@@ -11,8 +11,8 @@ cxx = ""
 variant = "debug"
 cxxflags = "-std=c++2a -no-pie -Wall -Wextra" # -pedantic-errors"
 ldflags = "-l pthread"
-includes = "-I ./include/ -I ./vendor/ -I ./vendor/raygui/ -I ../includes/mruby-3.0.0/include/"
-static_links = "./vendor/libmruby.a"
+includes = "-I ./include/ -I ./vendor/ -I ./vendor/raygui/ -I ./vendor/mruby/"
+static_links = ""
 SRC_FOLDER = "src"
 SRC = Rake::FileList["#{SRC_FOLDER}/**/*.cpp"]
 objects_folder = "build"
@@ -39,8 +39,8 @@ namespace :linux do
     cxx = "g++"
     platform = "linux"
     ldflags = "-l dl -l pthread"
-    includes += " -I ../includes/raylib-3.5.0_linux_amd64/include/"
-    static_links = "#{static_links} ./vendor/linux/libraylib.a"
+    includes += " -I ./vendor/linux/raylib/include/"
+    static_links = "#{static_links} ./vendor/linux/libmruby.a ./vendor/linux/raylib/lib/libraylib.a"
   end
 
   task :build => "linux:setup_variables"
@@ -70,11 +70,11 @@ namespace :windows do
     objects_folder = "build/windows/debug"
     cxx = "x86_64-w64-mingw32-g++"
     platform = "windows"
-    ldflags = "-L ../includes/raylib-3.5.0_win64_mingw-w64/lib/ -static -l raylib #{ldflags}"
+    ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -l raylib #{ldflags}"
     cxxflags += " -mwindows -static-libstdc++"
-    includes += " -I ../includes/raylib-3.5.0_win64_mingw-w64/include/"
+    includes += " -I ./vendor/windows/raylib/include/"
 
-    static_links = "#{static_links} ./vendor/windows/libraylibdll.a ./vendor/windows/libraylib.a"
+    static_links = "#{static_links} ./vendor/windows/libmruby.a ./vendor/windows/libraylibdll.a ./vendor/windows/raylib/lib/libraylib.a"
   end
 
   task :build => "windows:setup_variables"
@@ -155,3 +155,8 @@ supported_platforms.each { |platform|
 
 task :release => supported_platforms.map { |platform| "#{platform}:release:build" }
 task :all => supported_platforms.flat_map { |platform| ["#{platform}:build", "#{platform}:release:build"] }
+
+task 'mruby:build' do |task|
+  sh "docker build . --file Dockerfile.mruby --pull --tag bdsmge_mruby"
+  sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./vendor')},target=/app/output/ bdsmge_mruby:latest"
+end

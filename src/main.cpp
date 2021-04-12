@@ -20,6 +20,9 @@ int main(void)
   appendText(mrb);
   appendShapes(mrb);
 
+  FILE *game_file = fopen("app/game.rb", "r");
+  mrb_load_file(mrb, game_file);
+  /*
   mrb_load_string(mrb, R"(
       init_window(100, 100, 'hello')
       set_target_fps(144)
@@ -36,6 +39,7 @@ int main(void)
         end_drawing
       end
     )");
+    */
   //mrb_load_irep(mrb, game);
 
   if (mrb->exc) {
