@@ -4,6 +4,7 @@
 #include "mruby/data.h"
 #include "mruby/class.h"
 
+#include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 mrb_value MrbColourInitialize(mrb_state *mrb, mrb_value self) {
@@ -26,91 +27,35 @@ mrb_value MrbColourInitialize(mrb_state *mrb, mrb_value self) {
 }
 
 mrb_value MrbColourGetRed(mrb_state *mrb, mrb_value self) {
-  Color *colour;
-
-  Data_Get_Struct(mrb, self, &Colour_type, colour);
-  mrb_assert(colour != nullptr);
-
-  return mrb_int_value(mrb, colour->r);
+  attr_reader_int(mrb, self, Colour_type, Color, r);
 }
 
 mrb_value MrbColourSetRed(mrb_state *mrb, mrb_value self) {
-  mrb_int red;
-  mrb_get_args(mrb, "i", &red);
-  Color *colour;
-
-  Data_Get_Struct(mrb, self, &Colour_type, colour);
-  mrb_assert(colour != nullptr);
-
-  colour->r = red;
-
-  return mrb_int_value(mrb, colour->r);
+  attr_setter_int(mrb, self, Colour_type, Color, r);
 }
 
 mrb_value MrbColourGetGreen(mrb_state *mrb, mrb_value self) {
-  Color *colour;
-
-  Data_Get_Struct(mrb, self, &Colour_type, colour);
-  mrb_assert(colour != nullptr);
-
-  return mrb_int_value(mrb, colour->g);
+  attr_reader_int(mrb, self, Colour_type, Color, g);
 }
 
 mrb_value MrbColourSetGreen(mrb_state *mrb, mrb_value self) {
-  mrb_int green;
-  mrb_get_args(mrb, "i", &green);
-  Color *colour;
-
-  Data_Get_Struct(mrb, self, &Colour_type, colour);
-  mrb_assert(colour != nullptr);
-
-  colour->g = green;
-
-  return mrb_int_value(mrb, colour->g);
+  attr_setter_int(mrb, self, Colour_type, Color, g);
 }
 
 mrb_value MrbColourGetBlue(mrb_state *mrb, mrb_value self) {
-  Color *colour;
-
-  Data_Get_Struct(mrb, self, &Colour_type, colour);
-  mrb_assert(colour != nullptr);
-
-  return mrb_int_value(mrb, colour->b);
+  attr_reader_int(mrb, self, Colour_type, Color, b);
 }
 
 mrb_value MrbColourSetBlue(mrb_state *mrb, mrb_value self) {
-  mrb_int blue;
-  mrb_get_args(mrb, "i", &blue);
-  Color *colour;
-
-  Data_Get_Struct(mrb, self, &Colour_type, colour);
-  mrb_assert(colour != nullptr);
-
-  colour->b = blue;
-
-  return mrb_int_value(mrb, colour->b);
+  attr_setter_int(mrb, self, Colour_type, Color, b);
 }
 
 mrb_value MrbColourGetAlpha(mrb_state *mrb, mrb_value self) {
-  Color *colour;
-
-  Data_Get_Struct(mrb, self, &Colour_type, colour);
-  mrb_assert(colour != nullptr);
-
-  return mrb_int_value(mrb, colour->a);
+  attr_reader_int(mrb, self, Colour_type, Color, a);
 }
 
 mrb_value MrbColourSetAlpha(mrb_state *mrb, mrb_value self) {
-  mrb_int alpha;
-  mrb_get_args(mrb, "i", &alpha);
-  Color *colour;
-
-  Data_Get_Struct(mrb, self, &Colour_type, colour);
-  mrb_assert(colour != nullptr);
-
-  colour->a = alpha;
-
-  return mrb_int_value(mrb, colour->a);
+  attr_setter_int(mrb, self, Colour_type, Color, a);
 }
 
 void appendStructs(mrb_state *mrb) {
