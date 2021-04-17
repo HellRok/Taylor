@@ -2,21 +2,14 @@
 
 #include "mruby.h"
 
+#include "mruby_integration/models/colour.hpp"
+#include "mruby_integration/models/texture2d.hpp"
+
 //struct Vector2;
 //struct Vector3;
 //struct Vector4;
 //struct Quaternion;
 //struct Matrix;
-
-mrb_value MrbColourInitialize(mrb_state*, mrb_value self);
-mrb_value MrbColourGetRed(mrb_state*, mrb_value self);
-mrb_value MrbColourSetRed(mrb_state*, mrb_value self);
-mrb_value MrbColourGetGreen(mrb_state*, mrb_value self);
-mrb_value MrbColourSetGreen(mrb_state*, mrb_value self);
-mrb_value MrbColourGetBlue(mrb_state*, mrb_value self);
-mrb_value MrbColourSetBlue(mrb_state*, mrb_value self);
-mrb_value MrbColourGetAlpha(mrb_state*, mrb_value self);
-mrb_value MrbColourSetAlpha(mrb_state*, mrb_value self);
 
 //struct Rectangle;
 
@@ -48,8 +41,5 @@ mrb_value MrbColourSetAlpha(mrb_state*, mrb_value self);
 
 //struct VrDeviceInfo;
 //struct VrStereoConfig;
-
-extern RClass *colour_class;
-extern RClass *texture_class;
 
 void appendStructs(mrb_state*);
