@@ -7,6 +7,7 @@
 #include "mruby/compile.h"
 
 #include "mruby_integration/structs.hpp"
+#include "mruby_integration/textures.hpp"
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/text.hpp"
 #include "mruby_integration/shapes.hpp"
@@ -16,6 +17,7 @@ int main(void)
   mrb_state *mrb = mrb_open();
 
   appendStructs(mrb);
+  appendTextures(mrb);
   appendCore(mrb);
   appendText(mrb);
   appendShapes(mrb);

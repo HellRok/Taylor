@@ -49,4 +49,7 @@ mrb_value MrbColourSetAlpha(mrb_state*, mrb_value self);
 //struct VrDeviceInfo;
 //struct VrStereoConfig;
 
+extern RClass *colour_class;
+extern RClass *texture_class;
+
 void appendStructs(mrb_state*);

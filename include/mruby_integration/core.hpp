@@ -2,7 +2,7 @@
 
 #include "mruby.h"
 
-//// Window-related functions
+// Window-related functions
 mrb_value MrbInitWindow(mrb_state*, mrb_value);
 mrb_value MrbWindowShouldClose(mrb_state*, mrb_value);
 //void CloseWindow(void);

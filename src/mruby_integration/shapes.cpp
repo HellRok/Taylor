@@ -5,13 +5,9 @@
 
 mrb_value MrbDrawRectangle(mrb_state *mrb, mrb_value) {
   mrb_int x, y, width, height;
-  mrb_value mrb_colour;
   Color *colour;
 
-  mrb_get_args(mrb, "iiiio", &x, &y, &width, &height, &mrb_colour);
-
-  Data_Get_Struct(mrb, mrb_colour, &Colour_type, colour);
-  mrb_assert(colour != nullptr);
+  mrb_get_args(mrb, "iiiid", &x, &y, &width, &height, &colour, &Colour_type);
 
   DrawRectangle(x, y, width, height, *colour);
   return mrb_nil_value();
