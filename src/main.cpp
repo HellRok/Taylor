@@ -16,11 +16,11 @@ int main(void)
 {
   mrb_state *mrb = mrb_open();
 
-  appendStructs(mrb);
-  appendTextures(mrb);
-  appendCore(mrb);
-  appendText(mrb);
-  appendShapes(mrb);
+  append_core(mrb);
+  append_shapes(mrb);
+  append_structs(mrb);
+  append_text(mrb);
+  append_textures(mrb);
 
   FILE *game_file = fopen("app/game.rb", "r");
   mrb_load_file(mrb, game_file);

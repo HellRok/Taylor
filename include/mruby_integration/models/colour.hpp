@@ -2,6 +2,6 @@
 
 #include "mruby.h"
 
-extern RClass *colour_class;
+extern RClass *Colour_class;
 
-void appendModelsColour(mrb_state*);
+void append_models_Colour(mrb_state*);

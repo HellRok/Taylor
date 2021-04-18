@@ -7,9 +7,9 @@
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-struct RClass *colour_class;
+struct RClass *Colour_class;
 
-mrb_value MrbColourInitialize(mrb_state *mrb, mrb_value self) {
+mrb_value mrb_Colour_initialize(mrb_state *mrb, mrb_value self) {
   mrb_int red, green, blue, alpha;
   mrb_get_args(mrb, "iiii", &red, &green, &blue, &alpha);
 
@@ -27,48 +27,48 @@ mrb_value MrbColourInitialize(mrb_state *mrb, mrb_value self) {
   return self;
 }
 
-mrb_value MrbColourGetRed(mrb_state *mrb, mrb_value self) {
+mrb_value mrb_Colour_get_red(mrb_state *mrb, mrb_value self) {
   attr_reader_int(mrb, self, Colour_type, Color, r);
 }
 
-mrb_value MrbColourSetRed(mrb_state *mrb, mrb_value self) {
+mrb_value mrb_Colour_set_red(mrb_state *mrb, mrb_value self) {
   attr_setter_int(mrb, self, Colour_type, Color, r);
 }
 
-mrb_value MrbColourGetGreen(mrb_state *mrb, mrb_value self) {
+mrb_value mrb_Colour_get_green(mrb_state *mrb, mrb_value self) {
   attr_reader_int(mrb, self, Colour_type, Color, g);
 }
 
-mrb_value MrbColourSetGreen(mrb_state *mrb, mrb_value self) {
+mrb_value mrb_Colour_set_green(mrb_state *mrb, mrb_value self) {
   attr_setter_int(mrb, self, Colour_type, Color, g);
 }
 
-mrb_value MrbColourGetBlue(mrb_state *mrb, mrb_value self) {
+mrb_value mrb_Colour_get_blue(mrb_state *mrb, mrb_value self) {
   attr_reader_int(mrb, self, Colour_type, Color, b);
 }
 
-mrb_value MrbColourSetBlue(mrb_state *mrb, mrb_value self) {
+mrb_value mrb_Colour_set_blue(mrb_state *mrb, mrb_value self) {
   attr_setter_int(mrb, self, Colour_type, Color, b);
 }
 
-mrb_value MrbColourGetAlpha(mrb_state *mrb, mrb_value self) {
+mrb_value mrb_Colour_get_alpha(mrb_state *mrb, mrb_value self) {
   attr_reader_int(mrb, self, Colour_type, Color, a);
 }
 
-mrb_value MrbColourSetAlpha(mrb_state *mrb, mrb_value self) {
+mrb_value mrb_Colour_set_alpha(mrb_state *mrb, mrb_value self) {
   attr_setter_int(mrb, self, Colour_type, Color, a);
 }
 
-void appendModelsColour(mrb_state *mrb) {
-  colour_class = mrb_define_class(mrb, "Colour", mrb->object_class);
-  MRB_SET_INSTANCE_TT(colour_class, MRB_TT_DATA);
-  mrb_define_method(mrb, colour_class, "initialize", MrbColourInitialize, MRB_ARGS_REQ(4));
-  mrb_define_method(mrb, colour_class, "red", MrbColourGetRed, MRB_ARGS_NONE());
-  mrb_define_method(mrb, colour_class, "red=", MrbColourSetRed, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, colour_class, "green", MrbColourGetGreen, MRB_ARGS_NONE());
-  mrb_define_method(mrb, colour_class, "green=", MrbColourSetGreen, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, colour_class, "blue", MrbColourGetBlue, MRB_ARGS_NONE());
-  mrb_define_method(mrb, colour_class, "blue=", MrbColourSetBlue, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, colour_class, "alpha", MrbColourGetAlpha, MRB_ARGS_NONE());
-  mrb_define_method(mrb, colour_class, "alpha=", MrbColourSetAlpha, MRB_ARGS_REQ(1));
+void append_models_Colour(mrb_state *mrb) {
+  Colour_class = mrb_define_class(mrb, "Colour", mrb->object_class);
+  MRB_SET_INSTANCE_TT(Colour_class, MRB_TT_DATA);
+  mrb_define_method(mrb, Colour_class, "initialize", mrb_Colour_initialize, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, Colour_class, "red", mrb_Colour_get_red, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Colour_class, "red=", mrb_Colour_set_red, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "green", mrb_Colour_get_green, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Colour_class, "green=", mrb_Colour_set_green, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "blue", mrb_Colour_get_blue, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Colour_class, "blue=", mrb_Colour_set_blue, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "alpha", mrb_Colour_get_alpha, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Colour_class, "alpha=", mrb_Colour_set_alpha, MRB_ARGS_REQ(1));
 }

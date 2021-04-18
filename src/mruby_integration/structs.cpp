@@ -7,7 +7,7 @@
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-void appendStructs(mrb_state *mrb) {
-  appendModelsColour(mrb);
-  appendModelsTexture2D(mrb);
+void append_structs(mrb_state *mrb) {
+  append_models_Colour(mrb);
+  append_models_Texture2D(mrb);
 }

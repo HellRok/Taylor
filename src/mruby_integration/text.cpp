@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "mruby.h"
 
-mrb_value MrbDrawFPS(mrb_state *mrb, mrb_value) {
+mrb_value mrb_draw_fps(mrb_state *mrb, mrb_value) {
   mrb_int x, y;
 
   mrb_get_args(mrb, "ii", &x, &y);
@@ -10,6 +10,6 @@ mrb_value MrbDrawFPS(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-void appendText(mrb_state *mrb) {
-  mrb_define_method(mrb, mrb->kernel_module, "draw_fps", MrbDrawFPS, MRB_ARGS_REQ(2));
+void append_text(mrb_state *mrb) {
+  mrb_define_method(mrb, mrb->kernel_module, "draw_fps", mrb_draw_fps, MRB_ARGS_REQ(2));
 }

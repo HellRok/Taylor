@@ -2,6 +2,6 @@
 
 #include "mruby.h"
 
-extern RClass *texture_class;
+extern RClass *Texture2D_class;
 
-void appendModelsTexture2D(mrb_state*);
+void append_models_Texture2D(mrb_state*);
