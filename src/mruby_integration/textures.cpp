@@ -19,7 +19,6 @@ mrb_value mrb_load_texture(mrb_state *mrb, mrb_value) {
 
 mrb_value mrb_unload_texture(mrb_state *mrb, mrb_value) {
   Texture2D *texture;
-
   mrb_get_args(mrb, "d", &texture, &Texture2D_type);
 
   UnloadTexture(*texture);
@@ -30,11 +29,11 @@ mrb_value mrb_unload_texture(mrb_state *mrb, mrb_value) {
 mrb_value mrb_draw_texture(mrb_state *mrb, mrb_value) {
   Texture2D *texture;
   mrb_int x, y;
-  Color *color;
+  Color *colour;
 
-  mrb_get_args(mrb, "diid", &texture, &Texture2D_type, &x, &y, &color, &Colour_type);
+  mrb_get_args(mrb, "diid", &texture, &Texture2D_type, &x, &y, &colour, &Colour_type);
 
-  DrawTexture(*texture, x, y, *color);
+  DrawTexture(*texture, x, y, *colour);
 
   return mrb_nil_value();
 }
