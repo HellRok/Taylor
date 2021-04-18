@@ -17,6 +17,16 @@ mrb_value mrb_load_texture(mrb_state *mrb, mrb_value) {
   return mrb_obj_value(Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
 }
 
+mrb_value mrb_unload_texture(mrb_state *mrb, mrb_value) {
+  Texture2D *texture;
+
+  mrb_get_args(mrb, "d", &texture, &Texture2D_type);
+
+  UnloadTexture(*texture);
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_draw_texture(mrb_state *mrb, mrb_value) {
   Texture2D *texture;
   mrb_int x, y;
@@ -31,5 +41,6 @@ mrb_value mrb_draw_texture(mrb_state *mrb, mrb_value) {
 
 void append_textures(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_texture", mrb_load_texture, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "unload_texture", mrb_unload_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
 }
