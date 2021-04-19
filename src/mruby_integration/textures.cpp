@@ -5,6 +5,7 @@
 #include "mruby/class.h"
 #include "mruby/string.h"
 
+#include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 mrb_value mrb_load_texture(mrb_state *mrb, mrb_value) {
