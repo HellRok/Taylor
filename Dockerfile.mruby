@@ -8,7 +8,8 @@ COPY ./scripts/*.rb /app/build_config/
 
 RUN \
   rake && \
-  MRUBY_CONFIG=mingw rake
+  MRUBY_CONFIG=mingw rake && \
+  MRUBY_CONFIG=darwin rake
 
 COPY ./scripts/copy_mruby.sh /app/copy_mruby.sh
 

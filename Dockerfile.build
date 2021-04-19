@@ -1,0 +1,16 @@
+FROM appplant/mruby-cli
+
+WORKDIR /app
+
+COPY . /app
+
+RUN \
+  apt-get update -y && \
+  apt-get install -y g++ zip
+
+RUN \
+  rake linux:release:build && \
+  rake windows:release:build && \
+  rake osx:release:build
+
+CMD ./scripts/copy_build_artifacts.sh

@@ -2,7 +2,7 @@ require "fileutils"
 require "rake/clean"
 require 'rake/loaders/makefile'
 
-supported_platforms = %w(linux windows)
+supported_platforms = %w(linux windows osx)
 supported_variants = %w(debug release)
 
 name = "game"
@@ -29,7 +29,7 @@ task :default => "linux:build"
 
 def source_for(o_file)
   SRC.detect{ |file|
-    file.ext('').gsub(SRC_FOLDER, '') == o_file.ext('').gsub(/^build\/(windows|linux)\/(debug|release)/, '')
+    file.ext('').gsub(SRC_FOLDER, '') == o_file.ext('').gsub(/^build\/(windows|linux|osx)\/(debug|release)/, '')
   }
 end
 
@@ -100,6 +100,38 @@ namespace :windows do
   end
 end
 
+namespace :osx do
+  task :setup_variables do
+    objects_folder = "build/osx/debug"
+    cxx = "x86_64-apple-darwin19-clang++"
+    cxxflags = " -Oz -mmacosx-version-min=10.11 -stdlib=libc++"
+    platform = "osx"
+    ldflags = "-l dl -l pthread -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL"
+    includes += " -I ./vendor/osx/raylib/include/ -I /opt/osxcross/target/SDK/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
+    static_links = "#{static_links} ./vendor/osx/libmruby.a ./vendor/osx/raylib/lib/libraylib.a"
+  end
+
+  task :build => "osx:setup_variables"
+  multitask :build => depends.call("build/osx/debug")
+  multitask :build => objects.call("build/osx/debug")
+  task :build => "build:osx:debug"
+
+  namespace :release do
+    task :setup_variables do
+      objects_folder = "build/osx/release"
+      variant = "release"
+      cxxflags += " -Oz -mmacosx-version-min=10.11 -stdlib=libc++"
+    end
+
+    task :build => "osx:setup_variables"
+    task :build => "osx:release:setup_variables"
+    multitask :build => depends.call("build/osx/release")
+    multitask :build => objects.call("build/osx/release")
+    task :build => "build:osx:release"
+    task :build => "zip:osx"
+  end
+end
+
 supported_variants.each { |variant|
   task "windows:#{variant}:copy_dlls" do
     sh "cp -rv ./vendor/windows/*.dll ./dist/windows/#{variant}"
@@ -159,4 +191,9 @@ task :all => supported_platforms.flat_map { |platform| ["#{platform}:build", "#{
 task 'mruby:build' do |task|
   sh "docker build . --file Dockerfile.mruby --pull --tag bdsmge_mruby"
   sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./vendor')},target=/app/output/ bdsmge_mruby:latest"
+end
+
+task 'docker:build' do |task|
+  sh "docker build . --file Dockerfile.build --pull --tag bdsmge_build"
+  sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./releases')},target=/app/output/ bdsmge_build:latest"
 end
