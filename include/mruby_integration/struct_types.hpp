@@ -7,3 +7,4 @@
 
 extern mrb_data_type Colour_type;
 extern mrb_data_type Texture2D_type;
+extern mrb_data_type Vector2_type;

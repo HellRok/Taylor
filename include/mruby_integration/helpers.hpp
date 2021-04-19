@@ -21,3 +21,25 @@
   \
   return mrb_int_value(mrb, data->attr); \
 }
+
+#define attr_reader_float(mrb, self, klass_type, klass, attr) { \
+  klass *data; \
+  \
+  Data_Get_Struct(mrb, self, &klass_type, data); \
+  mrb_assert(data != nullptr); \
+  \
+  return mrb_float_value(mrb, data->attr); \
+}
+
+#define attr_setter_float(mrb, self, klass_type, klass, attr) { \
+  mrb_float attr; \
+  mrb_get_args(mrb, "f", &attr); \
+  klass *data; \
+  \
+  Data_Get_Struct(mrb, self, &klass_type, data); \
+  mrb_assert(data != nullptr); \
+  \
+  data->attr = attr; \
+  \
+  return mrb_float_value(mrb, data->attr); \
+}

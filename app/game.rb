@@ -27,9 +27,7 @@ end
 
 wabbit = load_texture('resources/wabbit.png')
 
-black = Colour.new(0, 0, 0, 255)
 opaque = Colour.new(0, 0, 0, 128)
-white = Colour.new(255, 255, 255, 255)
 
 colours = 50.times.map {
   Colour.new(
@@ -54,8 +52,10 @@ class Rabbit
     @x += @velocity_x * delta
     @y += @velocity_y * delta
 
-    @velocity_x = -@velocity_x if @x > 640 - @texture.width || @x < 0
-    @velocity_y = -@velocity_y if @y > 480 - @texture.height || @y < 0
+    @velocity_x = @velocity_x.abs  if @x < 0
+    @velocity_x = -@velocity_x.abs if @x > 640 - @texture.width
+    @velocity_y = @velocity_y.abs  if @y < 0
+    @velocity_y = -@velocity_y.abs if @y > 480 - @texture.height
   end
 
   def draw
@@ -78,15 +78,18 @@ until window_should_close?
     end
   end
 
-  rabbits.each { |rabbit| rabbit.tick(delta) }
-
   begin_drawing
-  clear_background(black)
-  rabbits.each(&:draw)
+
+  clear_background(BLACK)
+  rabbits.each { |rabbit|
+    rabbit.tick(delta)
+    rabbit.draw
+  }
 
   draw_rectangle(0, 0, 150, 50, opaque)
   draw_fps(5, 10)
-  draw_text("Rabbits: #{rabbits.size}", 5, 25, 20, white)
+  draw_text("Rabbits: #{rabbits.size}", 5, 25, 20, DARKGREEN)
+
   end_drawing
 end
 
