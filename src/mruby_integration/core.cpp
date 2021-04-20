@@ -9,7 +9,6 @@
 mrb_value mrb_init_window(mrb_state *mrb, mrb_value) {
   mrb_int width, height;
   char* title;
-
   mrb_get_args(mrb, "iiz", &width, &height, &title);
 
   InitWindow(width, height, title);
@@ -28,7 +27,6 @@ mrb_value mrb_close_window(mrb_state*, mrb_value) {
 mrb_value mrb_clear_background(mrb_state *mrb, mrb_value) {
   mrb_value mrb_colour;
   Color *colour;
-
   mrb_get_args(mrb, "o", &mrb_colour);
 
   Data_Get_Struct(mrb, mrb_colour, &Colour_type, colour);
@@ -54,7 +52,6 @@ mrb_value mrb_get_frame_time(mrb_state *mrb, mrb_value) {
 
 mrb_value mrb_set_target_fps(mrb_state *mrb, mrb_value) {
   mrb_int fps;
-
   mrb_get_args(mrb, "i", &fps);
 
   SetTargetFPS(fps);
@@ -123,10 +120,16 @@ mrb_value mrb_get_gamepad_axis_movement(mrb_state *mrb, mrb_value) {
 
 mrb_value mrb_is_mouse_button_pressed(mrb_state *mrb, mrb_value) {
   mrb_int button;
-
   mrb_get_args(mrb, "i", &button);
 
   return mrb_bool_value(IsMouseButtonPressed(button));
+}
+
+mrb_value mrb_is_mouse_button_down(mrb_state *mrb, mrb_value) {
+  mrb_int button;
+  mrb_get_args(mrb, "i", &button);
+
+  return mrb_bool_value(IsMouseButtonDown(button));
 }
 
 mrb_value mrb_get_mouse_position(mrb_state *mrb, mrb_value) {
@@ -138,6 +141,16 @@ mrb_value mrb_get_mouse_position(mrb_state *mrb, mrb_value) {
 
 mrb_value mrb_get_mouse_wheel_move(mrb_state *mrb, mrb_value) {
   return mrb_int_value(mrb, GetMouseWheelMove());
+}
+
+mrb_value mrb_get_touch_position(mrb_state *mrb, mrb_value) {
+  mrb_int index;
+  mrb_get_args(mrb, "i", &index);
+
+  Vector2 *position = (Vector2 *)malloc(sizeof(Vector2));
+  *position = GetTouchPosition(index);
+
+  return mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
 }
 
 void append_core(mrb_state *mrb) {
@@ -165,6 +178,8 @@ void append_core(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_axis_movement", mrb_get_gamepad_axis_movement, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "is_mouse_button_pressed", mrb_is_mouse_button_pressed, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_mouse_button_down", mrb_is_mouse_button_down, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_mouse_position", mrb_get_mouse_position, MRB_ARGS_NONE());
-  mrb_define_method(mrb, mrb->kernel_module, "get_mouse_wheel_move", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
+
+  mrb_define_method(mrb, mrb->kernel_module, "get_touch_position", mrb_get_touch_position, MRB_ARGS_REQ(1));
 }
