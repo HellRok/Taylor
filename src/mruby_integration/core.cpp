@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include "raylib.h"
 #include "mruby.h"
+#include "mruby/string.h"
 
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
@@ -64,12 +65,60 @@ mrb_value mrb_get_fps(mrb_state *mrb, mrb_value) {
   return mrb_int_value(mrb, GetFPS());
 }
 
-mrb_value mrb_is_key_down(mrb_state *mrb, mrb_value) {
+mrb_value mrb_set_config_flags(mrb_state *mrb, mrb_value) {
   mrb_int key;
-
   mrb_get_args(mrb, "i", &key);
 
-  return mrb_bool_value(IsKeyDown(key));
+  SetConfigFlags(key);
+  return mrb_nil_value();
+}
+
+mrb_value mrb_is_key_down(mrb_state *mrb, mrb_value) {
+  mrb_int key;
+  mrb_get_args(mrb, "i", &key);
+
+  SetConfigFlags(key);
+  return mrb_nil_value();
+}
+
+mrb_value mrb_is_gamepad_available(mrb_state *mrb, mrb_value) {
+  mrb_int index;
+  mrb_get_args(mrb, "i", &index);
+
+  return mrb_bool_value(IsGamepadAvailable(index));
+}
+
+mrb_value mrb_get_gamepad_name(mrb_state *mrb, mrb_value) {
+  mrb_int index;
+  mrb_get_args(mrb, "i", &index);
+
+  const char* name = GetGamepadName(index);
+  return mrb_str_new_cstr(mrb, name);
+}
+
+mrb_value mrb_is_gamepad_button_down(mrb_state *mrb, mrb_value) {
+  mrb_int index, button;
+  mrb_get_args(mrb, "ii", &index, &button);
+
+  return mrb_bool_value(IsGamepadButtonDown(index, button));
+}
+
+mrb_value mrb_get_gamepad_button_pressed(mrb_state *mrb, mrb_value) {
+  return mrb_int_value(mrb, GetGamepadButtonPressed());
+}
+
+mrb_value mrb_get_gamepad_axis_count(mrb_state *mrb, mrb_value) {
+  mrb_int index;
+  mrb_get_args(mrb, "i", &index);
+
+  return mrb_int_value(mrb, GetGamepadAxisCount(index));
+}
+
+mrb_value mrb_get_gamepad_axis_movement(mrb_state *mrb, mrb_value) {
+  mrb_int index, axis;
+  mrb_get_args(mrb, "ii", &index, &axis);
+
+  return mrb_float_value(mrb, GetGamepadAxisMovement(index, axis));
 }
 
 mrb_value mrb_is_mouse_button_pressed(mrb_state *mrb, mrb_value) {
@@ -104,7 +153,16 @@ void append_core(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "set_target_fps", mrb_set_target_fps, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_fps", mrb_get_fps, MRB_ARGS_NONE());
 
+  mrb_define_method(mrb, mrb->kernel_module, "set_config_flags", mrb_set_config_flags, MRB_ARGS_REQ(1));
+
   mrb_define_method(mrb, mrb->kernel_module, "is_key_down", mrb_is_key_down, MRB_ARGS_REQ(1));
+
+  mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_available", mrb_is_gamepad_available, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_name", mrb_get_gamepad_name, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_button_down", mrb_is_gamepad_button_down, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_button_pressed", mrb_get_gamepad_button_pressed, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_axis_count", mrb_get_gamepad_axis_count, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_axis_movement", mrb_get_gamepad_axis_movement, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "is_mouse_button_pressed", mrb_is_mouse_button_pressed, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_mouse_position", mrb_get_mouse_position, MRB_ARGS_NONE());
