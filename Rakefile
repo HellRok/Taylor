@@ -189,11 +189,11 @@ task :release => supported_platforms.map { |platform| "#{platform}:release:build
 task :all => supported_platforms.flat_map { |platform| ["#{platform}:build", "#{platform}:release:build"] }
 
 task 'mruby:build' do |task|
-  sh "docker build . --file Dockerfile.mruby --pull --tag bdsmge_mruby"
-  sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./vendor')},target=/app/output/ bdsmge_mruby:latest"
+  sh "docker build . --file Dockerfile.mruby --pull --tag taylor_mruby"
+  sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./vendor')},target=/app/output/ taylor_mruby:latest"
 end
 
 task 'docker:build' do |task|
-  sh "docker build . --file Dockerfile.build --pull --tag bdsmge_build"
-  sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./releases')},target=/app/output/ bdsmge_build:latest"
+  sh "docker build . --file Dockerfile.build --pull --tag taylor_build"
+  sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./releases')},target=/app/output/ taylor_build:latest"
 end
