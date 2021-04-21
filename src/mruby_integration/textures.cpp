@@ -39,8 +39,21 @@ mrb_value mrb_draw_texture(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_fade(mrb_state *mrb, mrb_value) {
+  Color *colour;
+  mrb_float alpha;
+  mrb_get_args(mrb, "df", &colour, &Colour_type, &alpha);
+
+  Color *return_colour = (Color *)malloc(sizeof(Color));
+  *return_colour = Fade(*colour, alpha);
+
+  return mrb_obj_value(Data_Wrap_Struct(mrb, Colour_class, &Colour_type, return_colour));
+}
+
 void append_textures(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_texture", mrb_load_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "unload_texture", mrb_unload_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
+
+  mrb_define_method(mrb, mrb->kernel_module, "fade", mrb_fade, MRB_ARGS_REQ(2));
 }

@@ -153,6 +153,10 @@ mrb_value mrb_get_touch_position(mrb_state *mrb, mrb_value) {
   return mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
 }
 
+mrb_value mrb_get_gesture_detected(mrb_state *mrb, mrb_value) {
+  return mrb_int_value(mrb, GetGestureDetected());
+}
+
 void append_core(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
@@ -182,4 +186,6 @@ void append_core(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "get_mouse_position", mrb_get_mouse_position, MRB_ARGS_NONE());
 
   mrb_define_method(mrb, mrb->kernel_module, "get_touch_position", mrb_get_touch_position, MRB_ARGS_REQ(1));
+
+  mrb_define_method(mrb, mrb->kernel_module, "get_gesture_detected", mrb_get_gesture_detected, MRB_ARGS_NONE());
 }
