@@ -11,17 +11,12 @@ init_window(screen_width, screen_height, "raylib [core] example - input gestures
 touch_position = Vector2.new(0, 0)
 touch_area = Rectangle.new(220, 10, screen_width - 230, screen_height - 20)
 
-puts touch_area.x
-puts touch_area.y
-puts touch_area.width
-puts touch_area.height
-
 gestures = []
 
 current_gesture = GESTURE_NONE
 last_gesture = GESTURE_NONE
 
-#SetGesturesEnabled(0b0000000000001001) # Enable only some gestures to be detected
+#set_gestures_enabled(0b0000000000001001) # Enable only some gestures to be detected
 
 set_target_fps(60) # Set our game to run at 60 frames-per-second
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "mruby/variable.h"
+
 #define attr_reader_int(mrb, self, klass_type, klass, attr) { \
   klass *data; \
   \
@@ -18,6 +20,11 @@
   mrb_assert(data != nullptr); \
   \
   data->attr = attr; \
+  mrb_iv_set( \
+      mrb, self, \
+      mrb_intern_cstr(mrb, "@" #attr), \
+      mrb_int_value(mrb, attr) \
+    ); \
   \
   return mrb_int_value(mrb, data->attr); \
 }
@@ -40,6 +47,51 @@
   mrb_assert(data != nullptr); \
   \
   data->attr = attr; \
+  mrb_iv_set( \
+      mrb, self, \
+      mrb_intern_cstr(mrb, "@" #attr), \
+      mrb_float_value(mrb, attr) \
+    ); \
   \
-  return mrb_float_value(mrb, data->attr); \
+  return mrb_float_value(mrb, attr); \
+}
+
+#define ivar_attr_int(mrb, self, value, attr) { \
+  value = attr; \
+  mrb_iv_set( \
+      mrb, self, \
+      mrb_intern_cstr(mrb, "@" #attr), \
+      mrb_int_value(mrb, value) \
+    ); \
+}
+
+#define ivar_attr_float(mrb, self, value, attr) { \
+  value = attr; \
+  mrb_iv_set( \
+      mrb, self, \
+      mrb_intern_cstr(mrb, "@" #attr), \
+      mrb_float_value(mrb, value) \
+    ); \
+}
+
+#define ivar_attr_vector2(mrb, self, obj_value, attr) { \
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, &obj_value)); \
+  obj_value.x = attr->x; \
+  obj_value.y = attr->y; \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@x"), \
+      mrb_float_value(mrb, attr->x) \
+    ); \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@y"), \
+      mrb_float_value(mrb, attr->y) \
+    ); \
+  \
+  mrb_iv_set( \
+      mrb, self, \
+      mrb_intern_cstr(mrb, "@" #attr), \
+      obj \
+    ); \
 }

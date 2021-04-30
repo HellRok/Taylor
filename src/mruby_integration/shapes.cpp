@@ -3,6 +3,16 @@
 
 #include "mruby_integration/struct_types.hpp"
 
+mrb_value mrb_draw_line(mrb_state *mrb, mrb_value) {
+  mrb_int start_x, start_y, end_x, end_y;
+  Color *colour;
+
+  mrb_get_args(mrb, "iiiid", &start_x, &start_y, &end_x, &end_y, &colour, &Colour_type);
+
+  DrawLine(start_x, start_y, end_x, end_y, *colour);
+  return mrb_nil_value();
+}
+
 mrb_value mrb_draw_circle(mrb_state *mrb, mrb_value) {
   mrb_int x, y;
   mrb_float radius;
@@ -75,6 +85,7 @@ mrb_value mrb_check_collision_point_rec(mrb_state *mrb, mrb_value) {
 }
 
 void append_shapes(mrb_state *mrb) {
+  mrb_define_method(mrb, mrb->kernel_module, "draw_line", mrb_draw_line, MRB_ARGS_REQ(5));
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle", mrb_draw_circle, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle_v", mrb_draw_circle_v, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "draw_rectangle", mrb_draw_rectangle, MRB_ARGS_REQ(5));

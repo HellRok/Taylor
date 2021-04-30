@@ -5,8 +5,10 @@
 #include "mruby/class.h"
 #include "mruby/string.h"
 
+#include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/struct_types.hpp"
+#include "mruby_integration/helpers.hpp"
 
 mrb_value mrb_load_texture(mrb_state *mrb, mrb_value) {
   mrb_value path;
@@ -15,7 +17,11 @@ mrb_value mrb_load_texture(mrb_state *mrb, mrb_value) {
   Texture2D *texture = (Texture2D *)malloc(sizeof(Texture2D));
   *texture = LoadTexture(mrb_str_to_cstr(mrb, path));
 
-  return mrb_obj_value(Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
+
+  setup_Texture2D(mrb, obj, texture, texture->id, texture->width, texture->height, texture->mipmaps, texture->format);
+
+  return obj;
 }
 
 mrb_value mrb_unload_texture(mrb_state *mrb, mrb_value) {
@@ -47,7 +53,11 @@ mrb_value mrb_fade(mrb_state *mrb, mrb_value) {
   Color *return_colour = (Color *)malloc(sizeof(Color));
   *return_colour = Fade(*colour, alpha);
 
-  return mrb_obj_value(Data_Wrap_Struct(mrb, Colour_class, &Colour_type, return_colour));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Colour_class, &Colour_type, return_colour));
+
+  setup_Colour(mrb, obj, return_colour, return_colour->r, return_colour->g, return_colour->b, return_colour->a);
+
+  return obj;
 }
 
 void append_textures(mrb_state *mrb) {

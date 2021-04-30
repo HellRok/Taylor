@@ -2,29 +2,6 @@ init_window(640, 480, 'hello')
 target_fps = 60
 set_target_fps(target_fps)
 
-class Colour
-  def to_h
-    {
-      red: red,
-      green: green,
-      blue: blue,
-      alpha: alpha,
-    }
-  end
-end
-
-class Texture2D
-  def to_h
-    {
-      id: id,
-      width: width,
-      height: height,
-      mipmaps: mipmaps,
-      format: format,
-    }
-  end
-end
-
 wabbit = load_texture('resources/wabbit.png')
 
 opaque = Colour.new(0, 0, 0, 128)
