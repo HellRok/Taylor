@@ -5,7 +5,7 @@ require 'rake/loaders/makefile'
 supported_platforms = %w(linux windows osx)
 supported_variants = %w(debug release)
 
-name = "game"
+name = "taylor"
 platform = ""
 cxx = ""
 variant = "debug"
@@ -74,7 +74,7 @@ namespace :windows do
     cxxflags += " -mwindows -static-libstdc++"
     includes += " -I ./vendor/windows/raylib/include/"
 
-    static_links = "#{static_links} ./vendor/windows/libmruby.a ./vendor/windows/libraylibdll.a ./vendor/windows/raylib/lib/libraylib.a"
+    static_links = "#{static_links} ./vendor/windows/libmruby.a ./vendor/windows/raylib/lib/libraylibdll.a ./vendor/windows/raylib/lib/libraylib.a"
   end
 
   task :build => "windows:setup_variables"
