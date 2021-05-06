@@ -54,6 +54,16 @@ void append_models_Camera2D(mrb_state *mrb) {
     class Camera2D
       attr_reader :offset, :target, :rotation, :zoom
 
+      def target=(other)
+        target.x = other.x
+        target.y = other.y
+      end
+
+      def offset=(other)
+        offset.x = other.x
+        offset.y = other.y
+      end
+
       def to_h
         {
           offset: offset.to_h,

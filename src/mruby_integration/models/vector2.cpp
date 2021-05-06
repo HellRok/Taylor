@@ -10,19 +10,23 @@
 
 struct RClass *Vector2_class;
 
+void setup_Vector2(mrb_state *mrb, mrb_value object, Vector2 *vector, float x, float y) {
+  ivar_attr_float(mrb, object, vector->x, x);
+  ivar_attr_float(mrb, object, vector->y, y);
+}
+
 mrb_value mrb_Vector2_initialize(mrb_state *mrb, mrb_value self) {
   mrb_float x, y;
   mrb_get_args(mrb, "ff", &x, &y);
 
-  Vector2 *vector2 = (struct Vector2 *)DATA_PTR(self);
-  if (vector2) { mrb_free(mrb, vector2); }
+  Vector2 *vector = (struct Vector2 *)DATA_PTR(self);
+  if (vector) { mrb_free(mrb, vector); }
   mrb_data_init(self, nullptr, &Vector2_type);
-  vector2 = (Vector2 *)malloc(sizeof(Vector2));
+  vector = (Vector2 *)malloc(sizeof(Vector2));
 
-  ivar_attr_float(mrb, self, vector2->x, x);
-  ivar_attr_float(mrb, self, vector2->y, y);
+  setup_Vector2(mrb, self, vector, x, y);
 
-  mrb_data_init(self, vector2, &Vector2_type);
+  mrb_data_init(self, vector, &Vector2_type);
   return self;
 }
 
@@ -44,6 +48,33 @@ void append_models_Vector2(mrb_state *mrb) {
   mrb_load_string(mrb, R"(
     class Vector2
       attr_reader :x, :y
+
+      def +(other)
+        Vector2.new(
+          self.x + other.x,
+          self.y + other.y
+        )
+      end
+
+      def -(other)
+        Vector2.new(
+          self.x - other.x,
+          self.y - other.y
+        )
+      end
+
+      alias :difference :-
+
+      def scale(scalar)
+        Vector2.new(
+          self.x * scalar,
+          self.y * scalar
+        )
+      end
+
+      def length
+        Math.sqrt(x**2 + y**2)
+      end
 
       def to_h
         {
