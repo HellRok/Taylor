@@ -13,4 +13,7 @@ MRuby::CrossBuild.new('x86_64-apple-darwin19') do |conf|
   conf.host_target      = 'x86_64-apple-darwin19'
 
   conf.gembox "default"
+
+  conf.gem github: 'iij/mruby-mtest'
+  conf.gem github: 'hellrok/mruby-require'
 end

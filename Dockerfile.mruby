@@ -7,7 +7,7 @@ RUN git clone --branch 3.0.0 --depth 1 https://github.com/mruby/mruby.git .
 COPY ./scripts/*.rb /app/build_config/
 
 RUN \
-  rake && \
+  MRUBY_CONFIG=linux rake && \
   MRUBY_CONFIG=mingw rake && \
   MRUBY_CONFIG=darwin rake
 
