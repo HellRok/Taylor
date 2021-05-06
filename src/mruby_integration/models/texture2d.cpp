@@ -34,23 +34,23 @@ mrb_value mrb_Texture2D_initialize(mrb_state *mrb, mrb_value self) {
 }
 
 mrb_value mrb_Texture2D_set_id(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, id);
+  attr_setter_int(mrb, self, Texture2D_type, Texture2D, id, id);
 }
 
 mrb_value mrb_Texture2D_set_width(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, width);
+  attr_setter_int(mrb, self, Texture2D_type, Texture2D, width, width);
 }
 
 mrb_value mrb_Texture2D_set_height(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, height);
+  attr_setter_int(mrb, self, Texture2D_type, Texture2D, height, height);
 }
 
 mrb_value mrb_Texture2D_set_mipmaps(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, mipmaps);
+  attr_setter_int(mrb, self, Texture2D_type, Texture2D, mipmaps, mipmaps);
 }
 
 mrb_value mrb_Texture2D_set_format(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, format);
+  attr_setter_int(mrb, self, Texture2D_type, Texture2D, format, format);
 }
 
 void append_models_Texture2D(mrb_state *mrb) {

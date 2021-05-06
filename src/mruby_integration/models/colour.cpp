@@ -33,19 +33,19 @@ mrb_value mrb_Colour_initialize(mrb_state *mrb, mrb_value self) {
 }
 
 mrb_value mrb_Colour_set_red(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Colour_type, Color, r);
+  attr_setter_int(mrb, self, Colour_type, Color, r, red);
 }
 
 mrb_value mrb_Colour_set_green(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Colour_type, Color, g);
+  attr_setter_int(mrb, self, Colour_type, Color, g, green);
 }
 
 mrb_value mrb_Colour_set_blue(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Colour_type, Color, b);
+  attr_setter_int(mrb, self, Colour_type, Color, b, blue);
 }
 
 mrb_value mrb_Colour_set_alpha(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Colour_type, Color, a);
+  attr_setter_int(mrb, self, Colour_type, Color, a, alpha);
 }
 
 void append_models_Colour(mrb_state *mrb) {

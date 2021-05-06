@@ -11,7 +11,7 @@
   return mrb_int_value(mrb, data->attr); \
 }
 
-#define attr_setter_int(mrb, self, klass_type, klass, attr) { \
+#define attr_setter_int(mrb, self, klass_type, klass, attr, ivar) { \
   mrb_int attr; \
   mrb_get_args(mrb, "i", &attr); \
   klass *data; \
@@ -22,7 +22,7 @@
   data->attr = attr; \
   mrb_iv_set( \
       mrb, self, \
-      mrb_intern_cstr(mrb, "@" #attr), \
+      mrb_intern_cstr(mrb, "@" #ivar), \
       mrb_int_value(mrb, attr) \
     ); \
   \
@@ -38,7 +38,7 @@
   return mrb_float_value(mrb, data->attr); \
 }
 
-#define attr_setter_float(mrb, self, klass_type, klass, attr) { \
+#define attr_setter_float(mrb, self, klass_type, klass, attr, ivar) { \
   mrb_float attr; \
   mrb_get_args(mrb, "f", &attr); \
   klass *data; \
@@ -49,7 +49,7 @@
   data->attr = attr; \
   mrb_iv_set( \
       mrb, self, \
-      mrb_intern_cstr(mrb, "@" #attr), \
+      mrb_intern_cstr(mrb, "@" #ivar), \
       mrb_float_value(mrb, attr) \
     ); \
   \

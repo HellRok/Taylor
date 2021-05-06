@@ -29,19 +29,19 @@ mrb_value mrb_Rectangle_initialize(mrb_state *mrb, mrb_value self) {
 }
 
 mrb_value mrb_Rectangle_set_x(mrb_state *mrb, mrb_value self) {
-  attr_setter_float(mrb, self, Rectangle_type, Rectangle, x);
+  attr_setter_float(mrb, self, Rectangle_type, Rectangle, x, x);
 }
 
 mrb_value mrb_Rectangle_set_y(mrb_state *mrb, mrb_value self) {
-  attr_setter_float(mrb, self, Rectangle_type, Rectangle, y);
+  attr_setter_float(mrb, self, Rectangle_type, Rectangle, y, y);
 }
 
 mrb_value mrb_Rectangle_set_width(mrb_state *mrb, mrb_value self) {
-  attr_setter_float(mrb, self, Rectangle_type, Rectangle, width);
+  attr_setter_float(mrb, self, Rectangle_type, Rectangle, width, width);
 }
 
 mrb_value mrb_Rectangle_set_height(mrb_state *mrb, mrb_value self) {
-  attr_setter_float(mrb, self, Rectangle_type, Rectangle, height);
+  attr_setter_float(mrb, self, Rectangle_type, Rectangle, height, height);
 }
 
 void append_models_Rectangle(mrb_state *mrb) {

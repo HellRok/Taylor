@@ -31,11 +31,11 @@ mrb_value mrb_Vector2_initialize(mrb_state *mrb, mrb_value self) {
 }
 
 mrb_value mrb_Vector2_set_x(mrb_state *mrb, mrb_value self) {
-  attr_setter_float(mrb, self, Vector2_type, Vector2, x);
+  attr_setter_float(mrb, self, Vector2_type, Vector2, x, x);
 }
 
 mrb_value mrb_Vector2_set_y(mrb_state *mrb, mrb_value self) {
-  attr_setter_float(mrb, self, Vector2_type, Vector2, y);
+  attr_setter_float(mrb, self, Vector2_type, Vector2, y, y);
 }
 
 void append_models_Vector2(mrb_state *mrb) {

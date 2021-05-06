@@ -59,6 +59,14 @@ mrb_value mrb_get_frame_time(mrb_state *mrb, mrb_value) {
   return mrb_float_value(mrb, GetFrameTime());
 }
 
+mrb_value mrb_set_trace_log_level(mrb_state *mrb, mrb_value) {
+  mrb_int level;
+  mrb_get_args(mrb, "i", &level);
+
+  SetTraceLogLevel(level);
+  return mrb_nil_value();
+}
+
 mrb_value mrb_get_world_to_screen2D(mrb_state *mrb, mrb_value) {
   Vector2 *vector;
   Camera2D *camera;
@@ -226,6 +234,8 @@ void append_core(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "get_frame_time", mrb_get_frame_time, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "set_target_fps", mrb_set_target_fps, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_fps", mrb_get_fps, MRB_ARGS_NONE());
+
+  mrb_define_method(mrb, mrb->kernel_module, "set_trace_log_level", mrb_set_trace_log_level, MRB_ARGS_REQ(1));
 
   mrb_define_method(mrb, mrb->kernel_module, "set_config_flags", mrb_set_config_flags, MRB_ARGS_REQ(1));
 

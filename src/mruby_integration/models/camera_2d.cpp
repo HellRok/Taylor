@@ -36,11 +36,11 @@ mrb_value mrb_Camera2D_initialize(mrb_state *mrb, mrb_value self) {
 }
 
 mrb_value mrb_Camera2D_set_rotation(mrb_state *mrb, mrb_value self) {
-  attr_setter_float(mrb, self, Camera2D_type, Camera2D, rotation);
+  attr_setter_float(mrb, self, Camera2D_type, Camera2D, rotation, rotation);
 }
 
 mrb_value mrb_Camera2D_set_zoom(mrb_state *mrb, mrb_value self) {
-  attr_setter_float(mrb, self, Camera2D_type, Camera2D, zoom);
+  attr_setter_float(mrb, self, Camera2D_type, Camera2D, zoom, zoom);
 }
 
 void append_models_Camera2D(mrb_state *mrb) {
@@ -54,14 +54,14 @@ void append_models_Camera2D(mrb_state *mrb) {
     class Camera2D
       attr_reader :offset, :target, :rotation, :zoom
 
-      def target=(other)
-        target.x = other.x
-        target.y = other.y
-      end
-
       def offset=(other)
         offset.x = other.x
         offset.y = other.y
+      end
+
+      def target=(other)
+        target.x = other.x
+        target.y = other.y
       end
 
       def to_h
