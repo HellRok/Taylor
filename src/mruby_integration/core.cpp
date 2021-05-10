@@ -24,6 +24,10 @@ mrb_value mrb_close_window(mrb_state*, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_is_window_ready(mrb_state*, mrb_value) {
+  return mrb_bool_value(IsWindowReady());
+}
+
 mrb_value mrb_clear_background(mrb_state *mrb, mrb_value) {
   Color *colour;
   mrb_get_args(mrb, "d", &colour, &Colour_type);
@@ -187,7 +191,11 @@ mrb_value mrb_get_mouse_position(mrb_state *mrb, mrb_value) {
   Vector2 *position = (Vector2 *)malloc(sizeof(Vector2));
   *position = GetMousePosition();
 
-  return mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
+
+  setup_Vector2(mrb, obj, position, position->x, position->y);
+
+  return obj;
 }
 
 mrb_value mrb_get_mouse_wheel_move(mrb_state *mrb, mrb_value) {
@@ -201,7 +209,11 @@ mrb_value mrb_get_touch_position(mrb_state *mrb, mrb_value) {
   Vector2 *position = (Vector2 *)malloc(sizeof(Vector2));
   *position = GetTouchPosition(index);
 
-  return mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
+
+  setup_Vector2(mrb, obj, position, position->x, position->y);
+
+  return obj;
 }
 
 mrb_value mrb_set_gestures_enabled(mrb_state *mrb, mrb_value) {
@@ -221,6 +233,7 @@ void append_core(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "close_window", mrb_close_window, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "is_window_ready?", mrb_is_window_ready, MRB_ARGS_NONE());
 
   mrb_define_method(mrb, mrb->kernel_module, "clear_background", mrb_clear_background, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());

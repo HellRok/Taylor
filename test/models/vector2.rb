@@ -3,8 +3,8 @@ class TestVector2 < MTest::Unit::TestCase
     vector = Vector2.new(1, 2)
 
     assert_kind_of Vector2, vector
-    assert vector.x == 1
-    assert vector.y == 2
+    assert_equal 1, vector.x
+    assert_equal 2, vector.y
   end
 
   def test_assignment
@@ -12,39 +12,39 @@ class TestVector2 < MTest::Unit::TestCase
     vector.x = 3
     vector.y = 8
 
-    assert vector.x == 3
-    assert vector.y == 8
+    assert_equal 3, vector.x
+    assert_equal 8, vector.y
   end
 
   def test_add
     vector = Vector2.new(1, 3) + Vector2.new(2, 5)
 
     assert_kind_of Vector2, vector
-    assert vector.x == 3
-    assert vector.y == 8
+    assert_equal 3, vector.x
+    assert_equal 8, vector.y
   end
 
   def test_minus
     vector = Vector2.new(1, 3) - Vector2.new(2, 5)
 
     assert_kind_of Vector2, vector
-    assert vector.x == -1
-    assert vector.y == -2
+    assert_equal(-1, vector.x)
+    assert_equal(-2, vector.y)
   end
 
   def test_scalar
     vector = Vector2.new(1, 3).scale(4)
 
     assert_kind_of Vector2, vector
-    assert vector.x == 4
-    assert vector.y == 12
+    assert_equal 4, vector.x
+    assert_equal 12, vector.y
   end
 
   def test_length
-    assert Vector2.new(3, -4).length == 5
+    assert_equal 5, Vector2.new(3, -4).length
   end
 
   def test_to_h
-    assert Vector2.new(3, -4).to_h == { x: 3, y: -4 }
+    assert_equal({ x: 3, y: -4 }, Vector2.new(3, -4).to_h)
   end
 end

@@ -24,6 +24,17 @@ mrb_value mrb_draw_circle(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_draw_circle_v(mrb_state *mrb, mrb_value) {
+  Vector2 *vector;
+  mrb_float radius;
+  Color *colour;
+
+  mrb_get_args(mrb, "dfd", &vector, &Vector2_type, &radius, &colour, &Colour_type);
+
+  DrawCircleV(*vector, radius, *colour);
+  return mrb_nil_value();
+}
+
 mrb_value mrb_draw_rectangle(mrb_state *mrb, mrb_value) {
   mrb_int x, y, width, height;
   Color *colour;
@@ -51,17 +62,6 @@ mrb_value mrb_draw_rectangle_lines(mrb_state *mrb, mrb_value) {
   mrb_get_args(mrb, "iiiid", &x, &y, &width, &height, &colour, &Colour_type);
 
   DrawRectangleLines(x, y, width, height, *colour);
-  return mrb_nil_value();
-}
-
-mrb_value mrb_draw_circle_v(mrb_state *mrb, mrb_value) {
-  Vector2 *vector;
-  mrb_float radius;
-  Color *colour;
-
-  mrb_get_args(mrb, "dfd", &vector, &Vector2_type, &radius, &colour, &Colour_type);
-
-  DrawCircleV(*vector, radius, *colour);
   return mrb_nil_value();
 }
 

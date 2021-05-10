@@ -3,11 +3,11 @@ class TestTexture2D < MTest::Unit::TestCase
     texture = Texture2D.new(1, 2, 3, 4, 5)
 
     assert_kind_of Texture2D, texture
-    assert texture.id      == 1
-    assert texture.width   == 2
-    assert texture.height  == 3
-    assert texture.mipmaps == 4
-    assert texture.format  == 5
+    assert_equal 1, texture.id
+    assert_equal 2, texture.width
+    assert_equal 3, texture.height
+    assert_equal 4, texture.mipmaps
+    assert_equal 5, texture.format
   end
 
   def test_assignment
@@ -18,22 +18,26 @@ class TestTexture2D < MTest::Unit::TestCase
     texture.mipmaps = 2
     texture.format  = 1
 
-    assert texture.id      == 5
-    assert texture.width   == 4
-    assert texture.height  == 3
-    assert texture.mipmaps == 2
-    assert texture.format  == 1
+    assert_equal 5, texture.id
+    assert_equal 4, texture.width
+    assert_equal 3, texture.height
+    assert_equal 2, texture.mipmaps
+    assert_equal 1, texture.format
+
   end
 
   def test_to_h
     texture = Texture2D.new(1, 2, 3, 4, 5)
 
-    assert texture.to_h == {
-      id: 1,
-      width: 2,
-      height: 3,
-      mipmaps: 4,
-      format: 5
-    }
+    assert_equal(
+      {
+        id: 1,
+        width: 2,
+        height: 3,
+        mipmaps: 4,
+        format: 5
+      },
+      texture.to_h
+    )
   end
 end
