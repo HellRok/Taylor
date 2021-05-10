@@ -65,6 +65,17 @@ mrb_value mrb_draw_rectangle_lines(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_draw_rectangle_lines_ex(mrb_state *mrb, mrb_value) {
+  Rectangle *rectangle;
+  mrb_int thickness;
+  Color *colour;
+
+  mrb_get_args(mrb, "did", &rectangle, &Rectangle_type, &thickness, &colour, &Colour_type);
+
+  DrawRectangleLinesEx(*rectangle, thickness, *colour);
+  return mrb_nil_value();
+}
+
 mrb_value mrb_draw_triangle(mrb_state *mrb, mrb_value) {
   Vector2 *left, *right, *top;
   Color *colour;
@@ -91,6 +102,7 @@ void append_shapes(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "draw_rectangle", mrb_draw_rectangle, MRB_ARGS_REQ(5));
   mrb_define_method(mrb, mrb->kernel_module, "draw_rectangle_rec", mrb_draw_rectangle_rec, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "draw_rectangle_lines", mrb_draw_rectangle_lines, MRB_ARGS_REQ(5));
+  mrb_define_method(mrb, mrb->kernel_module, "draw_rectangle_lines_ex", mrb_draw_rectangle_lines_ex, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "draw_triangle", mrb_draw_triangle, MRB_ARGS_REQ(4));
 
   mrb_define_method(mrb, mrb->kernel_module, "check_collision_point_rec", mrb_check_collision_point_rec, MRB_ARGS_REQ(2));

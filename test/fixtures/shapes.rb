@@ -66,6 +66,23 @@ def fixture_draw_rectangle_lines
   ]
 end
 
+def fixture_draw_rectangle_lines_ex
+  w = RAYWHITE
+  r = RED
+  [
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, r, r, r, r, r, r, r, r,
+    w, w, r, r, r, r, r, r, r, r,
+    w, w, r, r, w, w, w, w, r, r,
+    w, w, r, r, w, w, w, w, r, r,
+    w, w, r, r, w, w, w, w, r, r,
+    w, w, r, r, w, w, w, w, r, r,
+    w, w, r, r, r, r, r, r, r, r,
+    w, w, r, r, r, r, r, r, r, r,
+  ]
+end
+
 def fixture_draw_triangle
   w = RAYWHITE
   b = BLUE

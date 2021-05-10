@@ -1,5 +1,7 @@
 set_trace_log_level 5
 
+require './test/helpers'
+
 require './test/fixtures/core'
 require './test/fixtures/shapes'
 

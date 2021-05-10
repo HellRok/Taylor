@@ -72,6 +72,18 @@ class TestShapes < MTest::Unit::TestCase
     close_window
   end
 
+  def test_draw_rectangle_lines_ex
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_rectangle_lines_ex(Rectangle.new(2, 2, 8, 8), 2, RED)
+    end_drawing
+
+    assert_equal fixture_draw_rectangle_lines_ex, get_screen_data.data
+
+    close_window
+  end
+
   def test_draw_triangle
     init_window(10, 10, 'hi')
 

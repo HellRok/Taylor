@@ -23,9 +23,105 @@ mrb_value mrb_close_window(mrb_state*, mrb_value) {
   CloseWindow();
   return mrb_nil_value();
 }
-
 mrb_value mrb_is_window_ready(mrb_state*, mrb_value) {
   return mrb_bool_value(IsWindowReady());
+}
+
+mrb_value mrb_is_window_state(mrb_state *mrb, mrb_value) {
+  mrb_int flag;
+  mrb_get_args(mrb, "i", &flag);
+
+  return mrb_bool_value(IsWindowState(flag));
+}
+
+mrb_value mrb_set_window_state(mrb_state *mrb, mrb_value) {
+  mrb_int flag;
+  mrb_get_args(mrb, "i", &flag);
+
+  SetWindowState(flag);
+  return mrb_nil_value();
+}
+
+mrb_value mrb_is_window_fullscreen(mrb_state*, mrb_value) {
+  return mrb_bool_value(IsWindowFullscreen());
+}
+
+mrb_value mrb_is_window_hidden(mrb_state*, mrb_value) {
+  return mrb_bool_value(IsWindowHidden());
+}
+
+mrb_value mrb_is_window_minimised(mrb_state*, mrb_value) {
+  return mrb_bool_value(IsWindowMinimized());
+}
+
+mrb_value mrb_is_window_maximised(mrb_state*, mrb_value) {
+  return mrb_bool_value(IsWindowMaximized());
+}
+
+mrb_value mrb_is_window_focused(mrb_state*, mrb_value) {
+  return mrb_bool_value(IsWindowFocused());
+}
+
+mrb_value mrb_is_window_resized(mrb_state*, mrb_value) {
+  return mrb_bool_value(IsWindowResized());
+}
+
+mrb_value mrb_clear_window_state(mrb_state *mrb, mrb_value) {
+  mrb_int flag;
+  mrb_get_args(mrb, "i", &flag);
+
+  ClearWindowState(flag);
+  return mrb_nil_value();
+}
+
+mrb_value mrb_toggle_fullscreen(mrb_state*, mrb_value) {
+  ToggleFullscreen();
+  return mrb_nil_value();
+}
+
+mrb_value mrb_maximise_window(mrb_state*, mrb_value) {
+  MaximizeWindow();
+  return mrb_nil_value();
+}
+
+mrb_value mrb_minimise_window(mrb_state*, mrb_value) {
+  MinimizeWindow();
+  return mrb_nil_value();
+}
+
+mrb_value mrb_restore_window(mrb_state*, mrb_value) {
+  RestoreWindow();
+  return mrb_nil_value();
+}
+
+mrb_value mrb_get_screen_width(mrb_state *mrb, mrb_value) {
+  return mrb_int_value(mrb, GetScreenWidth());
+}
+
+mrb_value mrb_get_screen_height(mrb_state *mrb, mrb_value) {
+  return mrb_int_value(mrb, GetScreenHeight());
+}
+
+mrb_value mrb_get_monitor_count(mrb_state *mrb, mrb_value) {
+  return mrb_int_value(mrb, GetMonitorCount());
+}
+
+mrb_value mrb_get_monitor_width(mrb_state *mrb, mrb_value) {
+  mrb_int monitor;
+  mrb_get_args(mrb, "i", &monitor);
+
+  return mrb_int_value(mrb, GetMonitorWidth(monitor));
+}
+
+mrb_value mrb_get_monitor_height(mrb_state *mrb, mrb_value) {
+  mrb_int monitor;
+  mrb_get_args(mrb, "i", &monitor);
+
+  return mrb_int_value(mrb, GetMonitorHeight(monitor));
+}
+
+mrb_value mrb_get_current_monitor(mrb_state *mrb, mrb_value) {
+  return mrb_int_value(mrb, GetCurrentMonitor());
 }
 
 mrb_value mrb_clear_background(mrb_state *mrb, mrb_value) {
@@ -233,7 +329,27 @@ void append_core(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "close_window", mrb_close_window, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "close_window", mrb_close_window, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "is_window_ready?", mrb_is_window_ready, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "is_window_fullscreen?", mrb_is_window_fullscreen, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_window_hidden?", mrb_is_window_hidden, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_window_minimised?", mrb_is_window_minimised, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_window_maximised?", mrb_is_window_maximised, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_window_focused?", mrb_is_window_focused, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_window_resized?", mrb_is_window_resized, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_window_state?", mrb_is_window_state, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "set_window_state", mrb_set_window_state, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "clear_window_state", mrb_clear_window_state, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "toggle_fullscreen", mrb_toggle_fullscreen, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "maximise_window", mrb_maximise_window, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "minimise_window", mrb_minimise_window, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "restore_window", mrb_restore_window, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "get_screen_width", mrb_get_screen_width, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "get_screen_height", mrb_get_screen_height, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "get_monitor_count", mrb_get_monitor_count, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "get_current_monitor", mrb_get_current_monitor, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "get_monitor_width", mrb_get_monitor_width, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "get_monitor_height", mrb_get_monitor_height, MRB_ARGS_REQ(1));
 
   mrb_define_method(mrb, mrb->kernel_module, "clear_background", mrb_clear_background, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
