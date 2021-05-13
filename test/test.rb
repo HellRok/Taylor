@@ -1,5 +1,6 @@
 set_trace_log_level 5
 
+require './test/mtest_extensions'
 require './test/helpers'
 
 require './test/fixtures/core'

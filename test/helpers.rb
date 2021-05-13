@@ -7,23 +7,29 @@ def flush_frames(count)
   count.times { flush_frame }
 end
 
-def print_screen_data
-  get_screen_data.data.each_slice(10) { |row|
-    puts row.map { |colour|
+def print_colour_data(data)
+  map = ''
+  data.each_slice(10).each { |row|
+    row.each { |colour|
       case colour
       when RAYWHITE
-        :w
+        map << 'w'
       when RED
-        :r
+        map << 'r'
       when GREEN
-        :g
+        map << 'g'
       when BLUE
-        :b
+        map << 'b'
       when PURPLE
-        :p
+        map << 'p'
       else
-        colour.to_h
+        map << '?'
       end
+      map << ' '
     }
+
+    map << "\n"
   }
+
+  map
 end
