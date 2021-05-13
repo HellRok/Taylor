@@ -63,10 +63,10 @@ class TestCore < MTest::Unit::TestCase
     begin_mode2D(camera)
     draw_rectangle_rec(rectangle, RED)
     end_mode2D
-    end_drawing
 
     assert_equal fixture_mode2D[1], get_screen_data.data
 
+    end_drawing
     close_window
   end
 

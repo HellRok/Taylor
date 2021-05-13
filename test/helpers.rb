@@ -22,7 +22,7 @@ def print_screen_data
       when PURPLE
         :p
       else
-        :_
+        colour.to_h
       end
     }
   }
