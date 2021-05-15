@@ -13,6 +13,7 @@ require './test/models/colour'
 require './test/models/image'
 require './test/models/music'
 require './test/models/rectangle'
+require './test/models/sound'
 require './test/models/texture2d'
 require './test/models/vector2'
 
