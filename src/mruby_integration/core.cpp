@@ -1,4 +1,3 @@
-#include "raylib.h"
 #include "mruby.h"
 
 #include "mruby_integration/core/drawing.hpp"

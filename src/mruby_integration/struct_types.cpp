@@ -41,6 +41,7 @@ void free_klass(mrb_state *mrb, void* p, std::string klass) {
 void free_camera2d(mrb_state *mrb, void* p)  { free_klass(mrb, p, "Camera2D");  };
 void free_colour(mrb_state *mrb, void *p)    { free_klass(mrb, p, "Color");     };
 void free_image(mrb_state *mrb, void *p)     { free_klass(mrb, p, "Image");     };
+void free_music(mrb_state *mrb, void *p)     { free_klass(mrb, p, "Music");     };
 void free_rectangle(mrb_state *mrb, void *p) { free_klass(mrb, p, "Rectangle"); };
 void free_texture2d(mrb_state *mrb, void *p) { free_klass(mrb, p, "Texture2D"); };
 void free_vector(mrb_state *mrb, void* p)    { free_klass(mrb, p, "Vector");    };
@@ -48,6 +49,7 @@ void free_vector(mrb_state *mrb, void* p)    { free_klass(mrb, p, "Vector");    
 mrb_data_type Camera2D_type =  { "Camera2D",  free_camera2d };
 mrb_data_type Colour_type =    { "Color",     free_colour };
 mrb_data_type Image_type =     { "Image",     free_image };
+mrb_data_type Music_type =     { "Music",     free_music };
 mrb_data_type Rectangle_type = { "Rectangle", free_rectangle };
 mrb_data_type Texture2D_type = { "Texture2D", free_texture2d };
 mrb_data_type Vector2_type =   { "Vector2",   free_vector };

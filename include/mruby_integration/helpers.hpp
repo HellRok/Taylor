@@ -56,6 +56,33 @@
   return mrb_float_value(mrb, attr); \
 }
 
+#define attr_reader_bool(mrb, self, klass_type, klass, attr) { \
+  klass *data; \
+  \
+  Data_Get_Struct(mrb, self, &klass_type, data); \
+  mrb_assert(data != nullptr); \
+  \
+  return mrb_bool_value(data->attr); \
+}
+
+#define attr_setter_bool(mrb, self, klass_type, klass, attr, ivar) { \
+  mrb_bool attr; \
+  mrb_get_args(mrb, "b", &attr); \
+  klass *data; \
+  \
+  Data_Get_Struct(mrb, self, &klass_type, data); \
+  mrb_assert(data != nullptr); \
+  \
+  data->attr = attr; \
+  mrb_iv_set( \
+      mrb, self, \
+      mrb_intern_cstr(mrb, "@" #ivar), \
+      mrb_bool_value(attr) \
+    ); \
+  \
+  return mrb_bool_value(data->attr); \
+}
+
 #define ivar_attr_int(mrb, self, value, attr) { \
   value = attr; \
   mrb_iv_set( \
@@ -71,6 +98,15 @@
       mrb, self, \
       mrb_intern_cstr(mrb, "@" #attr), \
       mrb_float_value(mrb, value) \
+    ); \
+}
+
+#define ivar_attr_bool(mrb, self, value, attr) { \
+  value = attr; \
+  mrb_iv_set( \
+      mrb, self, \
+      mrb_intern_cstr(mrb, "@" #attr), \
+      mrb_bool_value(value) \
     ); \
 }
 

@@ -5,11 +5,12 @@
 #include "mruby/class.h"
 #include "mruby/compile.h"
 
-#include "mruby_integration/structs.hpp"
-#include "mruby_integration/textures.hpp"
+#include "mruby_integration/audio.hpp"
 #include "mruby_integration/core.hpp"
-#include "mruby_integration/text.hpp"
 #include "mruby_integration/shapes.hpp"
+#include "mruby_integration/structs.hpp"
+#include "mruby_integration/text.hpp"
+#include "mruby_integration/textures.hpp"
 
 int main(int, char **argv) {
   const char *path;
@@ -21,6 +22,7 @@ int main(int, char **argv) {
 
   mrb_state *mrb = mrb_open();
 
+  append_audio(mrb);
   append_core(mrb);
   append_shapes(mrb);
   append_structs(mrb);

@@ -12,11 +12,11 @@
 #include "mruby_integration/helpers.hpp"
 
 mrb_value mrb_load_texture(mrb_state *mrb, mrb_value) {
-  mrb_value path;
-  mrb_get_args(mrb, "S", &path);
+  char *path;
+  mrb_get_args(mrb, "z", &path);
 
   Texture2D *texture = (Texture2D *)malloc(sizeof(Texture2D));
-  *texture = LoadTexture(mrb_str_to_cstr(mrb, path));
+  *texture = LoadTexture(path);
 
   mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
 
