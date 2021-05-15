@@ -17,7 +17,16 @@ mrb_value mrb_set_trace_log_level(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_open_url(mrb_state *mrb, mrb_value) {
+  char* url;
+  mrb_get_args(mrb, "z", &url);
+
+  OpenURL(url);
+  return mrb_nil_value();
+}
+
 void append_core_misc(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "set_config_flags", mrb_set_config_flags, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "set_trace_log_level", mrb_set_trace_log_level, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "open_url", mrb_open_url, MRB_ARGS_REQ(1));
 }
