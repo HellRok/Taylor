@@ -1,5 +1,7 @@
 # Taylor
 
+![documentation workflow](https://github.com/HellRok/Taylor/actions/workflows/documentation.yml/badge.svg)
+
 ## What's this?
 
 Taylor is a game framework I've built using [mruby](http://mruby.org/) and

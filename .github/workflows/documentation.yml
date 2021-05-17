@@ -1,0 +1,23 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  documentation:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+      - name: Install dependencies
+        run: bundle install
+      - name: Run documentation check
+        run: bundle exec ./scripts/check_for_documentation.rb
