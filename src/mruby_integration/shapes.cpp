@@ -87,12 +87,12 @@ mrb_value mrb_draw_triangle(mrb_state *mrb, mrb_value) {
 }
 
 mrb_value mrb_check_collision_point_rec(mrb_state *mrb, mrb_value) {
-  Vector2 *vector;
+  Vector2 *point;
   Rectangle *rectangle;
 
-  mrb_get_args(mrb, "dd", &vector, &Vector2_type, &rectangle, &Rectangle_type);
+  mrb_get_args(mrb, "dd", &point, &Vector2_type, &rectangle, &Rectangle_type);
 
-  return mrb_bool_value(CheckCollisionPointRec(*vector, *rectangle));
+  return mrb_bool_value(CheckCollisionPointRec(*point, *rectangle));
 }
 
 void append_shapes(mrb_state *mrb) {

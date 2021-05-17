@@ -120,6 +120,6 @@ void append_audio_sound(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "stop_sound_multi", mrb_stop_sound_multi, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_sounds_playing", mrb_get_sounds_playing, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "is_sound_playing?", mrb_get_sounds_playing, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "set_sound_pitch", mrb_set_sound_pitch, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "set_sound_volume", mrb_set_sound_volume, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "set_sound_pitch", mrb_set_sound_pitch, MRB_ARGS_REQ(2));
 }

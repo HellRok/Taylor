@@ -17,8 +17,8 @@ mrb_value mrb_is_key_pressed(mrb_state *mrb, mrb_value) {
 }
 
 void append_core_input_keyboard(mrb_state *mrb) {
-  mrb_define_method(mrb, mrb->kernel_module, "is_key_down", mrb_is_key_down, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_key_pressed", mrb_is_key_pressed, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_key_down?", mrb_is_key_down, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_key_pressed?", mrb_is_key_pressed, MRB_ARGS_REQ(1));
   mrb_load_string(mrb, R"(
     # Alphanumeric keys
     KEY_APOSTROPHE      = 39
@@ -113,22 +113,28 @@ void append_core_input_keyboard(mrb_state *mrb) {
     KEY_GRAVE           = 96
 
     # Keypad keys
-    KEY_KP_0            = 32
-    KEY_KP_1            = 32
-    KEY_KP_2            = 32
-    KEY_KP_3            = 32
-    KEY_KP_4            = 32
-    KEY_KP_5            = 32
-    KEY_KP_6            = 32
-    KEY_KP_7            = 32
-    KEY_KP_8            = 32
-    KEY_KP_9            = 32
-    KEY_KP_DECIMAL      = 33
-    KEY_KP_DIVIDE       = 33
-    KEY_KP_MULTIPLY     = 33
-    KEY_KP_SUBTRACT     = 33
-    KEY_KP_ADD          = 33
-    KEY_KP_ENTER        = 33
+    KEY_KP_0            = 320
+    KEY_KP_1            = 321
+    KEY_KP_2            = 322
+    KEY_KP_3            = 323
+    KEY_KP_4            = 324
+    KEY_KP_5            = 325
+    KEY_KP_6            = 326
+    KEY_KP_7            = 327
+    KEY_KP_8            = 328
+    KEY_KP_9            = 329
+    KEY_KP_DECIMAL      = 330
+    KEY_KP_DIVIDE       = 331
+    KEY_KP_MULTIPLY     = 332
+    KEY_KP_SUBTRACT     = 333
+    KEY_KP_ADD          = 334
+    KEY_KP_ENTER        = 335
     KEY_KP_EQUAL        = 336
+
+    # Android key buttons
+    KEY_BACK            = 4
+    KEY_MENU            = 82
+    KEY_VOLUME_UP       = 24
+    KEY_VOLUME_DOWN     = 25
   )");
 }

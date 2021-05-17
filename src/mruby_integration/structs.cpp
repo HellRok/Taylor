@@ -1,4 +1,4 @@
-#include "mruby_integration/models/camera_2d.hpp"
+#include "mruby_integration/models/camera2d.hpp"
 #include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/music.hpp"

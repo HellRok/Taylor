@@ -44,9 +44,9 @@ mrb_value mrb_get_gamepad_axis_movement(mrb_state *mrb, mrb_value) {
 }
 
 void append_core_input_gamepad(mrb_state *mrb) {
-  mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_available", mrb_is_gamepad_available, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_available?", mrb_is_gamepad_available, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_name", mrb_get_gamepad_name, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_button_down", mrb_is_gamepad_button_down, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_button_down?", mrb_is_gamepad_button_down, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_button_pressed", mrb_get_gamepad_button_pressed, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_axis_count", mrb_get_gamepad_axis_count, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_axis_movement", mrb_get_gamepad_axis_movement, MRB_ARGS_REQ(2));

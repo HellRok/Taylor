@@ -57,11 +57,13 @@ void append_models_Camera2D(mrb_state *mrb) {
       def offset=(other)
         offset.x = other.x
         offset.y = other.y
+        offset
       end
 
       def target=(other)
         target.x = other.x
         target.y = other.y
+        target
       end
 
       def to_h

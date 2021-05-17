@@ -19,6 +19,7 @@ mrb_value mrb_close_window(mrb_state*, mrb_value) {
   CloseWindow();
   return mrb_nil_value();
 }
+
 mrb_value mrb_is_window_ready(mrb_state*, mrb_value) {
   return mrb_bool_value(IsWindowReady());
 }
