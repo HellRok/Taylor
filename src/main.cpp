@@ -1,3 +1,5 @@
+#include "version.hpp"
+
 #include "raylib.h"
 #include "raygui.hpp"
 #include "mruby.h"
@@ -21,6 +23,8 @@ int main(int, char **argv) {
   }
 
   mrb_state *mrb = mrb_open();
+
+  mrb_define_const(mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
 
   append_audio(mrb);
   append_core(mrb);

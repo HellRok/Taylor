@@ -78,6 +78,16 @@ def get_sounds_playing()
   1
 end
 
+# Checks whether or not a sound object is currently playing
+# @param sound [Sound]
+# @return [Boolean]
+def is_sound_playing?(sound)
+  # mrb_is_sound_playing
+  # src/mruby_integration/audio/sound.cpp
+  true
+end
+
+
 # Sets the volume of the sound object
 # @param sound [Sound]
 # @param volume [Float] a value between 0.0 and 1.0

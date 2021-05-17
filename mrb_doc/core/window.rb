@@ -72,6 +72,16 @@ def is_window_state?(flags)
   true
 end
 
+# Sets the specified states on the window, to pass in multiple you can do so like:
+#   `set_window_state(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)`
+# @param flags [Integer]
+# @return [nil]
+def set_window_state(flags)
+  # mrb_clear_window_state
+  # src/mruby_integration/core/window.cpp
+  nil
+end
+
 # Checks if the window has the FLAG_FULLSCREEN_MODE state set
 # @return [Boolean]
 def is_window_fullscreen?()

@@ -34,6 +34,15 @@ def is_music_playing?(music)
   true
 end
 
+# Updates the buffer for the specified music, you should call this every frame
+# @param music [Music]
+# @return [nil]
+def update_music_stream(music)
+  # mrb_update_music_stream
+  # src/mruby_integration/audio/music.cpp
+  nil
+end
+
 # Stops a music object from playing
 # @param music [Music]
 # @return [nil]
@@ -75,7 +84,7 @@ end
 # @param music [Music]
 # @param pitch [Float] A value between 0.0 and 1.0
 # @return [nil]
-def set_music_pitchd(music, pitch)
+def set_music_pitch(music, pitch)
   # mrb_set_music_pitch
   # src/mruby_integration/audio/music.cpp
   nil
