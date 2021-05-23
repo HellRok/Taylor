@@ -71,13 +71,11 @@ def draw_rectangle_lines(x, y, width, height, colour)
 end
 
 # Draw a rectangle outline with the specific thickness
-# @param x [Integer]
-# @param y [Integer]
-# @param width [Integer]
-# @param height [Integer]
+# @param rectangle [Rectangle]
+# @param thickness [Integer]
 # @param colour [Colour]
 # @return [nil]
-def draw_rectangle_lines_ex(x, y, width, height, thickness, colour)
+def draw_rectangle_lines_ex(rectangle, thickness, colour)
   # mrb_draw_rectangle_lines_ex
   # src/mruby_integration/shapes.cpp
   nil

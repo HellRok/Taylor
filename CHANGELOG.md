@@ -4,6 +4,7 @@
 
 - Re-word the readme to say game engine
 - Dockerfile now makes sure the release directory can be created
+- draw_rectangle_lines_ex had incorrect parameters in the documentation
 
 ## v0.0.1
 
