@@ -34,10 +34,11 @@ int main(int, char **argv) {
   append_textures(mrb);
 
   FILE *game_file = fopen(path, "r");
+
   mrb_load_file(mrb, game_file);
 
   if (mrb->exc) {
-    mrb_print_backtrace(mrb);
+    mrb_print_error(mrb);
     return 1;
   }
 
