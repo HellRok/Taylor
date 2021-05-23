@@ -195,6 +195,6 @@ end
 
 task 'docker:build' do |task|
   sh "docker build . --file Dockerfile.build --pull --tag taylor_build"
-  sh "mkdir releases"
+  sh "mkdir releases -p"
   sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./releases')},target=/app/output/ taylor_build:latest"
 end

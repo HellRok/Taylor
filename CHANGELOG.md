@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Re-word the readme to say game engine
+- Dockerfile now makes sure the release directory can be created
 
 ## v0.0.1
 
