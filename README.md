@@ -4,7 +4,7 @@
 
 ## What's this?
 
-Taylor is a game framework I've built using [mruby](http://mruby.org/) and
+Taylor is a game engine I've built using [mruby](http://mruby.org/) and
 [raylib](https://www.raylib.com/). I'm trying to build a very simple way for
 people to get into game development. This is trying to replicate the simplicity
 of QBasic but with a more of a modern approach.
