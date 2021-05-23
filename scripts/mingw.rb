@@ -10,6 +10,7 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
 
   conf.gembox "default"
 
+  conf.gem github: 'iij/mruby-dir'
   conf.gem github: 'iij/mruby-mtest'
   conf.gem github: 'hellrok/mruby-require'
 end

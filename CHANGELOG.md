@@ -6,6 +6,7 @@
 - Dockerfile now makes sure the release directory can be created
 - draw_rectangle_lines_ex had incorrect parameters in the documentation
 - Use mrb_print_error since it seems to do a better job
+- Add mrb-dir so users can easily change working directories
 
 ## v0.0.1
 
