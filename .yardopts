@@ -1,4 +1,5 @@
 --markup markdown
 mrb_doc/**/*.rb
 -
+CHANGELOG.md
 LICENSE
