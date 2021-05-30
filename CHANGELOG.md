@@ -9,6 +9,7 @@
 - Add set_window_monitor
 - Add set_window_min_size
 - Add set_window_size
+- Add get_monitor_position
 
 ## v0.0.2
 

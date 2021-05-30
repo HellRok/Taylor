@@ -164,6 +164,20 @@ mrb_value mrb_get_current_monitor(mrb_state *mrb, mrb_value) {
   return mrb_int_value(mrb, GetCurrentMonitor());
 }
 
+mrb_value mrb_get_monitor_position(mrb_state *mrb, mrb_value) {
+  mrb_int monitor;
+  mrb_get_args(mrb, "i", &monitor);
+
+  Vector2 *position = (Vector2 *)malloc(sizeof(Vector2));
+  *position = GetMonitorPosition(monitor);
+
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
+
+  setup_Vector2(mrb, obj, position, position->x, position->y);
+
+  return obj;
+}
+
 mrb_value mrb_get_monitor_width(mrb_state *mrb, mrb_value) {
   mrb_int monitor;
   mrb_get_args(mrb, "i", &monitor);
@@ -217,6 +231,7 @@ void append_core_window(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "get_screen_height", mrb_get_screen_height, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_count", mrb_get_monitor_count, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_current_monitor", mrb_get_current_monitor, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "get_monitor_position", mrb_get_monitor_position, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_width", mrb_get_monitor_width, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_height", mrb_get_monitor_height, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_window_position", mrb_get_window_position, MRB_ARGS_NONE());

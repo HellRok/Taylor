@@ -262,6 +262,15 @@ def get_current_monitor()
   0
 end
 
+# Gets the position of the specified monitor
+# @param monitor [Integer]
+# @return [Vector2]
+def get_monitor_position(monitor)
+  # mrb_get_monitor_position
+  # src/mruby_integration/core/window.cpp
+  Vector2.new(0, 0,)
+end
+
 # Gets the width of the specified monitor
 # @param monitor [Integer]
 # @return [Integer]
