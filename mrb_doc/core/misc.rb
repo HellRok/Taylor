@@ -25,3 +25,12 @@ def open_url(url)
   # src/mruby_integration/core/misc.cpp
   nil
 end
+
+# Sets the clipboard value
+# @param text [String]
+# @return [nil]
+def set_clipboard_text(text)
+  # mrb_set_clipboard_text
+  # src/mruby_integration/core/misc.cpp
+  nil
+end
