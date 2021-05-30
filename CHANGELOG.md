@@ -10,6 +10,7 @@
 - Add set_window_min_size
 - Add set_window_size
 - Add get_monitor_position
+- Add get_window_scale_dpi
 
 ## v0.0.2
 

@@ -203,6 +203,17 @@ mrb_value mrb_get_window_position(mrb_state *mrb, mrb_value) {
   return obj;
 }
 
+mrb_value mrb_get_window_scale_dpi(mrb_state *mrb, mrb_value) {
+  Vector2 *scale = (Vector2 *)malloc(sizeof(Vector2));
+  *scale = GetWindowScaleDPI();
+
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, scale));
+
+  setup_Vector2(mrb, obj, scale, scale->x, scale->y);
+
+  return obj;
+}
+
 void append_core_window(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
@@ -235,6 +246,7 @@ void append_core_window(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_width", mrb_get_monitor_width, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_height", mrb_get_monitor_height, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_window_position", mrb_get_window_position, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "get_window_scale_dpi", mrb_get_window_scale_dpi, MRB_ARGS_NONE());
 
   mrb_load_string(mrb, R"(
     FLAG_VSYNC_HINT         = 0x00000040   # Set to try enabling V-Sync on GPU
