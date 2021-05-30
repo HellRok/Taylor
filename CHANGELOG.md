@@ -4,6 +4,8 @@
 
 - Add set_window_icon
 - Add set_window_title
+- Add set_window_position
+- Add get_window_position
 
 ## v0.0.2
 

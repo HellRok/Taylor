@@ -168,4 +168,18 @@ class TestCore < MTest::Unit::TestCase
 
     close_window
   end
+
+  def test_window_position
+    init_window(10, 10, 'test_window_position')
+
+    set_window_position 10, 10
+    flush_frames(10)
+    assert_equal Vector2.new(10, 10), get_window_position
+
+    set_window_position 20, 20
+    flush_frames(10)
+    assert_equal Vector2.new(20, 20), get_window_position
+
+    close_window
+  end
 end

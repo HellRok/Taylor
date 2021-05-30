@@ -176,7 +176,7 @@ end
 # Sets the icon for the current window
 # @param image [Image]
 # @return [nil]
-def set_window_icon()
+def set_window_icon(image)
   # mrb_set_window_icon
   # src/mruby_integration/core/window.cpp
   nil
@@ -185,8 +185,18 @@ end
 # Sets the titel for the current window
 # @param title [String]
 # @return [nil]
-def set_window_title()
+def set_window_title(title)
   # mrb_set_window_title
+  # src/mruby_integration/core/window.cpp
+  nil
+end
+
+# Sets the titel for the current window
+# @param x [Integer]
+# @param y [Integer]
+# @return [nil]
+def set_window_position(x, y)
+  # mrb_set_window_position
   # src/mruby_integration/core/window.cpp
   nil
 end
@@ -215,6 +225,14 @@ def get_monitor_count()
   2
 end
 
+# Gets the id of the current monitor
+# @return [Integer]
+def get_current_monitor()
+  # mrb_get_current_monitor
+  # src/mruby_integration/core/window.cpp
+  0
+end
+
 # Gets the width of the specified monitor
 # @param monitor [Integer]
 # @return [Integer]
@@ -233,10 +251,10 @@ def get_monitor_height(monitor)
   1080
 end
 
-# Gets the id of the current monitor
-# @return [Integer]
-def get_current_monitor()
-  # mrb_get_current_monitor
+# Gets the position of the window
+# @return [Vector2]
+def get_window_position()
+  # mrb_get_window_position
   # src/mruby_integration/core/window.cpp
-  0
+  Vector2.new(10, 10)
 end
