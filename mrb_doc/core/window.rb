@@ -182,7 +182,7 @@ def set_window_icon(image)
   nil
 end
 
-# Sets the titel for the current window
+# Sets the title for the current window
 # @param title [String]
 # @return [nil]
 def set_window_title(title)
@@ -191,12 +191,21 @@ def set_window_title(title)
   nil
 end
 
-# Sets the titel for the current window
+# Sets the position for the current window
 # @param x [Integer]
 # @param y [Integer]
 # @return [nil]
 def set_window_position(x, y)
   # mrb_set_window_position
+  # src/mruby_integration/core/window.cpp
+  nil
+end
+
+# Sets the monitor for the current window
+# @param monitor [Integer]
+# @return [nil]
+def set_window_monitor(monitor)
+  # mrb_set_window_monitor
   # src/mruby_integration/core/window.cpp
   nil
 end
