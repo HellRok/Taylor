@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Add set_window_icon
+- Add set_window_title
 
 ## v0.0.2
 

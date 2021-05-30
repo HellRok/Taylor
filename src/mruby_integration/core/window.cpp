@@ -102,6 +102,15 @@ mrb_value mrb_set_window_icon(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_set_window_title(mrb_state *mrb, mrb_value) {
+  char* title;
+
+  mrb_get_args(mrb, "z", &title);
+
+  SetWindowTitle(title);
+  return mrb_nil_value();
+}
+
 mrb_value mrb_get_screen_width(mrb_state *mrb, mrb_value) {
   return mrb_int_value(mrb, GetScreenWidth());
 }
@@ -151,6 +160,7 @@ void append_core_window(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "minimise_window", mrb_minimise_window, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "restore_window", mrb_restore_window, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "set_window_icon", mrb_set_window_icon, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "set_window_title", mrb_set_window_title, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_screen_width", mrb_get_screen_width, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_screen_height", mrb_get_screen_height, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_count", mrb_get_monitor_count, MRB_ARGS_NONE());

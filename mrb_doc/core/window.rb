@@ -182,6 +182,15 @@ def set_window_icon()
   nil
 end
 
+# Sets the titel for the current window
+# @param title [String]
+# @return [nil]
+def set_window_title()
+  # mrb_set_window_title
+  # src/mruby_integration/core/window.cpp
+  nil
+end
+
 # Gets the width of the window
 # @return [Integer]
 def get_screen_width()
