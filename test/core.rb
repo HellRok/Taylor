@@ -182,4 +182,19 @@ class TestCore < MTest::Unit::TestCase
 
     close_window
   end
+
+  def test_set_window_size
+    init_window(32, 24, 'test_set_window_size')
+
+    assert_equal 32, get_screen_width
+    assert_equal 24, get_screen_height
+
+    set_window_size 64, 48
+
+    flush_frame
+    assert_equal 64, get_screen_width
+    assert_equal 48, get_screen_height
+
+    close_window
+  end
 end
