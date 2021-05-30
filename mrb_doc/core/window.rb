@@ -173,6 +173,15 @@ def restore_window()
   nil
 end
 
+# Sets the icon for the current window
+# @param image [Image]
+# @return [nil]
+def set_window_icon()
+  # mrb_set_window_icon
+  # src/mruby_integration/core/window.cpp
+  nil
+end
+
 # Gets the width of the window
 # @return [Integer]
 def get_screen_width()

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add set_window_icon
 
 ## v0.0.2
 

@@ -2,6 +2,8 @@
 #include "mruby.h"
 #include "mruby/compile.h"
 
+#include "mruby_integration/struct_types.hpp"
+
 mrb_value mrb_init_window(mrb_state *mrb, mrb_value) {
   mrb_int width, height;
   char* title;
@@ -91,6 +93,15 @@ mrb_value mrb_restore_window(mrb_state*, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_set_window_icon(mrb_state *mrb, mrb_value) {
+  Image *image;
+
+  mrb_get_args(mrb, "d", &image, &Image_type);
+
+  SetWindowIcon(*image);
+  return mrb_nil_value();
+}
+
 mrb_value mrb_get_screen_width(mrb_state *mrb, mrb_value) {
   return mrb_int_value(mrb, GetScreenWidth());
 }
@@ -125,7 +136,6 @@ void append_core_window(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "close_window", mrb_close_window, MRB_ARGS_NONE());
-  mrb_define_method(mrb, mrb->kernel_module, "close_window", mrb_close_window, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "is_window_ready?", mrb_is_window_ready, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "is_window_fullscreen?", mrb_is_window_fullscreen, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "is_window_hidden?", mrb_is_window_hidden, MRB_ARGS_REQ(1));
@@ -140,6 +150,7 @@ void append_core_window(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "maximise_window", mrb_maximise_window, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "minimise_window", mrb_minimise_window, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "restore_window", mrb_restore_window, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "set_window_icon", mrb_set_window_icon, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_screen_width", mrb_get_screen_width, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_screen_height", mrb_get_screen_height, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_count", mrb_get_monitor_count, MRB_ARGS_NONE());
