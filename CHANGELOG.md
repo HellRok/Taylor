@@ -12,6 +12,7 @@
 - Add get_monitor_position
 - Add get_window_scale_dpi
 - Add set_clipboard_text
+- Add get_clipboard_text
 
 ## v0.0.2
 

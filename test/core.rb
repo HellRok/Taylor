@@ -197,4 +197,13 @@ class TestCore < MTest::Unit::TestCase
 
     close_window
   end
+
+  def test_clipboard
+    init_window(32, 24, 'test_clipboard')
+
+    set_clipboard_text('TEST STRING')
+    assert_equal 'TEST STRING', get_clipboard_text
+
+    close_window
+  end
 end
