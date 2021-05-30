@@ -210,6 +210,16 @@ def set_window_monitor(monitor)
   nil
 end
 
+# Sets the minimum allowed size for the current window
+# @param width [Integer]
+# @param height [Integer]
+# @return [nil]
+def set_window_min_size(width, height)
+  # mrb_set_window_min_size
+  # src/mruby_integration/core/window.cpp
+  nil
+end
+
 # Gets the width of the window
 # @return [Integer]
 def get_screen_width()
