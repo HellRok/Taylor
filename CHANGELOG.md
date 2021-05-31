@@ -13,6 +13,7 @@
 - Add get_window_scale_dpi
 - Add set_clipboard_text
 - Add get_clipboard_text
+- Add show_cursor
 
 ## v0.0.2
 
