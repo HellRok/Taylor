@@ -21,3 +21,11 @@ def is_cursor_hidden?()
   # src/mruby_integration/core/cursor.cpp
   true
 end
+
+# Enables and shows the cursor
+# @return [nil]
+def enable_cursor
+  # mrb_enable_cursor
+  # src/mruby_integration/core/cursor.cpp
+  nil
+end
