@@ -18,6 +18,7 @@
 - Add is_cursor_hidden?
 - Add enable_cursor
 - Add disable_cursor
+- Add is_cursor_on_screen?
 
 ## v0.0.2
 
