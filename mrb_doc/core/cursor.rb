@@ -13,3 +13,11 @@ def hide_cursor()
   # src/mruby_integration/core/cursor.cpp
   nil
 end
+
+# Checks if the cursor is hidden
+# @return [Boolean]
+def is_cursor_hidden?()
+  # mrb_is_cursor_hidden
+  # src/mruby_integration/core/cursor.cpp
+  true
+end
