@@ -29,3 +29,11 @@ def enable_cursor
   # src/mruby_integration/core/cursor.cpp
   nil
 end
+
+# Disables the cursor and hides it
+# @return [nil]
+def disable_cursor
+  # mrb_disable_cursor
+  # src/mruby_integration/core/cursor.cpp
+  nil
+end

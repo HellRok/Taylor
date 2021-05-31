@@ -17,6 +17,7 @@
 - Add hide_cursor
 - Add is_cursor_hidden?
 - Add enable_cursor
+- Add disable_cursor
 
 ## v0.0.2
 
