@@ -14,6 +14,7 @@
 - Add set_clipboard_text
 - Add get_clipboard_text
 - Add show_cursor
+- Add hide_cursor
 
 ## v0.0.2
 
