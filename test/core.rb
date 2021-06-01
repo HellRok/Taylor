@@ -44,6 +44,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_mode2D
     init_window(10, 10, 'test_mode2D')
+    set_target_fps 5
     rectangle = Rectangle.new(2, 2, 6, 6)
     camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 1)
 
@@ -71,8 +72,12 @@ class TestCore < MTest::Unit::TestCase
   end
 
   def test_set_window_state_fullscreen
+    init_window(10, 10, 'test_set_window_state_fullscreen')
+    set_target_fps 5
+
     current_monitor = get_current_monitor
-    init_window(get_monitor_width(current_monitor), get_monitor_height(current_monitor), 'test_set_window_state_fullscreen')
+    set_window_size get_monitor_width(current_monitor), get_monitor_height(current_monitor)
+    flush_frame
 
     assert_false is_window_state?(FLAG_FULLSCREEN_MODE)
 
@@ -92,6 +97,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_set_window_state_hidden
     init_window(10, 10, 'test_set_window_state_hidden')
+    set_target_fps 5
 
     assert_false is_window_state?(FLAG_WINDOW_HIDDEN)
 
@@ -114,10 +120,10 @@ class TestCore < MTest::Unit::TestCase
 
     assert_false is_window_state?(FLAG_WINDOW_MINIMISED)
 
-    set_target_fps 60
+    set_target_fps 5
     set_window_state(FLAG_WINDOW_MINIMISED)
     # Need to actually wait for the window to minimise
-    flush_frames(10)
+    flush_frame
 
     assert_true is_window_state?(FLAG_WINDOW_MINIMISED)
     assert_true is_window_minimised?
@@ -146,6 +152,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_set_window_state_other
     init_window(10, 10, 'test_set_window_state_other')
+    set_target_fps 5
 
     [
       FLAG_WINDOW_ALWAYS_RUN,
@@ -153,8 +160,6 @@ class TestCore < MTest::Unit::TestCase
       FLAG_WINDOW_TOPMOST,
       FLAG_WINDOW_UNDECORATED,
     ].each do |state|
-      assert_false is_window_state?(state)
-
       set_window_state(state)
       flush_frame
 
@@ -171,21 +176,24 @@ class TestCore < MTest::Unit::TestCase
 
   def test_window_position
     init_window(10, 10, 'test_window_position')
+    set_target_fps 5
 
-    set_window_position 10, 10
-    flush_frames(10)
-    assert_equal Vector2.new(10, 10), get_window_position
+    set_window_position 50, 50
+    flush_frame
+    assert_equal Vector2.new(50, 50), get_window_position
 
-    set_window_position 20, 20
-    flush_frames(10)
-    assert_equal Vector2.new(20, 20), get_window_position
+    set_window_position 70, 70
+    flush_frame
+    assert_equal Vector2.new(70, 70), get_window_position
 
     close_window
   end
 
   def test_set_window_size
     init_window(32, 24, 'test_set_window_size')
+    set_target_fps 5
 
+    flush_frame
     assert_equal 32, get_screen_width
     assert_equal 24, get_screen_height
 

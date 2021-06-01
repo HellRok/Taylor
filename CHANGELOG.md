@@ -19,6 +19,10 @@
 - Add enable_cursor
 - Add disable_cursor
 - Add is_cursor_on_screen?
+- Add get_mouse_x
+- Add get_mouse_y
+- Add begin_scissor_mode
+- Add end_scissor_mode
 
 ## v0.0.2
 

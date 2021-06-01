@@ -19,6 +19,14 @@ mrb_value mrb_is_mouse_button_down(mrb_state *mrb, mrb_value) {
   return mrb_bool_value(IsMouseButtonDown(button));
 }
 
+mrb_value mrb_get_mouse_x(mrb_state *mrb, mrb_value) {
+  return mrb_int_value(mrb, GetMouseX());
+}
+
+mrb_value mrb_get_mouse_y(mrb_state *mrb, mrb_value) {
+  return mrb_int_value(mrb, GetMouseY());
+}
+
 mrb_value mrb_get_mouse_position(mrb_state *mrb, mrb_value) {
   Vector2 *position = (Vector2 *)malloc(sizeof(Vector2));
   *position = GetMousePosition();
@@ -37,6 +45,8 @@ mrb_value mrb_get_mouse_wheel_move(mrb_state *mrb, mrb_value) {
 void append_core_input_mouse(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "is_mouse_button_pressed?", mrb_is_mouse_button_pressed, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "is_mouse_button_down?", mrb_is_mouse_button_down, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "get_mouse_x", mrb_get_mouse_x, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "get_mouse_y", mrb_get_mouse_y, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_mouse_position", mrb_get_mouse_position, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_mouse_wheel_move", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
 
