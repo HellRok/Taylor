@@ -23,6 +23,7 @@
 - Add get_mouse_y
 - Add begin_scissor_mode
 - Add end_scissor_mode
+- Add get_time
 
 ## v0.0.2
 
