@@ -24,6 +24,7 @@
 - Add begin_scissor_mode
 - Add end_scissor_mode
 - Add get_time
+- Improve the release body
 
 ## v0.0.2
 

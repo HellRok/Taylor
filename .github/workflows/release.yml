@@ -16,10 +16,11 @@ jobs:
       - name: "Build"
         run: |
           rake docker:build
+          ./scripts/generate_release_body.rb > release-body.md
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: ncipollo/release-action@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          files: |
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          bodyFile: release-body.md
+          artifacts: |
             ./releases/*.zip
