@@ -5,6 +5,7 @@
 - Add take_screenshot
 - Set the current working directory to the location of the script called instead
   of the taylor binary
+- Add files_dropped?
 
 ## v0.0.3
 
