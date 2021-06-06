@@ -35,6 +35,8 @@ int main(int, char **argv) {
 
   FILE *game_file = fopen(path, "r");
 
+  ChangeDirectory(GetDirectoryPath(path));
+
   mrb_load_file(mrb, game_file);
 
   if (mrb->exc) {
