@@ -14,6 +14,5 @@ of QBasic but with a more of a modern approach.
 1. Get the test running on GitHub actions, this is tricky due to requiring
    OpenGL
 2. Finish mapping the rest of raylib, so far I think I've done about 30%
-3. Backtraces from mruby don't work, I think I need to compile it specially
-4. Allow users to compile their ruby code into a single executable
-5. Build an actual game with this
+3. Allow users to compile their ruby code into a single executable
+4. Build an actual game with this
