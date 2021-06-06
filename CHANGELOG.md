@@ -7,6 +7,7 @@
   of the taylor binary
 - Add files_dropped?
 - Backtraces are actually working now
+- Add get_dropped_files
 
 ## v0.0.3
 
