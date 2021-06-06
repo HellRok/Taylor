@@ -1,3 +1,15 @@
+# You'll want to call this function after you've called `end_drawing` or you'll
+# find that you don't get everything that you think you've drawn.
+#
+# The extension of `filename` will dictate how the screenshot is saved.
+# @param filename [String]
+# @return [nil]
+def take_screenshot(filename)
+  # mrb_take_screenshot
+  # src/mruby_integration/core/misc.cpp
+  nil
+end
+
 # Enable specific config flags, to pass in multiple you can do so like:
 #   `set_config_flags(FLAG_WINDOW_TOPMOST | FLAG_WINDOW_RESIZABLE)`
 # @param flags [Integer]

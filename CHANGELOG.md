@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add take_screenshot
 
 ## v0.0.3
 
