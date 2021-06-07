@@ -17,6 +17,10 @@
 - Add is_gamepad_button_released?
 - Add is_gamepad_button_up?
 - Add set_gamepad_mappings
+- Add set_mouse_position
+- Add set_mouse_offset
+- Add set_mouse_scale
+- Add set_mouse_cursor
 
 ## v0.0.3
 
