@@ -8,6 +8,11 @@
 - Add files_dropped?
 - Backtraces are actually working now
 - Add get_dropped_files
+- Add is_key_released?
+- Add is_key_up?
+- Add set_exit_key
+- Add get_key_pressed
+- Add get_char_pressed
 
 ## v0.0.3
 

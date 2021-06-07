@@ -221,6 +221,15 @@ KEY_VOLUME_UP       = 24
 # Android volume_down
 KEY_VOLUME_DOWN     = 25
 
+# Is the specified key pressed?
+# @param key [Integer]
+# @return [Boolean]
+def is_key_pressed?(key)
+  # mrb_is_key_pressed
+  # src/mruby_integration/core/input/keyboard.cpp
+  True
+end
+
 # Is the specified key down?
 # @param key [Integer]
 # @return [Boolean]
@@ -230,11 +239,45 @@ def is_key_down?(key)
   True
 end
 
-# Is the specified key pressed?
+# Is the specified key released?
 # @param key [Integer]
 # @return [Boolean]
-def is_key_pressed?(key)
-  # mrb_is_key_pressed
+def is_key_released?(key)
+  # mrb_is_key_released
   # src/mruby_integration/core/input/keyboard.cpp
-  True
+  False
+end
+
+# Is the specified key not down?
+# @param key [Integer]
+# @return [Boolean]
+def is_key_up?(key)
+  # mrb_is_key_up
+  # src/mruby_integration/core/input/keyboard.cpp
+  False
+end
+
+# Sets the key for should_window_close? to listen for
+# @param key [Integer]
+# @return [nil]
+def set_exit_key(key)
+  # mrb_set_exit_key
+  # src/mruby_integration/core/input/keyboard.cpp
+  nil
+end
+
+# Returns the keycode for the pressed key, call it multiple times for queued keys
+# @return [Integer]
+def get_key_pressed
+  # mrb_get_key_pressed
+  # src/mruby_integration/core/input/keyboard.cpp
+  64
+end
+
+# Returns the charcode for the pressed key, call it multiple times for queued keys
+# @return [Integer]
+def get_char_pressed
+  # mrb_getchar_pressed
+  # src/mruby_integration/core/input/keyboard.cpp
+  64
 end
