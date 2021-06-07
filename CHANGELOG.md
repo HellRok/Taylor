@@ -13,6 +13,10 @@
 - Add set_exit_key
 - Add get_key_pressed
 - Add get_char_pressed
+- Add is_gamepad_button_pressed?
+- Add is_gamepad_button_released?
+- Add is_gamepad_button_up?
+- Add set_gamepad_mappings
 
 ## v0.0.3
 

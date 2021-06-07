@@ -18,11 +18,32 @@ mrb_value mrb_get_gamepad_name(mrb_state *mrb, mrb_value) {
   return mrb_str_new_cstr(mrb, name);
 }
 
+mrb_value mrb_is_gamepad_button_pressed(mrb_state *mrb, mrb_value) {
+  mrb_int index, button;
+  mrb_get_args(mrb, "ii", &index, &button);
+
+  return mrb_bool_value(IsGamepadButtonPressed(index, button));
+}
+
 mrb_value mrb_is_gamepad_button_down(mrb_state *mrb, mrb_value) {
   mrb_int index, button;
   mrb_get_args(mrb, "ii", &index, &button);
 
   return mrb_bool_value(IsGamepadButtonDown(index, button));
+}
+
+mrb_value mrb_is_gamepad_button_released(mrb_state *mrb, mrb_value) {
+  mrb_int index, button;
+  mrb_get_args(mrb, "ii", &index, &button);
+
+  return mrb_bool_value(IsGamepadButtonReleased(index, button));
+}
+
+mrb_value mrb_is_gamepad_button_up(mrb_state *mrb, mrb_value) {
+  mrb_int index, button;
+  mrb_get_args(mrb, "ii", &index, &button);
+
+  return mrb_bool_value(IsGamepadButtonUp(index, button));
 }
 
 mrb_value mrb_get_gamepad_button_pressed(mrb_state *mrb, mrb_value) {
@@ -43,13 +64,24 @@ mrb_value mrb_get_gamepad_axis_movement(mrb_state *mrb, mrb_value) {
   return mrb_float_value(mrb, GetGamepadAxisMovement(index, axis));
 }
 
+mrb_value mrb_set_gamepad_mappings(mrb_state *mrb, mrb_value) {
+  char *mappings;
+  mrb_get_args(mrb, "z", &mappings);
+
+  return mrb_int_value(mrb, SetGamepadMappings(mappings));
+}
+
 void append_core_input_gamepad(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_available?", mrb_is_gamepad_available, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_name", mrb_get_gamepad_name, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_button_pressed?", mrb_is_gamepad_button_pressed, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_button_down?", mrb_is_gamepad_button_down, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_button_released?", mrb_is_gamepad_button_released, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "is_gamepad_button_up?", mrb_is_gamepad_button_up, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_button_pressed", mrb_get_gamepad_button_pressed, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_axis_count", mrb_get_gamepad_axis_count, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_gamepad_axis_movement", mrb_get_gamepad_axis_movement, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "set_gamepad_mappings", mrb_set_gamepad_mappings, MRB_ARGS_REQ(1));
 
   mrb_load_string(mrb, R"(
     GAMEPAD_BUTTON_UNKNOWN = 0

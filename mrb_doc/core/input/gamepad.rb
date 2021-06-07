@@ -77,6 +77,16 @@ def get_gamepad_name(index)
   'Xbox Controller'
 end
 
+# Has the specified button been pressed on the specific gamepad?
+# @param index [Integer]
+# @param button [Integer]
+# @return [Boolean]
+def is_gamepad_button_pressed?(index, button)
+  # mrb_is_gamepad_button_pressed
+  # src/mruby_integration/core/input/gamepad.cpp
+  true
+end
+
 # Is the specified button down on the specific gamepad?
 # @param index [Integer]
 # @param button [Integer]
@@ -84,7 +94,27 @@ end
 def is_gamepad_button_down?(index, button)
   # mrb_is_gamepad_button_down
   # src/mruby_integration/core/input/gamepad.cpp
-  True
+  true
+end
+
+# Has the specified button been released on the specific gamepad?
+# @param index [Integer]
+# @param button [Integer]
+# @return [Boolean]
+def is_gamepad_button_released?(index, button)
+  # mrb_is_gamepad_button_released
+  # src/mruby_integration/core/input/gamepad.cpp
+  false
+end
+
+# Is the specified button not being pressed on the specific gamepad?
+# @param index [Integer]
+# @param button [Integer]
+# @return [Boolean]
+def is_gamepad_button_up?(index, button)
+  # mrb_is_gamepad_button_up
+  # src/mruby_integration/core/input/gamepad.cpp
+  true
 end
 
 # Returns the last pressed gamepad button
@@ -112,4 +142,14 @@ def get_gamepad_axis_movement(index, axis)
   # mrb_get_gamepad_axis_movement
   # src/mruby_integration/core/input/gamepad.cpp
   0.5
+end
+
+# Setup gamepad mappings using the
+# [SDL_GameControllerDB](https://github.com/gabomdq/SDL_GameControllerDB) format
+# @param mappings [String]
+# @return [Integer]
+def set_gamepad_mappings(mappings)
+  # mrb_set_gamepad_mappings
+  # src/mruby_integration/core/input/gamepad.cpp
+  1
 end
