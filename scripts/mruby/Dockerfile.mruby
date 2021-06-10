@@ -4,13 +4,13 @@ WORKDIR /app
 
 RUN git clone --branch 3.0.0 --depth 1 https://github.com/mruby/mruby.git .
 
-COPY ./scripts/*.rb /app/build_config/
+COPY ./scripts/mruby/*.rb /app/build_config/
 
 RUN \
   MRUBY_CONFIG=linux rake && \
   MRUBY_CONFIG=mingw rake && \
   MRUBY_CONFIG=darwin rake
 
-COPY ./scripts/copy_mruby.sh /app/copy_mruby.sh
+COPY ./scripts/mruby/copy_mruby.sh /app/copy_mruby.sh
 
 CMD ./copy_mruby.sh

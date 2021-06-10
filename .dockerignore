@@ -1,2 +1,4 @@
 Dockerfile*
 .git
+build
+dist

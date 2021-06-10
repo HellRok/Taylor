@@ -70,11 +70,11 @@ namespace :windows do
     objects_folder = "build/windows/debug"
     cxx = "x86_64-w64-mingw32-g++"
     platform = "windows"
-    ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -l raylib #{ldflags}"
+    ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -lwinmm -l raylib #{ldflags}"
     cxxflags += " -mwindows -static-libstdc++"
     includes += " -I ./vendor/windows/raylib/include/"
 
-    static_links = "#{static_links} ./vendor/windows/libmruby.a ./vendor/windows/raylib/lib/libraylibdll.a ./vendor/windows/raylib/lib/libraylib.a"
+    static_links = "#{static_links} ./vendor/windows/libmruby.a ./vendor/windows/raylib/lib/libraylib.a"
   end
 
   task :build => "windows:setup_variables"
@@ -189,8 +189,12 @@ task :release => supported_platforms.map { |platform| "#{platform}:release:build
 task :all => supported_platforms.flat_map { |platform| ["#{platform}:build", "#{platform}:release:build"] }
 
 task 'mruby:build' do |task|
-  sh "docker build . --file Dockerfile.mruby --pull --tag taylor_mruby"
+  sh "docker build . --file ./scripts/mruby/Dockerfile.mruby --pull --tag taylor_mruby"
   sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./vendor')},target=/app/output/ taylor_mruby:latest"
+end
+
+task 'raylib:build' do |task|
+  sh "DOCKER_BUILDKIT=1 docker build --output ./vendor/ . --file ./scripts/raylib/Dockerfile.raylib --pull --tag taylor_raylib --progress plain"
 end
 
 task 'docker:build' do |task|

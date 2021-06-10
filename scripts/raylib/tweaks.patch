@@ -1,0 +1,36 @@
+diff --git a/src/Makefile b/src/Makefile
+index a4a943d6..1023feed 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -229,6 +229,15 @@ CC = gcc
+ AR = ar
+ 
+ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
++    ifeq ($(CROSS),MINGW)
++        CC = x86_64-w64-mingw32-gcc
++        AR = x86_64-w64-mingw32-ar
++        CFLAGS += -static-libgcc -lopengl32 -lgdi32 -lwinmm
++    endif
++    ifeq ($(CROSS),OSX)
++      CC = x86_64-apple-darwin19-clang
++      CFLAGS = -ferror-limit=99999 -compatibility_version $(RAYLIB_API_VERSION) -current_version $(RAYLIB_VERSION) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
++    endif
+     ifeq ($(PLATFORM_OS),OSX)
+         # OSX default compiler
+         CC = clang
+diff --git a/src/config.h b/src/config.h
+index 99cb1d48..f6236291 100644
+--- a/src/config.h
++++ b/src/config.h
+@@ -122,9 +122,9 @@
+ //------------------------------------------------------------------------------------
+ // Selecte desired fileformats to be supported for image data loading
+ #define SUPPORT_FILEFORMAT_PNG      1
+-//#define SUPPORT_FILEFORMAT_BMP      1
++#define SUPPORT_FILEFORMAT_BMP      1
+ //#define SUPPORT_FILEFORMAT_TGA      1
+-//#define SUPPORT_FILEFORMAT_JPG      1
++#define SUPPORT_FILEFORMAT_JPG      1
+ #define SUPPORT_FILEFORMAT_GIF      1
+ //#define SUPPORT_FILEFORMAT_PSD      1
+ #define SUPPORT_FILEFORMAT_DDS      1

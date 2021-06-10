@@ -22,6 +22,8 @@
 - Add set_mouse_scale
 - Add set_mouse_cursor
 - Add load_image
+- Compile raylib with jpg support
+- Refactor windows build to not need raylib.dll
 
 ## v0.0.3
 
