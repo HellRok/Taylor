@@ -21,6 +21,7 @@
 - Add set_mouse_offset
 - Add set_mouse_scale
 - Add set_mouse_cursor
+- Add load_image
 
 ## v0.0.3
 

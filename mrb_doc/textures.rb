@@ -1,3 +1,12 @@
+# Loads an image from a file
+# @param path [String]
+# @return [Image]
+def load_image(path)
+  # mrb_load_image
+  # src/mruby_integration/textures.cpp
+  Image.new
+end
+
 # Loads a texture from a file
 # @param path [String]
 # @return [Texture2D]
