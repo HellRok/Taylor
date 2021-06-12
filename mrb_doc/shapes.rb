@@ -80,6 +80,19 @@ def draw_line_bezier_quad(start, stop, control, thickness, colour)
   nil
 end
 
+# I honestly don't know how this method is supposed to work, I thought I had
+# bugs in my code but reproducing it in plain C++ causes it to do the same
+# things. As far as I can tell it just draws a line from 0, 0 to the first
+# vector and nothing else.
+# @param vectors [Array<Vector2>]
+# @param colour [Colour]
+# @return [nil]
+def draw_line_strip(vectors, colour)
+  # mrb_draw_line_strips
+  # src/mruby_integration/shapes.cpp
+  nil
+end
+
 # Draw a circle
 # @param x [Integer]
 # @param y [Integer]

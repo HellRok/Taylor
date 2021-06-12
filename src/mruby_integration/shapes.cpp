@@ -1,5 +1,7 @@
 #include "raylib.h"
 #include "mruby.h"
+#include "mruby/array.h"
+#include "mruby/data.h"
 
 #include "mruby_integration/struct_types.hpp"
 
@@ -73,6 +75,24 @@ mrb_value mrb_draw_line_bezier_quad(mrb_state *mrb, mrb_value) {
   mrb_get_args(mrb, "dddfd", &start, &Vector2_type, &end, &Vector2_type, &control, &Vector2_type, &thickness, &colour, &Colour_type);
 
   DrawLineBezierQuad(*start, *end, *control, thickness, *colour);
+  return mrb_nil_value();
+}
+
+mrb_value mrb_draw_line_strip(mrb_state *mrb, mrb_value) {
+  mrb_value vectors;
+  Color *colour;
+
+  mrb_get_args(mrb, "Ad", &vectors, &colour, &Colour_type);
+
+  mrb_int array_length = RARRAY_LEN(vectors);
+
+  Vector2 *raw_vectors[array_length];
+
+  for(mrb_int i = 0; i < array_length; i++) {
+    raw_vectors[i] = DATA_GET_PTR(mrb, mrb_ary_ref(mrb, vectors, i) , &Vector2_type, Vector2);
+  }
+
+  DrawLineStrip(*raw_vectors, array_length, *colour);
   return mrb_nil_value();
 }
 
@@ -167,6 +187,7 @@ void append_shapes(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "draw_line_ex", mrb_draw_line_ex, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_line_bezier", mrb_draw_line_bezier, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_line_bezier_quad", mrb_draw_line_bezier_quad, MRB_ARGS_REQ(5));
+  mrb_define_method(mrb, mrb->kernel_module, "draw_line_strip", mrb_draw_line_strip, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle", mrb_draw_circle, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle_v", mrb_draw_circle_v, MRB_ARGS_REQ(3));
