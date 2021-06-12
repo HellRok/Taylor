@@ -55,6 +55,31 @@ def draw_line_ex(start, stop, thickness, colour)
   nil
 end
 
+# Draw a bezier curve between the start and end points using Vector2s and specified thickness
+# @param start [Vector2]
+# @param stop [Vector2]
+# @param thickness [Float]
+# @param colour [Colour]
+# @return [nil]
+def draw_line_bezier(start, stop, thickness, colour)
+  # mrb_draw_line_bezier
+  # src/mruby_integration/shapes.cpp
+  nil
+end
+
+# Draw a bezier curve between the start and end points passing through the control using Vector2s and specified thickness
+# @param start [Vector2]
+# @param stop [Vector2]
+# @param control [Vector2]
+# @param thickness [Float]
+# @param colour [Colour]
+# @return [nil]
+def draw_line_bezier_quad(start, stop, control, thickness, colour)
+  # mrb_draw_line_bezier_quad
+  # src/mruby_integration/shapes.cpp
+  nil
+end
+
 # Draw a circle
 # @param x [Integer]
 # @param y [Integer]

@@ -54,6 +54,28 @@ mrb_value mrb_draw_line_ex(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_draw_line_bezier(mrb_state *mrb, mrb_value) {
+  Vector2 *start, *end;
+  mrb_float thickness;
+  Color *colour;
+
+  mrb_get_args(mrb, "ddfd", &start, &Vector2_type, &end, &Vector2_type, &thickness, &colour, &Colour_type);
+
+  DrawLineBezier(*start, *end, thickness, *colour);
+  return mrb_nil_value();
+}
+
+mrb_value mrb_draw_line_bezier_quad(mrb_state *mrb, mrb_value) {
+  Vector2 *start, *end, *control;
+  mrb_float thickness;
+  Color *colour;
+
+  mrb_get_args(mrb, "dddfd", &start, &Vector2_type, &end, &Vector2_type, &control, &Vector2_type, &thickness, &colour, &Colour_type);
+
+  DrawLineBezierQuad(*start, *end, *control, thickness, *colour);
+  return mrb_nil_value();
+}
+
 mrb_value mrb_draw_circle(mrb_state *mrb, mrb_value) {
   mrb_int x, y;
   mrb_float radius;
@@ -143,6 +165,8 @@ void append_shapes(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "draw_line", mrb_draw_line, MRB_ARGS_REQ(5));
   mrb_define_method(mrb, mrb->kernel_module, "draw_line_v", mrb_draw_line_v, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "draw_line_ex", mrb_draw_line_ex, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, mrb->kernel_module, "draw_line_bezier", mrb_draw_line_bezier, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, mrb->kernel_module, "draw_line_bezier_quad", mrb_draw_line_bezier_quad, MRB_ARGS_REQ(5));
 
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle", mrb_draw_circle, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle_v", mrb_draw_circle_v, MRB_ARGS_REQ(3));

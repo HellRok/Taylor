@@ -28,6 +28,8 @@
 - Add draw_pixel_v
 - Add draw_line_v
 - Add draw_line_ex
+- Add draw_line_bezier
+- Add draw_line_bezier_quad
 
 ## v0.0.3
 
