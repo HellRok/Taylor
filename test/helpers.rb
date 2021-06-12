@@ -22,6 +22,8 @@ def print_colour_data(data)
         map << 'b'
       when PURPLE
         map << 'p'
+      when VIOLET
+        map << 'v'
       else
         map << '?'
       end

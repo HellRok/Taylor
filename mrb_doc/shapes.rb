@@ -1,3 +1,14 @@
+# Draw a pixel
+# @param x [Integer]
+# @param y [Integer]
+# @param colour [Colour]
+# @return [nil]
+def draw_pixel(x, y, colour)
+  # mrb_draw_pixel
+  # src/mruby_integration/shapes.cpp
+  nil
+end
+
 # Draw a line between the start and end points
 # @param start_x [Integer]
 # @param start_y [Integer]
