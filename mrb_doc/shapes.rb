@@ -43,6 +43,18 @@ def draw_line_v(start, stop, colour)
   nil
 end
 
+# Draw a line between the start and end points using Vector2s and specified thickness
+# @param start [Vector2]
+# @param stop [Vector2]
+# @param thickness [Float]
+# @param colour [Colour]
+# @return [nil]
+def draw_line_ex(start, stop, thickness, colour)
+  # mrb_draw_line_ex
+  # src/mruby_integration/shapes.cpp
+  nil
+end
+
 # Draw a circle
 # @param x [Integer]
 # @param y [Integer]

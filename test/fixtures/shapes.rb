@@ -32,6 +32,23 @@ def fixture_draw_line
   ]
 end
 
+def fixture_draw_line_ex
+  w = RAYWHITE
+  g = GREEN
+  [
+    g, g, g, w, w, w, w, w, w, w,
+    g, g, g, g, w, w, w, w, w, w,
+    g, g, g, g, g, w, w, w, w, w,
+    w, g, g, g, g, g, w, w, w, w,
+    w, w, g, g, g, g, g, w, w, w,
+    w, w, w, g, g, g, g, g, w, w,
+    w, w, w, w, g, g, g, g, g, w,
+    w, w, w, w, w, g, g, g, g, g,
+    w, w, w, w, w, w, g, g, g, g,
+    w, w, w, w, w, w, w, g, g, g,
+  ]
+end
+
 def fixture_draw_circle
   w = RAYWHITE
   p = PURPLE

@@ -27,6 +27,7 @@
 - Add draw_pixel
 - Add draw_pixel_v
 - Add draw_line_v
+- Add draw_line_ex
 
 ## v0.0.3
 
