@@ -1,20 +1,20 @@
 set_trace_log_level 5
 
-require './test/mtest_extensions'
-require './test/helpers'
+require './mtest_extensions'
+require './helpers'
 
-require './test/fixtures/core'
-require './test/fixtures/shapes'
+require './fixtures/core'
+require './fixtures/shapes'
 
-require './test/core'
-require './test/shapes'
-require './test/models/camera2d'
-require './test/models/colour'
-require './test/models/image'
-require './test/models/music'
-require './test/models/rectangle'
-require './test/models/sound'
-require './test/models/texture2d'
-require './test/models/vector2'
+require './core'
+require './shapes'
+require './models/camera2d'
+require './models/colour'
+require './models/image'
+require './models/music'
+require './models/rectangle'
+require './models/sound'
+require './models/texture2d'
+require './models/vector2'
 
 MTest::Unit.new.run
