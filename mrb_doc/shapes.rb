@@ -9,6 +9,16 @@ def draw_pixel(x, y, colour)
   nil
 end
 
+# Draw a pixel using a Vector2
+# @param position [Vector2]
+# @param colour [Colour]
+# @return [nil]
+def draw_pixel_v(position, colour)
+  # mrb_draw_pixel_v
+  # src/mruby_integration/shapes.cpp
+  nil
+end
+
 # Draw a line between the start and end points
 # @param start_x [Integer]
 # @param start_y [Integer]

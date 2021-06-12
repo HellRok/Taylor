@@ -25,6 +25,7 @@
 - Compile raylib with jpg support
 - Refactor windows build to not need raylib.dll
 - Add draw_pixel
+- Add draw_pixel_v
 
 ## v0.0.3
 

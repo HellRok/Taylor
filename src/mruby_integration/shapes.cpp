@@ -13,6 +13,16 @@ mrb_value mrb_draw_pixel(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_draw_pixel_v(mrb_state *mrb, mrb_value) {
+  Vector2 *vector;
+  Color *colour;
+
+  mrb_get_args(mrb, "dd", &vector, &Vector2_type, &colour, &Colour_type);
+
+  DrawPixelV(*vector, *colour);
+  return mrb_nil_value();
+}
+
 mrb_value mrb_draw_line(mrb_state *mrb, mrb_value) {
   mrb_int start_x, start_y, end_x, end_y;
   Color *colour;
@@ -107,6 +117,7 @@ mrb_value mrb_check_collision_point_rec(mrb_state *mrb, mrb_value) {
 
 void append_shapes(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "draw_pixel", mrb_draw_pixel, MRB_ARGS_REQ(3));
+  mrb_define_method(mrb, mrb->kernel_module, "draw_pixel_v", mrb_draw_pixel_v, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "draw_line", mrb_draw_line, MRB_ARGS_REQ(5));
 
