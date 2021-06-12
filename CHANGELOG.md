@@ -26,6 +26,7 @@
 - Refactor windows build to not need raylib.dll
 - Add draw_pixel
 - Add draw_pixel_v
+- Add draw_line_v
 
 ## v0.0.3
 

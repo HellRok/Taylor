@@ -33,6 +33,16 @@ mrb_value mrb_draw_line(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_draw_line_v(mrb_state *mrb, mrb_value) {
+  Vector2 *start, *end;
+  Color *colour;
+
+  mrb_get_args(mrb, "ddd", &start, &Vector2_type, &end, &Vector2_type, &colour, &Colour_type);
+
+  DrawLineV(*start, *end, *colour);
+  return mrb_nil_value();
+}
+
 mrb_value mrb_draw_circle(mrb_state *mrb, mrb_value) {
   mrb_int x, y;
   mrb_float radius;
@@ -120,6 +130,7 @@ void append_shapes(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "draw_pixel_v", mrb_draw_pixel_v, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "draw_line", mrb_draw_line, MRB_ARGS_REQ(5));
+  mrb_define_method(mrb, mrb->kernel_module, "draw_line_v", mrb_draw_line_v, MRB_ARGS_REQ(3));
 
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle", mrb_draw_circle, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle_v", mrb_draw_circle_v, MRB_ARGS_REQ(3));

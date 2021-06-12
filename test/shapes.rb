@@ -35,6 +35,18 @@ class TestShapes < MTest::Unit::TestCase
     close_window
   end
 
+  def test_draw_line_v
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_line_v(Vector2.new(0, 0), Vector2.new(10, 10), GREEN)
+    end_drawing
+
+    assert_equal fixture_draw_line, get_screen_data.data
+
+    close_window
+  end
+
   def test_draw_circle
     init_window(10, 10, 'hi')
 
