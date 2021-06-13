@@ -1,6 +1,10 @@
 # Taylor
+## Made for Games
 
 ![documentation workflow](https://github.com/HellRok/Taylor/actions/workflows/documentation.yml/badge.svg)
+
+**Website**: http://taylor.oequacki.com  
+**Documentation**: http://taylor.oequacki.com/documentation/taylor/
 
 ## What's this?
 
