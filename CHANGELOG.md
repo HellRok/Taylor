@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.0.4
 
 - Add take_screenshot
 - Set the current working directory to the location of the script called instead
