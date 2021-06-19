@@ -8,6 +8,7 @@ require './fixtures/shapes'
 
 require './core'
 require './shapes/circle'
+require './shapes/ellipse'
 require './shapes/collision'
 require './shapes/line'
 require './shapes/pixel'
