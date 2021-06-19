@@ -117,6 +117,23 @@ def fixture_draw_circle_sector
   ]
 end
 
+def fixture_draw_circle_sector_lines
+  w = RAYWHITE
+  p = PURPLE
+  [
+    w, w, p, p, p, w, w, w, w, w,
+    w, p, w, w, p, w, w, w, w, w,
+    p, w, w, w, p, w, w, w, w, w,
+    p, w, w, w, p, w, w, w, w, w,
+    p, w, w, w, p, w, w, w, w, w,
+    p, p, p, p, p, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+  ]
+end
+
 def fixture_draw_rectangle
   w = RAYWHITE
   r = RED

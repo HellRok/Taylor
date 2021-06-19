@@ -32,6 +32,7 @@
 - Add draw_line_bezier_quad
 - Add draw_line_strip
 - Add draw_circle_sector
+- Add draw_circle_sector_lines
 
 ## v0.0.3
 

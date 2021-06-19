@@ -23,7 +23,7 @@ class TestShapesCircle < MTest::Unit::TestCase
     close_window
   end
 
-  def test_draw_circle_v
+  def test_draw_circle_sector
     init_window(10, 10, 'hi')
 
     begin_drawing
@@ -37,6 +37,24 @@ class TestShapesCircle < MTest::Unit::TestCase
     end_drawing
 
     assert_equal fixture_draw_circle_sector, get_screen_data.data
+
+    close_window
+  end
+
+  def test_draw_circle_sector_lines
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_circle_sector_lines(
+      Vector2.new(5, 5),
+      5,
+      180,
+      270,
+      8,
+      PURPLE)
+    end_drawing
+
+    assert_equal fixture_draw_circle_sector_lines, get_screen_data.data
 
     close_window
   end

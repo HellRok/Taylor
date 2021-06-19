@@ -34,3 +34,17 @@ def draw_circle_sector(vector, radius, start_angle, end_angle, segments, colour)
   # src/mruby_integration/shapes/circle.cpp
   nil
 end
+
+# Draw a circle sector outline
+# @param vector [Vector2]
+# @param radius [Float]
+# @param start_angle [Float]
+# @param end_angle [Float]
+# @param segments [Integer] How smooth to draw the sector
+# @param colour [Colour]
+# @return [nil]
+def draw_circle_sector_lines(vector, radius, start_angle, end_angle, segments, colour)
+  # mrb_draw_circle_sector_lines
+  # src/mruby_integration/shapes/circle.cpp
+  nil
+end
