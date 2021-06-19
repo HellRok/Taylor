@@ -61,3 +61,15 @@ def draw_circle_gradient(x, y, radius, colour1, colour2)
   # src/mruby_integration/shapes/circle.cpp
   nil
 end
+
+# Draw the outline of a circle
+# @param x [Integer]
+# @param y [Integer]
+# @param radius [Float]
+# @param colour [Colour]
+# @return [nil]
+def draw_circle_lines(x, y, radius, colour)
+  # mrb_draw_circle_lines
+  # src/mruby_integration/shapes/circle.cpp
+  nil
+end

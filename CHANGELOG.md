@@ -5,6 +5,7 @@
 - Add draw_circle_sector
 - Add draw_circle_sector_lines
 - Add draw_circle_gradient
+- Add draw_circle_lines
 
 ## v0.0.4
 

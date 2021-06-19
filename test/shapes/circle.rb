@@ -70,4 +70,16 @@ class TestShapesCircle < MTest::Unit::TestCase
 
     close_window
   end
+
+  def test_draw_lines
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_circle_lines(5, 5, 3, PURPLE)
+    end_drawing
+
+    assert_equal fixture_draw_circle_lines, get_screen_data.data
+
+    close_window
+  end
 end
