@@ -10,4 +10,16 @@ class TestShapesEllipse < MTest::Unit::TestCase
 
     close_window
   end
+
+  def test_draw_ellipse_lines
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_ellipse_lines(5, 5, 3, 5, PURPLE)
+    end_drawing
+
+    assert_equal fixture_draw_ellipse_lines, get_screen_data.data
+
+    close_window
+  end
 end

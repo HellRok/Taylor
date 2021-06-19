@@ -7,6 +7,7 @@
 - Add draw_circle_gradient
 - Add draw_circle_lines
 - Add draw_ellipse
+- Add draw_ellipse_lines
 
 ## v0.0.4
 
