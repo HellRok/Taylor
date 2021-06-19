@@ -10,6 +10,7 @@
 - Add draw_ellipse_lines
 - Add draw_ring
 - Add draw_ring_lines
+- Add draw_rectangle_pro
 
 ## v0.0.4
 

@@ -21,6 +21,18 @@ def draw_rectangle_rec(rectangle, colour)
   nil
 end
 
+# Draw a rectangle with rotation
+# @param rectangle [Rectangle]
+# @param origin [Vector2]
+# @param angle [Float]
+# @param colour [Colour]
+# @return [nil]
+def draw_rectangle_pro(rectangle, origin, angle, colour)
+  # mrb_draw_rectangle_pro
+  # src/mruby_integration/shapes/rectangle.cpp
+  nil
+end
+
 # Draw a rectangle outline
 # @param x [Integer]
 # @param y [Integer]
