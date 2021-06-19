@@ -9,6 +9,7 @@
 - Add draw_ellipse
 - Add draw_ellipse_lines
 - Add draw_ring
+- Add draw_ring_lines
 
 ## v0.0.4
 
