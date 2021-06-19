@@ -49,9 +49,21 @@ mrb_value mrb_draw_circle_sector_lines(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_draw_circle_gradient(mrb_state *mrb, mrb_value) {
+  mrb_int x, y;
+  mrb_float radius;
+  Color *colour1, *colour2;
+
+  mrb_get_args(mrb, "iifdd", &x, &y, &radius, &colour1, &Colour_type, &colour2, &Colour_type);
+
+  DrawCircleGradient(x, y, radius, *colour1, *colour2);
+  return mrb_nil_value();
+}
+
 void append_shapes_circle(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle", mrb_draw_circle, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle_v", mrb_draw_circle_v, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle_sector", mrb_draw_circle_sector, MRB_ARGS_REQ(6));
   mrb_define_method(mrb, mrb->kernel_module, "draw_circle_sector_lines", mrb_draw_circle_sector_lines, MRB_ARGS_REQ(6));
+  mrb_define_method(mrb, mrb->kernel_module, "draw_circle_gradient", mrb_draw_circle_gradient, MRB_ARGS_REQ(5));
 }

@@ -33,6 +33,7 @@
 - Add draw_line_strip
 - Add draw_circle_sector
 - Add draw_circle_sector_lines
+- Add draw_circle_gradient
 
 ## v0.0.3
 

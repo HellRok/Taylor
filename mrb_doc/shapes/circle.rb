@@ -48,3 +48,16 @@ def draw_circle_sector_lines(vector, radius, start_angle, end_angle, segments, c
   # src/mruby_integration/shapes/circle.cpp
   nil
 end
+
+# Draw a circle filled with a gradient
+# @param x [Integer]
+# @param y [Integer]
+# @param radius [Float]
+# @param colour1 [Colour]
+# @param colour2 [Colour]
+# @return [nil]
+def draw_circle_gradient(x, y, radius, colour1, colour2)
+  # mrb_draw_circle_gradient
+  # src/mruby_integration/shapes/circle.cpp
+  nil
+end

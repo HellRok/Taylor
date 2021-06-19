@@ -58,4 +58,16 @@ class TestShapesCircle < MTest::Unit::TestCase
 
     close_window
   end
+
+  def test_draw_circle_gradient
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_circle_gradient(5, 5, 3, PURPLE, GREEN)
+    end_drawing
+
+    assert_equal fixture_draw_circle_gradient, get_screen_data.data
+
+    close_window
+  end
 end
