@@ -11,6 +11,7 @@
 - Add draw_ring
 - Add draw_ring_lines
 - Add draw_rectangle_pro
+- Add JSON parsing and generating via mruby-iijson
 
 ## v0.0.4
 
