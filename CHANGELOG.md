@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.0.5
 
 - Add draw_circle_sector
 - Add draw_circle_sector_lines
