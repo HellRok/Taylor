@@ -7,6 +7,14 @@ def flush_frames(count)
   count.times { flush_frame }
 end
 
+def raw_colour_data(data)
+  data.each_slice(10).each { |row|
+    puts row.map { |colour|
+      "Colour.new(#{colour.red}, #{colour.green}, #{colour.blue}, #{colour.alpha}), "
+    }.join
+  }
+end
+
 def print_colour_data(data)
   map = ''
   data.each_slice(10).each { |row|

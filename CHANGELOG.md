@@ -12,6 +12,11 @@
 - Add draw_ring_lines
 - Add draw_rectangle_pro
 - Add JSON parsing and generating via mruby-iijson
+- Add draw_rectangle_gradient_v
+- Add draw_rectangle_gradient_h
+- Add draw_rectangle_gradient_ex
+- Add draw_rectangle_rounded
+- Add draw_rectangle_rounded_lines
 
 ## v0.0.4
 

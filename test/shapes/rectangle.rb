@@ -24,6 +24,42 @@ class TestShapesRectangle < MTest::Unit::TestCase
     close_window
   end
 
+  def test_draw_rectangle_gradient_v
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_rectangle_gradient_v(1, 1, 8, 8, RED, YELLOW)
+    end_drawing
+
+    assert_equal fixture_draw_rectangle_gradient_v, get_screen_data.data
+
+    close_window
+  end
+
+  def test_draw_rectangle_gradient_h
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_rectangle_gradient_h(1, 1, 8, 8, RED, YELLOW)
+    end_drawing
+
+    assert_equal fixture_draw_rectangle_gradient_h, get_screen_data.data
+
+    close_window
+  end
+
+  def test_draw_rectangle_gradient_ex
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_rectangle_gradient_ex(Rectangle.new(1, 1, 8, 8), RED, YELLOW, GREEN, BLUE)
+    end_drawing
+
+    assert_equal fixture_draw_rectangle_gradient_ex, get_screen_data.data
+
+    close_window
+  end
+
   def test_draw_rectangle_lines
     init_window(10, 10, 'hi')
 
@@ -56,6 +92,30 @@ class TestShapesRectangle < MTest::Unit::TestCase
     end_drawing
 
     assert_equal fixture_draw_rectangle_pro, get_screen_data.data
+
+    close_window
+  end
+
+  def test_draw_rectangle_rounded
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_rectangle_rounded(Rectangle.new(1, 1, 8, 8), 0.5, 8, RED)
+    end_drawing
+
+    assert_equal fixture_draw_rectangle_rounded, get_screen_data.data
+
+    close_window
+  end
+
+  def test_draw_rectangle_rounded_lines
+    init_window(10, 10, 'hi')
+
+    begin_drawing
+    draw_rectangle_rounded_lines(Rectangle.new(2, 2, 6, 6), 0.5, 8, 2, RED)
+    end_drawing
+
+    assert_equal fixture_draw_rectangle_rounded_lines, get_screen_data.data
 
     close_window
   end
