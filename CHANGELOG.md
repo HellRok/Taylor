@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add draw_triangle_lines
 
 ## v0.0.5
 

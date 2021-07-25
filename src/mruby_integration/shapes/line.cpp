@@ -1,7 +1,6 @@
 #include "raylib.h"
 #include "mruby.h"
 #include "mruby/array.h"
-#include "mruby/data.h"
 
 #include "mruby_integration/struct_types.hpp"
 
