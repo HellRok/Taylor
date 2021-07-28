@@ -60,6 +60,26 @@ mrb_value mrb_draw_texture(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_draw_texture_pro(mrb_state *mrb, mrb_value) {
+  Texture2D *texture;
+  Vector2 *origin;
+  Rectangle *source, *destination;
+  mrb_float rotation;
+  Color *colour;
+
+  mrb_get_args(mrb, "ddddfd",
+      &texture, &Texture2D_type,
+      &source, &Rectangle_type,
+      &destination, &Rectangle_type,
+      &origin, &Vector2_type,
+      &rotation,
+      &colour, &Colour_type);
+
+  DrawTexturePro(*texture, *source, *destination, *origin, rotation, *colour);
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_fade(mrb_state *mrb, mrb_value) {
   Color *colour;
   mrb_float alpha;
@@ -92,6 +112,7 @@ void append_textures(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_texture", mrb_load_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "unload_texture", mrb_unload_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, mrb->kernel_module, "draw_texture_pro", mrb_draw_texture_pro, MRB_ARGS_REQ(6));
 
   mrb_define_method(mrb, mrb->kernel_module, "fade", mrb_fade, MRB_ARGS_REQ(2));
 

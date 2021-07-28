@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Add draw_triangle_lines
+- Add draw_texture_pro
 
 ## v0.0.5
 
