@@ -1,16 +1,29 @@
-FROM appplant/mruby-cli
+FROM appplant/mruby-cli as mruby_base
 
 WORKDIR /app
-
 RUN git clone --branch 3.0.0 --depth 1 https://github.com/mruby/mruby.git .
 
-COPY ./scripts/mruby/*.rb /app/build_config/
+FROM mruby_base as mruby_include
+RUN mv ./include/mruby.h ./
+RUN mv ./include/mrbconf.h ./
 
-RUN \
-  MRUBY_CONFIG=linux rake && \
-  MRUBY_CONFIG=mingw rake && \
-  MRUBY_CONFIG=darwin rake
+FROM mruby_base as mruby_linux
+COPY ./scripts/mruby/linux.rb /app/build_config/
+RUN MRUBY_CONFIG=linux rake
 
-COPY ./scripts/mruby/copy_mruby.sh /app/copy_mruby.sh
+FROM mruby_base as mruby_mingw
+COPY ./scripts/mruby/mingw.rb /app/build_config/
+RUN MRUBY_CONFIG=mingw rake
 
-CMD ./copy_mruby.sh
+FROM mruby_base as mruby_osxcross
+COPY ./scripts/mruby/darwin.rb /app/build_config/
+RUN MRUBY_CONFIG=darwin rake
+
+FROM scratch AS export
+
+COPY --from=mruby_include /app/mruby.h ./vendor/mruby/
+COPY --from=mruby_include /app/mrbconf.h ./vendor/mruby/
+COPY --from=mruby_include /app/include/* ./vendor/mruby/mruby/
+COPY --from=mruby_linux /app/build/host/lib/libmruby.a ./vendor/linux/
+COPY --from=mruby_mingw /app/build/x86_64-w64-mingw32/lib/libmruby.a ./vendor/windows/
+COPY --from=mruby_osxcross /app/build/x86_64-apple-darwin19/lib/libmruby.a ./vendor/osx/

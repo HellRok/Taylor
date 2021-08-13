@@ -4,8 +4,6 @@ WORKDIR /app
 
 RUN git clone --branch 3.7.0 --depth 1 https://github.com/raysan5/raylib.git .
 
-COPY ./scripts/raylib/* /app/
-
 RUN apt-get update && \
   apt-get install \
   build-essential \
@@ -19,23 +17,23 @@ RUN apt-get update && \
   xorg-dev \
   -y
 
+COPY ./scripts/raylib/tweaks.patch /app/
 RUN git apply tweaks.patch
 
 FROM raylib_base AS raylib_linux
 RUN cd src && \
   make PLATFORM=PLATFORM_DESKTOP
 
-FROM raylib_base AS raylib_windows
+FROM raylib_base AS raylib_mingw
 RUN cd src && \
   make PLATFORM=PLATFORM_DESKTOP CROSS=MINGW
 
-# Cannot get this to compile under osxcross, current file is just built on OSX proper.
-#FROM raylib_base AS raylib_osx
-#RUN cd src && \
-#  MACOSX_DEPLOYMENT_TARGET=10.9 make PLATFORM=PLATFORM_DESKTOP CROSS=OSX
+FROM raylib_base AS raylib_osx
+RUN cd src && \
+  MACOSX_DEPLOYMENT_TARGET=10.11 make PLATFORM=PLATFORM_DESKTOP CROSS=OSX
 
 FROM scratch AS export
 
-COPY --from=raylib_linux /app/libraylib.a linux/raylib/lib/
-COPY --from=raylib_windows /app/libraylib.a windows/raylib/lib/
-#COPY --from=raylib_osx /app/libraylib.a osx/raylib/lib/
+COPY --from=raylib_linux /app/libraylib.a ./vendor/linux/raylib/lib/
+COPY --from=raylib_mingw /app/libraylib.a ./vendor/windows/raylib/lib/
+COPY --from=raylib_osx /app/libraylib.a ./vendor/osx/raylib/lib/

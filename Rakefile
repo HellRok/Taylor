@@ -189,16 +189,14 @@ task :release => supported_platforms.map { |platform| "#{platform}:release:build
 task :all => supported_platforms.flat_map { |platform| ["#{platform}:build", "#{platform}:release:build"] }
 
 task 'mruby:build' do |task|
-  sh "docker build . --file ./scripts/mruby/Dockerfile.mruby --pull --tag taylor_mruby"
-  sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./vendor')},target=/app/output/ taylor_mruby:latest"
+  sh "rm -rf ./vendor/mruby"
+  sh "DOCKER_BUILDKIT=1 docker build --output ./ . --file ./scripts/mruby/Dockerfile.mruby --pull --tag taylor_mruby"
 end
 
 task 'raylib:build' do |task|
-  sh "DOCKER_BUILDKIT=1 docker build --output ./vendor/ . --file ./scripts/raylib/Dockerfile.raylib --pull --tag taylor_raylib --progress plain"
+  sh "DOCKER_BUILDKIT=1 docker build --output ./ . --file ./scripts/raylib/Dockerfile.raylib --pull --tag taylor_raylib"
 end
 
 task 'docker:build' do |task|
-  sh "docker build . --file Dockerfile.build --pull --tag taylor_build"
-  sh "mkdir releases -p"
-  sh "docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=#{File.expand_path('./releases')},target=/app/output/ taylor_build:latest"
+  sh "DOCKER_BUILDKIT=1 docker build --output ./ . --file ./Dockerfile.build --pull --tag taylor_build"
 end

@@ -1,16 +1,24 @@
-FROM appplant/mruby-cli
+FROM appplant/mruby-cli as build_base
 
 WORKDIR /app
-
-COPY . /app
 
 RUN \
   apt-get update -y && \
   apt-get install -y g++ zip
 
-RUN \
-  rake linux:release:build && \
-  rake windows:release:build && \
-  rake osx:release:build
+COPY . /app
 
-CMD ./scripts/copy_build_artifacts.sh
+FROM build_base as build_linux
+RUN rake linux:release:build
+
+FROM build_base as build_mingw
+RUN rake windows:release:build
+
+FROM build_base as build_osx
+RUN rake osx:release:build
+
+FROM scratch AS export
+
+COPY --from=build_linux /app/releases/* ./releases/
+COPY --from=build_mingw /app/releases/* ./releases/
+COPY --from=build_osx /app/releases/* ./releases/

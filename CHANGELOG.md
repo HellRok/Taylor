@@ -5,6 +5,7 @@
 - Add draw_triangle_lines
 - Add draw_texture_pro
 - Make tests a little more lenient with screenshot comparisons
+- The entire build process now works in docker, no more OSX machine required
 
 ## v0.0.5
 
