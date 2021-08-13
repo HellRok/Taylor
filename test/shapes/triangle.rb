@@ -11,7 +11,7 @@ class TestShapesTriangle < MTest::Unit::TestCase
     )
     end_drawing
 
-    assert_equal fixture_draw_triangle, get_screen_data.data
+    assert_within 99, fixture_draw_triangle, get_screen_data.data
 
     close_window
   end
@@ -28,7 +28,7 @@ class TestShapesTriangle < MTest::Unit::TestCase
     )
     end_drawing
 
-    assert_equal fixture_draw_triangle_lines, get_screen_data.data
+    assert_within 99, fixture_draw_triangle_lines, get_screen_data.data
 
     close_window
   end

@@ -6,7 +6,7 @@ class TestShapesCircle < MTest::Unit::TestCase
     draw_circle(5, 5, 3, PURPLE)
     end_drawing
 
-    assert_equal fixture_draw_circle, get_screen_data.data
+    assert_within 99, fixture_draw_circle, get_screen_data.data
 
     close_window
   end
@@ -18,7 +18,7 @@ class TestShapesCircle < MTest::Unit::TestCase
     draw_circle_v(Vector2.new(5, 5), 3, PURPLE)
     end_drawing
 
-    assert_equal fixture_draw_circle, get_screen_data.data
+    assert_within 99, fixture_draw_circle, get_screen_data.data
 
     close_window
   end
@@ -36,7 +36,7 @@ class TestShapesCircle < MTest::Unit::TestCase
       PURPLE)
     end_drawing
 
-    assert_equal fixture_draw_circle_sector, get_screen_data.data
+    assert_within 99, fixture_draw_circle_sector, get_screen_data.data
 
     close_window
   end
@@ -54,7 +54,7 @@ class TestShapesCircle < MTest::Unit::TestCase
       PURPLE)
     end_drawing
 
-    assert_equal fixture_draw_circle_sector_lines, get_screen_data.data
+    assert_within 99, fixture_draw_circle_sector_lines, get_screen_data.data
 
     close_window
   end
@@ -66,7 +66,7 @@ class TestShapesCircle < MTest::Unit::TestCase
     draw_circle_gradient(5, 5, 3, PURPLE, GREEN)
     end_drawing
 
-    assert_equal fixture_draw_circle_gradient, get_screen_data.data
+    assert_within 99, fixture_draw_circle_gradient, get_screen_data.data
 
     close_window
   end
@@ -78,7 +78,7 @@ class TestShapesCircle < MTest::Unit::TestCase
     draw_circle_lines(5, 5, 3, PURPLE)
     end_drawing
 
-    assert_equal fixture_draw_circle_lines, get_screen_data.data
+    assert_within 99, fixture_draw_circle_lines, get_screen_data.data
 
     close_window
   end

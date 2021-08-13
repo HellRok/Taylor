@@ -6,7 +6,7 @@ class TestShapesPixel < MTest::Unit::TestCase
     draw_pixel(2, 2, VIOLET)
     end_drawing
 
-    assert_equal fixture_draw_pixel, get_screen_data.data
+    assert_within 99, fixture_draw_pixel, get_screen_data.data
 
     close_window
   end
@@ -18,7 +18,7 @@ class TestShapesPixel < MTest::Unit::TestCase
     draw_pixel_v(Vector2.new(2, 2), VIOLET)
     end_drawing
 
-    assert_equal fixture_draw_pixel, get_screen_data.data
+    assert_within 99, fixture_draw_pixel, get_screen_data.data
 
     close_window
   end

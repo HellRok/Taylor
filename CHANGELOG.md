@@ -4,6 +4,7 @@
 
 - Add draw_triangle_lines
 - Add draw_texture_pro
+- Make tests a little more lenient with screenshot comparisons
 
 ## v0.0.5
 

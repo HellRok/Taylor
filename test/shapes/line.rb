@@ -6,7 +6,7 @@ class TestShapesLine < MTest::Unit::TestCase
     draw_line(0, 0, 10, 10, GREEN)
     end_drawing
 
-    assert_equal fixture_draw_line, get_screen_data.data
+    assert_within 99, fixture_draw_line, get_screen_data.data
 
     close_window
   end
@@ -18,7 +18,7 @@ class TestShapesLine < MTest::Unit::TestCase
     draw_line_v(Vector2.new(0, 0), Vector2.new(10, 10), GREEN)
     end_drawing
 
-    assert_equal fixture_draw_line, get_screen_data.data
+    assert_within 99, fixture_draw_line, get_screen_data.data
 
     close_window
   end
@@ -30,7 +30,7 @@ class TestShapesLine < MTest::Unit::TestCase
     draw_line_ex(Vector2.new(0, 0), Vector2.new(10, 10), 3, GREEN)
     end_drawing
 
-    assert_equal fixture_draw_line_ex, get_screen_data.data
+    assert_within 99, fixture_draw_line_ex, get_screen_data.data
 
     close_window
   end
@@ -42,7 +42,7 @@ class TestShapesLine < MTest::Unit::TestCase
     draw_line_bezier(Vector2.new(0, 0), Vector2.new(10, 10), 1, GREEN)
     end_drawing
 
-    assert_equal fixture_draw_line_bezier, get_screen_data.data
+    assert_within 99, fixture_draw_line_bezier, get_screen_data.data
 
     close_window
   end
@@ -54,7 +54,7 @@ class TestShapesLine < MTest::Unit::TestCase
     draw_line_bezier_quad(Vector2.new(0, 0), Vector2.new(10, 10), Vector2.new(7, 3), 1, GREEN)
     end_drawing
 
-    assert_equal fixture_draw_line_bezier_quad, get_screen_data.data
+    assert_within 99, fixture_draw_line_bezier_quad, get_screen_data.data
 
     close_window
   end

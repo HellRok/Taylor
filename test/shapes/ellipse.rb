@@ -6,7 +6,7 @@ class TestShapesEllipse < MTest::Unit::TestCase
     draw_ellipse(5, 5, 3, 7, PURPLE)
     end_drawing
 
-    assert_equal fixture_draw_ellipse, get_screen_data.data
+    assert_within 99, fixture_draw_ellipse, get_screen_data.data
 
     close_window
   end
@@ -18,7 +18,7 @@ class TestShapesEllipse < MTest::Unit::TestCase
     draw_ellipse_lines(5, 5, 3, 5, PURPLE)
     end_drawing
 
-    assert_equal fixture_draw_ellipse_lines, get_screen_data.data
+    assert_within 99, fixture_draw_ellipse_lines, get_screen_data.data
 
     close_window
   end
