@@ -30,6 +30,7 @@ RUN cd src && \
 
 FROM raylib_base AS raylib_osx
 RUN cd src && \
+  make clean && \
   MACOSX_DEPLOYMENT_TARGET=10.11 make PLATFORM=PLATFORM_DESKTOP CROSS=OSX
 
 FROM scratch AS export

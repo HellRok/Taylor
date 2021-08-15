@@ -1,8 +1,8 @@
 diff --git a/src/Makefile b/src/Makefile
-index a4a943d6..4a9bb3ab 100644
+index a4a943d6..98229216 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -229,6 +229,16 @@ CC = gcc
+@@ -229,6 +229,17 @@ CC = gcc
  AR = ar
  
  ifeq ($(PLATFORM),PLATFORM_DESKTOP)
@@ -13,6 +13,7 @@ index a4a943d6..4a9bb3ab 100644
 +    endif
 +    ifeq ($(CROSS),OSX)
 +      CC = x86_64-apple-darwin19-clang
++      AR = x86_64-apple-darwin19-ar
 +      CFLAGS = -compatibility_version $(RAYLIB_API_VERSION) -current_version $(RAYLIB_VERSION) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
 +      GLFW_OSX = -x objective-c
 +    endif
