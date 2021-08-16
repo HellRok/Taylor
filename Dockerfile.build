@@ -9,13 +9,16 @@ RUN \
 COPY . /app
 
 FROM build_base as build_linux
-RUN rake linux:release:build
+RUN rake linux:release:build &&\
+  rake zip:linux
 
 FROM build_base as build_mingw
-RUN rake windows:release:build
+RUN rake windows:release:build &&\
+  rake zip:windows
 
 FROM build_base as build_osx
-RUN rake osx:release:build
+RUN rake osx:release:build &&\
+  rake zip:osx
 
 FROM scratch AS export
 

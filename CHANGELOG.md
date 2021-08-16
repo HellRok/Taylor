@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Setup for export builds
+
 ## v0.0.6
 
 - Add draw_triangle_lines

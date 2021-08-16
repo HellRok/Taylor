@@ -19,6 +19,9 @@ objects_folder = "build"
 objects = ->(objects_folder){ SRC.ext('.o').map { |file| file.gsub(SRC_FOLDER, objects_folder) } }
 depends = ->(objects_folder){ SRC.ext('.mf').map { |file| file.gsub(SRC_FOLDER, objects_folder) } }
 
+defines = ''
+defines << '-DEXPORT' if ENV['EXPORT']
+
 VERSION = File.read("./include/version.hpp").each_line.to_a.last.split('"')[1]
 
 CLEAN.include("./build/*")
@@ -60,7 +63,6 @@ namespace :linux do
     multitask :build => depends.call("build/linux/release")
     multitask :build => objects.call("build/linux/release")
     task :build => "build:linux:release"
-    task :build => "zip:linux"
   end
 end
 
@@ -96,7 +98,6 @@ namespace :windows do
     multitask :build => objects.call("build/windows/release")
     task :build => "build:windows:release"
     task :build => "windows:release:copy_dlls"
-    task :build => "zip:windows"
   end
 end
 
@@ -128,7 +129,6 @@ namespace :osx do
     multitask :build => depends.call("build/osx/release")
     multitask :build => objects.call("build/osx/release")
     task :build => "build:osx:release"
-    task :build => "zip:osx"
   end
 end
 
@@ -141,7 +141,7 @@ supported_variants.each { |variant|
 rule ".o" => ->(file){ source_for(file) } do |task|
   FileUtils.mkdir_p(File.dirname(task.name))
   sh <<-CMD.squeeze(' ').strip
-    #{cxx} #{cxxflags} #{includes} -c #{task.source} \
+    #{cxx} #{cxxflags} #{includes} #{defines} -c #{task.source} \
       -o #{task.name} \
       #{ldflags}
   CMD
@@ -149,7 +149,7 @@ end
 
 rule ".mf" => ->(file){ source_for(file) } do |task|
   data = `#{<<-CMD.squeeze(' ').strip}`
-    #{cxx} #{cxxflags} #{includes} -c #{task.source} \
+    #{cxx} #{cxxflags} #{includes} #{defines} -c #{task.source} \
       #{ldflags} \
       -MM \
       -MT #{task.name.gsub(SRC_FOLDER, objects_folder).ext('.o')}
@@ -169,6 +169,7 @@ supported_platforms.each { |platform|
         #{cxx} \
           -o ./dist/#{platform}/#{variant}/#{name} \
           #{cxxflags} \
+          #{defines} \
           #{includes} \
           #{objects.call(objects_folder).join ' '} \
           #{static_links} \
@@ -185,7 +186,9 @@ supported_platforms.each { |platform|
   end
 }
 
-task :release => supported_platforms.map { |platform| "#{platform}:release:build" }
+task :release => supported_platforms.flat_map { |platform|
+  ["#{platform}:release:build", "zip:#{platform}"]
+}
 task :all => supported_platforms.flat_map { |platform| ["#{platform}:build", "#{platform}:release:build"] }
 
 task 'mruby:build' do |task|

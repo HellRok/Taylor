@@ -6,6 +6,7 @@
 #include "mruby/data.h"
 #include "mruby/class.h"
 #include "mruby/compile.h"
+#include "mruby/irep.h"
 
 #include "mruby_integration/audio.hpp"
 #include "mruby_integration/core.hpp"
@@ -14,13 +15,19 @@
 #include "mruby_integration/text.hpp"
 #include "mruby_integration/textures.hpp"
 
+#ifdef EXPORT
+#include "game.h"
+#endif
+
 int main(int, char **argv) {
+#ifndef EXPORT
   const char *path;
   if (argv) {
     path = argv[1];
   } else {
     path = "./game.rb";
   }
+#endif
 
   mrb_state *mrb = mrb_open();
 
@@ -33,11 +40,17 @@ int main(int, char **argv) {
   append_text(mrb);
   append_textures(mrb);
 
+#ifndef EXPORT
   FILE *game_file = fopen(path, "r");
 
   ChangeDirectory(GetDirectoryPath(path));
 
   mrb_load_file(mrb, game_file);
+#endif
+
+#ifdef EXPORT
+  mrb_load_irep(mrb, game);
+#endif
 
   if (mrb->exc) {
     mrb_print_error(mrb);
