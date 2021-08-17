@@ -8,6 +8,7 @@
 #include "mruby/compile.h"
 #include "mruby/irep.h"
 
+#include "argv.hpp"
 #include "mruby_integration/audio.hpp"
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/shapes.hpp"
@@ -19,7 +20,7 @@
 #include "game.h"
 #endif
 
-int main(int, char **argv) {
+int main(int argc, char **argv) {
 #ifndef EXPORT
   const char *path;
   if (argv) {
@@ -32,6 +33,7 @@ int main(int, char **argv) {
   mrb_state *mrb = mrb_open();
 
   mrb_define_const(mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
+  populate_argv(mrb, argc, argv);
 
   append_audio(mrb);
   append_core(mrb);

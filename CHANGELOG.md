@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Setup for export builds
+- Populate ARGV for programs
 
 ## v0.0.6
 
