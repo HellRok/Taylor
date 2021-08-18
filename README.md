@@ -1,6 +1,7 @@
 # Taylor
 ## Made for Games
 
+![tests workflow](https://github.com/HellRok/Taylor/actions/workflows/tests.yml/badge.svg)
 ![documentation workflow](https://github.com/HellRok/Taylor/actions/workflows/documentation.yml/badge.svg)
 
 **Website**: http://taylor.oequacki.com  

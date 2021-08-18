@@ -16,4 +16,4 @@ x86_64-apple-darwin19-strip ./dist/osx/release/taylor
 
 popd
 
-rake rename
+rake rename compress

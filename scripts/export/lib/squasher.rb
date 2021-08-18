@@ -14,7 +14,7 @@ class Squasher
     @processed_files = []
     @data = ""
 
-    process_file('./game.rb')
+    process_file(options['input'])
 
     File.write('../export/output.rb', @data)
   end

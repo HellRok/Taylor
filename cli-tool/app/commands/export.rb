@@ -65,7 +65,7 @@ module Taylor
       def docker_build
         command = 'docker run -u $(id -u ${USER}):$(id -g ${USER})'
         command << " --mount type=bind,source=#{Dir.pwd},target=/app/game/"
-        command << " taylor:#{TAYLOR_VERSION}"
+        command << " hellrok/taylor:v#{TAYLOR_VERSION}"
 
         if options[:dry_run]
           puts command

@@ -28,6 +28,7 @@ end
 
 task :squash do
   Dir.chdir('../game')
+  puts `ls -l`
   Squasher.call(options)
   Dir.chdir('../export')
 end
@@ -60,4 +61,21 @@ task :rename do
   FileUtils.mkdir_p File.join(options['export_directory'], 'osx')
   FileUtils.cp '../taylor/dist/osx/release/taylor',
     File.join('./', options['export_directory'], 'osx', options['name'])
+end
+
+task :compress do
+  Dir.chdir(options['export_directory'])
+
+  Dir.chdir('./linux')
+  sh "zip -r #{options['name']}-linux.zip *"
+
+  Dir.chdir('../windows')
+  sh "zip -r #{options['name']}-windows.zip *"
+
+  Dir.chdir('../osx')
+  sh "zip -r #{options['name']}-osx.zip *"
+
+  Dir.chdir('..')
+  sh "mv **/*.zip ./"
+  sh "rm -rf linux windows osx"
 end

@@ -5,13 +5,13 @@ RUN git clone --branch 3.0.0 --depth 1 https://github.com/mruby/mruby.git . &&\
   rake
 
 WORKDIR /app/taylor
-RUN git clone --branch main --depth 1 https://github.com/HellRok/Taylor.git .
+RUN git clone --branch $VERSION --depth 1 https://github.com/HellRok/Taylor.git .
 
 WORKDIR /app/export
 
 RUN \
   apt-get update -y && \
-  apt-get install -y g++
+  apt-get install -y g++ zip
 
 COPY . /app/export
 

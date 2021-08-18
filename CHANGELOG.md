@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.1.0
 
 - Setup for export builds
 - Populate ARGV for programs
@@ -8,6 +8,7 @@
 - Do a test build on push/pull request
 - Add the ability to export builds
 - Create a CLI tool that will be the main user interface to Taylor
+- Build for cli-tool instead of standard taylor
 
 ## v0.0.6
 

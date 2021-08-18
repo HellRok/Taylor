@@ -179,17 +179,9 @@ supported_platforms.each { |platform|
   }
 }
 
-supported_platforms.each { |platform|
-  task "zip:#{platform}" do |task|
-    FileUtils.mkdir_p("./releases")
-    sh "zip -9r releases/#{name}-#{platform}-#{VERSION}.zip ./dist/#{platform}/release"
-  end
-}
-
 task :release => supported_platforms.flat_map { |platform|
-  ["#{platform}:release:build", "zip:#{platform}"]
+  "#{platform}:release:build"
 }
-task :all => supported_platforms.flat_map { |platform| ["#{platform}:build", "#{platform}:release:build"] }
 
 task 'mruby:build' do |task|
   sh "rm -rf ./vendor/mruby"
