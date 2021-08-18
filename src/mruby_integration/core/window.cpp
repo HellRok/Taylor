@@ -192,6 +192,13 @@ mrb_value mrb_get_monitor_height(mrb_state *mrb, mrb_value) {
   return mrb_int_value(mrb, GetMonitorHeight(monitor));
 }
 
+mrb_value mrb_get_monitor_refresh_rate(mrb_state *mrb, mrb_value) {
+  mrb_int monitor;
+  mrb_get_args(mrb, "i", &monitor);
+
+  return mrb_int_value(mrb, GetMonitorRefreshRate(monitor));
+}
+
 mrb_value mrb_get_window_position(mrb_state *mrb, mrb_value) {
   Vector2 *position = (Vector2 *)malloc(sizeof(Vector2));
   *position = GetWindowPosition();
@@ -245,6 +252,7 @@ void append_core_window(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_position", mrb_get_monitor_position, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_width", mrb_get_monitor_width, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_monitor_height", mrb_get_monitor_height, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "get_monitor_refresh_rate", mrb_get_monitor_refresh_rate, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_window_position", mrb_get_window_position, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_window_scale_dpi", mrb_get_window_scale_dpi, MRB_ARGS_NONE());
 

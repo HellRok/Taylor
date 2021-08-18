@@ -4,6 +4,7 @@
 
 - Setup for export builds
 - Populate ARGV for programs
+- Add get_monitor_refresh_rate
 - Do a test build on push/pull request
 
 ## v0.0.6
