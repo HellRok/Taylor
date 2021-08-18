@@ -4,6 +4,7 @@
 
 - Setup for export builds
 - Populate ARGV for programs
+- Do a test build on push/pull request
 
 ## v0.0.6
 
