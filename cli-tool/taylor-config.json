@@ -1,0 +1,9 @@
+{
+  "name": "cli-tool",
+  "input": "cli.rb",
+  "export_directory": "./exports",
+  "load_paths": [
+    "./"
+  ],
+  "copy_paths": []
+}

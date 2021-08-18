@@ -17,5 +17,6 @@ MRuby::CrossBuild.new('x86_64-apple-darwin19') do |conf|
   conf.gem github: 'iij/mruby-dir'
   conf.gem github: 'iij/mruby-iijson'
   conf.gem github: 'iij/mruby-mtest'
+  conf.gem github: 'katzer/mruby-tiny-opt-parser'
   conf.gem github: 'hellrok/mruby-require'
 end

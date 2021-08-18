@@ -7,6 +7,7 @@
 - Add get_monitor_refresh_rate
 - Do a test build on push/pull request
 - Add the ability to export builds
+- Create a CLI tool that will be the main user interface to Taylor
 
 ## v0.0.6
 
