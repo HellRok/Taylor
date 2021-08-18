@@ -21,13 +21,16 @@
 #endif
 
 int main(int argc, char **argv) {
-#ifndef EXPORT
   const char *path;
+#ifndef EXPORT
   if (argv) {
     path = argv[1];
   } else {
     path = "./game.rb";
   }
+#endif
+#ifdef EXPORT
+  path = argv[0];
 #endif
 
   mrb_state *mrb = mrb_open();
@@ -44,13 +47,12 @@ int main(int argc, char **argv) {
 
 #ifndef EXPORT
   FILE *game_file = fopen(path, "r");
-
   ChangeDirectory(GetDirectoryPath(path));
-
   mrb_load_file(mrb, game_file);
 #endif
 
 #ifdef EXPORT
+  ChangeDirectory(GetDirectoryPath(path));
   mrb_load_irep(mrb, game);
 #endif
 

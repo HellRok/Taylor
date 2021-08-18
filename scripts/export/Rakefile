@@ -1,0 +1,63 @@
+require 'json'
+require 'fileutils'
+
+require './lib/squasher'
+
+options = {
+  'name' => 'taylor_game',
+  'input' => 'game.rb',
+  'export_directory' => './exports',
+  'load_paths' => [
+    './',
+    './vendor',
+  ],
+  'copy_paths' => [
+    './assets',
+  ],
+}
+
+if File.exists?('../game/taylor-config.json')
+  options.merge!(
+    JSON.parse(File.read('../game/taylor-config.json'))
+  )
+end
+
+task :build do
+  sh "docker build . --pull --tag taylor"
+end
+
+task :squash do
+  Dir.chdir('../game')
+  Squasher.call(options)
+  Dir.chdir('../export')
+end
+
+task :transpile => :squash
+task :transpile do
+  sh "/app/mruby/bin/mrbc -Bgame -o game.h ./output.rb"
+end
+
+task :rename do
+  Dir.chdir('../game')
+  FileUtils.mkdir_p options['export_directory']
+
+  puts "Copying linux build"
+
+  FileUtils.mkdir_p File.join(options['export_directory'], 'linux')
+  FileUtils.cp '../taylor/dist/linux/release/taylor',
+    File.join('./', options['export_directory'], 'linux', options['name'])
+
+  puts "Copying windows build"
+
+  FileUtils.mkdir_p File.join(options['export_directory'], 'windows')
+  FileUtils.cp '../taylor/dist/windows/release/taylor.exe',
+    File.join('./', options['export_directory'], 'windows', "#{options['name']}.exe")
+  FileUtils.cp Dir.glob('../taylor/dist/windows/release/*.dll'),
+    File.join('./', options['export_directory'], 'windows')
+
+  puts "Copying osx build"
+
+  FileUtils.mkdir_p File.join(options['export_directory'], 'osx')
+  FileUtils.cp '../taylor/dist/osx/release/taylor',
+    File.join('./', options['export_directory'], 'osx', options['name'])
+end
