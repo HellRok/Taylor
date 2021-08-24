@@ -1,5 +1,5 @@
 module Taylor
-  module Command
+  module Commands
     class Run
       def self.call(command, argv, options)
         self.new(command, argv, options)
@@ -9,7 +9,7 @@ module Taylor
       def initialize(command, argv, options)
         setup_options(argv, options)
 
-        @command = command || '.'
+        @command = command || ''
 
         if @options[:help]
           display_help
@@ -46,8 +46,8 @@ module Taylor
       private
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help,             :bool,   false)
-          opts.on(:input,            :string, options.fetch(:input,            'game.rb'))
+          opts.on(:help,  :bool,   false)
+          opts.on(:input, :string, options.fetch(:input, 'game.rb'))
         end
         parser.parse(argv, true)
 
@@ -59,7 +59,7 @@ module Taylor
       end
 
       def unload_taylor_cli
-        Taylor.send(:remove_const, :Command)
+        Taylor.send(:remove_const, :Commands)
       end
 
       def run_command

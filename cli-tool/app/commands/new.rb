@@ -1,5 +1,5 @@
 module Taylor
-  module Command
+  module Commands
     class New
       def self.call(argv, options)
         self.new(argv, options)
@@ -68,8 +68,8 @@ module Taylor
       end
 
       def setup_game_structure
-        Dir.mkdir(path_for('vendor'))
-        Dir.mkdir(path_for('assets'))
+        @options[:load_paths].each { |path| Dir.mkdir(path_for(path)) unless path == './' }
+        @options[:copy_paths].each { |path| Dir.mkdir(path_for(path)) unless path == './' }
 
         game = File.open(path_for(options[:input]), 'w')
         game.write(

@@ -17,11 +17,11 @@ command = ARGV[0]
 
 case command
 when 'new'
-  Taylor::Command::New.call(ARGV[1..], options)
+  Taylor::Commands::New.call(ARGV[1..], options)
 
 when 'export'
-  Taylor::Command::Export.call(ARGV[1..], options)
+  Taylor::Commands::Export.call(ARGV[1..], options)
 
 else
-  Taylor::Command::Run.call(command, ARGV, options)
+  Taylor::Commands::Run.call(command, ARGV, options)
 end

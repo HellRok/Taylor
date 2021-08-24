@@ -1,5 +1,5 @@
 module Taylor
-  module Command
+  module Commands
     class Export
       def self.call(argv, options)
         self.new(argv, options)
@@ -27,11 +27,7 @@ module Taylor
           Options:
             --help\t\t\tDisplays this message
             --dry-run\t\t\tJust display the export command and don't run it
-            --name name\t\t\tWhat to name your game (defaults to taylor_game)
-            --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
             --export_directory directory\tWhat directory do you want your exports (defaults to ./exports)
-            --load_paths directories\tWhat directories do you want in your load path (defaults to ./,./vendor)
-            --copy_paths directories\tWhat directories do you want copied into your exports (defaults to ./assets)
         STR
       end
 
@@ -47,17 +43,11 @@ module Taylor
         parser = OptParser.new do |opts|
           opts.on(:help,             :bool,   false)
           opts.on(:dry_run,          :bool,   false)
-          opts.on(:name,             :string, options.fetch(:name,             'taylor_game'))
-          opts.on(:input,            :string, options.fetch(:input,            'game.rb'))
-          opts.on(:export_directory, :string, options.fetch(:export_directory, './exports'))
-          opts.on(:load_paths,       :string, options.fetch(:load_paths,       './,./vendor'))
-          opts.on(:copy_paths,       :string, options.fetch(:copy_paths,       './assets'))
         end
         parser.parse(argv, true)
 
         @options = parser.opts
-        @options[:load_paths] = @options[:load_paths].split(',')
-        @options[:copy_paths] = @options[:copy_paths].split(',')
+        @options[:export_directory] = options.fetch(:export_directory, './exports')
       end
 
       def check_in_taylor_project!
@@ -67,6 +57,8 @@ module Taylor
       end
 
       def create_export_folder
+        return if @options[:dry_run]
+
         unless File.exists?(options[:export_directory]) &&
             File.directory?(options[:export_directory])
           Dir.mkdir(options[:export_directory])

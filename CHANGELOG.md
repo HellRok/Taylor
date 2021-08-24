@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Taylor-cli commands now handle arguments individually
+- Taylor-cli now has tests
 
 ## v0.1.0
 
