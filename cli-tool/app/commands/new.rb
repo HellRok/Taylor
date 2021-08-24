@@ -1,19 +1,14 @@
 module Taylor
   module Command
     class New
-      def self.call(parser)
-        self.new(parser)
+      def self.call(argv, options)
+        self.new(argv, options)
       end
 
       attr_accessor :options
 
-      def initialize(parser)
-        @options = parser.opts.slice(
-          :help, :name, :input, :export_directory, :load_paths, :copy_paths
-        )
-
-        @options[:load_paths] = @options[:load_paths].split(',')
-        @options[:copy_paths] = @options[:copy_paths].split(',')
+      def initialize(argv, options)
+        setup_options(argv, options)
 
         if @options[:help]
           display_help
@@ -48,6 +43,22 @@ module Taylor
       end
 
       private
+      def setup_options(argv, options)
+        parser = OptParser.new do |opts|
+          opts.on(:help,             :bool,   false)
+          opts.on(:name,             :string, options.fetch(:name,             'taylor_game'))
+          opts.on(:input,            :string, options.fetch(:input,            'game.rb'))
+          opts.on(:export_directory, :string, options.fetch(:export_directory, './exports'))
+          opts.on(:load_paths,       :string, options.fetch(:load_paths,       './,./vendor'))
+          opts.on(:copy_paths,       :string, options.fetch(:copy_paths,       './assets'))
+        end
+        parser.parse(argv, true)
+
+        @options = parser.opts
+        @options[:load_paths] = @options[:load_paths].split(',')
+        @options[:copy_paths] = @options[:copy_paths].split(',')
+      end
+
       def create_directory!
         if File.exists?(options[:name])
           raise "#{options[:name]} directory already exists! Did you mean to run this again?"

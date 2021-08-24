@@ -36,6 +36,7 @@ int main(int argc, char **argv) {
   mrb_state *mrb = mrb_open();
 
   mrb_define_const(mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
+  mrb_define_const(mrb, mrb->kernel_module, "WORKING_DIRECTORY", mrb_str_new_cstr(mrb, GetWorkingDirectory()));
   populate_argv(mrb, argc, argv);
 
   append_audio(mrb);

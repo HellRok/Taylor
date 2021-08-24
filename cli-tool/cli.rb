@@ -4,37 +4,24 @@ require './app/commands/export'
 require './app/commands/new'
 require './app/commands/run'
 
+$:.unshift WORKING_DIRECTORY
+Dir.chdir WORKING_DIRECTORY
+
 if File.exists?('./taylor-config.json')
   options = JSON.parse(File.read('./taylor-config.json'))
 else
   options = {}
 end
 
-parser = OptParser.new do |opts|
-  opts.on(:help, :bool, false)
-
-  # New
-  opts.on(:name,             :string, options.fetch(:name,             'taylor_game'))
-  opts.on(:input,            :string, options.fetch(:input,            'game.rb'))
-  opts.on(:export_directory, :string, options.fetch(:export_directory, './exports'))
-  opts.on(:load_paths,       :string, options.fetch(:load_paths,       './,./vendor'))
-  opts.on(:copy_paths,       :string, options.fetch(:copy_paths,       './assets'))
-
-  # Export
-  opts.on(:dry_run, :bool, false)
-end
-
-parser.parse(ARGV, true)
-
-command = parser.tail.shift
+command = ARGV[0]
 
 case command
 when 'new'
-  Taylor::Command::New.call(parser)
+  Taylor::Command::New.call(ARGV[1..], options)
 
 when 'export'
-  Taylor::Command::Export.call(parser)
+  Taylor::Command::Export.call(ARGV[1..], options)
 
 else
-  Taylor::Command::Run.call(command, parser)
+  Taylor::Command::Run.call(command, ARGV, options)
 end

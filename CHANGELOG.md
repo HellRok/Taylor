@@ -1,5 +1,9 @@
 # Taylor
 
+## Unreleased
+
+- Taylor-cli commands now handle arguments individually
+
 ## v0.1.0
 
 - Setup for export builds
