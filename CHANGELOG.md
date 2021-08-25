@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.1.2
 
 - Setup STDERR, STDOUT, STDIN for Windows applications
 
