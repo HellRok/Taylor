@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Setup STDERR, STDOUT, STDIN for Windows applications
+
 ## v0.1.1
 
 - Taylor-cli commands now handle arguments individually
