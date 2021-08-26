@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.1.3
 
 - Version the release assets
 - Add the Font model
