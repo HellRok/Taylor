@@ -8,6 +8,7 @@
 
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
+#include "mruby_integration/models/colour.hpp"
 
 struct RClass *Image_class;
 

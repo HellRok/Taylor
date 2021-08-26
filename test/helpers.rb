@@ -1,3 +1,7 @@
+def skip_unless_display_present
+  skip if ENV.fetch('DISPLAY', '').empty?
+end
+
 def flush_frame
   begin_drawing
   end_drawing
@@ -22,6 +26,8 @@ def print_colour_data(data)
       case colour
       when RAYWHITE
         map << 'w'
+      when BLACK
+        map << 'b'
       when RED
         map << 'r'
       when GREEN

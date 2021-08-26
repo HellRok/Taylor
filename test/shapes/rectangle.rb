@@ -1,6 +1,8 @@
 class TestShapesRectangle < MTest::Unit::TestCase
   def test_draw_rectangle
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_rectangle(2, 2, 4, 5, RED)
@@ -12,7 +14,9 @@ class TestShapesRectangle < MTest::Unit::TestCase
   end
 
   def test_draw_rectangle_rec
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
     rectangle = Rectangle.new(2, 2, 4, 5)
 
     begin_drawing
@@ -25,7 +29,9 @@ class TestShapesRectangle < MTest::Unit::TestCase
   end
 
   def test_draw_rectangle_gradient_v
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_rectangle_gradient_v(1, 1, 8, 8, RED, YELLOW)
@@ -37,7 +43,9 @@ class TestShapesRectangle < MTest::Unit::TestCase
   end
 
   def test_draw_rectangle_gradient_h
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_rectangle_gradient_h(1, 1, 8, 8, RED, YELLOW)
@@ -49,7 +57,9 @@ class TestShapesRectangle < MTest::Unit::TestCase
   end
 
   def test_draw_rectangle_gradient_ex
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_rectangle_gradient_ex(Rectangle.new(1, 1, 8, 8), RED, YELLOW, GREEN, BLUE)
@@ -61,7 +71,9 @@ class TestShapesRectangle < MTest::Unit::TestCase
   end
 
   def test_draw_rectangle_lines
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_rectangle_lines(2, 2, 4, 5, RED)
@@ -73,7 +85,9 @@ class TestShapesRectangle < MTest::Unit::TestCase
   end
 
   def test_draw_rectangle_lines_ex
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_rectangle_lines_ex(Rectangle.new(2, 2, 8, 8), 2, RED)
@@ -85,7 +99,9 @@ class TestShapesRectangle < MTest::Unit::TestCase
   end
 
   def test_draw_rectangle_pro
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_rectangle_pro(Rectangle.new(2, 2, 5, 5), Vector2.new(0, 0), 45, RED)
@@ -97,7 +113,9 @@ class TestShapesRectangle < MTest::Unit::TestCase
   end
 
   def test_draw_rectangle_rounded
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_rectangle_rounded(Rectangle.new(1, 1, 8, 8), 0.5, 8, RED)
@@ -109,7 +127,9 @@ class TestShapesRectangle < MTest::Unit::TestCase
   end
 
   def test_draw_rectangle_rounded_lines
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_rectangle_rounded_lines(Rectangle.new(2, 2, 6, 6), 0.5, 8, 2, RED)

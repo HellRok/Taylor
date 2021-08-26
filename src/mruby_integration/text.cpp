@@ -3,6 +3,21 @@
 #include "mruby/string.h"
 
 #include "mruby_integration/struct_types.hpp"
+#include "mruby_integration/models/font.hpp"
+
+mrb_value mrb_load_font(mrb_state *mrb, mrb_value) {
+  char *path;
+  mrb_get_args(mrb, "z", &path);
+
+  Font *font = (Font *)malloc(sizeof(Font));
+  *font = LoadFont(path);
+
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Font_class, &Font_type, font));
+
+  setup_Font(mrb, obj, font, font->baseSize, font->charsCount, font->charsPadding);
+
+  return obj;
+}
 
 mrb_value mrb_draw_fps(mrb_state *mrb, mrb_value) {
   mrb_int x, y;
@@ -23,7 +38,21 @@ mrb_value mrb_draw_text(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_draw_text_ex(mrb_state *mrb, mrb_value) {
+  Font *font;
+  mrb_value text;
+  Vector2 *position;
+  mrb_float font_size, spacing;
+  Color *colour;
+  mrb_get_args(mrb, "dSdffd", &font, &Font_type, &text, &position, &Vector2_type, &font_size, &spacing, &colour, &Colour_type);
+
+  DrawTextEx(*font, mrb_str_to_cstr(mrb, text), *position, font_size, spacing, *colour);
+  return mrb_nil_value();
+}
+
 void append_text(mrb_state *mrb) {
+  mrb_define_method(mrb, mrb->kernel_module, "load_font", mrb_load_font, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "draw_fps", mrb_draw_fps, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "draw_text", mrb_draw_text, MRB_ARGS_REQ(5));
+  mrb_define_method(mrb, mrb->kernel_module, "draw_text_ex", mrb_draw_text_ex, MRB_ARGS_REQ(6));
 }

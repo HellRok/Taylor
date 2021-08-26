@@ -3,6 +3,12 @@
 ## Unreleased
 
 - Version the release assets
+- Add the Font model
+- Add load_font method
+- Add draw_text_ex method
+- Tests now all have the correct title for their window
+- Tests now run through taylor-cli
+- Some more tests can now run on CI
 
 ## v0.1.2
 

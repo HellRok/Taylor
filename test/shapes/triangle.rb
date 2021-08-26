@@ -1,6 +1,8 @@
 class TestShapesTriangle < MTest::Unit::TestCase
   def test_draw_triangle
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_triangle(
@@ -17,7 +19,9 @@ class TestShapesTriangle < MTest::Unit::TestCase
   end
 
   def test_draw_triangle_lines
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_triangle_lines(

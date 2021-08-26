@@ -34,6 +34,10 @@ jobs:
         run: bundle install
       - name: Build
         run: bundle exec rake linux:build
+
+      - name: taylor tests
+        run: |
+          ./dist/linux/debug/taylor ./cli-tool/cli.rb ./test/test.rb
       - name: taylor-cli tests
         run: |
           cd ./cli-tool

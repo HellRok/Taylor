@@ -1,6 +1,8 @@
 class TestShapesPixel < MTest::Unit::TestCase
   def test_draw_pixel
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_pixel(2, 2, VIOLET)
@@ -12,7 +14,9 @@ class TestShapesPixel < MTest::Unit::TestCase
   end
 
   def test_draw_pixel_v
-    init_window(10, 10, 'hi')
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
 
     begin_drawing
     draw_pixel_v(Vector2.new(2, 2), VIOLET)
