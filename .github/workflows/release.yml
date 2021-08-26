@@ -33,6 +33,12 @@ jobs:
           VERSION: ${{ steps.tag.outputs.tag }}
         run: |
           envsubst < ./scripts/export/Dockerfile.template > ./scripts/export/Dockerfile
+          # I would normally use a .template file by default here but this is
+          # useful for actually running this tool while developing and didn't
+          # want to have to manage it twice, so let's just move before we
+          # envsubst
+          mv ./cli-tool/taylor-config.json ./cli-tool/taylor-config.json.template
+          envsubst < ./cli-tool/taylor-config.json.template > ./cli-tool/taylor-config.json
 
       -
         name: "Build Docker"

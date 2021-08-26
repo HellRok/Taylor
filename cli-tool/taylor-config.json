@@ -1,5 +1,6 @@
 {
   "name": "taylor",
+  "version": "$VERSION",
   "input": "cli.rb",
   "export_directory": "./exports",
   "load_paths": [

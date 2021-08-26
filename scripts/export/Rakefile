@@ -5,6 +5,7 @@ require './lib/squasher'
 
 options = {
   'name' => 'taylor_game',
+  'version' => 'v0.0.1',
   'input' => 'game.rb',
   'export_directory' => './exports',
   'load_paths' => [
@@ -67,13 +68,13 @@ task :compress do
   Dir.chdir(options['export_directory'])
 
   Dir.chdir('./linux')
-  sh "zip -r #{options['name']}-linux.zip *"
+  sh "zip -r #{options['name']}-linux-#{options['version']}.zip *"
 
   Dir.chdir('../windows')
-  sh "zip -r #{options['name']}-windows.zip *"
+  sh "zip -r #{options['name']}-windows-#{options['version']}.zip *"
 
   Dir.chdir('../osx')
-  sh "zip -r #{options['name']}-osx.zip *"
+  sh "zip -r #{options['name']}-osx-#{options['version']}.zip *"
 
   Dir.chdir('..')
   sh "mv **/*.zip ./"

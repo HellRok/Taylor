@@ -23,6 +23,7 @@ class TestCommandsNew < MTest::Unit::TestCase
     Taylor::Commands::New.new([], {})
     data = JSON.parse(File.read('./taylor_game/taylor-config.json'))
     assert_equal 'taylor_game', data['name']
+    assert_equal 'v0.0.1', data['version']
     assert_equal 'game.rb', data['input']
     assert_true File.exists?('./taylor_game/game.rb')
     assert_equal './exports', data['export_directory']
@@ -38,6 +39,7 @@ class TestCommandsNew < MTest::Unit::TestCase
     Taylor::Commands::New.new(
       [
         '--name', './test/test_game',
+        '--version', 'final_v2_for_real',
         '--input', 'app.rb',
         '--export_directory', './releases',
         '--load_paths', './,./third_party',
@@ -48,6 +50,7 @@ class TestCommandsNew < MTest::Unit::TestCase
 
     data = JSON.parse(File.read('./test/test_game/taylor-config.json'))
     assert_equal './test/test_game', data['name']
+    assert_equal 'final_v2_for_real', data['version']
     assert_equal 'app.rb', data['input']
     assert_true File.exists?('./test/test_game/app.rb')
     assert_equal './releases', data['export_directory']
