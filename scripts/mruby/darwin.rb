@@ -14,6 +14,7 @@ MRuby::CrossBuild.new('x86_64-apple-darwin19') do |conf|
 
   conf.gembox "default"
 
+  conf.gem core: 'mruby-exit'
   conf.gem github: 'iij/mruby-dir'
   conf.gem github: 'iij/mruby-env'
   conf.gem github: 'iij/mruby-iijson'

@@ -12,4 +12,4 @@ require './test/commands/new'
 require './test/commands/export'
 require './test/commands/run'
 
-MTest::Unit.new.run
+exit 1 if MTest::Unit.new.run.positive?

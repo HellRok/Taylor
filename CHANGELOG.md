@@ -1,5 +1,10 @@
 # Taylor
 
+## Unreleased
+
+- Add mruby-exit gem
+- Tests now return an exit code of 1 when they fail or error
+
 ## v0.1.3
 
 - Version the release assets

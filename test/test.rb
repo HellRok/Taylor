@@ -27,4 +27,4 @@ require 'test/models/sound'
 require 'test/models/texture2d'
 require 'test/models/vector2'
 
-MTest::Unit.new.run
+exit 1 if MTest::Unit.new.run.positive?
