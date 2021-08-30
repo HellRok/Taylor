@@ -59,9 +59,16 @@ task :rename do
 
   puts "Copying osx build"
 
-  FileUtils.mkdir_p File.join(options['export_directory'], 'osx')
+  app_path = File.join(
+    options['export_directory'],
+    'osx',
+    "#{options['name']}.app",
+    'Contents',
+    'MacOS'
+  )
+  FileUtils.mkdir_p(app_path)
   FileUtils.cp '../taylor/dist/osx/release/taylor',
-    File.join('./', options['export_directory'], 'osx', options['name'])
+    File.join(app_path, options['name'])
 end
 
 task :compress do
@@ -76,7 +83,10 @@ task :compress do
   sh "zip -r #{options['name']}-windows-#{options['version']}.zip *"
 
   Dir.chdir('../osx')
-  options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
+  app_path = File.join('.', "#{options['name']}.app", 'Contents', 'MacOS')
+  FileUtils.mkdir_p(app_path)
+  File.write(File.join(app_path, '..', 'PkgInfo'), 'APPL????APPL????')
+  options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), app_path) }
   sh "zip -r #{options['name']}-osx-#{options['version']}.zip *"
 
   Dir.chdir('..')
