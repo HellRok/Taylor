@@ -16,8 +16,5 @@ of QBasic but with a more of a modern approach.
 
 ## To Do
 
-1. Get the test running on GitHub actions, this is tricky due to requiring
-   OpenGL
-2. Finish mapping the rest of raylib, so far I think I've done about 30%
-3. Allow users to compile their ruby code into a single executable
-4. Build an actual game with this
+1. Finish mapping the rest of raylib, so far I think I've done about 30%
+2. Build an actual game with this

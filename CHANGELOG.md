@@ -4,6 +4,7 @@
 
 - Add mruby-exit gem
 - Tests now return an exit code of 1 when they fail or error
+- Export now copies "copy_paths"
 
 ## v0.1.3
 

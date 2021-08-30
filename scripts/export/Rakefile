@@ -24,7 +24,7 @@ if File.exists?('../game/taylor-config.json')
 end
 
 task :build do
-  sh "docker build . --pull --tag taylor"
+  sh "docker build . --pull --tag hellrok/taylor"
 end
 
 task :squash do
@@ -68,12 +68,15 @@ task :compress do
   Dir.chdir(options['export_directory'])
 
   Dir.chdir('./linux')
+  options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
   sh "zip -r #{options['name']}-linux-#{options['version']}.zip *"
 
   Dir.chdir('../windows')
+  options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
   sh "zip -r #{options['name']}-windows-#{options['version']}.zip *"
 
   Dir.chdir('../osx')
+  options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
   sh "zip -r #{options['name']}-osx-#{options['version']}.zip *"
 
   Dir.chdir('..')
