@@ -7,6 +7,7 @@
 - Export now copies "copy_paths"
 - Export for OSX now creates an app
 - Cleanup the readme a little
+- Rectangles use floats, so use the right method for setting the ivar
 
 ## v0.1.3
 

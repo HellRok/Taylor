@@ -19,10 +19,10 @@ mrb_value mrb_Rectangle_initialize(mrb_state *mrb, mrb_value self) {
   mrb_data_init(self, nullptr, &Rectangle_type);
   rectangle = (Rectangle *)malloc(sizeof(Rectangle));
 
-  ivar_attr_int(mrb, self, rectangle->x, x);
-  ivar_attr_int(mrb, self, rectangle->y, y);
-  ivar_attr_int(mrb, self, rectangle->width, width);
-  ivar_attr_int(mrb, self, rectangle->height, height);
+  ivar_attr_float(mrb, self, rectangle->x, x);
+  ivar_attr_float(mrb, self, rectangle->y, y);
+  ivar_attr_float(mrb, self, rectangle->width, width);
+  ivar_attr_float(mrb, self, rectangle->height, height);
 
   mrb_data_init(self, rectangle, &Rectangle_type);
   return self;
