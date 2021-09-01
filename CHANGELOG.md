@@ -6,6 +6,7 @@
 - Tests now return an exit code of 1 when they fail or error
 - Export now copies "copy_paths"
 - Export for OSX now creates an app
+- Cleanup the readme a little
 
 ## v0.1.3
 
