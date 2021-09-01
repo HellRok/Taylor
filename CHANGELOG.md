@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.1.4
 
 - Add mruby-exit gem
 - Tests now return an exit code of 1 when they fail or error
