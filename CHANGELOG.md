@@ -1,5 +1,9 @@
 # Taylor
 
+## v0.1.6
+
+- ARGV needs to be zero indexed for export
+
 ## v0.1.5
 
 - Taylor-cli help commands now format nicely

@@ -13,7 +13,7 @@ void populate_argv(mrb_state *mrb, int argc, char **argv) {
   for (int i = 2; i < argc; i++) {
 #endif
 #ifdef EXPORT
-  for (int i = 1; i < argc; i++) {
+  for (int i = 0; i < argc; i++) {
 #endif
     mrb_ary_push(mrb, ARGV, mrb_str_new_cstr(mrb, argv[i]));
   }
