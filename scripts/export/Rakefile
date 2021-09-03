@@ -29,7 +29,6 @@ end
 
 task :squash do
   Dir.chdir('../game')
-  puts `ls -l`
   Squasher.call(options)
   Dir.chdir('../export')
 end
@@ -41,26 +40,26 @@ end
 
 task :rename do
   Dir.chdir('../game')
-  FileUtils.mkdir_p options['export_directory']
+  FileUtils.mkdir_p './exports'
 
   puts "Copying linux build"
 
-  FileUtils.mkdir_p File.join(options['export_directory'], 'linux')
+  FileUtils.mkdir_p File.join('./exports', 'linux')
   FileUtils.cp '../taylor/dist/linux/release/taylor',
-    File.join('./', options['export_directory'], 'linux', options['name'])
+    File.join('./', './exports', 'linux', options['name'])
 
   puts "Copying windows build"
 
-  FileUtils.mkdir_p File.join(options['export_directory'], 'windows')
+  FileUtils.mkdir_p File.join('./exports', 'windows')
   FileUtils.cp '../taylor/dist/windows/release/taylor.exe',
-    File.join('./', options['export_directory'], 'windows', "#{options['name']}.exe")
+    File.join('./', './exports', 'windows', "#{options['name']}.exe")
   FileUtils.cp Dir.glob('../taylor/dist/windows/release/*.dll'),
-    File.join('./', options['export_directory'], 'windows')
+    File.join('./', './exports', 'windows')
 
   puts "Copying osx build"
 
   app_path = File.join(
-    options['export_directory'],
+    './exports',
     'osx',
     "#{options['name']}.app",
     'Contents',
@@ -72,22 +71,22 @@ task :rename do
 end
 
 task :compress do
-  Dir.chdir(options['export_directory'])
+  Dir.chdir('./exports')
 
   Dir.chdir('./linux')
   options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
-  sh "zip -r #{options['name']}-linux-#{options['version']}.zip *"
+  sh "zip -r \"#{options['name']}-linux-#{options['version']}.zip\" *"
 
   Dir.chdir('../windows')
   options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
-  sh "zip -r #{options['name']}-windows-#{options['version']}.zip *"
+  sh "zip -r \"#{options['name']}-windows-#{options['version']}.zip\" *"
 
   Dir.chdir('../osx')
   app_path = File.join('.', "#{options['name']}.app", 'Contents', 'MacOS')
   FileUtils.mkdir_p(app_path)
   File.write(File.join(app_path, '..', 'PkgInfo'), 'APPL????APPL????')
   options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), app_path) }
-  sh "zip -r #{options['name']}-osx-#{options['version']}.zip *"
+  sh "zip -r \"#{options['name']}-osx-#{options['version']}.zip\" *"
 
   Dir.chdir('..')
   sh "mv **/*.zip ./"

@@ -5,6 +5,10 @@
 - Taylor-cli help commands now format nicely
 - Taylor-cli can just return the version number
 - Add measure_text_ex method
+- export_directory now actually specifies the export from the docker build, not
+  where it builds inside Docker
+- Can now specify a build cache for exports to save on compile time
+- Export Dockerfile now builds Taylor to prime the build cache
 
 ## v0.1.4
 
