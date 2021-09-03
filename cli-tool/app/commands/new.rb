@@ -27,7 +27,7 @@ module Taylor
           Options:
             --help\t\t\tDisplays this message
             --name name\t\t\tWhat to name your new game (defaults to taylor_game)
-            --version version\t\t\tWhat version is your game (defaults to v0.0.1)
+            --version version\t\tWhat version is your game (defaults to v0.0.1)
             --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
             --export_directory directory\tWhat directory do you want your exports (defaults to ./exports)
             --load_paths directories\tWhat directories do you want in your load path (defaults to ./,./vendor)

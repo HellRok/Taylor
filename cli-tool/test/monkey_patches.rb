@@ -22,17 +22,21 @@ module Taylor
   end
 
   module Commands
-    class New
+    class Export
       include PutsGrabber
     end
 
-    class Export
+    class New
       include PutsGrabber
     end
 
     class Run
       include PutsGrabber
       include RequireGrabber
+    end
+
+    class Version
+      include PutsGrabber
     end
   end
 end

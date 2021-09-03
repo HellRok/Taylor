@@ -35,7 +35,8 @@ module Taylor
             taylor [action] [options]
 
           Options:
-            --help\tShow this message
+            --help\t\t\tShow this message
+            --version\t\t\tDisplay the version and exit
             --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
 
           Actions:

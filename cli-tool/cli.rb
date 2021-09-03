@@ -3,6 +3,7 @@ require './templates/game_template'
 require './app/commands/export'
 require './app/commands/new'
 require './app/commands/run'
+require './app/commands/version'
 
 $:.unshift WORKING_DIRECTORY
 Dir.chdir WORKING_DIRECTORY
@@ -21,6 +22,9 @@ when 'new'
 
 when 'export'
   Taylor::Commands::Export.call(ARGV[1..], options)
+
+when '--version'
+  Taylor::Commands::Version.call
 
 else
   Taylor::Commands::Run.call(command, ARGV, options)
