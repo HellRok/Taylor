@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.1.5
 
 - Taylor-cli help commands now format nicely
 - Taylor-cli can just return the version number
