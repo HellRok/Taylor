@@ -21,4 +21,17 @@ class TestText < MTest::Unit::TestCase
     assert_within 97, fixture_draw_text_ex, get_screen_data.data
     close_window
   end
+
+  def test_measure_text_ex
+    skip_unless_display_present
+
+    init_window(10, 10, __method__.to_s)
+    font = load_font('./test/assets/tiny.ttf')
+    size = measure_text_ex(font, 'hello', 12, 0)
+    flush_frame
+
+    assert_equal 31.125, size.x
+    assert_equal 12, size.y
+    close_window
+  end
 end

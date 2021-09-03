@@ -4,6 +4,7 @@
 
 - Taylor-cli help commands now format nicely
 - Taylor-cli can just return the version number
+- Add measure_text_ex method
 
 ## v0.1.4
 
