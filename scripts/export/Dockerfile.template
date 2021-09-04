@@ -7,11 +7,7 @@ RUN git clone --branch 3.0.0 --depth 1 https://github.com/mruby/mruby.git /app/m
   git clone --branch $VERSION --depth 1 https://github.com/HellRok/Taylor.git /app/taylor &&\
   apt-get update -y &&\
   apt-get install -y g++ zip &&\
-  cd /app/taylor &&\
-  rake linux:release:build &&\
-  rake windows:release:build &&\
-  rake osx:release:build &&\
-  rm -rf dist/*
+  apt-get clean
 
 COPY . /app/export
 

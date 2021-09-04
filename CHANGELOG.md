@@ -1,8 +1,8 @@
 # Taylor
 
-## Unreleased
+## v0.1.7
 
-- ARGV still needs work
+- Do not prime the build cache
 
 ## v0.1.6
 
