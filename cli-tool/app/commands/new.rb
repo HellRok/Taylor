@@ -30,6 +30,7 @@ module Taylor
             --version version\t\tWhat version is your game (defaults to v0.0.1)
             --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
             --export_directory directory\tWhat directory do you want your exports (defaults to ./exports)
+            --export_targets targets\tWhat exports do you want (defaults to linux,windows,osx,web)
             --load_paths directories\tWhat directories do you want in your load path (defaults to ./,./vendor)
             --copy_paths directories\tWhat directories do you want copied into your exports (defaults to ./assets)
         STR
@@ -51,6 +52,7 @@ module Taylor
           opts.on(:version,          :string, options.fetch(:version,          'v0.0.1'))
           opts.on(:input,            :string, options.fetch(:input,            'game.rb'))
           opts.on(:export_directory, :string, options.fetch(:export_directory, './exports'))
+          opts.on(:export_targets,   :string, options.fetch(:export_targets,   'linux,windows,osx,web'))
           opts.on(:load_paths,       :string, options.fetch(:load_paths,       './,./vendor'))
           opts.on(:copy_paths,       :string, options.fetch(:copy_paths,       './assets'))
         end
@@ -59,6 +61,7 @@ module Taylor
         @options = parser.opts
         @options[:load_paths] = @options[:load_paths].split(',')
         @options[:copy_paths] = @options[:copy_paths].split(',')
+        @options[:export_targets] = @options[:export_targets].split(',')
       end
 
       def create_directory!

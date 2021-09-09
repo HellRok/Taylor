@@ -8,6 +8,12 @@ options = {
   'version' => 'v0.0.1',
   'input' => 'game.rb',
   'export_directory' => './exports',
+  'export_targets' => [
+    'linux',
+    'windows',
+    'osx',
+    'web',
+  ],
   'load_paths' => [
     './',
     './vendor',
@@ -17,83 +23,152 @@ options = {
   ],
 }
 
-if File.exists?('../game/taylor-config.json')
+if File.exists?('/app/game/taylor-config.json')
   options.merge!(
-    JSON.parse(File.read('../game/taylor-config.json'))
+    JSON.parse(File.read('/app/game/taylor-config.json'))
   )
 end
 
-task :build do
+task :docker do
   sh "docker build . --pull --tag hellrok/taylor"
 end
 
 task :squash do
-  Dir.chdir('../game')
+  Dir.chdir('/app/game')
   Squasher.call(options)
-  Dir.chdir('../export')
+  Dir.chdir('/app/export')
 end
 
 task :transpile => :squash
 task :transpile do
-  sh "/app/mruby/bin/mrbc -Bgame -o game.h ./output.rb"
+  sh "/app/mruby/bin/mrbc -Bgame -o /app/taylor/include/game.h ./output.rb"
 end
 
-task :rename do
-  Dir.chdir('../game')
-  FileUtils.mkdir_p './exports'
+task :build => "build:setup"
+task :build => "build:linux"   if options['export_targets'].include?('linux')
+task :build => "build:windows" if options['export_targets'].include?('windows')
+task :build => "build:osx"     if options['export_targets'].include?('osx')
+task :build => "build:web"     if options['export_targets'].include?('web')
+task :build => "build:reset"
 
-  puts "Copying linux build"
+namespace :build do
+  task :setup do
+    Dir.chdir('/app/taylor')
+  end
+  task :reset do
+    Dir.chdir('/app/game')
+  end
 
-  FileUtils.mkdir_p File.join('./exports', 'linux')
-  FileUtils.cp Dir.glob('../taylor/dist/linux/release/*'),
-    File.join('./', './exports', 'linux')
+  task :linux do
+    sh "EXPORT=1 rake linux:release:build"
+  end
 
-  puts "Copying windows build"
+  task :windows do
+    sh "EXPORT=1 rake windows:release:build"
+  end
 
-  FileUtils.mkdir_p File.join('./exports', 'windows')
-  FileUtils.cp Dir.glob('../taylor/dist/windows/release/*'),
-    File.join('./', './exports', 'windows')
+  task :osx do
+    sh "EXPORT=1 rake osx:release:build"
+  end
 
-  puts "Copying osx build"
-
-  app_path = File.join(
-    './exports',
-    'osx',
-    "#{options['name']}.app",
-    'Contents',
-    'MacOS'
-  )
-  FileUtils.mkdir_p(app_path)
-  FileUtils.cp Dir.glob('../taylor/dist/osx/release/*'), app_path
-
-  puts "Copying web build"
-  FileUtils.mkdir_p File.join('./exports', 'web')
-  FileUtils.cp Dir.glob('../taylor/dist/web/release/*'),
-    File.join('./', './exports', 'web')
+  task :web do
+    sh "EXPORT=1 rake web:release:build"
+  end
 end
 
-task :compress do
-  Dir.chdir('./exports')
+task :rename => "rename:setup"
+task :rename => "rename:linux"   if options['export_targets'].include?('linux')
+task :rename => "rename:windows" if options['export_targets'].include?('windows')
+task :rename => "rename:osx"     if options['export_targets'].include?('osx')
+task :rename => "rename:web"     if options['export_targets'].include?('web')
 
-  Dir.chdir('./linux')
-  options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
-  sh "zip -r \"#{options['name']}-linux-#{options['version']}.zip\" *"
+namespace :rename do
+  task :setup do
+    Dir.chdir('/app/game')
+    FileUtils.mkdir_p './exports'
+  end
 
-  Dir.chdir('../windows')
-  options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
-  sh "zip -r \"#{options['name']}-windows-#{options['version']}.zip\" *"
+  task :linux do
+    puts "Copying linux build"
 
-  Dir.chdir('../osx')
-  app_path = File.join('.', "#{options['name']}.app", 'Contents', 'MacOS')
-  FileUtils.mkdir_p(app_path)
-  File.write(File.join(app_path, '..', 'PkgInfo'), 'APPL????APPL????')
-  options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), app_path) }
-  sh "zip -r \"#{options['name']}-osx-#{options['version']}.zip\" *"
+    FileUtils.mkdir_p File.join('./exports', 'linux')
+    FileUtils.cp Dir.glob('/app/taylor/dist/linux/release/*'),
+      File.join('./', './exports', 'linux')
+  end
 
-  Dir.chdir('../web')
-  sh "zip -r \"#{options['name']}-web-#{options['version']}.zip\" *"
+  task :windows do
+    puts "Copying windows build"
 
-  Dir.chdir('..')
-  sh "mv **/*.zip ./"
-  sh "rm -rf linux windows osx web"
+    FileUtils.mkdir_p File.join('./exports', 'windows')
+    FileUtils.cp Dir.glob('/app/taylor/dist/windows/release/*'),
+      File.join('./', './exports', 'windows')
+  end
+
+  task :osx do
+    puts "Copying osx build"
+
+    app_path = File.join(
+      './exports',
+      'osx',
+      "#{options['name']}.app",
+      'Contents',
+      'MacOS'
+    )
+    FileUtils.mkdir_p(app_path)
+    FileUtils.cp Dir.glob('/app/taylor/dist/osx/release/*'), app_path
+  end
+
+  task :web do
+    puts "Copying web build"
+    FileUtils.mkdir_p File.join('./exports', 'web')
+    FileUtils.cp Dir.glob('/app/taylor/dist/web/release/*'),
+      File.join('./', './exports', 'web')
+  end
+end
+
+task :compress => "compress:setup"
+task :compress => "compress:linux"   if options['export_targets'].include?('linux')
+task :compress => "compress:windows" if options['export_targets'].include?('windows')
+task :compress => "compress:osx"     if options['export_targets'].include?('osx')
+task :compress => "compress:web"     if options['export_targets'].include?('web')
+task :compress => "compress:move"
+
+
+namespace :compress do
+  task :setup do
+    Dir.chdir('/app/game/exports')
+  end
+
+  task :move do
+    sh "mv /app/game/exports/**/*.zip /app/game/exports/"
+    options['export_targets'].each { |target|
+      sh "rm -rf \"/app/game/exports/#{target}\""
+    }
+  end
+
+  task :linux do
+    Dir.chdir('/app/game/exports/linux')
+    options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
+    sh "zip -r \"#{options['name']}-linux-#{options['version']}.zip\" *"
+  end
+
+  task :windows do
+    Dir.chdir('/app/game/exports/windows')
+    options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
+    sh "zip -r \"#{options['name']}-windows-#{options['version']}.zip\" *"
+  end
+
+  task :osx do
+    Dir.chdir('/app/game/exports/osx')
+    app_path = File.join('.', "#{options['name']}.app", 'Contents', 'MacOS')
+    FileUtils.mkdir_p(app_path)
+    File.write(File.join(app_path, '..', 'PkgInfo'), 'APPL????APPL????')
+    options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), app_path) }
+    sh "zip -r \"#{options['name']}-osx-#{options['version']}.zip\" *"
+  end
+
+  task :web do
+    Dir.chdir('/app/game/exports/web')
+    sh "zip -r \"#{options['name']}-web-#{options['version']}.zip\" *"
+  end
 end

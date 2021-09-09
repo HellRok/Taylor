@@ -1,8 +1,9 @@
 # Taylor
 
-## Unreleased
+## v0.2.0
 
 - Can now export to web
+- Can now specify target exports
 
 ## v0.1.7
 

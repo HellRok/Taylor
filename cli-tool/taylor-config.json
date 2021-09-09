@@ -3,6 +3,11 @@
   "version": "$VERSION",
   "input": "cli.rb",
   "export_directory": "./exports",
+  "export_targets": [
+    "linux",
+    "windows",
+    "osx"
+  ],
   "load_paths": [
     "./"
   ],

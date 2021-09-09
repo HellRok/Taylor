@@ -54,7 +54,10 @@ jobs:
           VERSION: ${{ steps.tag.outputs.tag }}
         run: |
           cd ./cli-tool
-          docker run -u $(id -u ${USER}):$(id -g ${USER}) --mount type=bind,source=$(pwd),target=/app/game/ hellrok/taylor:$VERSION
+          mkdir exports
+          docker run -u $(id -u ${USER}):$(id -g ${USER}) \
+            --mount type=bind,source=$(pwd),target=/app/game/ \
+            hellrok/taylor:$VERSION
           mkdir ../exports
           mv ./exports/* ../exports/
 

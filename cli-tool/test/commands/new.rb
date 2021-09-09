@@ -27,6 +27,7 @@ class TestCommandsNew < MTest::Unit::TestCase
     assert_equal 'game.rb', data['input']
     assert_true File.exists?('./taylor_game/game.rb')
     assert_equal './exports', data['export_directory']
+    assert_equal ['linux', 'windows', 'osx', 'web'], data['export_targets']
     assert_equal ['./', './vendor'], data['load_paths']
     assert_true Dir.exists?('./taylor_game/vendor')
     assert_equal ['./assets'], data['copy_paths']
@@ -42,6 +43,7 @@ class TestCommandsNew < MTest::Unit::TestCase
         '--version', 'final_v2_for_real',
         '--input', 'app.rb',
         '--export_directory', './releases',
+        '--export_targets', 'web,windows',
         '--load_paths', './,./third_party',
         '--copy_paths', './resources,./music',
       ],
@@ -54,6 +56,7 @@ class TestCommandsNew < MTest::Unit::TestCase
     assert_equal 'app.rb', data['input']
     assert_true File.exists?('./test/test_game/app.rb')
     assert_equal './releases', data['export_directory']
+    assert_equal ['web', 'windows'], data['export_targets']
     assert_equal ['./', './third_party'], data['load_paths']
     assert_true Dir.exists?('./test/test_game/third_party')
     assert_equal ['./resources', './music'], data['copy_paths']
