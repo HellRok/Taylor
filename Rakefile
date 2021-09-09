@@ -1,11 +1,18 @@
+require "json"
 require "fileutils"
 require "rake/clean"
 require 'rake/loaders/makefile'
 
-supported_platforms = %w(linux windows osx)
+supported_platforms = %w(linux windows osx web)
 supported_variants = %w(debug release)
 
-name = "taylor"
+if File.exist?('/app/game/taylor-config.json')
+  options = JSON.parse(File.read('/app/game/taylor-config.json'))
+else
+  options = {}
+end
+
+name = options.fetch('name', "taylor")
 platform = ""
 cxx = ""
 variant = "debug"
@@ -32,7 +39,7 @@ task :default => "linux:build"
 
 def source_for(o_file)
   SRC.detect{ |file|
-    file.ext('').gsub(SRC_FOLDER, '') == o_file.ext('').gsub(/^build\/(windows|linux|osx)\/(debug|release)/, '')
+    file.ext('').gsub(SRC_FOLDER, '') == o_file.ext('').gsub(/^build\/(windows|linux|osx|web)\/(debug|release)/, '')
   }
 end
 
@@ -58,11 +65,16 @@ namespace :linux do
       cxxflags += " -O3"
     end
 
+    task :strip do
+      sh "strip \"./dist/#{platform}/#{variant}/#{name}\""
+    end
+
     task :build => "linux:setup_variables"
     task :build => "linux:release:setup_variables"
     multitask :build => depends.call("build/linux/release")
     multitask :build => objects.call("build/linux/release")
     task :build => "build:linux:release"
+    task :build => "linux:release:strip"
   end
 end
 
@@ -92,12 +104,17 @@ namespace :windows do
       cxxflags += " -O3"
     end
 
+    task :strip do
+      sh "x86_64-w64-mingw32-strip \"./dist/#{platform}/#{variant}/#{name}\""
+    end
+
     task :build => "windows:setup_variables"
     task :build => "windows:release:setup_variables"
     multitask :build => depends.call("build/windows/release")
     multitask :build => objects.call("build/windows/release")
     task :build => "build:windows:release"
     task :build => "windows:release:copy_dlls"
+    task :build => "windows:release:strip"
   end
 end
 
@@ -124,11 +141,51 @@ namespace :osx do
       cxxflags += " -Oz -mmacosx-version-min=10.11 -stdlib=libc++"
     end
 
+    task :strip do
+      sh "x86_64-apple-darwin19-strip \"./dist/#{platform}/#{variant}/#{name}\""
+    end
+
     task :build => "osx:setup_variables"
     task :build => "osx:release:setup_variables"
     multitask :build => depends.call("build/osx/release")
     multitask :build => objects.call("build/osx/release")
     task :build => "build:osx:release"
+    task :build => "osx:release:strip"
+  end
+end
+
+namespace :web do
+  task :setup_variables do
+    name = "#{name}.html"
+    objects_folder = "build/web/debug"
+    cxx = "emcc"
+    cxxflags += " -s USE_GLFW=3 -s ASYNCIFY --shell-file ./scripts/export/emscripten_shell.html"
+    options.fetch('copy_paths', []).each { |path|
+      cxxflags += " --preload-file #{File.join('/', 'app', 'game', path)}@#{path}"
+    }
+    platform = "web"
+    ldflags = "-l dl -l pthread"
+    includes += " -I ./vendor/web/raylib/include/"
+    static_links = "#{static_links} ./vendor/web/libmruby.a ./vendor/web/raylib/lib/libraylib.a"
+  end
+
+  task :build => "web:setup_variables"
+  multitask :build => depends.call("build/web/debug")
+  multitask :build => objects.call("build/web/debug")
+  task :build => "build:web:debug"
+
+  namespace :release do
+    task :setup_variables do
+      objects_folder = "build/web/release"
+      variant = "release"
+      cxxflags += " -O3"
+    end
+
+    task :build => "web:setup_variables"
+    task :build => "web:release:setup_variables"
+    multitask :build => depends.call("build/web/release")
+    multitask :build => objects.call("build/web/release")
+    task :build => "build:web:release"
   end
 end
 
@@ -167,7 +224,7 @@ supported_platforms.each { |platform|
       FileUtils.mkdir_p("./dist/#{platform}/#{variant}")
       sh <<-CMD.squeeze(' ').strip
         #{cxx} \
-          -o ./dist/#{platform}/#{variant}/#{name} \
+          -o \"./dist/#{platform}/#{variant}/#{name}\" \
           #{cxxflags} \
           #{defines} \
           #{includes} \
@@ -177,10 +234,6 @@ supported_platforms.each { |platform|
       CMD
     end
   }
-}
-
-task :release => supported_platforms.flat_map { |platform|
-  "#{platform}:release:build"
 }
 
 task 'mruby:build' do |task|

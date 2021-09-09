@@ -12,7 +12,12 @@ MRuby::CrossBuild.new('x86_64-apple-darwin19') do |conf|
   conf.build_target     = 'x86_64-pc-linux-gnu'
   conf.host_target      = 'x86_64-apple-darwin19'
 
-  conf.gembox "default"
+  # These are the default libraries
+  conf.gembox "stdlib"
+  conf.gembox "stdlib-ext"
+  conf.gembox "stdlib-io"
+  conf.gembox "math"
+  conf.gembox "metaprog"
 
   conf.gem core: 'mruby-exit'
   conf.gem github: 'iij/mruby-dir'

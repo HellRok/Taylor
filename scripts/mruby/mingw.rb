@@ -8,7 +8,12 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.archiver.command = "#{conf.host_target}-gcc-ar"
   conf.exts.executable = ".exe"
 
-  conf.gembox "default"
+  # These are the default libraries
+  conf.gembox "stdlib"
+  conf.gembox "stdlib-ext"
+  conf.gembox "stdlib-io"
+  conf.gembox "math"
+  conf.gembox "metaprog"
 
   conf.gem core: 'mruby-exit'
   conf.gem github: 'iij/mruby-dir'

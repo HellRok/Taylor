@@ -45,15 +45,13 @@ task :rename do
   puts "Copying linux build"
 
   FileUtils.mkdir_p File.join('./exports', 'linux')
-  FileUtils.cp '../taylor/dist/linux/release/taylor',
-    File.join('./', './exports', 'linux', options['name'])
+  FileUtils.cp Dir.glob('../taylor/dist/linux/release/*'),
+    File.join('./', './exports', 'linux')
 
   puts "Copying windows build"
 
   FileUtils.mkdir_p File.join('./exports', 'windows')
-  FileUtils.cp '../taylor/dist/windows/release/taylor.exe',
-    File.join('./', './exports', 'windows', "#{options['name']}.exe")
-  FileUtils.cp Dir.glob('../taylor/dist/windows/release/*.dll'),
+  FileUtils.cp Dir.glob('../taylor/dist/windows/release/*'),
     File.join('./', './exports', 'windows')
 
   puts "Copying osx build"
@@ -66,8 +64,12 @@ task :rename do
     'MacOS'
   )
   FileUtils.mkdir_p(app_path)
-  FileUtils.cp '../taylor/dist/osx/release/taylor',
-    File.join(app_path, options['name'])
+  FileUtils.cp Dir.glob('../taylor/dist/osx/release/*'), app_path
+
+  puts "Copying web build"
+  FileUtils.mkdir_p File.join('./exports', 'web')
+  FileUtils.cp Dir.glob('../taylor/dist/web/release/*'),
+    File.join('./', './exports', 'web')
 end
 
 task :compress do
@@ -88,7 +90,10 @@ task :compress do
   options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), app_path) }
   sh "zip -r \"#{options['name']}-osx-#{options['version']}.zip\" *"
 
+  Dir.chdir('../web')
+  sh "zip -r \"#{options['name']}-web-#{options['version']}.zip\" *"
+
   Dir.chdir('..')
   sh "mv **/*.zip ./"
-  sh "rm -rf linux windows osx"
+  sh "rm -rf linux windows osx web"
 end
