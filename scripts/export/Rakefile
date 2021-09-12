@@ -91,24 +91,22 @@ namespace :rename do
   task :linux do
     puts "Copying linux build"
 
-    FileUtils.mkdir_p File.join('./exports', 'linux')
-    FileUtils.cp Dir.glob('/app/taylor/dist/linux/release/*'),
-      File.join('./', './exports', 'linux')
+    FileUtils.mkdir_p '/app/game/exports/linux'
+    FileUtils.cp Dir.glob('/app/taylor/dist/linux/release/*'), '/app/game/exports/linux'
   end
 
   task :windows do
     puts "Copying windows build"
 
-    FileUtils.mkdir_p File.join('./exports', 'windows')
-    FileUtils.cp Dir.glob('/app/taylor/dist/windows/release/*'),
-      File.join('./', './exports', 'windows')
+    FileUtils.mkdir_p '/app/game/exports/windows'
+    FileUtils.cp Dir.glob('/app/taylor/dist/windows/release/*'), '/app/game/exports/windows'
   end
 
   task :osx do
     puts "Copying osx build"
 
     app_path = File.join(
-      './exports',
+      '/app/game/exports',
       'osx',
       "#{options['name']}.app",
       'Contents',
@@ -120,9 +118,10 @@ namespace :rename do
 
   task :web do
     puts "Copying web build"
-    FileUtils.mkdir_p File.join('./exports', 'web')
-    FileUtils.cp Dir.glob('/app/taylor/dist/web/release/*'),
-      File.join('./', './exports', 'web')
+    FileUtils.mkdir_p '/app/game/exports/web'
+    FileUtils.cp Dir.glob('/app/taylor/dist/web/release/*'), '/app/game/exports/web'
+    FileUtils.mv File.join('/app/game/exports/web/', "#{options['name']}.html"),
+      '/app/game/exports/web/index.html'
   end
 end
 
