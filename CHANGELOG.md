@@ -1,5 +1,9 @@
 # Taylor
 
+## v0.2.3
+
+- Init audio in the initial template
+
 ## v0.2.2
 
 - Use -O3 on all builds

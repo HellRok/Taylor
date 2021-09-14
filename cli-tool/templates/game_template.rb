@@ -6,6 +6,9 @@ $LOAD_PATHS
 # Open up a window
 init_window(800, 480, "$NAME")
 
+# Setup audio so we can play sounds
+init_audio_device
+
 # Get the current monitor frame rate and set our target framerate to match.
 set_target_fps(get_monitor_refresh_rate(get_current_monitor))
 
@@ -25,6 +28,7 @@ until window_should_close?
   end_drawing
 end
 
+close_audio_device
 close_window
   STR
 end
