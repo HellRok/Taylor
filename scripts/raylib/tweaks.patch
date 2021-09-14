@@ -1,5 +1,5 @@
 diff --git a/src/Makefile b/src/Makefile
-index a4a943d6..9f7b635e 100644
+index a4a943d6..3b907ac6 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -155,16 +155,6 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
@@ -37,6 +37,15 @@ index a4a943d6..9f7b635e 100644
      ifeq ($(PLATFORM_OS),OSX)
          # OSX default compiler
          CC = clang
+@@ -303,7 +304,7 @@ ifeq ($(RAYLIB_BUILD_MODE),DEBUG)
+ endif
+ ifeq ($(RAYLIB_BUILD_MODE),RELEASE)
+     ifeq ($(PLATFORM),PLATFORM_WEB)
+-        CFLAGS += -Os
++        CFLAGS += -O3
+     endif
+     ifeq ($(PLATFORM),PLATFORM_DESKTOP)
+         CFLAGS += -s -O1
 diff --git a/src/config.h b/src/config.h
 index 99cb1d48..f6236291 100644
 --- a/src/config.h

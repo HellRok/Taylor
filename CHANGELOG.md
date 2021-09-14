@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Use -O3 on all builds
 
 ## v0.2.1
 
