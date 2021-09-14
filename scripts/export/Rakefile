@@ -78,11 +78,11 @@ namespace :build do
 end
 
 task :rename => "rename:setup"
-task :rename => "rename:linux"   if options['export_targets'].include?('linux')
-task :rename => "rename:windows" if options['export_targets'].include?('windows')
-task :rename => "rename:osx"     if options['export_targets'].include?('osx')
-task :rename => "rename:osx"     if options['export_targets'].include?('osx_no_app')
-task :rename => "rename:web"     if options['export_targets'].include?('web')
+task :rename => "rename:linux"      if options['export_targets'].include?('linux')
+task :rename => "rename:windows"    if options['export_targets'].include?('windows')
+task :rename => "rename:osx"        if options['export_targets'].include?('osx')
+task :rename => "rename:osx_no_app" if options['export_targets'].include?('osx_no_app')
+task :rename => "rename:web"        if options['export_targets'].include?('web')
 
 namespace :rename do
   task :setup do
@@ -116,6 +116,13 @@ namespace :rename do
     )
     FileUtils.mkdir_p(app_path)
     FileUtils.cp Dir.glob('/app/taylor/dist/osx/release/*'), app_path
+  end
+
+  task :osx_no_app do
+    puts "Copying osx build"
+
+    FileUtils.mkdir_p '/app/game/exports/osx'
+    FileUtils.cp Dir.glob('/app/taylor/dist/osx/release/*'), '/app/game/exports/osx'
   end
 
   task :web do
