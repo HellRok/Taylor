@@ -48,6 +48,7 @@ task :build => "build:setup"
 task :build => "build:linux"   if options['export_targets'].include?('linux')
 task :build => "build:windows" if options['export_targets'].include?('windows')
 task :build => "build:osx"     if options['export_targets'].include?('osx')
+task :build => "build:osx"     if options['export_targets'].include?('osx_no_app')
 task :build => "build:web"     if options['export_targets'].include?('web')
 task :build => "build:reset"
 
@@ -80,6 +81,7 @@ task :rename => "rename:setup"
 task :rename => "rename:linux"   if options['export_targets'].include?('linux')
 task :rename => "rename:windows" if options['export_targets'].include?('windows')
 task :rename => "rename:osx"     if options['export_targets'].include?('osx')
+task :rename => "rename:osx"     if options['export_targets'].include?('osx_no_app')
 task :rename => "rename:web"     if options['export_targets'].include?('web')
 
 namespace :rename do
@@ -126,10 +128,11 @@ namespace :rename do
 end
 
 task :compress => "compress:setup"
-task :compress => "compress:linux"   if options['export_targets'].include?('linux')
-task :compress => "compress:windows" if options['export_targets'].include?('windows')
-task :compress => "compress:osx"     if options['export_targets'].include?('osx')
-task :compress => "compress:web"     if options['export_targets'].include?('web')
+task :compress => "compress:linux"      if options['export_targets'].include?('linux')
+task :compress => "compress:windows"    if options['export_targets'].include?('windows')
+task :compress => "compress:osx"        if options['export_targets'].include?('osx')
+task :compress => "compress:osx_no_app" if options['export_targets'].include?('osx_no_app')
+task :compress => "compress:web"        if options['export_targets'].include?('web')
 task :compress => "compress:move"
 
 
@@ -163,6 +166,12 @@ namespace :compress do
     FileUtils.mkdir_p(app_path)
     File.write(File.join(app_path, '..', 'PkgInfo'), 'APPL????APPL????')
     options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), app_path) }
+    sh "zip -r \"#{options['name']}-osx-#{options['version']}.zip\" *"
+  end
+
+  task :osx_no_app do
+    Dir.chdir('/app/game/exports/osx')
+    options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
     sh "zip -r \"#{options['name']}-osx-#{options['version']}.zip\" *"
   end
 

@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Use -O3 on all builds
+- Taylor CLI OSX now exports as a cli app, not as a gui application
 
 ## v0.2.1
 
