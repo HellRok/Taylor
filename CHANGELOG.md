@@ -4,6 +4,7 @@
 
 - Use -O3 on all builds
 - Taylor CLI OSX now exports as a cli app, not as a gui application
+- Added load_font_ex
 
 ## v0.2.1
 
