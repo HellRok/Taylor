@@ -1,6 +1,8 @@
 FROM appplant/mruby-cli as build_base
 WORKDIR /app/export
 ENV PATH="/app/emsdk:/app/emsdk/node/14.15.5_64bit/bin:/app/emsdk/upstream/emscripten:/opt/osxcross/target/bin:${PATH}"
+# I'm not really sure why but this is required for the docker export to work on OSX
+ENV EM_CACHE="/app/emsdk/upstream/emscripten/cache"
 
 RUN git clone --branch 3.0.0 --depth 1 https://github.com/mruby/mruby.git /app/mruby &&\
   cd /app/mruby &&\
@@ -19,6 +21,7 @@ RUN  git clone https://github.com/juj/emsdk.git /app/emsdk &&\
 COPY . /app/export
 
 RUN chmod -R o+w \
+    /app/emsdk \
     /app/export \
     /app/taylor \
     /app/taylor/include

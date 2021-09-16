@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fix exports for OSX builds
 
 ## v0.2.3
 
