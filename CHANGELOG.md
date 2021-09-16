@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.2.4
 
 - Fix exports for OSX builds
 
