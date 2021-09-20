@@ -15,6 +15,11 @@ Taylor is a game engine I've built using [mruby](http://mruby.org/) and
 people to get into game development. This is trying to replicate the simplicity
 of QBasic but with a more of a modern approach.
 
+## Getting Started
+
+Check out my tutorial over on the [official Taylor
+website](http://taylor.oequacki.com/documentation/tutorials/getting_started/).
+
 ## Examples
 
 If you'd like to see some examples, check them out

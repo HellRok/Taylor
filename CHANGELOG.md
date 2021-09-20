@@ -4,6 +4,8 @@
 
 - Add set_main_loop
 - Add link to examples in the README
+- Add compilation instructions to the README
+- Add a link to Getting Started to the README
 
 ## v0.2.4
 
