@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.2.5
 
 - Add set_main_loop
 - Add link to examples in the README
