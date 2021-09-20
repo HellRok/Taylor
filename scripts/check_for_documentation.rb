@@ -1,7 +1,10 @@
 #!/usr/bin/env ruby
 
 def cpp_methods
-  Dir.glob('./src/mruby_integration/**/*.cpp').flat_map { |file|
+  (
+    Dir.glob('./src/mruby_integration/**/*.cpp') +
+    Dir.glob('./src/web.cpp')
+  ).flat_map { |file|
     klass = nil
 
     File.read(file).each_line.to_a.map { |line|
