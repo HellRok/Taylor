@@ -1,6 +1,7 @@
 #include "version.hpp"
 
 #include "raylib.h"
+
 #include "raygui.hpp"
 #include "mruby.h"
 #include "mruby/data.h"
@@ -15,6 +16,10 @@
 #include "mruby_integration/structs.hpp"
 #include "mruby_integration/text.hpp"
 #include "mruby_integration/textures.hpp"
+
+#ifdef __EMSCRIPTEN__
+#include "web.hpp"
+#endif
 
 #ifdef EXPORT
 #include "game.h"
@@ -61,6 +66,10 @@ int main(int argc, char **argv) {
   append_structs(mrb);
   append_text(mrb);
   append_textures(mrb);
+
+#ifdef __EMSCRIPTEN__
+  append_web(mrb);
+#endif
 
 #ifndef EXPORT
   FILE *game_file = fopen(path, "r");

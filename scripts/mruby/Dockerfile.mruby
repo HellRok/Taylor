@@ -24,8 +24,8 @@ ENV PATH="/app/emsdk:/app/emsdk/node/14.15.5_64bit/bin:/app/emsdk/upstream/emscr
 RUN apt-get update && apt-get install python3 xz-utils bzip2 -y
 RUN  git clone https://github.com/juj/emsdk.git /app/emsdk &&\
   cd /app/emsdk &&\
-  ./emsdk install 2.0.29 &&\
-  ./emsdk activate 2.0.29 &&\
+  ./emsdk install 2.0.30 &&\
+  ./emsdk activate 2.0.30 &&\
   cd -
 COPY ./scripts/mruby/emscripten.rb /app/build_config/
 

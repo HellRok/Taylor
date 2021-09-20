@@ -1,5 +1,9 @@
 # Taylor
 
+## Unreleased
+
+- Add set_main_loop
+
 ## v0.2.4
 
 - Fix exports for OSX builds

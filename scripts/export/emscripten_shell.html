@@ -3,19 +3,28 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <style type="text/css">
-      * {
+      body {
         margin: 0;
         padding: 0;
         background-color: #222;
       }
+      .centre {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
       canvas {
-        margin: 0 auto;
         display: block;
+        max-height: 100vh;
+        max-width: 100vw;
       }
     </style>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <div class="centre">
+      <canvas id="canvas"></canvas>
+    </div>
     <script>
       var Module = {
         print: (function() {

@@ -159,14 +159,14 @@ namespace :web do
     name = "#{name}.html"
     objects_folder = "build/web/debug"
     cxx = "emcc"
-    cxxflags += " -s USE_GLFW=3 -s ASYNCIFY --shell-file ./scripts/export/emscripten_shell.html"
+    cxxflags = "-std=c++2a -Wall -Wextra --shell-file ./scripts/export/emscripten_shell.html"
     options.fetch('copy_paths', []).each { |path|
       cxxflags += " --preload-file #{File.join('/', 'app', 'game', path)}@#{path}"
     }
     platform = "web"
-    ldflags = "-l dl -l pthread"
+    ldflags = ""
     includes += " -I ./vendor/web/raylib/include/"
-    static_links = "#{static_links} ./vendor/web/libmruby.a ./vendor/web/raylib/lib/libraylib.a"
+    static_links = "-s USE_GLFW=3 -s ASYNCIFY #{static_links} ./vendor/web/libmruby.a ./vendor/web/raylib/lib/libraylib.a"
   end
 
   task :build => "web:setup_variables"

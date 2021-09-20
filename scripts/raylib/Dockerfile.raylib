@@ -39,8 +39,8 @@ COPY ./scripts/mruby/emscripten.rb /app/build_config/
 RUN apt-get update && apt-get install python3 xz-utils bzip2 -y
 RUN  git clone https://github.com/juj/emsdk.git /app/emsdk &&\
   cd /app/emsdk &&\
-  ./emsdk install 2.0.29 &&\
-  ./emsdk activate 2.0.29 &&\
+  ./emsdk install 2.0.30 &&\
+  ./emsdk activate 2.0.30 &&\
   cd -
 RUN cd src && \
   make PLATFORM=PLATFORM_WEB -B
