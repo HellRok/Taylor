@@ -11,7 +11,7 @@ module Taylor
 
         @command = command || ''
 
-        if @options[:help]
+        if @options[:help] || @command.empty?
           display_help
         else
           call
