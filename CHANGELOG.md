@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Add set_main_loop
+- Add link to examples in the README
 
 ## v0.2.4
 
