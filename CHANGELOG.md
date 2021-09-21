@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.2.6
 
 - Add linux?
 - Add windows?
