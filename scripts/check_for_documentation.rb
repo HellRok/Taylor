@@ -3,7 +3,7 @@
 def cpp_methods
   (
     Dir.glob('./src/mruby_integration/**/*.cpp') +
-    Dir.glob('./src/web.cpp')
+    Dir.glob('./src/*.cpp')
   ).flat_map { |file|
     klass = nil
 
@@ -21,7 +21,7 @@ def cpp_methods
           "#{object.gsub('_class', '')}##{method}"
         end
 
-      elsif line =~ /^\s*def\s*(.*)/ && !line.include?('mrb_define_class')
+      elsif line =~ /^\s*def\s+(.*)/ && !line.include?('mrb_define_class')
         method = $~[1].split('(').first
         if klass
           "#{klass}##{method}"

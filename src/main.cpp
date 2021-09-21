@@ -9,17 +9,18 @@
 #include "mruby/compile.h"
 #include "mruby/irep.h"
 
+#ifdef __EMSCRIPTEN__
+#include "web.hpp"
+#endif
+
 #include "argv.hpp"
+#include "platform.hpp"
 #include "mruby_integration/audio.hpp"
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/shapes.hpp"
 #include "mruby_integration/structs.hpp"
 #include "mruby_integration/text.hpp"
 #include "mruby_integration/textures.hpp"
-
-#ifdef __EMSCRIPTEN__
-#include "web.hpp"
-#endif
 
 #ifdef EXPORT
 #include "game.h"
@@ -66,6 +67,8 @@ int main(int argc, char **argv) {
   append_structs(mrb);
   append_text(mrb);
   append_textures(mrb);
+
+  append_platform(mrb);
 
 #ifdef __EMSCRIPTEN__
   append_web(mrb);

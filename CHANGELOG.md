@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add linux?
+- Add windows?
+- Add osx?
+- Add browser?
+- Set default game template to work with improved emscripten performance gains
 
 ## v0.2.5
 

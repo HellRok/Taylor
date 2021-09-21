@@ -12,8 +12,11 @@ init_audio_device
 # Get the current monitor frame rate and set our target framerate to match.
 set_target_fps(get_monitor_refresh_rate(get_current_monitor))
 
-# Detect window close button or ESC key
-until window_should_close?
+# Define your main method
+def main
+  # Get the amount of time passed since the last frame was rendered
+  delta = get_frame_time
+
   # Your update logic goes here
 
   begin_drawing
@@ -26,6 +29,13 @@ until window_should_close?
   )
 
   end_drawing
+end
+
+if browser?
+  set_main_loop 'main'
+else
+  # Detect window close button or ESC key
+  main until window_should_close?
 end
 
 close_audio_device
