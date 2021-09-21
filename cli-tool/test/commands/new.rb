@@ -8,11 +8,18 @@ class TestCommandsNew < MTest::Unit::TestCase
 
   def test_create_directory_already_exist
     assert_raise(RuntimeError) {
-      Taylor::Commands::New.new(['--name', './test'], {})
+      Taylor::Commands::New.new(['./test'], {})
     }
   end
 
   def test_create_directory_success
+    Taylor::Commands::New.new(['./test/folder_test_game'], {})
+    assert_true Dir.exists?('./test/folder_test_game')
+  ensure
+    delete_project('./test/folder_test_game')
+  end
+
+  def test_create_directory_by_name_success
     Taylor::Commands::New.new(['--name', './test/test_game'], {})
     assert_true Dir.exists?('./test/test_game')
   ensure

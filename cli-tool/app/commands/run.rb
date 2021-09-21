@@ -32,7 +32,7 @@ module Taylor
             taylor\t\t\t# If the current folder is a taylor game, launch it
             taylor ./game.rb\t\t# Launch ./game.rb
             taylor --input ./game.rb\t# Launch ./game.rb
-            taylor [action] [options]
+            taylor <action> [options]
 
           Options:
             --help\t\t\tShow this message
@@ -40,7 +40,8 @@ module Taylor
             --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
 
           Actions:
-            new\tCreate a new Taylor game
+            new\t\tCreate a new Taylor game
+            export\tCompile your game for release
         STR
       end
 

@@ -7,6 +7,7 @@
 - Add osx?
 - Add browser?
 - Set default game template to work with improved emscripten performance gains
+- Allow setting the folder for Taylor-cli new command easily
 
 ## v0.2.5
 

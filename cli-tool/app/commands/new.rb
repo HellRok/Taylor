@@ -22,7 +22,8 @@ module Taylor
           Taylor #{TAYLOR_VERSION}
 
           Usage:
-            taylor run [options]
+            taylor run [options] <folder>
+
 
           Options:
             --help\t\t\tDisplays this message
@@ -33,6 +34,7 @@ module Taylor
             --export_targets targets\tWhat exports do you want (defaults to linux,windows,osx,web)
             --load_paths directories\tWhat directories do you want in your load path (defaults to ./,./vendor)
             --copy_paths directories\tWhat directories do you want copied into your exports (defaults to ./assets)
+            folder\t\t\tThe folder to create the new game in (defaults to the name value)
         STR
       end
 
@@ -59,17 +61,18 @@ module Taylor
         parser.parse(argv, true)
 
         @options = parser.opts
+        @options[:folder] = parser.tail.first || @options[:name]
         @options[:load_paths] = @options[:load_paths].split(',')
         @options[:copy_paths] = @options[:copy_paths].split(',')
         @options[:export_targets] = @options[:export_targets].split(',')
       end
 
       def create_directory!
-        if File.exists?(options[:name])
-          raise "#{options[:name]} directory already exists! Did you mean to run this again?"
+        if File.exists?(@options[:folder])
+          raise "#{options[:folder]} directory already exists! Did you mean to run this again?"
         end
 
-        Dir.mkdir(options[:name])
+        Dir.mkdir(options[:folder])
       end
 
       def setup_game_structure
@@ -95,7 +98,7 @@ module Taylor
       end
 
       def path_for(file)
-        File.join(options[:name], file)
+        File.join(options[:folder], file)
       end
 
       def load_paths_code
