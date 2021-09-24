@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Add unload_font
+- Add tests for draw_texture
 
 ## v0.2.6
 
