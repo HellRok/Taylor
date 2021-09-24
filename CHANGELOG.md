@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add unload_font
 
 ## v0.2.6
 

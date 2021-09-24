@@ -36,6 +36,15 @@ mrb_value mrb_load_font_ex(mrb_state *mrb, mrb_value) {
   return obj;
 }
 
+mrb_value mrb_unload_font(mrb_state *mrb, mrb_value) {
+  Font *font;
+  mrb_get_args(mrb, "d", &font, &Font_type);
+
+  UnloadFont(*font);
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_draw_fps(mrb_state *mrb, mrb_value) {
   mrb_int x, y;
 
@@ -86,6 +95,7 @@ mrb_value mrb_measure_text_ex(mrb_state *mrb, mrb_value) {
 void append_text(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_font", mrb_load_font, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "load_font_ex", mrb_load_font_ex, MRB_ARGS_REQ(3));
+  mrb_define_method(mrb, mrb->kernel_module, "unload_font", mrb_unload_font, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "draw_fps", mrb_draw_fps, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "draw_text", mrb_draw_text, MRB_ARGS_REQ(5));
   mrb_define_method(mrb, mrb->kernel_module, "draw_text_ex", mrb_draw_text_ex, MRB_ARGS_REQ(6));

@@ -18,6 +18,15 @@ def load_font_ex(path, font_size, char_count)
   Font.new
 end
 
+# Unloads a font from memory
+# @param font [Font]
+# @return [Font]
+def unload_font(font)
+  # mrb_unload_font
+  # src/mruby_integration/text.cpp
+  nil
+end
+
 # Draws the current frame rate at the passed in x and y coordinates.
 # @param x [Integer]
 # @param y [Integer]

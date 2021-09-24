@@ -19,6 +19,7 @@ class TestText < MTest::Unit::TestCase
     flush_frame
 
     assert_within 97, fixture_draw_text_ex, get_screen_data.data
+    unload_font(font)
     close_window
   end
 
@@ -32,6 +33,7 @@ class TestText < MTest::Unit::TestCase
 
     assert_equal 31.125, size.x
     assert_equal 12, size.y
+    unload_font(font)
     close_window
   end
 end
