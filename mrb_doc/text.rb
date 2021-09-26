@@ -20,7 +20,7 @@ end
 
 # Unloads a font from memory
 # @param font [Font]
-# @return [Font]
+# @return [nil]
 def unload_font(font)
   # mrb_unload_font
   # src/mruby_integration/text.cpp
@@ -50,7 +50,7 @@ def draw_text(text, x, y, font_size, colour)
   nil
 end
 
-# Draws the current frame rate at the passed in x and y coordinates.
+# Draws the text at the given position, size, padding, and colour with the specified font
 # @param font [Font] Which font to draw with
 # @param text [String] The text to put on the screen
 # @param position [Vector2]

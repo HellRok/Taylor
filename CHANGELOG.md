@@ -4,6 +4,11 @@
 
 - Add unload_font
 - Add tests for draw_texture
+- Add Font.load
+- Add Font#unload
+- Add Font#draw
+- Add Font#measure
+- Add Vector2::ZERO
 
 ## v0.2.6
 

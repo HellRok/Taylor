@@ -65,6 +65,25 @@ void append_models_Font(mrb_state *mrb) {
           chars_padding: chars_padding,
         }
       end
+
+      def self.load(path, size: 32, char_count: 100)
+        raise Font::NotFound.new("Could not find font at path \"#{path}\"") unless File.exist?(path)
+        load_font_ex(path, size, char_count)
+      end
+
+      def unload
+        unload_font(self)
+      end
+
+      def draw(text, position: Vector2::ZERO, size: 32, padding: 0, colour: BLACK)
+        draw_text_ex(self, text, position, size, padding, colour)
+      end
+
+      def measure(text, size: 32, padding: 0)
+        measure_text_ex(self, text, size, padding)
+      end
+
+      class NotFound < StandardError; end
     end
   )");
 }

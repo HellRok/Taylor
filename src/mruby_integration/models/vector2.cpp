@@ -87,6 +87,8 @@ void append_models_Vector2(mrb_state *mrb) {
           y: y,
         }
       end
+
+      ZERO = Vector2.new(0, 0)
     end
   )");
 }

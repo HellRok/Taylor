@@ -36,11 +36,50 @@ class Font
   # @return [Hash]
   def to_h
     # src/mruby_integration/models/font.cpp
-    {
-      base_size: base_size,
-      chars_count: chars_count,
-      chars_padding: chars_padding,
-    }
+    Hash.new
   end
-end
 
+  # Loads the font from the specified path
+  # @param path [String]
+  # @param size [Integer]
+  # @param char_count [Integer]
+  # @raise [Font::NotFound] If the file specified by path doesn't exist
+  # @return [Font]
+  def self.load(path, size: 32, char_count: 100)
+    # src/mruby_integration/models/font.cpp
+    Font.new
+  end
+
+  # Unloads the font from memory
+  # @return [nil]
+  def unload
+    # src/mruby_integration/models/font.cpp
+    nil
+  end
+
+  # Draws the text at the given position, size, padding, and colour
+  # @param text [String]
+  # @param position [Vector2]
+  # @param size [Integer]
+  # @param padding [Integer]
+  # @param colour [Colour]
+  # @return [Font]
+  def draw(text, position: Vector2::ZERO, size: 32, padding: 0, colour: BLACK)
+    # src/mruby_integration/models/font.cpp
+    Font.new
+  end
+
+  # Returns the size of the text
+  # @param text [String]
+  # @param size [Integer]
+  # @param padding [Integer]
+  # @raise [Font::NotFound] If the file specified by path doesn't exist
+  # @return [Vector2]
+  def measure(text, size: 32, padding: 0)
+    # src/mruby_integration/models/font.cpp
+    Vector2.new
+  end
+
+  # Used for alerting the user the specified font was not found at the specified path
+  class NotFound < StandardError; end
+end

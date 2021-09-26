@@ -87,4 +87,7 @@ class Vector2
       y: y,
     }
   end
+
+  # A Vector2 setup at 0, 0
+  ZERO = Vector2.new(0, 0)
 end
