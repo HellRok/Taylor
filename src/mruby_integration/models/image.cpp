@@ -96,6 +96,17 @@ void append_models_Image(mrb_state *mrb) {
           format: format,
         }
       end
+
+      def self.load(path)
+        raise Image::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
+        load_image(path)
+      end
+
+      def unload
+        unload_image(self)
+      end
+
+      class NotFound < StandardError; end
     end
   )");
 }

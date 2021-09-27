@@ -7,6 +7,15 @@ def load_image(path)
   Image.new
 end
 
+# Unloads an image
+# @param image [Image]
+# @return [nil]
+def unload_image(image)
+  # mrb_unload_image
+  # src/mruby_integration/images.cpp
+  nil
+end
+
 # Loads a texture from a file
 # @param path [String]
 # @return [Texture2D]

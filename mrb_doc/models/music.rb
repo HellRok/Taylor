@@ -1,17 +1,3 @@
-# Music format none
-MUSIC_AUDIO_NONE = 0
-# Music format wav
-MUSIC_AUDIO_WAV  = 1
-# Music format ogg
-MUSIC_AUDIO_OGG  = 2
-# Music format flac
-MUSIC_AUDIO_FLAC = 3
-# Music format mp3
-MUSIC_AUDIO_MP3  = 4
-# Music format xm
-MUSIC_MODULE_XM  = 5
-# Music format mo
-MUSIC_MODULE_MO  = 6
 
 # The Music class holds longer format sound files, very useful for background music.
 class Music
@@ -59,5 +45,116 @@ class Music
       looping: looping,
       sample_count: sample_count,
     }
+  end
+
+  # Loads a music file from the specified path
+  # @param path [String]
+  # @raise [Music::NotFound] If the file specified by path doesn't exist
+  # @return [Music]
+  def self.load(path)
+    # src/mruby_integration/models/music.cpp
+    Music.new
+  end
+
+  # Unloads the texture from memory
+  # @return [nil]
+  def unload
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # Starts playing the music
+  # @return [nil]
+  def play
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # This method should be called every update to keep the music playing
+  # smoothly
+  # @return [nil]
+  def update
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # Is the music currently playing?
+  # @return [Boolean]
+  def playing?
+    # src/mruby_integration/models/music.cpp
+    true
+  end
+
+  # Stops the music, you will need to call Music#play to start it again
+  # @return [nil]
+  def stop
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # Pauses the music, you will need to call Music#resume to start it again
+  # @return [nil]
+  def pause
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # Resumes the music playing
+  # @return [nil]
+  def resume
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # How long does this music go for?
+  # @return [Float]
+  def length
+    # src/mruby_integration/models/music.cpp
+    3.14
+  end
+
+  # How long has the music been played for this loop?
+  # @return [Float]
+  def played
+    # src/mruby_integration/models/music.cpp
+    2.17
+  end
+
+  # Set the volume
+  # @param value [Float] a value between 0 and 1
+  # @raise [ArgumentError] If the value is out of bounds
+  # @return [nil]
+  def volume=(value)
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # Set the pitch
+  # @param value [Float]
+  # @return [nil]
+  def pitch=(value)
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # Used for alerting the user the music file was not found at the specified path
+  class NotFound < StandardError; end
+
+  # Just a vanity class to make the types of music files read a little clearer.
+  class Type
+    # Music format none
+    NONE = 0
+    # Music format wav
+    WAV  = 1
+    # Music format ogg
+    OGG  = 2
+    # Music format flac
+    FLAC = 3
+    # Music format mp3
+    MP3  = 4
+    # Music format xm
+    XM   = 5
+    # Music format mo
+    MO   = 6
   end
 end

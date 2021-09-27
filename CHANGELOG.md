@@ -15,6 +15,19 @@
 - add unload_image
 - Add Image.load
 - Add Image#unload
+- Add Music.load
+- Add Music#unload
+- Add Music#play
+- Add Music#update
+- Add Music#playing?
+- Add Music#stop
+- Add Music#pause
+- Add Music#resume
+- Add Music#length
+- Add Music#played
+- Add Music#volume=
+- Add Music#pitch=
+- Rebranded the music type constants
 
 ## v0.2.6
 

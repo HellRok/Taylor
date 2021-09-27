@@ -82,7 +82,7 @@ end
 
 # Sets pitch for a music object
 # @param music [Music]
-# @param pitch [Float] A value between 0.0 and 1.0
+# @param pitch [Float]
 # @return [nil]
 def set_music_pitch(music, pitch)
   # mrb_set_music_pitch
