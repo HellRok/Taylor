@@ -58,4 +58,23 @@ class Image
       format: format,
     }
   end
+
+  # Loads an image from the specified path
+  # @param path [String]
+  # @raise [Image::NotFound] If the file specified by path doesn't exist
+  # @return [Image]
+  def self.load(path)
+    # src/mruby_integration/models/image.cpp
+    Image.new
+  end
+
+  # Unloads the texture from memory
+  # @return [nil]
+  def unload
+    # src/mruby_integration/models/image.cpp
+    nil
+  end
+
+  # Used for alerting the user the image was not found at the specified path
+  class NotFound < StandardError; end
 end

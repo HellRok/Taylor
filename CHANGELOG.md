@@ -12,6 +12,9 @@
 - Add Texture2D.load
 - Add Texture2D#unload
 - Add Texture2D#draw
+- add unload_image
+- Add Image.load
+- Add Image#unload
 
 ## v0.2.6
 
