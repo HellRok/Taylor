@@ -76,6 +76,33 @@ void append_models_Texture2D(mrb_state *mrb) {
           format: format,
         }
       end
+
+      def self.load(path)
+        raise Texture2D::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
+        load_texture(path)
+      end
+
+      def unload
+        unload_texture(self)
+      end
+
+      def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation:0, colour: WHITE)
+        @source = source unless source.nil?
+        @source ||= Rectangle.new(0, 0, self.width, self.height)
+        @destination = destination unless destination.nil?
+        @destination ||= @source
+
+        draw_texture_pro(
+          self,
+          @source,
+          @destination,
+          origin,
+          rotation,
+          colour
+        )
+      end
+
+      class NotFound < StandardError; end
     end
   )");
 }

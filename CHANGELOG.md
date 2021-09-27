@@ -9,6 +9,9 @@
 - Add Font#draw
 - Add Font#measure
 - Add Vector2::ZERO
+- Add Texture2D.load
+- Add Texture2D#unload
+- Add Texture2D#draw
 
 ## v0.2.6
 

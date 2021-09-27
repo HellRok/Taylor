@@ -63,10 +63,10 @@ class Font
   # @param size [Integer]
   # @param padding [Integer]
   # @param colour [Colour]
-  # @return [Font]
+  # @return [nil]
   def draw(text, position: Vector2::ZERO, size: 32, padding: 0, colour: BLACK)
     # src/mruby_integration/models/font.cpp
-    Font.new
+    nil
   end
 
   # Returns the size of the text
@@ -80,6 +80,6 @@ class Font
     Vector2.new
   end
 
-  # Used for alerting the user the specified font was not found at the specified path
+  # Used for alerting the user the font was not found at the specified path
   class NotFound < StandardError; end
 end

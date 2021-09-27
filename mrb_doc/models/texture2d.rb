@@ -58,4 +58,38 @@ class Texture2D
       format: format,
     }
   end
+
+  # Loads a texture from the specified path
+  # @param path [String]
+  # @raise [Texture2D::NotFound] If the file specified by path doesn't exist
+  # @return [Texture2D]
+  def self.load(path)
+    # src/mruby_integration/models/texture2d.cpp
+    Texture2D.new
+  end
+
+  # Unloads the texture from memory
+  # @return [nil]
+  def unload
+    # src/mruby_integration/models/texture.cpp
+    nil
+  end
+
+  # Draws the texture segment defined by source at the given destination,
+  # rotated around the origin in the specified colour.
+  # If source is not defined it defaults to the full image.
+  # If destination is not defined it defaults to source.
+  # @param source [Rectangle]
+  # @param destination [Rectangle]
+  # @param origin [Vector2]
+  # @param rotation [Integer] in degrees
+  # @param colour [Colour]
+  # @return [nil]
+  def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation:0, colour: WHITE)
+    # src/mruby_integration/models/font.cpp
+    nil
+  end
+
+  # Used for alerting the user the texture was not found at the specified path
+  class NotFound < StandardError; end
 end
