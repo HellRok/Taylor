@@ -64,7 +64,7 @@ end
 
 # Stops all sounds in the sound playback pool
 # @return [nil]
-def stop_sound_multi(sound)
+def stop_sound_multi
   # mrb_stop_sound_multi
   # src/mruby_integration/audio/sound.cpp
   nil
@@ -100,7 +100,7 @@ end
 
 # Sets the pitch of the sound object
 # @param sound [Sound]
-# @param pitch [Float] a value between 0.0 and 1.0
+# @param pitch [Float]
 # @return [nil]
 def set_sound_pitch(sound, pitch)
   # mrb_set_sound_pitch

@@ -28,6 +28,23 @@
 - Add Music#volume=
 - Add Music#pitch=
 - Rebranded the music type constants
+- Add Rectangle#draw
+- Add Sound.load
+- Add Sound#unload
+- Add Sound#play
+- Add Sound#playing?
+- Add Sound#stop
+- Add Sound#pause
+- Add Sound#resume
+- Add Sound#volume=
+- Add Sound#pitch=
+- Add Sound.stop
+- Add Sound.playing
+- is_sound_playing? now references the correct function
+- Add clear
+- Add drawing
+- Add scissor_mode
+- Add Camera2D#drawing
 
 ## v0.2.6
 

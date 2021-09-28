@@ -4,6 +4,9 @@ class Music
   # @return [Integer]
   attr_reader :context_type, :sample_count
 
+  # @return [Float]
+  attr_reader :volume, :pitch
+
   # @return [Boolean]
   attr_reader :looping
 
@@ -56,7 +59,7 @@ class Music
     Music.new
   end
 
-  # Unloads the texture from memory
+  # Unloads the music from memory
   # @return [nil]
   def unload
     # src/mruby_integration/models/music.cpp

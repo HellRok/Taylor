@@ -74,6 +74,13 @@ void append_models_Camera2D(mrb_state *mrb) {
           zoom: zoom,
         }
       end
+
+      def drawing(&block)
+        begin_mode2D(self)
+        block.call
+      ensure
+        end_mode2D
+      end
     end
   )");
 }

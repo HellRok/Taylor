@@ -50,4 +50,26 @@ class Rectangle
       height: height,
     }
   end
+
+  # Draws a rectangle in several configurations
+  # @param origin [Vector2]
+  # @param rotation [Float] only usable when outline and rounded are false
+  # @param outline [Boolean]
+  # @param thickness [Integer] only used when outline is true
+  # @param rounded [Boolean]
+  # @param radius [Float] A value between 0.0 and 1.0 and only used when rounded is true
+  # @raise [ArgumentError] If the radius is out of bounds
+  # @return [Rectangle]
+  def draw(
+    origin: Vector2::ZERO,
+    rotation: 0,
+    outline: false,
+    thickness: 2,
+    rounded: false,
+    radius: 5,
+    segments: 8,
+    colour: BLACK
+  )
+    # src/mruby_integration/models/rectangle.cpp
+  end
 end

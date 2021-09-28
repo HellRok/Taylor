@@ -59,3 +59,29 @@ def end_scissor_mode()
   # src/mruby_integration/core/drawing.cpp
   nil
 end
+
+# Clear the screen with the specified colour
+# @param colour [Colour]
+# @return [nil]
+def clear(colour: RAYWHITE)
+  # src/mruby_integration/core/drawing.cpp
+  nil
+end
+
+# Allows you to call rendering functions within the block
+# @yield The block that calls your rendering logic
+# @return [nil]
+def drawing(&block)
+  # src/mruby_integration/core/drawing.cpp
+  nil
+end
+
+# Allows you to call rendering functions within the block but limits the output
+# to within the bounds of `section`
+# @yield The block that calls your rendering logic
+# @param section [Rectangle]
+# @return [nil]
+def scissor_mode(section, &block)
+  # src/mruby_integration/core/drawing.cpp
+  nil
+end

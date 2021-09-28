@@ -41,13 +41,69 @@ void append_models_Sound(mrb_state *mrb) {
 
   mrb_load_string(mrb, R"(
     class Sound
-      attr_reader :sample_count
+      attr_reader :sample_count, :volume, :pitch
 
       def to_h
         {
           sample_count: sample_count,
         }
       end
+
+      def self.load(path)
+        raise Sound::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
+        load_sound(path).tap { |sound|
+          sound.volume = 1
+          sound.pitch = 1
+          }
+      end
+
+      def unload
+        unload_sound(self)
+      end
+
+      def play(multi: true)
+        multi ? play_sound_multi(self) : play_sound(self)
+      end
+
+      def stop
+        stop_sound(self)
+      end
+
+      def pause
+        pause_sound(self)
+      end
+
+      def resume
+        resume_sound(self)
+      end
+
+      def playing?
+        is_sound_playing?(self)
+      end
+
+      def volume=(value)
+        unless (0..1).include?(value)
+          raise ArgumentError, "Value must fall between 0 and 1, you gave me #{value}"
+        end
+        @volume = value
+
+        set_sound_volume(self, value)
+      end
+
+      def pitch=(value)
+        @pitch = value
+        set_sound_pitch(self, value)
+      end
+
+      def self.stop
+        stop_sound_multi
+      end
+
+      def self.playing
+        get_sounds_playing
+      end
+
+      class NotFound < StandardError; end
     end
   )");
 }

@@ -50,37 +50,6 @@ class TestCore < MTest::Unit::TestCase
     close_window
   end
 
-  def test_mode2D
-    skip_unless_display_present
-
-    init_window(10, 10, __method__.to_s)
-    set_target_fps 5
-    rectangle = Rectangle.new(2, 2, 6, 6)
-    camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 1)
-
-    begin_drawing
-    begin_mode2D(camera)
-    draw_rectangle_rec(rectangle, RED)
-    end_mode2D
-    end_drawing
-
-    assert_equal fixture_mode2D[0], get_screen_data.data
-    clear_background(RAYWHITE)
-
-    camera.offset.x = -2
-    camera.offset.y = -2
-
-    begin_drawing
-    begin_mode2D(camera)
-    draw_rectangle_rec(rectangle, RED)
-    end_mode2D
-
-    assert_equal fixture_mode2D[1], get_screen_data.data
-
-    end_drawing
-    close_window
-  end
-
   def test_set_window_state_fullscreen
     skip_unless_display_present
 

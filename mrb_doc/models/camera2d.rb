@@ -53,5 +53,12 @@ class Camera2D
       zoom: zoom,
     }
   end
+
+  # Draws the world through the lens of the camera
+  # @yield The block that calls your rendering logic
+  # @return [nil]
+  def drawing(&block)
+    # src/mruby_integration/models/camera2d.cpp
+  end
 end
 
