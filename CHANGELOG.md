@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.0
 
 - Add unload_font
 - Add tests for draw_texture

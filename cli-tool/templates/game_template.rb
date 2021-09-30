@@ -19,16 +19,15 @@ def main
 
   # Your update logic goes here
 
-  begin_drawing
-  # Your drawing logic goes here
+  drawing do
+    # Your drawing logic goes here
 
-  clear_background(RAYWHITE)
-  draw_text(
-    "Welcome to your first Taylor application!",
-    190, 200, 20, DARKGRAY
-  )
-
-  end_drawing
+    clear
+    draw_text(
+      "Welcome to your first Taylor application!",
+      190, 200, 20, DARKGRAY
+    )
+  end
 end
 
 if browser?
