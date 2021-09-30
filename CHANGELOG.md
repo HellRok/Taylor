@@ -45,6 +45,8 @@
 - Add drawing
 - Add scissor_mode
 - Add Camera2D#drawing
+- Add Camera2D#as_in_viewport
+- Add Camera2D#as_in_world
 
 ## v0.2.6
 

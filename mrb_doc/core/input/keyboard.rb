@@ -221,7 +221,7 @@ KEY_VOLUME_UP       = 24
 # Android volume_down
 KEY_VOLUME_DOWN     = 25
 
-# Is the specified key pressed?
+# Has the specified key been pressed since last frame?
 # @param key [Integer]
 # @return [Boolean]
 def is_key_pressed?(key)
@@ -239,7 +239,7 @@ def is_key_down?(key)
   True
 end
 
-# Is the specified key released?
+# Has the specified key been released since last frame?
 # @param key [Integer]
 # @return [Boolean]
 def is_key_released?(key)

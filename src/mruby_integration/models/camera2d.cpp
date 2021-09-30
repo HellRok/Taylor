@@ -81,6 +81,14 @@ void append_models_Camera2D(mrb_state *mrb) {
       ensure
         end_mode2D
       end
+
+      def as_in_viewport(vector)
+        get_world_to_screen2D(vector, self)
+      end
+
+      def as_in_world(vector)
+        get_screen_to_world2D(vector, self)
+      end
     end
   )");
 }
