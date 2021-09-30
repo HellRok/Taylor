@@ -28,8 +28,8 @@ end
 # Checks whether or not a music object is currently playing
 # @param music [Music]
 # @return [Boolean]
-def is_music_playing?(music)
-  # mrb_is_music_playing
+def music_playing?(music)
+  # mrb_music_playing
   # src/mruby_integration/audio/music.cpp
   true
 end

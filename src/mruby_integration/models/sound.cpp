@@ -78,7 +78,7 @@ void append_models_Sound(mrb_state *mrb) {
       end
 
       def playing?
-        is_sound_playing?(self)
+        sound_playing?(self)
       end
 
       def volume=(value)

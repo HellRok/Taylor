@@ -85,7 +85,7 @@ void append_models_Music(mrb_state *mrb) {
       end
 
       def playing?
-        is_music_playing?(self)
+        music_playing?(self)
       end
 
       def stop

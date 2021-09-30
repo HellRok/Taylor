@@ -56,18 +56,18 @@ end
 
 # Has the window been initialised and ready for rendering?
 # @return [Boolean]
-def is_window_ready?()
-  # mrb_is_window_ready
+def window_ready?()
+  # mrb_window_ready
   # src/mruby_integration/core/window.cpp
   true
 end
 
 # Checks if the window has the state set, to pass in multiple you can do so like:
-#   `is_window_state?(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)`
+#   `window_state?(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)`
 # @param flags [Integer]
 # @return [Boolean]
-def is_window_state?(flags)
-  # mrb_is_window_state
+def window_state?(flags)
+  # mrb_window_state
   # src/mruby_integration/core/window.cpp
   true
 end
@@ -84,48 +84,48 @@ end
 
 # Checks if the window has the FLAG_FULLSCREEN_MODE state set
 # @return [Boolean]
-def is_window_fullscreen?()
-  # mrb_is_window_fullscreen
+def window_fullscreen?()
+  # mrb_window_fullscreen
   # src/mruby_integration/core/window.cpp
   true
 end
 
 # Checks if the window has the FLAG_WINDOW_HIDDEN state set
 # @return [Boolean]
-def is_window_hidden?()
-  # mrb_is_window_hidden
+def window_hidden?()
+  # mrb_window_hidden
   # src/mruby_integration/core/window.cpp
   false
 end
 
 # Checks if the window has the FLAG_WINDOW_MINIMISED state set
 # @return [Boolean]
-def is_window_minimised?()
-  # mrb_is_window_minimised
+def window_minimised?()
+  # mrb_window_minimised
   # src/mruby_integration/core/window.cpp
   false
 end
 
 # Checks if the window has the FLAG_WINDOW_MAXIMISED state set
 # @return [Boolean]
-def is_window_maximised?()
-  # mrb_is_window_maximised
+def window_maximised?()
+  # mrb_window_maximised
   # src/mruby_integration/core/window.cpp
   true
 end
 
 # Checks if the window has focus
 # @return [Boolean]
-def is_window_focused?()
-  # mrb_is_window_focused
+def window_focused?()
+  # mrb_window_focused
   # src/mruby_integration/core/window.cpp
   true
 end
 
 # Checks if the window was resized since the last frame
 # @return [Boolean]
-def is_window_resized?()
-  # mrb_is_window_resized
+def window_resized?()
+  # mrb_window_resized
   # src/mruby_integration/core/window.cpp
   false
 end

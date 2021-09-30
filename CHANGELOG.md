@@ -47,6 +47,7 @@
 - Add Camera2D#drawing
 - Add Camera2D#as_in_viewport
 - Add Camera2D#as_in_world
+- Drop all is_ predicates since that's not very "ruby"
 
 ## v0.2.6
 

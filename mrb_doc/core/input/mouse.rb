@@ -31,8 +31,8 @@ MOUSE_CURSOR_NOT_ALLOWED   = 10
 # Is the specified mouse button pressed?
 # @param button [Integer]
 # @return [Boolean]
-def is_mouse_button_pressed?(button)
-  # mrb_is_mouse_button_pressed
+def mouse_button_pressed?(button)
+  # mrb_mouse_button_pressed
   # src/mruby_integration/core/input/mouse.cpp
   true
 end
@@ -40,8 +40,8 @@ end
 # Is the specified mouse button down?
 # @param button [Integer]
 # @return [Boolean]
-def is_mouse_button_down?(button)
-  # mrb_is_mouse_button_down
+def mouse_button_down?(button)
+  # mrb_mouse_button_down
   # src/mruby_integration/core/input/mouse.cpp
   true
 end
@@ -49,8 +49,8 @@ end
 # Has the specified mouse button been released?
 # @param button [Integer]
 # @return [Boolean]
-def is_mouse_button_released?(button)
-  # mrb_is_mouse_button_released
+def mouse_button_released?(button)
+  # mrb_mouse_button_released
   # src/mruby_integration/core/input/mouse.cpp
   false
 end
@@ -58,8 +58,8 @@ end
 # Is the specified mouse button not down?
 # @param button [Integer]
 # @return [Boolean]
-def is_mouse_button_up?(button)
-  # mrb_is_mouse_button_up
+def mouse_button_up?(button)
+  # mrb_mouse_button_up
   # src/mruby_integration/core/input/mouse.cpp
   false
 end

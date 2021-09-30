@@ -16,8 +16,8 @@ end
 
 # Checks if the cursor is hidden
 # @return [Boolean]
-def is_cursor_hidden?()
-  # mrb_is_cursor_hidden
+def cursor_hidden?()
+  # mrb_cursor_hidden
   # src/mruby_integration/core/cursor.cpp
   true
 end
@@ -40,8 +40,8 @@ end
 
 # Checks if the cursor is in the window
 # @return [Boolean]
-def is_cursor_on_screen?
-  # mrb_is_cursor_on_screen
+def cursor_on_screen?
+  # mrb_cursor_on_screen
   # src/mruby_integration/core/cursor.cpp
   true
 end

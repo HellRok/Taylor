@@ -2,28 +2,28 @@
 #include "mruby.h"
 #include "mruby/compile.h"
 
-mrb_value mrb_is_key_pressed(mrb_state *mrb, mrb_value) {
+mrb_value mrb_key_pressed(mrb_state *mrb, mrb_value) {
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
 
   return mrb_bool_value(IsKeyPressed(key));
 }
 
-mrb_value mrb_is_key_down(mrb_state *mrb, mrb_value) {
+mrb_value mrb_key_down(mrb_state *mrb, mrb_value) {
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
 
   return mrb_bool_value(IsKeyDown(key));
 }
 
-mrb_value mrb_is_key_released(mrb_state *mrb, mrb_value) {
+mrb_value mrb_key_released(mrb_state *mrb, mrb_value) {
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
 
   return mrb_bool_value(IsKeyReleased(key));
 }
 
-mrb_value mrb_is_key_up(mrb_state *mrb, mrb_value) {
+mrb_value mrb_key_up(mrb_state *mrb, mrb_value) {
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
 
@@ -48,10 +48,10 @@ mrb_value mrb_get_char_pressed(mrb_state *mrb, mrb_value) {
 }
 
 void append_core_input_keyboard(mrb_state *mrb) {
-  mrb_define_method(mrb, mrb->kernel_module, "is_key_pressed?", mrb_is_key_pressed, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_key_down?", mrb_is_key_down, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_key_released?", mrb_is_key_released, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_key_up?", mrb_is_key_up, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "key_pressed?", mrb_key_pressed, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "key_down?", mrb_key_down, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "key_released?", mrb_key_released, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "key_up?", mrb_key_up, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "set_exit_key", mrb_set_exit_key, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_key_pressed", mrb_get_key_pressed, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "get_char_pressed", mrb_get_char_pressed, MRB_ARGS_NONE());

@@ -16,8 +16,8 @@ end
 
 # Returns if the audio device has been setup
 # @return [Boolean]
-def is_audio_device_ready?()
-  # mrb_is_audio_device_ready
+def audio_device_ready?()
+  # mrb_audio_device_ready
   # src/mruby_integration/audio/device.cpp
   true
 end

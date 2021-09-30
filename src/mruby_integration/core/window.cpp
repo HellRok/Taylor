@@ -23,11 +23,11 @@ mrb_value mrb_close_window(mrb_state*, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_is_window_ready(mrb_state*, mrb_value) {
+mrb_value mrb_window_ready(mrb_state*, mrb_value) {
   return mrb_bool_value(IsWindowReady());
 }
 
-mrb_value mrb_is_window_state(mrb_state *mrb, mrb_value) {
+mrb_value mrb_window_state(mrb_state *mrb, mrb_value) {
   mrb_int flag;
   mrb_get_args(mrb, "i", &flag);
 
@@ -42,27 +42,27 @@ mrb_value mrb_set_window_state(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_is_window_fullscreen(mrb_state*, mrb_value) {
+mrb_value mrb_window_fullscreen(mrb_state*, mrb_value) {
   return mrb_bool_value(IsWindowFullscreen());
 }
 
-mrb_value mrb_is_window_hidden(mrb_state*, mrb_value) {
+mrb_value mrb_window_hidden(mrb_state*, mrb_value) {
   return mrb_bool_value(IsWindowHidden());
 }
 
-mrb_value mrb_is_window_minimised(mrb_state*, mrb_value) {
+mrb_value mrb_window_minimised(mrb_state*, mrb_value) {
   return mrb_bool_value(IsWindowMinimized());
 }
 
-mrb_value mrb_is_window_maximised(mrb_state*, mrb_value) {
+mrb_value mrb_window_maximised(mrb_state*, mrb_value) {
   return mrb_bool_value(IsWindowMaximized());
 }
 
-mrb_value mrb_is_window_focused(mrb_state*, mrb_value) {
+mrb_value mrb_window_focused(mrb_state*, mrb_value) {
   return mrb_bool_value(IsWindowFocused());
 }
 
-mrb_value mrb_is_window_resized(mrb_state*, mrb_value) {
+mrb_value mrb_window_resized(mrb_state*, mrb_value) {
   return mrb_bool_value(IsWindowResized());
 }
 
@@ -225,14 +225,14 @@ void append_core_window(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "close_window", mrb_close_window, MRB_ARGS_NONE());
-  mrb_define_method(mrb, mrb->kernel_module, "is_window_ready?", mrb_is_window_ready, MRB_ARGS_NONE());
-  mrb_define_method(mrb, mrb->kernel_module, "is_window_fullscreen?", mrb_is_window_fullscreen, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_window_hidden?", mrb_is_window_hidden, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_window_minimised?", mrb_is_window_minimised, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_window_maximised?", mrb_is_window_maximised, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_window_focused?", mrb_is_window_focused, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_window_resized?", mrb_is_window_resized, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_window_state?", mrb_is_window_state, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "window_ready?", mrb_window_ready, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "window_fullscreen?", mrb_window_fullscreen, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "window_hidden?", mrb_window_hidden, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "window_minimised?", mrb_window_minimised, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "window_maximised?", mrb_window_maximised, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "window_focused?", mrb_window_focused, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "window_resized?", mrb_window_resized, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "window_state?", mrb_window_state, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "set_window_state", mrb_set_window_state, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "clear_window_state", mrb_clear_window_state, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "toggle_fullscreen", mrb_toggle_fullscreen, MRB_ARGS_NONE());

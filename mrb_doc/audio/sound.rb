@@ -81,8 +81,8 @@ end
 # Checks whether or not a sound object is currently playing
 # @param sound [Sound]
 # @return [Boolean]
-def is_sound_playing?(sound)
-  # mrb_is_sound_playing
+def sound_playing?(sound)
+  # mrb_sound_playing
   # src/mruby_integration/audio/sound.cpp
   true
 end

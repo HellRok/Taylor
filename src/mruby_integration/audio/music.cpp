@@ -36,7 +36,7 @@ mrb_value mrb_play_music_stream(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_is_music_playing(mrb_state *mrb, mrb_value) {
+mrb_value mrb_music_playing(mrb_state *mrb, mrb_value) {
   Music *music;
   mrb_get_args(mrb, "d", &music, &Music_type);
 
@@ -117,7 +117,7 @@ void append_audio_music(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_music_stream", mrb_load_music_stream, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "unload_music_stream", mrb_unload_music_stream, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "play_music_stream", mrb_play_music_stream, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "is_music_playing?", mrb_is_music_playing, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "music_playing?", mrb_music_playing, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "update_music_stream", mrb_update_music_stream, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "stop_music_stream", mrb_stop_music_stream, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "pause_music_stream", mrb_pause_music_stream, MRB_ARGS_REQ(1));

@@ -224,8 +224,8 @@ KEY_VOLUME_DOWN     = 25
 # Has the specified key been pressed since last frame?
 # @param key [Integer]
 # @return [Boolean]
-def is_key_pressed?(key)
-  # mrb_is_key_pressed
+def key_pressed?(key)
+  # mrb_key_pressed
   # src/mruby_integration/core/input/keyboard.cpp
   True
 end
@@ -233,8 +233,8 @@ end
 # Is the specified key down?
 # @param key [Integer]
 # @return [Boolean]
-def is_key_down?(key)
-  # mrb_is_key_down
+def key_down?(key)
+  # mrb_key_down
   # src/mruby_integration/core/input/keyboard.cpp
   True
 end
@@ -242,8 +242,8 @@ end
 # Has the specified key been released since last frame?
 # @param key [Integer]
 # @return [Boolean]
-def is_key_released?(key)
-  # mrb_is_key_released
+def key_released?(key)
+  # mrb_key_released
   # src/mruby_integration/core/input/keyboard.cpp
   False
 end
@@ -251,8 +251,8 @@ end
 # Is the specified key not down?
 # @param key [Integer]
 # @return [Boolean]
-def is_key_up?(key)
-  # mrb_is_key_up
+def key_up?(key)
+  # mrb_key_up
   # src/mruby_integration/core/input/keyboard.cpp
   False
 end

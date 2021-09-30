@@ -62,8 +62,8 @@ GAMEPAD_AXIS_RIGHT_TRIGGER = 5
 # Return whether or not the specified gamepad is available
 # @param index [Integer]
 # @return [Bool]
-def is_gamepad_available?(index)
-  # mrb_is_gamepad_available
+def gamepad_available?(index)
+  # mrb_gamepad_available
   # src/mruby_integration/core/input/gamepad.cpp
   true
 end
@@ -81,8 +81,8 @@ end
 # @param index [Integer]
 # @param button [Integer]
 # @return [Boolean]
-def is_gamepad_button_pressed?(index, button)
-  # mrb_is_gamepad_button_pressed
+def gamepad_button_pressed?(index, button)
+  # mrb_gamepad_button_pressed
   # src/mruby_integration/core/input/gamepad.cpp
   true
 end
@@ -91,8 +91,8 @@ end
 # @param index [Integer]
 # @param button [Integer]
 # @return [Boolean]
-def is_gamepad_button_down?(index, button)
-  # mrb_is_gamepad_button_down
+def gamepad_button_down?(index, button)
+  # mrb_gamepad_button_down
   # src/mruby_integration/core/input/gamepad.cpp
   true
 end
@@ -101,8 +101,8 @@ end
 # @param index [Integer]
 # @param button [Integer]
 # @return [Boolean]
-def is_gamepad_button_released?(index, button)
-  # mrb_is_gamepad_button_released
+def gamepad_button_released?(index, button)
+  # mrb_gamepad_button_released
   # src/mruby_integration/core/input/gamepad.cpp
   false
 end
@@ -111,8 +111,8 @@ end
 # @param index [Integer]
 # @param button [Integer]
 # @return [Boolean]
-def is_gamepad_button_up?(index, button)
-  # mrb_is_gamepad_button_up
+def gamepad_button_up?(index, button)
+  # mrb_gamepad_button_up
   # src/mruby_integration/core/input/gamepad.cpp
   true
 end
