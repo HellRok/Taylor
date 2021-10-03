@@ -1,5 +1,10 @@
 # Taylor
 
+## Unreleased
+
+- Add generate_image_colour
+- Add Image.generate
+
 ## v0.3.0
 
 - Add unload_font

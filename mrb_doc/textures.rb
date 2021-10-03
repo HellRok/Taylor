@@ -1,21 +1,3 @@
-# Loads an image from a file
-# @param path [String]
-# @return [Image]
-def load_image(path)
-  # mrb_load_image
-  # src/mruby_integration/textures.cpp
-  Image.new
-end
-
-# Unloads an image
-# @param image [Image]
-# @return [nil]
-def unload_image(image)
-  # mrb_unload_image
-  # src/mruby_integration/images.cpp
-  nil
-end
-
 # Loads a texture from a file
 # @param path [String]
 # @return [Texture2D]
@@ -68,12 +50,4 @@ def fade(colour)
   # mrb_fade
   # src/mruby_integration/textures.cpp
   Colour.new
-end
-
-# Returns an Image object with the screen data
-# @return [Image]
-def get_screen_data()
-  # mrb_get_screen_data
-  # src/mruby_integration/textures.cpp
-  Image.new
 end

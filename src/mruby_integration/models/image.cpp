@@ -106,6 +106,10 @@ void append_models_Image(mrb_state *mrb) {
         unload_image(self)
       end
 
+      def self.generate(width:, height:, colour: RAYWHITE)
+        generate_image_colour(width, height, colour)
+      end
+
       class NotFound < StandardError; end
     end
   )");

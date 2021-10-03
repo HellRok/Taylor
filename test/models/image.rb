@@ -35,4 +35,28 @@ class TestImage < MTest::Unit::TestCase
       image.to_h
     )
   end
+
+  def test_load
+    image = Image.load('./test/assets/test.png')
+    assert_equal fixture_models_image_load, image.data
+    unload_image(image)
+  end
+
+  def test_load_fail
+    assert_raise(Image::NotFound) {
+      image = Image.load('./test/assets/fail.png')
+    }
+  end
+
+  def test_generate_default
+    image = Image.generate(width: 10, height: 10)
+    assert_equal fixture_models_generate_default, image.data
+    unload_image(image)
+  end
+
+  def test_generate
+    image = Image.generate(width: 10, height: 10, colour: GREEN)
+    assert_equal fixture_models_generate, image.data
+    unload_image(image)
+  end
 end

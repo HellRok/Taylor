@@ -28,12 +28,12 @@ mrb_value mrb_unload_image(mrb_state *mrb, mrb_value) {
 }
 
 mrb_value mrb_generate_image_colour(mrb_state *mrb, mrb_value) {
-  mrb_int x, y;
+  mrb_int width, height;
   Color *colour;
-  mrb_get_args(mrb, "iid", &x, &y, &colour, &Colour_type);
+  mrb_get_args(mrb, "iid", &width, &height, &colour, &Colour_type);
 
   Image *image = (Image *)malloc(sizeof(Image));
-  *image = GenImageColor(x, y, *colour);
+  *image = GenImageColor(width, height, *colour);
 
   mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
 
