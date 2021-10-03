@@ -52,6 +52,20 @@ mrb_value mrb_generate_image_colour(mrb_state *mrb, mrb_value) {
   return obj;
 }
 
+mrb_value mrb_image_copy(mrb_state *mrb, mrb_value) {
+  Image *image;
+  mrb_get_args(mrb, "d", &image, &Image_type);
+
+  Image *copy = (Image *)malloc(sizeof(Image));
+  *copy = ImageCopy(*image);
+
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, copy));
+
+  setup_Image(mrb, obj, copy, copy->width, copy->height, copy->mipmaps, copy->format);
+
+  return obj;
+}
+
 mrb_value mrb_get_screen_data(mrb_state *mrb, mrb_value) {
   Image *image = (Image *)malloc(sizeof(Image));
   *image = GetScreenData();
@@ -67,6 +81,8 @@ void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_image", mrb_load_image, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "unload_image", mrb_unload_image, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "export_image", mrb_export_image, MRB_ARGS_REQ(2));
+
+  mrb_define_method(mrb, mrb->kernel_module, "image_copy", mrb_image_copy, MRB_ARGS_REQ(1));
 
   mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
 

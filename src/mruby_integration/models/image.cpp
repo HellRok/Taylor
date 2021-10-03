@@ -110,6 +110,10 @@ void append_models_Image(mrb_state *mrb) {
         export_image(self, path)
       end
 
+      def copy
+        image_copy(self)
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

@@ -37,6 +37,15 @@ def generate_image_colour(width, height, colour)
   Image.new
 end
 
+# Copies an image to a new object
+# @param image [Image]
+# @return [Image]
+def image_copy(image)
+  # mrb_image_copy
+  # src/mruby_integration/image.cpp
+  Image.new
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

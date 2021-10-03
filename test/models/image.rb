@@ -59,4 +59,12 @@ class TestImage < MTest::Unit::TestCase
     assert_equal fixture_models_generate, image.data
     unload_image(image)
   end
+
+  def test_copy
+    image = Image.generate(width: 10, height: 10, colour: GREEN)
+    copy = image.copy
+    assert_equal image.data, copy.data
+    unload_image(image)
+    unload_image(copy)
+  end
 end

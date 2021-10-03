@@ -6,6 +6,8 @@
 - Add Image.generate
 - Add export_image
 - Add Image#export
+- Add image_copy
+- Add Image#copy
 
 ## v0.3.0
 

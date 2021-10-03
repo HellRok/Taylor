@@ -83,6 +83,13 @@ class Image
     nil
   end
 
+  # Copies the image to a new object
+  # @return [Image]
+  def copy
+    # src/mruby_integration/models/image.cpp
+    Image.new
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]
