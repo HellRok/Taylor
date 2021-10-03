@@ -4,6 +4,8 @@
 
 - Add generate_image_colour
 - Add Image.generate
+- Add export_image
+- Add Image#export
 
 ## v0.3.0
 

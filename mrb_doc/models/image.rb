@@ -75,6 +75,14 @@ class Image
     nil
   end
 
+  # Exports an image to a file
+  # @param path [String]
+  # @return [nil]
+  def export(path)
+    # src/mruby_integration/models/image.cpp
+    nil
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

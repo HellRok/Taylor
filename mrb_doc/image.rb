@@ -16,6 +16,16 @@ def unload_image(image)
   nil
 end
 
+# Exports an image to a file
+# @param image [Image]
+# @param path [String]
+# @return [nil]
+def export_image(image, path)
+  # mrb_export_image
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Generates a new image of width by height in the specified colour.
 # @param width [Integer]
 # @param height [Integer]

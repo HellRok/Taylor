@@ -27,6 +27,16 @@ mrb_value mrb_unload_image(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_export_image(mrb_state *mrb, mrb_value) {
+  Image *image;
+  char *path;
+  mrb_get_args(mrb, "dz", &image, &Image_type, &path);
+
+  ExportImage(*image, path);
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_generate_image_colour(mrb_state *mrb, mrb_value) {
   mrb_int width, height;
   Color *colour;
@@ -56,6 +66,7 @@ mrb_value mrb_get_screen_data(mrb_state *mrb, mrb_value) {
 void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_image", mrb_load_image, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "unload_image", mrb_unload_image, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "export_image", mrb_export_image, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
 
