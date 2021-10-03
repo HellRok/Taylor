@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include "raylib.h"
 #include "mruby.h"
 #include "mruby/data.h"
@@ -6,33 +5,9 @@
 #include "mruby/string.h"
 
 #include "mruby_integration/models/colour.hpp"
-#include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/struct_types.hpp"
 #include "mruby_integration/helpers.hpp"
-
-mrb_value mrb_load_image(mrb_state *mrb, mrb_value) {
-  char *path;
-  mrb_get_args(mrb, "z", &path);
-
-  Image *image = (Image *)malloc(sizeof(Image));
-  *image = LoadImage(path);
-
-  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
-
-  setup_Image(mrb, obj, image, image->width, image->height, image->mipmaps, image->format);
-
-  return obj;
-}
-
-mrb_value mrb_unload_image(mrb_state *mrb, mrb_value) {
-  Image *image;
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  UnloadImage(*image);
-
-  return mrb_nil_value();
-}
 
 mrb_value mrb_load_texture(mrb_state *mrb, mrb_value) {
   char *path;
@@ -104,27 +79,11 @@ mrb_value mrb_fade(mrb_state *mrb, mrb_value) {
   return obj;
 }
 
-mrb_value mrb_get_screen_data(mrb_state *mrb, mrb_value) {
-  Image *image = (Image *)malloc(sizeof(Image));
-  *image = GetScreenData();
-
-  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
-
-  setup_Image(mrb, obj, image, image->width, image->height, image->mipmaps, image->format);
-
-  return obj;
-}
-
 void append_textures(mrb_state *mrb) {
-  mrb_define_method(mrb, mrb->kernel_module, "load_image", mrb_load_image, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "unload_image", mrb_unload_image, MRB_ARGS_REQ(1));
-
   mrb_define_method(mrb, mrb->kernel_module, "load_texture", mrb_load_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "unload_texture", mrb_unload_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture_pro", mrb_draw_texture_pro, MRB_ARGS_REQ(6));
 
   mrb_define_method(mrb, mrb->kernel_module, "fade", mrb_fade, MRB_ARGS_REQ(2));
-
-  mrb_define_method(mrb, mrb->kernel_module, "get_screen_data", mrb_get_screen_data, MRB_ARGS_NONE());
 }

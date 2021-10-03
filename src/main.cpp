@@ -17,6 +17,7 @@
 #include "platform.hpp"
 #include "mruby_integration/audio.hpp"
 #include "mruby_integration/core.hpp"
+#include "mruby_integration/images.hpp"
 #include "mruby_integration/shapes.hpp"
 #include "mruby_integration/structs.hpp"
 #include "mruby_integration/text.hpp"
@@ -63,6 +64,7 @@ int main(int argc, char **argv) {
 
   append_audio(mrb);
   append_core(mrb);
+  append_images(mrb);
   append_shapes(mrb);
   append_structs(mrb);
   append_text(mrb);

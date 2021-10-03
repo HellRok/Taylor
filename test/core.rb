@@ -60,18 +60,18 @@ class TestCore < MTest::Unit::TestCase
     set_window_size get_monitor_width(current_monitor), get_monitor_height(current_monitor)
     flush_frame
 
-    assert_false is_window_state?(FLAG_FULLSCREEN_MODE)
+    assert_false window_state?(FLAG_FULLSCREEN_MODE)
 
     set_window_state(FLAG_FULLSCREEN_MODE)
     flush_frame
 
-    assert_true is_window_state?(FLAG_FULLSCREEN_MODE)
-    assert_true is_window_fullscreen?
+    assert_true window_state?(FLAG_FULLSCREEN_MODE)
+    assert_true window_fullscreen?
 
     clear_window_state(FLAG_FULLSCREEN_MODE)
     flush_frame
 
-    assert_false is_window_state?(FLAG_FULLSCREEN_MODE)
+    assert_false window_state?(FLAG_FULLSCREEN_MODE)
 
     close_window
   end
@@ -82,18 +82,18 @@ class TestCore < MTest::Unit::TestCase
     init_window(10, 10, __method__.to_s)
     set_target_fps 5
 
-    assert_false is_window_state?(FLAG_WINDOW_HIDDEN)
+    assert_false window_state?(FLAG_WINDOW_HIDDEN)
 
     set_window_state(FLAG_WINDOW_HIDDEN)
     flush_frame
 
-    assert_true is_window_state?(FLAG_WINDOW_HIDDEN)
-    assert_true is_window_hidden?
+    assert_true window_state?(FLAG_WINDOW_HIDDEN)
+    assert_true window_hidden?
 
     clear_window_state(FLAG_WINDOW_HIDDEN)
     flush_frame
 
-    assert_false is_window_state?(FLAG_WINDOW_HIDDEN)
+    assert_false window_state?(FLAG_WINDOW_HIDDEN)
 
     close_window
   end
@@ -103,15 +103,15 @@ class TestCore < MTest::Unit::TestCase
 
     init_window(10, 10, __method__.to_s)
 
-    assert_false is_window_state?(FLAG_WINDOW_MINIMISED)
+    assert_false window_state?(FLAG_WINDOW_MINIMISED)
 
     set_target_fps 5
     set_window_state(FLAG_WINDOW_MINIMISED)
     # Need to actually wait for the window to minimise
     flush_frame
 
-    assert_true is_window_state?(FLAG_WINDOW_MINIMISED)
-    assert_true is_window_minimised?
+    assert_true window_state?(FLAG_WINDOW_MINIMISED)
+    assert_true window_minimised?
 
     close_window
   end
@@ -121,18 +121,18 @@ class TestCore < MTest::Unit::TestCase
 
     init_window(10, 10, __method__.to_s)
 
-    assert_false is_window_state?(FLAG_WINDOW_MAXIMISED)
+    assert_false window_state?(FLAG_WINDOW_MAXIMISED)
 
     set_window_state(FLAG_WINDOW_MAXIMISED | FLAG_WINDOW_RESIZABLE)
     flush_frame
 
-    assert_true is_window_state?(FLAG_WINDOW_MAXIMISED)
-    assert_true is_window_maximised?
+    assert_true window_state?(FLAG_WINDOW_MAXIMISED)
+    assert_true window_maximised?
 
     restore_window
     flush_frame
 
-    assert_false is_window_state?(FLAG_WINDOW_MINIMISED)
+    assert_false window_state?(FLAG_WINDOW_MINIMISED)
 
     close_window
   end
@@ -152,12 +152,12 @@ class TestCore < MTest::Unit::TestCase
       set_window_state(state)
       flush_frame
 
-      assert_true is_window_state?(state)
+      assert_true window_state?(state)
 
       clear_window_state(state)
       flush_frame
 
-      assert_false is_window_state?(state)
+      assert_false window_state?(state)
     end
 
     close_window
