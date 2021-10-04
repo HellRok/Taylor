@@ -16,3 +16,12 @@ end
 def fixture_models_generate
   100.times.map { GREEN }
 end
+
+def fixture_models_copy_with_source
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  [
+    o, t,
+    t, o,
+  ]
+end

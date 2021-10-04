@@ -46,6 +46,16 @@ def image_copy(image)
   Image.new
 end
 
+# Returns a subsection of an image
+# @param image [Image]
+# @param source [Rectangle]
+# @return [Image]
+def image_from_image(image, source)
+  # mrb_image_from_image
+  # src/mruby_integration/image.cpp
+  Image.new
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

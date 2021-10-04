@@ -8,6 +8,8 @@
 - Add Image#export
 - Add image_copy
 - Add Image#copy
+- Add image_from_image
+- Image#copy now can take a `source` argument
 
 ## v0.3.0
 

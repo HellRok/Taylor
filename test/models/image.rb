@@ -67,4 +67,12 @@ class TestImage < MTest::Unit::TestCase
     unload_image(image)
     unload_image(copy)
   end
+
+  def test_copy_with_source
+    image = Image.load('test/assets/test.png')
+    new_image = image.copy(source: Rectangle.new(1, 1, 2, 2))
+    assert_equal fixture_models_copy_with_source, new_image.data
+    unload_image(image)
+    unload_image(new_image)
+  end
 end

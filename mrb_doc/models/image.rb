@@ -83,9 +83,11 @@ class Image
     nil
   end
 
-  # Copies the image to a new object
+  # Copies the image to a new object. If `source` is specified it'll only be
+  # that section of the image that is returned.
+  # @param source [Rectangle]
   # @return [Image]
-  def copy
+  def copy(source: nil)
     # src/mruby_integration/models/image.cpp
     Image.new
   end

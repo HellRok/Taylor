@@ -66,6 +66,21 @@ mrb_value mrb_image_copy(mrb_state *mrb, mrb_value) {
   return obj;
 }
 
+mrb_value mrb_image_from_image(mrb_state *mrb, mrb_value) {
+  Image *image;
+  Rectangle *rectangle;
+  mrb_get_args(mrb, "dd", &image, &Image_type, &rectangle, &Rectangle_type);
+
+  Image *result = (Image *)malloc(sizeof(Image));
+  *result = ImageFromImage(*image, *rectangle);
+
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
+
+  setup_Image(mrb, obj, result, result->width, result->height, result->mipmaps, result->format);
+
+  return obj;
+}
+
 mrb_value mrb_get_screen_data(mrb_state *mrb, mrb_value) {
   Image *image = (Image *)malloc(sizeof(Image));
   *image = GetScreenData();
@@ -83,6 +98,7 @@ void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "export_image", mrb_export_image, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "image_copy", mrb_image_copy, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "image_from_image", mrb_image_from_image, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
 

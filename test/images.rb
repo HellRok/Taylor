@@ -18,4 +18,12 @@ class TestImage < MTest::Unit::TestCase
     unload_image(image)
     unload_image(copy)
   end
+
+  def test_image_from_image
+    image = load_image('test/assets/test.png')
+    new_image = image_from_image(image, Rectangle.new(1, 1, 2, 2))
+    assert_equal fixture_image_from_image, new_image.data
+    unload_image(image)
+    unload_image(new_image)
+  end
 end
