@@ -80,6 +80,18 @@ class Font
     Vector2.new
   end
 
+  # Creates an image from the font
+  # @param text [String] The text to put on the screen
+  # @param font_size [Integer]
+  # @param font_padding [Integer]
+  # @param colour [Colour]
+  # @return [Image]
+  def to_image(text, font_size: 32, font_padding: 0, colour: BLACK)
+    # mrb_image_text_ex
+    # src/mruby_integration/image.cpp
+    Image.new
+  end
+
   # Used for alerting the user the font was not found at the specified path
   class NotFound < StandardError; end
 end

@@ -83,6 +83,10 @@ void append_models_Font(mrb_state *mrb) {
         measure_text_ex(self, text, size, padding)
       end
 
+      def to_image(text, size: 32, padding: 0, colour: BLACK)
+        image_text_ex(self, text, size, padding, colour)
+      end
+
       class NotFound < StandardError; end
     end
   )");

@@ -10,6 +10,8 @@
 - Add Image#copy
 - Add image_from_image
 - Image#copy now can take a `source` argument
+- Add image_text_ex
+- Add Font#to_image
 
 ## v0.3.0
 

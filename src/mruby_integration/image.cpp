@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "mruby.h"
+#include "mruby/string.h"
 
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/struct_types.hpp"
@@ -81,6 +82,23 @@ mrb_value mrb_image_from_image(mrb_state *mrb, mrb_value) {
   return obj;
 }
 
+mrb_value mrb_image_text_ex(mrb_state *mrb, mrb_value) {
+  Font *font;
+  mrb_value text;
+  mrb_float font_size, spacing;
+  Color *colour;
+  mrb_get_args(mrb, "dSffd", &font, &Font_type, &text, &font_size, &spacing, &colour, &Colour_type);
+
+  Image *result = (Image *)malloc(sizeof(Image));
+  *result = ImageTextEx(*font, mrb_str_to_cstr(mrb, text), font_size, spacing, *colour);
+
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
+
+  setup_Image(mrb, obj, result, result->width, result->height, result->mipmaps, result->format);
+
+  return obj;
+}
+
 mrb_value mrb_get_screen_data(mrb_state *mrb, mrb_value) {
   Image *image = (Image *)malloc(sizeof(Image));
   *image = GetScreenData();
@@ -99,6 +117,7 @@ void append_images(mrb_state *mrb) {
 
   mrb_define_method(mrb, mrb->kernel_module, "image_copy", mrb_image_copy, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "image_from_image", mrb_image_from_image, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "image_text_ex", mrb_image_text_ex, MRB_ARGS_REQ(5));
 
   mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
 

@@ -21,3 +21,24 @@ def fixture_image_from_image
     t, o,
   ]
 end
+
+def fixture_image_text_ex
+  [
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 57), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 85), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 85), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 113), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 57), Colour.new(0, 0, 0, 85), Colour.new(0, 0, 0, 85), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 170), Colour.new(0, 0, 0, 113), Colour.new(0, 0, 0, 85), Colour.new(0, 0, 0, 85), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 85), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 85), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+  ]
+end
