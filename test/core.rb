@@ -1,25 +1,18 @@
 class TestCore < MTest::Unit::TestCase
-  def test_init_window
-    skip_unless_display_present
-
-    init_window(10, 10, __method__.to_s)
-    assert_equal fixture_init_window, get_screen_data.data
-    close_window
-  end
-
   def test_clear_background
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
-    clear_background(RED)
+    set_window_title(__method__.to_s)
+    clear_and_draw do
+      clear_background(RED)
+    end
     assert_equal fixture_clear_background, get_screen_data.data
-    close_window
   end
 
   def test_get_world_to_screen2D
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
     vector = Vector2.new(5, 5)
     camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 1)
 
@@ -29,14 +22,12 @@ class TestCore < MTest::Unit::TestCase
     camera.target.y = 5
 
     assert_equal Vector2.new(0, 0), get_world_to_screen2D(vector, camera)
-
-    close_window
   end
 
   def test_get_screen_to_world2D
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
     vector = Vector2.new(5, 5)
     camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 1)
 
@@ -46,14 +37,12 @@ class TestCore < MTest::Unit::TestCase
     camera.target.y = 5
 
     assert_equal Vector2.new(10, 10), get_screen_to_world2D(vector, camera)
-
-    close_window
   end
 
   def test_set_window_state_fullscreen
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
     set_target_fps 5
 
     current_monitor = get_current_monitor
@@ -72,14 +61,17 @@ class TestCore < MTest::Unit::TestCase
     flush_frame
 
     assert_false window_state?(FLAG_FULLSCREEN_MODE)
-
-    close_window
+  ensure
+    if window_ready?
+      clear_window_state(FLAG_FULLSCREEN_MODE)
+      set_window_size(10, 10)
+    end
   end
 
   def test_set_window_state_hidden
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
     set_target_fps 5
 
     assert_false window_state?(FLAG_WINDOW_HIDDEN)
@@ -94,32 +86,32 @@ class TestCore < MTest::Unit::TestCase
     flush_frame
 
     assert_false window_state?(FLAG_WINDOW_HIDDEN)
-
-    close_window
+  ensure
+    clear_window_state(FLAG_WINDOW_HIDDEN) if window_ready?
   end
 
   def test_set_window_state_minimised
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
 
     assert_false window_state?(FLAG_WINDOW_MINIMISED)
 
     set_target_fps 5
     set_window_state(FLAG_WINDOW_MINIMISED)
     # Need to actually wait for the window to minimise
-    flush_frame
+    flush_frames 5
 
     assert_true window_state?(FLAG_WINDOW_MINIMISED)
     assert_true window_minimised?
-
-    close_window
+  ensure
+    restore_window if window_ready?
   end
 
   def test_set_window_state_maximised
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
 
     assert_false window_state?(FLAG_WINDOW_MAXIMISED)
 
@@ -130,17 +122,22 @@ class TestCore < MTest::Unit::TestCase
     assert_true window_maximised?
 
     restore_window
+    set_window_size(10, 10)
     flush_frame
 
-    assert_false window_state?(FLAG_WINDOW_MINIMISED)
+    assert_false window_state?(FLAG_WINDOW_MAXIMISED)
 
-    close_window
+  ensure
+    if window_ready?
+      clear_window_state(FLAG_WINDOW_MAXIMISED | FLAG_WINDOW_RESIZABLE)
+      set_window_size(10, 10)
+    end
   end
 
   def test_set_window_state_other
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
     set_target_fps 5
 
     [
@@ -158,15 +155,15 @@ class TestCore < MTest::Unit::TestCase
       flush_frame
 
       assert_false window_state?(state)
+    ensure
+      clear_window_state(state) if window_ready?
     end
-
-    close_window
   end
 
   def test_window_position
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
     set_target_fps 5
 
     set_window_position 50, 50
@@ -176,37 +173,33 @@ class TestCore < MTest::Unit::TestCase
     set_window_position 70, 70
     flush_frame
     assert_equal Vector2.new(70, 70), get_window_position
-
-    close_window
   end
 
   def test_set_window_size
     skip_unless_display_present
 
-    init_window(32, 24, __method__.to_s)
+    set_window_title(__method__.to_s)
     set_target_fps 5
 
     flush_frame
-    assert_equal 32, get_screen_width
-    assert_equal 24, get_screen_height
+    assert_equal 10, get_screen_width
+    assert_equal 10, get_screen_height
 
     set_window_size 64, 48
 
     flush_frame
     assert_equal 64, get_screen_width
     assert_equal 48, get_screen_height
-
-    close_window
+  ensure
+    set_window_size 10, 10 if window_ready?
   end
 
   def test_clipboard
     skip_unless_display_present
 
-    init_window(32, 24, __method__.to_s)
+    set_window_title(__method__.to_s)
 
     set_clipboard_text('TEST STRING')
     assert_equal 'TEST STRING', get_clipboard_text
-
-    close_window
   end
 end

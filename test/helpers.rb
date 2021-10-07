@@ -1,5 +1,13 @@
 def skip_unless_display_present
-  skip if ENV.fetch('DISPLAY', '').empty?
+  skip unless window_ready?
+end
+
+def clear_and_draw(&block)
+  begin_drawing
+  clear(colour: RAYWHITE)
+  block.call
+ensure
+  end_drawing
 end
 
 def flush_frame

@@ -12,6 +12,7 @@
 - Image#copy now can take a `source` argument
 - Add image_text_ex
 - Add Font#to_image
+- Restructured tests to run in a single window instead of spawing one window per test
 
 ## v0.3.0
 

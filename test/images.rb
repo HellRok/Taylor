@@ -30,7 +30,7 @@ class TestImage < MTest::Unit::TestCase
   def test_image_text_ex
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
     font = Font.load('./test/assets/tiny.ttf', size: 16)
 
     image = image_text_ex(font, 'S', 16, 0, BLACK)
@@ -38,6 +38,5 @@ class TestImage < MTest::Unit::TestCase
 
     unload_image(image)
     font.unload
-    close_window
   end
 end

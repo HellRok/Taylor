@@ -52,16 +52,16 @@ class TestCamera2D < MTest::Unit::TestCase
   def test_drawing
     skip_unless_display_present
 
-    init_window(10, 10, __method__.to_s)
+    set_window_title(__method__.to_s)
     set_target_fps 5
     rectangle = Rectangle.new(2, 2, 6, 6)
     camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 1)
 
-    begin_drawing
-    camera.drawing do
-      draw_rectangle_rec(rectangle, RED)
+    clear_and_draw do
+      camera.drawing do
+        draw_rectangle_rec(rectangle, RED)
+      end
     end
-    end_drawing
 
     assert_equal fixture_camera2d_drawing[0], get_screen_data.data
     clear_background(RAYWHITE)
@@ -69,14 +69,12 @@ class TestCamera2D < MTest::Unit::TestCase
     camera.offset.x = -2
     camera.offset.y = -2
 
-    begin_drawing
-    camera.drawing do
-      draw_rectangle_rec(rectangle, RED)
+    clear_and_draw do
+      camera.drawing do
+        draw_rectangle_rec(rectangle, RED)
+      end
     end
 
     assert_equal fixture_camera2d_drawing[1], get_screen_data.data
-
-    end_drawing
-    close_window
   end
 end

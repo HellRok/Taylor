@@ -33,4 +33,6 @@ require 'test/models/sound'
 require 'test/models/texture2d'
 require 'test/models/vector2'
 
+init_window(10, 10, 'blah') unless ENV.fetch('DISPLAY', '').empty?
 exit 1 if MTest::Unit.new.run.positive?
+close_window unless ENV.fetch('DISPLAY', '').empty?
