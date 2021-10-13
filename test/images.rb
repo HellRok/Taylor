@@ -39,4 +39,19 @@ class TestImage < MTest::Unit::TestCase
     unload_image(image)
     font.unload
   end
+
+  def test_image_resize!
+    image = load_image('test/assets/test.png')
+    image_resize!(image, 6, 6)
+    raw_colour_data(image.data)
+    assert_equal fixture_image_resize!, image.data
+    unload_image(image)
+  end
+
+  def test_image_resize_nearest_neighbour!
+    image = load_image('test/assets/test.png')
+    image_resize_nearest_neighbour!(image, 6, 6)
+    assert_equal fixture_image_resize_nearest_neighbour!, image.data
+    unload_image(image)
+  end
 end

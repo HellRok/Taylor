@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "mruby.h"
 #include "mruby/string.h"
+#include "mruby/variable.h"
 
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/struct_types.hpp"
@@ -99,6 +100,52 @@ mrb_value mrb_image_text_ex(mrb_state *mrb, mrb_value) {
   return obj;
 }
 
+mrb_value mrb_image_resize(mrb_state *mrb, mrb_value) {
+  mrb_value image_obj;
+  mrb_int width, height;
+  mrb_get_args(mrb, "oii", &image_obj, &width, &height);
+
+  Image *image = static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
+
+  ImageResize(image, width, height);
+
+  mrb_iv_set(
+      mrb, image_obj,
+      mrb_intern_cstr(mrb, "@width"),
+      mrb_int_value(mrb, width)
+    );
+  mrb_iv_set(
+      mrb, image_obj,
+      mrb_intern_cstr(mrb, "@height"),
+      mrb_int_value(mrb, height)
+    );
+
+  return mrb_nil_value();
+}
+
+mrb_value mrb_image_resize_nearest_neighbour(mrb_state *mrb, mrb_value) {
+  mrb_value image_obj;
+  mrb_int width, height;
+  mrb_get_args(mrb, "oii", &image_obj, &width, &height);
+
+  Image *image = static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
+
+  ImageResizeNN(image, width, height);
+
+  mrb_iv_set(
+      mrb, image_obj,
+      mrb_intern_cstr(mrb, "@width"),
+      mrb_int_value(mrb, width)
+    );
+  mrb_iv_set(
+      mrb, image_obj,
+      mrb_intern_cstr(mrb, "@height"),
+      mrb_int_value(mrb, height)
+    );
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_get_screen_data(mrb_state *mrb, mrb_value) {
   Image *image = (Image *)malloc(sizeof(Image));
   *image = GetScreenData();
@@ -118,6 +165,9 @@ void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "image_copy", mrb_image_copy, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "image_from_image", mrb_image_from_image, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "image_text_ex", mrb_image_text_ex, MRB_ARGS_REQ(5));
+
+  mrb_define_method(mrb, mrb->kernel_module, "image_resize!", mrb_image_resize, MRB_ARGS_REQ(3));
+  mrb_define_method(mrb, mrb->kernel_module, "image_resize_nearest_neighbour!", mrb_image_resize_nearest_neighbour, MRB_ARGS_REQ(3));
 
   mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
 

@@ -89,4 +89,26 @@ class TestImage < MTest::Unit::TestCase
     unload_image(image)
     unload_image(new_image)
   end
+
+  def test_resize_default_scaling!
+    image = Image.load('./test/assets/test.png')
+    image.resize!(width: 6, height: 6)
+    assert_equal fixture_models_image_resize_default_scaing!, image.data
+    unload_image(image)
+  end
+
+  def test_resize_bicubic_scaling!
+    image = Image.load('./test/assets/test.png')
+    image.resize!(width: 6, height: 6, scaling: :bicubic)
+    assert_equal fixture_models_image_resize_bicubic_scaing!, image.data
+    unload_image(image)
+  end
+
+  def test_resize_incorrect_scaling!
+    image = Image.load('./test/assets/test.png')
+    assert_raise(ArgumentError) {
+      image.resize!(width: 6, height: 6, scaling: :nope)
+    }
+    unload_image(image)
+  end
 end

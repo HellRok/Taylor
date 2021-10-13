@@ -15,6 +15,9 @@
 - Restructured tests to run in a single window instead of spawing one window per test
 - Add load_texture_from_image
 - Add Image#to_texture
+- Add image_resize!
+- Add image_resize_nearest_neighbour!
+- Add Image#resize!
 
 ## v0.3.0
 

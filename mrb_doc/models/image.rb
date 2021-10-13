@@ -99,6 +99,17 @@ class Image
     Texture2D.new
   end
 
+  # Resizes the image, defaults to using the nearest neighbour algorithm which
+  # is useful for pixel art.
+  # @param width [Integer]
+  # @param height [Integer]
+  # @param scaling [Symbol] Valid options are :nearest_neighbour and :bicubic
+  # @return [Image]
+  def resize!(width:, height:, scaling: :nearest_neighbour)
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

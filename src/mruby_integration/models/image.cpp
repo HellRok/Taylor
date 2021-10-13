@@ -122,6 +122,19 @@ void append_models_Image(mrb_state *mrb) {
         load_texture_from_image(self)
       end
 
+      def resize!(width:, height:, scaling: :nearest_neighbour)
+        case scaling
+        when :bicubic
+          image_resize!(self, width, height)
+        when :nearest_neighbour
+          image_resize_nearest_neighbour!(self, width, height)
+        else
+          raise ArgumentError.new("Unknown scaler \"#{scaling}\", valid options are: :bicubic, :nearest_neighbour")
+        end
+
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

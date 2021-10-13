@@ -69,6 +69,30 @@ def image_text_ex(font, text, font_size, font_padding, colour)
   Image.new
 end
 
+# Resizes the image using a bicubic scaling algorithm. Useful for things like
+# photos, not great for pixel art.
+# @param image [Image]
+# @param width [Integer]
+# @param height [Integer]
+# @return [nil]
+def image_resize!(image, width, height)
+  # mrb_image_resize
+  # src/mruby_integration/image.cpp
+  nil
+end
+
+# Resizes the image using a nearest-neighbour scaling algorithm. Useful for things like
+# pixel art, not great for photos.
+# @param image [Image]
+# @param width [Integer]
+# @param height [Integer]
+# @return [nil]
+def image_resize_nearest_neighbour!(image, width, height)
+  # mrb_image_resize_nearest_neighbour
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()
