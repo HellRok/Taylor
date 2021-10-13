@@ -13,6 +13,8 @@
 - Add image_text_ex
 - Add Font#to_image
 - Restructured tests to run in a single window instead of spawing one window per test
+- Add load_texture_from_image
+- Add Image#to_texture
 
 ## v0.3.0
 

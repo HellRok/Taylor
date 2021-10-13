@@ -118,6 +118,10 @@ void append_models_Image(mrb_state *mrb) {
         end
       end
 
+      def to_texture
+        load_texture_from_image(self)
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

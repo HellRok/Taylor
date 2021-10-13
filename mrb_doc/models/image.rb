@@ -92,6 +92,13 @@ class Image
     Image.new
   end
 
+  # Returns a texture of the image
+  # @return [Texture2D]
+  def to_texture
+    # src/mruby_integration/models/image.cpp
+    Texture2D.new
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

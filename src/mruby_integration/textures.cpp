@@ -23,6 +23,20 @@ mrb_value mrb_load_texture(mrb_state *mrb, mrb_value) {
   return obj;
 }
 
+mrb_value mrb_load_texture_from_image(mrb_state *mrb, mrb_value) {
+  Image *image;
+  mrb_get_args(mrb, "d", &image, &Image_type);
+
+  Texture2D *texture = (Texture2D *)malloc(sizeof(Texture2D));
+  *texture = LoadTextureFromImage(*image);
+
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
+
+  setup_Texture2D(mrb, obj, texture, texture->id, texture->width, texture->height, texture->mipmaps, texture->format);
+
+  return obj;
+}
+
 mrb_value mrb_unload_texture(mrb_state *mrb, mrb_value) {
   Texture2D *texture;
   mrb_get_args(mrb, "d", &texture, &Texture2D_type);
@@ -81,6 +95,7 @@ mrb_value mrb_fade(mrb_state *mrb, mrb_value) {
 
 void append_textures(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_texture", mrb_load_texture, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "load_texture_from_image", mrb_load_texture_from_image, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "unload_texture", mrb_unload_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture_pro", mrb_draw_texture_pro, MRB_ARGS_REQ(6));

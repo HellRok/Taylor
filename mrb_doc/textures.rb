@@ -7,6 +7,15 @@ def load_texture(path)
   Texture2D.new
 end
 
+# Loads a texture from an image object
+# @param image [Image]
+# @return [Texture2D]
+def load_texture_from_image(image)
+  # mrb_load_texture_from_image
+  # src/mruby_integration/textures.cpp
+  Texture2D.new
+end
+
 # Unloads a texture
 # @param texture [Texture2D]
 # @return [nil]

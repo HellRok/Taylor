@@ -68,6 +68,20 @@ class TestImage < MTest::Unit::TestCase
     unload_image(copy)
   end
 
+  def test_to_texture
+    skip_unless_display_present
+
+    set_window_title(__method__.to_s)
+    image = Image.load('./test/assets/test.png')
+    texture = image.to_texture
+
+    assert_equal image.width, texture.width
+    assert_equal image.height, texture.height
+
+    texture.unload
+    image.unload
+  end
+
   def test_copy_with_source
     image = Image.load('test/assets/test.png')
     new_image = image.copy(source: Rectangle.new(1, 1, 2, 2))
