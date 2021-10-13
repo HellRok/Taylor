@@ -3,7 +3,7 @@ class TestTexture < MTest::Unit::TestCase
     skip_unless_display_present
 
     set_window_title(__method__.to_s)
-    texture = Texture.load('test/assets/test.png')
+    texture = Texture2D.load('test/assets/test.png')
     clear_and_draw do
       draw_texture(texture, 3, 3, WHITE)
     end
@@ -16,7 +16,7 @@ class TestTexture < MTest::Unit::TestCase
     skip_unless_display_present
 
     set_window_title(__method__.to_s)
-    texture = Texture.load('test/assets/test.png')
+    texture = Texture2D.load('test/assets/test.png')
     clear_and_draw do
       draw_texture_pro(
         texture,

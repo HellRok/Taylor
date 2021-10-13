@@ -187,7 +187,7 @@ class TestCore < MTest::Unit::TestCase
 
     set_window_size 64, 48
 
-    flush_frame
+    flush_frames 5
     assert_equal 64, get_screen_width
     assert_equal 48, get_screen_height
   ensure
