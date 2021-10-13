@@ -50,3 +50,14 @@ def fixture_models_image_resize_default_scaing!
     p, p, t, t, o, o,
   ]
 end
+
+def fixture_models_image_crop!
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 255)
+  [
+    o, t,
+    t, o,
+    p, t,
+  ]
+end

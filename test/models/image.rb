@@ -111,4 +111,11 @@ class TestImage < MTest::Unit::TestCase
     }
     unload_image(image)
   end
+
+  def test_crop!
+    image = Image.load('./test/assets/test.png')
+    image.crop!(Rectangle.new(0, 0, 2, 3))
+    assert_equal fixture_models_image_crop!, image.data
+    unload_image(image)
+  end
 end

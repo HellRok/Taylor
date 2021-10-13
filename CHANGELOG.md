@@ -18,6 +18,8 @@
 - Add image_resize!
 - Add image_resize_nearest_neighbour!
 - Add Image#resize!
+- Add image_crop!
+- Add Image#crop!
 
 ## v0.3.0
 

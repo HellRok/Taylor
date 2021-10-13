@@ -65,6 +65,7 @@ class TestCore < MTest::Unit::TestCase
     if window_ready?
       clear_window_state(FLAG_FULLSCREEN_MODE)
       set_window_size(10, 10)
+      flush_frame
     end
   end
 
@@ -131,6 +132,7 @@ class TestCore < MTest::Unit::TestCase
     if window_ready?
       clear_window_state(FLAG_WINDOW_MAXIMISED | FLAG_WINDOW_RESIZABLE)
       set_window_size(10, 10)
+      flush_frame
     end
   end
 
@@ -191,7 +193,10 @@ class TestCore < MTest::Unit::TestCase
     assert_equal 64, get_screen_width
     assert_equal 48, get_screen_height
   ensure
-    set_window_size 10, 10 if window_ready?
+    if window_ready?
+      set_window_size 10, 10
+      flush_frame
+    end
   end
 
   def test_clipboard

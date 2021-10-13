@@ -43,7 +43,6 @@ class TestImage < MTest::Unit::TestCase
   def test_image_resize!
     image = load_image('test/assets/test.png')
     image_resize!(image, 6, 6)
-    raw_colour_data(image.data)
     assert_equal fixture_image_resize!, image.data
     unload_image(image)
   end
@@ -52,6 +51,13 @@ class TestImage < MTest::Unit::TestCase
     image = load_image('test/assets/test.png')
     image_resize_nearest_neighbour!(image, 6, 6)
     assert_equal fixture_image_resize_nearest_neighbour!, image.data
+    unload_image(image)
+  end
+
+  def test_image_crop!
+    image = load_image('test/assets/test.png')
+    image_crop!(image, Rectangle.new(0, 0, 3, 2))
+    assert_equal fixture_image_crop!, image.data
     unload_image(image)
   end
 end

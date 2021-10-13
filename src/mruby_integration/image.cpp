@@ -123,6 +123,29 @@ mrb_value mrb_image_resize(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_image_crop(mrb_state *mrb, mrb_value) {
+  Rectangle *rectangle;
+  mrb_value image_obj;
+  mrb_get_args(mrb, "od", &image_obj, &rectangle, &Rectangle_type);
+
+  Image *image = static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
+
+  ImageCrop(image, *rectangle);
+
+  mrb_iv_set(
+      mrb, image_obj,
+      mrb_intern_cstr(mrb, "@width"),
+      mrb_int_value(mrb, rectangle->width)
+    );
+  mrb_iv_set(
+      mrb, image_obj,
+      mrb_intern_cstr(mrb, "@height"),
+      mrb_int_value(mrb, rectangle->height)
+    );
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_image_resize_nearest_neighbour(mrb_state *mrb, mrb_value) {
   mrb_value image_obj;
   mrb_int width, height;
@@ -165,6 +188,7 @@ void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "image_copy", mrb_image_copy, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "image_from_image", mrb_image_from_image, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "image_text_ex", mrb_image_text_ex, MRB_ARGS_REQ(5));
+  mrb_define_method(mrb, mrb->kernel_module, "image_crop!", mrb_image_crop, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "image_resize!", mrb_image_resize, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "image_resize_nearest_neighbour!", mrb_image_resize_nearest_neighbour, MRB_ARGS_REQ(3));

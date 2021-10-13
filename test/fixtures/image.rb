@@ -67,3 +67,13 @@ def fixture_image_resize_nearest_neighbour!
     p, p, t, t, o, o,
   ]
 end
+
+def fixture_image_crop!
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 255)
+  [
+    o, t, p,
+    t, o, t,
+  ]
+end

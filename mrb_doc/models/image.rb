@@ -110,6 +110,14 @@ class Image
     self
   end
 
+  # Crops the image to the section in the rectangle
+  # @param rectangle [Rectangle]
+  # @return [Image]
+  def crop!(rectangle)
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

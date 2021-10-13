@@ -93,6 +93,16 @@ def image_resize_nearest_neighbour!(image, width, height)
   nil
 end
 
+# Crops the image to the section in the rectangle
+# @param image [Image]
+# @param rectangle [Rectangle]
+# @return [nil]
+def image_crop!(image, rectangle)
+  # mrb_image_crop
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()
