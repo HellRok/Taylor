@@ -37,8 +37,10 @@ class TestCommandsNew < MTest::Unit::TestCase
     assert_equal ['linux', 'windows', 'osx', 'web'], data['export_targets']
     assert_equal ['./', './vendor'], data['load_paths']
     assert_true Dir.exists?('./taylor_game/vendor')
+    assert_true File.exists?('./taylor_game/vendor/.keep')
     assert_equal ['./assets'], data['copy_paths']
     assert_true Dir.exists?('./taylor_game/assets')
+    assert_true File.exists?('./taylor_game/assets/.keep')
   ensure
     delete_project('./taylor_game')
   end
@@ -66,16 +68,22 @@ class TestCommandsNew < MTest::Unit::TestCase
     assert_equal ['web', 'windows'], data['export_targets']
     assert_equal ['./', './third_party'], data['load_paths']
     assert_true Dir.exists?('./test/test_game/third_party')
+    assert_true File.exists?('./test/test_game/third_party/.keep')
     assert_equal ['./resources', './music'], data['copy_paths']
     assert_true Dir.exists?('./test/test_game/resources')
+    assert_true File.exists?('./test/test_game/resources/.keep')
     assert_true Dir.exists?('./test/test_game/music')
+    assert_true File.exists?('./test/test_game/music/.keep')
   ensure
-    File.delete('./test/test_game/app.rb')
-    File.delete('./test/test_game/taylor-config.json')
-    Dir.rmdir('./test/test_game/music')
-    Dir.rmdir('./test/test_game/resources')
-    Dir.rmdir('./test/test_game/third_party')
-    Dir.rmdir('./test/test_game/')
+    File.delete(File.join('test', 'test_game', 'app.rb'))
+    File.delete(File.join('test', 'test_game', 'taylor-config.json'))
+    File.delete(File.join('test', 'test_game', 'music', '.keep'))
+    Dir.rmdir(File.join('test', 'test_game', 'music'))
+    File.delete(File.join('test', 'test_game', 'resources', '.keep'))
+    Dir.rmdir(File.join('test', 'test_game', 'resources'))
+    File.delete(File.join('test', 'test_game', 'third_party', '.keep'))
+    Dir.rmdir(File.join('test', 'test_game', 'third_party'))
+    Dir.rmdir(File.join('test', 'test_game'))
   end
 
   def test_setup_game_structure_defaults
@@ -100,11 +108,14 @@ class TestCommandsNew < MTest::Unit::TestCase
     assert_equal "$: << './black_box'\n", data[2]
     assert_equal "init_window(800, 480, \"./test/test_game_the_sequel\")\n", data[5]
   ensure
-    File.delete('./test/test_game_the_sequel/game.rb')
-    File.delete('./test/test_game_the_sequel/taylor-config.json')
-    Dir.rmdir('./test/test_game_the_sequel/assets')
-    Dir.rmdir('./test/test_game_the_sequel/third_party')
-    Dir.rmdir('./test/test_game_the_sequel/black_box')
-    Dir.rmdir('./test/test_game_the_sequel/')
+    File.delete(File.join('./test', 'test_game_the_sequel', 'game.rb'))
+    File.delete(File.join('./test', 'test_game_the_sequel', 'taylor-config.json'))
+    File.delete(File.join('./test', 'test_game_the_sequel', 'assets', '.keep'))
+    Dir.rmdir(File.join('./test', 'test_game_the_sequel', 'assets'))
+    File.delete(File.join('./test', 'test_game_the_sequel', 'third_party', '.keep'))
+    Dir.rmdir(File.join('./test', 'test_game_the_sequel', 'third_party'))
+    File.delete(File.join('./test', 'test_game_the_sequel', 'black_box', '.keep'))
+    Dir.rmdir(File.join('./test', 'test_game_the_sequel', 'black_box'))
+    Dir.rmdir(File.join('./test', 'test_game_the_sequel'))
   end
 end

@@ -20,6 +20,7 @@
 - Add Image#resize!
 - Add image_crop!
 - Add Image#crop!
+- Taylor-cli new now adds `.keep` files
 
 ## v0.3.0
 

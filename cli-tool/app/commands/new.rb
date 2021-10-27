@@ -76,8 +76,12 @@ module Taylor
       end
 
       def setup_game_structure
-        @options[:load_paths].each { |path| Dir.mkdir(path_for(path)) unless path == './' }
-        @options[:copy_paths].each { |path| Dir.mkdir(path_for(path)) unless path == './' }
+        (@options[:load_paths] + @options[:copy_paths]).each { |path|
+          unless path == './'
+            Dir.mkdir(path_for(path))
+            File.open(File.join(path_for(path), '.keep'), 'w').close
+          end
+        }
 
         game = File.open(path_for(options[:input]), 'w')
         game.write(
