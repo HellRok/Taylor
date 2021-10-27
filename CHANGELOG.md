@@ -21,6 +21,8 @@
 - Add image_crop!
 - Add Image#crop!
 - Taylor-cli new now adds `.keep` files
+- Add image_alpha_mask!
+- Add Image#alpha_mask=
 
 ## v0.3.0
 

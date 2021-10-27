@@ -140,6 +140,11 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def alpha_mask=(mask)
+        image_alpha_mask!(self, mask)
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

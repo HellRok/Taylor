@@ -103,6 +103,16 @@ def image_crop!(image, rectangle)
   nil
 end
 
+# Applies the alpha of the mask to the image
+# @param image [Image]
+# @param alpha_mask [Image]
+# @return [nil]
+def image_alpha_mask!(image, alpha_mask)
+  # mrb_image_alpha_mask
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

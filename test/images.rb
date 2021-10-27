@@ -60,4 +60,15 @@ class TestImage < MTest::Unit::TestCase
     assert_equal fixture_image_crop!, image.data
     unload_image(image)
   end
+
+  def test_image_alpha_mask!
+    image = load_image('test/assets/test.png')
+    mask = load_image('test/assets/alpha.png')
+
+    image_alpha_mask!(image, mask)
+    assert_equal fixture_image_alpha_mask!, image.data
+
+    unload_image(mask)
+    unload_image(image)
+  end
 end

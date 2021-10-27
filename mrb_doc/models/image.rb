@@ -118,6 +118,14 @@ class Image
     self
   end
 
+  # Applies the alpha of the mask to the image
+  # @param mask [Image]
+  # @return [Image]
+  def alpha_mask=(mask)
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

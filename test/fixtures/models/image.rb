@@ -61,3 +61,14 @@ def fixture_models_image_crop!
     p, t,
   ]
 end
+
+def fixture_models_image_alpha_mask
+  t = Colour.new(255, 255, 255, 0)
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 0)
+  [
+    o, t, p,
+    t, o, t,
+    p, t, o,
+  ]
+end
