@@ -18,7 +18,7 @@ cxx = ""
 variant = "debug"
 cxxflags = "-std=c++2a -no-pie -Wall -Wextra"
 ldflags = "-l pthread"
-includes = "-I ./include/ -I ./vendor/ -I ./vendor/raygui/ -I ./vendor/mruby/"
+includes = "-I ./include/ -I ./vendor/ -I ./vendor/raylib/include/ -I ./vendor/mruby/"
 static_links = ""
 SRC_FOLDER = "src"
 SRC = Rake::FileList["#{SRC_FOLDER}/**/*.cpp"]
@@ -49,7 +49,6 @@ namespace :linux do
     cxx = "g++"
     platform = "linux"
     ldflags = "-l dl -l pthread"
-    includes += " -I ./vendor/linux/raylib/include/"
     static_links = "#{static_links} ./vendor/linux/libmruby.a ./vendor/linux/raylib/lib/libraylib.a"
   end
 
@@ -86,7 +85,6 @@ namespace :windows do
     platform = "windows"
     ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -lwinmm -l raylib #{ldflags}"
     cxxflags += " -mwindows -static-libstdc++"
-    includes += " -I ./vendor/windows/raylib/include/"
 
     static_links = "#{static_links} ./vendor/windows/libmruby.a ./vendor/windows/raylib/lib/libraylib.a"
   end
@@ -125,7 +123,7 @@ namespace :osx do
     cxxflags = " -Oz -mmacosx-version-min=10.11 -stdlib=libc++"
     platform = "osx"
     ldflags = "-l dl -l pthread -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL"
-    includes += " -I ./vendor/osx/raylib/include/ -I /opt/osxcross/target/SDK/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
+    includes += " -I /opt/osxcross/target/SDK/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
     static_links = "#{static_links} ./vendor/osx/libmruby.a ./vendor/osx/raylib/lib/libraylib.a"
   end
 
@@ -165,7 +163,6 @@ namespace :web do
     }
     platform = "web"
     ldflags = ""
-    includes += " -I ./vendor/web/raylib/include/"
     static_links = "-s USE_GLFW=3 -s ASYNCIFY #{static_links} ./vendor/web/libmruby.a ./vendor/web/raylib/lib/libraylib.a"
   end
 

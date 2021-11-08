@@ -122,16 +122,18 @@ class TestCore < MTest::Unit::TestCase
     assert_true window_state?(FLAG_WINDOW_MAXIMISED)
     assert_true window_maximised?
 
-    restore_window
-    set_window_size(10, 10)
+    clear_window_state(FLAG_WINDOW_MAXIMISED)
     flush_frame
+    restore_window
+    flush_frame
+    set_window_size(10, 10)
 
     assert_false window_state?(FLAG_WINDOW_MAXIMISED)
 
   ensure
     if window_ready?
-      clear_window_state(FLAG_WINDOW_MAXIMISED | FLAG_WINDOW_RESIZABLE)
-      set_window_size(10, 10)
+      close_window
+      init_window(10, 10, 'blah')
       flush_frame
     end
   end

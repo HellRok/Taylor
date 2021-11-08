@@ -2,7 +2,7 @@ FROM appplant/mruby-cli as raylib_base
 
 WORKDIR /app
 
-RUN git clone --branch 3.7.0 --depth 1 https://github.com/raysan5/raylib.git .
+RUN git clone --branch 4.0.0 --depth 1 https://github.com/raysan5/raylib.git .
 
 RUN apt-get update && \
   apt-get install \
@@ -39,8 +39,8 @@ COPY ./scripts/mruby/emscripten.rb /app/build_config/
 RUN apt-get update && apt-get install python3 xz-utils bzip2 -y
 RUN  git clone https://github.com/juj/emsdk.git /app/emsdk &&\
   cd /app/emsdk &&\
-  ./emsdk install 2.0.30 &&\
-  ./emsdk activate 2.0.30 &&\
+  ./emsdk install 2.0.33 &&\
+  ./emsdk activate 2.0.33 &&\
   cd -
 RUN cd src && \
   make PLATFORM=PLATFORM_WEB -B
@@ -48,6 +48,7 @@ RUN cd src && \
 FROM scratch AS export
 
 COPY --from=raylib_linux /app/libraylib.a ./vendor/linux/raylib/lib/
+COPY --from=raylib_linux /app/src/raylib.h ./vendor/raylib/include/
 COPY --from=raylib_mingw /app/libraylib.a ./vendor/windows/raylib/lib/
 COPY --from=raylib_osx /app/libraylib.a ./vendor/osx/raylib/lib/
 COPY --from=raylib_emscripten /app/src/libraylib.a ./vendor/web/raylib/lib/

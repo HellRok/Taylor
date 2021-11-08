@@ -15,7 +15,7 @@ mrb_value mrb_load_font(mrb_state *mrb, mrb_value) {
 
   mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Font_class, &Font_type, font));
 
-  setup_Font(mrb, obj, font, font->baseSize, font->charsCount, font->charsPadding);
+  setup_Font(mrb, obj, font, font->baseSize, font->glyphCount, font->glyphPadding);
 
   return obj;
 }
@@ -31,7 +31,7 @@ mrb_value mrb_load_font_ex(mrb_state *mrb, mrb_value) {
 
   mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Font_class, &Font_type, font));
 
-  setup_Font(mrb, obj, font, font->baseSize, font->charsCount, font->charsPadding);
+  setup_Font(mrb, obj, font, font->baseSize, font->glyphCount, font->glyphPadding);
 
   return obj;
 }

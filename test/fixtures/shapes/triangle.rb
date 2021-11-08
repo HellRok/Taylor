@@ -25,8 +25,8 @@ def fixture_draw_triangle_lines
     w, w, b, w, w, w, w, b, w, w,
     w, b, w, w, w, w, w, w, b, w,
     w, b, w, w, w, w, w, w, b, w,
-    b, w, w, w, w, w, w, w, w, b,
     b, b, b, b, b, b, b, b, b, b,
+    w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
   ]

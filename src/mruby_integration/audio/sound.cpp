@@ -13,7 +13,7 @@ mrb_value mrb_load_sound(mrb_state *mrb, mrb_value) {
   *new_sound = LoadSound(path);
   mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Sound_class, &Sound_type, new_sound));
 
-  setup_Sound(mrb, obj, new_sound, new_sound->sampleCount);
+  setup_Sound(mrb, obj, new_sound, new_sound->frameCount);
 
   return obj;
 }

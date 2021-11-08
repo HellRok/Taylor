@@ -13,7 +13,7 @@ mrb_value mrb_load_music_stream(mrb_state *mrb, mrb_value) {
   *new_music = LoadMusicStream(path);
   mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Music_class, &Music_type, new_music));
 
-  setup_Music(mrb, obj, new_music, new_music->ctxType, new_music->looping, new_music->sampleCount);
+  setup_Music(mrb, obj, new_music, new_music->ctxType, new_music->looping, new_music->frameCount);
 
   return obj;
 }
@@ -40,7 +40,7 @@ mrb_value mrb_music_playing(mrb_state *mrb, mrb_value) {
   Music *music;
   mrb_get_args(mrb, "d", &music, &Music_type);
 
-  return mrb_bool_value(IsMusicPlaying(*music));
+  return mrb_bool_value(IsMusicStreamPlaying(*music));
 }
 
 mrb_value mrb_update_music_stream(mrb_state *mrb, mrb_value) {

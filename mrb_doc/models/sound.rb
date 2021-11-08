@@ -1,22 +1,22 @@
 # The Sound class holds shorter sounds, these are usually used for sound effects.
 class Sound
   # @return [Integer]
-  attr_reader :sample_count
+  attr_reader :frame_count
 
   # @return [Float]
   attr_reader :volume, :pitch
 
   # Creates a new instance of Sound
-  # @param sample_count [Integer]
+  # @param frame_count [Integer]
   # @return [Sound]
-  def initialize(sample_count)
+  def initialize(frame_count)
     # mrb_Sound_initialize
     # src/mruby_integration/models/sound.cpp
     Sound.new
   end
 
-  def sample_count=(sample_count)
-    # mrb_Sound_set_sample_count
+  def frame_count=(frame_count)
+    # mrb_Sound_set_frame_count
     # src/mruby_integration/models/sound.cpp
     1
   end
@@ -26,7 +26,7 @@ class Sound
   def to_h
     # src/mruby_integration/models/sound.cpp
     {
-      sample_count: sample_count,
+      frame_count: frame_count,
     }
   end
 

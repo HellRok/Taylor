@@ -1,14 +1,14 @@
 # The Font class is used for displaying TTF fonts
 class Font
   # @return [Integer]
-  attr_reader :base_size, :chars_count, :chars_padding
+  attr_reader :base_size, :glyph_count, :glyph_padding
 
   # Creates a new instance of Font
   # @param base_size [Integer]
-  # @param chars_count [Integer]
-  # @param chars_padding [Integer]
+  # @param glyph_count [Integer]
+  # @param glyph_padding [Integer]
   # @return [Font]
-  def initialize(base_size, chars_count, chars_padding)
+  def initialize(base_size, glyph_count, glyph_padding)
     # mrb_Font_initialize
     # src/mruby_integration/models/font.cpp
     Font.new
@@ -20,14 +20,14 @@ class Font
     10
   end
 
-  def chars_count=(chars_count)
-    # mrb_Font_chars_count
+  def glyph_count=(glyph_count)
+    # mrb_Font_glyph_count
     # src/mruby_integration/models/font.cpp
     95
   end
 
-  def chars_padding=(chars_padding)
-    # mrb_Font_chars_padding
+  def glyph_padding=(glyph_padding)
+    # mrb_Font_glyph_padding
     # src/mruby_integration/models/font.cpp
     4
   end

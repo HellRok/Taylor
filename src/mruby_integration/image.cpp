@@ -180,7 +180,7 @@ mrb_value mrb_image_resize_nearest_neighbour(mrb_state *mrb, mrb_value) {
 
 mrb_value mrb_get_screen_data(mrb_state *mrb, mrb_value) {
   Image *image = (Image *)malloc(sizeof(Image));
-  *image = GetScreenData();
+  *image = LoadImageFromScreen();
 
   mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
 

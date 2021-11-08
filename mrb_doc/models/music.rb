@@ -2,7 +2,7 @@
 # The Music class holds longer format sound files, very useful for background music.
 class Music
   # @return [Integer]
-  attr_reader :context_type, :sample_count
+  attr_reader :context_type, :frame_count
 
   # @return [Float]
   attr_reader :volume, :pitch
@@ -13,9 +13,9 @@ class Music
   # Creates a new instance of Music
   # @param context_type [Integer] A value between 0 and 6
   # @param looping [Boolean]
-  # @param sample_count [Integer]
+  # @param frame_count [Integer]
   # @return [Music]
-  def initialize(context_type, looping, sample_count)
+  def initialize(context_type, looping, frame_count)
     # mrb_Music_initialize
     # src/mruby_integration/models/music.cpp
     Music.new
@@ -33,8 +33,8 @@ class Music
     true
   end
 
-  def sample_count=(sample_count)
-    # mrb_Music_set_sample_count
+  def frame_count=(frame_count)
+    # mrb_Music_set_frame_count
     # src/mruby_integration/models/music.cpp
     1
   end
@@ -46,7 +46,7 @@ class Music
     {
       context_type: context_type,
       looping: looping,
-      sample_count: sample_count,
+      frame_count: frame_count,
     }
   end
 

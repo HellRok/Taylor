@@ -12,7 +12,7 @@
 - Image#copy now can take a `source` argument
 - Add image_text_ex
 - Add Font#to_image
-- Restructured tests to run in a single window instead of spawing one window per test
+- Restructured tests to run in a single window instead of spawning one window per test
 - Add load_texture_from_image
 - Add Image#to_texture
 - Add image_resize!
@@ -23,6 +23,7 @@
 - Taylor-cli new now adds `.keep` files
 - Add image_alpha_mask!
 - Add Image#alpha_mask=
+- Upgrade Raylib to 4.0.0
 
 ## v0.3.0
 

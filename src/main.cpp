@@ -2,7 +2,6 @@
 
 #include "raylib.h"
 
-#include "raygui.hpp"
 #include "mruby.h"
 #include "mruby/data.h"
 #include "mruby/class.h"

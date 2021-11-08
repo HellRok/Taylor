@@ -10,23 +10,23 @@
 
 struct RClass *Music_class;
 
-void setup_Music(mrb_state *mrb, mrb_value object, Music *music, int context_type, bool looping, int sample_count) {
+void setup_Music(mrb_state *mrb, mrb_value object, Music *music, int context_type, bool looping, int frame_count) {
   ivar_attr_int(mrb, object, music->ctxType, context_type);
   ivar_attr_bool(mrb, object, music->looping, looping);
-  ivar_attr_int(mrb, object, music->sampleCount, sample_count);
+  ivar_attr_int(mrb, object, music->frameCount, frame_count);
 }
 
 mrb_value mrb_Music_initialize(mrb_state *mrb, mrb_value self) {
-  mrb_int context_type, sample_count;
+  mrb_int context_type, frame_count;
   mrb_bool looping;
-  mrb_get_args(mrb, "ibi", &context_type, &looping, &sample_count);
+  mrb_get_args(mrb, "ibi", &context_type, &looping, &frame_count);
 
   Music *music = (struct Music *)DATA_PTR(self);
   if (music) { mrb_free(mrb, music); }
   mrb_data_init(self, nullptr, &Music_type);
   music = (Music *)malloc(sizeof(Music));
 
-  setup_Music(mrb, self, music, context_type, looping, sample_count);
+  setup_Music(mrb, self, music, context_type, looping, frame_count);
 
   mrb_data_init(self, music, &Music_type);
   return self;
@@ -40,8 +40,8 @@ mrb_value mrb_Music_set_looping(mrb_state *mrb, mrb_value self) {
   attr_setter_bool(mrb, self, Music_type, Music, looping, looping);
 }
 
-mrb_value mrb_Music_set_sample_count(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Music_type, Music, sampleCount, sample_count);
+mrb_value mrb_Music_set_frame_count(mrb_state *mrb, mrb_value self) {
+  attr_setter_int(mrb, self, Music_type, Music, frameCount, frame_count);
 }
 
 void append_models_Music(mrb_state *mrb) {
@@ -50,17 +50,17 @@ void append_models_Music(mrb_state *mrb) {
   mrb_define_method(mrb, Music_class, "initialize", mrb_Music_initialize, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, Music_class, "context_type=", mrb_Music_set_context_type, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Music_class, "looping=", mrb_Music_set_looping, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, Music_class, "sample_count=", mrb_Music_set_sample_count, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Music_class, "frame_count=", mrb_Music_set_frame_count, MRB_ARGS_REQ(1));
 
   mrb_load_string(mrb, R"(
     class Music
-      attr_reader :context_type, :looping, :sample_count, :volume, :pitch
+      attr_reader :context_type, :looping, :frame_count, :volume, :pitch
 
       def to_h
         {
           context_type: context_type,
           looping: looping,
-          sample_count: sample_count,
+          frame_count: frame_count,
         }
       end
 

@@ -5,18 +5,18 @@ class TestMusic < MTest::Unit::TestCase
     assert_kind_of Music, music
     assert_equal 1, music.context_type
     assert_equal true, music.looping
-    assert_equal 2, music.sample_count
+    assert_equal 2, music.frame_count
   end
 
   def test_assignment
     music = Music.new(0, false, 0)
     music.context_type = 4
     music.looping = true
-    music.sample_count = 2
+    music.frame_count = 2
 
     assert_equal 4, music.context_type
     assert_equal true, music.looping
-    assert_equal 2, music.sample_count
+    assert_equal 2, music.frame_count
   end
 
   def test_to_h
@@ -26,7 +26,7 @@ class TestMusic < MTest::Unit::TestCase
       {
         context_type: 1,
         looping: false,
-        sample_count: 3,
+        frame_count: 3,
       },
       music.to_h
     )

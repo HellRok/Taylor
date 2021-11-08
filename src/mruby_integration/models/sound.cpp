@@ -10,42 +10,42 @@
 
 struct RClass *Sound_class;
 
-void setup_Sound(mrb_state *mrb, mrb_value object, Sound *sound, int sample_count) {
-  ivar_attr_int(mrb, object, sound->sampleCount, sample_count);
+void setup_Sound(mrb_state *mrb, mrb_value object, Sound *sound, int frame_count) {
+  ivar_attr_int(mrb, object, sound->frameCount, frame_count);
 }
 
 mrb_value mrb_Sound_initialize(mrb_state *mrb, mrb_value self) {
-  mrb_int sample_count;
-  mrb_get_args(mrb, "i", &sample_count);
+  mrb_int frame_count;
+  mrb_get_args(mrb, "i", &frame_count);
 
   Sound *sound = (struct Sound *)DATA_PTR(self);
   if (sound) { mrb_free(mrb, sound); }
   mrb_data_init(self, nullptr, &Sound_type);
   sound = (Sound *)malloc(sizeof(Sound));
 
-  setup_Sound(mrb, self, sound, sample_count);
+  setup_Sound(mrb, self, sound, frame_count);
 
   mrb_data_init(self, sound, &Sound_type);
   return self;
 }
 
-mrb_value mrb_Sound_set_sample_count(mrb_state *mrb, mrb_value self) {
-  attr_setter_int(mrb, self, Sound_type, Sound, sampleCount, sample_count);
+mrb_value mrb_Sound_set_frame_count(mrb_state *mrb, mrb_value self) {
+  attr_setter_int(mrb, self, Sound_type, Sound, frameCount, frame_count);
 }
 
 void append_models_Sound(mrb_state *mrb) {
   Sound_class = mrb_define_class(mrb, "Sound", mrb->object_class);
   MRB_SET_INSTANCE_TT(Sound_class, MRB_TT_DATA);
   mrb_define_method(mrb, Sound_class, "initialize", mrb_Sound_initialize, MRB_ARGS_REQ(3));
-  mrb_define_method(mrb, Sound_class, "sample_count=", mrb_Sound_set_sample_count, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Sound_class, "frame_count=", mrb_Sound_set_frame_count, MRB_ARGS_REQ(1));
 
   mrb_load_string(mrb, R"(
     class Sound
-      attr_reader :sample_count, :volume, :pitch
+      attr_reader :frame_count, :volume, :pitch
 
       def to_h
         {
-          sample_count: sample_count,
+          frame_count: frame_count,
         }
       end
 
