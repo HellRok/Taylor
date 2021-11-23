@@ -155,6 +155,15 @@ mrb_value mrb_image_alpha_mask(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_image_alpha_premultiply(mrb_state *mrb, mrb_value) {
+  Image *image;
+  mrb_get_args(mrb, "d", &image, &Image_type);
+
+  ImageAlphaPremultiply(image);
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_image_resize_nearest_neighbour(mrb_state *mrb, mrb_value) {
   mrb_value image_obj;
   mrb_int width, height;
@@ -199,6 +208,7 @@ void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "image_text_ex", mrb_image_text_ex, MRB_ARGS_REQ(5));
   mrb_define_method(mrb, mrb->kernel_module, "image_crop!", mrb_image_crop, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "image_alpha_mask!", mrb_image_alpha_mask, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "image_alpha_premultiply!", mrb_image_alpha_premultiply, MRB_ARGS_REQ(1));
 
   mrb_define_method(mrb, mrb->kernel_module, "image_resize!", mrb_image_resize, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "image_resize_nearest_neighbour!", mrb_image_resize_nearest_neighbour, MRB_ARGS_REQ(3));

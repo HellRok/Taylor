@@ -113,6 +113,15 @@ def image_alpha_mask!(image, alpha_mask)
   nil
 end
 
+# Pre-multiplies the alpha for the image
+# @param image [Image]
+# @return [nil]
+def image_alpha_premultiply!(image)
+  # mrb_image_alpha_premultiply
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

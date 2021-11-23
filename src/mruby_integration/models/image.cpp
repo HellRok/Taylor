@@ -145,6 +145,11 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def premultiply_alpha!
+        image_alpha_premultiply!(self)
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

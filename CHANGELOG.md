@@ -24,6 +24,8 @@
 - Add image_alpha_mask!
 - Add Image#alpha_mask=
 - Upgrade Raylib to 4.0.0
+- Add image_alpha_premultiply!
+- Add Image#premultiply_alpha!
 
 ## v0.3.0
 
