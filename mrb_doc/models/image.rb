@@ -133,9 +133,23 @@ class Image
     self
   end
 
+  # Flips the image upside down
+  # @return [Image]
+  def flip_vertical!
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Generates mipmaps for the image
   # @return [Image]
   def generate_mipmaps!
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
+  # Flips the image sideways
+  # @return [Image]
+  def flip_horizontal!
     # src/mruby_integration/models/image.cpp
     self
   end

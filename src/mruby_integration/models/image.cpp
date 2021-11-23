@@ -155,6 +155,16 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def flip_vertical!
+        image_flip_vertical!(self)
+        self
+      end
+
+      def flip_horizontal!
+        image_flip_horizontal!(self)
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

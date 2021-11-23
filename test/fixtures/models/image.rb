@@ -72,3 +72,25 @@ def fixture_models_image_alpha_mask
     p, t, o,
   ]
 end
+
+def fixture_models_image_flip_vertical!
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 255)
+  [
+    p, t, p,
+    t, o, t,
+    o, t, p,
+  ]
+end
+
+def fixture_models_image_flip_horizontal!
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 255)
+  [
+    p, t, o,
+    t, o, t,
+    p, t, p,
+  ]
+end

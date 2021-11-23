@@ -28,6 +28,10 @@
 - Add Image#premultiply_alpha!
 - Add image_mipmaps!
 - Add Image#generate_mipmaps!
+- Add image_flip_vertical!
+- Add image_flip_horizontal!
+- Add Image#flip_vertical!
+- Add Image#flip_horizontal!
 
 ## v0.3.0
 

@@ -164,6 +164,15 @@ mrb_value mrb_image_alpha_premultiply(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_image_flip_vertical(mrb_state *mrb, mrb_value) {
+  Image *image;
+  mrb_get_args(mrb, "d", &image, &Image_type);
+
+  ImageFlipVertical(image);
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_image_mipmaps(mrb_state *mrb, mrb_value) {
   mrb_value image_obj;
   mrb_get_args(mrb, "o", &image_obj);
@@ -177,6 +186,15 @@ mrb_value mrb_image_mipmaps(mrb_state *mrb, mrb_value) {
       mrb_intern_cstr(mrb, "@mipmaps"),
       mrb_int_value(mrb, image->mipmaps)
     );
+
+  return mrb_nil_value();
+}
+
+mrb_value mrb_image_flip_horizontal(mrb_state *mrb, mrb_value) {
+  Image *image;
+  mrb_get_args(mrb, "d", &image, &Image_type);
+
+  ImageFlipHorizontal(image);
 
   return mrb_nil_value();
 }
@@ -230,6 +248,8 @@ void append_images(mrb_state *mrb) {
 
   mrb_define_method(mrb, mrb->kernel_module, "image_resize!", mrb_image_resize, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "image_resize_nearest_neighbour!", mrb_image_resize_nearest_neighbour, MRB_ARGS_REQ(3));
+  mrb_define_method(mrb, mrb->kernel_module, "image_flip_vertical!", mrb_image_flip_vertical, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "image_flip_horizontal!", mrb_image_flip_horizontal, MRB_ARGS_REQ(1));
 
   mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
 

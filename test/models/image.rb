@@ -140,4 +140,22 @@ class TestImage < MTest::Unit::TestCase
 
     image.unload
   end
+
+  def test_image_flip_vertical!
+    image = Image.load('test/assets/asymettrical.png')
+
+    image.flip_vertical!
+    assert_equal fixture_models_image_flip_vertical!, image.data
+
+    image.unload
+  end
+
+  def test_image_flip_horizontal!
+    image = Image.load('test/assets/asymettrical.png')
+
+    image.flip_horizontal!
+    assert_equal fixture_models_image_flip_horizontal!, image.data
+
+    image.unload
+  end
 end
