@@ -26,6 +26,8 @@
 - Upgrade Raylib to 4.0.0
 - Add image_alpha_premultiply!
 - Add Image#premultiply_alpha!
+- Add image_mipmaps!
+- Add Image#generate_mipmaps!
 
 ## v0.3.0
 

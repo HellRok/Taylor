@@ -130,4 +130,14 @@ class TestImage < MTest::Unit::TestCase
     mask.unload
     image.unload
   end
+
+  def test_generate_mipmaps!
+    image = Image.load('./test/assets/test.png')
+    assert_equal 1, image.mipmaps
+
+    image.generate_mipmaps!
+    assert_equal 2, image.mipmaps
+
+    image.unload
+  end
 end

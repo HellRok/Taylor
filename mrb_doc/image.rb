@@ -122,6 +122,15 @@ def image_alpha_premultiply!(image)
   nil
 end
 
+# Generates mipmaps for the specified image
+# @param image [Image]
+# @return [nil]
+def image_mipmaps!(image)
+  # mrb_image_mipmaps
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

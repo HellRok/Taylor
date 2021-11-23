@@ -164,6 +164,23 @@ mrb_value mrb_image_alpha_premultiply(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_image_mipmaps(mrb_state *mrb, mrb_value) {
+  mrb_value image_obj;
+  mrb_get_args(mrb, "o", &image_obj);
+
+  Image *image = static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
+
+  ImageMipmaps(image);
+
+  mrb_iv_set(
+      mrb, image_obj,
+      mrb_intern_cstr(mrb, "@mipmaps"),
+      mrb_int_value(mrb, image->mipmaps)
+    );
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_image_resize_nearest_neighbour(mrb_state *mrb, mrb_value) {
   mrb_value image_obj;
   mrb_int width, height;
@@ -209,6 +226,7 @@ void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "image_crop!", mrb_image_crop, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "image_alpha_mask!", mrb_image_alpha_mask, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "image_alpha_premultiply!", mrb_image_alpha_premultiply, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "image_mipmaps!", mrb_image_mipmaps, MRB_ARGS_REQ(1));
 
   mrb_define_method(mrb, mrb->kernel_module, "image_resize!", mrb_image_resize, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "image_resize_nearest_neighbour!", mrb_image_resize_nearest_neighbour, MRB_ARGS_REQ(3));
