@@ -94,3 +94,29 @@ def fixture_models_image_flip_horizontal!
     p, t, p,
   ]
 end
+
+def fixture_models_image_rotate_nil!
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 255)
+  [
+    p, t, o,
+    t, o, t,
+    p, t, p,
+  ]
+end
+
+def fixture_models_image_rotate_cw!
+  fixture_models_image_rotate_nil!
+end
+
+def fixture_models_image_rotate_ccw!
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 255)
+  [
+    p, t, p,
+    t, o, t,
+    o, t, p,
+  ]
+end

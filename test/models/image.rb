@@ -158,4 +158,41 @@ class TestImage < MTest::Unit::TestCase
 
     image.unload
   end
+
+  def test_image_rotate_nil!
+    image = Image.load('test/assets/asymettrical.png')
+
+    image.rotate!
+    assert_equal fixture_models_image_rotate_nil!, image.data
+
+    image.unload
+  end
+
+  def test_image_rotate_cw!
+    image = Image.load('test/assets/asymettrical.png')
+
+    image.rotate! :cw
+    assert_equal fixture_models_image_rotate_cw!, image.data
+
+    image.unload
+  end
+
+  def test_image_rotate_ccw!
+    image = Image.load('test/assets/asymettrical.png')
+
+    image.rotate! :ccw
+    assert_equal fixture_models_image_rotate_ccw!, image.data
+
+    image.unload
+  end
+
+  def test_image_rotate_invalid_direction!
+    image = Image.load('test/assets/asymettrical.png')
+
+    assert_raise(ArgumentError) {
+      image.rotate! :blah
+    }
+
+    image.unload
+  end
 end

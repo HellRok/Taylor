@@ -154,6 +154,15 @@ class Image
     self
   end
 
+  # Rotates the image either clockwise or counter-clockwise
+  # @param [direction] Valid options are :cw and :ccw
+  # @raise [ArgumentError] If the direction is invalid
+  # @return [Image]
+  def rotate!(direction = :cw)
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

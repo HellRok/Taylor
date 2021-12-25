@@ -99,4 +99,22 @@ class TestImage < MTest::Unit::TestCase
 
     unload_image(image)
   end
+
+  def test_image_rotate_cw!
+    image = load_image('test/assets/asymettrical.png')
+
+    image_rotate_cw!(image)
+    assert_equal fixture_image_rotate_cw!, image.data
+
+    unload_image(image)
+  end
+
+  def test_image_rotate_ccw!
+    image = load_image('test/assets/asymettrical.png')
+
+    image_rotate_ccw!(image)
+    assert_equal fixture_image_rotate_ccw!, image.data
+
+    unload_image(image)
+  end
 end

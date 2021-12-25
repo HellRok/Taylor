@@ -165,6 +165,17 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def rotate!(direction = :cw)
+        raise ArgumentError.new('Value must be :ccw, :cw, or nil') unless [:ccw, :cw, nil].include?(direction)
+
+        if direction == :ccw
+          image_rotate_ccw!(self)
+        else
+          image_rotate_cw!(self)
+        end
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

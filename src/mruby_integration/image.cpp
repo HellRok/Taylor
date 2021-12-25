@@ -199,6 +199,24 @@ mrb_value mrb_image_flip_horizontal(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_image_rotate_cw(mrb_state *mrb, mrb_value) {
+  Image *image;
+  mrb_get_args(mrb, "d", &image, &Image_type);
+
+  ImageRotateCW(image);
+
+  return mrb_nil_value();
+}
+
+mrb_value mrb_image_rotate_ccw(mrb_state *mrb, mrb_value) {
+  Image *image;
+  mrb_get_args(mrb, "d", &image, &Image_type);
+
+  ImageRotateCCW(image);
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_image_resize_nearest_neighbour(mrb_state *mrb, mrb_value) {
   mrb_value image_obj;
   mrb_int width, height;
@@ -250,6 +268,8 @@ void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "image_resize_nearest_neighbour!", mrb_image_resize_nearest_neighbour, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "image_flip_vertical!", mrb_image_flip_vertical, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "image_flip_horizontal!", mrb_image_flip_horizontal, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "image_rotate_cw!", mrb_image_rotate_cw, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "image_rotate_ccw!", mrb_image_rotate_ccw, MRB_ARGS_REQ(1));
 
   mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
 

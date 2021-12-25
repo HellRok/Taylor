@@ -56,7 +56,7 @@ class TestShapesCircle < MTest::Unit::TestCase
         PURPLE)
     end
 
-    assert_within 99, fixture_draw_circle_sector_lines, get_screen_data.data
+    assert_within 98, fixture_draw_circle_sector_lines, get_screen_data.data
   end
 
   def test_draw_circle_gradient

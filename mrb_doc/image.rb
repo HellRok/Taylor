@@ -149,6 +149,24 @@ def image_flip_horizontal!(image)
   nil
 end
 
+# Rotates the image clockwise 90 degrees
+# @param image [Image]
+# @return [nil]
+def image_rotate_cw!(image)
+  # mrb_image_rotate_cw
+  # src/mruby_integration/image.cpp
+  nil
+end
+
+# Rotates the image counter-clockwise 90 degrees
+# @param image [Image]
+# @return [nil]
+def image_rotate_ccw!(image)
+  # mrb_image_rotate_ccw
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

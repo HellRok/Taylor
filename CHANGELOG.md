@@ -32,6 +32,9 @@
 - Add image_flip_horizontal!
 - Add Image#flip_vertical!
 - Add Image#flip_horizontal!
+- Add image_rotate_cw!
+- Add image_rotate_ccw!
+- Add Image#rotate!
 
 ## v0.3.0
 
