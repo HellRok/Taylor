@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.1
 
 - Add generate_image_colour
 - Add Image.generate

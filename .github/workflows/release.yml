@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       -
-        name: "Setup Dockerfile"
+        name: "Setup config"
         env:
           VERSION: ${{ steps.tag.outputs.tag }}
         run: |
@@ -38,6 +38,29 @@ jobs:
           # envsubst
           mv ./cli-tool/taylor-config.json ./cli-tool/taylor-config.json.template
           envsubst < ./cli-tool/taylor-config.json.template > ./cli-tool/taylor-config.json
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+
+      -
+        name: "Build docker images for building"
+        run: |
+          bundle install
+          bundle exec rake docker:build:linux
+          bundle exec rake docker:build:windows
+          bundle exec rake docker:build:osx
+          bundle exec rake docker:build:web
+
+      -
+        name: "Build base export image"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./scripts/export/
+          file: ./scripts/export/Dockerfile
+          push: false
+          tags: taylor/export
 
       -
         name: "Build Linux export image"
