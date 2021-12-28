@@ -1,0 +1,20 @@
+FROM taylor/build-web as build_base
+WORKDIR /app/export
+ENV PATH="/app/emsdk:/app/emsdk/node/14.15.5_64bit/bin:/app/emsdk/upstream/emscripten:${PATH}"
+# I'm not really sure why but this is required for the docker export to work on OSX
+ENV EM_CACHE="/app/emsdk/upstream/emscripten/cache"
+
+COPY --from=taylor/export /app/taylor /app/taylor
+COPY --from=taylor/export /app/mruby/bin/mrbc /bin/
+
+COPY . /app/export
+
+RUN chmod -R o+w \
+    /app/emsdk \
+    /app/export \
+    /app/taylor \
+    /app/taylor/include
+
+ENV EXPORT=web
+
+CMD ["./entrypoint.sh"]

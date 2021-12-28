@@ -28,6 +28,7 @@ module Taylor
             --help\t\t\tDisplays this message
             --dry-run\t\t\tJust display the export command and don't run it
             --export_directory directory\tWhat directory do you want your exports (defaults to ./exports)
+            --export_targets targets\tWhat exports do you want (defaults to linux,windows,osx,web)
             --build_cache directory\tWhere do you want to store build cache (defaults to nil)
         STR
       end
@@ -45,11 +46,13 @@ module Taylor
           opts.on(:help,             :bool,   false)
           opts.on(:dry_run,          :bool,   false)
           opts.on(:export_directory, :string, options.fetch(:export_directory, './exports'))
+          opts.on(:export_targets,   :string, options.fetch(:export_targets,   'linux,windows,osx,web'))
           opts.on(:build_cache,      :string)
         end
         parser.parse(argv, true)
 
         @options = parser.opts
+        @options[:export_targets] = @options[:export_targets].split(',')
       end
 
       def check_in_taylor_project!
@@ -78,18 +81,31 @@ module Taylor
       end
 
       def docker_build
-        command = 'docker run -u $(id -u ${USER}):$(id -g ${USER})'
-        command << " --mount type=bind,source=#{Dir.pwd},target=/app/game"
-        command << " --mount type=bind,source=#{File.expand_path(@options[:export_directory])},target=/app/game/exports"
-        unless @options[:build_cache].nil?
-          command << " --mount type=bind,source=#{@options[:build_cache]},target=/app/taylor/build/"
-        end
-        command << " hellrok/taylor:v#{TAYLOR_VERSION}"
+        base_command = 'docker run -u $(id -u ${USER}):$(id -g ${USER})'
+        base_command << " --mount type=bind,source=#{Dir.pwd},target=/app/game"
+        base_command << " --mount type=bind,source=#{File.expand_path(@options[:export_directory])},target=/app/game/exports"
 
-        if options[:dry_run]
-          puts command
-        else
-          `#{command}`
+        unless @options[:build_cache].nil?
+          base_command << " --mount type=bind,source=#{@options[:build_cache]},target=/app/taylor/build/"
+        end
+
+        @options[:export_targets].each do |target|
+          command = base_command.dup
+
+          # This is because the "osx_no_app" variant just uses the osx docker
+          # image but with an override for the export target
+          if target == 'osx_no_app'
+            command << ' --env EXPORT=osx_no_app'
+            command << " hellrok/taylor:osx-v#{TAYLOR_VERSION}"
+          else
+            command << " hellrok/taylor:#{target}-v#{TAYLOR_VERSION}"
+          end
+
+          if options[:dry_run]
+            puts command
+          else
+            `#{command}`
+          end
         end
       end
     end

@@ -1,54 +1,54 @@
-FROM appplant/mruby-cli as raylib_base
+FROM debian:stable as raylib_base
 
 WORKDIR /app
 
-RUN git clone --branch 4.0.0 --depth 1 https://github.com/raysan5/raylib.git .
+RUN \
+  apt-get update -y && \
+  apt-get upgrade -y && \
+  apt-get install -y --no-install-recommends \
+    ca-certificates \
+    git && \
+  apt-get clean -y && apt-get autoremove -y && \
+  git clone --branch 4.0.0 --depth 1 https://github.com/raysan5/raylib.git .
 
-RUN apt-get update && \
-  apt-get install \
-  build-essential \
-  libasound2-dev \
-  libgl1-mesa-dev \
-  libglu1-mesa-dev \
-  libx11-dev \
-  libxi-dev \
-  libxrandr-dev \
-  mesa-common-dev \
-  xorg-dev \
-  -y
+#RUN apt-get update && \
+#  apt-get install \
+#  build-essential \
+#  -y
 
 COPY ./scripts/raylib/tweaks.patch /app/
 RUN git apply tweaks.patch
 
-FROM raylib_base AS raylib_linux
+FROM taylor/build-linux AS raylib_linux
+WORKDIR /app
+COPY --from=raylib_base /app /app
 RUN cd src && \
   make PLATFORM=PLATFORM_DESKTOP
 
-FROM raylib_base AS raylib_mingw
+FROM taylor/build-windows AS raylib_mingw
+WORKDIR /app
+COPY --from=raylib_base /app /app
 RUN cd src && \
   make PLATFORM=PLATFORM_DESKTOP CROSS=MINGW
 
-FROM raylib_base AS raylib_osx
+FROM taylor/build-osx AS raylib_osx
+WORKDIR /app
+COPY --from=raylib_base /app /app
 RUN cd src && \
   make clean && \
   MACOSX_DEPLOYMENT_TARGET=10.11 make PLATFORM=PLATFORM_DESKTOP CROSS=OSX
 
-FROM raylib_base as raylib_emscripten
-ENV PATH="/app/emsdk:/app/emsdk/node/14.15.5_64bit/bin:/app/emsdk/upstream/emscripten:${PATH}"
+FROM taylor/build-web as raylib_web
+WORKDIR /app
+COPY --from=raylib_base /app /app
 COPY ./scripts/mruby/emscripten.rb /app/build_config/
-RUN apt-get update && apt-get install python3 xz-utils bzip2 -y
-RUN  git clone https://github.com/juj/emsdk.git /app/emsdk &&\
-  cd /app/emsdk &&\
-  ./emsdk install 2.0.33 &&\
-  ./emsdk activate 2.0.33 &&\
-  cd -
 RUN cd src && \
   make PLATFORM=PLATFORM_WEB -B
 
 FROM scratch AS export
 
+COPY --from=raylib_base /app/src/raylib.h ./vendor/raylib/include/
 COPY --from=raylib_linux /app/libraylib.a ./vendor/linux/raylib/lib/
-COPY --from=raylib_linux /app/src/raylib.h ./vendor/raylib/include/
 COPY --from=raylib_mingw /app/libraylib.a ./vendor/windows/raylib/lib/
 COPY --from=raylib_osx /app/libraylib.a ./vendor/osx/raylib/lib/
-COPY --from=raylib_emscripten /app/src/libraylib.a ./vendor/web/raylib/lib/
+COPY --from=raylib_web /app/src/libraylib.a ./vendor/web/raylib/lib/

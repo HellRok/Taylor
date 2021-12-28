@@ -2,7 +2,8 @@ module PutsGrabber
   attr_accessor :puts_data
 
   def puts(str)
-    @puts_data = str
+    @puts_data = '' unless @puts_data
+    @puts_data << str
   end
 end
 

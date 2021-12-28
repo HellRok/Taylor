@@ -35,6 +35,8 @@
 - Add image_rotate_cw!
 - Add image_rotate_ccw!
 - Add Image#rotate!
+- Re-wrote the docker images since applant/mruby-cli doesn't work
+- Exports now use independent docker images for each target
 
 ## v0.3.0
 

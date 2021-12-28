@@ -41,7 +41,7 @@ class Squasher
   end
 
   def find_file(file_name)
-    file_name = "#{file_name}.rb" unless file_name[-3..] == '.rb'
+    file_name = "#{file_name}.rb" unless file_name[-3..-1] == '.rb'
     file_name = file_name.gsub(/[.]+[\/]+/, '')
 
     options['load_paths'].each { |dir|

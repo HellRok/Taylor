@@ -23,14 +23,36 @@ options = {
   ],
 }
 
+export_target = ENV.fetch('EXPORT', 'linux')
+
 if File.exists?('/app/game/taylor-config.json')
   options.merge!(
     JSON.parse(File.read('/app/game/taylor-config.json'))
   )
 end
 
-task :docker do
-  sh "docker build . --pull --tag hellrok/taylor"
+namespace :docker do
+  namespace :build do
+    task :export do
+      sh "docker build . --tag taylor/export"
+    end
+
+    task :linux do
+      sh "docker build . --file Dockerfile.linux --tag taylor/export-linux"
+    end
+
+    task :windows do
+      sh "docker build . --file Dockerfile.windows --tag taylor/export-windows"
+    end
+
+    task :osx do
+      sh "docker build . --file Dockerfile.osx --tag taylor/export-osx"
+    end
+
+    task :web do
+      sh "docker build . --file Dockerfile.web --tag taylor/export-web"
+    end
+  end
 end
 
 task :squash do
@@ -41,15 +63,15 @@ end
 
 task :transpile => :squash
 task :transpile do
-  sh "/app/mruby/bin/mrbc -Bgame -o /app/taylor/include/game.h ./output.rb"
+  sh "mrbc -Bgame -o /app/taylor/include/game.h ./output.rb"
 end
 
 task :build => "build:setup"
-task :build => "build:linux"   if options['export_targets'].include?('linux')
-task :build => "build:windows" if options['export_targets'].include?('windows')
-task :build => "build:osx"     if options['export_targets'].include?('osx')
-task :build => "build:osx"     if options['export_targets'].include?('osx_no_app')
-task :build => "build:web"     if options['export_targets'].include?('web')
+task :build => "build:linux"   if export_target == 'linux'
+task :build => "build:windows" if export_target == 'windows'
+task :build => "build:osx"     if export_target == 'osx'
+task :build => "build:osx"     if export_target == 'osx_no_app'
+task :build => "build:web"     if export_target == 'web'
 task :build => "build:reset"
 
 namespace :build do
@@ -78,11 +100,11 @@ namespace :build do
 end
 
 task :rename => "rename:setup"
-task :rename => "rename:linux"      if options['export_targets'].include?('linux')
-task :rename => "rename:windows"    if options['export_targets'].include?('windows')
-task :rename => "rename:osx"        if options['export_targets'].include?('osx')
-task :rename => "rename:osx_no_app" if options['export_targets'].include?('osx_no_app')
-task :rename => "rename:web"        if options['export_targets'].include?('web')
+task :rename => "rename:linux"      if export_target == 'linux'
+task :rename => "rename:windows"    if export_target == 'windows'
+task :rename => "rename:osx"        if export_target == 'osx'
+task :rename => "rename:osx_no_app" if export_target == 'osx_no_app'
+task :rename => "rename:web"        if export_target == 'web'
 
 namespace :rename do
   task :setup do
@@ -135,11 +157,11 @@ namespace :rename do
 end
 
 task :compress => "compress:setup"
-task :compress => "compress:linux"      if options['export_targets'].include?('linux')
-task :compress => "compress:windows"    if options['export_targets'].include?('windows')
-task :compress => "compress:osx"        if options['export_targets'].include?('osx')
-task :compress => "compress:osx_no_app" if options['export_targets'].include?('osx_no_app')
-task :compress => "compress:web"        if options['export_targets'].include?('web')
+task :compress => "compress:linux"      if export_target == 'linux'
+task :compress => "compress:windows"    if export_target == 'windows'
+task :compress => "compress:osx"        if export_target == 'osx'
+task :compress => "compress:osx_no_app" if export_target == 'osx_no_app'
+task :compress => "compress:web"        if export_target == 'web'
 task :compress => "compress:move"
 
 
@@ -150,9 +172,7 @@ namespace :compress do
 
   task :move do
     sh "mv /app/game/exports/**/*.zip /app/game/exports/"
-    options['export_targets'].each { |target|
-      sh "rm -rf \"/app/game/exports/#{target}\""
-    }
+    sh "rm -rf \"/app/game/exports/#{export_target}\""
   end
 
   task :linux do

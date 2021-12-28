@@ -49,3 +49,20 @@ it's pretty straight forward for Linux.
    "$TAYLOR_PATH/dist/linux/debug/taylor" "$TAYLOR_PATH/cli-tool/cli.rb" "$@"
    ```
 6. Then you can just `$ ./taylor-dev`
+
+## Building All the Docker Images
+
+To build all the docker images you can run the following commands:
+
+```
+$ bundle exec rake docker:build:{linux,windows,osx,web}
+$ cd scripts/export
+$ bundle exec rake docker:build:{export,linux,windows,osx,web}
+```
+
+If you also want to compile the mruby and raylib dependencies yourself there are
+docker images for that too, just run:
+
+```
+$ bundle exec rake docker:build:{mruby,raylib}
+```

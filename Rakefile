@@ -16,7 +16,7 @@ name = options.fetch('name', "taylor")
 platform = ""
 cxx = ""
 variant = "debug"
-cxxflags = "-std=c++2a -no-pie -Wall -Wextra"
+cxxflags = "-std=c++17 -no-pie -Wall -Wextra"
 ldflags = "-l pthread"
 includes = "-I ./include/ -I ./vendor/ -I ./vendor/raylib/include/ -I ./vendor/mruby/"
 static_links = ""
@@ -233,15 +233,29 @@ supported_platforms.each { |platform|
   }
 }
 
-task 'mruby:build' do |task|
-  sh "rm -rf ./vendor/mruby"
-  sh "DOCKER_BUILDKIT=1 docker build --output ./ . --file ./scripts/mruby/Dockerfile.mruby --pull --tag taylor_mruby"
+def build_docker(file, tag:, export: false)
+  if export
+    sh "DOCKER_BUILDKIT=1 docker build --output ./ . --file #{file} --tag #{tag}"
+  else
+    sh "docker build . --file #{file} --pull --tag #{tag}"
+  end
 end
 
-task 'raylib:build' do |task|
-  sh "DOCKER_BUILDKIT=1 docker build --output ./ . --file ./scripts/raylib/Dockerfile.raylib --pull --tag taylor_raylib"
-end
 
-task 'docker:build' do |task|
-  sh "DOCKER_BUILDKIT=1 docker build --output ./ . --file ./Dockerfile.build --pull --tag taylor_build"
+namespace :docker do
+  namespace :build do
+    task :linux do;   build_docker("./scripts/docker/Dockerfile.linux",   tag: "taylor/build-linux"); end
+    task :windows do; build_docker("./scripts/docker/Dockerfile.windows", tag: "taylor/build-windows"); end
+    task :osx do;     build_docker("./scripts/docker/Dockerfile.osx",     tag: "taylor/build-osx"); end
+    task :web do;     build_docker("./scripts/docker/Dockerfile.web",     tag: "taylor/build-web"); end
+
+    task :mruby do |task|
+      sh "rm -rf ./vendor/mruby"
+      build_docker("./scripts/mruby/Dockerfile.mruby", tag: "taylor/mruby", export: true)
+    end
+
+    task :raylib do |task|
+      build_docker("./scripts/raylib/Dockerfile.raylib", tag: "taylor/raylib", export: true)
+    end
+  end
 end

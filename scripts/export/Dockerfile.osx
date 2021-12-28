@@ -1,0 +1,16 @@
+FROM taylor/build-osx as build_base
+WORKDIR /app/export
+
+COPY --from=taylor/export /app/taylor /app/taylor
+COPY --from=taylor/export /app/mruby/bin/mrbc /bin/
+
+COPY . /app/export
+
+RUN chmod -R o+w \
+    /app/export \
+    /app/taylor \
+    /app/taylor/include
+
+ENV EXPORT=osx
+
+CMD ["./entrypoint.sh"]

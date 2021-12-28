@@ -32,7 +32,6 @@ jobs:
         env:
           VERSION: ${{ steps.tag.outputs.tag }}
         run: |
-          envsubst < ./scripts/export/Dockerfile.template > ./scripts/export/Dockerfile
           # I would normally use a .template file by default here but this is
           # useful for actually running this tool while developing and didn't
           # want to have to manage it twice, so let's just move before we
@@ -41,12 +40,40 @@ jobs:
           envsubst < ./cli-tool/taylor-config.json.template > ./cli-tool/taylor-config.json
 
       -
-        name: "Build Docker"
+        name: "Build Linux export image"
         uses: docker/build-push-action@v2
         with:
           context: ./scripts/export/
+          file: ./scripts/export/Dockerfile.linux
           push: false
-          tags: ${{secrets.DOCKER_USERNAME}}/taylor:latest,${{secrets.DOCKER_USERNAME}}/taylor:${{steps.tag.outputs.tag}}
+          tags: ${{secrets.DOCKER_USERNAME}}/taylor:latest,${{secrets.DOCKER_USERNAME}}/taylor:linux-${{steps.tag.outputs.tag}}
+
+      -
+        name: "Build Windows export image"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./scripts/export/
+          file: ./scripts/export/Dockerfile.windows
+          push: false
+          tags: ${{secrets.DOCKER_USERNAME}}/taylor:windows-${{steps.tag.outputs.tag}}
+
+      -
+        name: "Build OSX export image"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./scripts/export/
+          file: ./scripts/export/Dockerfile.osx
+          push: false
+          tags: ${{secrets.DOCKER_USERNAME}}/taylor:osx-${{steps.tag.outputs.tag}}
+
+      -
+        name: "Build Web export image"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./scripts/export/
+          file: ./scripts/export/Dockerfile.web
+          push: false
+          tags: ${{secrets.DOCKER_USERNAME}}/taylor:web-${{steps.tag.outputs.tag}}
 
       -
         name: "Compile Taylor CLI"
@@ -55,19 +82,58 @@ jobs:
         run: |
           cd ./cli-tool
           mkdir exports
+
           docker run -u $(id -u ${USER}):$(id -g ${USER}) \
             --mount type=bind,source=$(pwd),target=/app/game/ \
-            hellrok/taylor:$VERSION
+            hellrok/taylor:linux-$VERSION
+
+          docker run -u $(id -u ${USER}):$(id -g ${USER}) \
+            --mount type=bind,source=$(pwd),target=/app/game/ \
+            hellrok/taylor:windows-$VERSION
+
+          docker run -u $(id -u ${USER}):$(id -g ${USER}) \
+            --mount type=bind,source=$(pwd),target=/app/game/ \
+            --env EXPORT=osx_no_app \
+            hellrok/taylor:osx-$VERSION
+
           mkdir ../exports
           mv ./exports/* ../exports/
 
       -
-        name: "Push Docker"
+        name: "Push Linux export image"
         uses: docker/build-push-action@v2
         with:
           context: ./scripts/export/
+          file: ./scripts/export/Dockerfile.linux
           push: true
-          tags: ${{secrets.DOCKER_USERNAME}}/taylor:latest,${{secrets.DOCKER_USERNAME}}/taylor:${{steps.tag.outputs.tag}}
+          tags: ${{secrets.DOCKER_USERNAME}}/taylor:latest,${{secrets.DOCKER_USERNAME}}/taylor:linux-${{steps.tag.outputs.tag}}
+
+      -
+        name: "Push Windows export image"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./scripts/export/
+          file: ./scripts/export/Dockerfile.windows
+          push: true
+          tags: ${{secrets.DOCKER_USERNAME}}/taylor:windows-${{steps.tag.outputs.tag}}
+
+      -
+        name: "Push OSX export image"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./scripts/export/
+          file: ./scripts/export/Dockerfile.osx
+          push: true
+          tags: ${{secrets.DOCKER_USERNAME}}/taylor:osx-${{steps.tag.outputs.tag}}
+
+      -
+        name: "Push Web export image"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./scripts/export/
+          file: ./scripts/export/Dockerfile.web
+          push: true
+          tags: ${{secrets.DOCKER_USERNAME}}/taylor:web-${{steps.tag.outputs.tag}}
 
       - name: "Write release body"
         run: |

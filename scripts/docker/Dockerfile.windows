@@ -1,0 +1,17 @@
+FROM debian:stable
+
+# Libraries are in order
+# 1. Core
+# 2. Exporting
+
+RUN \
+  apt-get update -y && \
+  apt-get upgrade -y && \
+  apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    ruby \
+    mingw-w64 \
+    \
+    zip && \
+  apt-get clean -y && apt-get autoremove -y
