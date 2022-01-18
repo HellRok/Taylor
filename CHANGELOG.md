@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.2
 
 - Add SimpleHttp
 - Add SimpleHttpServer

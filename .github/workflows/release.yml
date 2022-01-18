@@ -57,8 +57,8 @@ jobs:
         name: "Build base export image"
         uses: docker/build-push-action@v2
         with:
-          context: ./scripts/export/
-          file: ./scripts/export/Dockerfile
+          context: ./
+          file: ./Dockerfile.export
           push: false
           tags: taylor/export
 
