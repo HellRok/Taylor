@@ -1,0 +1,15 @@
+# The reason this isn't in ./scripts/export is because we want to easily just
+# be able to copy our Taylor source code into the docker image and you can't
+# copy from parent folders. This stops us having to clone the Taylor repository
+# and allows us to build export images for development code.
+
+FROM taylor/build-linux as build_base
+WORKDIR /app/export
+
+RUN \
+  git clone --branch 3.0.0 --depth 1 https://github.com/mruby/mruby.git /app/mruby &&\
+  cd /app/mruby &&\
+  rake
+
+COPY . /app/taylor
+COPY ./scripts/export/ /app/export

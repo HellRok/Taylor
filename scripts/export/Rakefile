@@ -34,7 +34,9 @@ end
 namespace :docker do
   namespace :build do
     task :export do
-      sh "docker build . --tag taylor/export"
+      Dir.chdir('../..')
+      sh "docker build . --file Dockerfile.export --tag taylor/export"
+      Dir.chdir('./scripts/export')
     end
 
     task :linux do

@@ -1,5 +1,10 @@
 # Taylor
 
+## Unreleased
+
+- Add SimpleHttp
+- Add SimpleHttpServer
+
 ## v0.3.1
 
 - Add generate_image_colour
