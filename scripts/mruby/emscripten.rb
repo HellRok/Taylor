@@ -18,6 +18,7 @@ MRuby::CrossBuild.new('emscripten') do |conf|
   conf.gem github: 'iij/mruby-env'
   conf.gem github: 'iij/mruby-iijson'
   conf.gem github: 'iij/mruby-mtest'
+  conf.gem github: 'iij/mruby-regexp-pcre'
   conf.gem github: 'katzer/mruby-tiny-opt-parser'
   conf.gem github: 'matsumotory/mruby-simplehttp'
   # I dunno if it ever makes sense to enable this for web?

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add regex support
+
 ## v0.3.2
 
 - Add SimpleHttp
