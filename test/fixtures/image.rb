@@ -132,3 +132,9 @@ def fixture_image_rotate_ccw!
     o, t, p,
   ]
 end
+
+def fixture_image_colour_tint!
+  [
+    Colour.new(0, 108, 45, 255)
+  ]
+end

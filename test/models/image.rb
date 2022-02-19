@@ -195,4 +195,13 @@ class TestImage < MTest::Unit::TestCase
 
     image.unload
   end
+
+  def test_image_tint!
+    image = Image.generate(width: 1, height: 1, colour: BLUE)
+
+    image.tint!(GREEN)
+    assert_equal fixture_models_image_colour_tint!, image.data
+
+    image.unload
+  end
 end

@@ -167,6 +167,16 @@ def image_rotate_ccw!(image)
   nil
 end
 
+# Tints the image with the specified colour
+# @param image [Image]
+# @param colour [Colour]
+# @return [nil]
+def image_colour_tint!(image, colour)
+  # mrb_image_colour_tint
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

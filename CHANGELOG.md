@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Add regex support
+- Add image_colour_tint!
+- Add Image#tint!
 
 ## v0.3.2
 

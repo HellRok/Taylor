@@ -176,6 +176,11 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def tint!(colour)
+        image_colour_tint!(self, colour)
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end
