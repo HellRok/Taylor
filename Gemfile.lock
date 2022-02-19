@@ -1,8 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    rake (13.0.3)
-    yard (0.9.26)
+    rake (13.0.6)
+    webrick (1.7.0)
+    yard (0.9.27)
+      webrick (~> 1.7.0)
 
 PLATFORMS
   x86_64-linux
