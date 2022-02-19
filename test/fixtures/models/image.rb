@@ -140,3 +140,10 @@ def fixture_models_image_colour_grayscale!
     [Colour.new(139, 139, 139 ,255)],
   ]
 end
+
+def fixture_models_image_colour_contrast!
+  [
+    [Colour.new(0, 164, 30, 255)],
+    [Colour.new(24, 152, 62, 255)],
+  ]
+end

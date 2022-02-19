@@ -153,4 +153,18 @@ class TestImage < MTest::Unit::TestCase
     unload_image(blue)
     unload_image(green)
   end
+
+  def test_image_colour_contrast!
+    darken = Image.generate(width: 1, height: 1, colour: LIME)
+    lighten = Image.generate(width: 1, height: 1, colour: LIME)
+
+    image_colour_contrast!(darken, 50)
+    image_colour_contrast!(lighten, -50)
+
+    assert_equal fixture_image_colour_contrast![0], darken.data
+    assert_equal fixture_image_colour_contrast![1], lighten.data
+
+    unload_image(darken)
+    unload_image(lighten)
+  end
 end

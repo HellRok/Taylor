@@ -231,4 +231,38 @@ class TestImage < MTest::Unit::TestCase
     blue.unload
     green.unload
   end
+
+  def test_image_colour_contrast!
+    darken = Image.generate(width: 1, height: 1, colour: LIME)
+    lighten = Image.generate(width: 1, height: 1, colour: LIME)
+
+    darken.contrast!(10)
+    lighten.contrast!(-10)
+
+    assert_equal fixture_models_image_colour_contrast![0], darken.data
+    assert_equal fixture_models_image_colour_contrast![1], lighten.data
+
+    unload_image(darken)
+    unload_image(lighten)
+  end
+
+  def test_image_colour_contrast_too_low
+    image = Image.generate(width: 1, height: 1, colour: LIME)
+
+    assert_raise(ArgumentError) {
+      image.contrast!(-101)
+    }
+
+    unload_image(image)
+  end
+
+  def test_image_colour_contrast_too_high
+    image = Image.generate(width: 1, height: 1, colour: LIME)
+
+    assert_raise(ArgumentError) {
+      image.contrast!(101)
+    }
+
+    unload_image(image)
+  end
 end

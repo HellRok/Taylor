@@ -9,6 +9,8 @@
 - Add Image#invert!
 - Add image_colour_grayscale!
 - Add Image#grayscale!
+- Add image_colour_contrast!
+- Add Image#contrast!
 
 ## v0.3.2
 

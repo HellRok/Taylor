@@ -191,6 +191,13 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def contrast!(contrast)
+        raise ArgumentError.new('Must be within (-100..100)') if contrast < -100 || contrast > 100
+
+        image_colour_contrast!(self, contrast)
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

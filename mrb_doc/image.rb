@@ -195,6 +195,16 @@ def image_colour_grayscale!(image)
   nil
 end
 
+# Change the contrast of the image
+# @param image [Image]
+# @param contrast [Float] a value between -100 and 100
+# @return [nil]
+def image_colour_contrast!(image)
+  # mrb_image_colour_contrast
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()
