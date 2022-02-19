@@ -186,6 +186,11 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def grayscale!
+        image_colour_grayscale!(self)
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

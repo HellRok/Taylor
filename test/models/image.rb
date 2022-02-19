@@ -213,4 +213,22 @@ class TestImage < MTest::Unit::TestCase
 
     image.unload
   end
+
+  def test_image_grayscale!
+    red = Image.generate(width: 1, height: 1, colour: RED)
+    blue = Image.generate(width: 1, height: 1, colour: BLUE)
+    green = Image.generate(width: 1, height: 1, colour: GREEN)
+
+    red.grayscale!
+    blue.grayscale!
+    green.grayscale!
+
+    assert_equal fixture_models_image_colour_grayscale![0], red.data
+    assert_equal fixture_models_image_colour_grayscale![1], blue.data
+    assert_equal fixture_models_image_colour_grayscale![2], green.data
+
+    red.unload
+    blue.unload
+    green.unload
+  end
 end

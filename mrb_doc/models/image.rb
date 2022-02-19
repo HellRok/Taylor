@@ -178,6 +178,13 @@ class Image
     self
   end
 
+  # Converts the image to grayscale
+  # @return [nil]
+  def grayscale!
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

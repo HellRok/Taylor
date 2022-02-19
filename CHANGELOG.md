@@ -7,6 +7,8 @@
 - Add Image#tint!
 - Add image_colour_invert!
 - Add Image#invert!
+- Add image_colour_grayscale!
+- Add Image#grayscale!
 
 ## v0.3.2
 

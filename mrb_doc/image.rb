@@ -186,6 +186,15 @@ def image_colour_invert!(image)
   nil
 end
 
+# Converts the image to grayscale
+# @param image [Image]
+# @return [nil]
+def image_colour_grayscale!(image)
+  # mrb_image_colour_grayscale
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

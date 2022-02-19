@@ -144,3 +144,11 @@ def fixture_image_colour_invert!
     WHITE
   ]
 end
+
+def fixture_image_colour_grayscale!
+  [
+    [Colour.new(99, 99, 99 ,255)],
+    [Colour.new(98, 98, 98 ,255)],
+    [Colour.new(139, 139, 139 ,255)],
+  ]
+end
