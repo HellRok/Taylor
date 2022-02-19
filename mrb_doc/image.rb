@@ -177,6 +177,15 @@ def image_colour_tint!(image, colour)
   nil
 end
 
+# Inverts the colours of the image
+# @param image [Image]
+# @return [nil]
+def image_colour_invert!(image)
+  # mrb_image_colour_invert
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

@@ -5,6 +5,8 @@
 - Add regex support
 - Add image_colour_tint!
 - Add Image#tint!
+- Add image_colour_invert!
+- Add Image#invert!
 
 ## v0.3.2
 

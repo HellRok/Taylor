@@ -138,3 +138,9 @@ def fixture_image_colour_tint!
     Colour.new(0, 108, 45, 255)
   ]
 end
+
+def fixture_image_colour_invert!
+  [
+    WHITE
+  ]
+end

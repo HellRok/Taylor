@@ -126,4 +126,13 @@ class TestImage < MTest::Unit::TestCase
 
     unload_image(image)
   end
+
+  def test_image_colour_invert!
+    image = Image.generate(width: 1, height: 1, colour: BLACK)
+
+    image_colour_invert!(image)
+    assert_equal fixture_image_colour_invert!, image.data
+
+    unload_image(image)
+  end
 end

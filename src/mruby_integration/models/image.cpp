@@ -181,6 +181,11 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def invert!
+        image_colour_invert!(self)
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end
