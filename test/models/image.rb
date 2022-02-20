@@ -265,4 +265,38 @@ class TestImage < MTest::Unit::TestCase
 
     unload_image(image)
   end
+
+  def test_image_colour_brightness!
+    darken = Image.generate(width: 1, height: 1, colour: VIOLET)
+    lighten = Image.generate(width: 1, height: 1, colour: VIOLET)
+
+    darken.brightness!(-10)
+    lighten.brightness!(10)
+
+    assert_equal fixture_models_image_colour_brightness![1], darken.data
+    assert_equal fixture_models_image_colour_brightness![0], lighten.data
+
+    unload_image(darken)
+    unload_image(lighten)
+  end
+
+  def test_image_colour_brightness
+    image = Image.generate(width: 1, height: 1, colour: VIOLET)
+
+    assert_raise(ArgumentError) {
+      image.brightness!(-256)
+    }
+
+    unload_image(image)
+  end
+
+  def test_image_colour_brightness
+    image = Image.generate(width: 1, height: 1, colour: VIOLET)
+
+    assert_raise(ArgumentError) {
+      image.brightness!(256)
+    }
+
+    unload_image(image)
+  end
 end

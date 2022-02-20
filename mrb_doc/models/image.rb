@@ -194,6 +194,15 @@ class Image
     self
   end
 
+  # Change the brightness of the image
+  # @param brightness [Float] a value between -255 and 255
+  # @raise [ArgumentError] If the brightness is outside of the allowed range
+  # @return [nil]
+  def brightness!(brightness)
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

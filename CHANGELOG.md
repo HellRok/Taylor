@@ -11,6 +11,8 @@
 - Add Image#grayscale!
 - Add image_colour_contrast!
 - Add Image#contrast!
+- Add image_colour_brightness!
+- Add Image#brightness!
 
 ## v0.3.2
 

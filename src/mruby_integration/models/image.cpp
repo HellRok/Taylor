@@ -198,6 +198,13 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def brightness!(brightness)
+        raise ArgumentError.new('Must be within (-255..255)') if brightness < -255 || brightness > 255
+
+        image_colour_brightness!(self, brightness)
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

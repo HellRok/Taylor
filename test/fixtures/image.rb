@@ -159,3 +159,10 @@ def fixture_image_colour_contrast!
     [Colour.new(95, 135, 107, 255)],
   ]
 end
+
+def fixture_image_colour_brightness!
+  [
+    [Colour.new(185, 110, 240, 255)],
+    [Colour.new(85, 10, 140, 255)],
+  ]
+end

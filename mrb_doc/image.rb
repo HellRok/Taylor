@@ -199,8 +199,18 @@ end
 # @param image [Image]
 # @param contrast [Float] a value between -100 and 100
 # @return [nil]
-def image_colour_contrast!(image)
+def image_colour_contrast!(image, contrast)
   # mrb_image_colour_contrast
+  # src/mruby_integration/image.cpp
+  nil
+end
+
+# Change the brightness of the image
+# @param image [Image]
+# @param brightness [Float] a value between -255 and 255
+# @return [nil]
+def image_colour_brightness!(image, brightness)
+  # mrb_image_colour_brightness
   # src/mruby_integration/image.cpp
   nil
 end
