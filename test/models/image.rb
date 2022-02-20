@@ -200,7 +200,7 @@ class TestImage < MTest::Unit::TestCase
     image = Image.generate(width: 1, height: 1, colour: BLUE)
 
     image.tint!(GREEN)
-    assert_equal fixture_models_image_colour_tint!, image.data
+    assert_equal fixture_models_image_tint!, image.data
 
     image.unload
   end
@@ -209,7 +209,7 @@ class TestImage < MTest::Unit::TestCase
     image = Image.generate(width: 1, height: 1, colour: BLACK)
 
     image.invert!
-    assert_equal fixture_models_image_colour_invert!, image.data
+    assert_equal fixture_models_image_invert!, image.data
 
     image.unload
   end
@@ -223,30 +223,30 @@ class TestImage < MTest::Unit::TestCase
     blue.grayscale!
     green.grayscale!
 
-    assert_equal fixture_models_image_colour_grayscale![0], red.data
-    assert_equal fixture_models_image_colour_grayscale![1], blue.data
-    assert_equal fixture_models_image_colour_grayscale![2], green.data
+    assert_equal fixture_models_image_grayscale![0], red.data
+    assert_equal fixture_models_image_grayscale![1], blue.data
+    assert_equal fixture_models_image_grayscale![2], green.data
 
     red.unload
     blue.unload
     green.unload
   end
 
-  def test_image_colour_contrast!
+  def test_image_contrast!
     darken = Image.generate(width: 1, height: 1, colour: LIME)
     lighten = Image.generate(width: 1, height: 1, colour: LIME)
 
     darken.contrast!(10)
     lighten.contrast!(-10)
 
-    assert_equal fixture_models_image_colour_contrast![0], darken.data
-    assert_equal fixture_models_image_colour_contrast![1], lighten.data
+    assert_equal fixture_models_image_contrast![0], darken.data
+    assert_equal fixture_models_image_contrast![1], lighten.data
 
     unload_image(darken)
     unload_image(lighten)
   end
 
-  def test_image_colour_contrast_too_low
+  def test_image_contrast_too_low
     image = Image.generate(width: 1, height: 1, colour: LIME)
 
     assert_raise(ArgumentError) {
@@ -256,7 +256,7 @@ class TestImage < MTest::Unit::TestCase
     unload_image(image)
   end
 
-  def test_image_colour_contrast_too_high
+  def test_image_contrast_too_high
     image = Image.generate(width: 1, height: 1, colour: LIME)
 
     assert_raise(ArgumentError) {
@@ -266,21 +266,21 @@ class TestImage < MTest::Unit::TestCase
     unload_image(image)
   end
 
-  def test_image_colour_brightness!
+  def test_image_brightness!
     darken = Image.generate(width: 1, height: 1, colour: VIOLET)
     lighten = Image.generate(width: 1, height: 1, colour: VIOLET)
 
     darken.brightness!(-10)
     lighten.brightness!(10)
 
-    assert_equal fixture_models_image_colour_brightness![1], darken.data
-    assert_equal fixture_models_image_colour_brightness![0], lighten.data
+    assert_equal fixture_models_image_brightness![1], darken.data
+    assert_equal fixture_models_image_brightness![0], lighten.data
 
     unload_image(darken)
     unload_image(lighten)
   end
 
-  def test_image_colour_brightness
+  def test_image_brightness_too_low
     image = Image.generate(width: 1, height: 1, colour: VIOLET)
 
     assert_raise(ArgumentError) {
@@ -290,7 +290,7 @@ class TestImage < MTest::Unit::TestCase
     unload_image(image)
   end
 
-  def test_image_colour_brightness
+  def test_image_brightness_too_high
     image = Image.generate(width: 1, height: 1, colour: VIOLET)
 
     assert_raise(ArgumentError) {
@@ -298,5 +298,14 @@ class TestImage < MTest::Unit::TestCase
     }
 
     unload_image(image)
+  end
+
+  def test_image_replace!
+    image = load_image('test/assets/test.png')
+
+    image.replace!(WHITE, BLUE)
+    assert_equal fixture_models_image_replace!, image.data
+
+    image.unload
   end
 end

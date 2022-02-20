@@ -13,6 +13,8 @@
 - Add Image#contrast!
 - Add image_colour_brightness!
 - Add Image#brightness!
+- Add image_colour_replace!
+- Add Image#replace!
 
 ## v0.3.2
 

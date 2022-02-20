@@ -215,6 +215,17 @@ def image_colour_brightness!(image, brightness)
   nil
 end
 
+# Replace the old Colour with the new Colour
+# @param image [Image]
+# @param old_colour [Colour]
+# @param new_colour [Colour]
+# @return [nil]
+def image_colour_replace!(image, old_colour, new_colour)
+  # mrb_image_colour_replace
+  # src/mruby_integration/image.cpp
+  nil
+end
+
 # Returns an Image object with the screen data
 # @return [Image]
 def get_screen_data()

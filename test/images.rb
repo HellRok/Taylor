@@ -181,4 +181,13 @@ class TestImage < MTest::Unit::TestCase
     unload_image(darken)
     unload_image(lighten)
   end
+
+  def test_image_colour_replace!
+    image = load_image('test/assets/test.png')
+
+    image_colour_replace!(image, WHITE, BLUE)
+    assert_equal fixture_image_colour_replace!, image.data
+
+    unload_image(image)
+  end
 end

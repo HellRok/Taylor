@@ -265,6 +265,16 @@ mrb_value mrb_image_colour_brightness(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_image_colour_replace(mrb_state *mrb, mrb_value) {
+  Image *image;
+  Color *old_colour, *new_colour;
+  mrb_get_args(mrb, "ddd", &image, &Image_type, &old_colour, &Colour_type, &new_colour, &Colour_type);
+
+  ImageColorReplace(image, *old_colour, *new_colour);
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_image_resize_nearest_neighbour(mrb_state *mrb, mrb_value) {
   mrb_value image_obj;
   mrb_int width, height;
@@ -324,6 +334,7 @@ void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "image_colour_grayscale!", mrb_image_colour_grayscale, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "image_colour_contrast!", mrb_image_colour_contrast, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "image_colour_brightness!", mrb_image_colour_brightness, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "image_colour_replace!", mrb_image_colour_replace, MRB_ARGS_REQ(3));
 
   mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
 

@@ -203,6 +203,15 @@ class Image
     self
   end
 
+  # Replace the old Colour with the new Colour
+  # @param old_colour [Colour]
+  # @param new_colour [Colour]
+  # @return [nil]
+  def replace!(old_colour, new_colour)
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

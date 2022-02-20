@@ -121,19 +121,19 @@ def fixture_models_image_rotate_ccw!
   ]
 end
 
-def fixture_models_image_colour_tint!
+def fixture_models_image_tint!
   [
     Colour.new(0, 108, 45, 255)
   ]
 end
 
-def fixture_models_image_colour_invert!
+def fixture_models_image_invert!
   [
     WHITE
   ]
 end
 
-def fixture_models_image_colour_grayscale!
+def fixture_models_image_grayscale!
   [
     [Colour.new(99, 99, 99 ,255)],
     [Colour.new(98, 98, 98 ,255)],
@@ -141,16 +141,27 @@ def fixture_models_image_colour_grayscale!
   ]
 end
 
-def fixture_models_image_colour_contrast!
+def fixture_models_image_contrast!
   [
     [Colour.new(0, 164, 30, 255)],
     [Colour.new(24, 152, 62, 255)],
   ]
 end
 
-def fixture_models_image_colour_brightness!
+def fixture_models_image_brightness!
   [
     [Colour.new(145, 70, 200, 255)],
     [Colour.new(125, 50, 180, 255)],
+  ]
+end
+
+def fixture_models_image_replace!
+  b = BLUE
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 255)
+  [
+    o, b, p,
+    b, o, b,
+    p, b, o,
   ]
 end

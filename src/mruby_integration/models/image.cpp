@@ -198,6 +198,11 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def replace!(old_colour, new_colour)
+        image_colour_replace!(self, old_colour, new_colour)
+        self
+      end
+
       def brightness!(brightness)
         raise ArgumentError.new('Must be within (-255..255)') if brightness < -255 || brightness > 255
 

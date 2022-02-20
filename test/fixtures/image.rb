@@ -166,3 +166,14 @@ def fixture_image_colour_brightness!
     [Colour.new(85, 10, 140, 255)],
   ]
 end
+
+def fixture_image_colour_replace!
+  b = BLUE
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 255)
+  [
+    o, b, p,
+    b, o, b,
+    p, b, o,
+  ]
+end
