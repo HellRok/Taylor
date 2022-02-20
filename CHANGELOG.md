@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.3
 
 - Add regex support
 - Add image_colour_tint!
