@@ -1,5 +1,6 @@
 set_trace_log_level 5
 
+require 'mtest_overrides'
 require 'mtest_extensions'
 require 'helpers'
 
@@ -33,9 +34,9 @@ require 'models/sound'
 require 'models/texture2d'
 require 'models/vector2'
 
-init_window(10, 10, 'blah') if !ENV.fetch('DISPLAY', '').empty? || browser?
+init_window(10, 10, 'blah') if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?
 exit 1 if MTest::Unit.new.run.positive?
-close_window if !ENV.fetch('DISPLAY', '').empty? || browser?
+close_window if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?
 
 # The browser version doesn't exit cleanly unless specifically told to.
 exit

@@ -202,8 +202,14 @@ class TestCore < MTest::Unit::TestCase
     assert_equal 48, get_screen_height
   ensure
     if window_ready?
-      set_window_size 10, 10
-      flush_frame
+      if windows?
+        close_window
+        init_window(10, 10, 'blah')
+        flush_frame
+      else
+        set_window_size 10, 10
+        flush_frame
+      end
     end
   end
 
