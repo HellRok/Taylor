@@ -25,6 +25,10 @@ options = {
 
 export_target = ENV.fetch('EXPORT', 'linux')
 
+if File.exist?("../../include/version.hpp")
+  VERSION = File.read("../../include/version.hpp").each_line.to_a.last.split('"')[1]
+end
+
 if File.exists?('/app/game/taylor-config.json')
   options.merge!(
     JSON.parse(File.read('/app/game/taylor-config.json'))
@@ -40,19 +44,19 @@ namespace :docker do
     end
 
     task :linux do
-      sh "docker build . --file Dockerfile.linux --tag taylor/export-linux"
+      sh "docker build . --file Dockerfile.linux --tag taylor/export-linux --tag hellrok/taylor:linux-v#{VERSION}"
     end
 
     task :windows do
-      sh "docker build . --file Dockerfile.windows --tag taylor/export-windows"
+      sh "docker build . --file Dockerfile.windows --tag taylor/export-windows --tag hellrok/taylor:windows-v#{VERSION}"
     end
 
     task :osx do
-      sh "docker build . --file Dockerfile.osx --tag taylor/export-osx"
+      sh "docker build . --file Dockerfile.osx --tag taylor/export-osx --tag hellrok/taylor:osx-v#{VERSION}"
     end
 
     task :web do
-      sh "docker build . --file Dockerfile.web --tag taylor/export-web"
+      sh "docker build . --file Dockerfile.web --tag taylor/export-web --tag hellrok/taylor:web-v#{VERSION}"
     end
   end
 end

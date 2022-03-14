@@ -1,7 +1,7 @@
 # Using oldstable to solve https://github.com/HellRok/Taylor/issues/1
 # Basically we want an old enough version of GLIBC to support the most linux
 # distros possible.
-FROM debian:oldstable
+FROM debian:oldstable-slim
 
 # Libraries are in order
 # 1. Core
@@ -25,5 +25,5 @@ RUN \
     mesa-common-dev \
     xorg-dev \
     \
-    zip&& \
+    zip && \
   apt-get clean -y && apt-get autoremove -y
