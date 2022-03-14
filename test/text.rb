@@ -14,7 +14,7 @@ class TestText < MTest::Unit::TestCase
     skip_unless_display_present
 
     set_window_title(__method__.to_s)
-    font = Font.load('./test/assets/tiny.ttf')
+    font = Font.load('./assets/tiny.ttf')
     clear_and_draw do
       draw_text_ex(font, 'x', Vector2.new(0, 0), 12, 0, BLACK)
     end
@@ -27,7 +27,7 @@ class TestText < MTest::Unit::TestCase
     skip_unless_display_present
 
     set_window_title(__method__.to_s)
-    font = Font.load('./test/assets/tiny.ttf')
+    font = Font.load('./assets/tiny.ttf')
     size = measure_text_ex(font, 'hello', 12, 0)
     flush_frame
 

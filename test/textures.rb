@@ -4,7 +4,7 @@ class TestTexture < MTest::Unit::TestCase
 
     set_window_title(__method__.to_s)
 
-    image = Image.load('test/assets/test.png')
+    image = Image.load('assets/test.png')
     texture = load_texture_from_image(image)
     clear_and_draw do
       draw_texture(texture, 3, 3, WHITE)
@@ -19,7 +19,7 @@ class TestTexture < MTest::Unit::TestCase
     skip_unless_display_present
 
     set_window_title(__method__.to_s)
-    texture = Texture2D.load('test/assets/test.png')
+    texture = Texture2D.load('assets/test.png')
     clear_and_draw do
       draw_texture(texture, 3, 3, WHITE)
     end
@@ -32,7 +32,7 @@ class TestTexture < MTest::Unit::TestCase
     skip_unless_display_present
 
     set_window_title(__method__.to_s)
-    texture = Texture2D.load('test/assets/test.png')
+    texture = Texture2D.load('assets/test.png')
     clear_and_draw do
       draw_texture_pro(
         texture,

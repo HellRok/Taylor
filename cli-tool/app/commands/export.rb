@@ -45,14 +45,14 @@ module Taylor
         parser = OptParser.new do |opts|
           opts.on(:help,             :bool,   false)
           opts.on(:dry_run,          :bool,   false)
-          opts.on(:export_directory, :string, options.fetch(:export_directory, './exports'))
-          opts.on(:export_targets,   :string, options.fetch(:export_targets,   'linux,windows,osx,web'))
+          opts.on(:export_directory, :string, options.fetch('export_directory', './exports'))
+          opts.on(:export_targets,   :string, options.fetch('export_targets',   'linux,windows,osx,web'))
           opts.on(:build_cache,      :string)
         end
         parser.parse(argv, true)
 
         @options = parser.opts
-        @options[:export_targets] = @options[:export_targets].split(',')
+        @options[:export_targets] = @options[:export_targets].split(',') unless @options[:export_targets].is_a?(Array)
       end
 
       def check_in_taylor_project!

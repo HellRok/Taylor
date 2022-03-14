@@ -50,13 +50,13 @@ module Taylor
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
           opts.on(:help,             :bool,   false)
-          opts.on(:name,             :string, options.fetch(:name,             'taylor_game'))
-          opts.on(:version,          :string, options.fetch(:version,          'v0.0.1'))
-          opts.on(:input,            :string, options.fetch(:input,            'game.rb'))
-          opts.on(:export_directory, :string, options.fetch(:export_directory, './exports'))
-          opts.on(:export_targets,   :string, options.fetch(:export_targets,   'linux,windows,osx,web'))
-          opts.on(:load_paths,       :string, options.fetch(:load_paths,       './,./vendor'))
-          opts.on(:copy_paths,       :string, options.fetch(:copy_paths,       './assets'))
+          opts.on(:name,             :string, options.fetch('name',             'taylor_game'))
+          opts.on(:version,          :string, options.fetch('version',          'v0.0.1'))
+          opts.on(:input,            :string, options.fetch('input',            'game.rb'))
+          opts.on(:export_directory, :string, options.fetch('export_directory', './exports'))
+          opts.on(:export_targets,   :string, options.fetch('export_targets',   'linux,windows,osx,web'))
+          opts.on(:load_paths,       :string, options.fetch('load_paths',       './,./vendor'))
+          opts.on(:copy_paths,       :string, options.fetch('copy_paths',       './assets'))
         end
         parser.parse(argv, true)
 

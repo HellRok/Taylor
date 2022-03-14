@@ -3,3 +3,4 @@ dist
 releases
 
 cli-tool/exports
+test/exports

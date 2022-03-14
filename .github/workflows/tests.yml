@@ -23,7 +23,7 @@ jobs:
 
       - name: taylor tests
         run: |
-          ./dist/linux/debug/taylor ./cli-tool/cli.rb ./test/test.rb
+          ./dist/linux/debug/taylor ./cli-tool/cli.rb ./test/
       - name: taylor-cli tests
         run: |
           cd ./cli-tool

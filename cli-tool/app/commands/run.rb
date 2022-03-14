@@ -7,11 +7,12 @@ module Taylor
 
       attr_accessor :options
       def initialize(command, argv, options)
-        setup_options(argv, options)
+        @argv = argv
+        setup_options(@argv, options)
 
         @command = command || ''
 
-        if @options[:help] || @command.empty? && options[:input].nil?
+        if @options[:help] || entrypoint.empty?
           display_help
         else
           call
@@ -46,10 +47,26 @@ module Taylor
       end
 
       private
+      def entrypoint
+        if !@command.empty? && File.exist?(@command)
+          if File.directory?(@command) && File.exist?(File.join(@command, 'taylor-config.json'))
+            options = JSON.parse(File.read(File.join(@command, 'taylor-config.json')))
+            setup_options(@argv, options)
+            Dir.chdir(@command)
+            $:.unshift '.'
+            return @options[:input]
+          elsif File.exist?(@command)
+            return @command
+          end
+        else
+          return @options[:input]
+        end
+      end
+
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
           opts.on(:help,  :bool,   false)
-          opts.on(:input, :string, options.fetch(:input, 'game.rb'))
+          opts.on(:input, :string, options.fetch('input', 'game.rb'))
         end
         parser.parse(argv, true)
 
@@ -57,7 +74,7 @@ module Taylor
       end
 
       def from_config
-        @options[:input]
+        @options['input']
       end
 
       def unload_taylor_cli
@@ -65,12 +82,9 @@ module Taylor
       end
 
       def run_command
-        if File.exists?(@command) && File.file?(@command)
+        if File.exists?(entrypoint)
           ARGV.shift
-          require @command
-
-        elsif File.exists?(from_config) && File.file?(from_config)
-          require from_config
+          require entrypoint
 
         else
           raise "Did not know how to handle #{@command}"

@@ -37,14 +37,14 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_load
-    image = Image.load('./test/assets/test.png')
+    image = Image.load('./assets/test.png')
     assert_equal fixture_models_image_load, image.data
     unload_image(image)
   end
 
   def test_load_fail
     assert_raise(Image::NotFound) {
-      image = Image.load('./test/assets/fail.png')
+      image = Image.load('./assets/fail.png')
     }
   end
 
@@ -72,7 +72,7 @@ class TestImage < MTest::Unit::TestCase
     skip_unless_display_present
 
     set_window_title(__method__.to_s)
-    image = Image.load('./test/assets/test.png')
+    image = Image.load('./assets/test.png')
     texture = image.to_texture
 
     assert_equal image.width, texture.width
@@ -83,7 +83,7 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_copy_with_source
-    image = Image.load('test/assets/test.png')
+    image = Image.load('assets/test.png')
     new_image = image.copy(source: Rectangle.new(1, 1, 2, 2))
     assert_equal fixture_models_copy_with_source, new_image.data
     unload_image(image)
@@ -91,21 +91,21 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_resize_default_scaling!
-    image = Image.load('./test/assets/test.png')
+    image = Image.load('./assets/test.png')
     image.resize!(width: 6, height: 6)
     assert_equal fixture_models_image_resize_default_scaing!, image.data
     unload_image(image)
   end
 
   def test_resize_bicubic_scaling!
-    image = Image.load('./test/assets/test.png')
+    image = Image.load('./assets/test.png')
     image.resize!(width: 6, height: 6, scaling: :bicubic)
     assert_equal fixture_models_image_resize_bicubic_scaing!, image.data
     unload_image(image)
   end
 
   def test_resize_incorrect_scaling!
-    image = Image.load('./test/assets/test.png')
+    image = Image.load('./assets/test.png')
     assert_raise(ArgumentError) {
       image.resize!(width: 6, height: 6, scaling: :nope)
     }
@@ -113,15 +113,15 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_crop!
-    image = Image.load('./test/assets/test.png')
+    image = Image.load('./assets/test.png')
     image.crop!(Rectangle.new(0, 0, 2, 3))
     assert_equal fixture_models_image_crop!, image.data
     unload_image(image)
   end
 
   def test_alpha_mask
-    image = Image.load('./test/assets/test.png')
-    mask = Image.load('./test/assets/alpha.png')
+    image = Image.load('./assets/test.png')
+    mask = Image.load('./assets/alpha.png')
 
     image.alpha_mask =  mask
 
@@ -132,7 +132,7 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_generate_mipmaps!
-    image = Image.load('./test/assets/test.png')
+    image = Image.load('./assets/test.png')
     assert_equal 1, image.mipmaps
 
     image.generate_mipmaps!
@@ -142,7 +142,7 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_image_flip_vertical!
-    image = Image.load('test/assets/asymettrical.png')
+    image = Image.load('assets/asymettrical.png')
 
     image.flip_vertical!
     assert_equal fixture_models_image_flip_vertical!, image.data
@@ -151,7 +151,7 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_image_flip_horizontal!
-    image = Image.load('test/assets/asymettrical.png')
+    image = Image.load('assets/asymettrical.png')
 
     image.flip_horizontal!
     assert_equal fixture_models_image_flip_horizontal!, image.data
@@ -160,7 +160,7 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_image_rotate_nil!
-    image = Image.load('test/assets/asymettrical.png')
+    image = Image.load('assets/asymettrical.png')
 
     image.rotate!
     assert_equal fixture_models_image_rotate_nil!, image.data
@@ -169,7 +169,7 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_image_rotate_cw!
-    image = Image.load('test/assets/asymettrical.png')
+    image = Image.load('assets/asymettrical.png')
 
     image.rotate! :cw
     assert_equal fixture_models_image_rotate_cw!, image.data
@@ -178,7 +178,7 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_image_rotate_ccw!
-    image = Image.load('test/assets/asymettrical.png')
+    image = Image.load('assets/asymettrical.png')
 
     image.rotate! :ccw
     assert_equal fixture_models_image_rotate_ccw!, image.data
@@ -187,7 +187,7 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_image_rotate_invalid_direction!
-    image = Image.load('test/assets/asymettrical.png')
+    image = Image.load('assets/asymettrical.png')
 
     assert_raise(ArgumentError) {
       image.rotate! :blah
@@ -301,7 +301,7 @@ class TestImage < MTest::Unit::TestCase
   end
 
   def test_image_replace!
-    image = load_image('test/assets/test.png')
+    image = load_image('assets/test.png')
 
     image.replace!(WHITE, BLUE)
     assert_equal fixture_models_image_replace!, image.data

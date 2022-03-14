@@ -24,7 +24,7 @@ class TestCommandsRun < MTest::Unit::TestCase
   end
 
   def test_requires_from_config
-    run_command = Taylor::Commands::Run.new(nil, [], { input: './cli.rb' })
+    run_command = Taylor::Commands::Run.new(nil, [], { 'input' => './cli.rb' })
     assert_equal ['./cli.rb'], run_command.require_list
   end
 

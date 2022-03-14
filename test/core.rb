@@ -41,6 +41,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_set_window_state_fullscreen
     skip_unless_display_present
+    skip 'No window access for browsers' if browser?
 
     set_window_title(__method__.to_s)
     set_target_fps 5
@@ -71,6 +72,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_set_window_state_hidden
     skip_unless_display_present
+    skip 'No window access for browsers' if browser?
 
     set_window_title(__method__.to_s)
     set_target_fps 5
@@ -93,6 +95,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_set_window_state_minimised
     skip_unless_display_present
+    skip 'No window access for browsers' if browser?
 
     set_window_title(__method__.to_s)
 
@@ -111,6 +114,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_set_window_state_maximised
     skip_unless_display_present
+    skip 'No window access for browsers' if browser?
 
     set_window_title(__method__.to_s)
 
@@ -140,6 +144,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_set_window_state_other
     skip_unless_display_present
+    skip 'No window access for browsers' if browser?
 
     set_window_title(__method__.to_s)
     set_target_fps 5
@@ -166,6 +171,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_window_position
     skip_unless_display_present
+    skip 'No window access for browsers' if browser?
 
     set_window_title(__method__.to_s)
     set_target_fps 5
@@ -203,6 +209,7 @@ class TestCore < MTest::Unit::TestCase
 
   def test_clipboard
     skip_unless_display_present
+    skip 'No clipboard access for webbrowsers' if browser?
 
     set_window_title(__method__.to_s)
 

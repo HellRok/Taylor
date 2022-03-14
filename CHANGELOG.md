@@ -6,6 +6,8 @@
 - Add more tests for cli-export
 - Use slim docker images to save a few megabytes
 - Building the export docker images now includes the version for easy use
+- cli-export run now properly handles being passed a path
+- Test suite is now a proper Taylor application
 
 ## v0.3.3
 

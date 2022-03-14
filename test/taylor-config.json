@@ -1,0 +1,18 @@
+{
+  "name": "Taylor Test Suite",
+  "version": "v0.0.1",
+  "input": "test.rb",
+  "export_directory": "./exports",
+  "export_targets": [
+    "linux",
+    "windows",
+    "osx",
+    "web"
+  ],
+  "load_paths": [
+    "./"
+  ],
+  "copy_paths": [
+    "./assets"
+  ]
+}
