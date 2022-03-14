@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add Gitpod support
+- Add more tests for cli-export
+
 ## v0.3.3
 
 - Add regex support

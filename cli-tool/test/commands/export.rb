@@ -55,6 +55,16 @@ class TestCommandsExport < MTest::Unit::TestCase
     assert_include export_command.puts_data, "hellrok/taylor:web-v#{TAYLOR_VERSION}"
   end
 
+  def test_check_docker_command_override_targets
+    export_command = Taylor::Commands::Export.new(['--dry-run'], { export_targets: 'linux,web' })
+    assert_include export_command.puts_data, 'docker run'
+    assert_include export_command.puts_data, File.join(Dir.pwd, 'exports')
+    assert_include export_command.puts_data, "hellrok/taylor:linux-v#{TAYLOR_VERSION}"
+    assert_false export_command.puts_data.include? "hellrok/taylor:windows-v#{TAYLOR_VERSION}"
+    assert_false export_command.puts_data.include?  "hellrok/taylor:osx-v#{TAYLOR_VERSION}"
+    assert_include export_command.puts_data, "hellrok/taylor:web-v#{TAYLOR_VERSION}"
+  end
+
   def test_check_docker_command_set_build_cache
     # Because this isn't specified by the taylor-config.json we have to pass it
     # in via the ARGV
