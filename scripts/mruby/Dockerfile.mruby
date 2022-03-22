@@ -8,7 +8,7 @@ RUN \
     git \
     ca-certificates && \
   apt-get clean -y && apt-get autoremove -y && \
-  git clone --branch 3.0.0 --depth 1 https://github.com/mruby/mruby.git .
+  git clone --branch master --depth 1 https://github.com/mruby/mruby.git .
 
 FROM mruby_base as mruby_include
 RUN mv ./include/mruby.h ./

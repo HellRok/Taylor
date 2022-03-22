@@ -102,7 +102,6 @@ struct RStringEmbed {
 #define RSTRING_LEN(s)       RSTR_LEN(RSTRING(s))
 #define RSTRING_CAPA(s)      RSTR_CAPA(RSTRING(s))
 #define RSTRING_END(s)       (RSTRING_PTR(s) + RSTRING_LEN(s))
-MRB_API mrb_int mrb_str_strlen(mrb_state*, struct RString*);
 #define RSTRING_CSTR(mrb,s)  mrb_string_cstr(mrb, s)
 
 #define MRB_STR_SHARED    1
@@ -324,21 +323,7 @@ MRB_API mrb_value mrb_str_resize(mrb_state *mrb, mrb_value str, mrb_int len);
  */
 MRB_API mrb_value mrb_str_substr(mrb_state *mrb, mrb_value str, mrb_int beg, mrb_int len);
 
-/**
- * Returns a Ruby string type.
- *
- *
- * @param mrb The current mruby state.
- * @param str Ruby string.
- * @return [mrb_value] A Ruby string.
- */
-MRB_API mrb_value mrb_ensure_string_type(mrb_state *mrb, mrb_value str);
-MRB_API mrb_value mrb_check_string_type(mrb_state *mrb, mrb_value str);
-/* obsolete: use mrb_ensure_string_type() instead */
-MRB_API mrb_value mrb_string_type(mrb_state *mrb, mrb_value str);
-
-
-MRB_API mrb_value mrb_str_new_capa(mrb_state *mrb, size_t capa);
+MRB_API mrb_value mrb_str_new_capa(mrb_state *mrb, mrb_int capa);
 #define mrb_str_buf_new(mrb, capa) mrb_str_new_capa(mrb, (capa))
 
 /* NULL terminated C string from mrb_value */
@@ -346,9 +331,11 @@ MRB_API const char *mrb_string_cstr(mrb_state *mrb, mrb_value str);
 /* NULL terminated C string from mrb_value; `str` will be updated */
 MRB_API const char *mrb_string_value_cstr(mrb_state *mrb, mrb_value *str);
 /* obsolete: use RSTRING_PTR() */
-MRB_API const char *mrb_string_value_ptr(mrb_state *mrb, mrb_value str);
+#define mrb_string_value_ptr(mrb, str) RSTRING_PTR(str)
 /* obsolete: use RSTRING_LEN() */
-MRB_API mrb_int mrb_string_value_len(mrb_state *mrb, mrb_value str);
+#define mrb_string_value_len(mrb, str) RSTRING_LEN(str)
+/* obsolete: substituted by a macro; shall be removed */
+#define mrb_str_strlen(mrb, s) strlen(RSTR_PTR(s))
 
 /**
  * Duplicates a string object.
@@ -369,17 +356,10 @@ MRB_API mrb_value mrb_str_dup(mrb_state *mrb, mrb_value str);
  */
 MRB_API mrb_value mrb_str_intern(mrb_state *mrb, mrb_value self);
 
-MRB_API mrb_value mrb_str_to_inum(mrb_state *mrb, mrb_value str, mrb_int base, mrb_bool badcheck);
-MRB_API mrb_value mrb_cstr_to_inum(mrb_state *mrb, const char *s, mrb_int base, mrb_bool badcheck);
+MRB_API mrb_value mrb_str_to_integer(mrb_state *mrb, mrb_value str, mrb_int base, mrb_bool badcheck);
+/* obsolete: use mrb_str_to_integer() */
+#define mrb_str_to_inum(mrb, str, base, badcheck) mrb_str_to_integer(mrb, str, base, badcheck)
 MRB_API double mrb_str_to_dbl(mrb_state *mrb, mrb_value str, mrb_bool badcheck);
-MRB_API double mrb_cstr_to_dbl(mrb_state *mrb, const char *s, mrb_bool badcheck);
-
-/**
- * Returns a converted string type.
- * For type checking, non converting `mrb_to_str` is recommended.
- * obsolete: use `mrb_obj_as_string()` instead.
- */
-#define mrb_str_to_str(mrb, str) mrb_obj_as_string(mrb, str)
 
 /**
  * Returns true if the strings match and false if the strings don't match.

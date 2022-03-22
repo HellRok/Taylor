@@ -20,6 +20,7 @@ enum irep_pool_type {
   IREP_TT_SSTR  = 2,          /* string (static) */
   IREP_TT_INT32 = 1,          /* 32bit integer */
   IREP_TT_INT64 = 3,          /* 64bit integer */
+  IREP_TT_BIGINT = 7,         /* big integer (not yet supported) */
   IREP_TT_FLOAT = 5,          /* float (double/float) */
 };
 
@@ -31,9 +32,7 @@ typedef struct mrb_pool_value {
   union {
     const char *str;
     int32_t i32;
-#if defined(MRB_64BIT) || defined(MRB_INT64)
     int64_t i64;
-#endif
 #ifndef MRB_NO_FLOAT
     mrb_float f;
 #endif
@@ -47,8 +46,8 @@ enum mrb_catch_type {
 
 struct mrb_irep_catch_handler {
   uint8_t type;         /* enum mrb_catch_type */
-  uint8_t begin[4];     /* The starting address to match the hander. Includes this. */
-  uint8_t end[4];       /* The endpoint address that matches the hander. Not Includes this. */
+  uint8_t begin[4];     /* The starting address to match the handler. Includes this. */
+  uint8_t end[4];       /* The endpoint address that matches the handler. Not Includes this. */
   uint8_t target[4];    /* The address to jump to if a match is made. */
 };
 
@@ -100,7 +99,7 @@ MRB_API mrb_value mrb_load_irep(mrb_state*, const uint8_t*);
 
 /*
  * @param [const void*] irep code
- * @param [size_t] size of irep buffer. If -1 is given, it is considered unrestricted.
+ * @param [size_t] size of irep buffer.
  */
 MRB_API mrb_value mrb_load_irep_buf(mrb_state*, const void*, size_t);
 
@@ -109,7 +108,7 @@ MRB_API mrb_value mrb_load_irep_cxt(mrb_state*, const uint8_t*, mrbc_context*);
 
 /*
  * @param [const void*] irep code
- * @param [size_t] size of irep buffer. If -1 is given, it is considered unrestricted.
+ * @param [size_t] size of irep buffer.
  */
 MRB_API mrb_value mrb_load_irep_buf_cxt(mrb_state*, const void*, size_t, mrbc_context*);
 
@@ -124,6 +123,7 @@ struct mrb_insn_data {
   uint16_t a;
   uint16_t b;
   uint16_t c;
+  const mrb_code *addr;
 };
 
 struct mrb_insn_data mrb_decode_insn(const mrb_code *pc);

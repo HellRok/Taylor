@@ -3,9 +3,12 @@ class TestCore < MTest::Unit::TestCase
     skip_unless_display_present
 
     set_window_title(__method__.to_s)
+
+    flush_frame
     clear_and_draw do
       clear_background(RED)
     end
+
     assert_equal fixture_clear_background, get_screen_data.data
   end
 

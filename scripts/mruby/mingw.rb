@@ -16,6 +16,7 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.gembox "metaprog"
 
   conf.gem core: 'mruby-exit'
+  conf.gem core: 'mruby-sleep'
   conf.gem github: 'iij/mruby-dir'
   conf.gem github: 'iij/mruby-env'
   conf.gem github: 'iij/mruby-iijson'
