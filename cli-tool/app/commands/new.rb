@@ -22,7 +22,7 @@ module Taylor
           Taylor #{TAYLOR_VERSION}
 
           Usage:
-            taylor run [options] <folder>
+            taylor new [options] <folder>
 
 
           Options:
@@ -93,8 +93,9 @@ module Taylor
       end
 
       def create_config
-        config_options = options
+        config_options = options.dup
         config_options.delete(:help)
+        config_options.delete(:folder)
 
         config = File.open(path_for('taylor-config.json'), 'w')
         config.write(JSON.generate(config_options, { pretty_print: true, indent_width: 2 }))
