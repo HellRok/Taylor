@@ -2,8 +2,9 @@ MRuby::CrossBuild.new('emscripten') do |conf|
   toolchain :clang
 
   conf.cc.command = 'emcc'
-  conf.cc.flags  += %w[-O3 -s ASYNCIFY]
+  conf.cc.flags += %w[-O3]
   conf.linker.command = 'emcc'
+  conf.linker.flags += %w[-s ASYNCIFY]
   conf.archiver.command = 'emar'
 
    #These are the default libraries

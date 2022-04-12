@@ -25,5 +25,5 @@ RUN \
 
 RUN  git clone https://github.com/juj/emsdk.git /app/emsdk &&\
   cd /app/emsdk &&\
-  ./emsdk install 2.0.33 &&\
-  ./emsdk activate 2.0.33
+  ./emsdk install 3.1.8 &&\
+  ./emsdk activate 3.1.8

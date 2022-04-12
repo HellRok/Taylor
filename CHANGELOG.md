@@ -5,6 +5,7 @@
 - mRuby now builds from master instead of 3.0.0
 - Add mruby-sleep as a library
 - cli-new help now displays the correct command name
+- Bump Emscripten and clean up it's build process
 
 ## v0.3.4
 

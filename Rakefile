@@ -157,12 +157,13 @@ namespace :web do
     name = "#{name}.html"
     objects_folder = "build/web/debug"
     cxx = "emcc"
-    cxxflags = "-std=c++2a -Wall -Wextra --shell-file ./scripts/export/emscripten_shell.html"
+    cxxflags.gsub!("-no-pie", '')
+    ldflags = ""
+    static_links = "--shell-file ./scripts/export/emscripten_shell.html"
     options.fetch('copy_paths', []).each { |path|
-      cxxflags += " --preload-file #{File.join('/', 'app', 'game', path)}@#{path}"
+      static_links += " --preload-file #{File.join('/', 'app', 'game', path)}@#{path}"
     }
     platform = "web"
-    ldflags = ""
     static_links = "-s USE_GLFW=3 -s ASYNCIFY #{static_links} ./vendor/web/libmruby.a ./vendor/web/raylib/lib/libraylib.a"
   end
 
