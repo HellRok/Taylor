@@ -1,8 +1,6 @@
 #include "raylib.h"
 #include "mruby.h"
 
-#include "mruby_integration/struct_types.hpp"
-
 mrb_value mrb_show_cursor(mrb_state*, mrb_value) {
   ShowCursor();
   return mrb_nil_value();

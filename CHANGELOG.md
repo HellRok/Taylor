@@ -6,6 +6,7 @@
 - Add mruby-sleep as a library
 - cli-new help now displays the correct command name
 - Bump Emscripten and clean up it's build process
+- Add get_attribute_from_element
 
 ## v0.3.4
 

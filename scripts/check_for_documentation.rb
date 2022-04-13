@@ -3,6 +3,7 @@
 def cpp_methods
   (
     Dir.glob('./src/mruby_integration/**/*.cpp') +
+    Dir.glob('./src/platform_specific/*.cpp') +
     Dir.glob('./src/*.cpp')
   ).flat_map { |file|
     klass = nil

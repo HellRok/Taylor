@@ -86,7 +86,11 @@ namespace :windows do
     ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -lwinmm -l raylib #{ldflags}"
     cxxflags += " -mwindows -static-libstdc++"
 
-    static_links = "#{static_links} ./vendor/windows/libmruby.a ./vendor/windows/raylib/lib/libraylib.a"
+    static_links = <<-EOS
+      #{static_links} \
+      ./vendor/windows/libmruby.a \
+      ./vendor/windows/raylib/lib/libraylib.a
+    EOS
   end
 
   task :build => "windows:setup_variables"
@@ -122,9 +126,21 @@ namespace :osx do
     cxx = "x86_64-apple-darwin19-clang++"
     cxxflags = " -Oz -mmacosx-version-min=10.11 -stdlib=libc++"
     platform = "osx"
-    ldflags = "-l dl -l pthread -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL"
+    ldflags = <<-EOS
+      -l dl \
+      -l pthread \
+      -framework CoreVideo \
+      -framework IOKit \
+      -framework Cocoa \
+      -framework GLUT \
+      -framework OpenGL
+    EOS
     includes += " -I /opt/osxcross/target/SDK/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
-    static_links = "#{static_links} ./vendor/osx/libmruby.a ./vendor/osx/raylib/lib/libraylib.a"
+    static_links = <<-EOS
+      #{static_links} \
+      ./vendor/osx/libmruby.a \
+      ./vendor/osx/raylib/lib/libraylib.a
+    EOS
   end
 
   task :build => "osx:setup_variables"
@@ -159,12 +175,23 @@ namespace :web do
     cxx = "emcc"
     cxxflags.gsub!("-no-pie", '')
     ldflags = ""
-    static_links = "--shell-file ./scripts/export/emscripten_shell.html"
+    if options.dig('web', 'shell_path')
+      static_links = "--shell-file #{File.join('/', 'app', 'game', options['web']['shell_path'])}"
+    else
+      static_links = "--shell-file ./scripts/export/emscripten_shell.html"
+    end
     options.fetch('copy_paths', []).each { |path|
       static_links += " --preload-file #{File.join('/', 'app', 'game', path)}@#{path}"
     }
     platform = "web"
-    static_links = "-s USE_GLFW=3 -s ASYNCIFY #{static_links} ./vendor/web/libmruby.a ./vendor/web/raylib/lib/libraylib.a"
+    static_links = <<-EOS
+      -s USE_GLFW=3 \
+      -s ASYNCIFY \
+      #{static_links} \
+      ./vendor/web/libmruby.a \
+      ./vendor/web/raylib/lib/libraylib.a \
+      -s EXPORTED_RUNTIME_METHODS=['UTF8ToString','stringToUTF8','lengthBytesUTF8']
+    EOS
   end
 
   task :build => "web:setup_variables"

@@ -10,6 +10,7 @@
 
 #ifdef __EMSCRIPTEN__
 #include "web.hpp"
+#include "platform_specific/web.hpp"
 #endif
 
 #include "argv.hpp"
@@ -64,6 +65,7 @@ int main(int argc, char **argv) {
 
 #ifdef __EMSCRIPTEN__
   append_web(mrb);
+  append_platform_specific_web(mrb);
 #endif
 
 #ifdef _WIN32
