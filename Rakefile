@@ -49,7 +49,11 @@ namespace :linux do
     cxx = "g++"
     platform = "linux"
     ldflags = "-l dl -l pthread"
-    static_links = "#{static_links} ./vendor/linux/libmruby.a ./vendor/linux/raylib/lib/libraylib.a"
+    static_links = <<-EOS.chomp
+      #{static_links} \
+      ./vendor/linux/libmruby.a \
+      ./vendor/linux/raylib/lib/libraylib.a
+    EOS
   end
 
   task :build => "linux:setup_variables"
@@ -86,7 +90,7 @@ namespace :windows do
     ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -lwinmm -l raylib #{ldflags}"
     cxxflags += " -mwindows -static-libstdc++"
 
-    static_links = <<-EOS
+    static_links = <<-EOS.chomp
       #{static_links} \
       ./vendor/windows/libmruby.a \
       ./vendor/windows/raylib/lib/libraylib.a
@@ -126,7 +130,7 @@ namespace :osx do
     cxx = "x86_64-apple-darwin19-clang++"
     cxxflags = " -Oz -mmacosx-version-min=10.11 -stdlib=libc++"
     platform = "osx"
-    ldflags = <<-EOS
+    ldflags = <<-EOS.chomp
       -l dl \
       -l pthread \
       -framework CoreVideo \
@@ -136,7 +140,7 @@ namespace :osx do
       -framework OpenGL
     EOS
     includes += " -I /opt/osxcross/target/SDK/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
-    static_links = <<-EOS
+    static_links = <<-EOS.chomp
       #{static_links} \
       ./vendor/osx/libmruby.a \
       ./vendor/osx/raylib/lib/libraylib.a
@@ -184,7 +188,7 @@ namespace :web do
       static_links += " --preload-file #{File.join('/', 'app', 'game', path)}@#{path}"
     }
     platform = "web"
-    static_links = <<-EOS
+    static_links = <<-EOS.chomp
       -s USE_GLFW=3 \
       -s ASYNCIFY \
       #{static_links} \
