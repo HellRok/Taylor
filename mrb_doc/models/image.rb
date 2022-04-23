@@ -212,6 +212,18 @@ class Image
     self
   end
 
+  # Draws the specified portion of the image into the specified region of the
+  # this image.
+  # @param image [Image]
+  # @param source [Rectangle] if left blank, will use the whole image
+  # @param destination [Rectangle] if left blank, will draw into the top left corner
+  # @param colour [Colour] if left blank, no tinting is applied
+  # @return [nil]
+  def draw!(image:, source: nil, destination: nil, colour: WHITE)
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Generates a new image of width by height in the specified colour.
   # @param width [Integer]
   # @param height [Integer]

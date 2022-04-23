@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add image_draw!
+- Add Image#draw!
+
 ## v0.3.5
 
 - mRuby now builds from master instead of 3.0.0

@@ -308,4 +308,31 @@ class TestImage < MTest::Unit::TestCase
 
     image.unload
   end
+
+  def test_image_draw!
+    image = Image.generate(width: 3, height:3, colour: RAYWHITE)
+    to_copy = load_image('assets/test.png')
+
+    image.draw!(
+      image: to_copy,
+      source: Rectangle.new(0, 0, 2, 2),
+      destination: Rectangle.new(1, 1, 2, 2)
+    )
+    assert_equal fixture_models_image_draw!, image.data
+
+    image.unload
+    to_copy.unload
+  end
+
+  def test_image_draw_no_args!
+    image = Image.generate(width: 3, height:3, colour: RAYWHITE)
+    to_copy = load_image('assets/test.png')
+
+    image.draw!(image: to_copy)
+    assert_equal fixture_models_image_draw_no_args!, image.data
+
+
+    image.unload
+    to_copy.unload
+  end
 end

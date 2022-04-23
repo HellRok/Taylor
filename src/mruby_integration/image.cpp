@@ -298,6 +298,22 @@ mrb_value mrb_image_resize_nearest_neighbour(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_image_draw(mrb_state *mrb, mrb_value) {
+  Image *destination, *source;
+  Rectangle *destination_rectangle, *source_rectangle;
+  Color *colour;
+  mrb_get_args(mrb, "ddddd",
+      &destination, &Image_type,
+      &source, &Image_type,
+      &source_rectangle, &Rectangle_type,
+      &destination_rectangle, &Rectangle_type,
+      &colour, &Colour_type);
+
+  ImageDraw(destination, *source, *source_rectangle, *destination_rectangle, *colour);
+
+  return mrb_nil_value();
+}
+
 mrb_value mrb_get_screen_data(mrb_state *mrb, mrb_value) {
   Image *image = (Image *)malloc(sizeof(Image));
   *image = LoadImageFromScreen();
@@ -337,6 +353,8 @@ void append_images(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "image_colour_replace!", mrb_image_colour_replace, MRB_ARGS_REQ(3));
 
   mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
+
+  mrb_define_method(mrb, mrb->kernel_module, "image_draw!", mrb_image_draw, MRB_ARGS_REQ(5));
 
   mrb_define_method(mrb, mrb->kernel_module, "get_screen_data", mrb_get_screen_data, MRB_ARGS_NONE());
 }

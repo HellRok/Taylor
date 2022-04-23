@@ -177,3 +177,14 @@ def fixture_image_colour_replace!
     p, b, o,
   ]
 end
+
+def fixture_image_draw!
+  r = RAYWHITE
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  [
+    r, r, r,
+    r, o, t,
+    r, t, o
+  ]
+end

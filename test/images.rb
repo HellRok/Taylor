@@ -190,4 +190,21 @@ class TestImage < MTest::Unit::TestCase
 
     unload_image(image)
   end
+
+  def test_image_draw!
+    image = generate_image_colour(3, 3, RAYWHITE)
+    to_copy = load_image('assets/test.png')
+
+    image_draw!(
+      image,
+      to_copy,
+      Rectangle.new(0, 0, 2, 2),
+      Rectangle.new(1, 1, 2, 2),
+      WHITE
+    )
+    assert_equal fixture_image_draw!, image.data
+
+    unload_image(image)
+    unload_image(to_copy)
+  end
 end

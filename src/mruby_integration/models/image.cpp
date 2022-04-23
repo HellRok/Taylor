@@ -210,6 +210,14 @@ void append_models_Image(mrb_state *mrb) {
         self
       end
 
+      def draw!(image:, source: nil, destination: nil, colour: WHITE)
+        source ||= Rectangle.new(0, 0, image.width, image.height)
+        destination ||= Rectangle.new(0, 0, image.width, image.height)
+
+        image_draw!(self, image, source, destination, colour)
+        self
+      end
+
       def self.generate(width:, height:, colour: RAYWHITE)
         generate_image_colour(width, height, colour)
       end

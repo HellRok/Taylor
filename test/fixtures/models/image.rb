@@ -165,3 +165,25 @@ def fixture_models_image_replace!
     p, b, o,
   ]
 end
+
+def fixture_models_image_draw_no_args!
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  p = Colour.new(195, 37, 218, 255)
+  [
+    o, t, p,
+    t, o, t,
+    p, t, o,
+  ]
+end
+
+def fixture_models_image_draw!
+  r = RAYWHITE
+  t = WHITE
+  o = Colour.new(218, 154, 37, 255)
+  [
+    r, r, r,
+    r, o, t,
+    r, t, o
+  ]
+end
