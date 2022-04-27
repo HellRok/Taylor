@@ -1,0 +1,28 @@
+steps:
+  - label: 'Taylor Build'
+    commands:
+      - apt-get update
+      - apt-get install ruby build-essential -y
+      - gem install bundler
+      - bundle install
+      - bundle exec rake linux:release:build
+      - cd dist/linux/release
+      - buildkite-agent artifact upload taylor
+
+  - label: 'Taylor Tests'
+    commands:
+      - buildkite-agent artifact download taylor /usr/bin/
+      - chmod +x /usr/bin/taylor
+      - cd ./test/
+      - taylor ../cli-tool/cli.rb test.rb
+
+  - label: 'CLI Tool Tests'
+    commands:
+      - buildkite-agent artifact download taylor /usr/bin/
+      - chmod +x /usr/bin/taylor
+      - cd ./cli-tool/
+      - taylor ./cli.rb test/test.rb
+
+  - label: 'Check Documentation'
+    commands:
+      - ./scripts/check_for_documentation.rb
