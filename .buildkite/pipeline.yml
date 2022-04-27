@@ -11,9 +11,14 @@ steps:
 
   - label: 'Taylor Tests'
     commands:
+      - export DISPLAY=:1
+      - apt-get update
+      - apt-get install xvfb fluxbox -y
       - buildkite-agent artifact download taylor /usr/bin/
       - chmod +x /usr/bin/taylor
       - cd ./test/
+      - Xvfb :1 -screen 0 1280x800x24 &
+      - fluxbox &> /dev/null &
       - taylor ../cli-tool/cli.rb test.rb
 
   - label: 'CLI Tool Tests'

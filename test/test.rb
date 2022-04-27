@@ -1,5 +1,6 @@
 set_trace_log_level 5
 
+require 'ta_mtest'
 require 'mtest_overrides'
 require 'mtest_extensions'
 require 'helpers'
