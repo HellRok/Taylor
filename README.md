@@ -6,7 +6,11 @@ status](https://badge.buildkite.com/0cb81ca8e3b8f43a2998bc15f90323a2eb8429669e81
 ![GitHub all releases](https://img.shields.io/github/downloads/HellRok/Taylor/total?label=Total%20Downloads&style=plastic)
 
 **Website**: http://taylor.oequacki.com  
+<<<<<<< HEAD
 **Documentation**: http://taylor.oequacki.com/documentation/taylor/  
+=======
+**Documentation**: http://taylor.oequacki.com/documentation/taylor/
+>>>>>>> f6c5319 (Switch to Buildkite for tests)
 **Try it out online**: http://taylor.oequacki.com/playground/
 
 ## What's this?
