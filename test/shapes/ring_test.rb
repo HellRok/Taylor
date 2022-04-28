@@ -1,6 +1,6 @@
 class Test
   class Shapes
-    class Ring < MTest::Unit::TestCaseWithAnalytics
+    class Ring_Test < MTest::Unit::TestCaseWithAnalytics
       def test_draw_ring
         skip_unless_display_present
 

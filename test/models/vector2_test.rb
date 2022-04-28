@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Vector2 < MTest::Unit::TestCaseWithAnalytics
+    class Vector2_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
         vector = Vector2.new(1, 2)
 

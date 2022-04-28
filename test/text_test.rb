@@ -1,5 +1,5 @@
 class Test
-  class Text < MTest::Unit::TestCaseWithAnalytics
+  class Text_Test < MTest::Unit::TestCaseWithAnalytics
     def test_draw_text
       skip_unless_display_present
 

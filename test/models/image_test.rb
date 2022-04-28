@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Image < MTest::Unit::TestCaseWithAnalytics
+    class Image_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
         image = Image.new(2, 3, 4, 5)
 

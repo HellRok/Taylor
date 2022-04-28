@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Colour < MTest::Unit::TestCaseWithAnalytics
+    class Colour_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
         colour = Colour.new(1, 2, 3, 4)
 

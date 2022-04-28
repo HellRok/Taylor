@@ -1,6 +1,6 @@
 class Test
   class Shapes
-    class Triangle < MTest::Unit::TestCaseWithAnalytics
+    class Triangle_Test < MTest::Unit::TestCaseWithAnalytics
       def test_draw_triangle
         skip_unless_display_present
 

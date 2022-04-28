@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Camera2D < MTest::Unit::TestCaseWithAnalytics
+    class Camera2D_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
         camera = Camera2D.new(Vector2.new(1, 2), Vector2.new(3, 4), 5, 6)
 

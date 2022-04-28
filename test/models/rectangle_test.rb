@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Rectangle < MTest::Unit::TestCaseWithAnalytics
+    class Rectangle_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
         rectangle = Rectangle.new(1, 2, 3, 4)
 

@@ -1,5 +1,5 @@
 class Test
-  class Core < MTest::Unit::TestCaseWithAnalytics
+  class Core_Test < MTest::Unit::TestCaseWithAnalytics
     def test_clear_background
       skip_unless_display_present
 

@@ -1,6 +1,6 @@
 class Test
   class Shapes
-    class Ellipse < MTest::Unit::TestCaseWithAnalytics
+    class Ellipse_Test < MTest::Unit::TestCaseWithAnalytics
       def test_draw_ellipse
         skip_unless_display_present
 

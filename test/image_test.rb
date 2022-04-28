@@ -1,5 +1,5 @@
 class Test
-  class Image < MTest::Unit::TestCaseWithAnalytics
+  class Image_Test < MTest::Unit::TestCaseWithAnalytics
     def test_image_load
       image = load_image('assets/test.png')
       assert_equal fixture_image_load, image.data

@@ -1,6 +1,6 @@
 class Test
   class Shapes
-    class Rectangle < MTest::Unit::TestCaseWithAnalytics
+    class Rectangle_Test < MTest::Unit::TestCaseWithAnalytics
       def test_draw_rectangle
         skip_unless_display_present
 

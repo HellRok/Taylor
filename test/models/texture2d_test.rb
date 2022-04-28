@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Texture2D < MTest::Unit::TestCaseWithAnalytics
+    class Texture2D_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
         texture = Texture2D.new(1, 2, 3, 4, 5)
 

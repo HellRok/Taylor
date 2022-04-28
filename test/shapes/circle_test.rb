@@ -1,6 +1,6 @@
 class Test
   class Shapes
-    class Circle < MTest::Unit::TestCaseWithAnalytics
+    class Circle_Test < MTest::Unit::TestCaseWithAnalytics
       def test_draw_circle
         skip_unless_display_present
 

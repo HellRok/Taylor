@@ -1,6 +1,6 @@
 class Test
   class Shapes
-    class Collision < MTest::Unit::TestCaseWithAnalytics
+    class Collision_Test < MTest::Unit::TestCaseWithAnalytics
       def test_check_collision_point_rec
         rectangle = Rectangle.new(2, 2, 4, 5)
 

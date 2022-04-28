@@ -1,6 +1,6 @@
 class Test
   class Core
-    class Drawing < MTest::Unit::TestCaseWithAnalytics
+    class Drawing_Test < MTest::Unit::TestCaseWithAnalytics
       def test_clear
         skip_unless_display_present
 

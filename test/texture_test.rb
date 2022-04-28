@@ -1,5 +1,5 @@
 class Test
-  class Texture < MTest::Unit::TestCaseWithAnalytics
+  class Texture_Test < MTest::Unit::TestCaseWithAnalytics
     def test_load_texture_from_image
       skip_unless_display_present
 

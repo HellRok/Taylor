@@ -1,6 +1,6 @@
 class Test
   class Shapes
-    class Pixel < MTest::Unit::TestCaseWithAnalytics
+    class Pixel_Test < MTest::Unit::TestCaseWithAnalytics
       def test_draw_pixel
         skip_unless_display_present
 

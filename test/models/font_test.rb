@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Font < MTest::Unit::TestCaseWithAnalytics
+    class Font_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
         font = Font.new(1, 2, 3)
 

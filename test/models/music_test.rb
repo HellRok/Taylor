@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Music < MTest::Unit::TestCaseWithAnalytics
+    class Music_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
         music = Music.new(1, true, 2)
 
