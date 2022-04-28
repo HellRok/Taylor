@@ -18,6 +18,7 @@
 #include "workarounds/mingw.hpp"
 #include "workarounds/simplehttp.hpp"
 #include "mruby_integration/audio.hpp"
+#include "mruby_integration/buildkite_analytics.hpp"
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/images.hpp"
 #include "mruby_integration/shapes.hpp"
@@ -52,6 +53,8 @@ int main(int argc, char **argv) {
   mrb_define_const(mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
   mrb_define_const(mrb, mrb->kernel_module, "WORKING_DIRECTORY", mrb_str_new_cstr(mrb, GetWorkingDirectory()));
   populate_argv(mrb, argc, argv);
+
+  append_buildkite_analytics(mrb);
 
   append_audio(mrb);
   append_core(mrb);

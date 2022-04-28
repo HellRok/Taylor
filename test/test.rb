@@ -1,6 +1,5 @@
 set_trace_log_level 5
 
-require 'ta_mtest'
 require 'mtest_overrides'
 require 'mtest_extensions'
 require 'helpers'
@@ -14,9 +13,9 @@ require 'fixtures/models'
 
 require 'core'
 require 'core/drawing'
-require 'images'
+require 'image'
 require 'text'
-require 'textures'
+require 'texture'
 require 'shapes/circle'
 require 'shapes/ellipse'
 require 'shapes/collision'
@@ -36,7 +35,9 @@ require 'models/texture2d'
 require 'models/vector2'
 
 init_window(10, 10, 'blah') if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?
-exit 1 if MTest::Unit.new.run.positive?
+result = MTest::Unit.new.run.positive?
+upload_buildkite_test_analytics
+exit 1 if result
 close_window if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?
 
 # The browser version doesn't exit cleanly unless specifically told to.

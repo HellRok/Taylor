@@ -1,11 +1,17 @@
 #!/usr/bin/env ruby
 
+$ignored_files = [
+  "./src/mruby_integration/buildkite_analytics.cpp",
+]
+
 def cpp_methods
   (
     Dir.glob('./src/mruby_integration/**/*.cpp') +
     Dir.glob('./src/platform_specific/*.cpp') +
     Dir.glob('./src/*.cpp')
-  ).flat_map { |file|
+  ).reject { |file|
+    $ignored_files.include?(file)
+  }.flat_map { |file|
     klass = nil
 
     File.read(file).each_line.to_a.map { |line|
@@ -35,24 +41,27 @@ def cpp_methods
 end
 
 def documented_methods
-  Dir.glob('./mrb_doc/**/*.rb').flat_map { |file|
-    klass = nil
+  Dir.glob('./mrb_doc/**/*.rb').
+    reject { |file|
+      $ignored_files.include?(file)
+    }.flat_map { |file|
+      klass = nil
 
-    File.read(file).each_line.to_a.map { |line|
-      if line =~ /^\s*class\s*(.*)/
-        klass = $~[1].chomp
-        nil # we don't want to just return the klass
+      File.read(file).each_line.to_a.map { |line|
+        if line =~ /^\s*class\s*(.*)/
+          klass = $~[1].chomp
+          nil # we don't want to just return the klass
 
-      elsif line =~ /^\s*def\s*(.*)/
-        method = $~[1].split('(').first
-        if klass
-          "#{klass}##{method}"
-        else
-          method
+        elsif line =~ /^\s*def\s*(.*)/
+          method = $~[1].split('(').first
+          if klass
+            "#{klass}##{method}"
+          else
+            method
+          end
         end
-      end
-    }.compact
-  }
+      }.compact
+    }
 end
 
 undocumented_methods = cpp_methods - documented_methods
