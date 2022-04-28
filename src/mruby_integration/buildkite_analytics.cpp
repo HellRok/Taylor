@@ -24,11 +24,14 @@ void append_buildkite_analytics(mrb_state *mrb) {
 
           def file_name
             best_guess = self.class.to_s.split('::').map(&:downcase)
-            best_guess.reject! { _1 == 'test' }
-            best_guess = "#{File.join(best_guess)}.rb"
+            second_guess = best_guess.reject { _1 == 'test' }
+            best_guess_path = "#{File.join(best_guess)}.rb"
+            second_guess_path = "#{File.join(second_guess)}.rb"
 
-            if File.exist?(best_guess)
-              best_guess
+            if File.exist?(best_guess_path)
+              best_guess_path
+            elsif File.exist?(second_guess_path)
+              second_guess_path
             else
               "Could not find file for #{self.class} assumed #{best_guess}."
             end
@@ -83,6 +86,11 @@ void append_buildkite_analytics(mrb_state *mrb) {
           }.to_json
         }
       )
+
+      response_data = JSON.parse(response.body)
+      puts "ID: #{response_data['id']}"
+      puts "Run ID: #{response_data['run_id']}"
+      puts "Queued: #{response_data['queued']}"
 
       puts "Done!"
     end

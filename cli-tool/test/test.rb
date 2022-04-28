@@ -9,9 +9,11 @@ load './app/commands/version.rb'
 require './test/helpers'
 require './test/monkey_patches'
 
-require './test/commands/export'
-require './test/commands/new'
-require './test/commands/run'
-require './test/commands/version'
+require './test/commands/export_test'
+require './test/commands/new_test'
+require './test/commands/run_test'
+require './test/commands/version_test'
 
-exit 1 if MTest::Unit.new.run.positive?
+result = MTest::Unit.new.run.positive?
+upload_buildkite_test_analytics
+exit 1 if result
