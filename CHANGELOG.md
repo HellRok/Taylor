@@ -5,6 +5,7 @@
 - Switch to Buildkite and add test analytics
 - Switch Taylor CLI to BuildKite and add test analytics
 - Fix up the README
+- Use flock to prevent running multiple xvfb/fluxbox
 
 ## v0.3.6
 
