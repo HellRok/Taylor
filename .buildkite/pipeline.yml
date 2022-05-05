@@ -13,7 +13,7 @@ steps:
     commands:
       - apt-get update
       - apt-get install ruby -y --no-install-recommends
-      - ./scripts/check_for_documentation.rb
+      - .buildkite/scripts/tests/check_for_documentation.rb
 
   - wait
 

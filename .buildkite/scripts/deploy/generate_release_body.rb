@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-tag = ENV['GITHUB_REF'].split('/').last
+tag = ENV['BUILDKITE_BRANCH']
 
-changelog = File.read('./CHANGELOG.md')
+changelog = File.read('CHANGELOG.md')
 
 found_relevant_section = false
 

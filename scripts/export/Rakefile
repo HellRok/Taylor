@@ -44,19 +44,19 @@ namespace :docker do
     end
 
     task :linux do
-      sh "docker build . --file Dockerfile.linux --tag taylor/export-linux --tag hellrok/taylor:linux-v#{VERSION}"
+      sh "docker build . --file Dockerfile.linux --tag taylor/export-linux --tag hellrok/taylor:linux-v#{VERSION} --tag hellrok/taylor:linux-latest"
     end
 
     task :windows do
-      sh "docker build . --file Dockerfile.windows --tag taylor/export-windows --tag hellrok/taylor:windows-v#{VERSION}"
+      sh "docker build . --file Dockerfile.windows --tag taylor/export-windows --tag hellrok/taylor:windows-v#{VERSION} --tag hellrok/taylor:windows-latest"
     end
 
     task :osx do
-      sh "docker build . --file Dockerfile.osx --tag taylor/export-osx --tag hellrok/taylor:osx-v#{VERSION}"
+      sh "docker build . --file Dockerfile.osx --tag taylor/export-osx --tag hellrok/taylor:osx-v#{VERSION} --tag hellrok/taylor:osx-latest"
     end
 
     task :web do
-      sh "docker build . --file Dockerfile.web --tag taylor/export-web --tag hellrok/taylor:web-v#{VERSION}"
+      sh "docker build . --file Dockerfile.web --tag taylor/export-web --tag hellrok/taylor:web-v#{VERSION} --tag hellrok/taylor:web-latest"
     end
   end
 end

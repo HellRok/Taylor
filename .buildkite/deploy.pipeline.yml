@@ -1,0 +1,19 @@
+steps:
+  - label: 'Deploy'
+    concurrency: 1
+    concurrency_group: 'deploy_taylor'
+    commands:
+      - curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+      - echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+      - apt-get update
+      - apt-get install gettext ruby build-essential gh -y --no-install-recommends
+      - gem install bundler
+      - bundle install
+      - bundle exec rake linux:release:build
+      - mv ./dist/linux/release/taylor /usr/bin/
+      - bundle exec rake clean
+      - .buildkite/scripts/deploy/build_docker_images.sh
+      - .buildkite/scripts/deploy/build_taylor_cli.sh
+      - .buildkite/scripts/deploy/generate_release_body.rb > release-body.md
+      - .buildkite/scripts/deploy/push_docker_images.sh
+      - .buildkite/scripts/deploy/create_github_release.sh

@@ -1,6 +1,6 @@
 {
   "name": "taylor",
-  "version": "$VERSION",
+  "version": "$BUILDKITE_BRANCH",
   "input": "cli.rb",
   "export_directory": "./exports",
   "export_targets": [

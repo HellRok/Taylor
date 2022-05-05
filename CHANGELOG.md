@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.7
 
 - Switch to Buildkite and add test analytics
 - Switch Taylor CLI to BuildKite and add test analytics
