@@ -1,5 +1,9 @@
 # Taylor
 
+## Unreleased
+
+- Fix documentation typo
+
 ## v0.3.7
 
 - Switch to Buildkite and add test analytics

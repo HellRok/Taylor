@@ -64,7 +64,7 @@ class Camera2D
 
   # Pass in a vector with world coordinates to see what that translates to in
   # the camera's viewport.
-  # @params vector [Vector2]
+  # @param vector [Vector2]
   # @return [Vector2]
   def as_in_viewport(vector)
     # src/mruby_integration/models/camera2d.cpp
@@ -73,7 +73,7 @@ class Camera2D
 
   # Pass in a vector with camera viewport coordinates to see what that
   # translates to in the world.
-  # @params vector [Vector2]
+  # @param vector [Vector2]
   # @return [Vector2]
   def as_in_world(vector)
     # src/mruby_integration/models/camera2d.cpp
