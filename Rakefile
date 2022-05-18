@@ -191,6 +191,7 @@ namespace :web do
     static_links = <<-EOS.chomp
       -s USE_GLFW=3 \
       -s ASYNCIFY \
+      -s ALLOW_MEMORY_GROWTH \
       #{static_links} \
       ./vendor/web/libmruby.a \
       ./vendor/web/raylib/lib/libraylib.a \

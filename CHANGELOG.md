@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Fix documentation typo
+- Allow memory growth on the web builds
 
 ## v0.3.7
 
