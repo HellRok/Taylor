@@ -28,6 +28,14 @@ def cpp_methods
           "#{object.gsub('_class', '')}##{method}"
         end
 
+      elsif line =~ /^\s*mrb_define_class_method.*, (.*), "(.*)"/
+        object, method = $~[1..2]
+        if object == 'mrb->kernel_module'
+          method
+        else
+          "#{object.gsub('_class', '')}##{method}"
+        end
+
       elsif line =~ /^\s*def\s+(.*)/ && !line.include?('mrb_define_class')
         method = $~[1].split('(').first
         if klass

@@ -35,9 +35,7 @@
         })(),
         printErr: function(text) {
           if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-          if (0) {
-            dump(text + '\n');
-          }
+          console.error(text);
         },
         canvas: (function() {
           return document.getElementById('canvas');

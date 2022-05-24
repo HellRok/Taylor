@@ -8,3 +8,25 @@ def get_attribute_from_element(selector, attribute)
   # src/platform_specific/web.cpp
   'Hi!'
 end
+
+class LocalStorage
+  # Returns the value stored in localStorage in the browser, if it doesn't exist
+  # it will just return an empty string
+  # @param key [String]
+  # @return [String]
+  def get_item(key)
+    # mrb_local_storage_get_item
+    # src/platform_specific/web.cpp
+    'Hi!'
+  end
+
+  # Sets the value in localStorage in the browser
+  # @param key [String]
+  # @param value [String]
+  # @return [nil]
+  def set_item(key, value)
+    # mrb_local_storage_set_item
+    # src/platform_specific/web.cpp
+    nil
+  end
+end

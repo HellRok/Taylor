@@ -4,6 +4,9 @@
 
 - Fix documentation typo
 - Allow memory growth on the web builds
+- Add LocalStorage#set_item
+- Add LocalStorage#get_item
+- Errors now display in the javascript console
 
 ## v0.3.7
 
