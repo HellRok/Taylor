@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Bump mruby and recompile raylib
 
 ## v0.3.8
 

@@ -25,5 +25,5 @@ MRuby::CrossBuild.new('emscripten') do |conf|
   conf.gem github: 'matsumotory/mruby-simplehttp'
   # I dunno if it ever makes sense to enable this for web?
   #conf.gem github: 'matsumotory/mruby-simplehttpserver'
-  conf.gem github: 'hellrok/mruby-require'
+  conf.gem github: 'mattn/mruby-require'
 end
