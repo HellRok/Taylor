@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Bump mruby and recompile raylib
+- Force Locale to be en_US.UTF-8 inside docker export images
 
 ## v0.3.8
 
