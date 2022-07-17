@@ -1,8 +1,6 @@
 steps:
   - label: 'Taylor Build'
     commands:
-      - apt-get update
-      - apt-get install ruby build-essential -y --no-install-recommends
       - gem install bundler
       - bundle install
       - bundle exec rake linux:release:build
@@ -11,22 +9,15 @@ steps:
 
   - label: 'Check Documentation'
     commands:
-      - apt-get update
-      - apt-get install ruby -y --no-install-recommends
       - .buildkite/scripts/tests/check_for_documentation.rb
 
   - wait
 
   - label: 'Taylor Tests'
     commands:
-      - export DISPLAY=:1
-      - apt-get update
-      - apt-get install xvfb fluxbox -y --no-install-recommends
       - buildkite-agent artifact download taylor /usr/bin/
       - chmod +x /usr/bin/taylor
       - cd ./test/
-      - flock -n /tmp/xvfb.lock -c "Xvfb :1 -screen 0 1280x800x24" &
-      - flock -n /tmp/fluxbox.lock -c "fluxbox &> /dev/null" &
       - taylor ../cli-tool/cli.rb test.rb
 
   - label: 'CLI Tool Tests'

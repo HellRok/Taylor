@@ -4,6 +4,7 @@
 
 - Add mruby-base64
 - Remove workaround for simplehttp on Windows
+- Tweak buildkite test scripts for better reliability
 
 ## v0.3.9
 
