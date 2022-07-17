@@ -5,6 +5,7 @@
 - Add mruby-base64
 - Remove workaround for simplehttp on Windows
 - Tweak buildkite test scripts for better reliability
+- Fix Camera2D test on Buildkite
 
 ## v0.3.9
 

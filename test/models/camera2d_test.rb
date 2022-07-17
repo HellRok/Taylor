@@ -60,6 +60,7 @@ class Test
         camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 1)
 
         clear_and_draw do
+          flush_frame
           camera.drawing do
             draw_rectangle_rec(rectangle, RED)
           end
