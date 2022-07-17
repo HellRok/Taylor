@@ -16,7 +16,6 @@
 #include "argv.hpp"
 #include "platform.hpp"
 #include "workarounds/mingw.hpp"
-#include "workarounds/simplehttp.hpp"
 #include "mruby_integration/audio.hpp"
 #include "mruby_integration/buildkite_analytics.hpp"
 #include "mruby_integration/core.hpp"
@@ -74,8 +73,6 @@ int main(int argc, char **argv) {
 #ifdef _WIN32
   workarounds_mingw_msg_dontwait(mrb);
 #endif
-
-  workarounds_simplehttp(mrb);
 
 #ifndef EXPORT
   FILE *game_file = fopen(path, "r");

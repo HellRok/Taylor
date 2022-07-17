@@ -22,5 +22,6 @@ MRuby::Build.new do |conf|
   conf.gem github: 'Asmod4n/mruby-uri-parser'
   conf.gem github: 'matsumotory/mruby-simplehttp'
   conf.gem github: 'matsumotory/mruby-simplehttpserver'
+  conf.gem github: 'mattn/mruby-base64'
   conf.gem github: 'mattn/mruby-require'
 end

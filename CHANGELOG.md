@@ -1,5 +1,10 @@
 # Taylor
 
+## Unreleased
+
+- Add mruby-base64
+- Remove workaround for simplehttp on Windows
+
 ## v0.3.9
 
 - Bump mruby and recompile raylib

@@ -26,5 +26,6 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.gem github: 'Asmod4n/mruby-uri-parser'
   conf.gem github: 'matsumotory/mruby-simplehttp'
   conf.gem github: 'matsumotory/mruby-simplehttpserver'
+  conf.gem github: 'mattn/mruby-base64'
   conf.gem github: 'mattn/mruby-require'
 end
