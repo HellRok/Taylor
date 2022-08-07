@@ -22,4 +22,12 @@ class RenderTexture
       height: height,
     }
   end
+
+  # Instead of rending to the screen, render to this RenderTexture
+  # @yield The block that calls your rendering logic
+  # @return [nil]
+  def drawing(&block)
+    # src/mruby_integration/models/render_texture.cpp
+    nil
+  end
 end

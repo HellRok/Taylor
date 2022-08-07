@@ -50,6 +50,13 @@ void append_models_RenderTexture(mrb_state *mrb) {
           height: height,
         }
       end
+
+      def drawing(&block)
+        begin_texture_mode(self)
+        block.call
+      ensure
+        end_texture_mode
+      end
     end
   )");
 }
