@@ -6,6 +6,7 @@
 - Remove workaround for simplehttp on Windows
 - Tweak buildkite test scripts for better reliability
 - Fix Camera2D test on Buildkite
+- Add RenderTexture
 
 ## v0.3.9
 
