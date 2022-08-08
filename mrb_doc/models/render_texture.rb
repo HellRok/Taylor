@@ -13,6 +13,13 @@ class RenderTexture
     RenderTexture.new
   end
 
+  # Unloads the render texture from memory
+  # @return [nil]
+  def unload
+    # src/mruby_integration/models/render_texture.cpp
+    nil
+  end
+
   # Return the object represented by a Hash
   # @return [Hash]
   def to_h

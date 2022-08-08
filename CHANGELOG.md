@@ -8,6 +8,7 @@
 - Fix Camera2D test on Buildkite
 - Add RenderTexture
 - Add begin_texture_mode, end_texture_mode, and RenderTexture#drawing
+- Add RenderTexture#unload
 
 ## v0.3.9
 

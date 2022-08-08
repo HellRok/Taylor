@@ -71,7 +71,7 @@ class Texture2D
   # Unloads the texture from memory
   # @return [nil]
   def unload
-    # src/mruby_integration/models/texture.cpp
+    # src/mruby_integration/models/texture2d.cpp
     nil
   end
 
@@ -86,7 +86,7 @@ class Texture2D
   # @param colour [Colour]
   # @return [nil]
   def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation:0, colour: WHITE)
-    # src/mruby_integration/models/font.cpp
+    # src/mruby_integration/models/texture2d.cpp
     nil
   end
 

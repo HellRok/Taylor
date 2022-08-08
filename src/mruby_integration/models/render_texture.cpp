@@ -35,10 +35,21 @@ mrb_value mrb_RenderTexture_initialize(mrb_state *mrb, mrb_value self) {
   return self;
 }
 
+mrb_value mrb_RenderTexture_unload(mrb_state *mrb, mrb_value self) {
+  RenderTexture *texture;
+  Data_Get_Struct(mrb, self, &RenderTexture_type, texture);
+  mrb_assert(texture != nullptr);
+
+  UnloadRenderTexture(*texture);
+
+  return mrb_nil_value();
+}
+
 void append_models_RenderTexture(mrb_state *mrb) {
   RenderTexture_class = mrb_define_class(mrb, "RenderTexture", mrb->object_class);
   MRB_SET_INSTANCE_TT(RenderTexture_class, MRB_TT_DATA);
   mrb_define_method(mrb, RenderTexture_class, "initialize", mrb_RenderTexture_initialize, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, RenderTexture_class, "unload", mrb_RenderTexture_unload, MRB_ARGS_NONE());
 
   mrb_load_string(mrb, R"(
     class RenderTexture
