@@ -107,6 +107,16 @@
 /* string class to handle UTF-8 encoding */
 //#define MRB_UTF8_STRING
 
+/* maximum length of strings */
+/* the default value is 1MB */
+/* set this value to zero to skip the check */
+//#define MRB_STR_LENGTH_MAX 1048576
+
+/* maximum length of arrays */
+/* the default value is 2**17 entries */
+/* set this value to zero to skip the check */
+//#define MRB_ARY_LENGTH_MAX 131072
+
 /* argv max size in mrb_funcall */
 //#define MRB_FUNCALL_ARGC_MAX 16
 

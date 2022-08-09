@@ -74,12 +74,13 @@ mrb_irep_catch_handler_table(const struct mrb_irep *irep)
 #endif
 
 /* numeric */
-mrb_int mrb_div_int(mrb_state *mrb, mrb_int x, mrb_int y);
+mrb_value mrb_div_int_value(mrb_state *mrb, mrb_int x, mrb_int y);
+mrb_int mrb_div_int(mrb_int x, mrb_int y);
 mrb_value mrb_int_add(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_int_sub(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_int_mul(mrb_state *mrb, mrb_value x, mrb_value y);
-void mrb_int_zerodiv(mrb_state *mrb);
-void mrb_int_overflow(mrb_state *mrb, const char *reason);
+mrb_noreturn void mrb_int_zerodiv(mrb_state *mrb);
+mrb_noreturn void mrb_int_overflow(mrb_state *mrb, const char *reason);
 
 #ifdef MRB_USE_COMPLEX
 mrb_value mrb_complex_new(mrb_state *mrb, mrb_float x, mrb_float y);
@@ -87,6 +88,7 @@ mrb_value mrb_complex_add(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_complex_sub(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_complex_mul(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_complex_div(mrb_state *mrb, mrb_value x, mrb_value y);
+void mrb_complex_copy(mrb_state *mrb, mrb_value x, mrb_value y);
 #endif
 #ifdef MRB_USE_RATIONAL
 mrb_value mrb_rational_new(mrb_state *mrb, mrb_int x, mrb_int y);
@@ -94,6 +96,7 @@ mrb_value mrb_rational_add(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_rational_sub(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_rational_mul(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_rational_div(mrb_state *mrb, mrb_value x, mrb_value y);
+void mrb_rational_copy(mrb_state *mrb, mrb_value x, mrb_value y);
 #endif
 
 #ifdef MRUBY_PROC_H
@@ -116,6 +119,8 @@ mrb_value mrb_str_inspect(mrb_state *mrb, mrb_value str);
 mrb_bool mrb_str_beg_len(mrb_int str_len, mrb_int *begp, mrb_int *lenp);
 mrb_value mrb_str_byte_subseq(mrb_state *mrb, mrb_value str, mrb_int beg, mrb_int len);
 mrb_value mrb_str_aref(mrb_state *mrb, mrb_value str, mrb_value idx, mrb_value len);
+uint32_t mrb_byte_hash(const uint8_t*, mrb_int);
+uint32_t mrb_byte_hash_step(const uint8_t*, mrb_int, uint32_t);
 
 #ifdef MRB_UTF8_STRING
 mrb_int mrb_utf8len(const char *str, const char *end);
@@ -181,6 +186,9 @@ mrb_float mrb_bint_as_float(mrb_state *mrb, mrb_value x);
 mrb_int mrb_bint_as_int(mrb_state *mrb, mrb_value x);
 mrb_int mrb_bint_cmp(mrb_state *mrb, mrb_value x, mrb_value y);
 void mrb_gc_free_bint(mrb_state *mrb, struct RBasic *x);
+void mrb_bint_copy(mrb_state *mrb, mrb_value x, mrb_value y);
+size_t mrb_bint_memsize(mrb_value x);
+mrb_value mrb_bint_hash(mrb_state *mrb, mrb_value x);
 #endif
 
 #endif  /* MRUBY_INTERNAL_H */
