@@ -86,7 +86,7 @@ void append_models_Texture2D(mrb_state *mrb) {
         unload_texture(self)
       end
 
-      def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation:0, colour: WHITE)
+      def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation: 0, colour: WHITE)
         @source = source unless source.nil?
         @source ||= Rectangle.new(0, 0, self.width, self.height)
         @destination = destination unless destination.nil?

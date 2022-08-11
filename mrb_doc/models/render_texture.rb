@@ -1,5 +1,8 @@
 # The RenderTexture class is used to draw things to a texture
 class RenderTexture
+  # @return [Texture2D]
+  attr_reader :texture
+
   # @return [Integer]
   attr_reader :width, :height
 

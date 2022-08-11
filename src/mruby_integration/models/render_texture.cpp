@@ -7,6 +7,7 @@
 
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
+#include "mruby_integration/models/texture2d.hpp"
 
 struct RClass *RenderTexture_class;
 
@@ -26,12 +27,20 @@ void setup_RenderTexture(mrb_state *mrb, mrb_value object, int width, int height
 mrb_value mrb_RenderTexture_initialize(mrb_state *mrb, mrb_value self) {
   mrb_int width, height;
   mrb_get_args(mrb, "ii", &width, &height);
+
+  RenderTexture *render_texture = (RenderTexture *)malloc(sizeof(RenderTexture));
+  *render_texture = LoadRenderTexture(width, height);
+
   setup_RenderTexture(mrb, self, width, height);
 
-  RenderTexture *texture = (RenderTexture *)malloc(sizeof(RenderTexture));
-  *texture = LoadRenderTexture(width, height);
+  Texture2D* texture = &render_texture->texture;
 
-  mrb_data_init(self, texture, &RenderTexture_type);
+  ivar_attr_texture2d(mrb, self, render_texture->texture, texture);
+
+  add_parent(render_texture, "RenderTexture");
+  add_owned_object(&render_texture->texture);
+
+  mrb_data_init(self, render_texture, &RenderTexture_type);
   return self;
 }
 
@@ -53,10 +62,11 @@ void append_models_RenderTexture(mrb_state *mrb) {
 
   mrb_load_string(mrb, R"(
     class RenderTexture
-      attr_reader :width, :height
+      attr_reader :texture, :width, :height
 
       def to_h
         {
+          texture: texture.to_h,
           width: width,
           height: height,
         }

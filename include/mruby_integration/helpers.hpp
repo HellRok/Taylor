@@ -131,3 +131,39 @@
       obj \
     ); \
 }
+
+#define ivar_attr_texture2d(mrb, self, obj_value, attr) { \
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, &obj_value)); \
+  \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@id"), \
+      mrb_float_value(mrb, attr->id) \
+    ); \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@width"), \
+      mrb_float_value(mrb, attr->width) \
+    ); \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@height"), \
+      mrb_float_value(mrb, attr->height) \
+    ); \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@mipmaps"), \
+      mrb_float_value(mrb, attr->mipmaps) \
+    ); \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@format"), \
+      mrb_float_value(mrb, attr->format) \
+    ); \
+  \
+  mrb_iv_set( \
+      mrb, self, \
+      mrb_intern_cstr(mrb, "@" #attr), \
+      obj \
+    ); \
+}
