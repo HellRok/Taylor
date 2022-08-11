@@ -9,6 +9,8 @@
 - Add RenderTexture
 - Add begin_texture_mode, end_texture_mode, and RenderTexture#drawing
 - Add RenderTexture#unload
+- Add RenderTexture#texture
+- Add specs for RenderTexture
 
 ## v0.3.9
 
