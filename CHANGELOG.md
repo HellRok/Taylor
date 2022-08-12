@@ -11,6 +11,7 @@
 - Add RenderTexture#unload
 - Add RenderTexture#texture
 - Add specs for RenderTexture
+- Bump raylib to 4.2.0
 
 ## v0.3.9
 

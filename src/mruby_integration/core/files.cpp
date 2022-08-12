@@ -7,16 +7,15 @@ mrb_value mrb_files_dropped(mrb_state*, mrb_value) {
 }
 
 mrb_value mrb_get_dropped_files(mrb_state *mrb, mrb_value) {
-  int count = 0;
-  char **droppedFiles = { 0 };
-  droppedFiles = GetDroppedFiles(&count);
+  FilePathList droppedFiles;
+  droppedFiles = LoadDroppedFiles();
 
   mrb_value return_array = mrb_ary_new(mrb);
-  for (int i = 0; i < count; i++) {
-    mrb_ary_push(mrb, return_array, mrb_str_new_cstr(mrb, droppedFiles[i]));
+  for (unsigned int i = 0; i < droppedFiles.count; i++) {
+    mrb_ary_push(mrb, return_array, mrb_str_new_cstr(mrb, droppedFiles.paths[i]));
   }
 
-  ClearDroppedFiles();
+  UnloadDroppedFiles(droppedFiles);
 
   return return_array;
 }

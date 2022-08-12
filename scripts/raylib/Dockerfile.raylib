@@ -9,12 +9,7 @@ RUN \
     ca-certificates \
     git && \
   apt-get clean -y && apt-get autoremove -y && \
-  git clone --branch 4.0.0 --depth 1 https://github.com/raysan5/raylib.git .
-
-#RUN apt-get update && \
-#  apt-get install \
-#  build-essential \
-#  -y
+  git clone --branch 4.2.0 --depth 1 https://github.com/raysan5/raylib.git .
 
 COPY ./scripts/raylib/tweaks.patch /app/
 RUN git apply tweaks.patch
@@ -48,7 +43,7 @@ RUN cd src && \
 FROM scratch AS export
 
 COPY --from=raylib_base /app/src/raylib.h ./vendor/raylib/include/
-COPY --from=raylib_linux /app/libraylib.a ./vendor/linux/raylib/lib/
-COPY --from=raylib_mingw /app/libraylib.a ./vendor/windows/raylib/lib/
-COPY --from=raylib_osx /app/libraylib.a ./vendor/osx/raylib/lib/
+COPY --from=raylib_linux /app/src/libraylib.a ./vendor/linux/raylib/lib/
+COPY --from=raylib_mingw /app/src/libraylib.a ./vendor/windows/raylib/lib/
+COPY --from=raylib_osx /app/src/libraylib.a ./vendor/osx/raylib/lib/
 COPY --from=raylib_web /app/src/libraylib.a ./vendor/web/raylib/lib/
