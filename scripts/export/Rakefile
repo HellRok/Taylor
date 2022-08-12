@@ -58,6 +58,9 @@ namespace :docker do
     task :web do
       sh "docker build . --file Dockerfile.web --tag taylor/export-web --tag hellrok/taylor:web-v#{VERSION} --tag hellrok/taylor:web-latest"
     end
+
+    multitask :all_platforms => [:linux, :windows, :osx, :web]
+    task :all => [:export, :all_platforms]
   end
 end
 

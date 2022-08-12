@@ -57,8 +57,9 @@ namespace :linux do
   end
 
   task :build => "linux:setup_variables"
-  multitask :build => depends.call("build/linux/debug")
-  multitask :build => objects.call("build/linux/debug")
+  multitask :build_depends => depends.call("build/linux/debug")
+  multitask :build_objects => objects.call("build/linux/debug")
+  task :build => [:build_depends, :build_objects]
   task :build => "build:linux:debug"
 
   namespace :release do
@@ -74,8 +75,9 @@ namespace :linux do
 
     task :build => "linux:setup_variables"
     task :build => "linux:release:setup_variables"
-    multitask :build => depends.call("build/linux/release")
-    multitask :build => objects.call("build/linux/release")
+    multitask :build_depends => depends.call("build/linux/release")
+    multitask :build_objects => objects.call("build/linux/release")
+    task :build => [:build_depends, :build_objects]
     task :build => "build:linux:release"
     task :build => "linux:release:strip"
   end
@@ -98,8 +100,9 @@ namespace :windows do
   end
 
   task :build => "windows:setup_variables"
-  multitask :build => depends.call("build/windows/debug")
-  multitask :build => objects.call("build/windows/debug")
+  multitask :build_depends => depends.call("build/windows/debug")
+  multitask :build_objects => objects.call("build/windows/debug")
+  task :build => [:build_depends, :build_objects]
   task :build => "build:windows:debug"
   task :build => "windows:debug:copy_dlls"
 
@@ -116,8 +119,9 @@ namespace :windows do
 
     task :build => "windows:setup_variables"
     task :build => "windows:release:setup_variables"
-    multitask :build => depends.call("build/windows/release")
-    multitask :build => objects.call("build/windows/release")
+    multitask :build_depends => depends.call("build/windows/release")
+    multitask :build_objects => objects.call("build/windows/release")
+    task :build => [:build_depends, :build_objects]
     task :build => "build:windows:release"
     task :build => "windows:release:copy_dlls"
     task :build => "windows:release:strip"
@@ -148,8 +152,9 @@ namespace :osx do
   end
 
   task :build => "osx:setup_variables"
-  multitask :build => depends.call("build/osx/debug")
-  multitask :build => objects.call("build/osx/debug")
+  multitask :build_depends => depends.call("build/osx/debug")
+  multitask :build_objects => objects.call("build/osx/debug")
+  task :build => [:build_depends, :build_objects]
   task :build => "build:osx:debug"
 
   namespace :release do
@@ -165,8 +170,9 @@ namespace :osx do
 
     task :build => "osx:setup_variables"
     task :build => "osx:release:setup_variables"
-    multitask :build => depends.call("build/osx/release")
-    multitask :build => objects.call("build/osx/release")
+    multitask :build_depends => depends.call("build/osx/release")
+    multitask :build_objects => objects.call("build/osx/release")
+    task :build => [:build_depends, :build_objects]
     task :build => "build:osx:release"
     task :build => "osx:release:strip"
   end
@@ -200,8 +206,9 @@ namespace :web do
   end
 
   task :build => "web:setup_variables"
-  multitask :build => depends.call("build/web/debug")
-  multitask :build => objects.call("build/web/debug")
+  multitask :build_depends => depends.call("build/web/debug")
+  multitask :build_objects => objects.call("build/web/debug")
+  task :build => [:build_depends, :build_objects]
   task :build => "build:web:debug"
 
   namespace :release do
@@ -213,8 +220,9 @@ namespace :web do
 
     task :build => "web:setup_variables"
     task :build => "web:release:setup_variables"
-    multitask :build => depends.call("build/web/release")
-    multitask :build => objects.call("build/web/release")
+    multitask :build_depends => depends.call("build/web/release")
+    multitask :build_objects => objects.call("build/web/release")
+    task :build => [:build_depends, :build_objects]
     task :build => "build:web:release"
   end
 end
@@ -281,6 +289,7 @@ namespace :docker do
     task :windows do; build_docker("./scripts/docker/Dockerfile.windows", tag: "taylor/build-windows"); end
     task :osx do;     build_docker("./scripts/docker/Dockerfile.osx",     tag: "taylor/build-osx"); end
     task :web do;     build_docker("./scripts/docker/Dockerfile.web",     tag: "taylor/build-web"); end
+    multitask :all => [:linux, :windows, :osx, :web]
 
     task :mruby do |task|
       sh "rm -rf ./vendor/mruby"
