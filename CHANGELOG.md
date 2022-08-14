@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.10
 
 - Add mruby-base64
 - Remove workaround for simplehttp on Windows
