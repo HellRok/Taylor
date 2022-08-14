@@ -7,3 +7,8 @@ def delete_project(path)
   Dir.rmdir(File.join(path, 'vendor'))
   Dir.rmdir(path)
 end
+
+$exited = false
+def exit(status)
+  $exited = true
+end

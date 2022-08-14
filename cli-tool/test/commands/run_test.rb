@@ -30,10 +30,13 @@ class Test
         assert_equal ['./cli.rb'], run_command.require_list
       end
 
-      def test_raises_for_invalid_command
-        assert_raise(RuntimeError) {
-          Taylor::Commands::Run.new('./nonexistant.rb', [], {})
-        }
+      def test_exits_for_invalid_command
+        Taylor::Commands::Run.new('./nonexistant.rb', [], {})
+
+        assert $exited
+
+      ensure
+        $exited = false
       end
     end
   end

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Running taylor with a bad path now exits 1 instead of raising
+
 ## v0.3.10
 
 - Add mruby-base64

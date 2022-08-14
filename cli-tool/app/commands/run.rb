@@ -48,14 +48,14 @@ module Taylor
 
       private
       def entrypoint
-        if !@command.empty? && File.exist?(@command)
+        if !@command.empty?
           if File.directory?(@command) && File.exist?(File.join(@command, 'taylor-config.json'))
             options = JSON.parse(File.read(File.join(@command, 'taylor-config.json')))
             setup_options(@argv, options)
             Dir.chdir(@command)
             $:.unshift '.'
             return @options[:input]
-          elsif File.exist?(@command)
+          else
             return @command
           end
         else
@@ -87,7 +87,8 @@ module Taylor
           require entrypoint
 
         else
-          raise "Did not know how to handle #{@command}"
+          puts "Could not load \"#{entrypoint}\", are you sure it exists?"
+          exit 1
         end
       end
     end
