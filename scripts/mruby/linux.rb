@@ -1,6 +1,8 @@
 MRuby::Build.new do |conf|
   conf.toolchain
 
+  conf.cc.flags += %w[-DMRB_ARY_LENGTH_MAX=0 -DMRB_STR_LENGTH_MAX=0]
+
   # These are the default libraries
   conf.gembox "stdlib"
   conf.gembox "stdlib-ext"

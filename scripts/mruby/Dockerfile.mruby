@@ -14,6 +14,13 @@ FROM mruby_base as mruby_include
 RUN mv ./include/mruby.h ./
 RUN mv ./include/mrbconf.h ./
 
+FROM taylor/build-android as mruby_android
+WORKDIR /app
+COPY --from=mruby_base /app /app
+COPY ./scripts/mruby/android.rb /app/build_config/
+COPY ./scripts/mruby/android.rake /app/tasks/toolchains/
+RUN MRUBY_CONFIG=android rake
+
 FROM taylor/build-linux as mruby_linux
 WORKDIR /app
 COPY --from=mruby_base /app /app
@@ -44,6 +51,7 @@ FROM scratch AS export
 COPY --from=mruby_include /app/mruby.h ./vendor/mruby/
 COPY --from=mruby_include /app/mrbconf.h ./vendor/mruby/
 COPY --from=mruby_include /app/include/* ./vendor/mruby/mruby/
+COPY --from=mruby_android /app/build/android-arm64-v8a/lib/libmruby.a ./vendor/android/
 COPY --from=mruby_linux /app/build/host/lib/libmruby.a ./vendor/linux/
 COPY --from=mruby_windows /app/build/x86_64-w64-mingw32/lib/libmruby.a ./vendor/windows/
 COPY --from=mruby_osxcross /app/build/x86_64-apple-darwin19/lib/libmruby.a ./vendor/osx/

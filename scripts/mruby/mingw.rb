@@ -1,6 +1,8 @@
 MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.toolchain :gcc
 
+  conf.cc.flags += %w[-DMRB_ARY_LENGTH_MAX=0 -DMRB_STR_LENGTH_MAX=0]
+
   conf.host_target = "x86_64-w64-mingw32"  # required for `for_windows?` used by `mruby-socket` gem
 
   conf.cc.command = "#{conf.host_target}-gcc-posix"

@@ -1,0 +1,28 @@
+FROM ubuntu:22.04
+
+RUN apt-get update -y && \
+  apt-get install -y \
+    build-essential \
+    git \
+    ruby \
+    unzip \
+    openjdk-11-jre \
+    openjdk-11-jdk-headless \
+    wget
+
+RUN wget https://dl.google.com/android/repository/android-ndk-r25b-linux.zip && \
+  unzip android-ndk-r25b-linux.zip -d /ndk/ &&\
+  rm -rf android-ndk-r25b-linux.zip
+
+RUN wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip &&  \
+  unzip commandlinetools-linux-8512546_latest.zip -d /sdk/ && \
+  rm -rf commandlinetools-linux-8512546_latest.zip && \
+  /sdk/cmdline-tools/bin/sdkmanager --update --sdk_root=/sdk/ && \
+  yes | /sdk/cmdline-tools/bin/sdkmanager --install "build-tools;29.0.3" --sdk_root=/sdk/ && \
+  yes | /sdk/cmdline-tools/bin/sdkmanager --install "platform-tools" --sdk_root=/sdk/ && \
+  yes | /sdk/cmdline-tools/bin/sdkmanager --install "platforms;android-29" --sdk_root=/sdk/
+
+ENV ANDROID_NDK=/ndk/android-ndk-r25b
+ENV ANDROID_NDK_HOME=/ndk/android-ndk-r25b
+ENV ANDROID_SDK=/sdk/android-ndk-r25b
+ENV PATH="/ndk/android-ndk-r25b/toolchains/llvm/prebuilt/linux-x86_64/bin/:/sdk/build-tools/29.0.3:$PATH"

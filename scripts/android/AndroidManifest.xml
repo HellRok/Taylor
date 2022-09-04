@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.raylib.game"
+    android:versionCode="1" android:versionName="1.0" >
+
+  <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="29"/>
+  <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+  <application android:allowBackup="false" android:label="Game" android:icon="@drawable/icon">
+    <activity android:name="com.raylib.game.NativeLoader"
+        android:debuggable="true"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="landscape"
+        android:launchMode="singleTask"
+        android:clearTaskOnLaunch="true">
+
+      <meta-data android:name="android.app.lib_name" android:value="main"/>
+
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+  </application>
+</manifest>

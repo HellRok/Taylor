@@ -14,6 +14,14 @@ RUN \
 COPY ./scripts/raylib/tweaks.patch /app/
 RUN git apply tweaks.patch
 
+FROM taylor/build-android AS raylib_android
+WORKDIR /app
+COPY --from=raylib_base /app /app
+RUN apt-get install -y \
+    make
+RUN cd src && \
+  make PLATFORM=PLATFORM_ANDROID
+
 FROM taylor/build-linux AS raylib_linux
 WORKDIR /app
 COPY --from=raylib_base /app /app
@@ -43,6 +51,7 @@ RUN cd src && \
 FROM scratch AS export
 
 COPY --from=raylib_base /app/src/raylib.h ./vendor/raylib/include/
+COPY --from=raylib_android /app/src/libraylib.a ./vendor/android/raylib/lib/
 COPY --from=raylib_linux /app/src/libraylib.a ./vendor/linux/raylib/lib/
 COPY --from=raylib_mingw /app/src/libraylib.a ./vendor/windows/raylib/lib/
 COPY --from=raylib_osx /app/src/libraylib.a ./vendor/osx/raylib/lib/

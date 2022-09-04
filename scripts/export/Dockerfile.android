@@ -1,0 +1,20 @@
+FROM taylor/build-android as build_base
+WORKDIR /app/export
+
+COPY --from=taylor/export /app/taylor /app/taylor
+COPY --from=taylor/export /app/mruby/bin/mrbc /bin/
+
+COPY . /app/export
+
+RUN chmod -R o+w \
+    /app/export \
+    /app/taylor \
+    /app/taylor/include \
+    /ndk/android-ndk-r25b/sources/android/native_app_glue
+
+ENV EXPORT=android
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
+CMD ["./entrypoint.sh"]

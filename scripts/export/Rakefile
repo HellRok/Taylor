@@ -9,6 +9,7 @@ options = {
   'input' => 'game.rb',
   'export_directory' => './exports',
   'export_targets' => [
+    'android',
     'linux',
     'windows',
     'osx',
@@ -43,6 +44,10 @@ namespace :docker do
       Dir.chdir('./scripts/export')
     end
 
+    task :android do
+      sh "docker build . --file Dockerfile.android --tag taylor/export-android --tag hellrok/taylor:android-v#{VERSION} --tag hellrok/taylor:android-latest"
+    end
+
     task :linux do
       sh "docker build . --file Dockerfile.linux --tag taylor/export-linux --tag hellrok/taylor:linux-v#{VERSION} --tag hellrok/taylor:linux-latest"
     end
@@ -59,7 +64,7 @@ namespace :docker do
       sh "docker build . --file Dockerfile.web --tag taylor/export-web --tag hellrok/taylor:web-v#{VERSION} --tag hellrok/taylor:web-latest"
     end
 
-    multitask :all_platforms => [:linux, :windows, :osx, :web]
+    multitask :all_platforms => [:android, :linux, :windows, :osx, :web]
     task :all => [:export, :all_platforms]
   end
 end
@@ -76,6 +81,7 @@ task :transpile do
 end
 
 task :build => "build:setup"
+task :build => "build:android" if export_target == 'android'
 task :build => "build:linux"   if export_target == 'linux'
 task :build => "build:windows" if export_target == 'windows'
 task :build => "build:osx"     if export_target == 'osx'
@@ -89,6 +95,10 @@ namespace :build do
   end
   task :reset do
     Dir.chdir('/app/game')
+  end
+
+  task :android do
+    sh "EXPORT=1 rake android:release:build"
   end
 
   task :linux do
@@ -109,6 +119,7 @@ namespace :build do
 end
 
 task :rename => "rename:setup"
+task :rename => "rename:android"    if export_target == 'android'
 task :rename => "rename:linux"      if export_target == 'linux'
 task :rename => "rename:windows"    if export_target == 'windows'
 task :rename => "rename:osx"        if export_target == 'osx'
@@ -119,6 +130,13 @@ namespace :rename do
   task :setup do
     Dir.chdir('/app/game')
     FileUtils.mkdir_p './exports'
+  end
+
+  task :android do
+    puts "Copying android build"
+
+    FileUtils.mkdir_p '/app/game/exports/android'
+    FileUtils.cp Dir.glob('/app/taylor/dist/android/release/*'), '/app/game/exports/android'
   end
 
   task :linux do
