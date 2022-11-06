@@ -57,6 +57,23 @@ def end_texture_mode()
   nil
 end
 
+# All draw calls within will be drawn through the Shader
+# @param shader [Shader]
+# @return [nil]
+def begin_shader_mode(shader)
+  # mrb_begin_shader_mode
+  # src/mruby_integration/core/drawing.cpp
+  nil
+end
+
+# Stops drawing through the Shader
+# @return [nil]
+def end_shader_mode()
+  # mrb_end_shader_mode
+  # src/mruby_integration/core/drawing.cpp
+  nil
+end
+
 # In scissor mode only draw calls within the defined area will actually be drawn
 # @param x [Integer]
 # @param y [Integer]

@@ -30,8 +30,6 @@ mrb_value mrb_Image_initialize(mrb_state *mrb, mrb_value self) {
 
   setup_Image(mrb, self, image, width, height, mipmaps, format);
 
-  add_parent(image, "Image");
-
   mrb_data_init(self, image, &Image_type);
   return self;
 }

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Add Shader
+- Add load_shader
+- Add unload_shader
+- Add begin_shader_mode
+- Add end_shader_mode
+- Add Shader#draw
 - Running taylor with a bad path now exits 1 instead of raising
 
 ## v0.3.10

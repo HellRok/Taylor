@@ -15,6 +15,7 @@ extern mrb_data_type Font_type;
 extern mrb_data_type Image_type;
 extern mrb_data_type Music_type;
 extern mrb_data_type Rectangle_type;
+extern mrb_data_type Shader_type;
 extern mrb_data_type Sound_type;
 extern mrb_data_type RenderTexture_type;
 extern mrb_data_type Texture2D_type;

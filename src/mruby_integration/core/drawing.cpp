@@ -48,6 +48,19 @@ mrb_value mrb_end_texture_mode(mrb_state*, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_begin_shader_mode(mrb_state *mrb, mrb_value) {
+  Shader *shader;
+  mrb_get_args(mrb, "d", &shader, &Shader_type);
+
+  BeginShaderMode(*shader);
+  return mrb_nil_value();
+}
+
+mrb_value mrb_end_shader_mode(mrb_state*, mrb_value) {
+  EndShaderMode();
+  return mrb_nil_value();
+}
+
 mrb_value mrb_begin_scissor_mode(mrb_state *mrb, mrb_value) {
   mrb_int x, y, width, height;
   mrb_get_args(mrb, "iiii", &x, &y, &width, &height);
@@ -69,6 +82,8 @@ void append_core_drawing(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "end_mode2D", mrb_end_mode2D, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "begin_texture_mode", mrb_begin_texture_mode, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "end_texture_mode", mrb_end_texture_mode, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "begin_shader_mode", mrb_begin_shader_mode, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "end_shader_mode", mrb_end_shader_mode, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "begin_scissor_mode", mrb_begin_scissor_mode, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "end_scissor_mode", mrb_end_scissor_mode, MRB_ARGS_NONE());
 
