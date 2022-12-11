@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.11
 
 - Add Shader
 - Add load_shader

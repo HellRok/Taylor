@@ -141,7 +141,7 @@ class Test
     ensure
       if window_ready?
         close_window
-        init_window(10, 10, 'blah')
+        init_window(10, 10, 'Taylor Test Suite')
         flush_frame
       end
     end
@@ -208,7 +208,7 @@ class Test
       if window_ready?
         if windows?
           close_window
-          init_window(10, 10, 'blah')
+          init_window(10, 10, 'Taylor Test Suite')
           flush_frame
         else
           set_window_size 10, 10
