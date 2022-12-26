@@ -8,6 +8,7 @@
         margin: 0;
         padding: 0;
         background-color: #222;
+        overflow: hidden;
       }
       .centre {
         display: flex;
@@ -20,11 +21,63 @@
         max-height: 100vh;
         max-width: 100vw;
       }
+      #loading_info {
+        font-family: sans-serif;
+        font-size: 2rem;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        padding: 1.6rem 3rem;
+        border: 3px solid black;
+        border-radius: 5px;
+        background: white;
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+      #loading_background {
+        width: 100vh;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: block;
+        position: absolute;
+        z-index: 0;
+        background-color: #ffec63;
+        background-image: linear-gradient(
+          45deg,
+          #ffd966 25%,
+          transparent 25%,
+          transparent 75%,
+          #ffd966 75%,
+          #ffd966
+        ),
+        linear-gradient(
+          -45deg,
+          #ffd966 25%,
+          transparent 25%,
+          transparent 75%,
+          #ffd966 75%,
+          #ffd966
+        );
+        background-size: 60px 60px;
+        background-position: 0 0;
+        animation: slide 4s infinite linear;
+        transition: opacity 0.2s ease-in-out;
+      }
+      @keyframes slide {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: -120px 60px;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="centre">
-      <canvas id="canvas"></canvas>
+      <div id="loading_info"></div>
+      <div id="loading_background"></div>
+      <canvas id="canvas" style="display: none;"></canvas>
     </div>
     <script>
       var Module = {
@@ -39,9 +92,20 @@
         },
         canvas: (function() {
           return document.getElementById('canvas');
-        })()
+        })(),
+        totalDependencies: 0,
+        monitorRunDependencies: function(count) {
+          const div = document.getElementById('loading_info');
+          this.totalDependencies = Math.max(this.totalDependencies, count);
+          if (count) {
+            div.innerText = 'Preparing... (' + (this.totalDependencies - count) + '/' + this.totalDependencies + ')';
+          } else {
+            div.style = 'display: none;';
+            document.getElementById('canvas').style = '';
+            document.getElementById('loading_background').style = 'opacity: 0;';
+          }
+        }
       };
-
       Module.canvas.onclick = function() { Module.canvas.focus(); }
     </script>
     {{{ SCRIPT }}}

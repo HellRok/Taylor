@@ -1,5 +1,9 @@
 # Taylor
 
+## Unreleased
+
+- Add a loading screen for web exports
+
 ## v0.3.11
 
 - Add Shader
