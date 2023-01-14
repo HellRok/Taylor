@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Add a loading screen for web exports
+- Refactor Rakefile
 
 ## v0.3.11
 

@@ -30,43 +30,10 @@ if File.exist?("../../include/version.hpp")
   VERSION = File.read("../../include/version.hpp").each_line.to_a.last.split('"')[1]
 end
 
-if File.exists?('/app/game/taylor-config.json')
+if File.exist?('/app/game/taylor-config.json')
   options.merge!(
     JSON.parse(File.read('/app/game/taylor-config.json'))
   )
-end
-
-namespace :docker do
-  namespace :build do
-    task :export do
-      Dir.chdir('../..')
-      sh "docker build . --file Dockerfile.export --tag taylor/export"
-      Dir.chdir('./scripts/export')
-    end
-
-    task :android do
-      sh "docker build . --file Dockerfile.android --tag taylor/export-android --tag hellrok/taylor:android-v#{VERSION} --tag hellrok/taylor:android-latest"
-    end
-
-    task :linux do
-      sh "docker build . --file Dockerfile.linux --tag taylor/export-linux --tag hellrok/taylor:linux-v#{VERSION} --tag hellrok/taylor:linux-latest"
-    end
-
-    task :windows do
-      sh "docker build . --file Dockerfile.windows --tag taylor/export-windows --tag hellrok/taylor:windows-v#{VERSION} --tag hellrok/taylor:windows-latest"
-    end
-
-    task :osx do
-      sh "docker build . --file Dockerfile.osx --tag taylor/export-osx --tag hellrok/taylor:osx-v#{VERSION} --tag hellrok/taylor:osx-latest"
-    end
-
-    task :web do
-      sh "docker build . --file Dockerfile.web --tag taylor/export-web --tag hellrok/taylor:web-v#{VERSION} --tag hellrok/taylor:web-latest"
-    end
-
-    multitask :all_platforms => [:android, :linux, :windows, :osx, :web]
-    task :all => [:export, :all_platforms]
-  end
 end
 
 task :squash do

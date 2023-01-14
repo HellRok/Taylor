@@ -1,13 +1,12 @@
 # Taylor
 ## Made for Games
 
-[![Build
-status](https://badge.buildkite.com/0cb81ca8e3b8f43a2998bc15f90323a2eb8429669e819b7697.svg)](https://buildkite.com/oequacki/taylor)
+[![Build status](https://badge.buildkite.com/0cb81ca8e3b8f43a2998bc15f90323a2eb8429669e819b7697.svg)](https://buildkite.com/oequacki/taylor)
 ![GitHub all releases](https://img.shields.io/github/downloads/HellRok/Taylor/total?label=Total%20Downloads&style=plastic)
 
-**Website**: http://taylor.oequacki.com  
-**Documentation**: http://taylor.oequacki.com/documentation/taylor/  
-**Try it out online**: http://taylor.oequacki.com/playground/
+**Website**: [http://taylor.oequacki.com](http://taylor.oequacki.com)  
+**Documentation**: [http://taylor.oequacki.com/documentation/taylor/](http://taylor.oequacki.com/documentation/taylor/)  
+**Try it out online**: [http://taylor.oequacki.com/playground/](http://taylor.oequacki.com/playground/)
 
 ## What's this?
 
@@ -53,12 +52,10 @@ it's pretty straight forward for Linux.
 
 ## Building All the Docker Images
 
-To build all the docker images you can run the following commands:
+To build all the docker images you can run the following command:
 
 ```
-$ bundle exec rake docker:build:{linux,windows,osx,web}
-$ cd scripts/export
-$ bundle exec rake docker:build:{export,linux,windows,osx,web}
+$ bundle exec rake docker:build:all
 ```
 
 If you also want to compile the mruby and raylib dependencies yourself there are
