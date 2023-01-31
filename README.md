@@ -5,7 +5,7 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/HellRok/Taylor/total?label=Total%20Downloads&style=plastic)
 
 **Website**: [http://taylor.oequacki.com](http://taylor.oequacki.com)  
-**Documentation**: [http://taylor.oequacki.com/documentation/taylor/](http://taylor.oequacki.com/documentation/taylor/)  
+**Documentation**: [https://taylor.oequacki.com/documentation/taylor/latest/](https://taylor.oequacki.com/documentation/taylor/latest/)  
 **Try it out online**: [http://taylor.oequacki.com/playground/](http://taylor.oequacki.com/playground/)
 
 ## What's this?
