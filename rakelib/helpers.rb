@@ -1,6 +1,6 @@
 VARIANTS = %w(debug release)
 
-PLATFORMS = %w(linux windows osx web android)
+PLATFORMS = %w(linux windows osx/intel osx/apple web android)
 VERSION = File.read("./include/version.hpp").each_line.to_a.last.split('"')[1]
 
 SRC_FOLDER = "src"

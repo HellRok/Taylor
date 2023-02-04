@@ -92,14 +92,8 @@ module Taylor
         @options[:export_targets].each do |target|
           command = base_command.dup
 
-          # This is because the "osx_no_app" variant just uses the osx docker
-          # image but with an override for the export target
-          if target == 'osx_no_app'
-            command << ' --env EXPORT=osx_no_app'
-            command << " hellrok/taylor:osx-v#{TAYLOR_VERSION}"
-          else
-            command << " hellrok/taylor:#{target}-v#{TAYLOR_VERSION}"
-          end
+          command << " --env EXPORT=#{target}" if target.include?('/')
+          command << " hellrok/taylor:#{target.split('/').first}-v#{TAYLOR_VERSION}"
 
           if options[:dry_run]
             puts command

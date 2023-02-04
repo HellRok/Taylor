@@ -13,7 +13,6 @@ task :default => "linux:build"
 require_relative 'rakelib/helpers.rb'
 
 rule ".o" => ->(file){ source_for(file) } do |task|
-  puts "RULE .o #{task.name}"
   FileUtils.mkdir_p(File.dirname(task.name))
   sh Builder.o_command_for(task)
 end

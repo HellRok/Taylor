@@ -64,14 +64,15 @@ RUN git clone -q --depth=1 https://github.com/tpoechtrager/osxcross.git /opt/osx
             xz-utils && \
     dpkg-reconfigure --frontend noninteractive tzdata && \
     cd /opt/osxcross/tarballs && \
-    curl -L -o MacOSX10.15.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.15.sdk.tar.xz && \
-    tar -xvf MacOSX10.15.sdk.tar.xz -C . && \
+    curl -L -o MacOSX11.3.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.3.sdk.tar.xz && \
+    tar -xvf MacOSX11.3.sdk.tar.xz -C . && \
     cd /opt/osxcross/tarballs && \
-    cp -rf /usr/lib/llvm-12/include/c++ MacOSX10.15.sdk/usr/include/c++ && \
-    cp -rf /usr/include/x86_64-linux-gnu/c++/11/bits/ MacOSX10.15.sdk/usr/include/c++/v1/bits && \
-    tar -cJf MacOSX10.15.sdk.tar.xz MacOSX10.15.sdk && \
+    cp -rf /usr/lib/llvm-12/include/c++ MacOSX11.3.sdk/usr/include/c++ && \
+    cp -rf /usr/include/x86_64-linux-gnu/c++/11/bits/ MacOSX11.3.sdk/usr/include/c++/v1/bits && \
+    tar -cJf MacOSX11.3.sdk.tar.xz MacOSX11.3.sdk && \
     cd /opt/osxcross && \
-    UNATTENDED=1 SDK_VERSION=10.15 OSX_VERSION_MIN=10.13 USE_CLANG_AS=1 ./build.sh && \
+    UNATTENDED=1 SDK_VERSION=11.3 OSX_VERSION_MIN=11.3 USE_CLANG_AS=1 ./build.sh && \
+    ENABLE_COMPILER_RT_INSTALL=1 ./build_compiler_rt.sh && \
     rm -rf *~ build tarballs/* && \
     apt-get remove -y --auto-remove \
             cmake \
@@ -84,13 +85,14 @@ RUN git clone -q --depth=1 https://github.com/tpoechtrager/osxcross.git /opt/osx
             tzdata \
             wget \
             xz-utils
-ENV PATH /opt/osxcross/target/bin:$PATH
-ENV MACOSX_DEPLOYMENT_TARGET 10.13
-ENV OSXCROSS_MP_INC 1
+ENV \
+  PATH=/opt/osxcross/target/bin:$PATH \
+  MACOSX_DEPLOYMENT_TARGET=11.3 \
+  OSXCROSS_MP_INC=1 \
+  GLIBC_HEADERS=/opt/glibc/version_headers
 
 # glibc headers
 RUN git clone -q --depth=1 https://github.com/wheybags/glibc_version_header.git /opt/glibc && rm -rf /opt/glibc/.git
-ENV GLIBC_HEADERS /opt/glibc/version_headers
 
 # mruby utils
 RUN gem install mruby_utils:3.0.1

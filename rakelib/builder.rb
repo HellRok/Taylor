@@ -9,14 +9,16 @@ class Builder
   end
 
   def self.mf_command_for(task)
-    variant, platform, _ = task.name.split('/')
+    variant, platform, arch = task.name.split('/')
+    platform += "/#{arch}" if %w(intel apple).include?(arch)
 
     @@builders[platform].variant = variant
     @@builders[platform].generate_mf_for(task)
   end
 
   def self.o_command_for(task)
-    variant, platform, _ = task.name.split('/')
+    variant, platform, arch = task.name.split('/')
+    platform += "/#{arch}" if %w(intel apple).include?(arch)
 
     @@builders[platform].variant = variant
     @@builders[platform].generate_o_for(task)

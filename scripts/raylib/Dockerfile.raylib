@@ -34,12 +34,19 @@ COPY --from=raylib_base /app /app
 RUN cd src && \
   make PLATFORM=PLATFORM_DESKTOP CROSS=MINGW
 
-FROM taylor/build-osx AS raylib_osx
+FROM taylor/build-osx AS raylib_osx_intel
 WORKDIR /app
 COPY --from=raylib_base /app /app
 RUN cd src && \
   make clean && \
-  MACOSX_DEPLOYMENT_TARGET=10.11 make PLATFORM=PLATFORM_DESKTOP CROSS=OSX
+  MACOSX_DEPLOYMENT_TARGET=11.3 make PLATFORM=PLATFORM_DESKTOP CROSS=OSX_INTEL
+
+FROM taylor/build-osx AS raylib_osx_apple
+WORKDIR /app
+COPY --from=raylib_base /app /app
+RUN cd src && \
+  make clean && \
+  MACOSX_DEPLOYMENT_TARGET=11.3 make PLATFORM=PLATFORM_DESKTOP CROSS=OSX_APPLE
 
 FROM taylor/build-web as raylib_web
 WORKDIR /app
@@ -54,5 +61,6 @@ COPY --from=raylib_base /app/src/raylib.h ./vendor/raylib/include/
 COPY --from=raylib_android /app/src/libraylib.a ./vendor/android/raylib/lib/
 COPY --from=raylib_linux /app/src/libraylib.a ./vendor/linux/raylib/lib/
 COPY --from=raylib_mingw /app/src/libraylib.a ./vendor/windows/raylib/lib/
-COPY --from=raylib_osx /app/src/libraylib.a ./vendor/osx/raylib/lib/
+COPY --from=raylib_osx_intel /app/src/libraylib.a ./vendor/osx_intel/raylib/lib/
+COPY --from=raylib_osx_apple /app/src/libraylib.a ./vendor/osx_apple/raylib/lib/
 COPY --from=raylib_web /app/src/libraylib.a ./vendor/web/raylib/lib/

@@ -1,8 +1,9 @@
 FROM taylor/build-web as build_base
 WORKDIR /app/export
-ENV PATH="/app/emsdk:/app/emsdk/node/14.15.5_64bit/bin:/app/emsdk/upstream/emscripten:${PATH}"
-# I'm not really sure why but this is required for the docker export to work on OSX.
-ENV EM_CACHE="/app/emsdk/upstream/emscripten/cache"
+# I'm not really sure why but EM_CACHE is required for the docker export to work on OSX.
+ENV \
+  PATH="/app/emsdk:/app/emsdk/node/14.15.5_64bit/bin:/app/emsdk/upstream/emscripten:${PATH}" \
+  EM_CACHE="/app/emsdk/upstream/emscripten/cache"
 
 # This seems to take a really long time on some machines, so let's leave it as
 # a separate step to keep rebuild times low.
@@ -18,9 +19,10 @@ RUN chmod -R o+w \
     /app/taylor \
     /app/taylor/include
 
-ENV EXPORT=web
-ENV LANG=en_US.UTF-8
-ENV LANGUAGE=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
+ENV \
+  EXPORT=web \
+  LANG=en_US.UTF-8 \
+  LANGUAGE=en_US.UTF-8 \
+  LC_ALL=en_US.UTF-8
 
 CMD ["./entrypoint.sh"]

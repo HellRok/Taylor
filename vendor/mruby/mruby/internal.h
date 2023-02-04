@@ -21,6 +21,8 @@ mrb_bool mrb_const_name_p(mrb_state*, const char*, mrb_int);
 mrb_value mrb_class_find_path(mrb_state*, struct RClass*);
 mrb_value mrb_mod_to_s(mrb_state *, mrb_value);
 void mrb_method_added(mrb_state *mrb, struct RClass *c, mrb_sym mid);
+mrb_noreturn void mrb_method_missing(mrb_state *mrb, mrb_sym name, mrb_value self, mrb_value args);
+mrb_method_t mrb_vm_find_method(mrb_state *mrb, struct RClass *c, struct RClass **cp, mrb_sym mid);
 #endif
 
 /* debug */
@@ -35,6 +37,12 @@ int mrb_dump_irep(mrb_state *mrb, const mrb_irep *irep, uint8_t flags, uint8_t *
 int mrb_dump_irep_cfunc(mrb_state *mrb, const mrb_irep*, uint8_t flags, FILE *f, const char *initname);
 int mrb_dump_irep_cstruct(mrb_state *mrb, const mrb_irep*, uint8_t flags, FILE *f, const char *initname);
 #endif
+#endif
+
+/* codedump */
+void mrb_codedump_all(mrb_state *mrb, struct RProc *proc);
+#ifndef MRB_NO_STDIO
+void mrb_codedump_all_file(mrb_state *mrb, struct RProc *proc, FILE *out);
 #endif
 
 /* error */
@@ -103,6 +111,7 @@ void mrb_rational_copy(mrb_state *mrb, mrb_value x, mrb_value y);
 struct RProc *mrb_closure_new(mrb_state*, const mrb_irep*);
 void mrb_proc_copy(mrb_state *mrb, struct RProc *a, struct RProc *b);
 mrb_int mrb_proc_arity(const struct RProc *p);
+struct REnv *mrb_env_new(mrb_state *mrb, struct mrb_context *c, mrb_callinfo *ci, int nstacks, mrb_value *stack, struct RClass *tc);
 #endif
 
 /* range */
@@ -154,6 +163,11 @@ void mrb_gc_free_iv(mrb_state*, struct RObject*);
 
 /* VM */
 mrb_int mrb_ci_bidx(mrb_callinfo *ci);
+mrb_int mrb_ci_nregs(mrb_callinfo *ci);
+mrb_value mrb_exec_irep(mrb_state *mrb, mrb_value self, struct RProc *p);
+mrb_value mrb_obj_instance_eval(mrb_state*, mrb_value);
+mrb_value mrb_mod_module_eval(mrb_state*, mrb_value);
+mrb_value mrb_f_send(mrb_state *mrb, mrb_value self);
 
 #ifdef MRB_USE_BIGINT
 mrb_value mrb_bint_new_int(mrb_state *mrb, mrb_int x);

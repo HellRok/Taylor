@@ -1,5 +1,5 @@
 diff --git a/src/Makefile b/src/Makefile
-index c03278fb..5d196855 100644
+index c03278fb..58bd339f 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -180,16 +180,6 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
@@ -19,7 +19,7 @@ index c03278fb..5d196855 100644
  ifeq ($(PLATFORM),PLATFORM_ANDROID)
      # Android architecture
      # Starting at 2019 using arm64 is mandatory for published apps,
-@@ -255,6 +245,17 @@ CC = gcc
+@@ -255,6 +245,23 @@ CC = gcc
  AR = ar
  
  ifeq ($(PLATFORM),PLATFORM_DESKTOP)
@@ -28,9 +28,15 @@ index c03278fb..5d196855 100644
 +        AR = x86_64-w64-mingw32-ar
 +        CFLAGS += -static-libgcc -lopengl32 -lgdi32 -lwinmm
 +    endif
-+    ifeq ($(CROSS),OSX)
-+      CC = x86_64-apple-darwin19-clang
-+      AR = x86_64-apple-darwin19-ar
++    ifeq ($(CROSS),OSX_INTEL)
++      CC = x86_64-apple-darwin20.4-clang
++      AR = x86_64-apple-darwin20.4-ar
++      CFLAGS = -compatibility_version $(RAYLIB_API_VERSION) -current_version $(RAYLIB_VERSION) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
++      GLFW_OSX = -x objective-c
++    endif
++    ifeq ($(CROSS),OSX_APPLE)
++      CC = arm64-apple-darwin20.4-clang
++      AR = arm64-apple-darwin20.4-ar
 +      CFLAGS = -compatibility_version $(RAYLIB_API_VERSION) -current_version $(RAYLIB_VERSION) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
 +      GLFW_OSX = -x objective-c
 +    endif

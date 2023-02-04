@@ -40,10 +40,13 @@ namespace :docker do
     end
 
     namespace :export do
+      task :base => "docker:build:linux"
       task :base do
         build_docker("Dockerfile.export", tags: ["taylor/export"], pull: false)
       end
 
+      task :android => "docker:build:export:base"
+      task :android => "docker:build:android"
       task :android do
         build_docker(
           "./scripts/export/Dockerfile.android",
@@ -53,6 +56,8 @@ namespace :docker do
         )
       end
 
+      task :linux => "docker:build:export:base"
+      task :linux => "docker:build:linux"
       task :linux do
         build_docker(
           "./scripts/export/Dockerfile.linux",
@@ -62,6 +67,8 @@ namespace :docker do
         )
       end
 
+      task :windows => "docker:build:export:base"
+      task :windows => "docker:build:windows"
       task :windows do
         build_docker(
           "./scripts/export/Dockerfile.windows",
@@ -71,6 +78,8 @@ namespace :docker do
         )
       end
 
+      task :osx => "docker:build:export:base"
+      task :osx => "docker:build:osx"
       task :osx do
         build_docker(
           "./scripts/export/Dockerfile.osx",
@@ -80,6 +89,8 @@ namespace :docker do
         )
       end
 
+      task :web => "docker:build:export:base"
+      task :web => "docker:build:web"
       task :web do
         build_docker(
           "./scripts/export/Dockerfile.web",
@@ -89,16 +100,19 @@ namespace :docker do
         )
       end
 
-      task :all => [:base, :android, :linux, :windows, :osx, :web]
+      task :all => [:android, :linux, :windows, :osx, :web]
     end
 
     desc "Build the mruby dependency inside docker"
+    task :mruby => "docker:build:all_bases"
     task :mruby do |task|
       sh "rm -rf ./vendor/mruby"
       build_docker("./scripts/mruby/Dockerfile.mruby", tags: ["taylor/mruby"], export: true)
+      sh "mv ./vendor/mruby/mruby/mruby.h ./vendor/mruby/mruby/mrbconf.h ./vendor/mruby"
     end
 
     desc "Build the raylib dependency inside docker"
+    task :raylib => "docker:build:all_bases"
     task :raylib do |task|
       build_docker("./scripts/raylib/Dockerfile.raylib", tags: ["taylor/raylib"], export: true)
     end

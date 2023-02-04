@@ -1,7 +1,7 @@
 /*
 ** mruby - An embeddable Ruby implementation
 **
-** Copyright (c) mruby developers 2010-2021
+** Copyright (c) mruby developers 2010-2022
 **
 ** Permission is hereby granted, free of charge, to any person obtaining
 ** a copy of this software and associated documentation files (the
@@ -154,7 +154,7 @@ typedef uint8_t mrb_code;
  */
 typedef uint32_t mrb_aspec;
 
-struct mrb_irep;
+typedef struct mrb_irep mrb_irep;
 struct mrb_state;
 
 /**
@@ -178,6 +178,7 @@ typedef struct {
   uint8_t cci;                  /* called from C function */
   mrb_sym mid;
   const struct RProc *proc;
+  struct RProc *blk;
   mrb_value *stack;
   const mrb_code *pc;           /* current address on iseq of this proc */
   union {
@@ -361,7 +362,18 @@ MRB_API struct RClass *mrb_define_class_id(mrb_state *mrb, mrb_sym name, struct 
 MRB_API struct RClass *mrb_define_module(mrb_state *mrb, const char *name);
 MRB_API struct RClass *mrb_define_module_id(mrb_state *mrb, mrb_sym name);
 
+/**
+ * Returns the singleton class of an object.
+ *
+ * Raises a `TypeError` exception for immediate values.
+ */
 MRB_API mrb_value mrb_singleton_class(mrb_state *mrb, mrb_value val);
+
+/**
+ * Returns the singleton class of an object.
+ *
+ * Returns `NULL` for immediate values,
+ */
 MRB_API struct RClass *mrb_singleton_class_ptr(mrb_state *mrb, mrb_value val);
 
 /**
@@ -964,8 +976,8 @@ typedef const char *mrb_args_format;
  *
  *      // def method(a: 1, b: 2)
  *
- *      uint32_t kw_num = 2;
- *      uint32_t kw_required = 0;
+ *      mrb_int kw_num = 2;
+ *      mrb_int kw_required = 0;
  *      mrb_sym kw_names[] = { mrb_intern_lit(mrb, "a"), mrb_intern_lit(mrb, "b") };
  *      mrb_value kw_values[kw_num];
  *      mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, NULL };
@@ -995,8 +1007,8 @@ typedef struct mrb_kwargs mrb_kwargs;
 
 struct mrb_kwargs
 {
-  uint32_t num;                 /* number of keyword arguments */
-  uint32_t required;            /* number of required keyword arguments */
+  mrb_int num;                  /* number of keyword arguments */
+  mrb_int required;             /* number of required keyword arguments */
   const mrb_sym *table;         /* C array of symbols for keyword names */
   mrb_value *values;            /* keyword argument values */
   mrb_value *rest;              /* keyword rest (dict) */
@@ -1013,6 +1025,13 @@ struct mrb_kwargs
  * @see mrb_kwargs
  */
 MRB_API mrb_int mrb_get_args(mrb_state *mrb, mrb_args_format format, ...);
+
+/**
+ * Array version of mrb_get_args()
+ *
+ * @param ptr Array of void*, in the same order as the varargs version.
+ */
+MRB_API mrb_int mrb_get_args_a(mrb_state *mrb, mrb_args_format format, void** ptr);
 
 MRB_INLINE mrb_sym
 mrb_get_mid(mrb_state *mrb) /* get method symbol */
@@ -1441,6 +1460,10 @@ MRB_API mrb_bool mrb_func_basic_p(mrb_state *mrb, mrb_value obj, mrb_sym mid, mr
  * Resume a Fiber
  *
  * Implemented in mruby-fiber
+ *
+ * Switches to the specified fiber and executes. Like the `Fiber#resume` method.
+ *
+ * @note It can only be called before entering the mruby VM (e.g. in the `main()` function).
  */
 MRB_API mrb_value mrb_fiber_resume(mrb_state *mrb, mrb_value fib, mrb_int argc, const mrb_value *argv);
 
@@ -1448,6 +1471,15 @@ MRB_API mrb_value mrb_fiber_resume(mrb_state *mrb, mrb_value fib, mrb_int argc, 
  * Yield a Fiber
  *
  * Implemented in mruby-fiber
+ *
+ * Passes control to the caller fiber of the running fiber. Like the `Fiber.yield` method.
+ *
+ * @note This function is only available from inside a function defined as a method by,
+ *       for example, `mrb_define_method()`.
+ *       Also, the work following `mrb_fiber_yield()` cannot be performed,
+ *       and the return value of `mrb_fiber_yield()` must be returned as is.
+ *
+ *           return mrb_fiber_yield(mrb, argc, argv);
  */
 MRB_API mrb_value mrb_fiber_yield(mrb_state *mrb, mrb_int argc, const mrb_value *argv);
 

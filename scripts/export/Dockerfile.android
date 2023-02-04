@@ -12,9 +12,10 @@ RUN chmod -R o+w \
     /app/taylor/include \
     /ndk/android-ndk-r25b/sources/android/native_app_glue
 
-ENV EXPORT=android
-ENV LANG=en_US.UTF-8
-ENV LANGUAGE=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
+ENV \
+  EXPORT=android \
+  LANG=en_US.UTF-8 \
+  LANGUAGE=en_US.UTF-8 \
+  LC_ALL=en_US.UTF-8
 
 CMD ["./entrypoint.sh"]

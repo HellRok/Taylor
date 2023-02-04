@@ -6,7 +6,8 @@
   "export_targets": [
     "linux",
     "windows",
-    "osx_no_app"
+    "osx:no_app:intel",
+    "osx:no_app:apple"
   ],
   "load_paths": [
     "./"

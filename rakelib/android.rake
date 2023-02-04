@@ -54,12 +54,34 @@ namespace :android do
 
   namespace :release do
     task :strip do
-      sh "/ndk/android-ndk-r25b/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip \"./dist/#{builder.platform}/#{builder.variant}/#{builder.name}\""
+      sh <<-CMD
+        /ndk/android-ndk-r25b/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip \
+          "./dist/#{builder.platform}/#{builder.variant}/#{builder.name}"
+      CMD
     end
 
     task :native_app_glue do
-      sh "aarch64-linux-android29-clang -c /ndk/android-ndk-r25b/sources/android/native_app_glue/android_native_app_glue.c -o /ndk/android-ndk-r25b/sources/android/native_app_glue/native_app_glue.o -ffunction-sections -funwind-tables -fstack-protector-strong -fPIC -Wall -Wformat -Werror=format-security -no-canonical-prefixes -DANDROID -DPLATFORM_ANDROID -D__ANDROID_API__=29"
-      sh "llvm-ar rcs /ndk/android-ndk-r25b/sources/android/native_app_glue/android_native_app_glue.a /ndk/android-ndk-r25b/sources/android/native_app_glue/native_app_glue.o"
+      sh <<-CMD
+        aarch64-linux-android29-clang \
+          -c /ndk/android-ndk-r25b/sources/android/native_app_glue/android_native_app_glue.c \
+          -o /ndk/android-ndk-r25b/sources/android/native_app_glue/native_app_glue.o \
+          -ffunction-sections \
+          -funwind-tables \
+          -fstack-protector-strong \
+          -fPIC \
+          -Wall \
+          -Wformat \
+          -Werror=format-security \
+          -no-canonical-prefixes \
+          -DANDROID \
+          -DPLATFORM_ANDROID \
+          -D__ANDROID_API__=29
+      CMD
+      sh <<-CMD
+        llvm-ar rcs \
+          /ndk/android-ndk-r25b/sources/android/native_app_glue/android_native_app_glue.a \
+          /ndk/android-ndk-r25b/sources/android/native_app_glue/native_app_glue.o
+      CMD
     end
     task :build => :native_app_glue
 
@@ -78,8 +100,8 @@ namespace :android do
       CMD
 
       sh <<-CMD
-        #keytool -genkeypair -validity 1000 -dname "CN=raylib,O=Android,C=ES" -keystore raylib.keystore -storepass 'raylib' -keypass 'raylib' -alias projectKey -keyalg RSA
-        #keytool -genkey -v -keystore /app/raylib.keystore -storepass buttsbuttsbutts -keyalg RSA -keysize 2048 -validity 10000 -alias app
+        keytool -genkeypair -validity 1000 -dname "CN=raylib,O=Android,C=ES" -keystore raylib.keystore -storepass 'raylib' -keypass 'raylib' -alias projectKey -keyalg RSA
+        keytool -genkey -v -keystore /app/raylib.keystore -storepass buttsbuttsbutts -keyalg RSA -keysize 2048 -validity 10000 -alias app
       CMD
 
       sh <<-CMD
@@ -97,7 +119,6 @@ namespace :android do
           -classpath /sdk/platforms/android-29/android.jar:android/build/obj \
           -sourcepath src android/build/src/com/raylib/game/R.java \
           /app/taylor/scripts/android/NativeLoader.java
-
       CMD
 
       sh <<-CMD
@@ -107,25 +128,30 @@ namespace :android do
       sh <<-CMD
         aapt package -f \
           -M /app/taylor/scripts/android/AndroidManifest.xml -S android/build/res -A /app/game/assets \
-          -I /sdk/platforms/android-29/android.jar -F /app/game/exports/game.apk android/build/dex
+          -I /sdk/platforms/android-29/android.jar -F /app/game/exports/#{name} android/build/dex
 
-        #aapt add /app/game/exports/game.apk /app/taylor/dist/android/release/libmain.so
+        #aapt add /app/game/exports/#{name} /app/taylor/dist/android/release/libmain.so
         mv /app/taylor/dist/android/release/libmain.so /app/taylor/android/build/lib/arm64-v8a/
 
         cd /app/taylor/android/build
-        aapt add /app/game/exports/game.apk lib/arm64-v8a/libmain.so
+        aapt add /app/game/exports/#{name} lib/arm64-v8a/libmain.so
         cd -
       CMD
 
       sh <<-CMD
-        #jarsigner -keystore android/raylib.keystore -storepass raylib -keypass raylib \
-        #  -signedjar game.apk game.apk projectKey
+        jarsigner -keystore android/raylib.keystore -storepass raylib -keypass raylib \
+          -signedjar #{name} #{name} projectKey
 
-        zipalign -f 4 /app/game/exports/game.apk /app/game/exports/game.zip.apk
+        zipalign -f 4 /app/game/exports/#{name} /app/game/exports/game.zip.apk
       CMD
 
       sh <<-CMD
-        apksigner sign --ks-key-alias app --ks /app/game/raylib.keystore --ks-pass pass:buttsbuttsbutts --key-pass pass:buttsbuttsbutts /app/game/exports/game.zip.apk
+        apksigner sign \
+          --ks-key-alias app \
+          --ks /app/game/raylib.keystore \
+          --ks-pass pass:buttsbuttsbutts \
+          --key-pass pass:buttsbuttsbutts \
+          /app/game/exports/game.zip.apk
       CMD
     end
 
