@@ -7,6 +7,7 @@
 - Can now compile for OSX Apple hardware
 - Use exit! for tests
 - Update CLI-tool to use the new apple exports
+- Update CLI-tool to use exit! for failed command
 
 ## v0.3.11
 

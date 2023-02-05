@@ -88,7 +88,7 @@ module Taylor
 
         else
           puts "Could not load \"#{entrypoint}\", are you sure it exists?"
-          exit 1
+          exit! 1
         end
       end
     end

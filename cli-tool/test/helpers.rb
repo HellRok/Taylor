@@ -12,3 +12,7 @@ $exited = false
 def exit(status)
   $exited = true
 end
+
+def exit!(status)
+  $exited = true
+end
