@@ -5,6 +5,7 @@
 - Add a loading screen for web exports
 - Refactor Rakefile
 - Can now compile for OSX Apple hardware
+- Use exit! for tests
 
 ## v0.3.11
 

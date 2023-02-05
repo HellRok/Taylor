@@ -16,4 +16,4 @@ require './test/commands/version_test'
 
 result = MTest::Unit.new.run.positive?
 upload_buildkite_test_analytics
-exit 1 if result
+exit! 1 if result
