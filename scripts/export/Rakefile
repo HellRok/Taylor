@@ -164,14 +164,14 @@ namespace :rename do
       task :intel do
         puts "Copying osx intel build"
 
-        FileUtils.mkdir_p '/app/game/exports/osx'
+        FileUtils.mkdir_p '/app/game/exports/osx/intel'
         FileUtils.cp Dir.glob('/app/taylor/dist/osx/intel/release/*'), '/app/game/exports/osx'
       end
 
       task :apple do
         puts "Copying osx apple build"
 
-        FileUtils.mkdir_p '/app/game/exports/osx'
+        FileUtils.mkdir_p '/app/game/exports/osx/apple'
         FileUtils.cp Dir.glob('/app/taylor/dist/osx/apple/release/*'), '/app/game/exports/osx'
       end
     end
@@ -191,8 +191,8 @@ task :compress => "compress:linux"            if export_target == 'linux'
 task :compress => "compress:windows"          if export_target == 'windows'
 task :compress => "compress:osx:intel"        if export_target == 'osx/intel'
 task :compress => "compress:osx:apple"        if export_target == 'osx/apple'
-task :compress => "compress:osx_no_app_intel" if export_target == 'osx_no_app/intel'
-task :compress => "compress:osx_no_app:apple" if export_target == 'osx_no_app/apple'
+task :compress => "compress:osx:no_app:intel" if export_target == 'osx/no_app/intel'
+task :compress => "compress:osx:no_app:apple" if export_target == 'osx/no_app/apple'
 task :compress => "compress:web"              if export_target == 'web'
 task :compress => "compress:move"
 
@@ -237,19 +237,21 @@ namespace :compress do
       options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), app_path) }
       sh "zip -r \"#{options['name']}-osx-apple-#{options['version']}.zip\" *.app"
     end
-  end
 
-  namespace :osx_no_app do
-    task :intel do
-      Dir.chdir('/app/game/exports/osx/intel/')
-      options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
-      sh "zip -r \"#{options['name']}-osx-intel-#{options['version']}.zip\" *"
-    end
+    namespace :no_app do
+      task :intel do
+        Dir.chdir('/app/game/exports/osx')
+        options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
+        sh "mv taylor-intel taylor"
+        sh "zip -r \"#{options['name']}-osx-intel-#{options['version']}.zip\" taylor"
+      end
 
-    task :apple do
-      Dir.chdir('/app/game/exports/osx/apple/')
-      options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
-      sh "zip -r \"#{options['name']}-osx-apple-#{options['version']}.zip\" *"
+      task :apple do
+        Dir.chdir('/app/game/exports/osx')
+        options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
+        sh "mv taylor-apple taylor"
+        sh "zip -r \"#{options['name']}-osx-apple-#{options['version']}.zip\" taylor"
+      end
     end
   end
 

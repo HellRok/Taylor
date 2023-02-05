@@ -6,6 +6,7 @@
 - Refactor Rakefile
 - Can now compile for OSX Apple hardware
 - Use exit! for tests
+- Update CLI-tool to use the new apple exports
 
 ## v0.3.11
 
