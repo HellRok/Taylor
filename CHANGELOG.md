@@ -8,6 +8,7 @@
 - Use exit! for tests
 - Update CLI-tool to use the new apple exports
 - Update CLI-tool to use exit! for failed command
+- Add a roadmap
 
 ## v0.3.11
 
