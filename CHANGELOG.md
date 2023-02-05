@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.12
 
 - Add a loading screen for web exports
 - Refactor Rakefile
