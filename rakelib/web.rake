@@ -24,10 +24,18 @@ class WebBuilder < Builder
 
   def generate_static_links
     @static_links = <<-EOS.chomp
-      -s USE_GLFW=3 \
-      -s ASYNCIFY \
-      -s ALLOW_MEMORY_GROWTH
+      -s USE_GLFW=3
     EOS
+
+    total_memory = @options.dig('web', 'total_memory')
+    if total_memory.nil?
+      @static_links += " -s TOTAL_MEMORY=64MB"
+    elsif total_memory == -1
+      @static_links += " -s ALLOW_MEMORY_GROWTH"
+    else
+      @static_links += " -s TOTAL_MEMORY=#{total_memory}MB"
+    end
+
     @static_links += shell_path
     @options.fetch('copy_paths', []).each { |path|
       @static_links += " --preload-file #{File.join('/', 'app', 'game', path)}@#{path}"

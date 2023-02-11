@@ -1,5 +1,9 @@
 # Taylor
 
+## v0.3.12.1
+
+- Web exports no longer run at 20% speed or use 8GB of RAM
+
 ## v0.3.12
 
 - Add a loading screen for web exports
