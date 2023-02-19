@@ -40,9 +40,11 @@ require 'models/vector2_test'
 
 init_window(10, 10, 'blah') if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?
 result = MTest::Unit.new.run.positive?
-upload_buildkite_test_analytics
-exit! 1 if result
 close_window if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?
+
+upload_buildkite_test_analytics
+
+exit! 1 if result
 
 # The browser version doesn't exit cleanly unless specifically told to.
 exit! if browser?

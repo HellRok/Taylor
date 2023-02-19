@@ -1,5 +1,9 @@
+# We do this because we need to actually call it if there are failing tests
+# (which is what happened and why I noticed!)
+real_exit_bang = method(:exit!).to_proc
+
 # We use load here to forcefully re-require the commands that are unloaded by
-# automatically Taylor::Commands::Run
+# Taylor::Commands::Run automatically
 load './templates/game_template.rb'
 load './app/commands/export.rb'
 load './app/commands/new.rb'
@@ -16,4 +20,5 @@ require './test/commands/version_test'
 
 result = MTest::Unit.new.run.positive?
 upload_buildkite_test_analytics
-exit! 1 if result
+
+real_exit_bang.call(1) if result

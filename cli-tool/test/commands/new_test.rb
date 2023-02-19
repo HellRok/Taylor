@@ -36,7 +36,7 @@ class Test
         assert_equal 'game.rb', data['input']
         assert_true File.exists?('./taylor_game/game.rb')
         assert_equal './exports', data['export_directory']
-        assert_equal ['linux', 'windows', 'osx', 'web'], data['export_targets']
+        assert_equal ['linux', 'windows', 'osx/intel', 'osx/apple', 'web'], data['export_targets']
         assert_equal ['./', './vendor'], data['load_paths']
         assert_true Dir.exists?('./taylor_game/vendor')
         assert_true File.exists?('./taylor_game/vendor/.keep')

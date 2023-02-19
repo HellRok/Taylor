@@ -6,6 +6,7 @@
 - Add android?
 - Add GLSL_VERSION
 - Tests now all pass on web again
+- CLI Tool tests now fail correctly
 
 ## v0.3.12.1
 
