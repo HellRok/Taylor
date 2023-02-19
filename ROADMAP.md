@@ -24,6 +24,7 @@
 - Once I feel I've fully polished everything for 2D
 - Game exporting is seemless
 - Improve the experience on Windows
+- Audit the code base
 
 ## 2.0.0
 
