@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- CLI Tool now has the correct export targets
 
 ## v0.3.12.1
 

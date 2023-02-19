@@ -6,7 +6,8 @@
   "export_targets": [
     "linux",
     "windows",
-    "osx",
+    "osx/intel",
+    "osx/apple",
     "web"
   ],
   "load_paths": [
