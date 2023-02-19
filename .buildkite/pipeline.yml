@@ -26,3 +26,9 @@ steps:
       - chmod +x /usr/bin/taylor
       - cd ./cli-tool/
       - taylor ./cli.rb test/test.rb
+
+  - wait
+
+  - label: "Build docker images"
+    commands:
+      - bundle exec rake docker:build:all

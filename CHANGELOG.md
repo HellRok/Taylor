@@ -7,6 +7,7 @@
 - Add GLSL_VERSION
 - Tests now all pass on web again
 - CLI Tool tests now fail correctly
+- Build all the docker images in Buildkite
 
 ## v0.3.12.1
 
