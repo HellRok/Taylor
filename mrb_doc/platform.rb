@@ -1,3 +1,11 @@
+# Is the current platform Android?
+# @return [Boolean]
+def android?
+  # mrb_android
+  # src/platform.cpp
+  false
+end
+
 # Is the current platform Linux?
 # @return [Boolean]
 def linux?

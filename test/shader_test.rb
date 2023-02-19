@@ -5,7 +5,7 @@ class Test
 
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', 'assets/fragment_shader.fs')
+      shader = load_shader('', "assets/fragment_shader_#{GLSL_VERSION}.fs")
       clear_and_draw do
         begin_shader_mode(shader)
           Rectangle.new(0, 0, 10, 10).draw(colour: RED)

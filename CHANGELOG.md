@@ -3,6 +3,9 @@
 ## Unreleased
 
 - CLI Tool now has the correct export targets
+- Add android?
+- Add GLSL_VERSION
+- Tests now all pass on web again
 
 ## v0.3.12.1
 
