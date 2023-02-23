@@ -3,3 +3,4 @@ mrb_doc/**/*.rb
 -
 CHANGELOG.md
 LICENSE
+taylor_config.json.md

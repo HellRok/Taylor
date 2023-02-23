@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.12.2
 
 - CLI Tool now has the correct export targets
 - Add android?
@@ -8,6 +8,7 @@
 - Tests now all pass on web again
 - CLI Tool tests now fail correctly
 - Build all the docker images in Buildkite
+- Add documentation for `taylor_config.json`
 
 ## v0.3.12.1
 

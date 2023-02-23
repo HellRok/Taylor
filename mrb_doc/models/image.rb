@@ -155,7 +155,7 @@ class Image
   end
 
   # Rotates the image either clockwise or counter-clockwise
-  # @param [direction] Valid options are :cw and :ccw
+  # @param direction [Symbol] Valid options are :cw and :ccw
   # @raise [ArgumentError] If the direction is invalid
   # @return [Image]
   def rotate!(direction = :cw)

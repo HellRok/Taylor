@@ -9,6 +9,7 @@ def get_attribute_from_element(selector, attribute)
   'Hi!'
 end
 
+# A class for interacting with the browser's LocalStorage
 class LocalStorage
   # Returns the value stored in localStorage in the browser, if it doesn't exist
   # it will just return an empty string
