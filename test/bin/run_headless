@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+export DISPLAY=:1
+
+Xvfb :1 -screen 0 1280x800x24 &
+export XVFB_PID=$!
+
+DISPLAY=:1 openbox &
+export OPENBOX_PID=$!
+
+../dist/linux/debug/taylor ../cli-tool/cli.rb test.rb
+wine ../dist/windows/debug/taylor.exe ../cli-tool/cli.rb test.rb
+export EXIT_CODE=$?
+
+kill $OPENBOX_PID &> /dev/null
+kill $XVFB_PID &> /dev/null
+
+exit $EXIT_CODE

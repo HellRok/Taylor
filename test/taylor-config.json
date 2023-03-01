@@ -1,5 +1,5 @@
 {
-  "name": "Taylor Test Suite",
+  "name": "taylor-test-suite",
   "version": "v0.0.1",
   "input": "test.rb",
   "export_directory": "./exports",
@@ -15,5 +15,8 @@
   ],
   "copy_paths": [
     "./assets"
-  ]
+  ],
+  "web": {
+    "shell_path": "shell.html"
+  }
 }

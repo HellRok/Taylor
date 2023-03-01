@@ -67,11 +67,7 @@ class Test
 
       assert_false window_state?(FLAG_FULLSCREEN_MODE)
     ensure
-      if window_ready?
-        clear_window_state(FLAG_FULLSCREEN_MODE)
-        set_window_size(10, 10)
-        flush_frame
-      end
+      reset_window if window_ready?
     end
 
     def test_set_window_state_hidden
@@ -94,7 +90,7 @@ class Test
 
       assert_false window_state?(FLAG_WINDOW_HIDDEN)
     ensure
-      clear_window_state(FLAG_WINDOW_HIDDEN) if window_ready?
+      reset_window if window_ready?
     end
 
     def test_set_window_state_minimised
@@ -139,11 +135,7 @@ class Test
       assert_false window_state?(FLAG_WINDOW_MAXIMISED)
 
     ensure
-      if window_ready?
-        close_window
-        init_window(10, 10, 'Taylor Test Suite')
-        flush_frame
-      end
+      reset_window if window_ready?
     end
 
     def test_set_window_state_other
@@ -169,7 +161,7 @@ class Test
 
         assert_false window_state?(state)
       ensure
-        clear_window_state(state) if window_ready?
+        reset_window if window_ready?
       end
     end
 
@@ -199,22 +191,13 @@ class Test
       assert_equal 10, get_screen_width
       assert_equal 10, get_screen_height
 
-      set_window_size 64, 48
+      set_window_size 128, 48
 
       flush_frames 5
-      assert_equal 64, get_screen_width
+      assert_equal 128, get_screen_width
       assert_equal 48, get_screen_height
     ensure
-      if window_ready?
-        if windows?
-          close_window
-          init_window(10, 10, 'Taylor Test Suite')
-          flush_frame
-        else
-          set_window_size 10, 10
-          flush_frame
-        end
-      end
+      reset_window if window_ready?
     end
 
     def test_clipboard

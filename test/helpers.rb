@@ -1,3 +1,14 @@
+def reset_window
+  if windows?
+    close_window
+    init_window(10, 10, 'Taylor Test Suite')
+    flush_frame
+  else
+    set_window_size 10, 10
+    flush_frame
+  end
+end
+
 def skip_unless_display_present
   skip unless window_ready?
 end

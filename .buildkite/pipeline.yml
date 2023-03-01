@@ -1,4 +1,10 @@
 steps:
+  - label: 'Check Documentation'
+    commands:
+      - gem install bundler
+      - bundle install
+      - .buildkite/scripts/tests/check_for_documentation.rb
+
   - label: 'Taylor Build'
     commands:
       - gem install bundler
@@ -7,18 +13,15 @@ steps:
       - cd dist/linux/release
       - buildkite-agent artifact upload taylor
 
-  - label: 'Check Documentation'
-    commands:
-      - .buildkite/scripts/tests/check_for_documentation.rb
-
   - wait
 
-  - label: 'Taylor Tests'
+  - label: "Build docker images"
     commands:
-      - buildkite-agent artifact download taylor /usr/bin/
-      - chmod +x /usr/bin/taylor
-      - cd ./test/
-      - taylor ../cli-tool/cli.rb test.rb
+      - gem install bundler
+      - bundle install
+      - bundle exec rake docker:build:all
+
+  - wait
 
   - label: 'CLI Tool Tests'
     commands:
@@ -27,8 +30,22 @@ steps:
       - cd ./cli-tool/
       - taylor ./cli.rb test/test.rb
 
+  - label: 'Taylor Tests - Export'
+    commands:
+      - buildkite-agent artifact download taylor /usr/bin/
+      - chmod +x /usr/bin/taylor
+      - .buildkite/scripts/tests/export.sh
+
   - wait
 
-  - label: "Build docker images"
+  - label: 'Taylor Tests - Linux'
     commands:
-      - bundle exec rake docker:build:all
+      - .buildkite/scripts/tests/test_suite_linux.sh
+
+  - label: 'Taylor Tests - Windows'
+    commands:
+      - .buildkite/scripts/tests/test_suite_windows.sh
+
+  - label: 'Taylor Tests - Web'
+    commands:
+      - .buildkite/scripts/tests/test_suite_web.sh

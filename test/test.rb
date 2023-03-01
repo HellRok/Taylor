@@ -47,4 +47,7 @@ upload_buildkite_test_analytics
 exit! 1 if result
 
 # The browser version doesn't exit cleanly unless specifically told to.
-exit! if browser?
+if browser?
+  puts "EXIT CODE: #{result ? 1 : 0}"
+  exit!
+end
