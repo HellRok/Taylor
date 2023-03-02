@@ -15,11 +15,43 @@ steps:
 
   - wait
 
-  - label: "Build docker images"
+  - label: "Build base export image"
     commands:
       - gem install bundler
       - bundle install
-      - bundle exec rake docker:build:all
+      - bundle exec rake docker:build:export:base
+
+  - wait
+
+  - label: "Build Android export image"
+    commands:
+      - gem install bundler
+      - bundle install
+      - bundle exec rake docker:build:export:android
+
+  - label: "Build Linux export image"
+    commands:
+      - gem install bundler
+      - bundle install
+      - bundle exec rake docker:build:export:linux
+
+  - label: "Build OSX export image"
+    commands:
+      - gem install bundler
+      - bundle install
+      - bundle exec rake docker:build:export:osx
+
+  - label: "Build Windows export image"
+    commands:
+      - gem install bundler
+      - bundle install
+      - bundle exec rake docker:build:export:windows
+
+  - label: "Build Web export image"
+    commands:
+      - gem install bundler
+      - bundle install
+      - bundle exec rake docker:build:export:web
 
   - wait
 
