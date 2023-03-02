@@ -8,7 +8,7 @@ RUN \
     git \
     ca-certificates && \
   apt-get clean -y && apt-get autoremove -y && \
-  git clone --branch 3.2.0-rc3 --depth 1 https://github.com/mruby/mruby.git .
+  git clone --branch 3.2.0 --depth 1 https://github.com/mruby/mruby.git .
 
 FROM taylor/build-android as mruby_android
 WORKDIR /app

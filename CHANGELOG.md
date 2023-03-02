@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Buildkite now builds the docker images
+- Buildkite now runs tests on Linux, under wine, and in the chrome
+- Upgrade mruby to 3.2.0 now that it's released
+
 ## v0.3.12.2
 
 - CLI Tool now has the correct export targets
