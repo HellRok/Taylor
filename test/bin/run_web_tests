@@ -12,8 +12,6 @@ server_thread = Thread.start { server.start }
 driver = Selenium::WebDriver.for(:chrome)
 driver.manage.window.resize_to(1280, 800)
 
-puts driver.logs.available_types
-
 driver.get('http://localhost:3001')
 
 start_time = Time.now
@@ -37,5 +35,9 @@ loop do
   }
 
   # Give the tests 1 minute to run (which should be ample)
-  exit 1 if Time.now - start_time > 60
+  if Time.now - start_time > 60
+    puts "TIMEOUT"
+    puts taylor_logs
+    exit 1
+  end
 end

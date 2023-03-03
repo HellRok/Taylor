@@ -50,5 +50,8 @@ void append_platform(mrb_state *mrb) {
 
   mrb_load_string(mrb, R"(
     GLSL_VERSION = (browser? || android?) ? 100 : 330
+
+    class PlatformSpecificMethodCalledOnWrongPlatformError < StandardError
+    end
   )");
 }

@@ -5,6 +5,8 @@
 - Buildkite now builds the docker images
 - Buildkite now runs tests on Linux, under wine, and in the chrome
 - Upgrade mruby to 3.2.0 now that it's released
+- Platform specific methods now raise a unique error on unsupported platforms
+- Add tests for the platform specific methods
 
 ## v0.3.12.2
 

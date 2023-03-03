@@ -11,6 +11,7 @@ require 'fixtures/shapes'
 require 'fixtures/text'
 require 'fixtures/texture'
 require 'fixtures/models'
+require 'fixtures/web'
 
 require 'core_test'
 require 'core/drawing_test'
@@ -37,6 +38,7 @@ require 'models/shader_test'
 require 'models/sound_test'
 require 'models/texture2d_test'
 require 'models/vector2_test'
+require 'web'
 
 init_window(10, 10, 'blah') if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?
 result = MTest::Unit.new.run.positive?

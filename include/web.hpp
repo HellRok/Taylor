@@ -1,7 +1,7 @@
 #pragma once
-#ifdef __EMSCRIPTEN__
 #include "mruby.h"
+#ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
+#endif
 
 void append_web(mrb_state*);
-#endif

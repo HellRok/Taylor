@@ -8,13 +8,9 @@
 #include "mruby/compile.h"
 #include "mruby/irep.h"
 
-#ifdef __EMSCRIPTEN__
-#include "web.hpp"
-#include "platform_specific/web.hpp"
-#endif
-
 #include "argv.hpp"
 #include "platform.hpp"
+#include "platform_specific/web.hpp"
 #include "workarounds/mingw.hpp"
 #include "mruby_integration/audio.hpp"
 #include "mruby_integration/buildkite_analytics.hpp"
@@ -25,6 +21,7 @@
 #include "mruby_integration/structs.hpp"
 #include "mruby_integration/text.hpp"
 #include "mruby_integration/textures.hpp"
+#include "web.hpp"
 
 #ifdef EXPORT
 #include "game.h"
@@ -67,10 +64,8 @@ int main(int argc, char **argv) {
 
   append_platform(mrb);
 
-#ifdef __EMSCRIPTEN__
   append_web(mrb);
   append_platform_specific_web(mrb);
-#endif
 
 #ifdef _WIN32
   workarounds_mingw_msg_dontwait(mrb);

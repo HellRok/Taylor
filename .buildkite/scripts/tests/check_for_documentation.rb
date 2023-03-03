@@ -33,13 +33,18 @@ def cpp_methods
         if object == 'mrb->kernel_module'
           method
         else
-          "#{object.gsub('_class', '')}##{method}"
+          "#{object.gsub('_class', '')}.#{method}"
         end
 
       elsif line =~ /^\s*def\s+(.*)/ && !line.include?('mrb_define_class')
         method = $~[1].split('(').first
         if klass
-          "#{klass}##{method}"
+          if method.start_with?("self.")
+            method.slice!("self.")
+            "#{klass}.#{method}"
+          else
+            "#{klass}##{method}"
+          end
         else
           method
         end
@@ -63,7 +68,12 @@ def documented_methods
         elsif line =~ /^\s*def\s*(.*)/
           method = $~[1].split('(').first
           if klass
-            "#{klass}##{method}"
+            if method.start_with?("self.")
+              method.slice!("self.")
+              "#{klass}.#{method}"
+            else
+              "#{klass}##{method}"
+            end
           else
             method
           end

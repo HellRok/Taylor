@@ -15,7 +15,8 @@ class LocalStorage
   # it will just return an empty string
   # @param key [String]
   # @return [String]
-  def get_item(key)
+  # @raise [PlatformSpecificMethodCalledOnWrongPlatformError] If run on the wrong platform
+  def self.get_item(key)
     # mrb_local_storage_get_item
     # src/platform_specific/web.cpp
     'Hi!'
@@ -25,7 +26,8 @@ class LocalStorage
   # @param key [String]
   # @param value [String]
   # @return [nil]
-  def set_item(key, value)
+  # @raise [PlatformSpecificMethodCalledOnWrongPlatformError] If run on the wrong platform
+  def self.set_item(key, value)
     # mrb_local_storage_set_item
     # src/platform_specific/web.cpp
     nil

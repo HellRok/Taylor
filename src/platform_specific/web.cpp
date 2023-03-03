@@ -1,6 +1,8 @@
-#ifdef __EMSCRIPTEN__
 #include "mruby.h"
 #include <mruby/class.h>
+#include "mruby/compile.h"
+
+#ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
 
 EM_JS(char*, js_get_attribute_from_element, (const char* selectorPointer, const char* attributePointer), {
@@ -68,8 +70,10 @@ mrb_value mrb_local_storage_get_item(mrb_state *mrb, mrb_value) {
 
   return mrb_str_new_cstr(mrb, js_local_storage_get_item(key));
 }
+#endif
 
 void append_platform_specific_web(mrb_state *mrb) {
+#ifdef __EMSCRIPTEN__
   struct RClass *LocalStorage_class;
   LocalStorage_class = mrb_define_class(mrb, "LocalStorage", mrb->object_class);
   MRB_SET_INSTANCE_TT(LocalStorage_class, MRB_TT_DATA);
@@ -77,5 +81,19 @@ void append_platform_specific_web(mrb_state *mrb) {
   mrb_define_class_method(mrb, LocalStorage_class, "get_item", mrb_local_storage_get_item, MRB_ARGS_REQ(2));
 
   mrb_define_method(mrb, mrb->kernel_module, "get_attribute_from_element", mrb_get_attribute_from_element, MRB_ARGS_REQ(2));
-}
 #endif
+
+#ifndef __EMSCRIPTEN__
+  mrb_load_string(mrb, R"(
+    class LocalStorage
+      def self.get_item(key)
+        raise PlatformSpecificMethodCalledOnWrongPlatformError, 'LocalStorage.get_item is only available for Web exports'
+      end
+
+      def self.set_item(key, value)
+        raise PlatformSpecificMethodCalledOnWrongPlatformError, 'LocalStorage.set_item is only available for Web exports'
+      end
+    end
+  )");
+#endif
+}
