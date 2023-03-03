@@ -1,4 +1,10 @@
 Dockerfile*
+*.o
 .git
 build
 dist
+doc
+dump
+mrb_doc
+test
+.buildkite

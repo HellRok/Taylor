@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+bundle exec rake linux:build windows:build docker:build:export:web
+
 export DISPLAY=:1
 
 Xvfb :1 -screen 0 1280x800x24 &
@@ -9,10 +11,26 @@ DISPLAY=:1 openbox &
 export OPENBOX_PID=$!
 
 ../dist/linux/debug/taylor ../cli-tool/cli.rb test.rb
+export NATIVE_EXIT_CODE=$?
 wine ../dist/windows/debug/taylor.exe ../cli-tool/cli.rb test.rb
-export EXIT_CODE=$?
+export WINE_EXIT_CODE=$?
+
+rm -rf exports
+mkdir -p exports
+taylor-dev export
+pushd exports
+unzip taylor-test-suite-web-v0.0.1.zip
+../../.buildkite/scripts/tests/web_test.rb
+export WEB_EXIT_CODE=$?
+
+popd
+
 
 kill $OPENBOX_PID &> /dev/null
 kill $XVFB_PID &> /dev/null
 
-exit $EXIT_CODE
+echo "Linux: $NATIVE_EXIT_CODE"
+echo "Wine: $WINE_EXIT_CODE"
+echo "Web: $WEB_EXIT_CODE"
+
+exit $NATIVE_EXIT_CODE || $WINE_EXIT_CODE || $WEB_EXIT_CODE

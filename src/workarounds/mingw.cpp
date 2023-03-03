@@ -4,6 +4,7 @@
 #ifdef _WIN32
 #include <windef.h>
 #include <winbase.h>
+#include <shtypes.h>
 #include <wincon.h>
 
 void workarounds_mingw_attach_console() {

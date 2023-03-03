@@ -46,10 +46,11 @@ close_window if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?
 
 upload_buildkite_test_analytics
 
-exit! 1 if result
-
 # The browser version doesn't exit cleanly unless specifically told to.
 if browser?
+  puts "ANALYTICS: #{$buildkite_test_analytics.to_json}"
   puts "EXIT CODE: #{result ? 1 : 0}"
   exit!
+else
+  exit! 1 if result
 end

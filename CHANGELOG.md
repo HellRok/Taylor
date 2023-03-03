@@ -7,6 +7,7 @@
 - Upgrade mruby to 3.2.0 now that it's released
 - Platform specific methods now raise a unique error on unsupported platforms
 - Add tests for the platform specific methods
+- Upload analytics for the web build too
 
 ## v0.3.12.2
 
