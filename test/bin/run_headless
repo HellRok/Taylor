@@ -7,6 +7,8 @@ export DISPLAY=:1
 Xvfb :1 -screen 0 1280x800x24 &
 export XVFB_PID=$!
 
+echo XVFB_PID: $XVFB_PID
+
 DISPLAY=:1 openbox &
 export OPENBOX_PID=$!
 

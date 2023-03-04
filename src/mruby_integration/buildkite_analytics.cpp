@@ -6,12 +6,30 @@ void append_buildkite_analytics(mrb_state *mrb) {
     module MTest
       class Unit
         class TestCaseWithAnalytics < MTest::Unit::TestCase
-          def run(runner)
-            @result = super
-          end
+          attr_accessor :result
 
-          def setup
+          def run runner
             @start_time = Time.now
+            @result = ""
+            begin
+              @passed = nil
+              self.setup
+              self.run_setup_hooks
+              self.__send__ self.__name__
+              @result = "." unless io?
+              @passed = true
+            rescue Exception => e
+              @passed = false
+              @result = runner.puke self.class, self.__name__, e
+            ensure
+              begin
+                self.run_teardown_hooks
+                self.teardown
+              rescue Exception => e
+                @result = runner.puke self.class, self.__name__, e
+              end
+            end
+            @result
           end
 
           def location
