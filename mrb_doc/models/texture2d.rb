@@ -1,3 +1,16 @@
+# No filter, just pixel approximation
+TEXTURE_FILTER_POINT = 0
+# Linear filtering
+TEXTURE_FILTER_BILINEAR = 1
+# Trilinear filtering (linear with mipmaps)
+TEXTURE_FILTER_TRILINEAR = 2
+# Anisotropic filtering 4x
+TEXTURE_FILTER_ANISOTROPIC_4X = 3
+# Anisotropic filtering 8x
+TEXTURE_FILTER_ANISOTROPIC_8X = 4
+# Anisotropic filtering 16x
+TEXTURE_FILTER_ANISOTROPIC_16X = 5
+
 # The Texture2D class is most often used for drawing sprites.
 class Texture2D
   # @return [Integer]
@@ -88,6 +101,21 @@ class Texture2D
   def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation:0, colour: WHITE)
     # src/mruby_integration/models/texture2d.cpp
     nil
+  end
+
+  # Generates mipmaps for the {Texture2D}
+  # @return [Integer]
+  def generate_mipmaps
+    # src/mruby_integration/models/texture2d.cpp
+    nil
+  end
+
+  # Sets the filtering for the {Texture2D}
+  # @param val [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}
+  # @return [Integer]
+  def filter=(val)
+    # src/mruby_integration/models/texture2d.cpp
+    1
   end
 
   # Used for alerting the user the texture was not found at the specified path

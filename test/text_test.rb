@@ -7,6 +7,7 @@ class Test
       clear_and_draw do
         draw_text('a', 0, 0, 10, BLACK)
       end
+      flush_frame
 
       assert_equal fixture_draw_text, get_screen_data.data
     end

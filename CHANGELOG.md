@@ -8,6 +8,11 @@
 - Platform specific methods now raise a unique error on unsupported platforms
 - Add tests for the platform specific methods
 - Upload analytics for the web build too
+- Add set_texture_filter
+- Add generate_texture_mipmaps
+- Add Font.filter=
+- Add Texture2D.filter=
+- Add Texture2D.generate_mipmaps
 
 ## v0.3.12.2
 

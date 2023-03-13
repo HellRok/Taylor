@@ -102,6 +102,14 @@ void append_models_Texture2D(mrb_state *mrb) {
         )
       end
 
+      def filter=(val)
+        set_texture_filter(self, val)
+      end
+
+      def generate_mipmaps
+        generate_texture_mipmaps(self)
+      end
+
       class NotFound < StandardError; end
     end
   )");

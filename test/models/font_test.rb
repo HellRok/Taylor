@@ -24,14 +24,9 @@ class Test
       def test_to_h
         font = Font.new(1, 2, 3)
 
-        assert_equal(
-          {
-            base_size: 1,
-            glyph_count: 2,
-            glyph_padding: 3,
-          },
-          font.to_h
-        )
+        assert_equal(1, font.to_h[:base_size])
+        assert_equal(2, font.to_h[:glyph_count])
+        assert_equal(3, font.to_h[:glyph_padding])
       end
     end
   end

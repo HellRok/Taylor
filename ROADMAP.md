@@ -5,11 +5,11 @@
 - Support native OSX Apple architecture support for exports
 - Upgrade to mruby 3.2.0-rc
 
-## 0.3.13
+## 0.3.14
 
 - Finish shader implementation for 2D
 
-## 0.3.14
+## 0.3.15
 
 - Finish Android support
 

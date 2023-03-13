@@ -82,14 +82,21 @@ class Font
 
   # Creates an image from the font
   # @param text [String] The text to put on the screen
-  # @param font_size [Integer]
-  # @param font_padding [Integer]
+  # @param size [Integer]
+  # @param padding [Integer]
   # @param colour [Colour]
   # @return [Image]
-  def to_image(text, font_size: 32, font_padding: 0, colour: BLACK)
-    # mrb_image_text_ex
-    # src/mruby_integration/image.cpp
+  def to_image(text, size: 32, padding: 0, colour: BLACK)
+    # src/mruby_integration/models/font.cpp
     Image.new
+  end
+
+  # Sets the filtering and generates mipmaps for the {Texture2D} used behind the {Font}
+  # @param val [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}
+  # @return [Integer]
+  def filter=(val)
+    # src/mruby_integration/models/font.cpp
+    1
   end
 
   # Used for alerting the user the font was not found at the specified path

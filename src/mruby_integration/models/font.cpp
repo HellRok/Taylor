@@ -7,14 +7,15 @@
 
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
+#include "mruby_integration/models/texture2d.hpp"
 
 struct RClass *Font_class;
 
-void setup_Font(mrb_state *mrb, mrb_value object, Font *font, int base_size, int glyph_count, int glyph_padding) { //, Texture2D *texture2d, Rectangle **rectangles) {
+void setup_Font(mrb_state *mrb, mrb_value object, Font *font, int base_size, int glyph_count, int glyph_padding, Texture2D *texture) { //, Rectangle **rectangles) {
   ivar_attr_int(mrb, object, font->baseSize, base_size);
   ivar_attr_int(mrb, object, font->glyphCount, glyph_count);
   ivar_attr_int(mrb, object, font->glyphPadding, glyph_padding);
-  //  Texture2D texture;      // Characters texture atlas
+  ivar_attr_texture2d(mrb, object, font->texture, texture);
   //  Rectangle *recs;        // Characters rectangles in texture
   //  CharInfo *chars;        // Characters info data
 }
@@ -28,7 +29,12 @@ mrb_value mrb_Font_initialize(mrb_state *mrb, mrb_value self) {
   mrb_data_init(self, nullptr, &Font_type);
   font = (Font *)malloc(sizeof(Font));
 
-  setup_Font(mrb, self, font, base_size, glyph_count, glyph_padding);
+  Texture2D* texture = &font->texture;
+
+  setup_Font(mrb, self, font, base_size, glyph_count, glyph_padding, texture);
+
+  add_parent(font, "Font");
+  add_owned_object(&font->texture);
 
   mrb_data_init(self, font, &Font_type);
   return self;
@@ -56,13 +62,14 @@ void append_models_Font(mrb_state *mrb) {
 
   mrb_load_string(mrb, R"(
     class Font
-      attr_reader :base_size, :glyph_count, :glyph_padding
+      attr_reader :base_size, :glyph_count, :glyph_padding, :texture
 
       def to_h
         {
           base_size: base_size,
           glyph_count: glyph_count,
           glyph_padding: glyph_padding,
+          texture: texture.to_h,
         }
       end
 
@@ -85,6 +92,11 @@ void append_models_Font(mrb_state *mrb) {
 
       def to_image(text, size: 32, padding: 0, colour: BLACK)
         image_text_ex(self, text, size, padding, colour)
+      end
+
+      def filter=(val)
+        texture.generate_mipmaps
+        texture.filter = val
       end
 
       class NotFound < StandardError; end

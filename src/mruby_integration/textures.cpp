@@ -2,6 +2,7 @@
 #include "mruby.h"
 #include "mruby/data.h"
 #include "mruby/class.h"
+#include "mruby/compile.h"
 #include "mruby/string.h"
 
 #include "mruby_integration/models/colour.hpp"
@@ -42,6 +43,27 @@ mrb_value mrb_unload_texture(mrb_state *mrb, mrb_value) {
   mrb_get_args(mrb, "d", &texture, &Texture2D_type);
 
   UnloadTexture(*texture);
+
+  return mrb_nil_value();
+}
+
+mrb_value mrb_set_texture_filter(mrb_state *mrb, mrb_value) {
+  Texture2D *texture;
+  mrb_int filter;
+
+  mrb_get_args(mrb, "di", &texture, &Texture2D_type, &filter);
+
+  SetTextureFilter(*texture, filter);
+
+  return mrb_nil_value();
+}
+
+mrb_value mrb_gen_texture_mipmaps(mrb_state *mrb, mrb_value) {
+  Texture2D *texture;
+
+  mrb_get_args(mrb, "d", &texture, &Texture2D_type);
+
+  GenTextureMipmaps(texture);
 
   return mrb_nil_value();
 }
@@ -97,8 +119,19 @@ void append_textures(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_texture", mrb_load_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "load_texture_from_image", mrb_load_texture_from_image, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "unload_texture", mrb_unload_texture, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "set_texture_filter", mrb_set_texture_filter, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb, mrb->kernel_module, "generate_texture_mipmaps", mrb_gen_texture_mipmaps, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture_pro", mrb_draw_texture_pro, MRB_ARGS_REQ(6));
 
   mrb_define_method(mrb, mrb->kernel_module, "fade", mrb_fade, MRB_ARGS_REQ(2));
+
+  mrb_load_string(mrb, R"(
+    TEXTURE_FILTER_POINT = 0           # No filter, just pixel approximation
+    TEXTURE_FILTER_BILINEAR = 1        # Linear filtering
+    TEXTURE_FILTER_TRILINEAR = 2       # Trilinear filtering (linear with mipmaps)
+    TEXTURE_FILTER_ANISOTROPIC_4X = 3  # Anisotropic filtering 4x
+    TEXTURE_FILTER_ANISOTROPIC_8X = 4  # Anisotropic filtering 8x
+    TEXTURE_FILTER_ANISOTROPIC_16X = 5 # Anisotropic filtering 16x
+  )");
 }
