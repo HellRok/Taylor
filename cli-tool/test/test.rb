@@ -17,6 +17,7 @@ require './test/commands/export_test'
 require './test/commands/new_test'
 require './test/commands/run_test'
 require './test/commands/version_test'
+require './test/overrides'
 
 result = MTest::Unit.new.run.positive?
 upload_buildkite_test_analytics

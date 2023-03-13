@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.13
 
 - Buildkite now builds the docker images
 - Buildkite now runs tests on Linux, under wine, and in the chrome
@@ -13,6 +13,7 @@
 - Add Font.filter=
 - Add Texture2D.filter=
 - Add Texture2D.generate_mipmaps
+- Add released?
 
 ## v0.3.12.2
 

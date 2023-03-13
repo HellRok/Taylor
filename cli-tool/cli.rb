@@ -1,5 +1,7 @@
 require './templates/game_template'
 
+require './lib/overrides'
+
 require './app/commands/export'
 require './app/commands/new'
 require './app/commands/run'

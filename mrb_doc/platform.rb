@@ -37,3 +37,11 @@ def browser?
   # src/platform.cpp
   false
 end
+
+# Is this a release build?
+# @return [Boolean]
+def released?
+  # mrb_released
+  # src/platform.cpp
+  true
+end

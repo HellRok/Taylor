@@ -38,6 +38,7 @@ require 'models/shader_test'
 require 'models/sound_test'
 require 'models/texture2d_test'
 require 'models/vector2_test'
+require 'platform'
 require 'web'
 
 init_window(10, 10, 'blah') if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?

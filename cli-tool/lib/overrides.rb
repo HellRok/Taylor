@@ -1,0 +1,3 @@
+def released?
+  false
+end

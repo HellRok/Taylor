@@ -41,12 +41,18 @@ mrb_value mrb_windows(mrb_state*, mrb_value) {
 #endif
 }
 
+mrb_value mrb_released(mrb_state*, mrb_value) {
+  return mrb_true_value();
+}
+
 void append_platform(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "android?", mrb_android, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "browser?", mrb_browser, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "linux?", mrb_linux, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "osx?", mrb_osx, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "windows?", mrb_windows, MRB_ARGS_NONE());
+
+  mrb_define_method(mrb, mrb->kernel_module, "released?", mrb_released, MRB_ARGS_NONE());
 
   mrb_load_string(mrb, R"(
     GLSL_VERSION = (browser? || android?) ? 100 : 330
