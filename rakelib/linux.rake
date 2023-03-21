@@ -5,6 +5,7 @@ class LinuxBuilder < Builder
   def initialize
     @platform = 'linux'
     @cxx = 'g++'
+    @cxxflags = '-std=c++17'
     @ldflags = '-l dl -l pthread'
     @static_links = './vendor/linux/libmruby.a ./vendor/linux/raylib/lib/libraylib.a'
     @release_flags = '-03'

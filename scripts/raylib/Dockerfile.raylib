@@ -9,7 +9,7 @@ RUN \
     ca-certificates \
     git && \
   apt-get clean -y && apt-get autoremove -y && \
-  git clone --branch 4.2.0 --depth 1 https://github.com/raysan5/raylib.git .
+  git clone --branch 4.5.0 --depth 1 https://github.com/raysan5/raylib.git .
 
 COPY ./scripts/raylib/tweaks.patch /app/
 RUN git apply tweaks.patch

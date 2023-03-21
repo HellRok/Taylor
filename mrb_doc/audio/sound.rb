@@ -52,32 +52,6 @@ def resume_sound(sound)
   nil
 end
 
-# Plays a sound in the sound playback pool. This allows for multiple of the
-# same sound to be played simultaneously.
-# @param sound [Sound]
-# @return [nil]
-def play_sound_multi(sound)
-  # mrb_play_sound_multi
-  # src/mruby_integration/audio/sound.cpp
-  nil
-end
-
-# Stops all sounds in the sound playback pool
-# @return [nil]
-def stop_sound_multi
-  # mrb_stop_sound_multi
-  # src/mruby_integration/audio/sound.cpp
-  nil
-end
-
-# Returns the count of sounds playing currently
-# @return [Integer]
-def get_sounds_playing()
-  # mrb_get_sounds_playing
-  # src/mruby_integration/audio/sound.cpp
-  1
-end
-
 # Checks whether or not a sound object is currently playing
 # @param sound [Sound]
 # @return [Boolean]

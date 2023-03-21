@@ -63,25 +63,6 @@ mrb_value mrb_resume_sound(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_play_sound_multi(mrb_state *mrb, mrb_value) {
-  Sound *sound;
-  mrb_get_args(mrb, "d", &sound, &Sound_type);
-
-  PlaySoundMulti(*sound);
-
-  return mrb_nil_value();
-}
-
-mrb_value mrb_stop_sound_multi(mrb_state*, mrb_value) {
-  StopSoundMulti();
-
-  return mrb_nil_value();
-}
-
-mrb_value mrb_get_sounds_playing(mrb_state *mrb, mrb_value) {
-  return mrb_int_value(mrb, GetSoundsPlaying());
-}
-
 mrb_value mrb_sound_playing(mrb_state *mrb, mrb_value) {
   Sound *sound;
   mrb_get_args(mrb, "d", &sound, &Sound_type);
@@ -116,9 +97,6 @@ void append_audio_sound(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "stop_sound", mrb_stop_sound, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "pause_sound", mrb_pause_sound, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "resume_sound", mrb_resume_sound, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "play_sound_multi", mrb_play_sound_multi, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "stop_sound_multi", mrb_stop_sound_multi, MRB_ARGS_NONE());
-  mrb_define_method(mrb, mrb->kernel_module, "get_sounds_playing", mrb_get_sounds_playing, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "sound_playing?", mrb_sound_playing, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "set_sound_volume", mrb_set_sound_volume, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "set_sound_pitch", mrb_set_sound_pitch, MRB_ARGS_REQ(2));

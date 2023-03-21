@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-bundle exec rake linux:build windows:build docker:build:export:web
+bundle exec rake linux:release:build windows:release:build docker:build:export:web
+rm -rf exports
+mkdir -p exports
+taylor-dev export
 
 export DISPLAY=:1
 
@@ -12,14 +15,11 @@ echo XVFB_PID: $XVFB_PID
 DISPLAY=:1 openbox &
 export OPENBOX_PID=$!
 
-../dist/linux/debug/taylor ../cli-tool/cli.rb test.rb
+../dist/linux/release/taylor ../cli-tool/cli.rb test.rb
 export NATIVE_EXIT_CODE=$?
-wine ../dist/windows/debug/taylor.exe ../cli-tool/cli.rb test.rb
+wine ../dist/windows/release/taylor.exe ../cli-tool/cli.rb test.rb
 export WINE_EXIT_CODE=$?
 
-rm -rf exports
-mkdir -p exports
-taylor-dev export
 pushd exports
 unzip taylor-test-suite-web-v0.0.1.zip
 ../../.buildkite/scripts/tests/web_test.rb

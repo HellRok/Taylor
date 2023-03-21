@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Upgrade to Raylib 4.5
+
 ## v0.3.13
 
 - Buildkite now builds the docker images

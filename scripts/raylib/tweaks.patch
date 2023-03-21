@@ -1,25 +1,8 @@
 diff --git a/src/Makefile b/src/Makefile
-index c03278fb..58bd339f 100644
+index 5d7086d8..cef43584 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -180,16 +180,6 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
-     endif
- endif
- 
--ifeq ($(PLATFORM),PLATFORM_WEB)
--    # Emscripten required variables
--    EMSDK_PATH         ?= C:/emsdk
--    EMSCRIPTEN_PATH    ?= $(EMSDK_PATH)/upstream/emscripten
--    CLANG_PATH          = $(EMSDK_PATH)/upstream/bin
--    PYTHON_PATH         = $(EMSDK_PATH)/python/3.9.2-1_64bit
--    NODE_PATH           = $(EMSDK_PATH)/node/14.15.5_64bit/bin
--    export PATH         = $(EMSDK_PATH);$(EMSCRIPTEN_PATH);$(CLANG_PATH);$(NODE_PATH);$(PYTHON_PATH);C:\raylib\MinGW\bin:$$(PATH)
--endif
--
- ifeq ($(PLATFORM),PLATFORM_ANDROID)
-     # Android architecture
-     # Starting at 2019 using arm64 is mandatory for published apps,
-@@ -255,6 +245,23 @@ CC = gcc
+@@ -259,6 +259,23 @@ CC = gcc
  AR = ar
  
  ifeq ($(PLATFORM),PLATFORM_DESKTOP)
@@ -35,8 +18,8 @@ index c03278fb..58bd339f 100644
 +      GLFW_OSX = -x objective-c
 +    endif
 +    ifeq ($(CROSS),OSX_APPLE)
-+      CC = arm64-apple-darwin20.4-clang
-+      AR = arm64-apple-darwin20.4-ar
++      CC = arm64e-apple-darwin20.4-clang
++      AR = arm64e-apple-darwin20.4-ar
 +      CFLAGS = -compatibility_version $(RAYLIB_API_VERSION) -current_version $(RAYLIB_VERSION) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
 +      GLFW_OSX = -x objective-c
 +    endif
@@ -44,18 +27,33 @@ index c03278fb..58bd339f 100644
          # OSX default compiler
          CC = clang
 diff --git a/src/config.h b/src/config.h
-index ce7d9b04..aff901dd 100644
+index fbc7a5b4..61c40d7a 100644
 --- a/src/config.h
 +++ b/src/config.h
-@@ -140,9 +140,9 @@
+@@ -141,16 +141,16 @@
  //------------------------------------------------------------------------------------
- // Selecte desired fileformats to be supported for image data loading
- #define SUPPORT_FILEFORMAT_PNG      1
--//#define SUPPORT_FILEFORMAT_BMP      1
+ // Module: rtextures - Configuration Flags
+ //------------------------------------------------------------------------------------
+-// Select the desired fileformats to be supported for image data loading
+-#define SUPPORT_FILEFORMAT_PNG          1
+-//#define SUPPORT_FILEFORMAT_BMP          1
+-//#define SUPPORT_FILEFORMAT_TGA          1
+-//#define SUPPORT_FILEFORMAT_JPG          1
+-#define SUPPORT_FILEFORMAT_GIF          1
+-#define SUPPORT_FILEFORMAT_QOI          1
+-//#define SUPPORT_FILEFORMAT_PSD          1
+-#define SUPPORT_FILEFORMAT_DDS          1
+-#define SUPPORT_FILEFORMAT_HDR          1
++// Selecte desired fileformats to be supported for image data loading
++#define SUPPORT_FILEFORMAT_PNG      1
 +#define SUPPORT_FILEFORMAT_BMP      1
- //#define SUPPORT_FILEFORMAT_TGA      1
--//#define SUPPORT_FILEFORMAT_JPG      1
++//#define SUPPORT_FILEFORMAT_TGA      1
 +#define SUPPORT_FILEFORMAT_JPG      1
- #define SUPPORT_FILEFORMAT_GIF      1
- #define SUPPORT_FILEFORMAT_QOI      1
- //#define SUPPORT_FILEFORMAT_PSD      1
++#define SUPPORT_FILEFORMAT_GIF      1
++#define SUPPORT_FILEFORMAT_QOI      1
++//#define SUPPORT_FILEFORMAT_PSD      1
++#define SUPPORT_FILEFORMAT_DDS      1
++#define SUPPORT_FILEFORMAT_HDR      1
+ //#define SUPPORT_FILEFORMAT_PIC          1
+ //#define SUPPORT_FILEFORMAT_PNM          1
+ //#define SUPPORT_FILEFORMAT_KTX          1

@@ -61,8 +61,8 @@ void append_models_Sound(mrb_state *mrb) {
         unload_sound(self)
       end
 
-      def play(multi: true)
-        multi ? play_sound_multi(self) : play_sound(self)
+      def play
+        play_sound(self)
       end
 
       def stop
@@ -93,14 +93,6 @@ void append_models_Sound(mrb_state *mrb) {
       def pitch=(value)
         @pitch = value
         set_sound_pitch(self, value)
-      end
-
-      def self.stop
-        stop_sound_multi
-      end
-
-      def self.playing
-        get_sounds_playing
       end
 
       class NotFound < StandardError; end

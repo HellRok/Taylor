@@ -46,18 +46,14 @@ class Sound
     nil
   end
 
-  # Starts playing the sound, if `multi` is true you won't be able to
-  # pause/resume/stop this sound but you will be able to play it multiple times
-  # at once
-  # @param multi [Boolean]
+  # Starts playing the sound
   # @return [nil]
-  def play(multi: true)
+  def play
     # src/mruby_integration/models/music.cpp
     nil
   end
 
   # Is the sound currently playing?
-  # This can only be used if the sound was played with `multi: false`
   # @return [Boolean]
   def playing?
     # src/mruby_integration/models/sound.cpp
@@ -65,7 +61,6 @@ class Sound
   end
 
   # Stops the sound, you will need to call Sound#play to start it again.
-  # This can only be used if the sound was played with `multi: false`
   # @return [nil]
   def stop
     # src/mruby_integration/models/sound.cpp
@@ -73,7 +68,6 @@ class Sound
   end
 
   # Pauses the sound, you will need to call Sound#resume to start it again
-  # This can only be used if the sound was played with `multi: false`
   # @return [nil]
   def pause
     # src/mruby_integration/models/sound.cpp
@@ -81,7 +75,6 @@ class Sound
   end
 
   # Resumes the sound
-  # This can only be used if the sound was played with `multi: false`
   # @return [nil]
   def resume
     # src/mruby_integration/models/sound.cpp
@@ -103,20 +96,6 @@ class Sound
   def pitch=(value)
     # src/mruby_integration/models/sound.cpp
     nil
-  end
-
-  # Stops all sounds that were played using `multi: true` (the default)
-  # @return [nil]
-  def self.stop
-    # src/mruby_integration/models/sound.cpp
-    nil
-  end
-
-  # Returns the total amount of sounds playing using `multi: true` (the default)
-  # @return [Integer]
-  def self.playing
-    # src/mruby_integration/models/sound.cpp
-    3
   end
 
   # Used for alerting the user the sound file was not found at the specified path
