@@ -63,6 +63,10 @@ void append_models_Colour(mrb_state *mrb) {
     class Colour
       attr_reader :red, :green, :blue, :alpha
 
+      class << self
+        alias :[] :new
+      end
+
       def ==(other)
         self.red == other.red &&
           self.green == other.green &&

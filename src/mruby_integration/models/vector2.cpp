@@ -49,6 +49,10 @@ void append_models_Vector2(mrb_state *mrb) {
     class Vector2
       attr_reader :x, :y
 
+      class << self
+        alias :[] :new
+      end
+
       def ==(other)
         self.x == other.x &&
           self.y == other.y
