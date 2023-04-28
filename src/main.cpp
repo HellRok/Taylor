@@ -77,6 +77,8 @@ int main(int argc, char **argv) {
   workarounds_mingw_msg_dontwait(mrb);
 #endif
 
+  mrb_gv_set(mrb, mrb_intern_lit(mrb, "$0"), mrb_str_new_cstr(mrb, path));
+
 #ifndef EXPORT
 
   FILE *game_file = fopen(path, "r");
