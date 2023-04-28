@@ -100,9 +100,13 @@ struct mrb_state;
 # define MRB_ENDIAN_LOHI(a,b) b a
 #endif
 
-MRB_API mrb_int mrb_int_read(const char *p, const char *e, char **endp);
+MRB_API mrb_bool mrb_read_int(const char *p, const char *e, char **endp, mrb_int *np);
+/* obsolete; do not use mrb_int_read() */
+MRB_API mrb_int mrb_int_read(const char*, const char*, char**);
 #ifndef MRB_NO_FLOAT
-MRB_API double mrb_float_read(const char*, char**);
+MRB_API mrb_bool mrb_read_float(const char *p, char **endp, double *fp);
+/* obsolete; do not use mrb_float_read() */
+MRB_API double mrb_float_read(const char *p, char **endp);
 #ifdef MRB_USE_FLOAT32
   typedef float mrb_float;
 #else
@@ -183,8 +187,8 @@ MRB_VTYPE_FOREACH(MRB_VTYPE_TYPEDEF)
  *
  * Actual implementation depends on configured boxing type.
  *
- * @see mruby/boxing_no.h Default boxing representation
- * @see mruby/boxing_word.h Word representation
+ * @see mruby/boxing_word.h Word boxing representation (Default)
+ * @see mruby/boxing_no.h No boxing representation
  * @see mruby/boxing_nan.h Boxed double representation
  */
 typedef void mrb_value;

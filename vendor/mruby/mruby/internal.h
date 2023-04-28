@@ -21,6 +21,7 @@ mrb_bool mrb_const_name_p(mrb_state*, const char*, mrb_int);
 mrb_value mrb_class_find_path(mrb_state*, struct RClass*);
 mrb_value mrb_mod_to_s(mrb_state *, mrb_value);
 void mrb_method_added(mrb_state *mrb, struct RClass *c, mrb_sym mid);
+mrb_noreturn void mrb_method_missing(mrb_state *mrb, mrb_sym name, mrb_value self, mrb_value args);
 #endif
 
 /* debug */
@@ -154,6 +155,11 @@ void mrb_gc_free_iv(mrb_state*, struct RObject*);
 
 /* VM */
 mrb_int mrb_ci_bidx(mrb_callinfo *ci);
+mrb_int mrb_ci_nregs(mrb_callinfo *ci);
+mrb_value mrb_exec_irep(mrb_state *mrb, mrb_value self, struct RProc *p);
+mrb_value mrb_obj_instance_eval(mrb_state*, mrb_value);
+mrb_value mrb_mod_module_eval(mrb_state*, mrb_value);
+mrb_value mrb_f_send(mrb_state *mrb, mrb_value self);
 
 #ifdef MRB_USE_BIGINT
 mrb_value mrb_bint_new_int(mrb_state *mrb, mrb_int x);
