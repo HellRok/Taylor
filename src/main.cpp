@@ -7,6 +7,7 @@
 #include "mruby/class.h"
 #include "mruby/compile.h"
 #include "mruby/irep.h"
+#include "mruby/variable.h"
 
 #ifdef __EMSCRIPTEN__
 #include "web.hpp"
@@ -77,9 +78,16 @@ int main(int argc, char **argv) {
 #endif
 
 #ifndef EXPORT
+
   FILE *game_file = fopen(path, "r");
   ChangeDirectory(GetDirectoryPath(path));
-  mrb_load_file(mrb, game_file);
+
+  mrbc_context* cxt = mrbc_context_new(mrb);
+
+  mrbc_filename(mrb, cxt, path);
+  mrb_load_file_cxt(mrb, game_file, cxt);
+
+  fclose(game_file);
 #endif
 
 #ifdef EXPORT
