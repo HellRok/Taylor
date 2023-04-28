@@ -92,7 +92,17 @@ mrb_value mrb_measure_text_ex(mrb_state *mrb, mrb_value) {
   return obj;
 }
 
+mrb_value mrb_get_font_default(mrb_state *mrb, mrb_value) {
+  Font *font = (Font *)malloc(sizeof(Font));
+  *font = GetFontDefault();
+
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Font_class, &Font_type, font));
+
+  return obj;
+}
+
 void append_text(mrb_state *mrb) {
+  mrb_define_method(mrb, mrb->kernel_module, "default_font", mrb_get_font_default, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "load_font", mrb_load_font, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "load_font_ex", mrb_load_font_ex, MRB_ARGS_REQ(3));
   mrb_define_method(mrb, mrb->kernel_module, "unload_font", mrb_unload_font, MRB_ARGS_REQ(1));
