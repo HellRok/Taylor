@@ -80,6 +80,8 @@ void append_models_Colour(mrb_state *mrb) {
       end
     end
 
+    Color = Colour
+
     LIGHTGRAY  = Colour.new(200, 200, 200, 255)
     GRAY       = Colour.new(130, 130, 130, 255)
     DARKGRAY   = Colour.new( 80,  80,  80, 255)
