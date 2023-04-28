@@ -19,7 +19,9 @@ void setup_Colour(mrb_state *mrb, mrb_value object, Color *colour, int red, int 
 
 mrb_value mrb_Colour_initialize(mrb_state *mrb, mrb_value self) {
   mrb_int red, green, blue, alpha;
-  mrb_get_args(mrb, "iiii", &red, &green, &blue, &alpha);
+  alpha = 255;
+
+  mrb_get_args(mrb, "iii|i", &red, &green, &blue, &alpha);
 
   Color *colour = (struct Color *)DATA_PTR(self);
   if (colour) { mrb_free(mrb, colour); }
@@ -51,7 +53,7 @@ mrb_value mrb_Colour_set_alpha(mrb_state *mrb, mrb_value self) {
 void append_models_Colour(mrb_state *mrb) {
   Colour_class = mrb_define_class(mrb, "Colour", mrb->object_class);
   MRB_SET_INSTANCE_TT(Colour_class, MRB_TT_DATA);
-  mrb_define_method(mrb, Colour_class, "initialize", mrb_Colour_initialize, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, Colour_class, "initialize", mrb_Colour_initialize, MRB_ARGS_REQ(3)|MRB_ARGS_OPT(1));
   mrb_define_method(mrb, Colour_class, "red=", mrb_Colour_set_red, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Colour_class, "green=", mrb_Colour_set_green, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Colour_class, "blue=", mrb_Colour_set_blue, MRB_ARGS_REQ(1));
