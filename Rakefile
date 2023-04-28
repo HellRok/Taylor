@@ -17,7 +17,7 @@ platform = ""
 cxx = ""
 variant = "debug"
 cxxflags = "-std=c++17 -no-pie -Wall -Wextra"
-ldflags = "-l pthread"
+ldflags = "-l pthread --allow-multiple-definition"
 includes = "-I ./include/ -I ./vendor/ -I ./vendor/raylib/include/ -I ./vendor/mruby/"
 static_links = ""
 SRC_FOLDER = "src"
@@ -48,7 +48,7 @@ namespace :linux do
     objects_folder = "build/linux/debug"
     cxx = "g++"
     platform = "linux"
-    ldflags = "-l dl -l pthread"
+    ldflags = "-Wl,--allow-multiple-definition -l dl -l pthread"
     static_links = <<-EOS.chomp
       #{static_links} \
       ./vendor/linux/libmruby.a \
