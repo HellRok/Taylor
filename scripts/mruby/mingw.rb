@@ -25,7 +25,9 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.gem github: 'iij/mruby-mtest'
   conf.gem github: 'hellrok/mruby-regexp-pcre'
   conf.gem github: 'katzer/mruby-tiny-opt-parser'
-  conf.gem github: 'Asmod4n/mruby-uri-parser'
+  # This causes issues with conflicting symbols, not sure why?
+  # Will need to investigate and maybe fork.
+  #conf.gem github: 'Asmod4n/mruby-uri-parser'
   conf.gem github: 'matsumotory/mruby-simplehttp'
   conf.gem github: 'matsumotory/mruby-simplehttpserver'
   conf.gem github: 'mattn/mruby-base64'

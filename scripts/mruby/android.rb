@@ -24,7 +24,7 @@ MRuby::CrossBuild.new('android-arm64-v8a') do |conf|
   conf.gem github: 'iij/mruby-mtest'
   conf.gem github: 'hellrok/mruby-regexp-pcre'
   conf.gem github: 'katzer/mruby-tiny-opt-parser'
-  # This causes issues with conflicting symbols, not sure why only on android?
+  # This causes issues with conflicting symbols, not sure why?
   # Will need to investigate and maybe fork.
   #conf.gem github: 'Asmod4n/mruby-uri-parser'
   conf.gem github: 'matsumotory/mruby-simplehttp'
