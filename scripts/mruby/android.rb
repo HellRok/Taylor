@@ -9,6 +9,11 @@ MRuby::CrossBuild.new('android-arm64-v8a') do |conf|
 
   conf.cc.flags += %w[-DMRB_ARY_LENGTH_MAX=0 -DMRB_STR_LENGTH_MAX=0]
 
+  conf.archiver.command = 'llvm-ar'
+
+  conf.build_target = "x86_64-pc-linux-gnu"
+  conf.host_target = "aarch64-android-linux"
+
   # These are the default libraries
   conf.gembox "stdlib"
   conf.gembox "stdlib-ext"
