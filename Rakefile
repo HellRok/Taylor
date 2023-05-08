@@ -48,7 +48,7 @@ namespace :linux do
     objects_folder = "build/linux/debug"
     cxx = "g++"
     platform = "linux"
-    ldflags = "-Wl,--allow-multiple-definition -l dl -l pthread"
+    ldflags = "-l dl -l pthread"
     static_links = <<-EOS.chomp
       #{static_links} \
       ./vendor/linux/libmruby.a \
