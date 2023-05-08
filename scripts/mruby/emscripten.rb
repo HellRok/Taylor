@@ -24,10 +24,14 @@ MRuby::CrossBuild.new('emscripten') do |conf|
   conf.gem github: 'iij/mruby-mtest'
   conf.gem github: 'hellrok/mruby-regexp-pcre'
   conf.gem github: 'katzer/mruby-tiny-opt-parser'
-  conf.gem github: 'Asmod4n/mruby-uri-parser'
+  # This causes issues with conflicting symbols, not sure why?
+  # Will need to investigate and maybe fork.
+  #conf.gem github: 'Asmod4n/mruby-uri-parser'
   conf.gem github: 'matsumotory/mruby-simplehttp'
   # I dunno if it ever makes sense to enable this for web?
   #conf.gem github: 'matsumotory/mruby-simplehttpserver'
   conf.gem github: 'mattn/mruby-base64'
-  conf.gem github: 'mattn/mruby-require'
+  conf.gem github: 'iij/mruby-require'
+  conf.gem github: 'ksss/mruby-file-stat'
+  conf.gem github: 'ksss/mruby-ostruct'
 end
