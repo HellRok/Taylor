@@ -25,5 +25,5 @@ MRuby::Build.new do |conf|
   conf.gem github: 'matsumotory/mruby-simplehttp'
   conf.gem github: 'matsumotory/mruby-simplehttpserver'
   conf.gem github: 'mattn/mruby-base64'
-  conf.gem github: 'mattn/mruby-require'
+  conf.gem github: 'iij/mruby-require'
 end

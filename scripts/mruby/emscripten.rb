@@ -29,5 +29,5 @@ MRuby::CrossBuild.new('emscripten') do |conf|
   # I dunno if it ever makes sense to enable this for web?
   #conf.gem github: 'matsumotory/mruby-simplehttpserver'
   conf.gem github: 'mattn/mruby-base64'
-  conf.gem github: 'mattn/mruby-require'
+  conf.gem github: 'iij/mruby-require'
 end
