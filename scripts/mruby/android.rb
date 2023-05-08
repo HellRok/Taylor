@@ -31,4 +31,6 @@ MRuby::CrossBuild.new('android-arm64-v8a') do |conf|
   conf.gem github: 'matsumotory/mruby-simplehttpserver'
   conf.gem github: 'mattn/mruby-base64'
   conf.gem github: 'iij/mruby-require'
+  conf.gem github: 'ksss/mruby-file-stat'
+  conf.gem github: 'ksss/mruby-ostruct'
 end
