@@ -22,6 +22,7 @@ mrb_value mrb_class_find_path(mrb_state*, struct RClass*);
 mrb_value mrb_mod_to_s(mrb_state *, mrb_value);
 void mrb_method_added(mrb_state *mrb, struct RClass *c, mrb_sym mid);
 mrb_noreturn void mrb_method_missing(mrb_state *mrb, mrb_sym name, mrb_value self, mrb_value args);
+mrb_method_t mrb_vm_find_method(mrb_state *mrb, struct RClass *c, struct RClass **cp, mrb_sym mid);
 #endif
 
 /* debug */
@@ -38,12 +39,20 @@ int mrb_dump_irep_cstruct(mrb_state *mrb, const mrb_irep*, uint8_t flags, FILE *
 #endif
 #endif
 
+/* codedump */
+void mrb_codedump_all(mrb_state *mrb, struct RProc *proc);
+#ifndef MRB_NO_STDIO
+void mrb_codedump_all_file(mrb_state *mrb, struct RProc *proc, FILE *out);
+#endif
+
 /* error */
 mrb_value mrb_exc_inspect(mrb_state *mrb, mrb_value exc);
 mrb_value mrb_exc_backtrace(mrb_state *mrb, mrb_value exc);
 mrb_value mrb_get_backtrace(mrb_state *mrb);
 void mrb_exc_mesg_set(mrb_state *mrb, struct RException *exc, mrb_value mesg);
 mrb_value mrb_exc_mesg_get(mrb_state *mrb, struct RException *exc);
+mrb_value mrb_f_raise(mrb_state*, mrb_value);
+mrb_value mrb_make_exception(mrb_state *mrb, mrb_value exc, mrb_value mesg);
 
 /* gc */
 void mrb_gc_mark_mt(mrb_state*, struct RClass*);
@@ -104,6 +113,12 @@ void mrb_rational_copy(mrb_state *mrb, mrb_value x, mrb_value y);
 struct RProc *mrb_closure_new(mrb_state*, const mrb_irep*);
 void mrb_proc_copy(mrb_state *mrb, struct RProc *a, struct RProc *b);
 mrb_int mrb_proc_arity(const struct RProc *p);
+struct REnv *mrb_env_new(mrb_state *mrb, struct mrb_context *c, mrb_callinfo *ci, int nstacks, mrb_value *stack, struct RClass *tc);
+void mrb_proc_merge_lvar(mrb_state *mrb, mrb_irep *irep, struct REnv *env, int num, const mrb_sym *lv, const mrb_value *stack);
+mrb_value mrb_proc_local_variables(mrb_state *mrb, const struct RProc *proc);
+const struct RProc *mrb_proc_get_caller(mrb_state *mrb, struct REnv **env);
+mrb_value mrb_proc_get_self(mrb_state *mrb, struct RProc *p, struct RClass **target_class_p);
+mrb_bool mrb_proc_eql(mrb_state *mrb, mrb_value self, mrb_value other);
 #endif
 
 /* range */
@@ -163,21 +178,28 @@ mrb_value mrb_f_send(mrb_state *mrb, mrb_value self);
 
 #ifdef MRB_USE_BIGINT
 mrb_value mrb_bint_new_int(mrb_state *mrb, mrb_int x);
+#ifdef MRB_INT64
+#define mrb_bint_new_int64(mrb,x) mrb_bint_new_int((mrb),(mrb_int)(x))
+#else
+mrb_value mrb_bint_new_int64(mrb_state *mrb, int64_t x);
+#endif
+mrb_value mrb_bint_new_uint64(mrb_state *mrb, uint64_t x);
 mrb_value mrb_bint_new_str(mrb_state *mrb, const char *x, mrb_int len, mrb_int base);
 mrb_value mrb_as_bint(mrb_state *mrb, mrb_value x);
 mrb_value mrb_bint_add(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_bint_sub(mrb_state *mrb, mrb_value x, mrb_value y);
+mrb_value mrb_bint_add_d(mrb_state *mrb, mrb_value x, mrb_value y);
+mrb_value mrb_bint_sub_d(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_bint_mul(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_bint_div(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_bint_divmod(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_bint_add_ii(mrb_state *mrb, mrb_int x, mrb_int y);
 mrb_value mrb_bint_sub_ii(mrb_state *mrb, mrb_int x, mrb_int y);
 mrb_value mrb_bint_mul_ii(mrb_state *mrb, mrb_int x, mrb_int y);
-mrb_value mrb_bint_div_ii(mrb_state *mrb, mrb_int x, mrb_int y);
 mrb_value mrb_bint_mod(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_bint_rem(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_bint_pow(mrb_state *mrb, mrb_value x, mrb_value y);
-mrb_value mrb_bint_powm(mrb_state *mrb, mrb_value x, mrb_int y, mrb_value z);
+mrb_value mrb_bint_powm(mrb_state *mrb, mrb_value x, mrb_value y, mrb_value z);
 mrb_value mrb_bint_and(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_bint_or(mrb_state *mrb, mrb_value x, mrb_value y);
 mrb_value mrb_bint_xor(mrb_state *mrb, mrb_value x, mrb_value y);
@@ -190,6 +212,12 @@ mrb_value mrb_bint_new_float(mrb_state *mrb, mrb_float x);
 mrb_float mrb_bint_as_float(mrb_state *mrb, mrb_value x);
 #endif
 mrb_int mrb_bint_as_int(mrb_state *mrb, mrb_value x);
+#ifdef MRB_INT64
+#define mrb_bint_as_int64(mrb, x) mrb_bint_as_int((mrb), (x))
+#else
+int64_t mrb_bint_as_int64(mrb_state *mrb, mrb_value x);
+#endif
+uint64_t mrb_bint_as_uint64(mrb_state *mrb, mrb_value x);
 mrb_int mrb_bint_cmp(mrb_state *mrb, mrb_value x, mrb_value y);
 void mrb_gc_free_bint(mrb_state *mrb, struct RBasic *x);
 void mrb_bint_copy(mrb_state *mrb, mrb_value x, mrb_value y);
