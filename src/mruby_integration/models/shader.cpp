@@ -43,10 +43,22 @@ void append_models_Shader(mrb_state *mrb) {
     class Shader
       attr_reader :id
 
+      def self.load(vertex_shader_path, fragment_shader_path)
+        load_shader(vertex_shader_path, fragment_shader_path)
+      end
+
+      def unload
+        unload_shader(self)
+      end
+
       def draw(&block)
         begin_shader_mode(self)
         block.call
         end_shader_mode
+      end
+
+      def ready?
+        shader_ready?(self)
       end
     end
   )");

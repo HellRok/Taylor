@@ -12,17 +12,33 @@ class Shader
     Shader.new
   end
 
+  # Loads a Shader
+  # @param vertex_shader_path [String]
+  # @param fragment_shader_path [String]
+  # @return [Shader]
+  def load(vertex_shader_path, fragment_shader_path)
+    # src/mruby_integration/models/shader.cpp
+    Shader.new
+  end
+
   def id=(id)
     # mrb_Shader_set_id
     # src/mruby_integration/models/shader.cpp
     0
   end
 
-  # Instead of rending straight to the screen, render through this Shader first
+  # Instead of rendering straight to the screen, render through this Shader first
   # @yield The block that calls your rendering logic
   # @return [nil]
   def draw(&block)
     # src/mruby_integration/models/shader.cpp
     nil
+  end
+
+  # Is the Shader ready to be used?
+  # @return [Boolean]
+  def ready?
+    # src/mruby_integration/models/shader.cpp
+    True
   end
 end

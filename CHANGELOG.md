@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Upgrade to Raylib 4.5
+- Add shader_ready? and Shader#ready?
 
 ## v0.3.13
 

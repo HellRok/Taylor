@@ -31,7 +31,15 @@ mrb_value mrb_unload_shader(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_shader_ready(mrb_state *mrb, mrb_value) {
+  Shader *shader;
+  mrb_get_args(mrb, "d", &shader, &Shader_type);
+
+  return mrb_bool_value(IsShaderReady(*shader));
+}
+
 void append_shaders(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "load_shader", mrb_load_shader, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "unload_shader", mrb_unload_shader, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "shader_ready?", mrb_shader_ready, MRB_ARGS_REQ(1));
 }
