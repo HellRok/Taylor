@@ -16,9 +16,16 @@ class Shader
   # @param vertex_shader_path [String]
   # @param fragment_shader_path [String]
   # @return [Shader]
-  def load(vertex_shader_path, fragment_shader_path)
+  def self.load(vertex_shader_path, fragment_shader_path)
     # src/mruby_integration/models/shader.cpp
     Shader.new
+  end
+
+  # Unloads the Shader from memory
+  # @return [nil]
+  def unload
+    # src/mruby_integration/models/shader.cpp
+    nil
   end
 
   def id=(id)
