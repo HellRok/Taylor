@@ -4,6 +4,7 @@
 
 - Upgrade to Raylib 4.5
 - Add shader_ready? and Shader#ready?
+- Fix up the examples link in the readme to point to the playground
 
 ## v0.3.13
 
