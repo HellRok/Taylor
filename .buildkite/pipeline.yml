@@ -61,6 +61,7 @@ steps:
       - chmod +x /usr/bin/taylor
       - cd ./cli-tool/
       - taylor ./cli.rb test/test.rb
+      - ../.buildkite/scripts/tests/upload_test_analytics.sh ./test-analytics.json
 
   - label: 'Taylor Tests - Export'
     commands:
@@ -73,10 +74,12 @@ steps:
   - label: 'Taylor Tests - Linux'
     commands:
       - .buildkite/scripts/tests/test_suite_linux.sh
+      - .buildkite/scripts/tests/upload_test_analytics.sh /tmp/buildkite/taylor-test-suite/linux/test-analytics.json
 
   - label: 'Taylor Tests - Windows'
     commands:
       - .buildkite/scripts/tests/test_suite_windows.sh
+      - .buildkite/scripts/tests/upload_test_analytics.sh /tmp/buildkite/taylor-test-suite/windows/test-analytics.json
 
   - label: 'Taylor Tests - Web'
     commands:

@@ -112,5 +112,11 @@ void append_buildkite_analytics(mrb_state *mrb) {
 
       puts "Done!"
     end
+
+    def persist_buildkite_test_analytics
+      output = File.open('test-analytics.json', 'w')
+      output.write($buildkite_test_analytics.to_json)
+      output.close
+    end
   )");
 }

@@ -45,7 +45,7 @@ init_window(10, 10, 'blah') if !ENV.fetch('DISPLAY', '').empty? || browser? || w
 result = MTest::Unit.new.run.positive?
 close_window if !ENV.fetch('DISPLAY', '').empty? || browser? || windows?
 
-upload_buildkite_test_analytics
+persist_buildkite_test_analytics unless browser?
 
 # The browser version doesn't exit cleanly unless specifically told to.
 if browser?
