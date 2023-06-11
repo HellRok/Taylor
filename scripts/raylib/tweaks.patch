@@ -18,8 +18,8 @@ index 5d7086d8..cef43584 100644
 +      GLFW_OSX = -x objective-c
 +    endif
 +    ifeq ($(CROSS),OSX_APPLE)
-+      CC = arm64e-apple-darwin20.4-clang
-+      AR = arm64e-apple-darwin20.4-ar
++      CC = arm64-apple-darwin20.4-clang
++      AR = arm64-apple-darwin20.4-ar
 +      CFLAGS = -compatibility_version $(RAYLIB_API_VERSION) -current_version $(RAYLIB_VERSION) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
 +      GLFW_OSX = -x objective-c
 +    endif

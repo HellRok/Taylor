@@ -6,6 +6,8 @@
 - Add shader_ready? and Shader#ready?
 - Fix up the examples link in the readme to point to the playground
 - Add in the missed documentation
+- Fix Buildkite analytics upload
+- Fix ARM64 OSX builds
 
 ## v0.3.13
 
