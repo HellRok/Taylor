@@ -65,6 +65,12 @@ def upload_analytics(analytics)
   puts "Done!"
 end
 
+def persist_analytics(analytics)
+  output = File.open('test-analytics.json', 'w')
+  output.write(analytics.to_json)
+  output.close
+end
+
 start_time = Time.now
 analytics = nil
 loop do
@@ -81,7 +87,7 @@ loop do
 
     if log.include?("EXIT CODE:")
       _, code = log.split("EXIT CODE: ")
-      upload_analytics(analytics)
+      persist_analytics(analytics)
       exit code.to_i
     end
   }
