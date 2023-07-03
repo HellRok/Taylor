@@ -60,6 +60,11 @@ void append_models_Shader(mrb_state *mrb) {
       def ready?
         shader_ready?(self)
       end
+
+      def get_uniform_location(variable)
+        value = get_shader_location(self, variable)
+        value == -1 ? nil : value
+      end
     end
   )");
 }

@@ -31,6 +31,8 @@ class Test
 
       shader = load_shader('', "assets/uniform_shader_#{GLSL_VERSION}.fs")
 
+      assert_equal(-1, get_shader_location(shader, 'non_existant'))
+
       if GLSL_VERSION == 330
         assert_equal 1, get_shader_location(shader, 'red')
         assert_equal 2, get_shader_location(shader, 'green')
@@ -42,6 +44,7 @@ class Test
       else
         raise "Unexpected GLSL_VERSION"
       end
+
       unload_shader(shader)
     end
   end

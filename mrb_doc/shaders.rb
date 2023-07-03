@@ -28,9 +28,9 @@ end
 
 # Returns the location of uniform variable, will return -1 if not found.
 # @param shader [Shader]
-# @param uniform [String]
+# @param variable [String]
 # @return [Integer]
-def get_shader_location(uniform)
+def get_shader_location(variable)
   # mrb_get_shader_location
   # src/mruby_integration/shaders.cpp
   1

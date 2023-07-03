@@ -9,6 +9,7 @@
 - Fix Buildkite analytics upload
 - Fix ARM64 OSX builds
 - Add get_shader_location
+- Add Shader#get_uniform_location
 
 ## v0.3.13
 
@@ -21,8 +22,8 @@
 - Add set_texture_filter
 - Add generate_texture_mipmaps
 - Add Font.filter=
-- Add Texture2D.filter=
-- Add Texture2D.generate_mipmaps
+- Add Texture2D#filter=
+- Add Texture2D#generate_mipmaps
 - Add released?
 
 ## v0.3.12.2

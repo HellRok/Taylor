@@ -48,4 +48,12 @@ class Shader
     # src/mruby_integration/models/shader.cpp
     True
   end
+
+  # Returns the location of uniform variable, will return nil if not found.
+  # @param variable [String]
+  # @return [Integer]
+  def get_uniform_location(variable)
+    # src/mruby_integration/models/shader.cpp
+    1
+  end
 end

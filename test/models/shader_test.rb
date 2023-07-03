@@ -27,6 +27,29 @@ class Test
 
         shader.unload
       end
+
+      def test_get_shader_location
+        skip_unless_display_present
+        set_window_title(__method__.to_s)
+
+        shader = Shader.load('', "assets/uniform_shader_#{GLSL_VERSION}.fs")
+
+        assert_nil shader.get_uniform_location('non_existant')
+
+        if GLSL_VERSION == 330
+          assert_equal 1, shader.get_uniform_location('red')
+          assert_equal 2, shader.get_uniform_location('green')
+          assert_equal 3, shader.get_uniform_location('blue')
+        elsif GLSL_VERSION == 100
+          assert_equal 2, shader.get_uniform_location('red')
+          assert_equal 3, shader.get_uniform_location('green')
+          assert_equal 4, shader.get_uniform_location('blue')
+        else
+          raise "Unexpected GLSL_VERSION"
+        end
+
+        shader.unload
+      end
     end
   end
 end
