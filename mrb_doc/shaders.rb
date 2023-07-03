@@ -25,3 +25,13 @@ def shader_ready?(shader)
   # src/mruby_integration/shaders.cpp
   True
 end
+
+# Returns the location of uniform variable, will return -1 if not found.
+# @param shader [Shader]
+# @param uniform [String]
+# @return [Integer]
+def get_shader_location(uniform)
+  # mrb_get_shader_location
+  # src/mruby_integration/shaders.cpp
+  1
+end

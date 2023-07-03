@@ -1,27 +1,40 @@
 #!/usr/bin/env bash
 
-bundle exec rake linux:release:build windows:release:build docker:build:export:web
+echo Building
+bundle exec rake linux:release:build windows:release:build docker:build:all &> /dev/null
+
+if [[ $? -gt 0 ]]; then
+  echo "Building failed"
+  exit 1
+fi
+
 rm -rf exports
 mkdir -p exports
-taylor-dev export
+echo Exporting
+taylor-dev export &> /dev/null
+
+if [[ $? -gt 0 ]]; then
+  echo "Exporting failed"
+  exit 1
+fi
 
 export DISPLAY=:1
 
-Xvfb :1 -screen 0 1280x800x24 &
+Xvfb :1 -screen 0 1280x800x24 &> /dev/null &
 export XVFB_PID=$!
 
 echo XVFB_PID: $XVFB_PID
 
-DISPLAY=:1 openbox &
+DISPLAY=:1 openbox &> /dev/null &
 export OPENBOX_PID=$!
 
 ../dist/linux/release/taylor ../cli-tool/cli.rb test.rb
 export NATIVE_EXIT_CODE=$?
-wine ../dist/windows/release/taylor.exe ../cli-tool/cli.rb test.rb
+wine ../dist/windows/release/taylor.exe ../cli-tool/cli.rb test.rb 2> /dev/null
 export WINE_EXIT_CODE=$?
 
 pushd exports
-unzip taylor-test-suite-web-v0.0.1.zip
+unzip taylor-test-suite-web-v0.0.1.zip &> /dev/null
 ../../.buildkite/scripts/tests/web_test.rb
 export WEB_EXIT_CODE=$?
 
@@ -32,7 +45,7 @@ kill $OPENBOX_PID &> /dev/null
 kill $XVFB_PID &> /dev/null
 
 echo "Linux: $NATIVE_EXIT_CODE"
-echo "Wine: $WINE_EXIT_CODE"
-echo "Web: $WEB_EXIT_CODE"
+echo "Wine:  $WINE_EXIT_CODE"
+echo "Web:   $WEB_EXIT_CODE"
 
 exit $NATIVE_EXIT_CODE || $WINE_EXIT_CODE || $WEB_EXIT_CODE

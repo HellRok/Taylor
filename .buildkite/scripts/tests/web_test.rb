@@ -7,8 +7,12 @@ require 'net/http'
 require 'net/https'
 
 root = File.expand_path '.'
-server = WEBrick::HTTPServer.new :Port => 3001, :DocumentRoot => root
-server.config[:Logger].level = 0
+server = WEBrick::HTTPServer.new(
+  Port: 3001,
+  DocumentRoot: root,
+  Logger: WEBrick::Log.new("/dev/null"),
+  AccessLog: [],
+)
 
 server_thread = Thread.start { server.start }
 

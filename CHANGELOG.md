@@ -8,6 +8,7 @@
 - Add in the missed documentation
 - Fix Buildkite analytics upload
 - Fix ARM64 OSX builds
+- Add get_shader_location
 
 ## v0.3.13
 
