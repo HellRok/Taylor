@@ -11,7 +11,8 @@ fi
 rm -rf exports
 mkdir -p exports
 echo Exporting
-taylor-dev export &> /dev/null
+mkdir -p /tmp/blah
+taylor-dev export --build-cache /tmp/blah &> /dev/null
 
 if [[ $? -gt 0 ]]; then
   echo "Exporting failed"

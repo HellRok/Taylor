@@ -46,7 +46,7 @@ def print_colour_data(data)
       when RAYWHITE
         map << 'w'
       when BLACK
-        map << 'b'
+        map << 'B'
       when RED
         map << 'r'
       when GREEN

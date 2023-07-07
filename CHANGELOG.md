@@ -10,6 +10,7 @@
 - Fix ARM64 OSX builds
 - Add get_shader_location
 - Add Shader#get_uniform_location
+- Add set_shader_values
 
 ## v0.3.13
 

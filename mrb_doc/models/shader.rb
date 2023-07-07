@@ -56,4 +56,24 @@ class Shader
     # src/mruby_integration/models/shader.cpp
     1
   end
+
+  # An encapsulating module for enums
+  module Uniform
+    # A single float value
+    FLOAT = 0
+    # An array of 2 floats
+    VEC2 = 1
+    # An array of 3 floats
+    VEC3 = 2
+    # An array of 4 floats
+    VEC4 = 3
+    # An single integer value
+    INT = 4
+    # An array of 2 integers
+    IVEC2 = 5
+    # An array of 3 integers
+    IVEC3 = 6
+    # An array of 4 integers
+    IVEC4 = 7
+  end
 end

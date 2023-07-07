@@ -32,7 +32,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_#{GLSL_VERSION}.fs")
+        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_nil shader.get_uniform_location('non_existant')
 
