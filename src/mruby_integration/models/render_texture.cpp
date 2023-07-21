@@ -3,11 +3,12 @@
 #include "mruby.h"
 #include "mruby/data.h"
 #include "mruby/class.h"
-#include "mruby/compile.h"
 
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
 #include "mruby_integration/models/texture2d.hpp"
+
+#include "ruby/models/render_texture.hpp"
 
 struct RClass *RenderTexture_class;
 
@@ -60,24 +61,5 @@ void append_models_RenderTexture(mrb_state *mrb) {
   mrb_define_method(mrb, RenderTexture_class, "initialize", mrb_RenderTexture_initialize, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, RenderTexture_class, "unload", mrb_RenderTexture_unload, MRB_ARGS_NONE());
 
-  mrb_load_string(mrb, R"(
-    class RenderTexture
-      attr_reader :texture, :width, :height
-
-      def to_h
-        {
-          texture: texture.to_h,
-          width: width,
-          height: height,
-        }
-      end
-
-      def drawing(&block)
-        begin_texture_mode(self)
-        block.call
-      ensure
-        end_texture_mode
-      end
-    end
-  )");
+  load_ruby_models_render_texture(mrb);
 }

@@ -3,10 +3,11 @@
 #include "mruby.h"
 #include "mruby/data.h"
 #include "mruby/class.h"
-#include "mruby/compile.h"
 
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
+
+#include "ruby/models/shader.hpp"
 
 struct RClass *Shader_class;
 
@@ -39,44 +40,5 @@ void append_models_Shader(mrb_state *mrb) {
   mrb_define_method(mrb, Shader_class, "initialize", mrb_Shader_initialize, MRB_ARGS_REQ(5));
   mrb_define_method(mrb, Shader_class, "id=", mrb_Shader_set_id, MRB_ARGS_REQ(1));
 
-  mrb_load_string(mrb, R"(
-    class Shader
-      attr_reader :id
-
-      def self.load(vertex_shader_path, fragment_shader_path)
-        load_shader(vertex_shader_path, fragment_shader_path)
-      end
-
-      def unload
-        unload_shader(self)
-      end
-
-      def draw(&block)
-        begin_shader_mode(self)
-        block.call
-        end_shader_mode
-      end
-
-      def ready?
-        shader_ready?(self)
-      end
-
-      def get_uniform_location(variable)
-        value = get_shader_location(self, variable)
-        value == -1 ? nil : value
-      end
-
-      module Uniform
-        FLOAT = 0
-        VEC2 = 1
-        VEC3 = 2
-        VEC4 = 3
-        INT = 4
-        IVEC2 = 5
-        IVEC3 = 6
-        IVEC4 = 7
-        #SAMPLER2D = 8
-      end
-    end
-  )");
+  load_ruby_models_shader(mrb);
 }

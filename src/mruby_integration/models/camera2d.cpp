@@ -2,13 +2,14 @@
 #include "raylib.h"
 #include "mruby.h"
 #include "mruby/class.h"
-#include "mruby/compile.h"
 #include "mruby/data.h"
 #include "mruby/variable.h"
 
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
 #include "mruby_integration/models/vector2.hpp"
+
+#include "ruby/models/camera2d.hpp"
 
 struct RClass *Camera2D_class;
 
@@ -50,45 +51,5 @@ void append_models_Camera2D(mrb_state *mrb) {
   mrb_define_method(mrb, Camera2D_class, "rotation=", mrb_Camera2D_set_rotation, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Camera2D_class, "zoom=", mrb_Camera2D_set_zoom, MRB_ARGS_REQ(1));
 
-  mrb_load_string(mrb, R"(
-    class Camera2D
-      attr_reader :offset, :target, :rotation, :zoom
-
-      def offset=(other)
-        offset.x = other.x
-        offset.y = other.y
-        offset
-      end
-
-      def target=(other)
-        target.x = other.x
-        target.y = other.y
-        target
-      end
-
-      def to_h
-        {
-          offset: offset.to_h,
-          target: target.to_h,
-          rotation: rotation,
-          zoom: zoom,
-        }
-      end
-
-      def drawing(&block)
-        begin_mode2D(self)
-        block.call
-      ensure
-        end_mode2D
-      end
-
-      def as_in_viewport(vector)
-        get_world_to_screen2D(vector, self)
-      end
-
-      def as_in_world(vector)
-        get_screen_to_world2D(vector, self)
-      end
-    end
-  )");
+  load_ruby_models_camera2d(mrb);
 }

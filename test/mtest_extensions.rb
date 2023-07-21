@@ -3,7 +3,9 @@ module MTest
     alias :original_diff :diff
     def diff(exp, act)
       if [exp, act].all? { |obj| obj.is_a?(Array) && obj.all? { |item| item.is_a?(Colour) } }
-        if exp.all? { |obj| obj == exp.first } && act.all? { |obj| obj == act.first }
+        if exp.length != act.length
+          return "Expected length: #{exp.length}\n Actual length: #{act.length}"
+        elsif exp.all? { |obj| obj == exp.first } && act.all? { |obj| obj == act.first }
           return "Expected: #{exp.first.to_h}\n Actual: #{act.first.to_h}"
         else
           return "Expected:\n#{print_colour_data(exp)}\n Actual:\n#{print_colour_data(act)}"

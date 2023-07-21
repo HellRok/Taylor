@@ -2,7 +2,6 @@
 #include "mruby.h"
 #include "mruby/data.h"
 #include "mruby/class.h"
-#include "mruby/compile.h"
 #include "mruby/string.h"
 
 #include "mruby_integration/models/colour.hpp"
@@ -125,13 +124,4 @@ void append_textures(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "draw_texture_pro", mrb_draw_texture_pro, MRB_ARGS_REQ(6));
 
   mrb_define_method(mrb, mrb->kernel_module, "fade", mrb_fade, MRB_ARGS_REQ(2));
-
-  mrb_load_string(mrb, R"(
-    TEXTURE_FILTER_POINT = 0           # No filter, just pixel approximation
-    TEXTURE_FILTER_BILINEAR = 1        # Linear filtering
-    TEXTURE_FILTER_TRILINEAR = 2       # Trilinear filtering (linear with mipmaps)
-    TEXTURE_FILTER_ANISOTROPIC_4X = 3  # Anisotropic filtering 4x
-    TEXTURE_FILTER_ANISOTROPIC_8X = 4  # Anisotropic filtering 8x
-    TEXTURE_FILTER_ANISOTROPIC_16X = 5 # Anisotropic filtering 16x
-  )");
 }

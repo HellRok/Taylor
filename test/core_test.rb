@@ -5,7 +5,6 @@ class Test
 
       set_window_title(__method__.to_s)
 
-      flush_frame
       clear_and_draw do
         clear_background(RED)
       end
@@ -109,7 +108,7 @@ class Test
       assert_true window_state?(FLAG_WINDOW_MINIMISED)
       assert_true window_minimised?
     ensure
-      restore_window if window_ready?
+      reset_window if window_ready?
     end
 
     def test_set_window_state_maximised

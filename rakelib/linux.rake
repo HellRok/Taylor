@@ -20,7 +20,7 @@ Builder.register(builder)
 namespace :linux do
   multitask :build_depends => depends('build/linux/debug')
   multitask :build_objects => objects('build/linux/debug')
-  task :build => [:build_depends, :build_objects]
+  task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
   desc "Build for linux in debug mode"
   task :build => 'build:linux:debug'
 
@@ -31,7 +31,7 @@ namespace :linux do
 
     multitask :build_depends => depends('build/linux/release')
     multitask :build_objects => objects('build/linux/release')
-    task :build => [:build_depends, :build_objects]
+    task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
     task :build => 'build:linux:release'
     desc "Build for linux in release mode"
     task :build => 'linux:release:strip'

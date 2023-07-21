@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
-echo Building
-bundle exec rake linux:release:build windows:release:build docker:build:all &> /dev/null
+echo Building binaries
+bundle exec rake linux:release:build windows:release:build &> /dev/null
+
+if [[ $? -gt 0 ]]; then
+  echo "Building failed"
+  exit 1
+fi
+
+echo Building docker
+bundle exec rake docker:build:all &> /dev/null
 
 if [[ $? -gt 0 ]]; then
   echo "Building failed"
@@ -12,7 +20,7 @@ rm -rf exports
 mkdir -p exports
 echo Exporting
 mkdir -p /tmp/blah
-taylor-dev export --build-cache /tmp/blah &> /dev/null
+taylor-dev export &> /dev/null
 
 if [[ $? -gt 0 ]]; then
   echo "Exporting failed"

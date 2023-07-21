@@ -2,6 +2,9 @@ class Test
   class Models
     class RenderTexture_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
+        skip_unless_display_present
+        set_window_title(__method__.to_s)
+
         render_texture = RenderTexture.new(64, 32)
 
         assert_kind_of RenderTexture, render_texture
@@ -12,6 +15,9 @@ class Test
       end
 
       def test_to_h
+        skip_unless_display_present
+        set_window_title(__method__.to_s)
+
         render_texture = RenderTexture.new(64, 32)
 
         assert_equal(

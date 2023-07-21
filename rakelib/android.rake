@@ -48,7 +48,7 @@ Builder.register(builder)
 namespace :android do
   multitask :build_depends => depends("build/android/debug")
   multitask :build_objects => objects("build/android/debug")
-  task :build => [:build_depends, :build_objects]
+  task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
   desc "Build for android in debug mode"
   task :build => "build:android:debug"
 
@@ -87,7 +87,7 @@ namespace :android do
 
     multitask :build_depends => depends("build/android/release")
     multitask :build_objects => objects("build/android/release")
-    task :build => [:build_depends, :build_objects]
+    task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
     task :build => "build:android:release"
 
     task :build_apk do

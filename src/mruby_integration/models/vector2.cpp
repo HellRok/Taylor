@@ -3,10 +3,11 @@
 #include "mruby.h"
 #include "mruby/data.h"
 #include "mruby/class.h"
-#include "mruby/compile.h"
 
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
+
+#include "ruby/models/vector2.hpp"
 
 struct RClass *Vector2_class;
 
@@ -45,50 +46,5 @@ void append_models_Vector2(mrb_state *mrb) {
   mrb_define_method(mrb, Vector2_class, "x=", mrb_Vector2_set_x, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Vector2_class, "y=", mrb_Vector2_set_y, MRB_ARGS_REQ(1));
 
-  mrb_load_string(mrb, R"(
-    class Vector2
-      attr_reader :x, :y
-
-      def ==(other)
-        self.x == other.x &&
-          self.y == other.y
-      end
-
-      def +(other)
-        Vector2.new(
-          self.x + other.x,
-          self.y + other.y
-        )
-      end
-
-      def -(other)
-        Vector2.new(
-          self.x - other.x,
-          self.y - other.y
-        )
-      end
-
-      alias :difference :-
-
-      def scale(scalar)
-        Vector2.new(
-          self.x * scalar,
-          self.y * scalar
-        )
-      end
-
-      def length
-        Math.sqrt(x**2 + y**2)
-      end
-
-      def to_h
-        {
-          x: x,
-          y: y,
-        }
-      end
-
-      ZERO = Vector2.new(0, 0)
-    end
-  )");
+  load_ruby_models_vector2(mrb);
 }

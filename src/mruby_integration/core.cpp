@@ -10,6 +10,8 @@
 #include "mruby_integration/core/timing.hpp"
 #include "mruby_integration/core/window.hpp"
 
+#include "ruby/core/buildkite_analytics.hpp"
+
 void append_core(mrb_state *mrb) {
   append_core_cursor(mrb);
   append_core_drawing(mrb);
@@ -20,4 +22,6 @@ void append_core(mrb_state *mrb) {
   append_core_screen_space(mrb);
   append_core_timing(mrb);
   append_core_window(mrb);
+
+  load_ruby_core_buildkite_analytics(mrb);
 }

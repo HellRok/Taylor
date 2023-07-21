@@ -1,6 +1,8 @@
 build
 dist
 releases
+src/ruby/**/*.cpp
+include/ruby
 
 cli-tool/exports
 test/exports

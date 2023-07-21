@@ -1,8 +1,9 @@
 #include "raylib.h"
 #include "mruby.h"
-#include "mruby/compile.h"
 
 #include "mruby_integration/struct_types.hpp"
+
+#include "ruby/core/drawing.hpp"
 
 mrb_value mrb_clear_background(mrb_state *mrb, mrb_value) {
   Color *colour;
@@ -87,23 +88,5 @@ void append_core_drawing(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "begin_scissor_mode", mrb_begin_scissor_mode, MRB_ARGS_REQ(4));
   mrb_define_method(mrb, mrb->kernel_module, "end_scissor_mode", mrb_end_scissor_mode, MRB_ARGS_NONE());
 
-  mrb_load_string(mrb, R"(
-    def clear(colour: RAYWHITE)
-      clear_background(colour)
-    end
-
-    def drawing(&block)
-      begin_drawing
-      block.call
-    ensure
-      end_drawing
-    end
-
-    def scissor_mode(section, &block)
-      begin_scissor_mode(section.x, section.y, section.width, section.height)
-      block.call
-    ensure
-      end_scissor_mode
-    end
-  )");
+  load_ruby_core_drawing(mrb);
 }

@@ -3,10 +3,11 @@
 #include "mruby.h"
 #include "mruby/data.h"
 #include "mruby/class.h"
-#include "mruby/compile.h"
 
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
+
+#include "ruby/models/texture2d.hpp"
 
 struct RClass *Texture2D_class;
 
@@ -63,54 +64,5 @@ void append_models_Texture2D(mrb_state *mrb) {
   mrb_define_method(mrb, Texture2D_class, "mipmaps=", mrb_Texture2D_set_mipmaps, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Texture2D_class, "format=", mrb_Texture2D_set_format, MRB_ARGS_REQ(1));
 
-  mrb_load_string(mrb, R"(
-    class Texture2D
-      attr_reader :id, :width, :height, :mipmaps, :format
-
-      def to_h
-        {
-          id: id,
-          width: width,
-          height: height,
-          mipmaps: mipmaps,
-          format: format,
-        }
-      end
-
-      def self.load(path)
-        raise Texture2D::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
-        load_texture(path)
-      end
-
-      def unload
-        unload_texture(self)
-      end
-
-      def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation: 0, colour: WHITE)
-        @source = source unless source.nil?
-        @source ||= Rectangle.new(0, 0, self.width, self.height)
-        @destination = destination unless destination.nil?
-        @destination ||= @source
-
-        draw_texture_pro(
-          self,
-          @source,
-          @destination,
-          origin,
-          rotation,
-          colour
-        )
-      end
-
-      def filter=(val)
-        set_texture_filter(self, val)
-      end
-
-      def generate_mipmaps
-        generate_texture_mipmaps(self)
-      end
-
-      class NotFound < StandardError; end
-    end
-  )");
+  load_ruby_models_texture2d(mrb);
 }

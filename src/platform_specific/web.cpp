@@ -2,6 +2,8 @@
 #include <mruby/class.h>
 #include "mruby/compile.h"
 
+#include "ruby/platform_specific/web.hpp"
+
 #ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
 
@@ -84,16 +86,6 @@ void append_platform_specific_web(mrb_state *mrb) {
 #endif
 
 #ifndef __EMSCRIPTEN__
-  mrb_load_string(mrb, R"(
-    class LocalStorage
-      def self.get_item(key)
-        raise PlatformSpecificMethodCalledOnWrongPlatformError, 'LocalStorage.get_item is only available for Web exports'
-      end
-
-      def self.set_item(key, value)
-        raise PlatformSpecificMethodCalledOnWrongPlatformError, 'LocalStorage.set_item is only available for Web exports'
-      end
-    end
-  )");
+  load_ruby_platform_specific_web(mrb);
 #endif
 }

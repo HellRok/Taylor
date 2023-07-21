@@ -33,7 +33,7 @@ Builder.register(builder)
 namespace 'osx/intel' do
   multitask :build_depends => depends("build/osx/intel/debug")
   multitask :build_objects => objects("build/osx/intel/debug")
-  task :build => [:build_depends, :build_objects]
+  task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
   desc "Build for osx in debug mode"
   task :build => "build/osx:debug"
 
@@ -44,7 +44,7 @@ namespace 'osx/intel' do
 
     multitask :build_depends => depends("build/osx/intel/release")
     multitask :build_objects => objects("build/osx/intel/release")
-    task :build => [:build_depends, :build_objects]
+    task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
     task :build => "build:osx/intel:release"
     desc "Build for osx in release mode"
     task :build => "osx/intel:release:strip"

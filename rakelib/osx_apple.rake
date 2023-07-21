@@ -33,14 +33,14 @@ Builder.register(builder)
 namespace 'osx/apple' do
   multitask :build_depends => depends("build/osx/apple/debug")
   multitask :build_objects => objects("build/osx/apple/debug")
-  task :build => [:build_depends, :build_objects]
+  task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
   desc "Build for osx in debug mode"
   task :build => "build:osx/apple:debug"
 
   namespace :release do
     multitask :build_depends => depends("build/osx/apple/release")
     multitask :build_objects => objects("build/osx/apple/release")
-    task :build => [:build_depends, :build_objects]
+    task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
     task :build => "build:osx/apple:release"
     desc "Build for osx in release mode"
     # We do not strip the OSX Apple binary as it breaks the binary signature

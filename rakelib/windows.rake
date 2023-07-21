@@ -30,7 +30,7 @@ VARIANTS.each { |variant|
 namespace :windows do
   multitask :build_depends => depends("build/windows/debug")
   multitask :build_objects => objects("build/windows/debug")
-  task :build => [:build_depends, :build_objects]
+  task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
   task :build => "build:windows:debug"
   desc "Build for windows in debug mode"
   task :build => "windows:debug:copy_dlls"
@@ -42,7 +42,7 @@ namespace :windows do
 
     multitask :build_depends => depends("build/windows/release")
     multitask :build_objects => objects("build/windows/release")
-    task :build => [:build_depends, :build_objects]
+    task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
     task :build => "build:windows:release"
     task :build => "windows:release:copy_dlls"
     desc "Build for windows in release mode"

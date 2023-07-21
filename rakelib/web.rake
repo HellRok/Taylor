@@ -57,14 +57,14 @@ Builder.register(WebBuilder.new)
 namespace :web do
   multitask :build_depends => depends("build/web/debug")
   multitask :build_objects => objects("build/web/debug")
-  task :build => [:build_depends, :build_objects]
+  task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
   desc "Build for web in debug mode"
   task :build => "build:web:debug"
 
   namespace :release do
     multitask :build_depends => depends("build/web/release")
     multitask :build_objects => objects("build/web/release")
-    task :build => [:build_depends, :build_objects]
+    task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
     desc "Build for web in release mode"
     task :build => "build:web:release"
   end

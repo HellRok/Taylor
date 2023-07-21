@@ -77,6 +77,7 @@ end
 
 start_time = Time.now
 analytics = nil
+
 loop do
   sleep 0.1
 
