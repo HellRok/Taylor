@@ -2,6 +2,7 @@
 
 $ignored_files = [
   "./src/mruby_integration/buildkite_analytics.cpp",
+  "./src/platform_specific/web.cpp",
 ]
 
 def cpp_methods

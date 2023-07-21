@@ -1,6 +1,16 @@
+# The Music class holds longer format sound files, very useful for background music.
 class Music
-  attr_reader :context_type, :looping, :frame_count, :volume, :pitch
+  # @return [Integer]
+  attr_reader :context_type, :frame_count
 
+  # @return [Float]
+  attr_reader :volume, :pitch
+
+  # @return [Boolean]
+  attr_reader :looping
+
+  # Return the object represented by a Hash
+  # @return [Hash]
   def to_h
     {
       context_type: context_type,
@@ -9,6 +19,10 @@ class Music
     }
   end
 
+  # Loads a music file from the specified path
+  # @param path [String]
+  # @raise [Music::NotFound] If the file specified by path doesn't exist
+  # @return [Music]
   def self.load(path)
     raise Music::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
     load_music_stream(path).tap { |music|
@@ -17,42 +31,65 @@ class Music
     }
   end
 
+  # Unloads the music from memory
+  # @return [nil]
   def unload
     unload_music_stream(self)
   end
 
+  # Starts playing the music
+  # @return [nil]
   def play
     play_music_stream(self)
   end
 
+  # This method should be called every update to keep the music playing
+  # smoothly
+  # @return [nil]
   def update
     update_music_stream(self)
   end
 
+  # Is the music currently playing?
+  # @return [Boolean]
   def playing?
     music_playing?(self)
   end
 
+  # Stops the music, you will need to call Music#play to start it again
+  # @return [nil]
   def stop
     stop_music_stream(self)
   end
 
+  # Pauses the music, you will need to call Music#resume to start it again
+  # @return [nil]
   def pause
     pause_music_stream(self)
   end
 
+  # Resumes the music playing
+  # @return [nil]
   def resume
     resume_music_stream(self)
   end
 
+  # How long does this music go for?
+  # @return [Float]
   def length
     get_music_time_length(self)
   end
 
+  # How long has the music been played for this loop?
+  # @return [Float]
   def played
     get_music_time_played(self)
   end
 
+  # Set the volume
+  # @param value [Float] a value between 0 and 1
+  # @raise [ArgumentError] If the value is out of bounds
+  # @return [nil]
   def volume=(value)
     unless (0..1).include?(value)
       raise ArgumentError, "Value must fall between 0 and 1, you gave me #{value}"
@@ -62,19 +99,32 @@ class Music
     set_music_volume(self, value)
   end
 
+  # Set the pitch
+  # @param value [Float]
+  # @return [nil]
   def pitch=(value)
     @pitch = value
     set_music_pitch(self, value)
   end
 
+  # Used for alerting the user the music file was not found at the specified path
   class NotFound < StandardError; end
+
+  # Just a vanity class to make the types of music files read a little clearer.
   class Type
+    # Music format none
     NONE = 0
+    # Music format wav
     WAV  = 1
+    # Music format ogg
     OGG  = 2
+    # Music format flac
     FLAC = 3
+    # Music format mp3
     MP3  = 4
+    # Music format xm
     XM   = 5
+    # Music format mo
     MO   = 6
   end
 end
