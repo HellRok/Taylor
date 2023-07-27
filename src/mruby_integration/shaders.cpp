@@ -47,7 +47,7 @@ mrb_value mrb_get_shader_location(mrb_state *mrb, mrb_value) {
   return mrb_int_value(mrb, GetShaderLocation(*shader, uniform_name));
 }
 
-mrb_value mrb_set_shaders_value(mrb_state *mrb, mrb_value) {
+mrb_value mrb_set_shader_values(mrb_state *mrb, mrb_value) {
   Shader *shader;
   mrb_int variable_location, enum_value;
   int array_length;
@@ -163,5 +163,5 @@ void append_shaders(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "unload_shader", mrb_unload_shader, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "shader_ready?", mrb_shader_ready, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "get_shader_location", mrb_get_shader_location, MRB_ARGS_REQ(2));
-  mrb_define_method(mrb, mrb->kernel_module, "set_shader_values", mrb_set_shaders_value, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, mrb->kernel_module, "set_shader_values", mrb_set_shader_values, MRB_ARGS_REQ(4));
 }
