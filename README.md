@@ -4,13 +4,13 @@
 [![Build status](https://badge.buildkite.com/0cb81ca8e3b8f43a2998bc15f90323a2eb8429669e819b7697.svg)](https://buildkite.com/oequacki/taylor)
 ![GitHub all releases](https://img.shields.io/github/downloads/HellRok/Taylor/total?label=Total%20Downloads&style=plastic)
 
-**Website**: [http://taylor.oequacki.com](http://taylor.oequacki.com)  
-**Documentation**: [https://taylor.oequacki.com/documentation/taylor/latest/](https://taylor.oequacki.com/documentation/taylor/latest/)  
-**Try it out online**: [http://taylor.oequacki.com/playground/](http://taylor.oequacki.com/playground/)
+**Website**: [https://www.taylormadetech.dev](https://www.taylormadetech.dev)  
+**Documentation**: [https://www.taylormadetech.dev/documentation/taylor/latest/](https://www.taylormadetech.dev/documentation/taylor/latest/)  
+**Try it out online**: [https://www.taylormadetech.dev/playground/](https://www.taylormadetech.dev/playground/)
 
 ## What's this?
 
-Taylor is a game engine I've built using [mruby](http://mruby.org/) and
+Taylor is a game engine I've built using [mruby](https://mruby.org/) and
 [raylib](https://www.raylib.com/). I'm trying to build a very simple way for
 people to get into game development. This is trying to replicate the simplicity
 of QBasic but with a more of a modern approach.
@@ -18,12 +18,12 @@ of QBasic but with a more of a modern approach.
 ## Getting Started
 
 Check out my tutorial over on the [official Taylor
-website](http://taylor.oequacki.com/documentation/tutorials/getting_started/).
+website](https://www.taylormadetech.dev/documentation/tutorials/getting_started/).
 
 ## Examples
 
 If you'd like to see some examples, check them out
-[here!](https://taylor.oequacki.com/playground/)
+[here!](https://www.taylormadetech.dev/playground/)
 
 ## Compile Yourself!
 
