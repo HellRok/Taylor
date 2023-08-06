@@ -13,6 +13,7 @@
 - Add set_shader_values
 - Add Shader#set_value
 - Add Shader#set_values
+- Reserve the Taylor gem name
 
 ## v0.3.13
 

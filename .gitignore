@@ -7,3 +7,5 @@ include/ruby
 cli-tool/exports
 test/exports
 test/test-analytics.json
+
+gem/*.gem
