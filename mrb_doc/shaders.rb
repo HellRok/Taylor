@@ -1,3 +1,13 @@
+# Loads a shader from in memory strings
+# @param vertex_shader_code [String]
+# @param fragment_shader_code [String]
+# @return [Shader]
+def load_shader_from_string(vertex_shader_code, fragment_shader_code)
+  # mrb_load_shader
+  # src/mruby_integration/shaders.cpp
+  Shader.new
+end
+
 # Loads a shader from a file
 # @param vertex_shader_path [String]
 # @param fragment_shader_path [String]

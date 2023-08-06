@@ -9,9 +9,25 @@
 #include "mruby_integration/struct_types.hpp"
 #include "mruby_integration/helpers.hpp"
 
+mrb_value mrb_load_shader_from_string(mrb_state *mrb, mrb_value) {
+  char *vertex_shader_code = NULL;
+  char *fragment_shader_code = NULL;
+
+  mrb_get_args(mrb, "z!z!", &vertex_shader_code, &fragment_shader_code);
+
+  Shader *shader = (Shader *)malloc(sizeof(Shader));
+  *shader = LoadShaderFromMemory(vertex_shader_code, fragment_shader_code);
+
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Shader_class, &Shader_type, shader));
+
+  setup_Shader(mrb, obj, shader, shader->id);
+
+  return obj;
+}
+
 mrb_value mrb_load_shader(mrb_state *mrb, mrb_value) {
   char *vertex_shader_path, *fragment_shader_path;
-  mrb_get_args(mrb, "zz", &vertex_shader_path, &fragment_shader_path);
+  mrb_get_args(mrb, "z!z!", &vertex_shader_path, &fragment_shader_path);
 
   Shader *shader = (Shader *)malloc(sizeof(Shader));
   *shader = LoadShader(vertex_shader_path, fragment_shader_path);
@@ -159,6 +175,7 @@ mrb_value mrb_set_shader_values(mrb_state *mrb, mrb_value) {
 }
 
 void append_shaders(mrb_state *mrb) {
+  mrb_define_method(mrb, mrb->kernel_module, "load_shader_from_string", mrb_load_shader_from_string, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "load_shader", mrb_load_shader, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, mrb->kernel_module, "unload_shader", mrb_unload_shader, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "shader_ready?", mrb_shader_ready, MRB_ARGS_REQ(1));

@@ -14,6 +14,7 @@
 - Add Shader#set_value
 - Add Shader#set_values
 - Reserve the Taylor gem name
+- Add load_shaders_from_string
 
 ## v0.3.13
 

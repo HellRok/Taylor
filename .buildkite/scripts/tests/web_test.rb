@@ -16,14 +16,9 @@ server = WEBrick::HTTPServer.new(
 
 server_thread = Thread.start { server.start }
 
-options = Selenium::WebDriver::Options.chrome(
-  args: [
-    'no-sandbox',
-    'disable-dev-shm-usage',
-    'window-size=1280,800',
-  ]
-)
-driver = Selenium::WebDriver.for(:chrome, options: options)
+options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
+
+driver = Selenium::WebDriver.for(:firefox, options: options)
 
 driver.get('http://localhost:3001')
 
@@ -94,16 +89,6 @@ loop do
       _, code = log.split("EXIT CODE: ")
       persist_analytics(analytics)
       exit code.to_i
-    end
-  }
-
-  browser_logs = driver.logs.get :browser
-
-  browser_logs.each { |log|
-    if log.message.include?("program exited (with status: 1)")
-      puts log.message
-      sleep 10
-      exit 1
     end
   }
 

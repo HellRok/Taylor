@@ -3,12 +3,27 @@ class Shader
   # @return [Integer]
   attr_reader :id
 
-  # Loads a Shader
+  # Loads a Shader from either paths or code, but not both at once.
   # @param vertex_shader_path [String]
   # @param fragment_shader_path [String]
+  # @param vertex_shader_code [String]
+  # @param fragment_shader_code [String]
   # @return [Shader]
-  def self.load(vertex_shader_path, fragment_shader_path)
-    load_shader(vertex_shader_path, fragment_shader_path)
+  # @raise [ArgumentError]
+  def self.load(vertex_shader_path: nil, fragment_shader_path: nil, vertex_shader_code: nil, fragment_shader_code: nil)
+    unless vertex_shader_path || fragment_shader_path || vertex_shader_code || fragment_shader_code
+      raise ArgumentError, "You can only specify paths or code, not both"
+    end
+
+    if (vertex_shader_path || fragment_shader_path) && (vertex_shader_code || fragment_shader_code)
+      raise ArgumentError, "You can only specify paths or code, not both"
+    end
+
+    if vertex_shader_path || fragment_shader_path
+      load_shader(vertex_shader_path, fragment_shader_path)
+    elsif vertex_shader_code || fragment_shader_code
+      load_shader_from_string(vertex_shader_path, fragment_shader_path)
+    end
   end
 
   # Unloads the Shader from memory

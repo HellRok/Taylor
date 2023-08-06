@@ -16,12 +16,25 @@ class Test
 
       end
 
+      def test_load_argument_errors
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+
+        assert_raise(ArgumentError) { Shader.load() }
+
+        assert_raise(ArgumentError) { Shader.load(fragment_shader_path: "path", vector_shader_code: "code") }
+        assert_raise(ArgumentError) { Shader.load(fragment_shader_path: "path", fragment_shader_code: "code") }
+        assert_raise(ArgumentError) { Shader.load(vector_shader_path: "path", fragment_shader_code: "code") }
+        assert_raise(ArgumentError) { Shader.load(vector_shader_path: "path", vector_shader_code: "code") }
+      end
+
       def test_shader_ready
         skip_unless_display_present
 
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/fragment_shader_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/fragment_shader_#{GLSL_VERSION}.fs")
 
         assert_true shader.ready?
 
@@ -32,7 +45,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_nil shader.get_uniform_location('non_existant')
 
@@ -55,7 +68,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_value(
@@ -68,7 +81,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_value(
@@ -82,7 +95,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_value(
@@ -96,7 +109,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_value(
@@ -110,7 +123,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_value(
@@ -124,7 +137,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_value(
@@ -138,7 +151,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_value(
@@ -152,7 +165,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         shader.set_value(
           value: 0.0,
@@ -185,7 +198,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_vec2_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec2_#{GLSL_VERSION}.fs")
 
         shader.set_value(
           variable: 'vector',
@@ -208,7 +221,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_vec3_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec3_#{GLSL_VERSION}.fs")
 
         shader.set_value(
           variable: 'vector',
@@ -231,7 +244,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_vec4_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec4_#{GLSL_VERSION}.fs")
 
         shader.set_value(
           variable: 'vector',
@@ -254,7 +267,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_int_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_int_#{GLSL_VERSION}.fs")
 
         shader.set_value(
           variable: 'red',
@@ -287,7 +300,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_ivec2_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec2_#{GLSL_VERSION}.fs")
 
         shader.set_value(
           variable: 'vector',
@@ -310,7 +323,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_ivec3_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec3_#{GLSL_VERSION}.fs")
 
         shader.set_value(
           value: [0, 1, 1],
@@ -333,7 +346,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_ivec4_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec4_#{GLSL_VERSION}.fs")
 
         shader.set_value(
           variable: 'vector',
@@ -356,7 +369,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_values(
@@ -369,7 +382,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_values(
@@ -383,7 +396,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_values(
@@ -397,7 +410,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_values(
@@ -411,7 +424,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_values(
@@ -425,7 +438,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_values(
@@ -439,7 +452,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         assert_raise(ArgumentError) {
           shader.set_values(
@@ -453,7 +466,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
         shader.set_values(
           values: [0.0],
@@ -486,7 +499,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_vec2_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec2_#{GLSL_VERSION}.fs")
 
         shader.set_values(
           variable: 'vector',
@@ -509,7 +522,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_vec3_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec3_#{GLSL_VERSION}.fs")
 
         shader.set_values(
           variable: 'vector',
@@ -532,7 +545,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_vec4_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec4_#{GLSL_VERSION}.fs")
 
         shader.set_values(
           variable: 'vector',
@@ -555,7 +568,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_int_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_int_#{GLSL_VERSION}.fs")
 
         shader.set_values(
           variable: 'red',
@@ -588,7 +601,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_ivec2_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec2_#{GLSL_VERSION}.fs")
 
         shader.set_values(
           variable: 'vector',
@@ -611,7 +624,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_ivec3_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec3_#{GLSL_VERSION}.fs")
 
         shader.set_values(
           values: [[0, 1, 1]],
@@ -634,7 +647,7 @@ class Test
         skip_unless_display_present
         set_window_title(__method__.to_s)
 
-        shader = Shader.load('', "assets/uniform_shader_ivec4_#{GLSL_VERSION}.fs")
+        shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec4_#{GLSL_VERSION}.fs")
 
         shader.set_values(
           variable: 'vector',

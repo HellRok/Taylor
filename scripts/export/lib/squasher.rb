@@ -1,5 +1,5 @@
 class Squasher
-  REQUIRE_REGEX = /.*require\s+['"](.*)['"].*/
+  REQUIRE_REGEX = /^[^#]*require\s+['"](.*)['"].*/
   attr_reader :options
 
   def self.call(options)
