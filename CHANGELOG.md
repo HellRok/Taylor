@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.14
 
 - Upgrade to Raylib 4.5
 - Add shader_ready? and Shader#ready?
