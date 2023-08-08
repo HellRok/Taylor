@@ -29,6 +29,44 @@ class Test
         assert_raise(ArgumentError) { Shader.load(vector_shader_path: "path", vector_shader_code: "code") }
       end
 
+      def test_load_shader_from_string
+        skip_unless_display_present
+        set_window_title(__method__.to_s)
+
+        shader = Shader.load(fragment_shader_code: <<~FRAGMENT)
+          #version #{GLSL_VERSION}
+
+          void main() {
+            gl_FragColor = vec4(0.0, 0.58, 0.86, 1.0);
+          }
+        FRAGMENT
+
+        clear_and_draw do
+          shader.draw do
+            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+          end
+        end
+
+        assert_equal fixture_load_shader, get_screen_data.data
+        shader.unload
+      end
+
+      def test_load_shader
+        skip_unless_display_present
+        set_window_title(__method__.to_s)
+
+        shader = Shader.load(fragment_shader_path: "assets/fragment_shader_#{GLSL_VERSION}.fs")
+
+        clear_and_draw do
+          shader.draw do
+            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+          end
+        end
+
+        assert_equal fixture_load_shader, get_screen_data.data
+        shader.unload
+      end
+
       def test_shader_ready
         skip_unless_display_present
 

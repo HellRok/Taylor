@@ -1,5 +1,9 @@
 # Taylor
 
+## Unreleased
+
+- Bug fix for Shader.load
+
 ## v0.3.14
 
 - Upgrade to Raylib 4.5

@@ -20,7 +20,7 @@ rm -rf exports
 mkdir -p exports
 echo Exporting
 mkdir -p /tmp/blah
-taylor-dev export &> /dev/null
+taylor-dev export --build-cache /tmp/blah &> /dev/null
 
 if [[ $? -gt 0 ]]; then
   echo "Exporting failed"

@@ -22,7 +22,7 @@ class Shader
     if vertex_shader_path || fragment_shader_path
       load_shader(vertex_shader_path, fragment_shader_path)
     elsif vertex_shader_code || fragment_shader_code
-      load_shader_from_string(vertex_shader_path, fragment_shader_path)
+      load_shader_from_string(vertex_shader_code, fragment_shader_code)
     end
   end
 
