@@ -1,5 +1,9 @@
 # Taylor
 
+## Unreleased
+
+- Build the docker images one at a time to not thrash the disk
+
 ## v0.3.14.1
 
 - Bug fix for Shader.load

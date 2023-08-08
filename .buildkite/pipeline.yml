@@ -29,11 +29,15 @@ steps:
       - bundle install
       - bundle exec rake docker:build:export:android
 
+  - wait
+
   - label: "Build Linux export image"
     commands:
       - gem install bundler
       - bundle install
       - bundle exec rake docker:build:export:linux
+
+  - wait
 
   - label: "Build OSX export image"
     commands:
@@ -41,11 +45,15 @@ steps:
       - bundle install
       - bundle exec rake docker:build:export:osx
 
+  - wait
+
   - label: "Build Windows export image"
     commands:
       - gem install bundler
       - bundle install
       - bundle exec rake docker:build:export:windows
+
+  - wait
 
   - label: "Build Web export image"
     commands:
