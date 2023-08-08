@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.3.14.1
 
 - Bug fix for Shader.load
 
