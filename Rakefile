@@ -13,8 +13,6 @@ task default: "linux:build"
 
 require_relative "rakelib/helpers"
 
-multitask :setup_ruby_includes
-
 ephemeral_files_for_ruby.each do |file|
   task file do
     FileUtils.mkdir_p("include/#{File.dirname(file)}")
@@ -28,6 +26,22 @@ ephemeral_files_for_ruby.each do |file|
 end
 
 multitask setup_ephemeral_files: ephemeral_files_for_ruby
+
+task "lint:check" => [:setup_ephemeral_files] do
+  sh Builder.builders["linux"].lint
+end
+
+task "lint:fix" => [:setup_ephemeral_files] do
+  sh Builder.builders["linux"].lint(fix: true)
+end
+
+task "format:check" do
+  sh "clang-format --dry-run -Werror $(git ls-files *.{cpp,hpp})"
+end
+
+task "format:fix" do
+  sh "clang-format -i $(git ls-files *.{cpp,hpp})"
+end
 
 rule ".o" => ->(file) { source_for(file) } do |task|
   FileUtils.mkdir_p(File.dirname(task.name))

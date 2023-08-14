@@ -27,7 +27,7 @@ def source_for(o_file)
 end
 
 def objects(objects_folder)
-  SRC.ext(".o").map { |file| file.gsub(SRC_FOLDER, objects_folder) } # .tap { puts "OBJECTS"; p _1 }
+  SRC.ext(".o").map { |file| file.gsub(SRC_FOLDER, objects_folder) }
 end
 
 def depends(objects_folder)

@@ -4,6 +4,7 @@
 
 - Build the docker images one at a time to not thrash the disk
 - Setup standardrb for formatting
+- Setup clang-tidy and clang-format
 
 ## v0.3.14.1
 
