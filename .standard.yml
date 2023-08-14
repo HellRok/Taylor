@@ -1,6 +1,7 @@
 ignore:
   - '**/*':
     - Performance/RegexpMatch
+    - Style/FileWrite
   - 'test/**/*':
     - Style/GlobalVars
     - Naming/ClassAndModuleCamelCase
