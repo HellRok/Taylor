@@ -3,6 +3,7 @@ steps:
     commands:
       - gem install bundler
       - bundle install
+      - bundle exec standardrb
       - .buildkite/scripts/tests/check_for_documentation.rb
 
   - label: 'Taylor Build'

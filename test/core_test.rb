@@ -44,7 +44,7 @@ class Test
 
     def test_set_window_state_fullscreen
       skip_unless_display_present
-      skip 'No window access for browsers' if browser?
+      skip "No window access for browsers" if browser?
 
       set_window_title(__method__.to_s)
       set_target_fps 5
@@ -71,7 +71,7 @@ class Test
 
     def test_set_window_state_hidden
       skip_unless_display_present
-      skip 'No window access for browsers' if browser?
+      skip "No window access for browsers" if browser?
 
       set_window_title(__method__.to_s)
       set_target_fps 5
@@ -94,7 +94,7 @@ class Test
 
     def test_set_window_state_minimised
       skip_unless_display_present
-      skip 'No window access for browsers' if browser?
+      skip "No window access for browsers" if browser?
 
       set_window_title(__method__.to_s)
 
@@ -113,7 +113,7 @@ class Test
 
     def test_set_window_state_maximised
       skip_unless_display_present
-      skip 'No window access for browsers' if browser?
+      skip "No window access for browsers" if browser?
 
       set_window_title(__method__.to_s)
 
@@ -132,14 +132,13 @@ class Test
       set_window_size(10, 10)
 
       assert_false window_state?(FLAG_WINDOW_MAXIMISED)
-
     ensure
       reset_window if window_ready?
     end
 
     def test_set_window_state_other
       skip_unless_display_present
-      skip 'No window access for browsers' if browser?
+      skip "No window access for browsers" if browser?
 
       set_window_title(__method__.to_s)
       set_target_fps 5
@@ -148,7 +147,7 @@ class Test
         FLAG_WINDOW_ALWAYS_RUN,
         FLAG_WINDOW_RESIZABLE,
         FLAG_WINDOW_TOPMOST,
-        FLAG_WINDOW_UNDECORATED,
+        FLAG_WINDOW_UNDECORATED
       ].each do |state|
         set_window_state(state)
         flush_frame
@@ -166,7 +165,7 @@ class Test
 
     def test_window_position
       skip_unless_display_present
-      skip 'No window access for browsers' if browser?
+      skip "No window access for browsers" if browser?
 
       set_window_title(__method__.to_s)
       set_target_fps 5
@@ -201,12 +200,12 @@ class Test
 
     def test_clipboard
       skip_unless_display_present
-      skip 'No clipboard access for webbrowsers' if browser?
+      skip "No clipboard access for webbrowsers" if browser?
 
       set_window_title(__method__.to_s)
 
-      set_clipboard_text('TEST STRING')
-      assert_equal 'TEST STRING', get_clipboard_text
+      set_clipboard_text("TEST STRING")
+      assert_equal "TEST STRING", get_clipboard_text
     end
   end
 end

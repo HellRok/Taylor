@@ -12,7 +12,7 @@ def fixture_camera2d_drawing
       w, w, r, r, r, r, r, r, w, w,
       w, w, r, r, r, r, r, r, w, w,
       w, w, w, w, w, w, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w,
+      w, w, w, w, w, w, w, w, w, w
     ],
     [
       r, r, r, r, r, r, w, w, w, w,
@@ -24,8 +24,7 @@ def fixture_camera2d_drawing
       w, w, w, w, w, w, w, w, w, w,
       w, w, w, w, w, w, w, w, w, w,
       w, w, w, w, w, w, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w,
+      w, w, w, w, w, w, w, w, w, w
     ]
   ]
 end
-

@@ -9,8 +9,8 @@ class Vector2
   # @param other [Vector2]
   # @return [Boolean]
   def ==(other)
-    self.x == other.x &&
-      self.y == other.y
+    x == other.x &&
+      y == other.y
   end
 
   # The addition operator is used for adding up two Vector2s
@@ -18,8 +18,8 @@ class Vector2
   # @return [Vector2]
   def +(other)
     Vector2.new(
-      self.x + other.x,
-      self.y + other.y
+      x + other.x,
+      y + other.y
     )
   end
 
@@ -28,20 +28,20 @@ class Vector2
   # @return [Vector2]
   def -(other)
     Vector2.new(
-      self.x - other.x,
-      self.y - other.y
+      x - other.x,
+      y - other.y
     )
   end
 
-  alias :difference :-
+  alias_method :difference, :-
 
   # Change the length of the Vector2
   # @param scalar [Numeric]
   # @return [Vector2]
   def scale(scalar)
     Vector2.new(
-      self.x * scalar,
-      self.y * scalar
+      x * scalar,
+      y * scalar
     )
   end
 
@@ -56,7 +56,7 @@ class Vector2
   def to_h
     {
       x: x,
-      y: y,
+      y: y
     }
   end
 

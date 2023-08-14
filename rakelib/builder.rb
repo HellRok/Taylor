@@ -9,16 +9,16 @@ class Builder
   end
 
   def self.mf_command_for(task)
-    variant, platform, arch = task.name.split('/')
-    platform += "/#{arch}" if %w(intel apple).include?(arch)
+    variant, platform, arch = task.name.split("/")
+    platform += "/#{arch}" if %w[intel apple].include?(arch)
 
     @@builders[platform].variant = variant
     @@builders[platform].generate_mf_for(task)
   end
 
   def self.o_command_for(task)
-    variant, platform, arch = task.name.split('/')
-    platform += "/#{arch}" if %w(intel apple).include?(arch)
+    variant, platform, arch = task.name.split("/")
+    platform += "/#{arch}" if %w[intel apple].include?(arch)
 
     @@builders[platform].variant = variant
     @@builders[platform].generate_o_for(task)
@@ -30,24 +30,24 @@ class Builder
   def after_initialize
     @variant = :debug
 
-    @includes ||= ''
-    @includes << ' -I ./include/ -I ./vendor/ -I ./vendor/raylib/include/ -I ./vendor/mruby/'
+    @includes ||= ""
+    @includes << " -I ./include/ -I ./vendor/ -I ./vendor/raylib/include/ -I ./vendor/mruby/"
 
-    @defines ||= ''
-    @defines << ' -DEXPORT' if ENV['EXPORT']
+    @defines ||= ""
+    @defines << " -DEXPORT" if ENV["EXPORT"]
 
     setup_options
   end
 
   def setup_options
-    @options ||= File.exist?('/app/game/taylor-config.json') ?
-      JSON.parse(File.read('/app/game/taylor-config.json')) : {
-        'name' => 'taylor',
+    @options ||= File.exist?("/app/game/taylor-config.json") ?
+      JSON.parse(File.read("/app/game/taylor-config.json")) : {
+        "name" => "taylor"
       }
   end
 
   def name
-    @options['name']
+    @options["name"]
   end
 
   def objects_folder
@@ -55,16 +55,16 @@ class Builder
   end
 
   def generate_mf_for(task)
-    <<-CMD.squeeze(' ').strip
+    <<-CMD.squeeze(" ").strip
       #{@cxx} #{@cxxflags} #{@includes} #{@defines} -c #{task.source} \
         #{@ldflags} \
         -MM \
-        -MT #{task.name.gsub(SRC_FOLDER, objects_folder).ext('.o')}
+        -MT #{task.name.gsub(SRC_FOLDER, objects_folder).ext(".o")}
     CMD
   end
 
   def generate_o_for(task)
-    <<-CMD.squeeze(' ').strip
+    <<-CMD.squeeze(" ").strip
     #{@cxx} #{@cxxflags} #{@includes} #{@defines} -c #{task.source} \
       -o #{task.name} \
       #{@ldflags}
@@ -72,14 +72,14 @@ class Builder
   end
 
   def compile
-    <<-CMD.squeeze(' ').strip
+    <<-CMD.squeeze(" ").strip
       #{@cxx} \
-        -o \"./dist/#{@platform}/#{@variant}/#{name}\" \
+        -o "./dist/#{@platform}/#{@variant}/#{name}" \
         #{@cxxflags} \
-        #{variant == :release ? @release_flags : ''} \
+        #{(variant == :release) ? @release_flags : ""} \
         #{@defines} \
         #{@includes} \
-        #{objects(objects_folder).join ' '} \
+        #{objects(objects_folder).join " "} \
         #{@static_links} \
         #{@ldflags}
     CMD

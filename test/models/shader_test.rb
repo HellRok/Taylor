@@ -13,7 +13,6 @@ class Test
         shader.id = 5
 
         assert_equal 5, shader.id
-
       end
 
       def test_load_argument_errors
@@ -21,7 +20,7 @@ class Test
 
         set_window_title(__method__.to_s)
 
-        assert_raise(ArgumentError) { Shader.load() }
+        assert_raise(ArgumentError) { Shader.load }
 
         assert_raise(ArgumentError) { Shader.load(fragment_shader_path: "path", vector_shader_code: "code") }
         assert_raise(ArgumentError) { Shader.load(fragment_shader_path: "path", fragment_shader_code: "code") }
@@ -85,16 +84,16 @@ class Test
 
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
-        assert_nil shader.get_uniform_location('non_existant')
+        assert_nil shader.get_uniform_location("non_existant")
 
         if GLSL_VERSION == 330
-          assert_equal 1, shader.get_uniform_location('red')
-          assert_equal 2, shader.get_uniform_location('green')
-          assert_equal 3, shader.get_uniform_location('blue')
+          assert_equal 1, shader.get_uniform_location("red")
+          assert_equal 2, shader.get_uniform_location("green")
+          assert_equal 3, shader.get_uniform_location("blue")
         elsif GLSL_VERSION == 100
-          assert_equal 2, shader.get_uniform_location('red')
-          assert_equal 3, shader.get_uniform_location('green')
-          assert_equal 4, shader.get_uniform_location('blue')
+          assert_equal 2, shader.get_uniform_location("red")
+          assert_equal 3, shader.get_uniform_location("green")
+          assert_equal 4, shader.get_uniform_location("blue")
         else
           raise "Unexpected GLSL_VERSION"
         end
@@ -110,7 +109,7 @@ class Test
 
         assert_raise(ArgumentError) {
           shader.set_value(
-            value: 0.0,
+            value: 0.0
           )
         }
       end
@@ -124,7 +123,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_value(
             value: "green",
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -138,7 +137,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_value(
             value: ["green"],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -152,7 +151,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_value(
             value: [1.0, 1.0, 1.0, 1.0, 1.0],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -166,7 +165,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_value(
             value: [1.0],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -180,7 +179,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_value(
             value: [1, 1, 1, 1, 1],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -194,7 +193,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_value(
             value: [1],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -207,17 +206,17 @@ class Test
 
         shader.set_value(
           value: 0.0,
-          variable: 'red',
+          variable: "red"
         )
 
         shader.set_value(
-          variable: 'green',
-          value: 0.4745,
+          variable: "green",
+          value: 0.4745
         )
 
         shader.set_value(
-          variable: 'blue',
-          value: 0.94509,
+          variable: "blue",
+          value: 0.94509
         )
 
         clear_and_draw do
@@ -239,8 +238,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec2_#{GLSL_VERSION}.fs")
 
         shader.set_value(
-          variable: 'vector',
-          value: [0.1, 0.5],
+          variable: "vector",
+          value: [0.1, 0.5]
         )
 
         clear_and_draw do
@@ -262,8 +261,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec3_#{GLSL_VERSION}.fs")
 
         shader.set_value(
-          variable: 'vector',
-          value: [0.1, 0.5, 0.75],
+          variable: "vector",
+          value: [0.1, 0.5, 0.75]
         )
 
         clear_and_draw do
@@ -285,8 +284,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec4_#{GLSL_VERSION}.fs")
 
         shader.set_value(
-          variable: 'vector',
-          value: [0.1, 0.5, 0.75, 1.0],
+          variable: "vector",
+          value: [0.1, 0.5, 0.75, 1.0]
         )
 
         clear_and_draw do
@@ -308,18 +307,18 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_int_#{GLSL_VERSION}.fs")
 
         shader.set_value(
-          variable: 'red',
-          value: 1,
+          variable: "red",
+          value: 1
         )
 
         shader.set_value(
-          variable: 'green',
-          value: 0,
+          variable: "green",
+          value: 0
         )
 
         shader.set_value(
-          variable: 'blue',
-          value: 1,
+          variable: "blue",
+          value: 1
         )
 
         clear_and_draw do
@@ -341,8 +340,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec2_#{GLSL_VERSION}.fs")
 
         shader.set_value(
-          variable: 'vector',
-          value: [0, 1],
+          variable: "vector",
+          value: [0, 1]
         )
 
         clear_and_draw do
@@ -365,7 +364,7 @@ class Test
 
         shader.set_value(
           value: [0, 1, 1],
-          variable: 'vector',
+          variable: "vector"
         )
 
         clear_and_draw do
@@ -387,8 +386,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec4_#{GLSL_VERSION}.fs")
 
         shader.set_value(
-          variable: 'vector',
-          value: [1, 0, 0, 1],
+          variable: "vector",
+          value: [1, 0, 0, 1]
         )
 
         clear_and_draw do
@@ -411,7 +410,7 @@ class Test
 
         assert_raise(ArgumentError) {
           shader.set_values(
-            values: 0.0,
+            values: 0.0
           )
         }
       end
@@ -425,7 +424,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_values(
             values: "green",
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -439,7 +438,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_values(
             values: ["green"],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -453,7 +452,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_values(
             values: [[1.0, 1.0, 1.0, 1.0, 1.0]],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -467,7 +466,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_values(
             values: [[1.0]],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -481,7 +480,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_values(
             values: [[1, 1, 1, 1, 1]],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -495,7 +494,7 @@ class Test
         assert_raise(ArgumentError) {
           shader.set_values(
             values: [[1]],
-            variable: 'red',
+            variable: "red"
           )
         }
       end
@@ -508,17 +507,17 @@ class Test
 
         shader.set_values(
           values: [0.0],
-          variable: 'red',
+          variable: "red"
         )
 
         shader.set_values(
-          variable: 'green',
-          values: [0.4745],
+          variable: "green",
+          values: [0.4745]
         )
 
         shader.set_values(
-          variable: 'blue',
-          values: [0.94509],
+          variable: "blue",
+          values: [0.94509]
         )
 
         clear_and_draw do
@@ -540,8 +539,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec2_#{GLSL_VERSION}.fs")
 
         shader.set_values(
-          variable: 'vector',
-          values: [[0.1, 0.5]],
+          variable: "vector",
+          values: [[0.1, 0.5]]
         )
 
         clear_and_draw do
@@ -563,8 +562,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec3_#{GLSL_VERSION}.fs")
 
         shader.set_values(
-          variable: 'vector',
-          values: [[0.1, 0.5, 0.75]],
+          variable: "vector",
+          values: [[0.1, 0.5, 0.75]]
         )
 
         clear_and_draw do
@@ -586,8 +585,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_vec4_#{GLSL_VERSION}.fs")
 
         shader.set_values(
-          variable: 'vector',
-          values: [[0.1, 0.5, 0.75, 1.0]],
+          variable: "vector",
+          values: [[0.1, 0.5, 0.75, 1.0]]
         )
 
         clear_and_draw do
@@ -609,18 +608,18 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_int_#{GLSL_VERSION}.fs")
 
         shader.set_values(
-          variable: 'red',
-          values: [1],
+          variable: "red",
+          values: [1]
         )
 
         shader.set_values(
-          variable: 'green',
-          values: [0],
+          variable: "green",
+          values: [0]
         )
 
         shader.set_values(
-          variable: 'blue',
-          values: [1],
+          variable: "blue",
+          values: [1]
         )
 
         clear_and_draw do
@@ -642,8 +641,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec2_#{GLSL_VERSION}.fs")
 
         shader.set_values(
-          variable: 'vector',
-          values: [[0, 1]],
+          variable: "vector",
+          values: [[0, 1]]
         )
 
         clear_and_draw do
@@ -666,7 +665,7 @@ class Test
 
         shader.set_values(
           values: [[0, 1, 1]],
-          variable: 'vector',
+          variable: "vector"
         )
 
         clear_and_draw do
@@ -688,8 +687,8 @@ class Test
         shader = Shader.load(fragment_shader_path: "assets/uniform_shader_ivec4_#{GLSL_VERSION}.fs")
 
         shader.set_values(
-          variable: 'vector',
-          values: [[1, 0, 0, 1]],
+          variable: "vector",
+          values: [[1, 0, 0, 1]]
         )
 
         clear_and_draw do

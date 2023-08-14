@@ -11,7 +11,7 @@ def fixture_draw_circle
     w, w, p, p, p, p, p, p, w, w,
     w, w, w, p, p, p, p, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end
 
@@ -28,7 +28,7 @@ def fixture_draw_circle_sector
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end
 
@@ -45,7 +45,7 @@ def fixture_draw_circle_sector_lines
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end
 
@@ -84,7 +84,7 @@ def fixture_draw_circle_gradient
     Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
     Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
     Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255),
+    Colour.new(245, 245, 245, 255)
   ]
 end
 
@@ -101,6 +101,6 @@ def fixture_draw_circle_lines
     w, w, p, w, w, w, w, p, w, w,
     w, w, w, p, p, p, p, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end

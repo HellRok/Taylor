@@ -1,4 +1,4 @@
-MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
+MRuby::CrossBuild.new("x86_64-w64-mingw32") do |conf|
   conf.toolchain :gcc
 
   conf.cc.flags += %w[-DMRB_ARY_LENGTH_MAX=0 -DMRB_STR_LENGTH_MAX=0]
@@ -17,17 +17,17 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.gembox "math"
   conf.gembox "metaprog"
 
-  conf.gem core: 'mruby-exit'
-  conf.gem core: 'mruby-sleep'
-  conf.gem github: 'iij/mruby-dir'
-  conf.gem github: 'iij/mruby-env'
-  conf.gem github: 'iij/mruby-iijson'
-  conf.gem github: 'iij/mruby-mtest'
-  conf.gem github: 'hellrok/mruby-regexp-pcre'
-  conf.gem github: 'katzer/mruby-tiny-opt-parser'
-  conf.gem github: 'Asmod4n/mruby-uri-parser'
-  conf.gem github: 'matsumotory/mruby-simplehttp'
-  conf.gem github: 'matsumotory/mruby-simplehttpserver'
-  conf.gem github: 'mattn/mruby-base64'
-  conf.gem github: 'mattn/mruby-require'
+  conf.gem core: "mruby-exit"
+  conf.gem core: "mruby-sleep"
+  conf.gem github: "iij/mruby-dir"
+  conf.gem github: "iij/mruby-env"
+  conf.gem github: "iij/mruby-iijson"
+  conf.gem github: "iij/mruby-mtest"
+  conf.gem github: "hellrok/mruby-regexp-pcre"
+  conf.gem github: "katzer/mruby-tiny-opt-parser"
+  conf.gem github: "Asmod4n/mruby-uri-parser"
+  conf.gem github: "matsumotory/mruby-simplehttp"
+  conf.gem github: "matsumotory/mruby-simplehttpserver"
+  conf.gem github: "mattn/mruby-base64"
+  conf.gem github: "mattn/mruby-require"
 end

@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 
-$ignored_files = [
+IGNORED_FILES = [
   "./src/mruby_integration/buildkite_analytics.cpp",
-  "./src/platform_specific/web.cpp",
+  "./src/platform_specific/web.cpp"
 ]
 
 def cpp_methods
   (
-    Dir.glob('./src/mruby_integration/**/*.cpp') +
-    Dir.glob('./src/platform_specific/*.cpp') +
-    Dir.glob('./src/*.cpp')
+    Dir.glob("./src/mruby_integration/**/*.cpp") +
+    Dir.glob("./src/platform_specific/*.cpp") +
+    Dir.glob("./src/*.cpp")
   ).reject { |file|
-    $ignored_files.include?(file)
+    IGNORED_FILES.include?(file)
   }.flat_map { |file|
     klass = nil
 
@@ -23,22 +23,22 @@ def cpp_methods
 
       if line =~ /^\s*mrb_define_method.*, (.*), "(.*)"/
         object, method = $~[1..2]
-        if object == 'mrb->kernel_module'
+        if object == "mrb->kernel_module"
           method
         else
-          "#{object.gsub('_class', '')}##{method}"
+          "#{object.gsub("_class", "")}##{method}"
         end
 
       elsif line =~ /^\s*mrb_define_class_method.*, (.*), "(.*)"/
         object, method = $~[1..2]
-        if object == 'mrb->kernel_module'
+        if object == "mrb->kernel_module"
           method
         else
-          "#{object.gsub('_class', '')}.#{method}"
+          "#{object.gsub("_class", "")}.#{method}"
         end
 
-      elsif line =~ /^\s*def\s+(.*)/ && !line.include?('mrb_define_class')
-        method = $~[1].split('(').first
+      elsif line =~ /^\s*def\s+(.*)/ && !line.include?("mrb_define_class")
+        method = $~[1].split("(").first
         if klass
           if method.start_with?("self.")
             method.slice!("self.")
@@ -55,9 +55,9 @@ def cpp_methods
 end
 
 def documented_methods
-  Dir.glob('./mrb_doc/**/*.rb').
-    reject { |file|
-      $ignored_files.include?(file)
+  Dir.glob("./mrb_doc/**/*.rb")
+    .reject { |file|
+      IGNORED_FILES.include?(file)
     }.flat_map { |file|
       klass = nil
 
@@ -67,7 +67,7 @@ def documented_methods
           nil # we don't want to just return the klass
 
         elsif line =~ /^\s*def\s*(.*)/
-          method = $~[1].split('(').first
+          method = $~[1].split("(").first
           if klass
             if method.start_with?("self.")
               method.slice!("self.")

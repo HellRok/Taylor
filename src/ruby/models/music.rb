@@ -15,7 +15,7 @@ class Music
     {
       context_type: context_type,
       looping: looping,
-      frame_count: frame_count,
+      frame_count: frame_count
     }
   end
 
@@ -91,7 +91,7 @@ class Music
   # @raise [ArgumentError] If the value is out of bounds
   # @return [nil]
   def volume=(value)
-    unless (0..1).include?(value)
+    unless (0..1).cover?(value)
       raise ArgumentError, "Value must fall between 0 and 1, you gave me #{value}"
     end
     @volume = value
@@ -115,16 +115,16 @@ class Music
     # Music format none
     NONE = 0
     # Music format wav
-    WAV  = 1
+    WAV = 1
     # Music format ogg
-    OGG  = 2
+    OGG = 2
     # Music format flac
     FLAC = 3
     # Music format mp3
-    MP3  = 4
+    MP3 = 4
     # Music format xm
-    XM   = 5
+    XM = 5
     # Music format mo
-    MO   = 6
+    MO = 6
   end
 end

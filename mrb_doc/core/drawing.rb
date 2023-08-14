@@ -9,7 +9,7 @@ end
 
 # Starts drawing to the screen
 # @return [nil]
-def begin_drawing()
+def begin_drawing
   # mrb_begin_drawing
   # src/mruby_integration/core/drawing.cpp
   nil
@@ -17,7 +17,7 @@ end
 
 # Ends drawing to the screen
 # @return [nil]
-def end_drawing()
+def end_drawing
   # mrb_end_drawing
   # src/mruby_integration/core/drawing.cpp
   nil
@@ -34,7 +34,7 @@ end
 
 # Stops drawing from the perspective of the camera
 # @return [nil]
-def end_mode2D()
+def end_mode2D
   # mrb_end_mode2D
   # src/mruby_integration/core/drawing.cpp
   nil
@@ -51,7 +51,7 @@ end
 
 # Stops drawing to the RenderTexture
 # @return [nil]
-def end_texture_mode()
+def end_texture_mode
   # mrb_end_texture_mode
   # src/mruby_integration/core/drawing.cpp
   nil
@@ -68,7 +68,7 @@ end
 
 # Stops drawing through the Shader
 # @return [nil]
-def end_shader_mode()
+def end_shader_mode
   # mrb_end_shader_mode
   # src/mruby_integration/core/drawing.cpp
   nil
@@ -88,7 +88,7 @@ end
 
 # End scissor mode
 # @return [nil]
-def end_scissor_mode()
+def end_scissor_mode
   # mrb_end_scissor_mode
   # src/mruby_integration/core/drawing.cpp
   nil

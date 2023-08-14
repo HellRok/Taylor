@@ -10,7 +10,7 @@ class Rectangle
       x: x,
       y: y,
       width: width,
-      height: height,
+      height: height
     }
   end
 
@@ -35,7 +35,7 @@ class Rectangle
   )
 
     if rounded
-      unless (0..1).include?(radius)
+      unless (0..1).cover?(radius)
         raise ArgumentError, "Radius must fall between 0 and 1, you gave me #{radius}"
       end
 
@@ -44,12 +44,10 @@ class Rectangle
       else
         draw_rectangle_rounded(self, radius, segments, colour)
       end
+    elsif outline
+      draw_rectangle_lines_ex(self, thickness, colour)
     else
-      if outline
-        draw_rectangle_lines_ex(self, thickness, colour)
-      else
-        draw_rectangle_pro(self, origin, rotation, colour)
-      end
+      draw_rectangle_pro(self, origin, rotation, colour)
     end
   end
 end

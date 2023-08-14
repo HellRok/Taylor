@@ -31,7 +31,7 @@ class Camera2D
       offset: offset.to_h,
       target: target.to_h,
       rotation: rotation,
-      zoom: zoom,
+      zoom: zoom
     }
   end
 

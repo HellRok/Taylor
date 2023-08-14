@@ -2,7 +2,7 @@ module Taylor
   module Commands
     class Run
       def self.call(command, argv, options)
-        self.new(command, argv, options)
+        new(command, argv, options)
       end
 
       attr_accessor :options
@@ -10,7 +10,7 @@ module Taylor
         @argv = argv
         setup_options(@argv, options)
 
-        @command = command || ''
+        @command = command || ""
 
         if @options[:help] || entrypoint.empty?
           display_help
@@ -47,26 +47,27 @@ module Taylor
       end
 
       private
+
       def entrypoint
         if !@command.empty?
-          if File.directory?(@command) && File.exist?(File.join(@command, 'taylor-config.json'))
-            options = JSON.parse(File.read(File.join(@command, 'taylor-config.json')))
+          if File.directory?(@command) && File.exist?(File.join(@command, "taylor-config.json"))
+            options = JSON.parse(File.read(File.join(@command, "taylor-config.json")))
             setup_options(@argv, options)
             Dir.chdir(@command)
-            $:.unshift '.'
-            return @options[:input]
+            $:.unshift "."
+            @options[:input]
           else
-            return @command
+            @command
           end
         else
-          return @options[:input]
+          @options[:input]
         end
       end
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help,  :bool,   false)
-          opts.on(:input, :string, options.fetch('input', 'game.rb'))
+          opts.on(:help, :bool, false)
+          opts.on(:input, :string, options.fetch("input", "game.rb"))
         end
         parser.parse(argv, true)
 
@@ -74,7 +75,7 @@ module Taylor
       end
 
       def from_config
-        @options['input']
+        @options["input"]
       end
 
       def unload_taylor_cli
@@ -82,7 +83,7 @@ module Taylor
       end
 
       def run_command
-        if File.exists?(entrypoint)
+        if File.exist?(entrypoint)
           ARGV.shift
           require entrypoint
 

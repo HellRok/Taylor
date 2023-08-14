@@ -28,7 +28,7 @@ class Test
           {
             context_type: 1,
             looping: false,
-            frame_count: 3,
+            frame_count: 3
           },
           music.to_h
         )

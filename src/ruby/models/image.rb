@@ -10,7 +10,7 @@ class Image
       width: width,
       height: height,
       mipmaps: mipmaps,
-      format: format,
+      format: format
     }
   end
 
@@ -86,7 +86,6 @@ class Image
   # @return [Image]
   def alpha_mask=(mask)
     image_alpha_mask!(self, mask)
-    self
   end
 
   # Pre-multiplies the alpha for the image
@@ -122,7 +121,7 @@ class Image
   # @raise [ArgumentError] If the direction is invalid
   # @return [Image]
   def rotate!(direction = :cw)
-    raise ArgumentError.new('Value must be :ccw, :cw, or nil') unless [:ccw, :cw, nil].include?(direction)
+    raise ArgumentError.new("Value must be :ccw, :cw, or nil") unless [:ccw, :cw, nil].include?(direction)
 
     if direction == :ccw
       image_rotate_ccw!(self)
@@ -159,7 +158,7 @@ class Image
   # @raise [ArgumentError] If the contrast is outside of the allowed range
   # @return [nil]
   def contrast!(contrast)
-    raise ArgumentError.new('Must be within (-100..100)') if contrast < -100 || contrast > 100
+    raise ArgumentError.new("Must be within (-100..100)") if contrast < -100 || contrast > 100
 
     image_colour_contrast!(self, contrast)
     self
@@ -179,7 +178,7 @@ class Image
   # @raise [ArgumentError] If the brightness is outside of the allowed range
   # @return [nil]
   def brightness!(brightness)
-    raise ArgumentError.new('Must be within (-255..255)') if brightness < -255 || brightness > 255
+    raise ArgumentError.new("Must be within (-255..255)") if brightness < -255 || brightness > 255
 
     image_colour_brightness!(self, brightness)
     self

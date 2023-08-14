@@ -8,36 +8,36 @@ module MTest
         @result = ""
         begin
           @passed = nil
-          self.setup
-          self.run_setup_hooks
-          self.__send__ self.__name__
+          setup
+          run_setup_hooks
+          __send__ __name__
           @result = "." unless io?
           @passed = true
         rescue Exception => e
           @passed = false
-          @result = runner.puke self.class, self.__name__, e
+          @result = runner.puke self.class, __name__, e
         ensure
           begin
-            self.run_teardown_hooks
-            self.teardown
+            run_teardown_hooks
+            teardown
           rescue Exception => e
-            @result = runner.puke self.class, self.__name__, e
+            @result = runner.puke self.class, __name__, e
           end
         end
         @result
       end
 
       def location
-        return 'Could not find file' unless File.exist?(file_name)
+        return "Could not find file" unless File.exist?(file_name)
 
         File.read(file_name).each_line.with_index { |line, index|
-          return "#{file_name}:#{index + 1}" if line =~ /^\s*def\s*#{self.__name__}(.*)/
+          return "#{file_name}:#{index + 1}" if line =~ /^\s*def\s*#{__name__}(.*)/
         }
       end
 
       def file_name
-        best_guess = self.class.to_s.split('::').map(&:downcase)
-        second_guess = best_guess.reject { _1 == 'test' }
+        best_guess = self.class.to_s.split("::").map(&:downcase)
+        second_guess = best_guess.reject { _1 == "test" }
         best_guess_path = "#{File.join(best_guess)}.rb"
         second_guess_path = "#{File.join(second_guess)}.rb"
 
@@ -54,15 +54,19 @@ module MTest
         $buildkite_test_analytics ||= []
 
         $buildkite_test_analytics << {
-          "scope": self.class,
-          "name": self.__name__,
-          "identifier": "#{self.class}##{self.__name__}",
-          "location": self.location,
-          "file_name": self.file_name,
-          "result": (@passed ? "passed" : (@result == "S" ? "skipped" : "failed")),
-          "failure_reason": (@result unless @passed),
-          "history": {
-            "duration": "%.6f" % [Time.now - @start_time]
+          scope: self.class,
+          name: __name__,
+          identifier: "#{self.class}##{__name__}",
+          location: location,
+          file_name: file_name,
+          result: (if @passed
+                     "passed"
+                   else
+                     ((@result == "S") ? "skipped" : "failed")
+                   end),
+          failure_reason: (@result unless @passed),
+          history: {
+            duration: "%.6f" % [Time.now - @start_time]
           }
         }
       end
@@ -71,29 +75,29 @@ module MTest
 end
 
 def upload_buildkite_test_analytics
-  return unless ENV['BUILDKITE_TEST_ANALYTICS_KEY']
+  return unless ENV["BUILDKITE_TEST_ANALYTICS_KEY"]
   puts
   puts "Found a Buildkite test analytics key, let's upload our results!"
   puts "..."
 
-  client = SimpleHttp.new('https', 'analytics-api.buildkite.com', 443)
+  client = SimpleHttp.new("https", "analytics-api.buildkite.com", 443)
   response = client.request(
     "POST",
-    '/v1/uploads',
+    "/v1/uploads",
     {
-      'Authorization' => "Token token=\"#{ENV['BUILDKITE_TEST_ANALYTICS_KEY']}\"",
-      'Content-Type' => 'application/json',
-      'Body' => {
-        format: 'json',
+      "Authorization" => "Token token=\"#{ENV["BUILDKITE_TEST_ANALYTICS_KEY"]}\"",
+      "Content-Type" => "application/json",
+      "Body" => {
+        format: "json",
         run_env: {
           "CI" => "buildkite",
-          "key" => ENV['BUILDKITE_BUILD_ID'],
-          "number" => ENV['BUILDKITE_BUILD_NUMBER'],
-          "job_id" => ENV['BUILDKITE_JOB_ID'],
-          "branch" => ENV['BUILDKITE_BRANCH'],
-          "commit_sha" => ENV['BUILDKITE_COMMIT'],
-          "message" => ENV['BUILDKITE_MESSAGE'],
-          "url" => ENV['BUILDKITE_BUILD_URL']
+          "key" => ENV["BUILDKITE_BUILD_ID"],
+          "number" => ENV["BUILDKITE_BUILD_NUMBER"],
+          "job_id" => ENV["BUILDKITE_JOB_ID"],
+          "branch" => ENV["BUILDKITE_BRANCH"],
+          "commit_sha" => ENV["BUILDKITE_COMMIT"],
+          "message" => ENV["BUILDKITE_MESSAGE"],
+          "url" => ENV["BUILDKITE_BUILD_URL"]
         },
         data: $buildkite_test_analytics
       }.to_json
@@ -101,15 +105,15 @@ def upload_buildkite_test_analytics
   )
 
   response_data = JSON.parse(response.body)
-  puts "ID: #{response_data['id']}"
-  puts "Run ID: #{response_data['run_id']}"
-  puts "Queued: #{response_data['queued']}"
+  puts "ID: #{response_data["id"]}"
+  puts "Run ID: #{response_data["run_id"]}"
+  puts "Queued: #{response_data["queued"]}"
 
   puts "Done!"
 end
 
 def persist_buildkite_test_analytics
-  output = File.open('test-analytics.json', 'w')
+  output = File.open("test-analytics.json", "w")
   output.write($buildkite_test_analytics.to_json)
   output.close
 end

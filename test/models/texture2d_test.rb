@@ -18,14 +18,13 @@ class Test
         texture.width = 4
         texture.height = 3
         texture.mipmaps = 2
-        texture.format  = 1
+        texture.format = 1
 
         assert_equal 5, texture.id
         assert_equal 4, texture.width
         assert_equal 3, texture.height
         assert_equal 2, texture.mipmaps
         assert_equal 1, texture.format
-
       end
 
       def test_to_h

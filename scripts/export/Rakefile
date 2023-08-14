@@ -1,70 +1,70 @@
-require 'json'
-require 'fileutils'
+require "json"
+require "fileutils"
 
-require './lib/squasher'
+require "./lib/squasher"
 
 options = {
-  'name' => 'taylor_game',
-  'version' => 'v0.0.1',
-  'input' => 'game.rb',
-  'export_directory' => './exports',
-  'export_targets' => [
-    'android',
-    'linux',
-    'windows',
-    'osx/intel',
-    'osx/apple',
-    'web',
+  "name" => "taylor_game",
+  "version" => "v0.0.1",
+  "input" => "game.rb",
+  "export_directory" => "./exports",
+  "export_targets" => [
+    "android",
+    "linux",
+    "windows",
+    "osx/intel",
+    "osx/apple",
+    "web"
   ],
-  'load_paths' => [
-    './',
-    './vendor',
+  "load_paths" => [
+    "./",
+    "./vendor"
   ],
-  'copy_paths' => [
-    './assets',
-  ],
+  "copy_paths" => [
+    "./assets"
+  ]
 }
 
-export_target = ENV.fetch('EXPORT', 'linux')
+export_target = ENV.fetch("EXPORT", "linux")
 
 if File.exist?("../../include/version.hpp")
   VERSION = File.read("../../include/version.hpp").each_line.to_a.last.split('"')[1]
 end
 
-if File.exist?('/app/game/taylor-config.json')
+if File.exist?("/app/game/taylor-config.json")
   options.merge!(
-    JSON.parse(File.read('/app/game/taylor-config.json'))
+    JSON.parse(File.read("/app/game/taylor-config.json"))
   )
 end
 
 task :squash do
-  Dir.chdir('/app/game')
+  Dir.chdir("/app/game")
   Squasher.call(options)
-  Dir.chdir('/app/export')
+  Dir.chdir("/app/export")
 end
 
-task :transpile => :squash
+task transpile: :squash
 task :transpile do
   sh "mrbc -Bgame -o /app/taylor/include/game.h ./output.rb"
 end
 
-task :build => "build:setup"
-task :build => "build:android"   if export_target == 'android'
-task :build => "build:linux"     if export_target == 'linux'
-task :build => "build:windows"   if export_target == 'windows'
-task :build => "build:osx:intel" if export_target == 'osx/intel'
-task :build => "build:osx:apple" if export_target == 'osx/apple'
-task :build => "build:osx:intel" if export_target == 'osx/no_app/intel'
-task :build => "build:osx:apple" if export_target == 'osx/no_app/apple'
-task :build => "build:web"       if export_target == 'web'
-task :build => "build:reset"
+task build: "build:setup"
+task build: "build:android" if export_target == "android"
+task build: "build:linux" if export_target == "linux"
+task build: "build:windows" if export_target == "windows"
+task build: "build:osx:intel" if export_target == "osx/intel"
+task build: "build:osx:apple" if export_target == "osx/apple"
+task build: "build:osx:intel" if export_target == "osx/no_app/intel"
+task build: "build:osx:apple" if export_target == "osx/no_app/apple"
+task build: "build:web" if export_target == "web"
+task build: "build:reset"
 
 namespace :build do
   task :setup do
-    Dir.chdir('/app/taylor')
+    Dir.chdir("/app/taylor")
   end
   task :reset do
-    Dir.chdir('/app/game')
+    Dir.chdir("/app/game")
   end
 
   task :android do
@@ -94,41 +94,41 @@ namespace :build do
   end
 end
 
-task :rename => "rename:setup"
-task :rename => "rename:android"          if export_target == 'android'
-task :rename => "rename:linux"            if export_target == 'linux'
-task :rename => "rename:windows"          if export_target == 'windows'
-task :rename => "rename:osx:intel"        if export_target == 'osx/intel'
-task :rename => "rename:osx:apple"        if export_target == 'osx/apple'
-task :rename => "rename:osx:no_app:intel" if export_target == 'osx/no_app/intel'
-task :rename => "rename:osx:no_app:apple" if export_target == 'osx/no_app/apple'
-task :rename => "rename:web"              if export_target == 'web'
+task rename: "rename:setup"
+task rename: "rename:android" if export_target == "android"
+task rename: "rename:linux" if export_target == "linux"
+task rename: "rename:windows" if export_target == "windows"
+task rename: "rename:osx:intel" if export_target == "osx/intel"
+task rename: "rename:osx:apple" if export_target == "osx/apple"
+task rename: "rename:osx:no_app:intel" if export_target == "osx/no_app/intel"
+task rename: "rename:osx:no_app:apple" if export_target == "osx/no_app/apple"
+task rename: "rename:web" if export_target == "web"
 
 namespace :rename do
   task :setup do
-    Dir.chdir('/app/game')
-    FileUtils.mkdir_p './exports'
+    Dir.chdir("/app/game")
+    FileUtils.mkdir_p "./exports"
   end
 
   task :android do
     puts "Copying android build"
 
-    FileUtils.mkdir_p '/app/game/exports/android'
-    FileUtils.cp Dir.glob('/app/taylor/dist/android/release/*'), '/app/game/exports/android'
+    FileUtils.mkdir_p "/app/game/exports/android"
+    FileUtils.cp Dir.glob("/app/taylor/dist/android/release/*"), "/app/game/exports/android"
   end
 
   task :linux do
     puts "Copying linux build"
 
-    FileUtils.mkdir_p '/app/game/exports/linux'
-    FileUtils.cp Dir.glob('/app/taylor/dist/linux/release/*'), '/app/game/exports/linux'
+    FileUtils.mkdir_p "/app/game/exports/linux"
+    FileUtils.cp Dir.glob("/app/taylor/dist/linux/release/*"), "/app/game/exports/linux"
   end
 
   task :windows do
     puts "Copying windows build"
 
-    FileUtils.mkdir_p '/app/game/exports/windows'
-    FileUtils.cp Dir.glob('/app/taylor/dist/windows/release/*'), '/app/game/exports/windows'
+    FileUtils.mkdir_p "/app/game/exports/windows"
+    FileUtils.cp Dir.glob("/app/taylor/dist/windows/release/*"), "/app/game/exports/windows"
   end
 
   namespace :osx do
@@ -136,70 +136,69 @@ namespace :rename do
       puts "Copying osx intel build"
 
       app_path = File.join(
-        '/app/game/exports',
-        'osx',
-        "#{options['name']}-intel.app",
-        'Contents',
-        'MacOS'
+        "/app/game/exports",
+        "osx",
+        "#{options["name"]}-intel.app",
+        "Contents",
+        "MacOS"
       )
       FileUtils.mkdir_p(app_path)
-      FileUtils.cp Dir.glob('/app/taylor/dist/osx/intel/release/*'), app_path
+      FileUtils.cp Dir.glob("/app/taylor/dist/osx/intel/release/*"), app_path
     end
 
     task :apple do
       puts "Copying osx apple build"
 
       app_path = File.join(
-        '/app/game/exports',
-        'osx',
-        "#{options['name']}-apple.app",
-        'Contents',
-        'MacOS'
+        "/app/game/exports",
+        "osx",
+        "#{options["name"]}-apple.app",
+        "Contents",
+        "MacOS"
       )
       FileUtils.mkdir_p(app_path)
-      FileUtils.cp Dir.glob('/app/taylor/dist/osx/apple/release/*'), app_path
+      FileUtils.cp Dir.glob("/app/taylor/dist/osx/apple/release/*"), app_path
     end
 
     namespace :no_app do
       task :intel do
         puts "Copying osx intel build"
 
-        FileUtils.mkdir_p '/app/game/exports/osx/intel'
-        FileUtils.cp Dir.glob('/app/taylor/dist/osx/intel/release/*'), '/app/game/exports/osx'
+        FileUtils.mkdir_p "/app/game/exports/osx/intel"
+        FileUtils.cp Dir.glob("/app/taylor/dist/osx/intel/release/*"), "/app/game/exports/osx"
       end
 
       task :apple do
         puts "Copying osx apple build"
 
-        FileUtils.mkdir_p '/app/game/exports/osx/apple'
-        FileUtils.cp Dir.glob('/app/taylor/dist/osx/apple/release/*'), '/app/game/exports/osx'
+        FileUtils.mkdir_p "/app/game/exports/osx/apple"
+        FileUtils.cp Dir.glob("/app/taylor/dist/osx/apple/release/*"), "/app/game/exports/osx"
       end
     end
   end
 
   task :web do
     puts "Copying web build"
-    FileUtils.mkdir_p '/app/game/exports/web'
-    FileUtils.cp Dir.glob('/app/taylor/dist/web/release/*'), '/app/game/exports/web'
-    FileUtils.mv File.join('/app/game/exports/web/', "#{options['name']}.html"),
-      '/app/game/exports/web/index.html'
+    FileUtils.mkdir_p "/app/game/exports/web"
+    FileUtils.cp Dir.glob("/app/taylor/dist/web/release/*"), "/app/game/exports/web"
+    FileUtils.mv File.join("/app/game/exports/web/", "#{options["name"]}.html"),
+      "/app/game/exports/web/index.html"
   end
 end
 
-task :compress => "compress:setup"
-task :compress => "compress:linux"            if export_target == 'linux'
-task :compress => "compress:windows"          if export_target == 'windows'
-task :compress => "compress:osx:intel"        if export_target == 'osx/intel'
-task :compress => "compress:osx:apple"        if export_target == 'osx/apple'
-task :compress => "compress:osx:no_app:intel" if export_target == 'osx/no_app/intel'
-task :compress => "compress:osx:no_app:apple" if export_target == 'osx/no_app/apple'
-task :compress => "compress:web"              if export_target == 'web'
-task :compress => "compress:move"
-
+task compress: "compress:setup"
+task compress: "compress:linux" if export_target == "linux"
+task compress: "compress:windows" if export_target == "windows"
+task compress: "compress:osx:intel" if export_target == "osx/intel"
+task compress: "compress:osx:apple" if export_target == "osx/apple"
+task compress: "compress:osx:no_app:intel" if export_target == "osx/no_app/intel"
+task compress: "compress:osx:no_app:apple" if export_target == "osx/no_app/apple"
+task compress: "compress:web" if export_target == "web"
+task compress: "compress:move"
 
 namespace :compress do
   task :setup do
-    Dir.chdir('/app/game/exports')
+    Dir.chdir("/app/game/exports")
   end
 
   task :move do
@@ -208,55 +207,55 @@ namespace :compress do
   end
 
   task :linux do
-    Dir.chdir('/app/game/exports/linux')
-    options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
-    sh "zip -r \"#{options['name']}-linux-#{options['version']}.zip\" *"
+    Dir.chdir("/app/game/exports/linux")
+    options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
+    sh "zip -r \"#{options["name"]}-linux-#{options["version"]}.zip\" *"
   end
 
   task :windows do
-    Dir.chdir('/app/game/exports/windows')
-    options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
-    sh "zip -r \"#{options['name']}-windows-#{options['version']}.zip\" *"
+    Dir.chdir("/app/game/exports/windows")
+    options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
+    sh "zip -r \"#{options["name"]}-windows-#{options["version"]}.zip\" *"
   end
 
   namespace :osx do
     task :intel do
-      Dir.chdir('/app/game/exports/osx')
-      app_path = File.join('.', "#{options['name']}-intel.app", 'Contents', 'MacOS')
+      Dir.chdir("/app/game/exports/osx")
+      app_path = File.join(".", "#{options["name"]}-intel.app", "Contents", "MacOS")
       FileUtils.mkdir_p(app_path)
-      File.write(File.join(app_path, '..', 'PkgInfo'), 'APPL????APPL????')
-      options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), app_path) }
-      sh "zip -r \"#{options['name']}-osx-intel-#{options['version']}.zip\" *.app"
+      File.write(File.join(app_path, "..", "PkgInfo"), "APPL????APPL????")
+      options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), app_path) }
+      sh "zip -r \"#{options["name"]}-osx-intel-#{options["version"]}.zip\" *.app"
     end
 
     task :apple do
-      Dir.chdir('/app/game/exports/osx')
-      app_path = File.join('.', "#{options['name']}-apple.app", 'Contents', 'MacOS')
+      Dir.chdir("/app/game/exports/osx")
+      app_path = File.join(".", "#{options["name"]}-apple.app", "Contents", "MacOS")
       FileUtils.mkdir_p(app_path)
-      File.write(File.join(app_path, '..', 'PkgInfo'), 'APPL????APPL????')
-      options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), app_path) }
-      sh "zip -r \"#{options['name']}-osx-apple-#{options['version']}.zip\" *.app"
+      File.write(File.join(app_path, "..", "PkgInfo"), "APPL????APPL????")
+      options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), app_path) }
+      sh "zip -r \"#{options["name"]}-osx-apple-#{options["version"]}.zip\" *.app"
     end
 
     namespace :no_app do
       task :intel do
-        Dir.chdir('/app/game/exports/osx')
-        options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
+        Dir.chdir("/app/game/exports/osx")
+        options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
         sh "mv taylor-intel taylor"
-        sh "zip -r \"#{options['name']}-osx-intel-#{options['version']}.zip\" taylor"
+        sh "zip -r \"#{options["name"]}-osx-intel-#{options["version"]}.zip\" taylor"
       end
 
       task :apple do
-        Dir.chdir('/app/game/exports/osx')
-        options['copy_paths'].each { |asset_path| FileUtils.cp_r(File.join('/app/game/', asset_path), '.') }
+        Dir.chdir("/app/game/exports/osx")
+        options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
         sh "mv taylor-apple taylor"
-        sh "zip -r \"#{options['name']}-osx-apple-#{options['version']}.zip\" taylor"
+        sh "zip -r \"#{options["name"]}-osx-apple-#{options["version"]}.zip\" taylor"
       end
     end
   end
 
   task :web do
-    Dir.chdir('/app/game/exports/web')
-    sh "zip -r \"#{options['name']}-web-#{options['version']}.zip\" *"
+    Dir.chdir("/app/game/exports/web")
+    sh "zip -r \"#{options["name"]}-web-#{options["version"]}.zip\" *"
   end
 end

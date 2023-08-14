@@ -5,7 +5,7 @@ class Test
 
       set_window_title(__method__.to_s)
       clear_and_draw do
-        draw_text('a', 0, 0, 10, BLACK)
+        draw_text("a", 0, 0, 10, BLACK)
       end
       flush_frame
 
@@ -16,9 +16,9 @@ class Test
       skip_unless_display_present
 
       set_window_title(__method__.to_s)
-      font = Font.load('./assets/tiny.ttf')
+      font = Font.load("./assets/tiny.ttf")
       clear_and_draw do
-        draw_text_ex(font, 'x', Vector2.new(0, 0), 12, 0, BLACK)
+        draw_text_ex(font, "x", Vector2.new(0, 0), 12, 0, BLACK)
       end
 
       assert_within 97, fixture_draw_text_ex, get_screen_data.data
@@ -29,8 +29,8 @@ class Test
       skip_unless_display_present
 
       set_window_title(__method__.to_s)
-      font = Font.load('./assets/tiny.ttf')
-      size = measure_text_ex(font, 'hello', 12, 0)
+      font = Font.load("./assets/tiny.ttf")
+      size = measure_text_ex(font, "hello", 12, 0)
       flush_frame
 
       assert_equal 31.125, size.x

@@ -11,7 +11,7 @@ def fixture_draw_ellipse
     w, w, p, p, p, p, p, p, w, w,
     w, w, p, p, p, p, p, p, w, w,
     w, w, p, p, p, p, p, p, w, w,
-    w, w, w, p, p, p, p, w, w, w,
+    w, w, w, p, p, p, p, w, w, w
   ]
 end
 
@@ -28,6 +28,6 @@ def fixture_draw_ellipse_lines
     w, w, p, w, w, w, w, p, w, w,
     w, w, p, w, w, w, w, p, w, w,
     w, w, p, w, w, w, w, p, w, w,
-    w, w, w, p, p, p, p, w, w, w,
+    w, w, w, p, p, p, p, w, w, w
   ]
 end

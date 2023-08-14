@@ -5,7 +5,7 @@ class Test
 
       set_window_title(__method__.to_s)
 
-      image = Image.load('assets/test.png')
+      image = Image.load("assets/test.png")
       texture = load_texture_from_image(image)
       clear_and_draw do
         draw_texture(texture, 3, 3, WHITE)
@@ -20,7 +20,7 @@ class Test
       skip_unless_display_present
 
       set_window_title(__method__.to_s)
-      texture = Texture2D.load('assets/test.png')
+      texture = Texture2D.load("assets/test.png")
       clear_and_draw do
         draw_texture(texture, 3, 3, WHITE)
       end
@@ -33,13 +33,13 @@ class Test
       skip_unless_display_present
 
       set_window_title(__method__.to_s)
-      texture = Texture2D.load('assets/test.png')
+      texture = Texture2D.load("assets/test.png")
       clear_and_draw do
         draw_texture_pro(
           texture,
           Rectangle.new(0, 0, 3, 3),
           Rectangle.new(0, 0, 9, 9),
-          Vector2.new(0 ,0),
+          Vector2.new(0, 0),
           0,
           WHITE
         )

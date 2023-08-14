@@ -5,7 +5,7 @@ def fixture_image_load
   [
     o, t, p,
     t, o, t,
-    p, t, o,
+    p, t, o
   ]
 end
 
@@ -18,7 +18,7 @@ def fixture_image_from_image
   o = Colour.new(218, 154, 37, 255)
   [
     o, t,
-    t, o,
+    t, o
   ]
 end
 
@@ -39,7 +39,7 @@ def fixture_image_text_ex
     Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 86), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
     Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
     Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
+    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0)
   ]
 end
 
@@ -50,7 +50,7 @@ def fixture_image_resize!
     Colour.new(254, 255, 224, 255), Colour.new(245, 232, 179, 255), Colour.new(227, 181, 82, 255), Colour.new(225, 172, 96, 255), Colour.new(240, 206, 219, 255), Colour.new(247, 221, 255, 255),
     Colour.new(247, 221, 255, 255), Colour.new(240, 206, 219, 255), Colour.new(225, 172, 96, 255), Colour.new(227, 181, 82, 255), Colour.new(245, 232, 179, 255), Colour.new(254, 255, 224, 255),
     Colour.new(205, 73, 232, 255), Colour.new(216, 115, 228, 255), Colour.new(240, 206, 219, 255), Colour.new(245, 232, 179, 255), Colour.new(232, 194, 107, 255), Colour.new(226, 176, 73, 255),
-    Colour.new(186, 5, 212, 255), Colour.new(205, 73, 232, 255), Colour.new(247, 221, 255, 255), Colour.new(254, 255, 224, 255), Colour.new(226, 176, 73, 255), Colour.new(212, 139, 4, 255),
+    Colour.new(186, 5, 212, 255), Colour.new(205, 73, 232, 255), Colour.new(247, 221, 255, 255), Colour.new(254, 255, 224, 255), Colour.new(226, 176, 73, 255), Colour.new(212, 139, 4, 255)
   ]
 end
 
@@ -64,7 +64,7 @@ def fixture_image_resize_nearest_neighbour!
     t, t, o, o, t, t,
     t, t, o, o, t, t,
     p, p, t, t, o, o,
-    p, p, t, t, o, o,
+    p, p, t, t, o, o
   ]
 end
 
@@ -74,7 +74,7 @@ def fixture_image_crop!
   p = Colour.new(195, 37, 218, 255)
   [
     o, t, p,
-    t, o, t,
+    t, o, t
   ]
 end
 
@@ -85,7 +85,7 @@ def fixture_image_alpha_mask!
   [
     o, t, p,
     t, o, t,
-    p, t, o,
+    p, t, o
   ]
 end
 
@@ -96,7 +96,7 @@ def fixture_image_flip_vertical!
   [
     p, t, p,
     t, o, t,
-    o, t, p,
+    o, t, p
   ]
 end
 
@@ -107,7 +107,7 @@ def fixture_image_flip_horizontal!
   [
     p, t, o,
     t, o, t,
-    p, t, p,
+    p, t, p
   ]
 end
 
@@ -118,7 +118,7 @@ def fixture_image_rotate_cw!
   [
     p, t, o,
     t, o, t,
-    p, t, p,
+    p, t, p
   ]
 end
 
@@ -129,7 +129,7 @@ def fixture_image_rotate_ccw!
   [
     p, t, p,
     t, o, t,
-    o, t, p,
+    o, t, p
   ]
 end
 
@@ -147,23 +147,23 @@ end
 
 def fixture_image_colour_grayscale!
   [
-    [Colour.new(99, 99, 99 ,255)],
-    [Colour.new(98, 98, 98 ,255)],
-    [Colour.new(139, 139, 139 ,255)],
+    [Colour.new(99, 99, 99, 255)],
+    [Colour.new(98, 98, 98, 255)],
+    [Colour.new(139, 139, 139, 255)]
   ]
 end
 
 def fixture_image_colour_contrast!
   [
     [Colour.new(0, 196, 0, 255)],
-    [Colour.new(95, 135, 107, 255)],
+    [Colour.new(95, 135, 107, 255)]
   ]
 end
 
 def fixture_image_colour_brightness!
   [
     [Colour.new(185, 110, 240, 255)],
-    [Colour.new(85, 10, 140, 255)],
+    [Colour.new(85, 10, 140, 255)]
   ]
 end
 
@@ -174,7 +174,7 @@ def fixture_image_colour_replace!
   [
     o, b, p,
     b, o, b,
-    p, b, o,
+    p, b, o
   ]
 end
 

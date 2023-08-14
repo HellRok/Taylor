@@ -1,4 +1,4 @@
-require 'fixtures/core/drawing'
+require "fixtures/core/drawing"
 
 def fixture_clear_background
   100.times.map { RED }

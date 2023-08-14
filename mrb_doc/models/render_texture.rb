@@ -1,5 +1,4 @@
 class RenderTexture
-
   # Creates a new instance of RenderTexture
   # @param width [Integer]
   # @param height [Integer]

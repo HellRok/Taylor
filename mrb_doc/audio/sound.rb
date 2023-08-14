@@ -61,7 +61,6 @@ def sound_playing?(sound)
   true
 end
 
-
 # Sets the volume of the sound object
 # @param sound [Sound]
 # @param volume [Float] a value between 0.0 and 1.0

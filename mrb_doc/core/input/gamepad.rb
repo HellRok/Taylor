@@ -13,7 +13,7 @@ end
 def get_gamepad_name(index)
   # mrb_get_gamepad_name
   # src/mruby_integration/core/input/gamepad.cpp
-  'Xbox Controller'
+  "Xbox Controller"
 end
 
 # Has the specified button been pressed on the specific gamepad?
@@ -58,7 +58,7 @@ end
 
 # Returns the last pressed gamepad button
 # @return [Integer]
-def get_gamepad_button_pressed()
+def get_gamepad_button_pressed
   # mrb_get_gamepad_button_pressed
   # src/mruby_integration/core/input/gamepad.cpp
   0

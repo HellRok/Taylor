@@ -2,7 +2,7 @@ module Taylor
   module Commands
     class Export
       def self.call(argv, options)
-        self.new(argv, options)
+        new(argv, options)
       end
 
       attr_accessor :options
@@ -41,30 +41,31 @@ module Taylor
       end
 
       private
+
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help,             :bool,   false)
-          opts.on(:dry_run,          :bool,   false)
-          opts.on(:export_directory, :string, options.fetch('export_directory', './exports'))
-          opts.on(:export_targets,   :string, options.fetch('export_targets',   'linux,windows,osx,web'))
-          opts.on(:build_cache,      :string)
+          opts.on(:help, :bool, false)
+          opts.on(:dry_run, :bool, false)
+          opts.on(:export_directory, :string, options.fetch("export_directory", "./exports"))
+          opts.on(:export_targets, :string, options.fetch("export_targets", "linux,windows,osx,web"))
+          opts.on(:build_cache, :string)
         end
         parser.parse(argv, true)
 
         @options = parser.opts
-        @options[:export_targets] = @options[:export_targets].split(',') unless @options[:export_targets].is_a?(Array)
+        @options[:export_targets] = @options[:export_targets].split(",") unless @options[:export_targets].is_a?(Array)
       end
 
       def check_in_taylor_project!
-        unless File.exists?(File.join(Dir.pwd, 'taylor-config.json'))
-          raise 'This command must be run from a Taylor project'
+        unless File.exist?(File.join(Dir.pwd, "taylor-config.json"))
+          raise "This command must be run from a Taylor project"
         end
       end
 
       def create_export_folder
         return if @options[:dry_run]
 
-        unless File.exists?(options[:export_directory]) &&
+        unless File.exist?(options[:export_directory]) &&
             File.directory?(options[:export_directory])
           Dir.mkdir(options[:export_directory])
         end
@@ -74,14 +75,14 @@ module Taylor
         return if @options[:dry_run]
         return if @options[:build_cache].nil?
 
-        unless File.exists?(options[:build_cache]) &&
+        unless File.exist?(options[:build_cache]) &&
             File.directory?(options[:build_cache])
           Dir.mkdir(options[:build_cache])
         end
       end
 
       def docker_build
-        base_command = 'docker run -u $(id -u ${USER}):$(id -g ${USER})'
+        base_command = "docker run -u $(id -u ${USER}):$(id -g ${USER})"
         base_command << " --mount type=bind,source=#{Dir.pwd},target=/app/game"
         base_command << " --mount type=bind,source=#{File.expand_path(@options[:export_directory])},target=/app/game/exports"
 
@@ -92,8 +93,8 @@ module Taylor
         @options[:export_targets].each do |target|
           command = base_command.dup
 
-          command << " --env EXPORT=#{target}" if target.include?('/')
-          command << " hellrok/taylor:#{target.split('/').first}-v#{TAYLOR_VERSION}"
+          command << " --env EXPORT=#{target}" if target.include?("/")
+          command << " hellrok/taylor:#{target.split("/").first}-v#{TAYLOR_VERSION}"
 
           if options[:dry_run]
             puts command

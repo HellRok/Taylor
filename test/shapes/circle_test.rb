@@ -37,7 +37,8 @@ class Test
             180,
             270,
             8,
-            PURPLE)
+            PURPLE
+          )
         end
 
         assert_within 99, fixture_draw_circle_sector, get_screen_data.data
@@ -55,7 +56,8 @@ class Test
             180,
             270,
             8,
-            PURPLE)
+            PURPLE
+          )
         end
 
         assert_within 98, fixture_draw_circle_sector_lines, get_screen_data.data

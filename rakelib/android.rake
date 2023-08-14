@@ -1,11 +1,11 @@
-require_relative 'builder.rb'
-require_relative 'helpers.rb'
+require_relative "builder"
+require_relative "helpers"
 
 class AndroidBuilder < Builder
   def initialize
-    @name = 'libmain.so'
-    @platform = 'android'
-    @cxx = 'aarch64-linux-android29-clang++'
+    @name = "libmain.so"
+    @platform = "android"
+    @cxx = "aarch64-linux-android29-clang++"
     @cxxflags = <<-EOS.chomp
       -Oz \
       -stdlib=libc++ \
@@ -17,7 +17,7 @@ class AndroidBuilder < Builder
       -D ANDROID_API__29
     EOS
     @includes = "-I /ndk/android-ndk-r25b/sources/android/native_app_glue/"
-    @release_flags = '-O3'
+    @release_flags = "-O3"
 
     @static_links = <<-EOS.chomp
       -shared \
@@ -38,7 +38,7 @@ class AndroidBuilder < Builder
   end
 
   def name
-    "#{@options['name']}.apk"
+    "#{@options["name"]}.apk"
   end
 end
 
@@ -46,11 +46,11 @@ builder = AndroidBuilder.new
 Builder.register(builder)
 
 namespace :android do
-  multitask :build_depends => depends("build/android/debug")
-  multitask :build_objects => objects("build/android/debug")
-  task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
+  multitask build_depends: depends("build/android/debug")
+  multitask build_objects: objects("build/android/debug")
+  task build: [:setup_ephemeral_files, :build_depends, :build_objects]
   desc "Build for android in debug mode"
-  task :build => "build:android:debug"
+  task build: "build:android:debug"
 
   namespace :release do
     task :strip do
@@ -83,12 +83,12 @@ namespace :android do
           /ndk/android-ndk-r25b/sources/android/native_app_glue/native_app_glue.o
       CMD
     end
-    task :build => :native_app_glue
+    task build: :native_app_glue
 
-    multitask :build_depends => depends("build/android/release")
-    multitask :build_objects => objects("build/android/release")
-    task :build => [:setup_ephemeral_files, :build_depends, :build_objects]
-    task :build => "build:android:release"
+    multitask build_depends: depends("build/android/release")
+    multitask build_objects: objects("build/android/release")
+    task build: [:setup_ephemeral_files, :build_depends, :build_objects]
+    task build: "build:android:release"
 
     task :build_apk do
       sh <<-CMD
@@ -156,6 +156,6 @@ namespace :android do
     end
 
     desc "Build for android in release mode"
-    task :build => :build_apk
+    task build: :build_apk
   end
 end

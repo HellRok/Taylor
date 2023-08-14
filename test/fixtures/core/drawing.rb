@@ -23,7 +23,7 @@ def fixture_core_drawing_scissor_mode
     w, w, r, r, r, r, r, r, w, w,
     w, w, r, r, r, r, r, r, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end
 
@@ -41,7 +41,7 @@ def fixture_core_drawing_mode2D
       w, w, r, r, r, r, r, r, w, w,
       w, w, r, r, r, r, r, r, w, w,
       w, w, w, w, w, w, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w,
+      w, w, w, w, w, w, w, w, w, w
     ],
     [
       r, r, r, r, r, r, w, w, w, w,
@@ -53,7 +53,7 @@ def fixture_core_drawing_mode2D
       w, w, w, w, w, w, w, w, w, w,
       w, w, w, w, w, w, w, w, w, w,
       w, w, w, w, w, w, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w,
+      w, w, w, w, w, w, w, w, w, w
     ]
   ]
 end

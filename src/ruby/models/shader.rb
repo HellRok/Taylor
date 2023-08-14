@@ -52,7 +52,7 @@ class Shader
   # @return [Integer]
   def get_uniform_location(variable)
     value = get_shader_location(self, variable)
-    value == -1 ? nil : value
+    (value == -1) ? nil : value
   end
 
   # Sets the variable to the specified value, will auto detect the
@@ -87,7 +87,7 @@ class Shader
     set_values(
       values: [value],
       variable_location: variable_location,
-      variable_type: variable_type,
+      variable_type: variable_type
     )
   end
 
@@ -123,7 +123,7 @@ class Shader
       self,
       variable_location,
       values,
-      variable_type,
+      variable_type
     )
   end
 
@@ -138,9 +138,11 @@ class Shader
   def detect_uniform_type(values:)
     case values.first
     when Numeric
+      # No OP
     when Array
       case values.first.first
       when Numeric
+        # No OP
       else
         raise ArgumentError, "You can only set numeric values for a uniform variable"
       end
@@ -150,7 +152,7 @@ class Shader
 
     case values.first
     when Float
-        Shader::Uniform::FLOAT
+      Shader::Uniform::FLOAT
 
     when Integer
       Shader::Uniform::INT
@@ -202,6 +204,6 @@ class Shader
     IVEC3 = 6
     # An array of 4 integers
     IVEC4 = 7
-    #SAMPLER2D = 8
+    # SAMPLER2D = 8
   end
 end

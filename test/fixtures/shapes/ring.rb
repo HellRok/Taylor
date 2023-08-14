@@ -11,7 +11,7 @@ def fixture_draw_ring
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end
 
@@ -28,6 +28,6 @@ def fixture_draw_ring_lines
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end

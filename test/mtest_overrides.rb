@@ -8,15 +8,15 @@
 # nightmare so far for Windows.
 
 if windows?
-	module MTest
-		class Unit
-			def puts *a
-				super(*a)
-			end
+  module MTest
+    class Unit
+      def puts *a
+        super(*a)
+      end
 
-			def print *a
-				super(*a)
-			end
-		end
-	end
+      def print *a
+        super(*a)
+      end
+    end
+  end
 end

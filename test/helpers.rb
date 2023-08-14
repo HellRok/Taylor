@@ -1,12 +1,11 @@
 def reset_window
   if windows?
     close_window
-    init_window(10, 10, 'Taylor Test Suite')
-    flush_frame
+    init_window(10, 10, "Taylor Test Suite")
   else
     set_window_size 10, 10
-    flush_frame
   end
+  flush_frame
 end
 
 def skip_unless_display_present
@@ -39,28 +38,28 @@ def raw_colour_data(data)
 end
 
 def print_colour_data(data)
-  map = ''
+  map = ""
   data.each_slice(10).each { |row|
     row.each { |colour|
-      case colour
+      map << case colour
       when RAYWHITE
-        map << 'w'
+        "w"
       when BLACK
-        map << 'B'
+        "B"
       when RED
-        map << 'r'
+        "r"
       when GREEN
-        map << 'g'
+        "g"
       when BLUE
-        map << 'b'
+        "b"
       when PURPLE
-        map << 'p'
+        "p"
       when VIOLET
-        map << 'v'
+        "v"
       else
-        map << '?'
+        "?"
       end
-      map << ' '
+      map << " "
     }
 
     map << "\n"

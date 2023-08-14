@@ -8,15 +8,15 @@ class Squasher
 
   def initialize(options)
     @options = options
-    @files = options['load_paths'].flat_map { |dir|
-      Dir.glob(File.join(dir, '**/*.rb'))
+    @files = options["load_paths"].flat_map { |dir|
+      Dir.glob(File.join(dir, "**/*.rb"))
     }
     @processed_files = []
     @data = ""
 
-    process_file(options['input'])
+    process_file(options["input"])
 
-    File.write('../export/output.rb', @data)
+    File.write("../export/output.rb", @data)
   end
 
   def process_file(file, indent: 0)
@@ -41,10 +41,10 @@ class Squasher
   end
 
   def find_file(file_name)
-    file_name = "#{file_name}.rb" unless file_name[-3..-1] == '.rb'
-    file_name = file_name.gsub(/[.]+[\/]+/, '')
+    file_name = "#{file_name}.rb" unless file_name[-3..] == ".rb"
+    file_name = file_name.gsub(/[.]+\/+/, "")
 
-    options['load_paths'].each { |dir|
+    options["load_paths"].each { |dir|
       file = File.join(dir, file_name)
 
       return file if File.exist?(file)

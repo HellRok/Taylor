@@ -47,7 +47,7 @@ class Test
         set_window_title(__method__.to_s)
         drawing do
           clear_background(RAYWHITE)
-          scissor_mode(Rectangle.new(2 ,2, 6 ,6)) do
+          scissor_mode(Rectangle.new(2, 2, 6, 6)) do
             clear_background(RED)
           end
         end

@@ -18,4 +18,3 @@ def draw_pixel_v(position, colour)
   # src/mruby_integration/shapes/pixel.cpp
   nil
 end
-

@@ -1,0 +1,12 @@
+ignore:
+  - '**/*':
+    - Performance/RegexpMatch
+  - 'test/**/*':
+    - Style/GlobalVars
+    - Naming/ClassAndModuleCamelCase
+  - 'cli-tool/test/**/*':
+    - Style/GlobalVars
+    - Naming/ClassAndModuleCamelCase
+  - 'src/ruby/core/buildkite_analytics.rb':
+    - Lint/RescueException
+    - Style/GlobalVars

@@ -10,7 +10,7 @@ class Font
       base_size: base_size,
       glyph_count: glyph_count,
       glyph_padding: glyph_padding,
-      texture: texture.to_h,
+      texture: texture.to_h
     }
   end
 

@@ -14,7 +14,6 @@ class Test
       end
 
       def test_assignment
-
         camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 0)
         camera.offset.x = 6
         camera.offset.y = 5
@@ -38,14 +37,14 @@ class Test
           {
             offset: {
               x: 1,
-              y: 2,
+              y: 2
             },
             target: {
               x: 3,
-              y: 4,
+              y: 4
             },
             rotation: 5,
-            zoom: 6,
+            zoom: 6
           },
           camera.to_h
         )

@@ -1,31 +1,31 @@
-require './templates/game_template'
+require "./templates/game_template"
 
-require './lib/overrides'
+require "./lib/overrides"
 
-require './app/commands/export'
-require './app/commands/new'
-require './app/commands/run'
-require './app/commands/version'
+require "./app/commands/export"
+require "./app/commands/new"
+require "./app/commands/run"
+require "./app/commands/version"
 
 $:.unshift WORKING_DIRECTORY
 Dir.chdir WORKING_DIRECTORY
 
-if File.exists?('./taylor-config.json')
-  options = JSON.parse(File.read('./taylor-config.json'))
+options = if File.exist?("./taylor-config.json")
+  JSON.parse(File.read("./taylor-config.json"))
 else
-  options = {}
+  {}
 end
 
 command = ARGV[0]
 
 case command
-when 'new'
+when "new"
   Taylor::Commands::New.call(ARGV[1..], options)
 
-when 'export'
+when "export"
   Taylor::Commands::Export.call(ARGV[1..], options)
 
-when '--version'
+when "--version"
   Taylor::Commands::Version.call
 
 else

@@ -29,7 +29,7 @@ class Test
               width: 64,
               height: 32,
               mipmaps: 1,
-              format: 7,
+              format: 7
             }
           },
           render_texture.to_h

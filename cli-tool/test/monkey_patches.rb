@@ -2,7 +2,7 @@ module PutsGrabber
   attr_accessor :puts_data
 
   def puts(str)
-    @puts_data = '' unless @puts_data
+    @puts_data ||= ""
     @puts_data << str
   end
 end
@@ -41,4 +41,3 @@ module Taylor
     end
   end
 end
-

@@ -2,7 +2,7 @@ module Taylor
   module Commands
     class New
       def self.call(argv, options)
-        self.new(argv, options)
+        new(argv, options)
       end
 
       attr_accessor :options
@@ -47,28 +47,29 @@ module Taylor
       end
 
       private
+
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help,             :bool,   false)
-          opts.on(:name,             :string, options.fetch('name',             'taylor_game'))
-          opts.on(:version,          :string, options.fetch('version',          'v0.0.1'))
-          opts.on(:input,            :string, options.fetch('input',            'game.rb'))
-          opts.on(:export_directory, :string, options.fetch('export_directory', './exports'))
-          opts.on(:export_targets,   :string, options.fetch('export_targets',   'linux,windows,osx/apple,osx/intel,web'))
-          opts.on(:load_paths,       :string, options.fetch('load_paths',       './,./vendor'))
-          opts.on(:copy_paths,       :string, options.fetch('copy_paths',       './assets'))
+          opts.on(:help, :bool, false)
+          opts.on(:name, :string, options.fetch("name", "taylor_game"))
+          opts.on(:version, :string, options.fetch("version", "v0.0.1"))
+          opts.on(:input, :string, options.fetch("input", "game.rb"))
+          opts.on(:export_directory, :string, options.fetch("export_directory", "./exports"))
+          opts.on(:export_targets, :string, options.fetch("export_targets", "linux,windows,osx/apple,osx/intel,web"))
+          opts.on(:load_paths, :string, options.fetch("load_paths", "./,./vendor"))
+          opts.on(:copy_paths, :string, options.fetch("copy_paths", "./assets"))
         end
         parser.parse(argv, true)
 
         @options = parser.opts
         @options[:folder] = parser.tail.first || @options[:name]
-        @options[:load_paths] = @options[:load_paths].split(',')
-        @options[:copy_paths] = @options[:copy_paths].split(',')
-        @options[:export_targets] = @options[:export_targets].split(',')
+        @options[:load_paths] = @options[:load_paths].split(",")
+        @options[:copy_paths] = @options[:copy_paths].split(",")
+        @options[:export_targets] = @options[:export_targets].split(",")
       end
 
       def create_directory!
-        if File.exists?(@options[:folder])
+        if File.exist?(@options[:folder])
           raise "#{options[:folder]} directory already exists! Did you mean to run this again?"
         end
 
@@ -77,17 +78,17 @@ module Taylor
 
       def setup_game_structure
         (@options[:load_paths] + @options[:copy_paths]).each { |path|
-          unless path == './'
+          unless path == "./"
             Dir.mkdir(path_for(path))
-            File.open(File.join(path_for(path), '.keep'), 'w').close
+            File.open(File.join(path_for(path), ".keep"), "w").close
           end
         }
 
-        game = File.open(path_for(options[:input]), 'w')
+        game = File.open(path_for(options[:input]), "w")
         game.write(
-          game_template.
-            gsub('$NAME', options[:name]).
-            gsub('$LOAD_PATHS', load_paths_code)
+          game_template
+            .gsub("$NAME", options[:name])
+            .gsub("$LOAD_PATHS", load_paths_code)
         )
         game.close
       end
@@ -97,8 +98,8 @@ module Taylor
         config_options.delete(:help)
         config_options.delete(:folder)
 
-        config = File.open(path_for('taylor-config.json'), 'w')
-        config.write(JSON.generate(config_options, { pretty_print: true, indent_width: 2 }))
+        config = File.open(path_for("taylor-config.json"), "w")
+        config.write(JSON.generate(config_options, {pretty_print: true, indent_width: 2}))
         config.close
       end
 
@@ -107,10 +108,10 @@ module Taylor
       end
 
       def load_paths_code
-        output = ''
+        output = ""
 
         options[:load_paths].each { |path|
-          next if path == './' || path == '.'
+          next if path == "./" || path == "."
           output << "$: << '#{path}'\n"
         }
 

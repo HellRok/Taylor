@@ -1,8 +1,7 @@
 require "json"
 require "fileutils"
 require "rake/clean"
-require 'rake/loaders/makefile'
-
+require "rake/loaders/makefile"
 
 CLEAN.include("./build/*")
 CLEAN.include("./dist/*")
@@ -10,9 +9,9 @@ CLEAN.include("./releases/*")
 CLEAN.include("./src/ruby/**/*.cpp")
 CLEAN.include("./include/ruby")
 
-task :default => "linux:build"
+task default: "linux:build"
 
-require_relative 'rakelib/helpers.rb'
+require_relative "rakelib/helpers"
 
 multitask :setup_ruby_includes
 
@@ -28,7 +27,7 @@ ephemeral_files_for_ruby.each do |file|
   end
 end
 
-multitask :setup_ephemeral_files => ephemeral_files_for_ruby
+multitask setup_ephemeral_files: ephemeral_files_for_ruby
 
 rule ".o" => ->(file) { source_for(file) } do |task|
   FileUtils.mkdir_p(File.dirname(task.name))
@@ -38,8 +37,8 @@ end
 rule ".mf" => ->(file) { source_for(file) } do |task|
   data = `#{Builder.mf_command_for(task)}`
 
-  file, deps = data.split(':')
-  deps = deps.split.select{ |dep| File.exist? dep }
+  file, deps = data.split(":")
+  deps = deps.split.select { |dep| File.exist? dep }
 
   Rake::Task[file].enhance deps
 end

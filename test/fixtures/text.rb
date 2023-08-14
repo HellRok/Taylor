@@ -11,7 +11,7 @@ def fixture_draw_text
     b, w, w, w, b, w, w, w, w, w,
     b, b, b, b, b, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end
 
@@ -28,6 +28,6 @@ def fixture_draw_text_ex
     w, w, b, b, w, w, w, w, w, w,
     b, b, b, b, b, b, w, w, w, w,
     b, b, w, w, b, b, w, w, w, w,
-    b, b, w, w, b, b, w, w, w, w,
+    b, b, w, w, b, b, w, w, w, w
   ]
 end

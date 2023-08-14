@@ -1,11 +1,11 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 # Tooling
-gem 'rake'
+gem "rake"
+gem "standardrb"
 
 # Documentation
-gem 'yard'
+gem "yard"
 
 # Testing
 gem "selenium-webdriver"
-gem "webdrivers"

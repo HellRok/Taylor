@@ -1,8 +1,8 @@
 module Taylor
   module Commands
     class Version
-      def self.call()
-        self.new
+      def self.call
+        new
       end
 
       def initialize

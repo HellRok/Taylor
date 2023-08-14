@@ -1,6 +1,6 @@
 # Initialises the audio device for playback
 # @return [nil]
-def init_audio_device()
+def init_audio_device
   # mrb_init_audio_device
   # src/mruby_integration/audio/device.cpp
   nil
@@ -8,7 +8,7 @@ end
 
 # Closes the audio device
 # @return [nil]
-def close_audio_device()
+def close_audio_device
   # mrb_close_audio_device
   # src/mruby_integration/audio/device.cpp
   nil
@@ -16,7 +16,7 @@ end
 
 # Returns if the audio device has been setup
 # @return [Boolean]
-def audio_device_ready?()
+def audio_device_ready?
   # mrb_audio_device_ready
   # src/mruby_integration/audio/device.cpp
   true

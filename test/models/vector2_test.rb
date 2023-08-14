@@ -47,7 +47,7 @@ class Test
       end
 
       def test_to_h
-        assert_equal({ x: 3, y: -4 }, Vector2.new(3, -4).to_h)
+        assert_equal({x: 3, y: -4}, Vector2.new(3, -4).to_h)
       end
     end
   end

@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Build the docker images one at a time to not thrash the disk
+- Setup standardrb for formatting
 
 ## v0.3.14.1
 

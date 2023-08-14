@@ -13,7 +13,7 @@ def fixture_draw_texture
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end
 
@@ -32,6 +32,6 @@ def fixture_draw_texture_pro
     p, p, p, t, t, t, o, o, o, w,
     p, p, p, t, t, t, o, o, o, w,
     p, p, p, t, t, t, o, o, o, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end

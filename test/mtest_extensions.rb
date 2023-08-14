@@ -1,14 +1,14 @@
 module MTest
   module Assertions
-    alias :original_diff :diff
+    alias_method :original_diff, :diff
     def diff(exp, act)
       if [exp, act].all? { |obj| obj.is_a?(Array) && obj.all? { |item| item.is_a?(Colour) } }
         if exp.length != act.length
-          return "Expected length: #{exp.length}\n Actual length: #{act.length}"
+          "Expected length: #{exp.length}\n Actual length: #{act.length}"
         elsif exp.all? { |obj| obj == exp.first } && act.all? { |obj| obj == act.first }
-          return "Expected: #{exp.first.to_h}\n Actual: #{act.first.to_h}"
+          "Expected: #{exp.first.to_h}\n Actual: #{act.first.to_h}"
         else
-          return "Expected:\n#{print_colour_data(exp)}\n Actual:\n#{print_colour_data(act)}"
+          "Expected:\n#{print_colour_data(exp)}\n Actual:\n#{print_colour_data(act)}"
         end
       else
         original_diff(exp, act)
@@ -23,8 +23,8 @@ module MTest
     # @param msg [String]
     # @return [true]
     def assert_within(percent, exp, act, msg = nil)
-      unless exp.size == act.size && [exp, act].all? {
-          |obj| obj.is_a?(Array) && obj.all? { |item| item.is_a?(Colour) }
+      unless exp.size == act.size && [exp, act].all? { |obj|
+        obj.is_a?(Array) && obj.all? { |item| item.is_a?(Colour) }
       }
         raise ArgumentError, "Must be passed two arrays of Colour of equal size"
       end

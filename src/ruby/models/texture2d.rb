@@ -11,7 +11,7 @@ class Texture2D
       width: width,
       height: height,
       mipmaps: mipmaps,
-      format: format,
+      format: format
     }
   end
 
@@ -42,7 +42,7 @@ class Texture2D
   # @return [nil]
   def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation: 0, colour: WHITE)
     @source = source unless source.nil?
-    @source ||= Rectangle.new(0, 0, self.width, self.height)
+    @source ||= Rectangle.new(0, 0, width, height)
     @destination = destination unless destination.nil?
     @destination ||= @source
 

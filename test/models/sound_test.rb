@@ -20,7 +20,7 @@ class Test
 
         assert_equal(
           {
-            frame_count: 1,
+            frame_count: 1
           },
           sound.to_h
         )

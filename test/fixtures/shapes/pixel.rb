@@ -11,6 +11,6 @@ def fixture_draw_pixel
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end

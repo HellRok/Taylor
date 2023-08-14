@@ -10,7 +10,7 @@ class Sound
   # @return [Hash]
   def to_h
     {
-      frame_count: frame_count,
+      frame_count: frame_count
     }
   end
 
@@ -67,7 +67,7 @@ class Sound
   # @raise [ArgumentError] If the value is out of bounds
   # @return [nil]
   def volume=(value)
-    unless (0..1).include?(value)
+    unless (0..1).cover?(value)
       raise ArgumentError, "Value must fall between 0 and 1, you gave me #{value}"
     end
     @volume = value

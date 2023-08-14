@@ -1,16 +1,16 @@
-VARIANTS = %w(debug release)
+VARIANTS = %w[debug release]
 
-PLATFORMS = %w(linux windows osx/intel osx/apple web android)
+PLATFORMS = %w[linux windows osx/intel osx/apple web android]
 VERSION = File.read("./include/version.hpp").each_line.to_a.last.split('"')[1]
 
 def ephemeral_files_for_ruby
   Rake::FileList["#{SRC_FOLDER}/**/*.cpp"].flat_map { |file|
-    File.read(file).
-      lines.
-      map(&:strip).
-      select { _1.start_with?("#include") }.
-      map { _1.split('"').last }.
-      select { _1.start_with?("ruby") }
+    File.read(file)
+      .lines
+      .map(&:strip)
+      .select { _1.start_with?("#include") }
+      .map { _1.split('"').last }
+      .select { _1.start_with?("ruby") }
   }
 end
 
@@ -21,17 +21,17 @@ SRC = (
 ).uniq
 
 def source_for(o_file)
-  SRC.detect{ |file|
-    file.ext('').gsub(SRC_FOLDER, '') == o_file.ext('').gsub(/^build\/(#{PLATFORMS.join('|')})\/(#{VARIANTS.join('|')})/, '')
+  SRC.detect { |file|
+    file.ext("").gsub(SRC_FOLDER, "") == o_file.ext("").gsub(/^build\/(#{PLATFORMS.join('|')})\/(#{VARIANTS.join('|')})/, "")
   }
 end
 
 def objects(objects_folder)
-  SRC.ext('.o').map { |file| file.gsub(SRC_FOLDER, objects_folder) } #.tap { puts "OBJECTS"; p _1 }
+  SRC.ext(".o").map { |file| file.gsub(SRC_FOLDER, objects_folder) } # .tap { puts "OBJECTS"; p _1 }
 end
 
 def depends(objects_folder)
-  SRC.ext('.mf').map { |file| file.gsub(SRC_FOLDER, objects_folder) }
+  SRC.ext(".mf").map { |file| file.gsub(SRC_FOLDER, objects_folder) }
 end
 
 def write_hpp_file(hpp_file)
@@ -47,9 +47,9 @@ def write_cpp_file(hpp_file, cpp_file, ruby_code)
     #include "mruby/compile.h"
 
     void load_#{hpp_file.ext.split("/").join("_")}(mrb_state *mrb) {
-      mrb_load_string(mrb, R"(
+      mrb_load_string(mrb, R"RUBY(
         #{ruby_code}
-      )");
+      )RUBY");
     }
   CPP
 end

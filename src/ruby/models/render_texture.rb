@@ -12,7 +12,7 @@ class RenderTexture
     {
       texture: texture.to_h,
       width: width,
-      height: height,
+      height: height
     }
   end
 

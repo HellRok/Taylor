@@ -36,7 +36,7 @@ end
 
 # Returns the current mouse x position in the window
 # @return [Integer]
-def get_mouse_x()
+def get_mouse_x
   # mrb_get_mouse_x
   # src/mruby_integration/core/input/mouse.cpp
   64
@@ -44,7 +44,7 @@ end
 
 # Returns the current mouse y position in the window
 # @return [Integer]
-def get_mouse_y()
+def get_mouse_y
   # mrb_get_mouse_y
   # src/mruby_integration/core/input/mouse.cpp
   64
@@ -52,7 +52,7 @@ end
 
 # Returns the current mouse position in the window
 # @return [Vector2]
-def get_mouse_position()
+def get_mouse_position
   # mrb_get_mouse_position
   # src/mruby_integration/core/input/mouse.cpp
   Vector2.new
@@ -90,7 +90,7 @@ end
 
 # Returns the movement of the mouse wheel since last frame
 # @return [Float]
-def get_mouse_wheel_move()
+def get_mouse_wheel_move
   # mrb_get_mouse_wheel_move
   # src/mruby_integration/core/input/mouse.cpp
   0.5

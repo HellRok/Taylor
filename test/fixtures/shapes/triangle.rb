@@ -11,7 +11,7 @@ def fixture_draw_triangle
     b, b, b, b, b, b, b, b, b, b,
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end
 
@@ -28,6 +28,6 @@ def fixture_draw_triangle_lines
     b, b, b, b, b, b, b, b, b, b,
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
-    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
   ]
 end

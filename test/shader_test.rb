@@ -14,7 +14,7 @@ class Test
 
       clear_and_draw do
         begin_shader_mode(shader)
-          Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+        Rectangle.new(0, 0, 10, 10).draw(colour: RED)
         end_shader_mode
       end
 
@@ -26,11 +26,11 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/fragment_shader_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/fragment_shader_#{GLSL_VERSION}.fs")
 
       clear_and_draw do
         begin_shader_mode(shader)
-          Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+        Rectangle.new(0, 0, 10, 10).draw(colour: RED)
         end_shader_mode
       end
 
@@ -42,7 +42,7 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/fragment_shader_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/fragment_shader_#{GLSL_VERSION}.fs")
 
       assert_true shader_ready?(shader)
       unload_shader(shader)
@@ -52,18 +52,18 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
-      assert_equal(-1, get_shader_location(shader, 'non_existant'))
+      assert_equal(-1, get_shader_location(shader, "non_existant"))
 
       if GLSL_VERSION == 330
-        assert_equal 1, get_shader_location(shader, 'red')
-        assert_equal 2, get_shader_location(shader, 'green')
-        assert_equal 3, get_shader_location(shader, 'blue')
+        assert_equal 1, get_shader_location(shader, "red")
+        assert_equal 2, get_shader_location(shader, "green")
+        assert_equal 3, get_shader_location(shader, "blue")
       elsif GLSL_VERSION == 100
-        assert_equal 2, get_shader_location(shader, 'red')
-        assert_equal 3, get_shader_location(shader, 'green')
-        assert_equal 4, get_shader_location(shader, 'blue')
+        assert_equal 2, get_shader_location(shader, "red")
+        assert_equal 3, get_shader_location(shader, "green")
+        assert_equal 4, get_shader_location(shader, "blue")
       else
         raise "Unexpected GLSL_VERSION"
       end
@@ -75,25 +75,25 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/uniform_shader_float_#{GLSL_VERSION}.fs")
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'red'),
+        get_shader_location(shader, "red"),
         [0.0],
         Shader::Uniform::FLOAT
       )
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'green'),
+        get_shader_location(shader, "green"),
         [0.4745],
         Shader::Uniform::FLOAT
       )
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'blue'),
+        get_shader_location(shader, "blue"),
         [0.94509],
         Shader::Uniform::FLOAT
       )
@@ -114,11 +114,11 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/uniform_shader_vec2_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/uniform_shader_vec2_#{GLSL_VERSION}.fs")
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'vector'),
+        get_shader_location(shader, "vector"),
         [[0.1, 0.5]],
         Shader::Uniform::VEC2
       )
@@ -139,11 +139,11 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/uniform_shader_vec3_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/uniform_shader_vec3_#{GLSL_VERSION}.fs")
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'vector'),
+        get_shader_location(shader, "vector"),
         [[0.1, 0.5, 0.75]],
         Shader::Uniform::VEC3
       )
@@ -164,11 +164,11 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/uniform_shader_vec4_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/uniform_shader_vec4_#{GLSL_VERSION}.fs")
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'vector'),
+        get_shader_location(shader, "vector"),
         [[0.1, 0.5, 0.75, 1.0]],
         Shader::Uniform::VEC4
       )
@@ -189,25 +189,25 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/uniform_shader_int_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/uniform_shader_int_#{GLSL_VERSION}.fs")
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'red'),
+        get_shader_location(shader, "red"),
         [1],
         Shader::Uniform::INT
       )
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'green'),
+        get_shader_location(shader, "green"),
         [0],
         Shader::Uniform::INT
       )
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'blue'),
+        get_shader_location(shader, "blue"),
         [1],
         Shader::Uniform::INT
       )
@@ -228,11 +228,11 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/uniform_shader_ivec2_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/uniform_shader_ivec2_#{GLSL_VERSION}.fs")
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'vector'),
+        get_shader_location(shader, "vector"),
         [[0, 1]],
         Shader::Uniform::IVEC2
       )
@@ -253,11 +253,11 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/uniform_shader_ivec3_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/uniform_shader_ivec3_#{GLSL_VERSION}.fs")
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'vector'),
+        get_shader_location(shader, "vector"),
         [[0, 1, 1]],
         Shader::Uniform::IVEC3
       )
@@ -278,11 +278,11 @@ class Test
       skip_unless_display_present
       set_window_title(__method__.to_s)
 
-      shader = load_shader('', "assets/uniform_shader_ivec4_#{GLSL_VERSION}.fs")
+      shader = load_shader("", "assets/uniform_shader_ivec4_#{GLSL_VERSION}.fs")
 
       set_shader_values(
         shader,
-        get_shader_location(shader, 'vector'),
+        get_shader_location(shader, "vector"),
         [[1, 0, 0, 1]],
         Shader::Uniform::IVEC4
       )
