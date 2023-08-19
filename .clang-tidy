@@ -2,13 +2,14 @@
 Checks: "-*,
         android-*,
         bugprone-*,
-        -bugprone-narrowing-conversions,
         -bugprone-easily-swappable-parameters,
+        -bugprone-macro-parentheses,
+        -bugprone-narrowing-conversions,
         clang-analyzer-*,
         google-*,
         modernize-*,
         -modernize-avoid-c-arrays,
         readability-identifier-naming,
 "
-HeaderFilterRegex: '*.hpp'
+HeaderFilterRegex: ''
 FormatStyle: none

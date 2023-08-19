@@ -74,9 +74,9 @@ class Builder
   def lint(fix: false)
     <<~CMD
       clang-tidy \
-        #{"--fix" if fix} \
+        #{"--fix-errors" if fix} \
         #{"--warnings-as-errors=*" unless fix} \
-        $(git ls-files *.cpp) \
+        $(git ls-files *.{cpp,hpp}) \
         -- -std=c++17 #{@includes} #{@defines} \
         2>/dev/null
     CMD

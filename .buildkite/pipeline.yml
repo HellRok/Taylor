@@ -1,10 +1,15 @@
 steps:
-  - label: 'Check Documentation'
+  - label: 'Ruby Checks'
     commands:
       - gem install bundler
       - bundle install
       - bundle exec standardrb
       - .buildkite/scripts/tests/check_for_documentation.rb
+
+  - label: 'CPP Checks'
+    commands:
+      - bundle exec rake format:check
+      - bundle exec rake lint:check
 
   - label: 'Taylor Build'
     commands:
