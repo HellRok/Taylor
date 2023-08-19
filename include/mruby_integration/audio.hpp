@@ -2,5 +2,5 @@
 
 #include "mruby.h"
 
-void append_audio(mrb_state*);
-
+void
+append_audio(mrb_state*);

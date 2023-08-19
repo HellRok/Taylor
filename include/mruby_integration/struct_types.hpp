@@ -1,13 +1,15 @@
 #pragma once
 
-#include <string>
 #include "mruby.h"
 #include "mruby/data.h"
+#include <string>
 
 #include "mruby_integration/structs.hpp"
 
-void add_parent(void*, std::string);
-void add_owned_object(void*);
+void
+add_parent(void*, std::string);
+void
+add_owned_object(void*);
 
 extern mrb_data_type Camera2D_type;
 extern mrb_data_type Colour_type;

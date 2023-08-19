@@ -4,13 +4,15 @@
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/music.hpp"
 #include "mruby_integration/models/rectangle.hpp"
+#include "mruby_integration/models/render_texture.hpp"
 #include "mruby_integration/models/shader.hpp"
 #include "mruby_integration/models/sound.hpp"
-#include "mruby_integration/models/render_texture.hpp"
 #include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/models/vector2.hpp"
 
-void append_structs(mrb_state *mrb) {
+void
+append_structs(mrb_state* mrb)
+{
   append_models_Camera2D(mrb);
   append_models_Colour(mrb);
   append_models_Font(mrb);

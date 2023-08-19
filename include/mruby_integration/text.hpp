@@ -2,4 +2,5 @@
 
 #include "mruby.h"
 
-void append_text(mrb_state*);
+void
+append_text(mrb_state*);

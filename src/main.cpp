@@ -3,15 +3,12 @@
 #include "raylib.h"
 
 #include "mruby.h"
-#include "mruby/data.h"
 #include "mruby/class.h"
 #include "mruby/compile.h"
+#include "mruby/data.h"
 #include "mruby/irep.h"
 
 #include "argv.hpp"
-#include "platform.hpp"
-#include "platform_specific/web.hpp"
-#include "workarounds/mingw.hpp"
 #include "mruby_integration/audio.hpp"
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/images.hpp"
@@ -20,19 +17,23 @@
 #include "mruby_integration/structs.hpp"
 #include "mruby_integration/text.hpp"
 #include "mruby_integration/textures.hpp"
+#include "platform.hpp"
+#include "platform_specific/web.hpp"
 #include "web.hpp"
+#include "workarounds/mingw.hpp"
 
 #ifdef EXPORT
 #include "game.h"
 #endif
 
-
-int main(int argc, char **argv) {
+int
+main(int argc, char** argv)
+{
 #ifdef _WIN32
   workarounds_mingw_attach_console();
 #endif
 
-  const char *path;
+  const char* path;
 #ifndef EXPORT
   if (argv) {
     path = argv[1];
@@ -44,10 +45,14 @@ int main(int argc, char **argv) {
   path = argv[0];
 #endif
 
-  mrb_state *mrb = mrb_open();
+  mrb_state* mrb = mrb_open();
 
-  mrb_define_const(mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
-  mrb_define_const(mrb, mrb->kernel_module, "WORKING_DIRECTORY", mrb_str_new_cstr(mrb, GetWorkingDirectory()));
+  mrb_define_const(
+    mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
+  mrb_define_const(mrb,
+                   mrb->kernel_module,
+                   "WORKING_DIRECTORY",
+                   mrb_str_new_cstr(mrb, GetWorkingDirectory()));
   populate_argv(mrb, argc, argv);
 
   append_audio(mrb);
@@ -69,7 +74,7 @@ int main(int argc, char **argv) {
 #endif
 
 #ifndef EXPORT
-  FILE *game_file = fopen(path, "r");
+  FILE* game_file = fopen(path, "r");
   ChangeDirectory(GetDirectoryPath(path));
   mrb_load_file(mrb, game_file);
 #endif

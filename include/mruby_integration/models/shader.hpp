@@ -2,7 +2,9 @@
 
 #include "mruby.h"
 
-extern RClass *Shader_class;
+extern RClass* Shader_class;
 
-void setup_Shader(mrb_state*, mrb_value, Shader*, int);
-void append_models_Shader(mrb_state*);
+void
+setup_Shader(mrb_state*, mrb_value, Shader*, int);
+void
+append_models_Shader(mrb_state*);

@@ -1,27 +1,38 @@
-#include "raylib.h"
 #include "mruby.h"
 #include "mruby/string.h"
 #include "mruby/variable.h"
+#include "raylib.h"
 
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value mrb_load_image(mrb_state *mrb, mrb_value) {
-  char *path;
+mrb_value
+mrb_load_image(mrb_state* mrb, mrb_value)
+{
+  char* path;
   mrb_get_args(mrb, "z", &path);
 
-  Image *image = (Image *)malloc(sizeof(Image));
+  Image* image = (Image*)malloc(sizeof(Image));
   *image = LoadImage(path);
 
-  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
 
-  setup_Image(mrb, obj, image, image->width, image->height, image->mipmaps, image->format);
+  setup_Image(mrb,
+              obj,
+              image,
+              image->width,
+              image->height,
+              image->mipmaps,
+              image->format);
 
   return obj;
 }
 
-mrb_value mrb_unload_image(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_unload_image(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
   UnloadImage(*image);
@@ -29,9 +40,11 @@ mrb_value mrb_unload_image(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_export_image(mrb_state *mrb, mrb_value) {
-  Image *image;
-  char *path;
+mrb_value
+mrb_export_image(mrb_state* mrb, mrb_value)
+{
+  Image* image;
+  char* path;
   mrb_get_args(mrb, "dz", &image, &Image_type, &path);
 
   ExportImage(*image, path);
@@ -39,114 +52,156 @@ mrb_value mrb_export_image(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_generate_image_colour(mrb_state *mrb, mrb_value) {
+mrb_value
+mrb_generate_image_colour(mrb_state* mrb, mrb_value)
+{
   mrb_int width, height;
-  Color *colour;
+  Color* colour;
   mrb_get_args(mrb, "iid", &width, &height, &colour, &Colour_type);
 
-  Image *image = (Image *)malloc(sizeof(Image));
+  Image* image = (Image*)malloc(sizeof(Image));
   *image = GenImageColor(width, height, *colour);
 
-  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
 
-  setup_Image(mrb, obj, image, image->width, image->height, image->mipmaps, image->format);
+  setup_Image(mrb,
+              obj,
+              image,
+              image->width,
+              image->height,
+              image->mipmaps,
+              image->format);
 
   return obj;
 }
 
-mrb_value mrb_image_copy(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_copy(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
-  Image *copy = (Image *)malloc(sizeof(Image));
+  Image* copy = (Image*)malloc(sizeof(Image));
   *copy = ImageCopy(*image);
 
-  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, copy));
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, copy));
 
-  setup_Image(mrb, obj, copy, copy->width, copy->height, copy->mipmaps, copy->format);
+  setup_Image(
+    mrb, obj, copy, copy->width, copy->height, copy->mipmaps, copy->format);
 
   return obj;
 }
 
-mrb_value mrb_image_from_image(mrb_state *mrb, mrb_value) {
-  Image *image;
-  Rectangle *rectangle;
+mrb_value
+mrb_image_from_image(mrb_state* mrb, mrb_value)
+{
+  Image* image;
+  Rectangle* rectangle;
   mrb_get_args(mrb, "dd", &image, &Image_type, &rectangle, &Rectangle_type);
 
-  Image *result = (Image *)malloc(sizeof(Image));
+  Image* result = (Image*)malloc(sizeof(Image));
   *result = ImageFromImage(*image, *rectangle);
 
-  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
 
-  setup_Image(mrb, obj, result, result->width, result->height, result->mipmaps, result->format);
+  setup_Image(mrb,
+              obj,
+              result,
+              result->width,
+              result->height,
+              result->mipmaps,
+              result->format);
 
   return obj;
 }
 
-mrb_value mrb_image_text_ex(mrb_state *mrb, mrb_value) {
-  Font *font;
+mrb_value
+mrb_image_text_ex(mrb_state* mrb, mrb_value)
+{
+  Font* font;
   mrb_value text;
   mrb_float font_size, spacing;
-  Color *colour;
-  mrb_get_args(mrb, "dSffd", &font, &Font_type, &text, &font_size, &spacing, &colour, &Colour_type);
+  Color* colour;
+  mrb_get_args(mrb,
+               "dSffd",
+               &font,
+               &Font_type,
+               &text,
+               &font_size,
+               &spacing,
+               &colour,
+               &Colour_type);
 
-  Image *result = (Image *)malloc(sizeof(Image));
-  *result = ImageTextEx(*font, mrb_str_to_cstr(mrb, text), font_size, spacing, *colour);
+  Image* result = (Image*)malloc(sizeof(Image));
+  *result =
+    ImageTextEx(*font, mrb_str_to_cstr(mrb, text), font_size, spacing, *colour);
 
-  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
 
-  setup_Image(mrb, obj, result, result->width, result->height, result->mipmaps, result->format);
+  setup_Image(mrb,
+              obj,
+              result,
+              result->width,
+              result->height,
+              result->mipmaps,
+              result->format);
 
   return obj;
 }
 
-mrb_value mrb_image_resize(mrb_state *mrb, mrb_value) {
+mrb_value
+mrb_image_resize(mrb_state* mrb, mrb_value)
+{
   mrb_value image_obj;
   mrb_int width, height;
   mrb_get_args(mrb, "oii", &image_obj, &width, &height);
 
-  Image *image = static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
+  Image* image =
+    static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
 
   ImageResize(image, width, height);
 
   mrb_iv_set(
-      mrb, image_obj,
-      mrb_intern_cstr(mrb, "@width"),
-      mrb_int_value(mrb, width)
-    );
-  mrb_iv_set(
-      mrb, image_obj,
-      mrb_intern_cstr(mrb, "@height"),
-      mrb_int_value(mrb, height)
-    );
+    mrb, image_obj, mrb_intern_cstr(mrb, "@width"), mrb_int_value(mrb, width));
+  mrb_iv_set(mrb,
+             image_obj,
+             mrb_intern_cstr(mrb, "@height"),
+             mrb_int_value(mrb, height));
 
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_crop(mrb_state *mrb, mrb_value) {
-  Rectangle *rectangle;
+mrb_value
+mrb_image_crop(mrb_state* mrb, mrb_value)
+{
+  Rectangle* rectangle;
   mrb_value image_obj;
   mrb_get_args(mrb, "od", &image_obj, &rectangle, &Rectangle_type);
 
-  Image *image = static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
+  Image* image =
+    static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
 
   ImageCrop(image, *rectangle);
 
-  mrb_iv_set(
-      mrb, image_obj,
-      mrb_intern_cstr(mrb, "@width"),
-      mrb_int_value(mrb, rectangle->width)
-    );
-  mrb_iv_set(
-      mrb, image_obj,
-      mrb_intern_cstr(mrb, "@height"),
-      mrb_int_value(mrb, rectangle->height)
-    );
+  mrb_iv_set(mrb,
+             image_obj,
+             mrb_intern_cstr(mrb, "@width"),
+             mrb_int_value(mrb, rectangle->width));
+  mrb_iv_set(mrb,
+             image_obj,
+             mrb_intern_cstr(mrb, "@height"),
+             mrb_int_value(mrb, rectangle->height));
 
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_alpha_mask(mrb_state *mrb, mrb_value) {
+mrb_value
+mrb_image_alpha_mask(mrb_state* mrb, mrb_value)
+{
   Image *image, *alpha_mask;
   mrb_get_args(mrb, "dd", &image, &Image_type, &alpha_mask, &Image_type);
 
@@ -155,8 +210,10 @@ mrb_value mrb_image_alpha_mask(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_alpha_premultiply(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_alpha_premultiply(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
   ImageAlphaPremultiply(image);
@@ -164,8 +221,10 @@ mrb_value mrb_image_alpha_premultiply(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_flip_vertical(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_flip_vertical(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
   ImageFlipVertical(image);
@@ -173,25 +232,29 @@ mrb_value mrb_image_flip_vertical(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_mipmaps(mrb_state *mrb, mrb_value) {
+mrb_value
+mrb_image_mipmaps(mrb_state* mrb, mrb_value)
+{
   mrb_value image_obj;
   mrb_get_args(mrb, "o", &image_obj);
 
-  Image *image = static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
+  Image* image =
+    static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
 
   ImageMipmaps(image);
 
-  mrb_iv_set(
-      mrb, image_obj,
-      mrb_intern_cstr(mrb, "@mipmaps"),
-      mrb_int_value(mrb, image->mipmaps)
-    );
+  mrb_iv_set(mrb,
+             image_obj,
+             mrb_intern_cstr(mrb, "@mipmaps"),
+             mrb_int_value(mrb, image->mipmaps));
 
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_flip_horizontal(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_flip_horizontal(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
   ImageFlipHorizontal(image);
@@ -199,8 +262,10 @@ mrb_value mrb_image_flip_horizontal(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_rotate_cw(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_rotate_cw(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
   ImageRotateCW(image);
@@ -208,8 +273,10 @@ mrb_value mrb_image_rotate_cw(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_rotate_ccw(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_rotate_ccw(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
   ImageRotateCCW(image);
@@ -217,9 +284,11 @@ mrb_value mrb_image_rotate_ccw(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_colour_tint(mrb_state *mrb, mrb_value) {
-  Image *image;
-  Color *colour;
+mrb_value
+mrb_image_colour_tint(mrb_state* mrb, mrb_value)
+{
+  Image* image;
+  Color* colour;
   mrb_get_args(mrb, "dd", &image, &Image_type, &colour, &Colour_type);
 
   ImageColorTint(image, *colour);
@@ -227,8 +296,10 @@ mrb_value mrb_image_colour_tint(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_colour_invert(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_colour_invert(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
   ImageColorInvert(image);
@@ -236,8 +307,10 @@ mrb_value mrb_image_colour_invert(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_colour_grayscale(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_colour_grayscale(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
   ImageColorGrayscale(image);
@@ -245,8 +318,10 @@ mrb_value mrb_image_colour_grayscale(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_colour_contrast(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_colour_contrast(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_float contrast;
   mrb_get_args(mrb, "df", &image, &Image_type, &contrast);
 
@@ -255,8 +330,10 @@ mrb_value mrb_image_colour_contrast(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_colour_brightness(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_colour_brightness(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   mrb_int brightness;
   mrb_get_args(mrb, "di", &image, &Image_type, &brightness);
 
@@ -265,96 +342,206 @@ mrb_value mrb_image_colour_brightness(mrb_state *mrb, mrb_value) {
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_colour_replace(mrb_state *mrb, mrb_value) {
-  Image *image;
+mrb_value
+mrb_image_colour_replace(mrb_state* mrb, mrb_value)
+{
+  Image* image;
   Color *old_colour, *new_colour;
-  mrb_get_args(mrb, "ddd", &image, &Image_type, &old_colour, &Colour_type, &new_colour, &Colour_type);
+  mrb_get_args(mrb,
+               "ddd",
+               &image,
+               &Image_type,
+               &old_colour,
+               &Colour_type,
+               &new_colour,
+               &Colour_type);
 
   ImageColorReplace(image, *old_colour, *new_colour);
 
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_resize_nearest_neighbour(mrb_state *mrb, mrb_value) {
+mrb_value
+mrb_image_resize_nearest_neighbour(mrb_state* mrb, mrb_value)
+{
   mrb_value image_obj;
   mrb_int width, height;
   mrb_get_args(mrb, "oii", &image_obj, &width, &height);
 
-  Image *image = static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
+  Image* image =
+    static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
 
   ImageResizeNN(image, width, height);
 
   mrb_iv_set(
-      mrb, image_obj,
-      mrb_intern_cstr(mrb, "@width"),
-      mrb_int_value(mrb, width)
-    );
-  mrb_iv_set(
-      mrb, image_obj,
-      mrb_intern_cstr(mrb, "@height"),
-      mrb_int_value(mrb, height)
-    );
+    mrb, image_obj, mrb_intern_cstr(mrb, "@width"), mrb_int_value(mrb, width));
+  mrb_iv_set(mrb,
+             image_obj,
+             mrb_intern_cstr(mrb, "@height"),
+             mrb_int_value(mrb, height));
 
   return mrb_nil_value();
 }
 
-mrb_value mrb_image_draw(mrb_state *mrb, mrb_value) {
+mrb_value
+mrb_image_draw(mrb_state* mrb, mrb_value)
+{
   Image *destination, *source;
   Rectangle *destination_rectangle, *source_rectangle;
-  Color *colour;
-  mrb_get_args(mrb, "ddddd",
-      &destination, &Image_type,
-      &source, &Image_type,
-      &source_rectangle, &Rectangle_type,
-      &destination_rectangle, &Rectangle_type,
-      &colour, &Colour_type);
+  Color* colour;
+  mrb_get_args(mrb,
+               "ddddd",
+               &destination,
+               &Image_type,
+               &source,
+               &Image_type,
+               &source_rectangle,
+               &Rectangle_type,
+               &destination_rectangle,
+               &Rectangle_type,
+               &colour,
+               &Colour_type);
 
-  ImageDraw(destination, *source, *source_rectangle, *destination_rectangle, *colour);
+  ImageDraw(
+    destination, *source, *source_rectangle, *destination_rectangle, *colour);
 
   return mrb_nil_value();
 }
 
-mrb_value mrb_get_screen_data(mrb_state *mrb, mrb_value) {
-  Image *image = (Image *)malloc(sizeof(Image));
+mrb_value
+mrb_get_screen_data(mrb_state* mrb, mrb_value)
+{
+  Image* image = (Image*)malloc(sizeof(Image));
   *image = LoadImageFromScreen();
 
-  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
 
-  setup_Image(mrb, obj, image, image->width, image->height, image->mipmaps, image->format);
+  setup_Image(mrb,
+              obj,
+              image,
+              image->width,
+              image->height,
+              image->mipmaps,
+              image->format);
 
   return obj;
 }
 
-void append_images(mrb_state *mrb) {
-  mrb_define_method(mrb, mrb->kernel_module, "load_image", mrb_load_image, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "unload_image", mrb_unload_image, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "export_image", mrb_export_image, MRB_ARGS_REQ(2));
+void
+append_images(mrb_state* mrb)
+{
+  mrb_define_method(
+    mrb, mrb->kernel_module, "load_image", mrb_load_image, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, mrb->kernel_module, "unload_image", mrb_unload_image, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, mrb->kernel_module, "export_image", mrb_export_image, MRB_ARGS_REQ(2));
 
-  mrb_define_method(mrb, mrb->kernel_module, "image_copy", mrb_image_copy, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "image_from_image", mrb_image_from_image, MRB_ARGS_REQ(2));
-  mrb_define_method(mrb, mrb->kernel_module, "image_text_ex", mrb_image_text_ex, MRB_ARGS_REQ(5));
-  mrb_define_method(mrb, mrb->kernel_module, "image_crop!", mrb_image_crop, MRB_ARGS_REQ(2));
-  mrb_define_method(mrb, mrb->kernel_module, "image_alpha_mask!", mrb_image_alpha_mask, MRB_ARGS_REQ(2));
-  mrb_define_method(mrb, mrb->kernel_module, "image_alpha_premultiply!", mrb_image_alpha_premultiply, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "image_mipmaps!", mrb_image_mipmaps, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, mrb->kernel_module, "image_copy", mrb_image_copy, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_from_image",
+                    mrb_image_from_image,
+                    MRB_ARGS_REQ(2));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_text_ex",
+                    mrb_image_text_ex,
+                    MRB_ARGS_REQ(5));
+  mrb_define_method(
+    mrb, mrb->kernel_module, "image_crop!", mrb_image_crop, MRB_ARGS_REQ(2));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_alpha_mask!",
+                    mrb_image_alpha_mask,
+                    MRB_ARGS_REQ(2));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_alpha_premultiply!",
+                    mrb_image_alpha_premultiply,
+                    MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_mipmaps!",
+                    mrb_image_mipmaps,
+                    MRB_ARGS_REQ(1));
 
-  mrb_define_method(mrb, mrb->kernel_module, "image_resize!", mrb_image_resize, MRB_ARGS_REQ(3));
-  mrb_define_method(mrb, mrb->kernel_module, "image_resize_nearest_neighbour!", mrb_image_resize_nearest_neighbour, MRB_ARGS_REQ(3));
-  mrb_define_method(mrb, mrb->kernel_module, "image_flip_vertical!", mrb_image_flip_vertical, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "image_flip_horizontal!", mrb_image_flip_horizontal, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "image_rotate_cw!", mrb_image_rotate_cw, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "image_rotate_ccw!", mrb_image_rotate_ccw, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_resize!",
+                    mrb_image_resize,
+                    MRB_ARGS_REQ(3));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_resize_nearest_neighbour!",
+                    mrb_image_resize_nearest_neighbour,
+                    MRB_ARGS_REQ(3));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_flip_vertical!",
+                    mrb_image_flip_vertical,
+                    MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_flip_horizontal!",
+                    mrb_image_flip_horizontal,
+                    MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_rotate_cw!",
+                    mrb_image_rotate_cw,
+                    MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_rotate_ccw!",
+                    mrb_image_rotate_ccw,
+                    MRB_ARGS_REQ(1));
 
-  mrb_define_method(mrb, mrb->kernel_module, "image_colour_tint!", mrb_image_colour_tint, MRB_ARGS_REQ(2));
-  mrb_define_method(mrb, mrb->kernel_module, "image_colour_invert!", mrb_image_colour_invert, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "image_colour_grayscale!", mrb_image_colour_grayscale, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, mrb->kernel_module, "image_colour_contrast!", mrb_image_colour_contrast, MRB_ARGS_REQ(2));
-  mrb_define_method(mrb, mrb->kernel_module, "image_colour_brightness!", mrb_image_colour_brightness, MRB_ARGS_REQ(2));
-  mrb_define_method(mrb, mrb->kernel_module, "image_colour_replace!", mrb_image_colour_replace, MRB_ARGS_REQ(3));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_colour_tint!",
+                    mrb_image_colour_tint,
+                    MRB_ARGS_REQ(2));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_colour_invert!",
+                    mrb_image_colour_invert,
+                    MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_colour_grayscale!",
+                    mrb_image_colour_grayscale,
+                    MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_colour_contrast!",
+                    mrb_image_colour_contrast,
+                    MRB_ARGS_REQ(2));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_colour_brightness!",
+                    mrb_image_colour_brightness,
+                    MRB_ARGS_REQ(2));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "image_colour_replace!",
+                    mrb_image_colour_replace,
+                    MRB_ARGS_REQ(3));
 
-  mrb_define_method(mrb, mrb->kernel_module, "generate_image_colour", mrb_generate_image_colour, MRB_ARGS_REQ(3));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "generate_image_colour",
+                    mrb_generate_image_colour,
+                    MRB_ARGS_REQ(3));
 
-  mrb_define_method(mrb, mrb->kernel_module, "image_draw!", mrb_image_draw, MRB_ARGS_REQ(5));
+  mrb_define_method(
+    mrb, mrb->kernel_module, "image_draw!", mrb_image_draw, MRB_ARGS_REQ(5));
 
-  mrb_define_method(mrb, mrb->kernel_module, "get_screen_data", mrb_get_screen_data, MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "get_screen_data",
+                    mrb_get_screen_data,
+                    MRB_ARGS_NONE());
 }

@@ -2,4 +2,5 @@
 
 #include "mruby.h"
 
-void append_shapes_pixel(mrb_state*);
+void
+append_shapes_pixel(mrb_state*);

@@ -2,4 +2,5 @@
 
 #include "mruby.h"
 
-void append_shaders(mrb_state*);
+void
+append_shaders(mrb_state*);

@@ -2,4 +2,5 @@
 
 #include "mruby.h"
 
-void append_core_misc(mrb_state*);
+void
+append_core_misc(mrb_state*);

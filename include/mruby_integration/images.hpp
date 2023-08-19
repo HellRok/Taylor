@@ -2,4 +2,5 @@
 
 #include "mruby.h"
 
-void append_images(mrb_state*);
+void
+append_images(mrb_state*);

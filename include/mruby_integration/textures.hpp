@@ -2,4 +2,5 @@
 
 #include "mruby.h"
 
-void append_textures(mrb_state*);
+void
+append_textures(mrb_state*);

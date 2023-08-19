@@ -5,7 +5,9 @@
 #include "mruby_integration/core/input/mouse.hpp"
 #include "mruby_integration/core/input/touch.hpp"
 
-void append_core_input(mrb_state *mrb) {
+void
+append_core_input(mrb_state* mrb)
+{
   append_core_input_gamepad(mrb);
   append_core_input_keyboard(mrb);
   append_core_input_mouse(mrb);

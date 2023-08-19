@@ -4,4 +4,5 @@
 #include <emscripten/emscripten.h>
 #endif
 
-void append_web(mrb_state*);
+void
+append_web(mrb_state*);

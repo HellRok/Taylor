@@ -12,7 +12,9 @@
 
 #include "ruby/core/buildkite_analytics.hpp"
 
-void append_core(mrb_state *mrb) {
+void
+append_core(mrb_state* mrb)
+{
   append_core_cursor(mrb);
   append_core_drawing(mrb);
   append_core_files(mrb);

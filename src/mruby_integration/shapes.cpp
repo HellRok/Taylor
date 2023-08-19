@@ -1,5 +1,5 @@
-#include "raylib.h"
 #include "mruby.h"
+#include "raylib.h"
 
 #include "mruby_integration/shapes/circle.hpp"
 #include "mruby_integration/shapes/ellipse.hpp"
@@ -11,7 +11,9 @@
 
 #include "mruby_integration/shapes/collision.hpp"
 
-void append_shapes(mrb_state *mrb) {
+void
+append_shapes(mrb_state* mrb)
+{
   append_shapes_circle(mrb);
   append_shapes_ellipse(mrb);
   append_shapes_line(mrb);
