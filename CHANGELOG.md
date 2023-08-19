@@ -6,6 +6,7 @@
 - Setup standardrb for formatting
 - Setup clang-tidy and clang-format
 - Add a .git-blame-ignore-revs
+- the `check_for_documentation` script now supports the new formatting
 
 ## v0.3.14.1
 

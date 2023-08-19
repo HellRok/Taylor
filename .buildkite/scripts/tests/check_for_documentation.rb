@@ -15,14 +15,36 @@ def cpp_methods
   }.flat_map { |file|
     klass = nil
 
-    File.read(file).each_line.to_a.map { |line|
+    lines = File.read(file).each_line.to_a
+    lines.map.with_index { |line, index|
       if line =~ /^\s*class\s*(.*)/
         klass = $~[1].chomp
         nil # we don't want to just return the klass
       end
 
+      # mrb_define_method(mrb, Font_class, "initialize"
       if line =~ /^\s*mrb_define_method.*, (.*), "(.*)"/
         object, method = $~[1..2]
+        if object == "mrb->kernel_module"
+          method
+        else
+          "#{object.gsub("_class", "")}##{method}"
+        end
+
+      elsif /^\s*mrb_define_method/.match?(line)
+        # mrb_define_method(
+        #   mrb, Font_class, "initialize"
+        if lines[index + 1] =~ /\s*mrb, (.*), "(.*)"/
+          object, method = $~[1..2]
+
+        # mrb_define_method(mrb,
+        #                   Font_class,
+        #                   "initialize"
+        else
+          object = lines[index + 1].strip.delete(",")
+          method = lines[index + 2].strip.delete(",").delete('"')
+        end
+
         if object == "mrb->kernel_module"
           method
         else
