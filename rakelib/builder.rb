@@ -72,14 +72,26 @@ class Builder
   end
 
   def lint(fix: false)
-    <<~CMD
-      clang-tidy \
-        #{"--fix-errors" if fix} \
-        #{"--warnings-as-errors=*" unless fix} \
-        $(git ls-files *.{cpp,hpp}) \
-        -- -std=c++17 #{@includes} #{@defines} \
-        2>/dev/null
-    CMD
+    if fix
+      <<~CMD
+        clang-tidy \
+          --fix-errors
+          $(git ls-files *.{cpp,hpp}) \
+          -- -std=c++17 #{@includes} #{@defines} \
+          2>/dev/null
+      CMD
+    else
+      cores = `grep 'cpu cores' /proc/cpuinfo`.lines.count
+      <<~CMD
+        find . -type f -name "*.[c,h]pp" |
+        xargs -P#{cores} -I{} \
+        clang-tidy \
+          --warnings-as-errors=* \
+          {} \
+          -- -std=c++17 #{@includes} #{@defines} \
+          2>/dev/null
+      CMD
+    end
   end
 
   def compile

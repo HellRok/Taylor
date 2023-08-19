@@ -37,6 +37,7 @@ end
 def write_hpp_file(hpp_file)
   write_if_changed_or_new("include/#{hpp_file}", <<~HPP)
     #pragma once
+    #include "mruby.h"
 
     void load_#{hpp_file.ext.split("/").join("_")}(mrb_state*);
   HPP

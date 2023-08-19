@@ -8,6 +8,8 @@ steps:
 
   - label: 'CPP Checks'
     commands:
+      - gem install bundler
+      - bundle install
       - bundle exec rake format:check
       - bundle exec rake lint:check
 
