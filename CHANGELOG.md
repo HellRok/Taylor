@@ -5,6 +5,7 @@
 - Build the docker images one at a time to not thrash the disk
 - Setup standardrb for formatting
 - Setup clang-tidy and clang-format
+- Add a .git-blame-ignore-revs
 
 ## v0.3.14.1
 
