@@ -1,6 +1,9 @@
 # Run this command to always ignore formatting commits in `git blame`
 # git config blame.ignoreRevsFile .git-blame-ignore-revs
 
+# clang-tidy first run
+25109bfb442f88fb9e60a0f3aade79137794f4fd
+
 # Format all CPP and HPP files
 ee114f913e184d16952b8b3c1efb78420349ec43
 
