@@ -36,7 +36,8 @@ task "lint:fix" => [:setup_ephemeral_files] do
 end
 
 task "format:check" do
-  sh "clang-format --dry-run -Werror $(git ls-files *.{cpp,hpp})"
+  sh "clang-format --dry-run -Werror $(git ls-files *.cpp)"
+  sh "clang-format --dry-run -Werror $(git ls-files *.hpp)"
 end
 
 task "format:fix" do
