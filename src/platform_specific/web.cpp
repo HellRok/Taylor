@@ -11,11 +11,12 @@ EM_JS(char*,
       js_get_attribute_from_element,
       (const char* selectorPointer, const char* attributePointer),
       {
+        // clang-format off
         const selector = Module.UTF8ToString(selectorPointer);
         let attribute = Module.UTF8ToString(attributePointer);
         let value;
 
-        if (attribute.slice(0, 5) == = 'data-') {
+        if (attribute.slice(0, 5) === 'data-') {
           attribute = attribute.slice(5, attribute.length);
           value = document.querySelector(selector).dataset[attribute];
         } else {
@@ -28,6 +29,7 @@ EM_JS(char*,
         Module.stringToUTF8(value, valuePointer, byteCount);
 
         return valuePointer;
+        // clang-format on
       });
 
 mrb_value
@@ -44,11 +46,12 @@ EM_JS(void,
       js_local_storage_set_item,
       (const char* keyPointer, const char* valuePointer),
       {
+        // clang-format off
         const key = Module.UTF8ToString(keyPointer);
         const value = Module.UTF8ToString(valuePointer);
 
-        console.log(key, value);
         localStorage.setItem(key, value);
+        // clang-format on
       });
 
 mrb_value
@@ -63,6 +66,7 @@ mrb_local_storage_set_item(mrb_state* mrb, mrb_value)
 }
 
 EM_JS(char*, js_local_storage_get_item, (const char* keyPointer), {
+  // clang-format off
   const key = Module.UTF8ToString(keyPointer);
 
   // We can't return two different types, so let's just return an empty string,
@@ -75,6 +79,7 @@ EM_JS(char*, js_local_storage_get_item, (const char* keyPointer), {
   Module.stringToUTF8(value, valuePointer, byteCount);
 
   return valuePointer;
+  // clang-format on
 });
 
 mrb_value
