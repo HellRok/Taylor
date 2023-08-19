@@ -6,8 +6,8 @@
 
 #include "ruby/core/input/mouse.hpp"
 
-mrb_value
-mrb_mouse_button_pressed(mrb_state* mrb, mrb_value)
+auto
+mrb_mouse_button_pressed(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int button;
   mrb_get_args(mrb, "i", &button);
@@ -15,8 +15,8 @@ mrb_mouse_button_pressed(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsMouseButtonPressed(button));
 }
 
-mrb_value
-mrb_mouse_button_down(mrb_state* mrb, mrb_value)
+auto
+mrb_mouse_button_down(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int button;
   mrb_get_args(mrb, "i", &button);
@@ -24,8 +24,8 @@ mrb_mouse_button_down(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsMouseButtonDown(button));
 }
 
-mrb_value
-mrb_mouse_button_released(mrb_state* mrb, mrb_value)
+auto
+mrb_mouse_button_released(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int button;
   mrb_get_args(mrb, "i", &button);
@@ -33,8 +33,8 @@ mrb_mouse_button_released(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsMouseButtonReleased(button));
 }
 
-mrb_value
-mrb_mouse_button_up(mrb_state* mrb, mrb_value)
+auto
+mrb_mouse_button_up(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int button;
   mrb_get_args(mrb, "i", &button);
@@ -42,22 +42,22 @@ mrb_mouse_button_up(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsMouseButtonUp(button));
 }
 
-mrb_value
-mrb_get_mouse_x(mrb_state* mrb, mrb_value)
+auto
+mrb_get_mouse_x(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetMouseX());
 }
 
-mrb_value
-mrb_get_mouse_y(mrb_state* mrb, mrb_value)
+auto
+mrb_get_mouse_y(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetMouseY());
 }
 
-mrb_value
-mrb_get_mouse_position(mrb_state* mrb, mrb_value)
+auto
+mrb_get_mouse_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  Vector2* position = (Vector2*)malloc(sizeof(Vector2));
+  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *position = GetMousePosition();
 
   mrb_value obj = mrb_obj_value(
@@ -68,8 +68,8 @@ mrb_get_mouse_position(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_set_mouse_position(mrb_state* mrb, mrb_value)
+auto
+mrb_set_mouse_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
   mrb_get_args(mrb, "ii", &x, &y);
@@ -79,8 +79,8 @@ mrb_set_mouse_position(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_mouse_offset(mrb_state* mrb, mrb_value)
+auto
+mrb_set_mouse_offset(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
   mrb_get_args(mrb, "ii", &x, &y);
@@ -90,8 +90,8 @@ mrb_set_mouse_offset(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_mouse_scale(mrb_state* mrb, mrb_value)
+auto
+mrb_set_mouse_scale(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
   mrb_get_args(mrb, "ff", &x, &y);
@@ -101,14 +101,14 @@ mrb_set_mouse_scale(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_get_mouse_wheel_move(mrb_state* mrb, mrb_value)
+auto
+mrb_get_mouse_wheel_move(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_float_value(mrb, GetMouseWheelMove());
 }
 
-mrb_value
-mrb_set_mouse_cursor(mrb_state* mrb, mrb_value)
+auto
+mrb_set_mouse_cursor(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int cursor;
   mrb_get_args(mrb, "i", &cursor);

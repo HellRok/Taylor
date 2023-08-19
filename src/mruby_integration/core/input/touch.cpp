@@ -4,13 +4,13 @@
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_get_touch_position(mrb_state* mrb, mrb_value)
+auto
+mrb_get_touch_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index;
   mrb_get_args(mrb, "i", &index);
 
-  Vector2* position = (Vector2*)malloc(sizeof(Vector2));
+  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *position = GetTouchPosition(index);
 
   mrb_value obj = mrb_obj_value(

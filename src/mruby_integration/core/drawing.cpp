@@ -5,8 +5,8 @@
 
 #include "ruby/core/drawing.hpp"
 
-mrb_value
-mrb_clear_background(mrb_state* mrb, mrb_value)
+auto
+mrb_clear_background(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Color* colour;
   mrb_get_args(mrb, "d", &colour, &Colour_type);
@@ -15,22 +15,22 @@ mrb_clear_background(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_begin_drawing(mrb_state*, mrb_value)
+auto
+mrb_begin_drawing(mrb_state*, mrb_value) -> mrb_value
 {
   BeginDrawing();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_end_drawing(mrb_state*, mrb_value)
+auto
+mrb_end_drawing(mrb_state*, mrb_value) -> mrb_value
 {
   EndDrawing();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_begin_mode2D(mrb_state* mrb, mrb_value)
+auto
+mrb_begin_mode2D(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Camera2D* camera;
   mrb_get_args(mrb, "d", &camera, &Camera2D_type);
@@ -39,15 +39,15 @@ mrb_begin_mode2D(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_end_mode2D(mrb_state*, mrb_value)
+auto
+mrb_end_mode2D(mrb_state*, mrb_value) -> mrb_value
 {
   EndMode2D();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_begin_texture_mode(mrb_state* mrb, mrb_value)
+auto
+mrb_begin_texture_mode(mrb_state* mrb, mrb_value) -> mrb_value
 {
   RenderTexture* texture;
   mrb_get_args(mrb, "d", &texture, &RenderTexture_type);
@@ -56,15 +56,15 @@ mrb_begin_texture_mode(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_end_texture_mode(mrb_state*, mrb_value)
+auto
+mrb_end_texture_mode(mrb_state*, mrb_value) -> mrb_value
 {
   EndTextureMode();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_begin_shader_mode(mrb_state* mrb, mrb_value)
+auto
+mrb_begin_shader_mode(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Shader* shader;
   mrb_get_args(mrb, "d", &shader, &Shader_type);
@@ -73,15 +73,15 @@ mrb_begin_shader_mode(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_end_shader_mode(mrb_state*, mrb_value)
+auto
+mrb_end_shader_mode(mrb_state*, mrb_value) -> mrb_value
 {
   EndShaderMode();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_begin_scissor_mode(mrb_state* mrb, mrb_value)
+auto
+mrb_begin_scissor_mode(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y, width, height;
   mrb_get_args(mrb, "iiii", &x, &y, &width, &height);
@@ -90,8 +90,8 @@ mrb_begin_scissor_mode(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_end_scissor_mode(mrb_state*, mrb_value)
+auto
+mrb_end_scissor_mode(mrb_state*, mrb_value) -> mrb_value
 {
   EndScissorMode();
   return mrb_nil_value();

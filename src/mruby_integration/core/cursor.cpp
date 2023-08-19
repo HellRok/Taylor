@@ -1,42 +1,42 @@
 #include "mruby.h"
 #include "raylib.h"
 
-mrb_value
-mrb_show_cursor(mrb_state*, mrb_value)
+auto
+mrb_show_cursor(mrb_state*, mrb_value) -> mrb_value
 {
   ShowCursor();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_hide_cursor(mrb_state*, mrb_value)
+auto
+mrb_hide_cursor(mrb_state*, mrb_value) -> mrb_value
 {
   HideCursor();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_cursor_hidden(mrb_state*, mrb_value)
+auto
+mrb_cursor_hidden(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsCursorHidden());
 }
 
-mrb_value
-mrb_enable_cursor(mrb_state*, mrb_value)
+auto
+mrb_enable_cursor(mrb_state*, mrb_value) -> mrb_value
 {
   EnableCursor();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_disable_cursor(mrb_state*, mrb_value)
+auto
+mrb_disable_cursor(mrb_state*, mrb_value) -> mrb_value
 {
   DisableCursor();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_cursor_on_screen(mrb_state*, mrb_value)
+auto
+mrb_cursor_on_screen(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsCursorOnScreen());
 }

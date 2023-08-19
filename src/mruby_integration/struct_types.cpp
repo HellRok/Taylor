@@ -8,12 +8,13 @@
 std::unordered_map<void*, std::string> parent_types;
 std::vector<void*> owned_objects{};
 
-int
-is_owned(void* p)
+auto
+is_owned(void* p) -> int
 {
   for (unsigned int i = 0; i < owned_objects.size(); i++) {
-    if (p == owned_objects[i])
-      return int(i);
+    if (p == owned_objects[i]) {
+      return static_cast<int>(i);
+    }
   }
   return -1;
 }

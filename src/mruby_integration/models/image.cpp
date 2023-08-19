@@ -28,18 +28,18 @@ setup_Image(mrb_state* mrb,
   ivar_attr_int(mrb, object, image->format, format);
 }
 
-mrb_value
-mrb_Image_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Image_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int width, height, mipmaps, format;
   mrb_get_args(mrb, "iiii", &width, &height, &mipmaps, &format);
 
-  Image* image = (Image*)DATA_PTR(self);
+  Image* image = static_cast<Image*> DATA_PTR(self);
   if (image) {
     mrb_free(mrb, image);
   }
   mrb_data_init(self, nullptr, &Image_type);
-  image = (Image*)malloc(sizeof(Image));
+  image = static_cast<Image*>(malloc(sizeof(Image)));
 
   setup_Image(mrb, self, image, width, height, mipmaps, format);
 
@@ -47,8 +47,8 @@ mrb_Image_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Image_get_data(mrb_state* mrb, mrb_value self)
+auto
+mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
 
@@ -78,26 +78,26 @@ mrb_Image_get_data(mrb_state* mrb, mrb_value self)
   return return_array;
 }
 
-mrb_value
-mrb_Image_set_width(mrb_state* mrb, mrb_value self)
+auto
+mrb_Image_set_width(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Image_type, Image, width, width);
 }
 
-mrb_value
-mrb_Image_set_height(mrb_state* mrb, mrb_value self)
+auto
+mrb_Image_set_height(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Image_type, Image, height, height);
 }
 
-mrb_value
-mrb_Image_set_mipmaps(mrb_state* mrb, mrb_value self)
+auto
+mrb_Image_set_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Image_type, Image, mipmaps, mipmaps);
 }
 
-mrb_value
-mrb_Image_set_format(mrb_state* mrb, mrb_value self)
+auto
+mrb_Image_set_format(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Image_type, Image, format, format);
 }

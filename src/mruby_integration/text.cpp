@@ -6,13 +6,13 @@
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_load_font(mrb_state* mrb, mrb_value)
+auto
+mrb_load_font(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* path;
   mrb_get_args(mrb, "z", &path);
 
-  Font* font = (Font*)malloc(sizeof(Font));
+  Font* font = static_cast<Font*>(malloc(sizeof(Font)));
   *font = LoadFont(path);
 
   mrb_value obj =
@@ -32,15 +32,15 @@ mrb_load_font(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_load_font_ex(mrb_state* mrb, mrb_value)
+auto
+mrb_load_font_ex(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* path;
-  int* font_chars{ 0 };
+  int* font_chars{ nullptr };
   mrb_int font_size, char_count;
   mrb_get_args(mrb, "zii", &path, &font_size, &char_count);
 
-  Font* font = (Font*)malloc(sizeof(Font));
+  Font* font = static_cast<Font*>(malloc(sizeof(Font)));
   *font = LoadFontEx(path, font_size, font_chars, char_count);
 
   mrb_value obj =
@@ -60,8 +60,8 @@ mrb_load_font_ex(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_unload_font(mrb_state* mrb, mrb_value)
+auto
+mrb_unload_font(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Font* font;
   mrb_get_args(mrb, "d", &font, &Font_type);
@@ -71,8 +71,8 @@ mrb_unload_font(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_fps(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_fps(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
 
@@ -82,8 +82,8 @@ mrb_draw_fps(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_text(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_text(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value text;
   mrb_int x, y, font_size;
@@ -94,8 +94,8 @@ mrb_draw_text(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_text_ex(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_text_ex(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Font* font;
   mrb_value text;
@@ -119,15 +119,15 @@ mrb_draw_text_ex(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_measure_text_ex(mrb_state* mrb, mrb_value)
+auto
+mrb_measure_text_ex(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Font* font;
   mrb_value text;
   mrb_float font_size, spacing;
   mrb_get_args(mrb, "dSff", &font, &Font_type, &text, &font_size, &spacing);
 
-  Vector2* size = (Vector2*)malloc(sizeof(Vector2));
+  auto* size = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *size = MeasureTextEx(*font, mrb_str_to_cstr(mrb, text), font_size, spacing);
 
   mrb_value obj =

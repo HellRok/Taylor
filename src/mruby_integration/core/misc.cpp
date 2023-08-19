@@ -1,8 +1,8 @@
 #include "mruby.h"
 #include "raylib.h"
 
-mrb_value
-mrb_take_screenshot(mrb_state* mrb, mrb_value)
+auto
+mrb_take_screenshot(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* path;
   mrb_get_args(mrb, "z", &path);
@@ -11,8 +11,8 @@ mrb_take_screenshot(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_config_flags(mrb_state* mrb, mrb_value)
+auto
+mrb_set_config_flags(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int flags;
   mrb_get_args(mrb, "i", &flags);
@@ -21,8 +21,8 @@ mrb_set_config_flags(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_trace_log_level(mrb_state* mrb, mrb_value)
+auto
+mrb_set_trace_log_level(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int level;
   mrb_get_args(mrb, "i", &level);
@@ -31,8 +31,8 @@ mrb_set_trace_log_level(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_open_url(mrb_state* mrb, mrb_value)
+auto
+mrb_open_url(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* url;
   mrb_get_args(mrb, "z", &url);
@@ -41,8 +41,8 @@ mrb_open_url(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_clipboard_text(mrb_state* mrb, mrb_value)
+auto
+mrb_set_clipboard_text(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* text;
   mrb_get_args(mrb, "z", &text);
@@ -51,8 +51,8 @@ mrb_set_clipboard_text(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_get_clipboard_text(mrb_state* mrb, mrb_value)
+auto
+mrb_get_clipboard_text(mrb_state* mrb, mrb_value) -> mrb_value
 {
   const char* name = GetClipboardText();
   return mrb_str_new_cstr(mrb, name);

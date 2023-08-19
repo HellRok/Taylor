@@ -24,19 +24,19 @@ setup_Music(mrb_state* mrb,
   ivar_attr_int(mrb, object, music->frameCount, frame_count);
 }
 
-mrb_value
-mrb_Music_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Music_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int context_type, frame_count;
   mrb_bool looping;
   mrb_get_args(mrb, "ibi", &context_type, &looping, &frame_count);
 
-  Music* music = (struct Music*)DATA_PTR(self);
+  Music* music = static_cast<struct Music*> DATA_PTR(self);
   if (music) {
     mrb_free(mrb, music);
   }
   mrb_data_init(self, nullptr, &Music_type);
-  music = (Music*)malloc(sizeof(Music));
+  music = static_cast<Music*>(malloc(sizeof(Music)));
 
   setup_Music(mrb, self, music, context_type, looping, frame_count);
 
@@ -44,20 +44,20 @@ mrb_Music_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Music_set_context_type(mrb_state* mrb, mrb_value self)
+auto
+mrb_Music_set_context_type(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Music_type, Music, ctxType, context_type);
 }
 
-mrb_value
-mrb_Music_set_looping(mrb_state* mrb, mrb_value self)
+auto
+mrb_Music_set_looping(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_bool(mrb, self, Music_type, Music, looping, looping);
 }
 
-mrb_value
-mrb_Music_set_frame_count(mrb_state* mrb, mrb_value self)
+auto
+mrb_Music_set_frame_count(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Music_type, Music, frameCount, frame_count);
 }

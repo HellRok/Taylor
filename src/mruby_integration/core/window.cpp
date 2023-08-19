@@ -6,8 +6,8 @@
 
 #include "ruby/core/window.hpp"
 
-mrb_value
-mrb_init_window(mrb_state* mrb, mrb_value)
+auto
+mrb_init_window(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int width, height;
   char* title;
@@ -17,27 +17,27 @@ mrb_init_window(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_window_should_close(mrb_state*, mrb_value)
+auto
+mrb_window_should_close(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(WindowShouldClose());
 }
 
-mrb_value
-mrb_close_window(mrb_state*, mrb_value)
+auto
+mrb_close_window(mrb_state*, mrb_value) -> mrb_value
 {
   CloseWindow();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_window_ready(mrb_state*, mrb_value)
+auto
+mrb_window_ready(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsWindowReady());
 }
 
-mrb_value
-mrb_window_state(mrb_state* mrb, mrb_value)
+auto
+mrb_window_state(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int flag;
   mrb_get_args(mrb, "i", &flag);
@@ -45,8 +45,8 @@ mrb_window_state(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsWindowState(flag));
 }
 
-mrb_value
-mrb_set_window_state(mrb_state* mrb, mrb_value)
+auto
+mrb_set_window_state(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int flag;
   mrb_get_args(mrb, "i", &flag);
@@ -55,44 +55,44 @@ mrb_set_window_state(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_window_fullscreen(mrb_state*, mrb_value)
+auto
+mrb_window_fullscreen(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsWindowFullscreen());
 }
 
-mrb_value
-mrb_window_hidden(mrb_state*, mrb_value)
+auto
+mrb_window_hidden(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsWindowHidden());
 }
 
-mrb_value
-mrb_window_minimised(mrb_state*, mrb_value)
+auto
+mrb_window_minimised(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsWindowMinimized());
 }
 
-mrb_value
-mrb_window_maximised(mrb_state*, mrb_value)
+auto
+mrb_window_maximised(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsWindowMaximized());
 }
 
-mrb_value
-mrb_window_focused(mrb_state*, mrb_value)
+auto
+mrb_window_focused(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsWindowFocused());
 }
 
-mrb_value
-mrb_window_resized(mrb_state*, mrb_value)
+auto
+mrb_window_resized(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsWindowResized());
 }
 
-mrb_value
-mrb_clear_window_state(mrb_state* mrb, mrb_value)
+auto
+mrb_clear_window_state(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int flag;
   mrb_get_args(mrb, "i", &flag);
@@ -101,36 +101,36 @@ mrb_clear_window_state(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_toggle_fullscreen(mrb_state*, mrb_value)
+auto
+mrb_toggle_fullscreen(mrb_state*, mrb_value) -> mrb_value
 {
   ToggleFullscreen();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_maximise_window(mrb_state*, mrb_value)
+auto
+mrb_maximise_window(mrb_state*, mrb_value) -> mrb_value
 {
   MaximizeWindow();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_minimise_window(mrb_state*, mrb_value)
+auto
+mrb_minimise_window(mrb_state*, mrb_value) -> mrb_value
 {
   MinimizeWindow();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_restore_window(mrb_state*, mrb_value)
+auto
+mrb_restore_window(mrb_state*, mrb_value) -> mrb_value
 {
   RestoreWindow();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_window_icon(mrb_state* mrb, mrb_value)
+auto
+mrb_set_window_icon(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
 
@@ -140,8 +140,8 @@ mrb_set_window_icon(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_window_title(mrb_state* mrb, mrb_value)
+auto
+mrb_set_window_title(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* title;
 
@@ -151,8 +151,8 @@ mrb_set_window_title(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_window_position(mrb_state* mrb, mrb_value)
+auto
+mrb_set_window_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
 
@@ -162,8 +162,8 @@ mrb_set_window_position(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_window_monitor(mrb_state* mrb, mrb_value)
+auto
+mrb_set_window_monitor(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int monitor;
 
@@ -173,8 +173,8 @@ mrb_set_window_monitor(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_window_min_size(mrb_state* mrb, mrb_value)
+auto
+mrb_set_window_min_size(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int width, height;
 
@@ -184,8 +184,8 @@ mrb_set_window_min_size(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_window_size(mrb_state* mrb, mrb_value)
+auto
+mrb_set_window_size(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int width, height;
 
@@ -195,37 +195,37 @@ mrb_set_window_size(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_get_screen_width(mrb_state* mrb, mrb_value)
+auto
+mrb_get_screen_width(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetScreenWidth());
 }
 
-mrb_value
-mrb_get_screen_height(mrb_state* mrb, mrb_value)
+auto
+mrb_get_screen_height(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetScreenHeight());
 }
 
-mrb_value
-mrb_get_monitor_count(mrb_state* mrb, mrb_value)
+auto
+mrb_get_monitor_count(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetMonitorCount());
 }
 
-mrb_value
-mrb_get_current_monitor(mrb_state* mrb, mrb_value)
+auto
+mrb_get_current_monitor(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetCurrentMonitor());
 }
 
-mrb_value
-mrb_get_monitor_position(mrb_state* mrb, mrb_value)
+auto
+mrb_get_monitor_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int monitor;
   mrb_get_args(mrb, "i", &monitor);
 
-  Vector2* position = (Vector2*)malloc(sizeof(Vector2));
+  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *position = GetMonitorPosition(monitor);
 
   mrb_value obj = mrb_obj_value(
@@ -236,8 +236,8 @@ mrb_get_monitor_position(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_get_monitor_width(mrb_state* mrb, mrb_value)
+auto
+mrb_get_monitor_width(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int monitor;
   mrb_get_args(mrb, "i", &monitor);
@@ -245,8 +245,8 @@ mrb_get_monitor_width(mrb_state* mrb, mrb_value)
   return mrb_int_value(mrb, GetMonitorWidth(monitor));
 }
 
-mrb_value
-mrb_get_monitor_height(mrb_state* mrb, mrb_value)
+auto
+mrb_get_monitor_height(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int monitor;
   mrb_get_args(mrb, "i", &monitor);
@@ -254,8 +254,8 @@ mrb_get_monitor_height(mrb_state* mrb, mrb_value)
   return mrb_int_value(mrb, GetMonitorHeight(monitor));
 }
 
-mrb_value
-mrb_get_monitor_refresh_rate(mrb_state* mrb, mrb_value)
+auto
+mrb_get_monitor_refresh_rate(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int monitor;
   mrb_get_args(mrb, "i", &monitor);
@@ -263,10 +263,10 @@ mrb_get_monitor_refresh_rate(mrb_state* mrb, mrb_value)
   return mrb_int_value(mrb, GetMonitorRefreshRate(monitor));
 }
 
-mrb_value
-mrb_get_window_position(mrb_state* mrb, mrb_value)
+auto
+mrb_get_window_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  Vector2* position = (Vector2*)malloc(sizeof(Vector2));
+  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *position = GetWindowPosition();
 
   mrb_value obj = mrb_obj_value(
@@ -277,10 +277,10 @@ mrb_get_window_position(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value)
+auto
+mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  Vector2* scale = (Vector2*)malloc(sizeof(Vector2));
+  auto* scale = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *scale = GetWindowScaleDPI();
 
   mrb_value obj =

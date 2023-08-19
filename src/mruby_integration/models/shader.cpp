@@ -17,18 +17,18 @@ setup_Shader(mrb_state* mrb, mrb_value object, Shader* shader, int id)
   ivar_attr_int(mrb, object, shader->id, id);
 }
 
-mrb_value
-mrb_Shader_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Shader_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int id;
   mrb_get_args(mrb, "i", &id);
 
-  Shader* shader = (Shader*)DATA_PTR(self);
+  Shader* shader = static_cast<Shader*> DATA_PTR(self);
   if (shader) {
     mrb_free(mrb, shader);
   }
   mrb_data_init(self, nullptr, &Shader_type);
-  shader = (Shader*)malloc(sizeof(Shader));
+  shader = static_cast<Shader*>(malloc(sizeof(Shader)));
 
   setup_Shader(mrb, self, shader, id);
 
@@ -36,8 +36,8 @@ mrb_Shader_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Shader_set_id(mrb_state* mrb, mrb_value self)
+auto
+mrb_Shader_set_id(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Shader_type, Shader, id, id);
 }

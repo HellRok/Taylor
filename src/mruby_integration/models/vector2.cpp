@@ -22,18 +22,18 @@ setup_Vector2(mrb_state* mrb,
   ivar_attr_float(mrb, object, vector->y, y);
 }
 
-mrb_value
-mrb_Vector2_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Vector2_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_float x, y;
   mrb_get_args(mrb, "ff", &x, &y);
 
-  Vector2* vector = (struct Vector2*)DATA_PTR(self);
+  Vector2* vector = static_cast<struct Vector2*> DATA_PTR(self);
   if (vector) {
     mrb_free(mrb, vector);
   }
   mrb_data_init(self, nullptr, &Vector2_type);
-  vector = (Vector2*)malloc(sizeof(Vector2));
+  vector = static_cast<Vector2*>(malloc(sizeof(Vector2)));
 
   setup_Vector2(mrb, self, vector, x, y);
 
@@ -41,14 +41,14 @@ mrb_Vector2_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Vector2_set_x(mrb_state* mrb, mrb_value self)
+auto
+mrb_Vector2_set_x(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_float(mrb, self, Vector2_type, Vector2, x, x);
 }
 
-mrb_value
-mrb_Vector2_set_y(mrb_state* mrb, mrb_value self)
+auto
+mrb_Vector2_set_y(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_float(mrb, self, Vector2_type, Vector2, y, y);
 }

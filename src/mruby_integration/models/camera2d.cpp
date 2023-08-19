@@ -13,15 +13,15 @@
 
 struct RClass* Camera2D_class;
 
-mrb_value
-mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Camera2D* camera = (struct Camera2D*)DATA_PTR(self);
+  Camera2D* camera = static_cast<struct Camera2D*> DATA_PTR(self);
   if (camera) {
     mrb_free(mrb, camera);
   }
   mrb_data_init(self, nullptr, &Camera2D_type);
-  camera = (Camera2D*)malloc(sizeof(Camera2D));
+  camera = static_cast<Camera2D*>(malloc(sizeof(Camera2D)));
 
   mrb_float rotation, zoom;
   Vector2 *offset, *target;
@@ -47,14 +47,14 @@ mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Camera2D_set_rotation(mrb_state* mrb, mrb_value self)
+auto
+mrb_Camera2D_set_rotation(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_float(mrb, self, Camera2D_type, Camera2D, rotation, rotation);
 }
 
-mrb_value
-mrb_Camera2D_set_zoom(mrb_state* mrb, mrb_value self)
+auto
+mrb_Camera2D_set_zoom(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_float(mrb, self, Camera2D_type, Camera2D, zoom, zoom);
 }

@@ -1,8 +1,8 @@
 #include "mruby.h"
 #include "mruby/compile.h"
 
-mrb_value
-mrb_android(mrb_state*, mrb_value)
+auto
+mrb_android(mrb_state*, mrb_value) -> mrb_value
 {
 #ifdef __NDK_MAJOR__
   return mrb_true_value();
@@ -11,8 +11,8 @@ mrb_android(mrb_state*, mrb_value)
 #endif
 }
 
-mrb_value
-mrb_browser(mrb_state*, mrb_value)
+auto
+mrb_browser(mrb_state*, mrb_value) -> mrb_value
 {
 #ifdef __EMSCRIPTEN__
   return mrb_true_value();
@@ -21,8 +21,8 @@ mrb_browser(mrb_state*, mrb_value)
 #endif
 }
 
-mrb_value
-mrb_linux(mrb_state*, mrb_value)
+auto
+mrb_linux(mrb_state*, mrb_value) -> mrb_value
 {
 #ifdef __linux__
   return mrb_true_value();
@@ -31,8 +31,8 @@ mrb_linux(mrb_state*, mrb_value)
 #endif
 }
 
-mrb_value
-mrb_osx(mrb_state*, mrb_value)
+auto
+mrb_osx(mrb_state*, mrb_value) -> mrb_value
 {
 #ifdef __APPLE__
   return mrb_true_value();
@@ -41,8 +41,8 @@ mrb_osx(mrb_state*, mrb_value)
 #endif
 }
 
-mrb_value
-mrb_windows(mrb_state*, mrb_value)
+auto
+mrb_windows(mrb_state*, mrb_value) -> mrb_value
 {
 #ifdef _WIN32
   return mrb_true_value();
@@ -51,8 +51,8 @@ mrb_windows(mrb_state*, mrb_value)
 #endif
 }
 
-mrb_value
-mrb_released(mrb_state*, mrb_value)
+auto
+mrb_released(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_true_value();
 }

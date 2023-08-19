@@ -3,8 +3,8 @@
 
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_draw_triangle(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_triangle(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2 *left, *right, *top;
   Color* colour;
@@ -24,8 +24,8 @@ mrb_draw_triangle(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_triangle_lines(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_triangle_lines(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2 *left, *right, *top;
   Color* colour;

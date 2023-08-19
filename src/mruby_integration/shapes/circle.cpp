@@ -3,8 +3,8 @@
 
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_draw_circle(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_circle(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
   mrb_float radius;
@@ -16,8 +16,8 @@ mrb_draw_circle(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_circle_v(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_circle_v(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2* vector;
   mrb_float radius;
@@ -30,8 +30,8 @@ mrb_draw_circle_v(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_circle_sector(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_circle_sector(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2* vector;
   mrb_float radius, start_angle, end_angle;
@@ -53,8 +53,8 @@ mrb_draw_circle_sector(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_circle_sector_lines(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_circle_sector_lines(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2* vector;
   mrb_float radius, start_angle, end_angle;
@@ -77,8 +77,8 @@ mrb_draw_circle_sector_lines(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_circle_gradient(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_circle_gradient(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
   mrb_float radius;
@@ -98,8 +98,8 @@ mrb_draw_circle_gradient(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_circle_lines(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_circle_lines(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
   mrb_float radius;

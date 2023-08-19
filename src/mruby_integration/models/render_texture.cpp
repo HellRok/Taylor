@@ -21,13 +21,14 @@ setup_RenderTexture(mrb_state* mrb, mrb_value object, int width, int height)
     mrb, object, mrb_intern_cstr(mrb, "@height"), mrb_int_value(mrb, height));
 }
 
-mrb_value
-mrb_RenderTexture_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_RenderTexture_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int width, height;
   mrb_get_args(mrb, "ii", &width, &height);
 
-  RenderTexture* render_texture = (RenderTexture*)malloc(sizeof(RenderTexture));
+  auto* render_texture =
+    static_cast<RenderTexture*>(malloc(sizeof(RenderTexture)));
   *render_texture = LoadRenderTexture(width, height);
 
   setup_RenderTexture(mrb, self, width, height);
@@ -43,8 +44,8 @@ mrb_RenderTexture_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_RenderTexture_unload(mrb_state* mrb, mrb_value self)
+auto
+mrb_RenderTexture_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   RenderTexture* texture;
   Data_Get_Struct(mrb, self, &RenderTexture_type, texture);

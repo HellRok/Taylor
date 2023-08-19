@@ -4,8 +4,8 @@
 
 #include "ruby/core/input/gamepad.hpp"
 
-mrb_value
-mrb_gamepad_available(mrb_state* mrb, mrb_value)
+auto
+mrb_gamepad_available(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index;
   mrb_get_args(mrb, "i", &index);
@@ -13,8 +13,8 @@ mrb_gamepad_available(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsGamepadAvailable(index));
 }
 
-mrb_value
-mrb_get_gamepad_name(mrb_state* mrb, mrb_value)
+auto
+mrb_get_gamepad_name(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index;
   mrb_get_args(mrb, "i", &index);
@@ -23,8 +23,8 @@ mrb_get_gamepad_name(mrb_state* mrb, mrb_value)
   return mrb_str_new_cstr(mrb, name);
 }
 
-mrb_value
-mrb_gamepad_button_pressed(mrb_state* mrb, mrb_value)
+auto
+mrb_gamepad_button_pressed(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index, button;
   mrb_get_args(mrb, "ii", &index, &button);
@@ -32,8 +32,8 @@ mrb_gamepad_button_pressed(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsGamepadButtonPressed(index, button));
 }
 
-mrb_value
-mrb_gamepad_button_down(mrb_state* mrb, mrb_value)
+auto
+mrb_gamepad_button_down(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index, button;
   mrb_get_args(mrb, "ii", &index, &button);
@@ -41,8 +41,8 @@ mrb_gamepad_button_down(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsGamepadButtonDown(index, button));
 }
 
-mrb_value
-mrb_gamepad_button_released(mrb_state* mrb, mrb_value)
+auto
+mrb_gamepad_button_released(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index, button;
   mrb_get_args(mrb, "ii", &index, &button);
@@ -50,8 +50,8 @@ mrb_gamepad_button_released(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsGamepadButtonReleased(index, button));
 }
 
-mrb_value
-mrb_gamepad_button_up(mrb_state* mrb, mrb_value)
+auto
+mrb_gamepad_button_up(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index, button;
   mrb_get_args(mrb, "ii", &index, &button);
@@ -59,14 +59,14 @@ mrb_gamepad_button_up(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsGamepadButtonUp(index, button));
 }
 
-mrb_value
-mrb_get_gamepad_button_pressed(mrb_state* mrb, mrb_value)
+auto
+mrb_get_gamepad_button_pressed(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetGamepadButtonPressed());
 }
 
-mrb_value
-mrb_get_gamepad_axis_count(mrb_state* mrb, mrb_value)
+auto
+mrb_get_gamepad_axis_count(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index;
   mrb_get_args(mrb, "i", &index);
@@ -74,8 +74,8 @@ mrb_get_gamepad_axis_count(mrb_state* mrb, mrb_value)
   return mrb_int_value(mrb, GetGamepadAxisCount(index));
 }
 
-mrb_value
-mrb_get_gamepad_axis_movement(mrb_state* mrb, mrb_value)
+auto
+mrb_get_gamepad_axis_movement(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index, axis;
   mrb_get_args(mrb, "ii", &index, &axis);
@@ -83,8 +83,8 @@ mrb_get_gamepad_axis_movement(mrb_state* mrb, mrb_value)
   return mrb_float_value(mrb, GetGamepadAxisMovement(index, axis));
 }
 
-mrb_value
-mrb_set_gamepad_mappings(mrb_state* mrb, mrb_value)
+auto
+mrb_set_gamepad_mappings(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* mappings;
   mrb_get_args(mrb, "z", &mappings);

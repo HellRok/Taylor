@@ -3,8 +3,8 @@
 
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_draw_ellipse(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_ellipse(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
   mrb_float radius_h, radius_v;
@@ -17,8 +17,8 @@ mrb_draw_ellipse(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_ellipse_lines(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_ellipse_lines(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
   mrb_float radius_h, radius_v;

@@ -2,14 +2,14 @@
 #include "mruby/array.h"
 #include "raylib.h"
 
-mrb_value
-mrb_files_dropped(mrb_state*, mrb_value)
+auto
+mrb_files_dropped(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsFileDropped());
 }
 
-mrb_value
-mrb_get_dropped_files(mrb_state* mrb, mrb_value)
+auto
+mrb_get_dropped_files(mrb_state* mrb, mrb_value) -> mrb_value
 {
   FilePathList droppedFiles;
   droppedFiles = LoadDroppedFiles();

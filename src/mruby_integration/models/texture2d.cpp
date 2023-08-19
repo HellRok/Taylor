@@ -28,18 +28,18 @@ setup_Texture2D(mrb_state* mrb,
   ivar_attr_int(mrb, object, texture->format, format);
 }
 
-mrb_value
-mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int id, width, height, mipmaps, format;
   mrb_get_args(mrb, "iiiii", &id, &width, &height, &mipmaps, &format);
 
-  Texture2D* texture = (Texture2D*)DATA_PTR(self);
+  Texture2D* texture = static_cast<Texture2D*> DATA_PTR(self);
   if (texture) {
     mrb_free(mrb, texture);
   }
   mrb_data_init(self, nullptr, &Texture2D_type);
-  texture = (Texture2D*)malloc(sizeof(Texture2D));
+  texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
 
   setup_Texture2D(mrb, self, texture, id, width, height, mipmaps, format);
 
@@ -47,32 +47,32 @@ mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Texture2D_set_id(mrb_state* mrb, mrb_value self)
+auto
+mrb_Texture2D_set_id(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Texture2D_type, Texture2D, id, id);
 }
 
-mrb_value
-mrb_Texture2D_set_width(mrb_state* mrb, mrb_value self)
+auto
+mrb_Texture2D_set_width(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Texture2D_type, Texture2D, width, width);
 }
 
-mrb_value
-mrb_Texture2D_set_height(mrb_state* mrb, mrb_value self)
+auto
+mrb_Texture2D_set_height(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Texture2D_type, Texture2D, height, height);
 }
 
-mrb_value
-mrb_Texture2D_set_mipmaps(mrb_state* mrb, mrb_value self)
+auto
+mrb_Texture2D_set_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Texture2D_type, Texture2D, mipmaps, mipmaps);
 }
 
-mrb_value
-mrb_Texture2D_set_format(mrb_state* mrb, mrb_value self)
+auto
+mrb_Texture2D_set_format(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Texture2D_type, Texture2D, format, format);
 }

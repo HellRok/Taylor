@@ -9,15 +9,15 @@
 #include "mruby_integration/models/shader.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_load_shader_from_string(mrb_state* mrb, mrb_value)
+auto
+mrb_load_shader_from_string(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  char* vertex_shader_code = NULL;
-  char* fragment_shader_code = NULL;
+  char* vertex_shader_code = nullptr;
+  char* fragment_shader_code = nullptr;
 
   mrb_get_args(mrb, "z!z!", &vertex_shader_code, &fragment_shader_code);
 
-  Shader* shader = (Shader*)malloc(sizeof(Shader));
+  auto* shader = static_cast<Shader*>(malloc(sizeof(Shader)));
   *shader = LoadShaderFromMemory(vertex_shader_code, fragment_shader_code);
 
   mrb_value obj =
@@ -28,13 +28,13 @@ mrb_load_shader_from_string(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_load_shader(mrb_state* mrb, mrb_value)
+auto
+mrb_load_shader(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char *vertex_shader_path, *fragment_shader_path;
   mrb_get_args(mrb, "z!z!", &vertex_shader_path, &fragment_shader_path);
 
-  Shader* shader = (Shader*)malloc(sizeof(Shader));
+  auto* shader = static_cast<Shader*>(malloc(sizeof(Shader)));
   *shader = LoadShader(vertex_shader_path, fragment_shader_path);
 
   mrb_value obj =
@@ -45,8 +45,8 @@ mrb_load_shader(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_unload_shader(mrb_state* mrb, mrb_value)
+auto
+mrb_unload_shader(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Shader* shader;
   mrb_get_args(mrb, "d", &shader, &Shader_type);
@@ -56,8 +56,8 @@ mrb_unload_shader(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_shader_ready(mrb_state* mrb, mrb_value)
+auto
+mrb_shader_ready(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Shader* shader;
   mrb_get_args(mrb, "d", &shader, &Shader_type);
@@ -65,8 +65,8 @@ mrb_shader_ready(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsShaderReady(*shader));
 }
 
-mrb_value
-mrb_get_shader_location(mrb_state* mrb, mrb_value)
+auto
+mrb_get_shader_location(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Shader* shader;
   char* uniform_name;
@@ -75,8 +75,8 @@ mrb_get_shader_location(mrb_state* mrb, mrb_value)
   return mrb_int_value(mrb, GetShaderLocation(*shader, uniform_name));
 }
 
-mrb_value
-mrb_set_shader_values(mrb_state* mrb, mrb_value)
+auto
+mrb_set_shader_values(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Shader* shader;
   mrb_int variable_location, enum_value;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mruby.h"
+#include "raylib.h"
 
 extern RClass* Vector2_class;
 

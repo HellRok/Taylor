@@ -17,18 +17,18 @@ setup_Sound(mrb_state* mrb, mrb_value object, Sound* sound, int frame_count)
   ivar_attr_int(mrb, object, sound->frameCount, frame_count);
 }
 
-mrb_value
-mrb_Sound_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Sound_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int frame_count;
   mrb_get_args(mrb, "i", &frame_count);
 
-  Sound* sound = (struct Sound*)DATA_PTR(self);
+  Sound* sound = static_cast<struct Sound*> DATA_PTR(self);
   if (sound) {
     mrb_free(mrb, sound);
   }
   mrb_data_init(self, nullptr, &Sound_type);
-  sound = (Sound*)malloc(sizeof(Sound));
+  sound = static_cast<Sound*>(malloc(sizeof(Sound)));
 
   setup_Sound(mrb, self, sound, frame_count);
 
@@ -36,8 +36,8 @@ mrb_Sound_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Sound_set_frame_count(mrb_state* mrb, mrb_value self)
+auto
+mrb_Sound_set_frame_count(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Sound_type, Sound, frameCount, frame_count);
 }

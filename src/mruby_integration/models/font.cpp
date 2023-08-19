@@ -29,18 +29,18 @@ setup_Font(mrb_state* mrb,
   //  CharInfo *chars;        // Characters info data
 }
 
-mrb_value
-mrb_Font_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int base_size, glyph_count, glyph_padding;
   mrb_get_args(mrb, "iii", &base_size, &glyph_count, &glyph_padding);
 
-  Font* font = (Font*)DATA_PTR(self);
+  Font* font = static_cast<Font*> DATA_PTR(self);
   if (font) {
     mrb_free(mrb, font);
   }
   mrb_data_init(self, nullptr, &Font_type);
-  font = (Font*)malloc(sizeof(Font));
+  font = static_cast<Font*>(malloc(sizeof(Font)));
 
   Texture2D* texture = &font->texture;
 
@@ -53,20 +53,20 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Font_set_base_size(mrb_state* mrb, mrb_value self)
+auto
+mrb_Font_set_base_size(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Font_type, Font, baseSize, base_size);
 }
 
-mrb_value
-mrb_Font_set_glyph_count(mrb_state* mrb, mrb_value self)
+auto
+mrb_Font_set_glyph_count(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Font_type, Font, glyphCount, glyph_count);
 }
 
-mrb_value
-mrb_Font_set_glyph_padding(mrb_state* mrb, mrb_value self)
+auto
+mrb_Font_set_glyph_padding(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Font_type, Font, glyphPadding, glyph_padding);
 }

@@ -3,8 +3,8 @@
 
 #include "ruby/core/input/keyboard.hpp"
 
-mrb_value
-mrb_key_pressed(mrb_state* mrb, mrb_value)
+auto
+mrb_key_pressed(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
@@ -12,8 +12,8 @@ mrb_key_pressed(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsKeyPressed(key));
 }
 
-mrb_value
-mrb_key_down(mrb_state* mrb, mrb_value)
+auto
+mrb_key_down(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
@@ -21,8 +21,8 @@ mrb_key_down(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsKeyDown(key));
 }
 
-mrb_value
-mrb_key_released(mrb_state* mrb, mrb_value)
+auto
+mrb_key_released(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
@@ -30,8 +30,8 @@ mrb_key_released(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsKeyReleased(key));
 }
 
-mrb_value
-mrb_key_up(mrb_state* mrb, mrb_value)
+auto
+mrb_key_up(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
@@ -39,8 +39,8 @@ mrb_key_up(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsKeyUp(key));
 }
 
-mrb_value
-mrb_set_exit_key(mrb_state* mrb, mrb_value)
+auto
+mrb_set_exit_key(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
@@ -50,14 +50,14 @@ mrb_set_exit_key(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_get_key_pressed(mrb_state* mrb, mrb_value)
+auto
+mrb_get_key_pressed(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetKeyPressed());
 }
 
-mrb_value
-mrb_get_char_pressed(mrb_state* mrb, mrb_value)
+auto
+mrb_get_char_pressed(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetCharPressed());
 }

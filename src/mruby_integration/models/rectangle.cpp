@@ -11,18 +11,18 @@
 
 struct RClass* Rectangle_class;
 
-mrb_value
-mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_float x, y, width, height;
   mrb_get_args(mrb, "ffff", &x, &y, &width, &height);
 
-  Rectangle* rectangle = (struct Rectangle*)DATA_PTR(self);
+  Rectangle* rectangle = static_cast<struct Rectangle*> DATA_PTR(self);
   if (rectangle) {
     mrb_free(mrb, rectangle);
   }
   mrb_data_init(self, nullptr, &Rectangle_type);
-  rectangle = (Rectangle*)malloc(sizeof(Rectangle));
+  rectangle = static_cast<Rectangle*>(malloc(sizeof(Rectangle)));
 
   ivar_attr_float(mrb, self, rectangle->x, x);
   ivar_attr_float(mrb, self, rectangle->y, y);
@@ -33,26 +33,26 @@ mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Rectangle_set_x(mrb_state* mrb, mrb_value self)
+auto
+mrb_Rectangle_set_x(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_float(mrb, self, Rectangle_type, Rectangle, x, x);
 }
 
-mrb_value
-mrb_Rectangle_set_y(mrb_state* mrb, mrb_value self)
+auto
+mrb_Rectangle_set_y(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_float(mrb, self, Rectangle_type, Rectangle, y, y);
 }
 
-mrb_value
-mrb_Rectangle_set_width(mrb_state* mrb, mrb_value self)
+auto
+mrb_Rectangle_set_width(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_float(mrb, self, Rectangle_type, Rectangle, width, width);
 }
 
-mrb_value
-mrb_Rectangle_set_height(mrb_state* mrb, mrb_value self)
+auto
+mrb_Rectangle_set_height(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_float(mrb, self, Rectangle_type, Rectangle, height, height);
 }

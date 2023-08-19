@@ -9,13 +9,13 @@
 #include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_load_texture(mrb_state* mrb, mrb_value)
+auto
+mrb_load_texture(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* path;
   mrb_get_args(mrb, "z", &path);
 
-  Texture2D* texture = (Texture2D*)malloc(sizeof(Texture2D));
+  auto* texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
   *texture = LoadTexture(path);
 
   mrb_value obj = mrb_obj_value(
@@ -33,13 +33,13 @@ mrb_load_texture(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_load_texture_from_image(mrb_state* mrb, mrb_value)
+auto
+mrb_load_texture_from_image(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
-  Texture2D* texture = (Texture2D*)malloc(sizeof(Texture2D));
+  auto* texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
   *texture = LoadTextureFromImage(*image);
 
   mrb_value obj = mrb_obj_value(
@@ -57,8 +57,8 @@ mrb_load_texture_from_image(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_unload_texture(mrb_state* mrb, mrb_value)
+auto
+mrb_unload_texture(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Texture2D* texture;
   mrb_get_args(mrb, "d", &texture, &Texture2D_type);
@@ -68,8 +68,8 @@ mrb_unload_texture(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_texture_filter(mrb_state* mrb, mrb_value)
+auto
+mrb_set_texture_filter(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Texture2D* texture;
   mrb_int filter;
@@ -81,8 +81,8 @@ mrb_set_texture_filter(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_gen_texture_mipmaps(mrb_state* mrb, mrb_value)
+auto
+mrb_gen_texture_mipmaps(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Texture2D* texture;
 
@@ -93,8 +93,8 @@ mrb_gen_texture_mipmaps(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_texture(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_texture(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Texture2D* texture;
   mrb_int x, y;
@@ -108,8 +108,8 @@ mrb_draw_texture(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_texture_pro(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_texture_pro(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Texture2D* texture;
   Vector2* origin;
@@ -136,14 +136,14 @@ mrb_draw_texture_pro(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_fade(mrb_state* mrb, mrb_value)
+auto
+mrb_fade(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Color* colour;
   mrb_float alpha;
   mrb_get_args(mrb, "df", &colour, &Colour_type, &alpha);
 
-  Color* return_colour = (Color*)malloc(sizeof(Color));
+  auto* return_colour = static_cast<Color*>(malloc(sizeof(Color)));
   *return_colour = Fade(*colour, alpha);
 
   mrb_value obj = mrb_obj_value(

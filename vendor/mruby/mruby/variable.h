@@ -8,6 +8,7 @@
 #define MRUBY_VARIABLE_H
 
 #include "common.h"
+#include "mruby.h"
 
 /**
  * Functions to access mruby variables.

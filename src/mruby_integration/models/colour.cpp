@@ -26,18 +26,18 @@ setup_Colour(mrb_state* mrb,
   ivar_attr_int(mrb, object, colour->a, alpha);
 }
 
-mrb_value
-mrb_Colour_initialize(mrb_state* mrb, mrb_value self)
+auto
+mrb_Colour_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int red, green, blue, alpha;
   mrb_get_args(mrb, "iiii", &red, &green, &blue, &alpha);
 
-  Color* colour = (struct Color*)DATA_PTR(self);
+  Color* colour = static_cast<struct Color*> DATA_PTR(self);
   if (colour) {
     mrb_free(mrb, colour);
   }
   mrb_data_init(self, nullptr, &Colour_type);
-  colour = (Color*)malloc(sizeof(Color));
+  colour = static_cast<Color*>(malloc(sizeof(Color)));
 
   setup_Colour(mrb, self, colour, red, green, blue, alpha);
 
@@ -45,26 +45,26 @@ mrb_Colour_initialize(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-mrb_value
-mrb_Colour_set_red(mrb_state* mrb, mrb_value self)
+auto
+mrb_Colour_set_red(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Colour_type, Color, r, red);
 }
 
-mrb_value
-mrb_Colour_set_green(mrb_state* mrb, mrb_value self)
+auto
+mrb_Colour_set_green(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Colour_type, Color, g, green);
 }
 
-mrb_value
-mrb_Colour_set_blue(mrb_state* mrb, mrb_value self)
+auto
+mrb_Colour_set_blue(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Colour_type, Color, b, blue);
 }
 
-mrb_value
-mrb_Colour_set_alpha(mrb_state* mrb, mrb_value self)
+auto
+mrb_Colour_set_alpha(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   attr_setter_int(mrb, self, Colour_type, Color, a, alpha);
 }

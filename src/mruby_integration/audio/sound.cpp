@@ -5,13 +5,13 @@
 #include "mruby_integration/models/sound.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_load_sound(mrb_state* mrb, mrb_value)
+auto
+mrb_load_sound(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* path;
   mrb_get_args(mrb, "z", &path);
 
-  Sound* new_sound = (Sound*)malloc(sizeof(Sound));
+  auto* new_sound = static_cast<Sound*>(malloc(sizeof(Sound)));
   *new_sound = LoadSound(path);
   mrb_value obj =
     mrb_obj_value(Data_Wrap_Struct(mrb, Sound_class, &Sound_type, new_sound));
@@ -21,8 +21,8 @@ mrb_load_sound(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_unload_sound(mrb_state* mrb, mrb_value)
+auto
+mrb_unload_sound(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Sound* sound;
   mrb_get_args(mrb, "d", &sound, &Sound_type);
@@ -32,8 +32,8 @@ mrb_unload_sound(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_play_sound(mrb_state* mrb, mrb_value)
+auto
+mrb_play_sound(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Sound* sound;
   mrb_get_args(mrb, "d", &sound, &Sound_type);
@@ -43,8 +43,8 @@ mrb_play_sound(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_stop_sound(mrb_state* mrb, mrb_value)
+auto
+mrb_stop_sound(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Sound* sound;
   mrb_get_args(mrb, "d", &sound, &Sound_type);
@@ -54,8 +54,8 @@ mrb_stop_sound(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_pause_sound(mrb_state* mrb, mrb_value)
+auto
+mrb_pause_sound(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Sound* sound;
   mrb_get_args(mrb, "d", &sound, &Sound_type);
@@ -65,8 +65,8 @@ mrb_pause_sound(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_resume_sound(mrb_state* mrb, mrb_value)
+auto
+mrb_resume_sound(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Sound* sound;
   mrb_get_args(mrb, "d", &sound, &Sound_type);
@@ -76,8 +76,8 @@ mrb_resume_sound(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_sound_playing(mrb_state* mrb, mrb_value)
+auto
+mrb_sound_playing(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Sound* sound;
   mrb_get_args(mrb, "d", &sound, &Sound_type);
@@ -85,8 +85,8 @@ mrb_sound_playing(mrb_state* mrb, mrb_value)
   return mrb_bool_value(IsSoundPlaying(*sound));
 }
 
-mrb_value
-mrb_set_sound_volume(mrb_state* mrb, mrb_value)
+auto
+mrb_set_sound_volume(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Sound* sound;
   mrb_float volume;
@@ -97,8 +97,8 @@ mrb_set_sound_volume(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_set_sound_pitch(mrb_state* mrb, mrb_value)
+auto
+mrb_set_sound_pitch(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Sound* sound;
   mrb_float pitch;

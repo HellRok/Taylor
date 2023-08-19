@@ -3,8 +3,8 @@
 
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_check_collision_point_rec(mrb_state* mrb, mrb_value)
+auto
+mrb_check_collision_point_rec(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2* point;
   Rectangle* rectangle;

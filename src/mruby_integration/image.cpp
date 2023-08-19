@@ -6,13 +6,13 @@
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_load_image(mrb_state* mrb, mrb_value)
+auto
+mrb_load_image(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* path;
   mrb_get_args(mrb, "z", &path);
 
-  Image* image = (Image*)malloc(sizeof(Image));
+  auto* image = static_cast<Image*>(malloc(sizeof(Image)));
   *image = LoadImage(path);
 
   mrb_value obj =
@@ -29,8 +29,8 @@ mrb_load_image(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_unload_image(mrb_state* mrb, mrb_value)
+auto
+mrb_unload_image(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
@@ -40,8 +40,8 @@ mrb_unload_image(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_export_image(mrb_state* mrb, mrb_value)
+auto
+mrb_export_image(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   char* path;
@@ -52,14 +52,14 @@ mrb_export_image(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_generate_image_colour(mrb_state* mrb, mrb_value)
+auto
+mrb_generate_image_colour(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int width, height;
   Color* colour;
   mrb_get_args(mrb, "iid", &width, &height, &colour, &Colour_type);
 
-  Image* image = (Image*)malloc(sizeof(Image));
+  auto* image = static_cast<Image*>(malloc(sizeof(Image)));
   *image = GenImageColor(width, height, *colour);
 
   mrb_value obj =
@@ -76,13 +76,13 @@ mrb_generate_image_colour(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_image_copy(mrb_state* mrb, mrb_value)
+auto
+mrb_image_copy(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
-  Image* copy = (Image*)malloc(sizeof(Image));
+  auto* copy = static_cast<Image*>(malloc(sizeof(Image)));
   *copy = ImageCopy(*image);
 
   mrb_value obj =
@@ -94,14 +94,14 @@ mrb_image_copy(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_image_from_image(mrb_state* mrb, mrb_value)
+auto
+mrb_image_from_image(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   Rectangle* rectangle;
   mrb_get_args(mrb, "dd", &image, &Image_type, &rectangle, &Rectangle_type);
 
-  Image* result = (Image*)malloc(sizeof(Image));
+  auto* result = static_cast<Image*>(malloc(sizeof(Image)));
   *result = ImageFromImage(*image, *rectangle);
 
   mrb_value obj =
@@ -118,8 +118,8 @@ mrb_image_from_image(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_image_text_ex(mrb_state* mrb, mrb_value)
+auto
+mrb_image_text_ex(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Font* font;
   mrb_value text;
@@ -135,7 +135,7 @@ mrb_image_text_ex(mrb_state* mrb, mrb_value)
                &colour,
                &Colour_type);
 
-  Image* result = (Image*)malloc(sizeof(Image));
+  auto* result = static_cast<Image*>(malloc(sizeof(Image)));
   *result =
     ImageTextEx(*font, mrb_str_to_cstr(mrb, text), font_size, spacing, *colour);
 
@@ -153,14 +153,14 @@ mrb_image_text_ex(mrb_state* mrb, mrb_value)
   return obj;
 }
 
-mrb_value
-mrb_image_resize(mrb_state* mrb, mrb_value)
+auto
+mrb_image_resize(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value image_obj;
   mrb_int width, height;
   mrb_get_args(mrb, "oii", &image_obj, &width, &height);
 
-  Image* image =
+  auto* image =
     static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
 
   ImageResize(image, width, height);
@@ -175,14 +175,14 @@ mrb_image_resize(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_crop(mrb_state* mrb, mrb_value)
+auto
+mrb_image_crop(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Rectangle* rectangle;
   mrb_value image_obj;
   mrb_get_args(mrb, "od", &image_obj, &rectangle, &Rectangle_type);
 
-  Image* image =
+  auto* image =
     static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
 
   ImageCrop(image, *rectangle);
@@ -199,8 +199,8 @@ mrb_image_crop(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_alpha_mask(mrb_state* mrb, mrb_value)
+auto
+mrb_image_alpha_mask(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image *image, *alpha_mask;
   mrb_get_args(mrb, "dd", &image, &Image_type, &alpha_mask, &Image_type);
@@ -210,8 +210,8 @@ mrb_image_alpha_mask(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_alpha_premultiply(mrb_state* mrb, mrb_value)
+auto
+mrb_image_alpha_premultiply(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
@@ -221,8 +221,8 @@ mrb_image_alpha_premultiply(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_flip_vertical(mrb_state* mrb, mrb_value)
+auto
+mrb_image_flip_vertical(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
@@ -232,13 +232,13 @@ mrb_image_flip_vertical(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_mipmaps(mrb_state* mrb, mrb_value)
+auto
+mrb_image_mipmaps(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value image_obj;
   mrb_get_args(mrb, "o", &image_obj);
 
-  Image* image =
+  auto* image =
     static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
 
   ImageMipmaps(image);
@@ -251,8 +251,8 @@ mrb_image_mipmaps(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_flip_horizontal(mrb_state* mrb, mrb_value)
+auto
+mrb_image_flip_horizontal(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
@@ -262,8 +262,8 @@ mrb_image_flip_horizontal(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_rotate_cw(mrb_state* mrb, mrb_value)
+auto
+mrb_image_rotate_cw(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
@@ -273,8 +273,8 @@ mrb_image_rotate_cw(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_rotate_ccw(mrb_state* mrb, mrb_value)
+auto
+mrb_image_rotate_ccw(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
@@ -284,8 +284,8 @@ mrb_image_rotate_ccw(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_colour_tint(mrb_state* mrb, mrb_value)
+auto
+mrb_image_colour_tint(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   Color* colour;
@@ -296,8 +296,8 @@ mrb_image_colour_tint(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_colour_invert(mrb_state* mrb, mrb_value)
+auto
+mrb_image_colour_invert(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
@@ -307,8 +307,8 @@ mrb_image_colour_invert(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_colour_grayscale(mrb_state* mrb, mrb_value)
+auto
+mrb_image_colour_grayscale(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
@@ -318,8 +318,8 @@ mrb_image_colour_grayscale(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_colour_contrast(mrb_state* mrb, mrb_value)
+auto
+mrb_image_colour_contrast(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_float contrast;
@@ -330,8 +330,8 @@ mrb_image_colour_contrast(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_colour_brightness(mrb_state* mrb, mrb_value)
+auto
+mrb_image_colour_brightness(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_int brightness;
@@ -342,8 +342,8 @@ mrb_image_colour_brightness(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_colour_replace(mrb_state* mrb, mrb_value)
+auto
+mrb_image_colour_replace(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   Color *old_colour, *new_colour;
@@ -361,14 +361,14 @@ mrb_image_colour_replace(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_resize_nearest_neighbour(mrb_state* mrb, mrb_value)
+auto
+mrb_image_resize_nearest_neighbour(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value image_obj;
   mrb_int width, height;
   mrb_get_args(mrb, "oii", &image_obj, &width, &height);
 
-  Image* image =
+  auto* image =
     static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
 
   ImageResizeNN(image, width, height);
@@ -383,8 +383,8 @@ mrb_image_resize_nearest_neighbour(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_image_draw(mrb_state* mrb, mrb_value)
+auto
+mrb_image_draw(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image *destination, *source;
   Rectangle *destination_rectangle, *source_rectangle;
@@ -408,10 +408,10 @@ mrb_image_draw(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_get_screen_data(mrb_state* mrb, mrb_value)
+auto
+mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  Image* image = (Image*)malloc(sizeof(Image));
+  auto* image = static_cast<Image*>(malloc(sizeof(Image)));
   *image = LoadImageFromScreen();
 
   mrb_value obj =

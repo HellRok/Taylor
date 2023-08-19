@@ -1,28 +1,28 @@
 #include "mruby.h"
 #include "raylib.h"
 
-mrb_value
-mrb_init_audio_device(mrb_state*, mrb_value)
+auto
+mrb_init_audio_device(mrb_state*, mrb_value) -> mrb_value
 {
   InitAudioDevice();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_close_audio_device(mrb_state*, mrb_value)
+auto
+mrb_close_audio_device(mrb_state*, mrb_value) -> mrb_value
 {
   CloseAudioDevice();
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_audio_device_ready(mrb_state*, mrb_value)
+auto
+mrb_audio_device_ready(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsAudioDeviceReady());
 }
 
-mrb_value
-mrb_set_master_volume(mrb_state* mrb, mrb_value)
+auto
+mrb_set_master_volume(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_float volume;
   mrb_get_args(mrb, "f", &volume);

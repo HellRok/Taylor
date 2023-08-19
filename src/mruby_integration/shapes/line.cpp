@@ -4,8 +4,8 @@
 
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_draw_line(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_line(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int start_x, start_y, end_x, end_y;
   Color* colour;
@@ -17,8 +17,8 @@ mrb_draw_line(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_line_v(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_line_v(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2 *start, *end;
   Color* colour;
@@ -36,8 +36,8 @@ mrb_draw_line_v(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_line_ex(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_line_ex(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2 *start, *end;
   mrb_float thickness;
@@ -57,8 +57,8 @@ mrb_draw_line_ex(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_line_bezier(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_line_bezier(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2 *start, *end;
   mrb_float thickness;
@@ -78,8 +78,8 @@ mrb_draw_line_bezier(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_line_bezier_quad(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_line_bezier_quad(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2 *start, *end, *control;
   mrb_float thickness;
@@ -101,8 +101,8 @@ mrb_draw_line_bezier_quad(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_line_strip(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_line_strip(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value vectors;
   Color* colour;

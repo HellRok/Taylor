@@ -3,8 +3,8 @@
 
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_draw_ring(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_ring(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2* vector;
   mrb_float inner_radius, outer_radius, start_angle, end_angle;
@@ -33,8 +33,8 @@ mrb_draw_ring(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_ring_lines(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_ring_lines(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Vector2* vector;
   mrb_float inner_radius, outer_radius, start_angle, end_angle;

@@ -3,8 +3,8 @@
 
 #include "mruby_integration/struct_types.hpp"
 
-mrb_value
-mrb_draw_rectangle(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y, width, height;
   Color* colour;
@@ -15,8 +15,8 @@ mrb_draw_rectangle(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_rectangle_rec(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle_rec(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Rectangle* rectangle;
   Color* colour;
@@ -27,8 +27,8 @@ mrb_draw_rectangle_rec(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_rectangle_pro(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle_pro(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Rectangle* rectangle;
   Vector2* origin;
@@ -49,8 +49,8 @@ mrb_draw_rectangle_pro(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_rectangle_gradient_v(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle_gradient_v(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y, width, height;
   Color *colour1, *colour2;
@@ -70,8 +70,8 @@ mrb_draw_rectangle_gradient_v(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_rectangle_gradient_h(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle_gradient_h(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y, width, height;
   Color *colour1, *colour2;
@@ -91,8 +91,8 @@ mrb_draw_rectangle_gradient_h(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_rectangle_gradient_ex(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle_gradient_ex(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Rectangle* rectangle;
   Color *colour1, *colour2, *colour3, *colour4;
@@ -114,8 +114,8 @@ mrb_draw_rectangle_gradient_ex(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_rectangle_lines(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle_lines(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y, width, height;
   Color* colour;
@@ -126,8 +126,8 @@ mrb_draw_rectangle_lines(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Rectangle* rectangle;
   mrb_int thickness;
@@ -140,8 +140,8 @@ mrb_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_rectangle_rounded(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle_rounded(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Rectangle* rectangle;
   mrb_float radius;
@@ -161,8 +161,8 @@ mrb_draw_rectangle_rounded(mrb_state* mrb, mrb_value)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_draw_rectangle_rounded_lines(mrb_state* mrb, mrb_value)
+auto
+mrb_draw_rectangle_rounded_lines(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Rectangle* rectangle;
   mrb_float radius;

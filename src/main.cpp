@@ -26,8 +26,8 @@
 #include "game.h"
 #endif
 
-int
-main(int argc, char** argv)
+auto
+main(int argc, char** argv) -> int
 {
 #ifdef _WIN32
   workarounds_mingw_attach_console();
@@ -74,7 +74,7 @@ main(int argc, char** argv)
 #endif
 
 #ifndef EXPORT
-  FILE* game_file = fopen(path, "r");
+  FILE* game_file = fopen(path, "re");
   ChangeDirectory(GetDirectoryPath(path));
   mrb_load_file(mrb, game_file);
 #endif
