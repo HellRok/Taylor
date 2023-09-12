@@ -1,5 +1,5 @@
-def delete_project(path)
-  File.delete(File.join(path, "game.rb"))
+def delete_project(path, input: "game.rb")
+  File.delete(File.join(path, input))
   File.delete(File.join(path, "taylor-config.json"))
   File.delete(File.join(path, "assets", ".keep"))
   Dir.rmdir(File.join(path, "assets"))

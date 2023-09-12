@@ -8,6 +8,7 @@
 - Add a .git-blame-ignore-revs
 - the `check_for_documentation` script now supports the new formatting
 - Run clang-tidy and clang-format on Buildkite
+- Squashing is now a taylor responsibility
 
 ## v0.3.14.1
 

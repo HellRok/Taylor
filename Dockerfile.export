@@ -3,6 +3,11 @@
 # copy from parent folders. This stops us having to clone the Taylor repository
 # and allows us to build export images for development code.
 
+FROM taylor/build-linux as build_taylor
+WORKDIR /app/taylor
+COPY . /app/taylor
+RUN rake linux:release:build
+
 FROM taylor/build-linux as build_base
 WORKDIR /app/export
 
@@ -11,5 +16,6 @@ RUN \
   cd /app/mruby &&\
   rake
 
+COPY --from=build_taylor /app/taylor/dist/linux/release/taylor /usr/bin/taylor
 COPY . /app/taylor
 COPY ./scripts/export/ /app/export

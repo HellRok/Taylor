@@ -1,7 +1,9 @@
 require "json"
 require "fileutils"
 
-require "./lib/squasher"
+def taylor(args)
+  "taylor /app/taylor/cli-tool/cli.rb #{args}"
+end
 
 options = {
   "name" => "taylor_game",
@@ -39,13 +41,16 @@ end
 
 task :squash do
   Dir.chdir("/app/game")
-  Squasher.call(options)
+  File.write(
+    "/app/taylor/output.rb",
+    `#{taylor("squash --stdout")}`
+  )
   Dir.chdir("/app/export")
 end
 
 task transpile: :squash
 task :transpile do
-  sh "mrbc -Bgame -o /app/taylor/include/game.h ./output.rb"
+  sh "mrbc -Bgame -o /app/taylor/include/game.h /app/taylor/output.rb"
 end
 
 task build: "build:setup"

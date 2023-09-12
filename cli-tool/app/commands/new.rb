@@ -63,9 +63,9 @@ module Taylor
 
         @options = parser.opts
         @options[:folder] = parser.tail.first || @options[:name]
-        @options[:load_paths] = @options[:load_paths].split(",")
-        @options[:copy_paths] = @options[:copy_paths].split(",")
-        @options[:export_targets] = @options[:export_targets].split(",")
+        @options[:load_paths] = @options[:load_paths].split(",") unless @options[:load_paths].is_a?(Array)
+        @options[:copy_paths] = @options[:copy_paths].split(",") unless @options[:copy_paths].is_a?(Array)
+        @options[:export_targets] = @options[:export_targets].split(",") unless @options[:export_targets].is_a?(Array)
       end
 
       def create_directory!

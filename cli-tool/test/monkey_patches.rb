@@ -36,6 +36,10 @@ module Taylor
       include RequireGrabber
     end
 
+    class Squash
+      include PutsGrabber
+    end
+
     class Version
       include PutsGrabber
     end

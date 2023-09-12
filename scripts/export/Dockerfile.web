@@ -10,6 +10,7 @@ ENV \
 RUN chmod -R o+w \
     /app/emsdk
 
+COPY --from=taylor/export /usr/bin/taylor /usr/bin/taylor
 COPY --from=taylor/export /app/taylor /app/taylor
 COPY --from=taylor/export /app/mruby/bin/mrbc /bin/
 COPY . /app/export

@@ -43,6 +43,7 @@ module Taylor
           Actions:
             new\t\tCreate a new Taylor game
             export\tCompile your game for release
+            squash\tSquash all your source code into one file
         STR
       end
 

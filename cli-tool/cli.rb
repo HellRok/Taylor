@@ -5,6 +5,7 @@ require "./lib/overrides"
 require "./app/commands/export"
 require "./app/commands/new"
 require "./app/commands/run"
+require "./app/commands/squash"
 require "./app/commands/version"
 
 $:.unshift WORKING_DIRECTORY
@@ -24,6 +25,9 @@ when "new"
 
 when "export"
   Taylor::Commands::Export.call(ARGV[1..], options)
+
+when "squash"
+  Taylor::Commands::Squash.call(ARGV[1..], options)
 
 when "--version"
   Taylor::Commands::Version.call
