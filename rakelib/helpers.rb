@@ -22,7 +22,7 @@ SRC = (
 
 def source_for(o_file)
   SRC.detect { |file|
-    file.ext("").gsub(SRC_FOLDER, "") == o_file.ext("").gsub(/^build\/(#{PLATFORMS.join('|')})\/(#{VARIANTS.join('|')})/, "")
+    file.ext("").gsub(SRC_FOLDER, "") == o_file.ext("").gsub(/^build\/(#{PLATFORMS.join("|")})\/(#{VARIANTS.join("|")})/, "")
   }
 end
 
