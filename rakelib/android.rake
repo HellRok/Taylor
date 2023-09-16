@@ -38,7 +38,11 @@ class AndroidBuilder < Builder
   end
 
   def name
-    "#{@options["name"]}.apk"
+    "libmain.so"
+  end
+
+  def apk_name(final: false)
+    "#{@options["name"]}#{"-unzipped" unless final}.apk"
   end
 end
 
@@ -99,9 +103,18 @@ namespace :android do
         mkdir -p android/build/lib/arm64-v8a/
       CMD
 
+      # Generate key, probably not needed here? Should just be a helper command
       sh <<-CMD
-        keytool -genkeypair -validity 1000 -dname "CN=raylib,O=Android,C=ES" -keystore raylib.keystore -storepass 'raylib' -keypass 'raylib' -alias projectKey -keyalg RSA
-        keytool -genkey -v -keystore /app/raylib.keystore -storepass buttsbuttsbutts -keyalg RSA -keysize 2048 -validity 10000 -alias app
+       # keytool -genkeypair -validity 1000 -dname "CN=raylib,O=Android,C=ES" -keystore raylib.keystore -storepass 'raylib' -keypass 'raylib' -alias projectKey -keyalg RSA
+       # keytool -genkey -v \
+       #   -noprompt \
+       #   -dname "CN=app.taylor.com" \
+       #   -keystore /app/game/raylib.keystore \
+       #   -storepass buttsbuttsbutts \
+       #   -keyalg RSA \
+       #   -keysize 2048 \
+       #   -validity 10000 \
+       #   -alias app
       CMD
 
       sh <<-CMD
@@ -126,23 +139,33 @@ namespace :android do
       CMD
 
       sh <<-CMD
-        aapt package -f \
-          -M /app/taylor/scripts/android/AndroidManifest.xml -S android/build/res -A /app/game/assets \
-          -I /sdk/platforms/android-29/android.jar -F /app/game/exports/#{name} android/build/dex
+        mkdir /app/game/tmp_assets
+        mv /app/game/assets /app/game/tmp_assets/
+        mv /app/game/tmp_assets /app/game/assets
+      CMD
 
-        #aapt add /app/game/exports/#{name} /app/taylor/dist/android/release/libmain.so
-        mv /app/taylor/dist/android/release/libmain.so /app/taylor/android/build/lib/arm64-v8a/
+      sh <<-CMD
+        mkdir /app/game/exports/android/
+        aapt package -f \
+          -M /app/taylor/scripts/android/AndroidManifest.xml \
+          -S android/build/res \
+          -A /app/game/assets \
+          -I /sdk/platforms/android-29/android.jar \
+          -F /app/game/exports/android/#{builder.apk_name} android/build/dex
+
+        mv /app/taylor/dist/android/release/#{builder.name} /app/taylor/android/build/lib/arm64-v8a/libmain.so
 
         cd /app/taylor/android/build
-        aapt add /app/game/exports/#{name} lib/arm64-v8a/libmain.so
+        aapt add /app/game/exports/android/#{builder.apk_name} lib/arm64-v8a/libmain.so
         cd -
       CMD
 
       sh <<-CMD
-        jarsigner -keystore android/raylib.keystore -storepass raylib -keypass raylib \
-          -signedjar #{name} #{name} projectKey
+        #jarsigner -keystore android/raylib.keystore -storepass raylib -keypass raylib \
+        #  -signedjar android/#{builder.apk_name} android/#{builder.apk_name} projectKey
 
-        zipalign -f 4 /app/game/exports/#{name} /app/game/exports/game.zip.apk
+        zipalign -f 4 /app/game/exports/android/#{builder.apk_name} /app/game/exports/android/#{builder.apk_name(final: true)}
+        rm /app/game/exports/android/#{builder.apk_name}
       CMD
 
       sh <<-CMD
@@ -151,7 +174,7 @@ namespace :android do
           --ks /app/game/raylib.keystore \
           --ks-pass pass:buttsbuttsbutts \
           --key-pass pass:buttsbuttsbutts \
-          /app/game/exports/game.zip.apk
+          /app/game/exports/android/#{builder.apk_name(final: true)}
       CMD
     end
 

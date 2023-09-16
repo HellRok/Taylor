@@ -192,6 +192,7 @@ namespace :rename do
 end
 
 task compress: "compress:setup"
+task compress: "compress:android" if export_target == "android"
 task compress: "compress:linux" if export_target == "linux"
 task compress: "compress:windows" if export_target == "windows"
 task compress: "compress:osx:intel" if export_target == "osx/intel"
@@ -209,6 +210,11 @@ namespace :compress do
   task :move do
     sh "mv /app/game/exports/**/*.zip /app/game/exports/"
     sh "rm -rf \"/app/game/exports/#{export_target.split("/").first}\""
+  end
+
+  task :android do
+    Dir.chdir("/app/game/exports/android")
+    sh "zip -r \"#{options["name"]}-android-#{options["version"]}.zip\" *"
   end
 
   task :linux do

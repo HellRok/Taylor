@@ -4,6 +4,7 @@ RUN apt-get update -y && \
   apt-get install -y \
     build-essential \
     git \
+    locales \
     ruby \
     unzip \
     openjdk-11-jre \
