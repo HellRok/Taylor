@@ -39,6 +39,7 @@ void free_klass(mrb_state *mrb, void* p, std::string klass) {
 };
 
 void free_camera2d(mrb_state *mrb, void* p)       { free_klass(mrb, p, "Camera2D");      };
+void free_camera3d(mrb_state *mrb, void* p)       { free_klass(mrb, p, "Camera3D");      };
 void free_colour(mrb_state *mrb, void *p)         { free_klass(mrb, p, "Color");         };
 void free_font(mrb_state *mrb, void *p)           { free_klass(mrb, p, "Font");          };
 void free_image(mrb_state *mrb, void *p)          { free_klass(mrb, p, "Image");         };
@@ -52,6 +53,7 @@ void free_vector2(mrb_state *mrb, void* p)         { free_klass(mrb, p, "Vector2
 void free_vector3(mrb_state *mrb, void* p)         { free_klass(mrb, p, "Vector3");      };
 
 mrb_data_type Camera2D_type =      { "Camera2D",      free_camera2d       };
+mrb_data_type Camera3D_type =      { "Camera3D",      free_camera3d       };
 mrb_data_type Colour_type =        { "Color",         free_colour         };
 mrb_data_type Font_type =          { "Font",          free_font           };
 mrb_data_type Image_type =         { "Image",         free_image          };

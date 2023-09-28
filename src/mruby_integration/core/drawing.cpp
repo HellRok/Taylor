@@ -35,6 +35,19 @@ mrb_value mrb_end_mode2D(mrb_state*, mrb_value) {
   return mrb_nil_value();
 }
 
+mrb_value mrb_begin_mode3D(mrb_state *mrb, mrb_value) {
+  Camera3D *camera;
+  mrb_get_args(mrb, "d", &camera, &Camera3D_type);
+
+  BeginMode3D(*camera);
+  return mrb_nil_value();
+}
+
+mrb_value mrb_end_mode3D(mrb_state*, mrb_value) {
+  EndMode3D();
+  return mrb_nil_value();
+}
+
 mrb_value mrb_begin_texture_mode(mrb_state *mrb, mrb_value) {
   RenderTexture *texture;
   mrb_get_args(mrb, "d", &texture, &RenderTexture_type);
@@ -80,6 +93,8 @@ void append_core_drawing(mrb_state *mrb) {
   mrb_define_method(mrb, mrb->kernel_module, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "begin_mode2D", mrb_begin_mode2D, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "end_mode2D", mrb_end_mode2D, MRB_ARGS_NONE());
+  mrb_define_method(mrb, mrb->kernel_module, "begin_mode3D", mrb_begin_mode3D, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, mrb->kernel_module, "end_mode3D", mrb_end_mode3D, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "begin_texture_mode", mrb_begin_texture_mode, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, mrb->kernel_module, "end_texture_mode", mrb_end_texture_mode, MRB_ARGS_NONE());
   mrb_define_method(mrb, mrb->kernel_module, "begin_shader_mode", mrb_begin_shader_mode, MRB_ARGS_REQ(1));

@@ -132,6 +132,34 @@
     ); \
 }
 
+#define ivar_attr_vector3(mrb, self, obj_value, attr) { \
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Vector3_class, &Vector3_type, &obj_value)); \
+  obj_value.x = attr->x; \
+  obj_value.y = attr->y; \
+  obj_value.z = attr->z; \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@x"), \
+      mrb_float_value(mrb, attr->x) \
+    ); \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@y"), \
+      mrb_float_value(mrb, attr->y) \
+    ); \
+  mrb_iv_set( \
+      mrb, obj, \
+      mrb_intern_cstr(mrb, "@z"), \
+      mrb_float_value(mrb, attr->z) \
+    ); \
+  \
+  mrb_iv_set( \
+      mrb, self, \
+      mrb_intern_cstr(mrb, "@" #attr), \
+      obj \
+    ); \
+}
+
 #define ivar_attr_texture2d(mrb, self, obj_value, attr) { \
   mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, &obj_value)); \
   \

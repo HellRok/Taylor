@@ -1,4 +1,5 @@
 #include "mruby_integration/models/camera2d.hpp"
+#include "mruby_integration/models/camera3d.hpp"
 #include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/models/font.hpp"
 #include "mruby_integration/models/image.hpp"
@@ -13,6 +14,7 @@
 
 void append_structs(mrb_state *mrb) {
   append_models_Camera2D(mrb);
+  append_models_Camera3D(mrb);
   append_models_Colour(mrb);
   append_models_Font(mrb);
   append_models_Image(mrb);
