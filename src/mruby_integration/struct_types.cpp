@@ -48,7 +48,8 @@ void free_shader(mrb_state *mrb, void *p)         { free_klass(mrb, p, "Shader")
 void free_sound(mrb_state *mrb, void *p)          { free_klass(mrb, p, "Sound");         };
 void free_render_texture(mrb_state *mrb, void *p) { free_klass(mrb, p, "RenderTexture"); };
 void free_texture2d(mrb_state *mrb, void *p)      { free_klass(mrb, p, "Texture2D");     };
-void free_vector(mrb_state *mrb, void* p)         { free_klass(mrb, p, "Vector");        };
+void free_vector2(mrb_state *mrb, void* p)         { free_klass(mrb, p, "Vector2");      };
+void free_vector3(mrb_state *mrb, void* p)         { free_klass(mrb, p, "Vector3");      };
 
 mrb_data_type Camera2D_type =      { "Camera2D",      free_camera2d       };
 mrb_data_type Colour_type =        { "Color",         free_colour         };
@@ -60,4 +61,5 @@ mrb_data_type Shader_type =        { "Shader",        free_shader         };
 mrb_data_type Sound_type =         { "Sound",         free_sound          };
 mrb_data_type RenderTexture_type = { "RenderTexture", free_render_texture };
 mrb_data_type Texture2D_type =     { "Texture2D",     free_texture2d      };
-mrb_data_type Vector2_type =       { "Vector2",       free_vector         };
+mrb_data_type Vector2_type =       { "Vector2",       free_vector2        };
+mrb_data_type Vector3_type =       { "Vector3",       free_vector3        };

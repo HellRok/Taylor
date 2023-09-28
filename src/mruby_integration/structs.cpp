@@ -9,6 +9,7 @@
 #include "mruby_integration/models/render_texture.hpp"
 #include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/models/vector2.hpp"
+#include "mruby_integration/models/vector3.hpp"
 
 void append_structs(mrb_state *mrb) {
   append_models_Camera2D(mrb);
@@ -22,4 +23,5 @@ void append_structs(mrb_state *mrb) {
   append_models_RenderTexture(mrb);
   append_models_Texture2D(mrb);
   append_models_Vector2(mrb);
+  append_models_Vector3(mrb);
 }
