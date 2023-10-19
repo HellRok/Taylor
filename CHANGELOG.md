@@ -9,6 +9,7 @@
 - the `check_for_documentation` script now supports the new formatting
 - Run clang-tidy and clang-format on Buildkite
 - Squashing is now a taylor responsibility
+- Refactor the `taylor export` command and test
 
 ## v0.3.14.1
 

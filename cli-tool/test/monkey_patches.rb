@@ -7,12 +7,20 @@ module PutsGrabber
   end
 end
 
+module BacktickGrabber
+  attr_accessor :backtick_data
+
+  def `(str)
+    @backtick_data ||= []
+    @backtick_data << str
+  end
+end
+
 module RequireGrabber
   attr_accessor :require_list
 
   def require(str)
     @require_list ||= []
-
     @require_list << str
   end
 end
@@ -25,6 +33,7 @@ module Taylor
   module Commands
     class Export
       include PutsGrabber
+      include BacktickGrabber
     end
 
     class New
