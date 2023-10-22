@@ -10,6 +10,7 @@
 - Run clang-tidy and clang-format on Buildkite
 - Squashing is now a taylor responsibility
 - Refactor the `taylor export` command and test
+- Fix the OSX docker image build
 
 ## v0.3.14.1
 

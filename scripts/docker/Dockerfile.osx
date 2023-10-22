@@ -58,7 +58,7 @@ RUN git clone -q --depth=1 https://github.com/tpoechtrager/osxcross.git /opt/osx
             lzma-dev \
             make \
             patch \
-            python2 \
+            python3 \
             tzdata \
             wget \
             xz-utils && \
@@ -85,6 +85,7 @@ RUN git clone -q --depth=1 https://github.com/tpoechtrager/osxcross.git /opt/osx
             tzdata \
             wget \
             xz-utils
+
 ENV \
   PATH=/opt/osxcross/target/bin:$PATH \
   MACOSX_DEPLOYMENT_TARGET=11.3 \
