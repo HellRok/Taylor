@@ -11,6 +11,7 @@
 - Squashing is now a taylor responsibility
 - Refactor the `taylor export` command and test
 - Fix the OSX docker image build
+- Fix incorrect documentation for `Font#measure`
 
 ## v0.3.14.1
 

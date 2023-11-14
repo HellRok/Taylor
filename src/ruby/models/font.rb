@@ -46,7 +46,6 @@ class Font
   # @param text [String]
   # @param size [Integer]
   # @param padding [Integer]
-  # @raise [Font::NotFound] If the file specified by path doesn't exist
   # @return [Vector2]
   def measure(text, size: 32, padding: 0)
     measure_text_ex(self, text, size, padding)
