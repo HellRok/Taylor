@@ -12,6 +12,7 @@
 - Refactor the `taylor export` command and test
 - Fix the OSX docker image build
 - Fix incorrect documentation for `Font#measure`
+- Fix a typo in the README.md
 
 ## v0.3.14.1
 

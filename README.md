@@ -40,7 +40,7 @@ it's pretty straight forward for Linux.
 3. You'll now have a binary you can run like `$ ./dist/linux/debug/taylor`
 4. If you want the nice command line interface, you'll need to run:  
   `$ ./dist/linux/debug/taylor ./cli-tool/cli.rb`
-5. Take make it easier to run, you can create a `taylor-dev` script and populate
+5. To make it easier to run, you can create a `taylor-dev` script and populate
    it with:
    ```shell
    #!/usr/bin/env bash
