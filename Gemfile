@@ -4,8 +4,15 @@ source "https://rubygems.org"
 gem "rake"
 gem "standardrb"
 
+group :development do
+  gem "solargraph"
+  gem "solargraph-standardrb"
+end
+
 # Documentation
 gem "yard"
 
 # Testing
-gem "selenium-webdriver"
+group :test do
+  gem "selenium-webdriver"
+end
