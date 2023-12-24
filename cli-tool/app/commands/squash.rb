@@ -29,24 +29,24 @@ module Taylor
             taylor squash [options]
 
           Options:
-            --help\t\t\tDisplays this message
-            --stdout\t\t\tPrint the squashed ruby to STDOUT
-            --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
-            --load_paths directories\tWhat are your load paths? (defaults to ./,./vendor)
+            -h, --help\t\t\tDisplays this message
+            -s, --stdout\t\t\tPrint the squashed ruby to STDOUT
+            -i, --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
+            -l, --load-paths directories\tWhat are your load paths? (defaults to ./,./vendor)
         STR
       end
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help, :bool, false)
-          opts.on(:stdout, :bool, false)
-          opts.on(:input, :string, options.fetch("input", "game.rb"))
-          opts.on(:load_paths, :string, options.fetch("load_paths", "./,./vendor"))
+          opts.on(:help, :bool, default: false, short: :h)
+          opts.on(:stdout, :bool, default: false, short: :s)
+          opts.on(:input, :string, default: options.fetch("input", "game.rb"), short: :i)
+          opts.on("load-paths", :string, default: options.fetch("load_paths", "./,./vendor"), short: :l)
         end
-        parser.parse(argv, true)
+        parser.parse(argv)
 
         @options = parser.opts
-        @options[:load_paths] = @options[:load_paths].split(",") unless @options[:load_paths].is_a?(Array)
+        @options[:"load-paths"] = @options[:"load-paths"].split(",") unless @options[:"load-paths"].is_a?(Array)
       end
 
       def call
@@ -88,7 +88,7 @@ module Taylor
         file_name = "#{file_name}.rb" unless file_name[-3..] == ".rb"
         file_name = file_name.gsub(/[.]+\/+/, "")
 
-        options[:load_paths].each { |dir|
+        options[:"load-paths"].each { |dir|
           file = File.join(dir, file_name)
 
           return file if File.exist?(file)

@@ -34,8 +34,8 @@ namespace "osx/intel" do
   multitask build_depends: depends("build/osx/intel/debug")
   multitask build_objects: objects("build/osx/intel/debug")
   task build: [:setup_ephemeral_files, :build_depends, :build_objects]
-  desc "Build for osx in debug mode"
-  task build: "build/osx:debug"
+  desc "Build for osx/intel in debug mode"
+  task build: "build:osx/intel:debug"
 
   namespace :release do
     task :strip do
@@ -46,7 +46,7 @@ namespace "osx/intel" do
     multitask build_objects: objects("build/osx/intel/release")
     task build: [:setup_ephemeral_files, :build_depends, :build_objects]
     task build: "build:osx/intel:release"
-    desc "Build for osx in release mode"
+    desc "Build for osx/intel in release mode"
     task build: "osx/intel:release:strip"
   end
 end

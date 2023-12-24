@@ -55,7 +55,7 @@ end
 
 task build: "build:setup"
 task build: "build:android" if export_target == "android"
-task build: "build:linux" if export_target == "linux"
+task build: "build:linux:x64" if export_target == "linux"
 task build: "build:windows" if export_target == "windows"
 task build: "build:osx:intel" if export_target == "osx/intel"
 task build: "build:osx:apple" if export_target == "osx/apple"
@@ -76,8 +76,10 @@ namespace :build do
     sh "EXPORT=1 rake android:release:build"
   end
 
-  task :linux do
-    sh "EXPORT=1 rake linux:release:build"
+  namespace :linux do
+    task :x64 do
+      sh "EXPORT=1 rake linux:release:build"
+    end
   end
 
   task :windows do
@@ -101,7 +103,7 @@ end
 
 task rename: "rename:setup"
 task rename: "rename:android" if export_target == "android"
-task rename: "rename:linux" if export_target == "linux"
+task rename: "rename:linux:x64" if export_target == "linux"
 task rename: "rename:windows" if export_target == "windows"
 task rename: "rename:osx:intel" if export_target == "osx/intel"
 task rename: "rename:osx:apple" if export_target == "osx/apple"
@@ -122,11 +124,13 @@ namespace :rename do
     FileUtils.cp Dir.glob("/app/taylor/dist/android/release/*"), "/app/game/exports/android"
   end
 
-  task :linux do
-    puts "Copying linux build"
+  namespace :linux do
+    task :x64 do
+      puts "Copying linux build"
 
-    FileUtils.mkdir_p "/app/game/exports/linux"
-    FileUtils.cp Dir.glob("/app/taylor/dist/linux/release/*"), "/app/game/exports/linux"
+      FileUtils.mkdir_p "/app/game/exports/linux"
+      FileUtils.cp Dir.glob("/app/taylor/dist/linux/release/*"), "/app/game/exports/linux"
+    end
   end
 
   task :windows do
@@ -193,7 +197,7 @@ end
 
 task compress: "compress:setup"
 task compress: "compress:android" if export_target == "android"
-task compress: "compress:linux" if export_target == "linux"
+task compress: "compress:linux:x64" if export_target == "linux"
 task compress: "compress:windows" if export_target == "windows"
 task compress: "compress:osx:intel" if export_target == "osx/intel"
 task compress: "compress:osx:apple" if export_target == "osx/apple"
@@ -217,10 +221,12 @@ namespace :compress do
     sh "zip -r \"#{options["name"]}-android-#{options["version"]}.zip\" *"
   end
 
-  task :linux do
-    Dir.chdir("/app/game/exports/linux")
-    options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
-    sh "zip -r \"#{options["name"]}-linux-#{options["version"]}.zip\" *"
+  namespace :linux do
+    task :x64 do
+      Dir.chdir("/app/game/exports/linux")
+      options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
+      sh "zip -r \"#{options["name"]}-linux-#{options["version"]}.zip\" *"
+    end
   end
 
   task :windows do

@@ -193,6 +193,12 @@ mrb_set_shader_values(mrb_state* mrb, mrb_value) -> mrb_value
       //  {
       //    break;
       //  }
+
+    default: {
+      // In theory we should never get here due to the ruby code
+      // catching it first.
+      break;
+    }
   }
 
   return mrb_nil_value();

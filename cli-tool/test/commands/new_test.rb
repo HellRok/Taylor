@@ -35,12 +35,12 @@ class Test
         assert_equal "v0.0.1", data["version"]
         assert_equal "game.rb", data["input"]
         assert_true File.exist?("./taylor_game/game.rb")
-        assert_equal "./exports", data["export_directory"]
-        assert_equal ["linux", "windows", "osx/apple", "osx/intel", "web"], data["export_targets"]
-        assert_equal ["./", "./vendor"], data["load_paths"]
+        assert_equal "./exports", data["export-directory"]
+        assert_equal ["linux", "windows", "osx/apple", "osx/intel", "web"], data["export-targets"]
+        assert_equal ["./", "./vendor"], data["load-paths"]
         assert_true Dir.exist?("./taylor_game/vendor")
         assert_true File.exist?("./taylor_game/vendor/.keep")
-        assert_equal ["./assets"], data["copy_paths"]
+        assert_equal ["./assets"], data["copy-paths"]
         assert_true Dir.exist?("./taylor_game/assets")
         assert_true File.exist?("./taylor_game/assets/.keep")
       ensure
@@ -53,10 +53,10 @@ class Test
             "--name", "./test/test_game",
             "--version", "final_v2_for_real",
             "--input", "app.rb",
-            "--export_directory", "./releases",
-            "--export_targets", "web,windows",
-            "--load_paths", "./,./third_party",
-            "--copy_paths", "./resources,./music"
+            "--export-directory", "./releases",
+            "--export-targets", "web,windows",
+            "--load-paths", "./,./third_party",
+            "--copy-paths", "./resources,./music"
           ],
           {}
         )
@@ -66,12 +66,12 @@ class Test
         assert_equal "final_v2_for_real", data["version"]
         assert_equal "app.rb", data["input"]
         assert_true File.exist?("./test/test_game/app.rb")
-        assert_equal "./releases", data["export_directory"]
-        assert_equal ["web", "windows"], data["export_targets"]
-        assert_equal ["./", "./third_party"], data["load_paths"]
+        assert_equal "./releases", data["export-directory"]
+        assert_equal ["web", "windows"], data["export-targets"]
+        assert_equal ["./", "./third_party"], data["load-paths"]
         assert_true Dir.exist?("./test/test_game/third_party")
         assert_true File.exist?("./test/test_game/third_party/.keep")
-        assert_equal ["./resources", "./music"], data["copy_paths"]
+        assert_equal ["./resources", "./music"], data["copy-paths"]
         assert_true Dir.exist?("./test/test_game/resources")
         assert_true File.exist?("./test/test_game/resources/.keep")
         assert_true Dir.exist?("./test/test_game/music")
@@ -101,7 +101,7 @@ class Test
         Taylor::Commands::New.new(
           [
             "--name", "./test/test_game_the_sequel",
-            "--load_paths", "./,./third_party,./black_box"
+            "--load-paths", "./,./third_party,./black_box"
           ],
           {}
         )

@@ -13,6 +13,8 @@
 - Fix the OSX docker image build
 - Fix incorrect documentation for `Font#measure`
 - Fix a typo in the README.md
+- Remove SimpleHTTPServer
+- Slight refactor of build pipeline
 
 ## v0.3.14.1
 

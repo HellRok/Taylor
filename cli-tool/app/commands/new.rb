@@ -26,14 +26,14 @@ module Taylor
 
 
           Options:
-            --help\t\t\tDisplays this message
-            --name name\t\t\tWhat to name your new game (defaults to taylor_game)
-            --version version\t\tWhat version is your game (defaults to v0.0.1)
-            --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
-            --export_directory directory\tWhat directory do you want your exports (defaults to ./exports)
-            --export_targets targets\tWhat exports do you want (defaults to linux,windows,osx/apple,osx/intel,web)
-            --load_paths directories\tWhat directories do you want in your load path (defaults to ./,./vendor)
-            --copy_paths directories\tWhat directories do you want copied into your exports (defaults to ./assets)
+            -h, --help\t\t\tDisplays this message
+            -n, --name name\t\t\tWhat to name your new game (defaults to taylor_game)
+            -v, --version version\t\tWhat version is your game (defaults to v0.0.1)
+            -i, --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
+            -d, --export-directory directory\tWhat directory do you want your exports (defaults to ./exports)
+            -t, --export-targets targets\tWhat exports do you want (defaults to linux,windows,osx/apple,osx/intel,web)
+            -l, --load-paths directories\tWhat directories do you want in your load path (defaults to ./,./vendor)
+            -c, --copy-paths directories\tWhat directories do you want copied into your exports (defaults to ./assets)
             folder\t\t\tThe folder to create the new game in (defaults to the name value)
         STR
       end
@@ -50,22 +50,22 @@ module Taylor
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help, :bool, false)
-          opts.on(:name, :string, options.fetch("name", "taylor_game"))
-          opts.on(:version, :string, options.fetch("version", "v0.0.1"))
-          opts.on(:input, :string, options.fetch("input", "game.rb"))
-          opts.on(:export_directory, :string, options.fetch("export_directory", "./exports"))
-          opts.on(:export_targets, :string, options.fetch("export_targets", "linux,windows,osx/apple,osx/intel,web"))
-          opts.on(:load_paths, :string, options.fetch("load_paths", "./,./vendor"))
-          opts.on(:copy_paths, :string, options.fetch("copy_paths", "./assets"))
+          opts.on(:help, :bool, default: false, short: :h)
+          opts.on(:name, :string, default: options.fetch("name", "taylor_game"), short: :n)
+          opts.on(:version, :string, default: options.fetch("version", "v0.0.1"), short: :v)
+          opts.on(:input, :string, default: options.fetch("input", "game.rb"), short: :i)
+          opts.on(:"export-directory", :string, default: options.fetch("export_directory", "./exports"), short: :d)
+          opts.on(:"export-targets", :string, default: options.fetch("export_targets", "linux,windows,osx/apple,osx/intel,web"), short: :t)
+          opts.on(:"load-paths", :string, default: options.fetch("load_paths", "./,./vendor"), short: :l)
+          opts.on(:"copy-paths", :string, default: options.fetch("copy_paths", "./assets"), short: :c)
         end
-        parser.parse(argv, true)
+        parser.parse(argv)
 
         @options = parser.opts
         @options[:folder] = parser.tail.first || @options[:name]
-        @options[:load_paths] = @options[:load_paths].split(",") unless @options[:load_paths].is_a?(Array)
-        @options[:copy_paths] = @options[:copy_paths].split(",") unless @options[:copy_paths].is_a?(Array)
-        @options[:export_targets] = @options[:export_targets].split(",") unless @options[:export_targets].is_a?(Array)
+        @options[:"load-paths"] = @options[:"load-paths"].split(",") unless @options[:"load-paths"].is_a?(Array)
+        @options[:"copy-paths"] = @options[:"copy-paths"].split(",") unless @options[:"copy-paths"].is_a?(Array)
+        @options[:"export-targets"] = @options[:"export-targets"].split(",") unless @options[:"export-targets"].is_a?(Array)
       end
 
       def create_directory!
@@ -77,7 +77,7 @@ module Taylor
       end
 
       def setup_game_structure
-        (@options[:load_paths] + @options[:copy_paths]).each { |path|
+        (@options[:"load-paths"] + @options[:"copy-paths"]).each { |path|
           unless path == "./"
             Dir.mkdir(path_for(path))
             File.open(File.join(path_for(path), ".keep"), "w").close
@@ -110,7 +110,7 @@ module Taylor
       def load_paths_code
         output = ""
 
-        options[:load_paths].each { |path|
+        options[:"load-paths"].each { |path|
           next if path == "./" || path == "."
           output << "$: << '#{path}'\n"
         }

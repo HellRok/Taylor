@@ -36,9 +36,9 @@ module Taylor
             taylor <action> [options]
 
           Options:
-            --help\t\t\tShow this message
-            --version\t\t\tDisplay the version and exit
-            --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
+            -h, --help\t\t\tShow this message
+            -v, --version\t\t\tDisplay the version and exit
+            -i, --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
 
           Actions:
             new\t\tCreate a new Taylor game
@@ -67,10 +67,10 @@ module Taylor
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help, :bool, false)
-          opts.on(:input, :string, options.fetch("input", "game.rb"))
+          opts.on(:help, :bool, default: false, short: :h)
+          opts.on(:input, :string, default: options.fetch("input", "game.rb"), short: :i)
         end
-        parser.parse(argv, true)
+        parser.parse(argv)
 
         @options = parser.opts
       end

@@ -25,11 +25,11 @@ module Taylor
             taylor export [options]
 
           Options:
-            --help\t\t\tDisplays this message
-            --dry-run\t\t\tJust display the export command and don't run it
-            --export-directory directory\tWhat directory do you want your exports (defaults to ./exports)
-            --export-targets targets\tWhat exports do you want (defaults to linux,windows,osx,web)
-            --build-cache directory\tWhere do you want to store build cache (defaults to nil)
+            -h, --help\t\t\tDisplays this message
+            -r, --dry-run\t\t\tJust display the export command and don't run it
+            -d, --export-directory directory\tWhat directory do you want your exports (defaults to ./exports)
+            -t, --export-targets targets\tWhat exports do you want (defaults to linux,windows,osx,web)
+            -b, --build-cache directory\tWhere do you want to store build cache (defaults to nil)
         STR
       end
 
@@ -44,13 +44,13 @@ module Taylor
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help, :bool, false)
-          opts.on("dry-run", :bool, false)
-          opts.on("export-directory", :string, options.fetch("export_directory", "./exports"))
-          opts.on("export-targets", :string, options.fetch("export_targets", "linux,windows,osx/intel,osx/apple,web"))
-          opts.on("build-cache", :string)
+          opts.on(:help, :bool, default: false, short: :h)
+          opts.on("dry-run", :bool, default: false, short: :r)
+          opts.on("export-directory", :string, default: options.fetch("export_directory", "./exports"), short: :d)
+          opts.on("export-targets", :string, default: options.fetch("export_targets", "linux,windows,osx/intel,osx/apple,web"), short: :t)
+          opts.on("build-cache", :string, short: :b)
         end
-        parser.parse(argv, true)
+        parser.parse(argv)
 
         @options = parser.opts
         @options[:"export-targets"] = @options[:"export-targets"].split(",") unless @options[:"export-targets"].is_a?(Array)
@@ -72,8 +72,6 @@ module Taylor
       end
 
       def create_build_cache_folder
-        raise "Could not create folder as a file of the same name already exists" if File.exist?(options[:"build-cache"])
-
         return if @options[:"dry-run"]
         return if @options[:"build-cache"].nil?
         return if File.directory?(options[:"build-cache"])

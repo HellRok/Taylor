@@ -11,3 +11,4 @@ ignore:
   - 'src/ruby/core/buildkite_analytics.rb':
     - Lint/RescueException
     - Style/GlobalVars
+  - 'dump/**/*'

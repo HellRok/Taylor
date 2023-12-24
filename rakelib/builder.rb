@@ -10,7 +10,7 @@ class Builder
 
   def self.mf_command_for(task)
     variant, platform, arch = task.name.split("/")
-    platform += "/#{arch}" if %w[intel apple].include?(arch)
+    platform += "/#{arch}" unless arch.nil? || %w[debug release].include?(arch)
 
     @@builders[platform].variant = variant
     @@builders[platform].generate_mf_for(task)
@@ -18,7 +18,7 @@ class Builder
 
   def self.o_command_for(task)
     variant, platform, arch = task.name.split("/")
-    platform += "/#{arch}" if %w[intel apple].include?(arch)
+    platform += "/#{arch}" unless arch.nil? || %w[debug release].include?(arch)
 
     @@builders[platform].variant = variant
     @@builders[platform].generate_o_for(task)

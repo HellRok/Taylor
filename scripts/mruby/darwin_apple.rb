@@ -1,9 +1,9 @@
-MRuby::CrossBuild.new("arm64-apple-darwin20.4") do |conf|
+MRuby::CrossBuild.new("osx-apple") do |conf|
   toolchain :clang
 
   [conf.cc, conf.linker].each do |cc|
     cc.command = "arm64-apple-darwin20.4-clang"
-    cc.flags += %w[-Oz -mmacosx-version-min=10.11 -stdlib=libc++]
+    cc.flags += %w[-O2 -mmacosx-version-min=10.11 -stdlib=libc++]
   end
   conf.cc.flags += %w[-DMRB_ARY_LENGTH_MAX=0 -DMRB_STR_LENGTH_MAX=0]
 
@@ -27,10 +27,9 @@ MRuby::CrossBuild.new("arm64-apple-darwin20.4") do |conf|
   conf.gem github: "iij/mruby-iijson"
   conf.gem github: "iij/mruby-mtest"
   conf.gem github: "hellrok/mruby-regexp-pcre"
-  conf.gem github: "katzer/mruby-tiny-opt-parser"
+  conf.gem github: "hellrok/mruby-tiny-opt-parser"
   conf.gem github: "Asmod4n/mruby-uri-parser"
   conf.gem github: "matsumotory/mruby-simplehttp"
-  conf.gem github: "matsumotory/mruby-simplehttpserver"
   conf.gem github: "mattn/mruby-base64"
   conf.gem github: "mattn/mruby-require"
 end

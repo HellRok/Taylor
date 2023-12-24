@@ -6,6 +6,7 @@ class Test
         assert_include export_command.puts_data, TAYLOR_VERSION
         assert_include export_command.puts_data, "Usage:"
         assert_include export_command.puts_data, "Options:"
+        assert_false Dir.exist?("./exports")
       end
 
       def test_check_in_taylor_project_error
@@ -24,6 +25,8 @@ class Test
         assert_true true
       rescue RuntimeError
         assert_true false
+      ensure
+        Dir.rmdir("./exports")
       end
 
       def test_create_export_directory_dry_run
@@ -174,7 +177,6 @@ class Test
 
       def test_check_docker_command_export_directory_flag
         export_command = Taylor::Commands::Export.new(["--export-directory", "releases_flag"], {})
-        skip "There's a bug in mruby-tiny-opt-parser"
         assert_equal(
           export_command.backtick_data[0],
           [
@@ -186,11 +188,7 @@ class Test
           ].join(" ")
         )
       ensure
-        begin
-          Dir.rmdir("releases_flag")
-        rescue
-          nil
-        end
+        Dir.rmdir("releases_flag")
       end
 
       def test_check_docker_command_export_directory_option
@@ -239,7 +237,6 @@ class Test
 
       def test_check_docker_command_export_targets_flag
         export_command = Taylor::Commands::Export.new(["--export-targets", "linux,web"], {})
-        skip "There's a bug in mruby-tiny-opt-parser"
 
         assert_equal(export_command.backtick_data.size, 2)
         assert_equal(
@@ -263,18 +260,7 @@ class Test
           ].join(" ")
         )
       ensure
-        begin
-          Dir.rmdir("exports")
-        rescue
-          nil
-        end
-
-        # This is due to the bug, can be removed once fixed
-        begin
-          Dir.rmdir("linux,web")
-        rescue
-          nil
-        end
+        Dir.rmdir("exports")
       end
 
       def test_check_docker_command_set_build_cache_dry_run

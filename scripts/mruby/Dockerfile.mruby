@@ -1,49 +1,49 @@
-FROM debian:stable-slim as mruby_base
+FROM taylor/build-linux as mruby_base
 
 WORKDIR /app
-RUN \
-  apt-get update -y && \
-  apt-get upgrade -y && \
-  apt-get install -y --no-install-recommends \
-    git \
-    ca-certificates && \
-  apt-get clean -y && apt-get autoremove -y && \
-  git clone --branch 3.2.0 --depth 1 https://github.com/mruby/mruby.git .
+RUN git clone --branch 3.2.0 --depth 1 https://github.com/mruby/mruby.git .
+COPY ./scripts/mruby/linux.rb /app/build_config/
+RUN MRUBY_CONFIG=linux rake
 
 FROM taylor/build-android as mruby_android
 WORKDIR /app
 COPY --from=mruby_base /app /app
+COPY --from=mruby_base /app/build/repos/host /app/build/repos/android
 COPY ./scripts/mruby/android.rb /app/build_config/
 COPY ./scripts/mruby/android.rake /app/tasks/toolchains/
+
 RUN MRUBY_CONFIG=android rake
 
 FROM taylor/build-linux as mruby_linux
 WORKDIR /app
 COPY --from=mruby_base /app /app
-COPY ./scripts/mruby/linux.rb /app/build_config/
 RUN MRUBY_CONFIG=linux rake
 
 FROM taylor/build-windows as mruby_windows
 WORKDIR /app
 COPY --from=mruby_base /app /app
+COPY --from=mruby_base /app/build/repos/host /app/build/repos/windows
 COPY ./scripts/mruby/mingw.rb /app/build_config/
 RUN MRUBY_CONFIG=mingw rake
 
 FROM taylor/build-osx as mruby_osxcross_intel
 WORKDIR /app
 COPY --from=mruby_base /app /app
+COPY --from=mruby_base /app/build/repos/host /app/build/repos/osx-intel
 COPY ./scripts/mruby/darwin_intel.rb /app/build_config/
 RUN MRUBY_CONFIG=darwin_intel rake
 
 FROM taylor/build-osx as mruby_osxcross_apple
 WORKDIR /app
 COPY --from=mruby_base /app /app
+COPY --from=mruby_base /app/build/repos/host /app/build/repos/osx-apple
 COPY ./scripts/mruby/darwin_apple.rb /app/build_config/
 RUN MRUBY_CONFIG=darwin_apple rake
 
 FROM taylor/build-web as mruby_web
 WORKDIR /app
 COPY --from=mruby_base /app /app/
+COPY --from=mruby_base /app/build/repos/host /app/build/repos/emscripten
 COPY ./scripts/mruby/emscripten.rb /app/build_config/
 
 RUN MRUBY_CONFIG=emscripten rake
@@ -51,9 +51,9 @@ RUN MRUBY_CONFIG=emscripten rake
 FROM scratch AS export
 
 COPY --from=mruby_base /app/include/* ./vendor/mruby/mruby/
-COPY --from=mruby_android /app/build/android-arm64-v8a/lib/libmruby.a ./vendor/android/
+COPY --from=mruby_android /app/build/android/lib/libmruby.a ./vendor/android/
 COPY --from=mruby_linux /app/build/host/lib/libmruby.a ./vendor/linux/
-COPY --from=mruby_windows /app/build/x86_64-w64-mingw32/lib/libmruby.a ./vendor/windows/
-COPY --from=mruby_osxcross_intel /app/build/x86_64-apple-darwin20.4/lib/libmruby.a ./vendor/osx_intel/
-COPY --from=mruby_osxcross_apple /app/build/arm64-apple-darwin20.4/lib/libmruby.a ./vendor/osx_apple/
+COPY --from=mruby_windows /app/build/windows/lib/libmruby.a ./vendor/windows/
+COPY --from=mruby_osxcross_intel /app/build/osx-intel/lib/libmruby.a ./vendor/osx_intel/
+COPY --from=mruby_osxcross_apple /app/build/osx-apple/lib/libmruby.a ./vendor/osx_apple/
 COPY --from=mruby_web /app/build/emscripten/lib/libmruby.a ./vendor/web/

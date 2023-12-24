@@ -1,4 +1,19 @@
-plugins:
-- solargraph-standardrb
+---
+include:
+- "**/*.rb"
+exclude:
+- vendor/**/*
+require: []
+domains: []
 reporters:
 - standardrb
+formatter:
+  rubocop:
+    cops: safe
+    except: []
+    only: []
+    extra_args: []
+require_paths: []
+plugins:
+- solargraph-standardrb
+max_files: 5000
