@@ -8,5 +8,5 @@ MRuby::CrossBuild.new("emscripten") do |conf|
   conf.linker.command = "emcc"
   conf.archiver.command = "emar"
 
-  conf.gembox File.expand_path('taylor', File.dirname(__FILE__))
+  conf.gembox File.expand_path("taylor", File.dirname(__FILE__))
 end

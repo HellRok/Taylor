@@ -13,5 +13,5 @@ MRuby::CrossBuild.new("osx-apple") do |conf|
   conf.build_target = "arm64-pc-linux-gnu"
   conf.host_target = "arm64-apple-darwin20.4"
 
-  conf.gembox File.expand_path('taylor', File.dirname(__FILE__))
+  conf.gembox File.expand_path("taylor", File.dirname(__FILE__))
 end

@@ -7,5 +7,5 @@ MRuby::Build.new do |conf|
   # Generate mrbc command
   conf.gem core: "mruby-bin-mrbc"
 
-  conf.gembox File.expand_path('taylor', File.dirname(__FILE__))
+  conf.gembox File.expand_path("taylor", File.dirname(__FILE__))
 end

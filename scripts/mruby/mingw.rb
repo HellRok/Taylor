@@ -11,5 +11,5 @@ MRuby::CrossBuild.new("windows") do |conf|
   conf.archiver.command = "#{conf.host_target}-gcc-ar"
   conf.exts.executable = ".exe"
 
-  conf.gembox File.expand_path('taylor', File.dirname(__FILE__))
+  conf.gembox File.expand_path("taylor", File.dirname(__FILE__))
 end
