@@ -13,23 +13,5 @@ MRuby::CrossBuild.new("osx-intel") do |conf|
   conf.build_target = "x86_64-pc-linux-gnu"
   conf.host_target = "x86_64-apple-darwin20.4"
 
-  # These are the default libraries
-  conf.gembox "stdlib"
-  conf.gembox "stdlib-ext"
-  conf.gembox "stdlib-io"
-  conf.gembox "math"
-  conf.gembox "metaprog"
-
-  conf.gem core: "mruby-exit"
-  conf.gem core: "mruby-sleep"
-  conf.gem github: "iij/mruby-dir"
-  conf.gem github: "iij/mruby-env"
-  conf.gem github: "iij/mruby-iijson"
-  conf.gem github: "iij/mruby-mtest"
-  conf.gem github: "hellrok/mruby-regexp-pcre"
-  conf.gem github: "hellrok/mruby-tiny-opt-parser"
-  conf.gem github: "Asmod4n/mruby-uri-parser"
-  conf.gem github: "matsumotory/mruby-simplehttp"
-  conf.gem github: "mattn/mruby-base64"
-  conf.gem github: "mattn/mruby-require"
+  conf.gembox File.expand_path('taylor', File.dirname(__FILE__))
 end

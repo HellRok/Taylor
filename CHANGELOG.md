@@ -15,6 +15,7 @@
 - Fix a typo in the README.md
 - Remove SimpleHTTPServer
 - Slight refactor of build pipeline
+- Group mruby gems in a gembox
 
 ## v0.3.14.1
 
