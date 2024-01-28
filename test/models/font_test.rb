@@ -8,6 +8,8 @@ class Test
         assert_equal 32, font.size
         assert_equal 95, font.glyph_count
         assert_equal 4, font.glyph_padding
+
+        font.unload
       end
 
       def test_initialize_with_args
@@ -17,6 +19,8 @@ class Test
         assert_equal 6, font.size
         assert_equal 100, font.glyph_count
         assert_equal 4, font.glyph_padding
+
+        font.unload
       end
 
       def test_to_h
@@ -25,6 +29,20 @@ class Test
         assert_equal(32, font.to_h[:size])
         assert_equal(95, font.to_h[:glyph_count])
         assert_equal(4, font.to_h[:glyph_padding])
+
+        font.unload
+      end
+
+      def test_ready?
+        font = Font.new("./assets/tiny.ttf")
+        assert_true font.ready?
+        font.unload
+      end
+
+      def test_unload
+        font = Font.new("./assets/tiny.ttf")
+        assert_true font.ready?
+        font.unload
       end
     end
   end

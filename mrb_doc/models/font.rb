@@ -8,4 +8,20 @@ class Font
     # src/mruby_integration/models/font.cpp
     Font.new
   end
+
+  # Unloads the font from memory
+  # @return [nil]
+  def unload
+    # mrb_Font_unload
+    # src/mruby_integration/models/font.cpp
+    nil
+  end
+
+  # Checks if the font is loaded and ready to go
+  # @return [Boolean]
+  def ready?
+    # mrb_Font_ready
+    # src/mruby_integration/models/font.cpp
+    true
+  end
 end

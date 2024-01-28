@@ -14,12 +14,6 @@ class Font
     }
   end
 
-  # Unloads the font from memory
-  # @return [nil]
-  def unload
-    unload_font(self)
-  end
-
   # Draws the text at the given position, size, padding, and colour
   # @param text [String]
   # @param position [Vector2]

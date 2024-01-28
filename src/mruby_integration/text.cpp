@@ -7,17 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_unload_font(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Font* font;
-  mrb_get_args(mrb, "d", &font, &Font_type);
-
-  UnloadFont(*font);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_draw_fps(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
@@ -87,8 +76,6 @@ mrb_measure_text_ex(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_text(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "unload_font", mrb_unload_font, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, mrb->kernel_module, "draw_fps", mrb_draw_fps, MRB_ARGS_REQ(2));
   mrb_define_method(
