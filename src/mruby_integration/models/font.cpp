@@ -77,6 +77,30 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
+auto
+mrb_Font_unload(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Font* font;
+
+  Data_Get_Struct(mrb, self, &Font_type, font);
+  mrb_assert(font != nullptr);
+
+  UnloadFont(*font);
+
+  return mrb_nil_value();
+}
+
+auto
+mrb_Font_ready(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Font* font;
+
+  Data_Get_Struct(mrb, self, &Font_type, font);
+  mrb_assert(font != nullptr);
+
+  return mrb_bool_value(IsFontReady(*font));
+}
+
 void
 append_models_Font(mrb_state* mrb)
 {
@@ -84,6 +108,9 @@ append_models_Font(mrb_state* mrb)
   MRB_SET_INSTANCE_TT(Font_class, MRB_TT_DATA);
   mrb_define_method(
     mrb, Font_class, "initialize", mrb_Font_initialize, MRB_ARGS_REQ(5));
+  mrb_define_method(
+    mrb, Font_class, "unload", mrb_Font_unload, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Font_class, "ready?", mrb_Font_ready, MRB_ARGS_NONE());
 
   load_ruby_models_font(mrb);
 }
