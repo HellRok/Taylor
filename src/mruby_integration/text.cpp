@@ -7,60 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_load_font(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  char* path;
-  mrb_get_args(mrb, "z", &path);
-
-  Font* font = static_cast<Font*>(malloc(sizeof(Font)));
-  *font = LoadFont(path);
-
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Font_class, &Font_type, font));
-
-  setup_Font(mrb,
-             obj,
-             font,
-             font->baseSize,
-             font->glyphCount,
-             font->glyphPadding,
-             &font->texture);
-
-  add_parent(font, "Font");
-  add_owned_object(&font->texture);
-
-  return obj;
-}
-
-auto
-mrb_load_font_ex(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  char* path;
-  int* font_chars{ nullptr };
-  mrb_int font_size, char_count;
-  mrb_get_args(mrb, "zii", &path, &font_size, &char_count);
-
-  Font* font = static_cast<Font*>(malloc(sizeof(Font)));
-  *font = LoadFontEx(path, font_size, font_chars, char_count);
-
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Font_class, &Font_type, font));
-
-  setup_Font(mrb,
-             obj,
-             font,
-             font->baseSize,
-             font->glyphCount,
-             font->glyphPadding,
-             &font->texture);
-
-  add_parent(font, "Font");
-  add_owned_object(&font->texture);
-
-  return obj;
-}
-
-auto
 mrb_unload_font(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Font* font;
@@ -141,10 +87,6 @@ mrb_measure_text_ex(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_text(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "load_font", mrb_load_font, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, mrb->kernel_module, "load_font_ex", mrb_load_font_ex, MRB_ARGS_REQ(3));
   mrb_define_method(
     mrb, mrb->kernel_module, "unload_font", mrb_unload_font, MRB_ARGS_REQ(1));
   mrb_define_method(

@@ -2,31 +2,29 @@ class Test
   class Models
     class Font_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
-        font = Font.new(1, 2, 3)
+        font = Font.new("./assets/tiny.ttf")
 
         assert_kind_of Font, font
-        assert_equal 1, font.base_size
-        assert_equal 2, font.glyph_count
-        assert_equal 3, font.glyph_padding
+        assert_equal 32, font.size
+        assert_equal 95, font.glyph_count
+        assert_equal 4, font.glyph_padding
       end
 
-      def test_assignment
-        font = Font.new(0, 0, 0)
-        font.base_size = 3
-        font.glyph_count = 2
-        font.glyph_padding = 1
+      def test_initialize_with_args
+        font = Font.new("./assets/tiny.ttf", size: 6, glyph_count: 100)
 
-        assert_equal 3, font.base_size
-        assert_equal 2, font.glyph_count
-        assert_equal 1, font.glyph_padding
+        assert_kind_of Font, font
+        assert_equal 6, font.size
+        assert_equal 100, font.glyph_count
+        assert_equal 4, font.glyph_padding
       end
 
       def test_to_h
-        font = Font.new(1, 2, 3)
+        font = Font.new("./assets/tiny.ttf")
 
-        assert_equal(1, font.to_h[:base_size])
-        assert_equal(2, font.to_h[:glyph_count])
-        assert_equal(3, font.to_h[:glyph_padding])
+        assert_equal(32, font.to_h[:size])
+        assert_equal(95, font.to_h[:glyph_count])
+        assert_equal(4, font.to_h[:glyph_padding])
       end
     end
   end

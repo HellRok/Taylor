@@ -32,7 +32,7 @@ class Test
       skip_unless_display_present
 
       set_window_title(__method__.to_s)
-      font = Font.load("./assets/tiny.ttf", size: 16)
+      font = Font.new("./assets/tiny.ttf", size: 16)
 
       image = image_text_ex(font, "S", 16, 0, BLACK)
       assert_equal fixture_image_text_ex, image.data

@@ -1,23 +1,3 @@
-# Loads a font from a file
-# @param path [String]
-# @return [Font]
-def load_font(path)
-  # mrb_load_font
-  # src/mruby_integration/text.cpp
-  Font.new
-end
-
-# Loads a font from a file with extended options
-# @param path [String]
-# @param font_size [Integer]
-# @param char_count [Integer]
-# @return [Font]
-def load_font_ex(path, font_size, char_count)
-  # mrb_load_font_ex
-  # src/mruby_integration/text.cpp
-  Font.new
-end
-
 # Unloads a font from memory
 # @param font [Font]
 # @return [nil]

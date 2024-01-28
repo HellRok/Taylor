@@ -1,28 +1,17 @@
 # The Font class is used for displaying TTF fonts
 class Font
   # @return [Integer]
-  attr_reader :base_size, :glyph_count, :glyph_padding, :texture
+  attr_reader :size, :glyph_count, :glyph_padding, :texture
 
   # Return the object represented by a Hash
   # @return [Hash]
   def to_h
     {
-      base_size: base_size,
+      size: size,
       glyph_count: glyph_count,
       glyph_padding: glyph_padding,
       texture: texture.to_h
     }
-  end
-
-  # Loads the font from the specified path
-  # @param path [String]
-  # @param size [Integer]
-  # @param char_count [Integer]
-  # @raise [Font::NotFound] If the file specified by path doesn't exist
-  # @return [Font]
-  def self.load(path, size: 32, char_count: 100)
-    raise Font::NotFound.new("Could not find font at path \"#{path}\"") unless File.exist?(path)
-    load_font_ex(path, size, char_count)
   end
 
   # Unloads the font from memory
