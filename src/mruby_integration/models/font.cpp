@@ -1,11 +1,14 @@
 #include "mruby.h"
 #include "mruby/class.h"
 #include "mruby/data.h"
+#include "mruby/string.h"
 #include "raylib.h"
 #include <cstdlib>
 
 #include "mruby_integration/helpers.hpp"
+#include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/models/texture2d.hpp"
+#include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 #include "ruby/models/font.hpp"
@@ -101,6 +104,69 @@ mrb_Font_ready(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_bool_value(IsFontReady(*font));
 }
 
+auto
+mrb_Font_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  char* text;
+
+  // def draw(text, size: self.size, spacing: 0, x: 0, y: 0, position:
+  // Vector2[x, y], colour: Colour::BLACK)
+  mrb_int kw_num = 6;
+  mrb_int kw_required = 0;
+  mrb_sym kw_names[] = {
+    mrb_intern_lit(mrb, "size"),     mrb_intern_lit(mrb, "spacing"),
+    mrb_intern_lit(mrb, "x"),        mrb_intern_lit(mrb, "y"),
+    mrb_intern_lit(mrb, "position"), mrb_intern_lit(mrb, "colour")
+  };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, "z:", &text, &kwargs);
+
+  Font* font;
+  Data_Get_Struct(mrb, self, &Font_type, font);
+  mrb_assert(font != nullptr);
+
+  float size = font->baseSize;
+  if (!mrb_undef_p(kw_values[0])) {
+    size = mrb_as_float(mrb, kw_values[0]);
+  }
+
+  float spacing = 0;
+  if (!mrb_undef_p(kw_values[1])) {
+    spacing = mrb_as_float(mrb, kw_values[1]);
+  }
+
+  float x = 0;
+  if (!mrb_undef_p(kw_values[2])) {
+    x = mrb_as_float(mrb, kw_values[2]);
+  }
+
+  float y = 0;
+  if (!mrb_undef_p(kw_values[3])) {
+    y = mrb_as_float(mrb, kw_values[3]);
+  }
+
+  Vector2* position;
+  if (mrb_undef_p(kw_values[4])) {
+    auto default_position = Vector2{ x, y };
+    position = &default_position;
+  } else {
+    position = static_cast<struct Vector2*> DATA_PTR(kw_values[4]);
+  }
+
+  Color* colour;
+  if (mrb_undef_p(kw_values[5])) {
+    auto default_colour = Color{ 0, 0, 0, 255 };
+    colour = &default_colour;
+  } else {
+    colour = static_cast<struct Color*> DATA_PTR(kw_values[5]);
+  }
+
+  DrawTextEx(*font, text, *position, size, spacing, *colour);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Font(mrb_state* mrb)
 {
@@ -111,6 +177,7 @@ append_models_Font(mrb_state* mrb)
   mrb_define_method(
     mrb, Font_class, "unload", mrb_Font_unload, MRB_ARGS_NONE());
   mrb_define_method(mrb, Font_class, "ready?", mrb_Font_ready, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Font_class, "draw", mrb_Font_draw, MRB_ARGS_REQ(6));
 
   load_ruby_models_font(mrb);
 }

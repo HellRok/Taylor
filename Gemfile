@@ -11,6 +11,7 @@ end
 
 # Documentation
 gem "yard"
+gem "redcarpet"
 
 # Testing
 group :test do
