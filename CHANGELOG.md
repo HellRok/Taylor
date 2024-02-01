@@ -17,8 +17,10 @@
 - Slight refactor of build pipeline
 - Group mruby gems in a gembox
 - Font#new now uses kwargs and is C++ backed
-- Font#unload is C++ now backed
+- Font#unload is now C++ backed
 - Add Font#ready?
+- Font#draw is now C++ back
+- Removed draw_text and draw_text_ex
 
 ## v0.3.14.1
 

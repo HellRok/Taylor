@@ -29,19 +29,103 @@ class Test
         assert_equal(32, font.to_h[:size])
         assert_equal(95, font.to_h[:glyph_count])
         assert_equal(4, font.to_h[:glyph_padding])
-
+      ensure
         font.unload
       end
 
       def test_ready?
         font = Font.new("./assets/tiny.ttf")
         assert_true font.ready?
+      ensure
+        font.unload
+      end
+
+      def test_draw
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        clear_and_draw do
+          font.draw("xx")
+        end
+
+        assert_equal fixture_font_draw, get_screen_data.data
+      ensure
+        font.unload
+      end
+
+      def test_draw_with_position
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        clear_and_draw do
+          font.draw(
+            "x",
+            position: Vector2.new(2, 2)
+          )
+        end
+
+        assert_equal fixture_font_draw_with_position, get_screen_data.data
+      ensure
+        font.unload
+      end
+
+      def test_draw_with_x_and_y
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        clear_and_draw do
+          font.draw(
+            "x",
+            x: 2, y: 0
+          )
+        end
+
+        assert_equal fixture_font_draw_with_x_and_y, get_screen_data.data
+      ensure
+        font.unload
+      end
+
+      def test_draw_with_colour
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        clear_and_draw do
+          font.draw(
+            "O",
+            colour: GREEN
+          )
+        end
+
+        assert_equal fixture_font_draw_with_colour, get_screen_data.data
+      ensure
         font.unload
       end
 
       def test_unload
         font = Font.new("./assets/tiny.ttf")
         assert_true font.ready?
+      ensure
+        font.unload
+      end
+
+      def test_draw_with_spacing
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        clear_and_draw do
+          font.draw(
+            "xx",
+            spacing: 1
+          )
+        end
+
+        assert_equal fixture_font_draw_with_spacing, get_screen_data.data
+      ensure
         font.unload
       end
     end

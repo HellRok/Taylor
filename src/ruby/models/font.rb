@@ -1,4 +1,15 @@
 # The Font class is used for displaying TTF fonts
+#
+# ```ruby
+# font = Font.new("./assets/comic_sans.ttf", size: 16)
+#
+# font.draw("Hello", x: 16, y: 12, colour: Colour::GREEN)
+#
+# position = Vector2[30, 42]
+# font.draw("Hello", position: position, colour: Colour::GREEN)
+#
+# font.unload
+# ```
 class Font
   # @return [Integer]
   attr_reader :size, :glyph_count, :glyph_padding, :texture
@@ -12,17 +23,6 @@ class Font
       glyph_padding: glyph_padding,
       texture: texture.to_h
     }
-  end
-
-  # Draws the text at the given position, size, padding, and colour
-  # @param text [String]
-  # @param position [Vector2]
-  # @param size [Integer]
-  # @param padding [Integer]
-  # @param colour [Colour]
-  # @return [nil]
-  def draw(text, position: Vector2::ZERO, size: 32, padding: 0, colour: BLACK)
-    draw_text_ex(self, text, position, size, padding, colour)
   end
 
   # Returns the size of the text
@@ -44,7 +44,15 @@ class Font
     image_text_ex(self, text, size, padding, colour)
   end
 
-  # Sets the filtering and generates mipmaps for the {Texture2D} used behind the {Font}
+  # Sets the filtering and generates mipmaps for the {Texture2D} used behind the {Font}.
+  #
+  # For pixel art fonts you'll want to leave it as default {TEXTURE_FILTER_POINT}, but if you'll want to set it to something nicer.
+  #
+  # ```
+  # font = Font.new("./assets/windings.ttf")
+  # font.filter = TEXTURE_FILTER_ANISOTROPIC_16X
+  # ```
+  #
   # @param val [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}
   # @return [Integer]
   def filter=(val)

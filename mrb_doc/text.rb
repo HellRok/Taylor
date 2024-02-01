@@ -8,33 +8,6 @@ def draw_fps(x, y)
   nil
 end
 
-# Draws the current frame rate at the passed in x and y coordinates.
-# @param text [String] The text to put on the screen
-# @param x [Integer]
-# @param y [Integer]
-# @param font_size [Integer]
-# @param colour [Colour]
-# @return [nil]
-def draw_text(text, x, y, font_size, colour)
-  # mrb_draw_text
-  # src/mruby_integration/text.cpp
-  nil
-end
-
-# Draws the text at the given position, size, padding, and colour with the specified font
-# @param font [Font] Which font to draw with
-# @param text [String] The text to put on the screen
-# @param position [Vector2]
-# @param font_size [Integer]
-# @param font_padding [Integer]
-# @param colour [Colour]
-# @return [nil]
-def draw_text_ex(font, text, position, font_size, font_padding, colour)
-  # mrb_draw_text_ex
-  # src/mruby_integration/text.cpp
-  nil
-end
-
 # Returns the size of the text for the given font
 # @param font [Font] Which font to draw with
 # @param text [String] The text to put on the screen
