@@ -18,6 +18,16 @@ class Test
         assert_equal 8, vector.y
       end
 
+      def test_aliases
+        vector = Vector2.new(12, 13)
+
+        assert_equal vector.x, vector.width
+        assert_equal 12, vector.width
+
+        assert_equal vector.y, vector.height
+        assert_equal 13, vector.height
+      end
+
       def test_add
         vector = Vector2.new(1, 3) + Vector2.new(2, 5)
 

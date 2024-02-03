@@ -38,7 +38,33 @@ class Font
   def draw(text, size: self.size, spacing: 0, x: 0, y: 0, position: Vector2[x, y], colour: Colour::BLACK)
     # mrb_Font_draw
     # src/mruby_integration/models/font.cpp
-    Font.new
+    nil
+  end
+
+  # Returns the measurements of the text if drawn by the {Font}.
+  #
+  # ```ruby
+  # font = Font.new("/assets/my_cool_font.ttf", size: 16)
+  #
+  # hello_size = font.measure("Hello")
+  #
+  # puts hello_size.width
+  # # => 33
+  #
+  # puts hello_size.height
+  # # => 16
+  #
+  # font.unload
+  # ```
+  #
+  # @param text [String] The text to draw on the screen
+  # @param size [Float]
+  # @param spacing [Float] How much spacing to have between letters
+  # @return [Vector2]
+  def measure(text, size: self.size, spacing: 0)
+    # mrb_Font_measure
+    # src/mruby_integration/models/font.cpp
+    Vector2[33, 16]
   end
 
   # Unloads the font from memory

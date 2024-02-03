@@ -25,15 +25,6 @@ class Font
     }
   end
 
-  # Returns the size of the text
-  # @param text [String]
-  # @param size [Integer]
-  # @param padding [Integer]
-  # @return [Vector2]
-  def measure(text, size: 32, padding: 0)
-    measure_text_ex(self, text, size, padding)
-  end
-
   # Creates an image from the font
   # @param text [String] The text to put on the screen
   # @param size [Integer]

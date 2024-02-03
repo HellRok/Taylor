@@ -128,6 +128,39 @@ class Test
       ensure
         font.unload
       end
+
+      def test_measure
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        assert_equal 8, font.measure("xx").width
+        assert_equal 6, font.measure("xx").height
+      ensure
+        font.unload
+      end
+
+      def test_measure_with_size
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        assert_equal 16, font.measure("xx", size: 12).width
+        assert_equal 12, font.measure("xx", size: 12).height
+      ensure
+        font.unload
+      end
+
+      def test_measure_with_spacing
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        assert_equal 9, font.measure("xx", spacing: 1).width
+        assert_equal 6, font.measure("xx", spacing: 1).height
+      ensure
+        font.unload
+      end
     end
   end
 end
