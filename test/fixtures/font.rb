@@ -1,3 +1,20 @@
+def fixture_font_default_draw
+  w = RAYWHITE
+  b = BLACK
+  [
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    b, w, w, w, b, b, w, w, w, b,
+    w, b, w, b, w, w, b, w, b, w,
+    w, w, b, w, w, w, w, b, w, w,
+    w, b, w, b, w, w, b, w, b, w,
+    b, w, w, w, b, b, w, w, w, b,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
+  ]
+end
+
 def fixture_font_draw
   w = RAYWHITE
   b = BLACK

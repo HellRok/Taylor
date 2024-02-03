@@ -51,6 +51,7 @@ def cpp_methods
           "#{object.gsub("_class", "")}##{method}"
         end
 
+      # mrb_define_class_method(mrb, Font_class, "initialize"
       elsif line =~ /^\s*mrb_define_class_method.*, (.*), "(.*)"/
         object, method = $~[1..2]
         if object == "mrb->kernel_module"
@@ -59,17 +60,24 @@ def cpp_methods
           "#{object.gsub("_class", "")}.#{method}"
         end
 
-      elsif line =~ /^\s*def\s+(.*)/ && !line.include?("mrb_define_class")
-        method = $~[1].split("(").first
-        if klass
-          if method.start_with?("self.")
-            method.slice!("self.")
-            "#{klass}.#{method}"
-          else
-            "#{klass}##{method}"
-          end
+      elsif /^\s*mrb_define_class_method/.match?(line)
+        # mrb_define_class_method(
+        #   mrb, Font_class, "default"
+        if lines[index + 1] =~ /\s*mrb, (.*), "(.*)"/
+          object, method = $~[1..2]
+
+        # mrb_define_class_method(mrb,
+        #                   Font_class,
+        #                   "default"
         else
+          object = lines[index + 1].strip.delete(",")
+          method = lines[index + 2].strip.delete(",").delete('"')
+        end
+
+        if object == "mrb->kernel_module"
           method
+        else
+          "#{object.gsub("_class", "")}.#{method}"
         end
       end
     }.compact

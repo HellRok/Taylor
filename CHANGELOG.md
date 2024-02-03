@@ -23,6 +23,7 @@
 - Removed draw_text and draw_text_ex
 - Font#measure is now C++ backed
 - Removed measure_text_ex
+- Add Font.default
 
 ## v0.3.14.1
 
