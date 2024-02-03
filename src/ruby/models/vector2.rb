@@ -4,6 +4,9 @@ class Vector2
   # @return [Float]
   attr_reader :x, :y
 
+  alias_method :width, :x
+  alias_method :height, :y
+
   # The equality operator is used for checking if two Vector2s share the same
   # position.
   # @param other [Vector2]

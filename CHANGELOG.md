@@ -19,8 +19,10 @@
 - Font#new now uses kwargs and is C++ backed
 - Font#unload is now C++ backed
 - Add Font#ready?
-- Font#draw is now C++ back
+- Font#draw is now C++ backed
 - Removed draw_text and draw_text_ex
+- Font#measure is now C++ backed
+- Removed measure_text_ex
 
 ## v0.3.14.1
 

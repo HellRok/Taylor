@@ -167,17 +167,58 @@ mrb_Font_draw(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  char* text;
+
+  // def measure(text, size: self.size, spacing: 0)
+  mrb_int kw_num = 2;
+  mrb_int kw_required = 0;
+  mrb_sym kw_names[] = {
+    mrb_intern_lit(mrb, "size"),     mrb_intern_lit(mrb, "spacing"),
+  };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, "z:", &text, &kwargs);
+
+  Font* font;
+  Data_Get_Struct(mrb, self, &Font_type, font);
+  mrb_assert(font != nullptr);
+
+  float size = font->baseSize;
+  if (!mrb_undef_p(kw_values[0])) {
+    size = mrb_as_float(mrb, kw_values[0]);
+  }
+
+  float spacing = 0;
+  if (!mrb_undef_p(kw_values[1])) {
+    spacing = mrb_as_float(mrb, kw_values[1]);
+  }
+
+  auto* text_size = static_cast<Vector2*>(malloc(sizeof(Vector2)));
+  *text_size = MeasureTextEx(*font, text, size, spacing);
+
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, text_size));
+
+  setup_Vector2(mrb, obj, text_size, text_size->x, text_size->y);
+
+  return obj;
+}
+
 void
 append_models_Font(mrb_state* mrb)
 {
   Font_class = mrb_define_class(mrb, "Font", mrb->object_class);
   MRB_SET_INSTANCE_TT(Font_class, MRB_TT_DATA);
   mrb_define_method(
-    mrb, Font_class, "initialize", mrb_Font_initialize, MRB_ARGS_REQ(5));
+    mrb, Font_class, "initialize", mrb_Font_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Font_class, "unload", mrb_Font_unload, MRB_ARGS_NONE());
   mrb_define_method(mrb, Font_class, "ready?", mrb_Font_ready, MRB_ARGS_NONE());
-  mrb_define_method(mrb, Font_class, "draw", mrb_Font_draw, MRB_ARGS_REQ(6));
+  mrb_define_method(mrb, Font_class, "draw", mrb_Font_draw, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Font_class, "measure", mrb_Font_measure, MRB_ARGS_REQ(1));
 
   load_ruby_models_font(mrb);
 }
