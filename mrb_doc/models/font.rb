@@ -1,4 +1,17 @@
 class Font
+  # Returns the default built in {Font}. You may not want to `unload` this one!
+  #
+  # ```ruby
+  # Font.default.draw("Hello!")
+  # ```
+  #
+  # @return [Font]
+  def self.default
+    # mrb_Font_default
+    # src/mruby_integration/models/font.cpp
+    Font.new
+  end
+
   # Creates a new instance of Font
   #
   # ```ruby

@@ -23,6 +23,21 @@ class Test
         font.unload
       end
 
+      def test_default
+        font = Font.default
+
+        assert_kind_of Font, font
+        assert_equal 10, font.size
+        assert_equal 224, font.glyph_count
+        assert_equal 0, font.glyph_padding
+
+        clear_and_draw do
+          Font.default.draw("xx")
+        end
+
+        assert_equal fixture_font_default_draw, get_screen_data.data
+      end
+
       def test_to_h
         font = Font.new("./assets/tiny.ttf")
 

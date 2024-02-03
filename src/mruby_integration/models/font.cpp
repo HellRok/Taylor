@@ -81,6 +81,29 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Font_default(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  Font* font = static_cast<Font*>(malloc(sizeof(Font)));
+  *font = GetFontDefault();
+
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Font_class, &Font_type, font));
+
+  setup_Font(mrb,
+             obj,
+             font,
+             font->baseSize,
+             font->glyphCount,
+             font->glyphPadding,
+             &font->texture);
+
+  add_parent(font, "Font");
+  add_owned_object(&font->texture);
+
+  return obj;
+}
+
+auto
 mrb_Font_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Font* font;
@@ -176,7 +199,8 @@ mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_int kw_num = 2;
   mrb_int kw_required = 0;
   mrb_sym kw_names[] = {
-    mrb_intern_lit(mrb, "size"),     mrb_intern_lit(mrb, "spacing"),
+    mrb_intern_lit(mrb, "size"),
+    mrb_intern_lit(mrb, "spacing"),
   };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
@@ -199,8 +223,8 @@ mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
   auto* text_size = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *text_size = MeasureTextEx(*font, text, size, spacing);
 
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, text_size));
+  mrb_value obj = mrb_obj_value(
+    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, text_size));
 
   setup_Vector2(mrb, obj, text_size, text_size->x, text_size->y);
 
@@ -212,13 +236,16 @@ append_models_Font(mrb_state* mrb)
 {
   Font_class = mrb_define_class(mrb, "Font", mrb->object_class);
   MRB_SET_INSTANCE_TT(Font_class, MRB_TT_DATA);
+  mrb_define_class_method(
+    mrb, Font_class, "default", mrb_Font_default, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Font_class, "initialize", mrb_Font_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Font_class, "unload", mrb_Font_unload, MRB_ARGS_NONE());
   mrb_define_method(mrb, Font_class, "ready?", mrb_Font_ready, MRB_ARGS_NONE());
   mrb_define_method(mrb, Font_class, "draw", mrb_Font_draw, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, Font_class, "measure", mrb_Font_measure, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Font_class, "measure", mrb_Font_measure, MRB_ARGS_REQ(1));
 
   load_ruby_models_font(mrb);
 }
