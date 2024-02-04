@@ -95,4 +95,28 @@ class Font
     # src/mruby_integration/models/font.cpp
     true
   end
+
+  # Creates an {Image} of the text using the {Font}.
+  #
+  # ```ruby
+  # font = Font.new("/assets/my_cool_font.ttf", size: 16)
+  #
+  # image = font.to_image("Hello", colour: Colour::PINK)
+  #
+  # image.export("my_cool_text.jpg")
+  #
+  # font.unload
+  # image.unload
+  # ```
+  #
+  # @param text [String] The text to turn into an {Image}
+  # @param size [Integer]
+  # @param spacing [Integer]
+  # @param colour [Colour]
+  # @return [Image]
+  def to_image(text, size: 32, spacing: 0, colour: BLACK)
+    # mrb_Font_to_image
+    # src/mruby_integration/models/font.cpp
+    Image.new
+  end
 end

@@ -69,6 +69,20 @@ class Test
         font.unload
       end
 
+      def test_draw_with_size
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        clear_and_draw do
+          font.draw("x", size: 12)
+        end
+
+        assert_equal fixture_font_draw_with_size, get_screen_data.data
+      ensure
+        font.unload
+      end
+
       def test_draw_with_position
         skip_unless_display_present
 
@@ -175,6 +189,58 @@ class Test
         assert_equal 6, font.measure("xx", spacing: 1).height
       ensure
         font.unload
+      end
+
+      def test_to_image
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        image = font.to_image("xx")
+        assert_equal fixture_font_to_image, image.data
+      ensure
+        font.unload
+        image.unload
+      end
+
+      def test_to_image_with_size
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        image = font.to_image("x", size: 12, colour: GREEN)
+        # I suspect there's a bug here in Raylib where there is a filter being
+        # applied somewhere in the process. Because just drawing it to the
+        # screen at an exact integer scale works fine, but here it's slightly
+        # blurry.
+        assert_equal fixture_font_to_image_with_size, image.data
+      ensure
+        font.unload
+        image.unload
+      end
+
+      def test_to_image_with_spacing
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        image = font.to_image("xx", spacing: 1)
+        assert_equal fixture_font_to_image_with_spacing, image.data
+      ensure
+        font.unload
+        image.unload
+      end
+
+      def test_to_image_with_colour
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+        font = Font.new("./assets/tiny.ttf", size: 6)
+        image = font.to_image("xx", colour: GREEN)
+        assert_equal fixture_font_to_image_with_colour, image.data
+      ensure
+        font.unload
+        image.unload
       end
     end
   end

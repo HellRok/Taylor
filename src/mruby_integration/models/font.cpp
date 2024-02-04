@@ -7,6 +7,7 @@
 
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/colour.hpp"
+#include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
@@ -231,6 +232,62 @@ mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
   return obj;
 }
 
+auto
+mrb_Font_to_image(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  char* text;
+
+  // def to_image(text, size: self.size, spacing: 0, colour: Colour::BLACK)
+  mrb_int kw_num = 3;
+  mrb_int kw_required = 0;
+  mrb_sym kw_names[] = {
+    mrb_intern_lit(mrb, "size"),
+    mrb_intern_lit(mrb, "spacing"),
+    mrb_intern_lit(mrb, "colour"),
+  };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, "z:", &text, &kwargs);
+
+  Font* font;
+  Data_Get_Struct(mrb, self, &Font_type, font);
+  mrb_assert(font != nullptr);
+
+  float size = font->baseSize;
+  if (!mrb_undef_p(kw_values[0])) {
+    size = mrb_as_float(mrb, kw_values[0]);
+  }
+
+  float spacing = 0;
+  if (!mrb_undef_p(kw_values[1])) {
+    spacing = mrb_as_float(mrb, kw_values[1]);
+  }
+
+  Color* colour;
+  if (mrb_undef_p(kw_values[2])) {
+    auto default_colour = Color{ 0, 0, 0, 255 };
+    colour = &default_colour;
+  } else {
+    colour = static_cast<struct Color*> DATA_PTR(kw_values[2]);
+  }
+
+  auto* result = static_cast<Image*>(malloc(sizeof(Image)));
+  *result = ImageTextEx(*font, text, size, spacing, *colour);
+
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
+
+  setup_Image(mrb,
+              obj,
+              result,
+              result->width,
+              result->height,
+              result->mipmaps,
+              result->format);
+
+  return obj;
+}
+
 void
 append_models_Font(mrb_state* mrb)
 {
@@ -246,6 +303,8 @@ append_models_Font(mrb_state* mrb)
   mrb_define_method(mrb, Font_class, "draw", mrb_Font_draw, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Font_class, "measure", mrb_Font_measure, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Font_class, "to_image", mrb_Font_to_image, MRB_ARGS_REQ(1));
 
   load_ruby_models_font(mrb);
 }

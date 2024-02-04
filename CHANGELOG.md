@@ -24,6 +24,8 @@
 - Font#measure is now C++ backed
 - Removed measure_text_ex
 - Add Font.default
+- Font#to_image is now C++ backed
+- Removed image_text_ex
 
 ## v0.3.14.1
 
