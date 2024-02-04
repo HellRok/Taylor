@@ -45,19 +45,11 @@ class Font
     }
   end
 
-  # Creates an image from the font
-  # @param text [String] The text to put on the screen
-  # @param size [Integer]
-  # @param padding [Integer]
-  # @param colour [Colour]
-  # @return [Image]
-  def to_image(text, size: 32, padding: 0, colour: BLACK)
-    image_text_ex(self, text, size, padding, colour)
-  end
-
   # Sets the filtering and generates mipmaps for the {Texture2D} used behind the {Font}.
   #
-  # For pixel art fonts you'll want to leave it as default {TEXTURE_FILTER_POINT}, but if you'll want to set it to something nicer.
+  # For pixel art fonts you'll want to leave it as default
+  # {TEXTURE_FILTER_POINT}, but otherwise you'll want to set it to something
+  # nicer.
   #
   # ```
   # font = Font.new("./assets/windings.ttf")
