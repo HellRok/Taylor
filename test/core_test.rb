@@ -17,7 +17,7 @@ class Test
 
       set_window_title(__method__.to_s)
       vector = Vector2.new(5, 5)
-      camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 1)
+      camera = Camera2D.new
 
       assert_equal Vector2.new(5, 5), get_world_to_screen2D(vector, camera)
 
@@ -32,7 +32,7 @@ class Test
 
       set_window_title(__method__.to_s)
       vector = Vector2.new(5, 5)
-      camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 1)
+      camera = Camera2D.new
 
       assert_equal Vector2.new(5, 5), get_screen_to_world2D(vector, camera)
 

@@ -23,16 +23,47 @@ mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_data_init(self, nullptr, &Camera2D_type);
   camera = static_cast<Camera2D*>(malloc(sizeof(Camera2D)));
 
-  mrb_float rotation, zoom;
-  Vector2 *offset, *target;
-  mrb_get_args(mrb,
-               "ddff",
-               &offset,
-               &Vector2_type,
-               &target,
-               &Vector2_type,
-               &rotation,
-               &zoom);
+  // def initialize(
+  //   target: Vector2[0, 0],
+  //   offset: Vector2[0, 0],
+  //   rotation: 0,
+  //   zoom: 1
+  // )
+  mrb_int kw_num = 4;
+  mrb_int kw_required = 0;
+  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "target"),
+                         mrb_intern_lit(mrb, "offset"),
+                         mrb_intern_lit(mrb, "rotation"),
+                         mrb_intern_lit(mrb, "zoom") };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  Vector2* target;
+  if (mrb_undef_p(kw_values[0])) {
+    auto default_target = Vector2{ 0, 0 };
+    target = &default_target;
+  } else {
+    target = static_cast<struct Vector2*> DATA_PTR(kw_values[0]);
+  }
+
+  Vector2* offset;
+  if (mrb_undef_p(kw_values[1])) {
+    auto default_offset = Vector2{ 0, 0 };
+    offset = &default_offset;
+  } else {
+    offset = static_cast<struct Vector2*> DATA_PTR(kw_values[1]);
+  }
+
+  float rotation = 0;
+  if (!mrb_undef_p(kw_values[2])) {
+    rotation = mrb_as_float(mrb, kw_values[2]);
+  }
+
+  float zoom = 1.0;
+  if (!mrb_undef_p(kw_values[3])) {
+    zoom = mrb_as_float(mrb, kw_values[3]);
+  }
 
   ivar_attr_vector2(mrb, self, camera->offset, offset);
   ivar_attr_vector2(mrb, self, camera->target, target);
