@@ -26,6 +26,8 @@
 - Add Font.default
 - Font#to_image is now C++ backed
 - Removed image_text_ex
+- Added Vector2[]
+- Added Vector2#/
 
 ## v0.3.14.1
 
