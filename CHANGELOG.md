@@ -28,6 +28,7 @@
 - Removed image_text_ex
 - Added Vector2[]
 - Added Vector2#/
+- Camera2D#initialize now takes keyword arguments
 
 ## v0.3.14.1
 

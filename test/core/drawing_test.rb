@@ -60,7 +60,7 @@ class Test
         set_window_title(__method__.to_s)
         set_target_fps 5
         rectangle = Rectangle.new(2, 2, 6, 6)
-        camera = Camera2D.new(Vector2.new(0, 0), Vector2.new(0, 0), 0, 1)
+        camera = Camera2D.new
 
         clear_and_draw do
           begin_mode2D(camera)
