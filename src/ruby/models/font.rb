@@ -15,6 +15,7 @@ class Font
   attr_reader :size, :glyph_count, :glyph_padding, :texture
 
   # Return the object represented by a Hash
+  #
   # ```ruby
   # font = Font.new("./assets/my_font.ttf", size: 16)
   #

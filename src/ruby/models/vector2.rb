@@ -1,5 +1,18 @@
 # A class used to hold an x and y value, will be translated when viewed through
-# a Camera2D object.
+# a {Camera2D} object.
+#
+# ```ruby
+# delta = 1 / 60.0 # Assume 60 frames per second
+# player_position = Vector2[7, 8]
+# player_velocity = Vector2[2, 2]
+#
+# player_position += player_velocity * delta
+#
+# puts player_position.x
+# # => 7.0333...
+# puts player_position.y
+# # => 8.0333...
+# ```
 class Vector2
   # @return [Float]
   attr_reader :x, :y
@@ -7,8 +20,34 @@ class Vector2
   alias_method :width, :x
   alias_method :height, :y
 
-  # The equality operator is used for checking if two Vector2s share the same
-  # position.
+  # A short form way to create new {Vector2} objects.
+  #
+  # ```ruby
+  # position = Vector2[10, 12]
+  #
+  # puts position.x
+  # # => 10
+  # puts position.y
+  # # => 12
+  # ```
+  #
+  # @param x [Float]
+  # @param y [Float]
+  # @return [Vector2]
+  def self.[](x, y)
+    new(x, y)
+  end
+
+  # The equality operator is used for checking if two {Vector2} objects share
+  # the same position.
+  #
+  # ```ruby
+  # puts Vector2[3, 4] == Vector2[3, 4]
+  # # => true
+  #
+  # puts Vector2[3, 4] == Vector2[4, 3]
+  # # => false
+  # ```
   # @param other [Vector2]
   # @return [Boolean]
   def ==(other)
@@ -16,7 +55,20 @@ class Vector2
       y == other.y
   end
 
-  # The addition operator is used for adding up two Vector2s
+  # The addition operator is used for adding up two {Vector2} objects.
+  #
+  # ```ruby
+  # vector_1 = Vector2[1, 2]
+  # vector_2 = Vector2[3, 4]
+  #
+  # vector_both = vector_1 + vector_2
+  #
+  # puts vector_both.x
+  # # => 4
+  # puts vector_both.y
+  # # => 6
+  # ```
+  #
   # @param other [Vector2]
   # @return [Vector2]
   def +(other)
@@ -26,7 +78,20 @@ class Vector2
     )
   end
 
-  # The addition operator is used for subtracting two Vector2s
+  # The subtraction operator is used for subtracting two {Vector2} objects.
+  #
+  # ```ruby
+  # vector_1 = Vector2[3, 4]
+  # vector_2 = Vector2[2, 1]
+  #
+  # vector_both = vector_1 - vector_2
+  #
+  # puts vector_both.x
+  # # => 1
+  # puts vector_both.y
+  # # => 3
+  # ```
+  #
   # @param other [Vector2]
   # @return [Vector2]
   def -(other)
@@ -38,23 +103,76 @@ class Vector2
 
   alias_method :difference, :-
 
-  # Change the length of the Vector2
-  # @param scalar [Numeric]
+  # Scale the {Vector2} by the scalar.
+  #
+  # ```ruby
+  # vector = Vector2[2, 4]
+  # vector *= 3
+  #
+  # puts vector.x
+  # # => 6
+  # puts vector.y
+  # # => 12
+  # ```
+  #
+  # @param other [Numeric]
   # @return [Vector2]
-  def scale(scalar)
+  def *(other)
     Vector2.new(
-      x * scalar,
-      y * scalar
+      x * other,
+      y * other
     )
   end
 
-  # Calculates the length of the Vector2
+  alias_method :scale, :*
+
+  # Divide the {Vector2} by the value.
+  #
+  # ```ruby
+  # vector = Vector2[2, 3]
+  # vector /= 2
+  #
+  # puts vector.x
+  # # => 1
+  # puts vector.y
+  # # => 1.5
+  # ```
+  #
+  # @param other [Numeric]
+  # @return [Vector2]
+  def /(other)
+    Vector2.new(
+      x / other,
+      y / other
+    )
+  end
+
+  # Calculates the length of the {Vector2}.
+  #
+  # ```ruby
+  # vector = Vector2[3, 4]
+  #
+  # puts vector.length
+  # # => 5
+  # ```
+  #
   # @return [Numeric]
   def length
     Math.sqrt(x**2 + y**2)
   end
 
-  # Return the object represented by a Hash
+  # Return the object represented by a Hash.
+  #
+  # ```ruby
+  # vector = Vector2[6, 8]
+  #
+  # p vector.to_h
+  # # => {
+  # #      x: 6,
+  # #      y: 8
+  # #    }
+  # ```
+  #
   # @return [Hash]
   def to_h
     {

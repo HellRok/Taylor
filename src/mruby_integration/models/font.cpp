@@ -47,11 +47,14 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, "z:", &path, &kwargs);
 
-  if (mrb_undef_p(kw_values[0])) {
-    kw_values[0] = mrb_fixnum_value(32);
+  float size = 32;
+  if (!mrb_undef_p(kw_values[0])) {
+    size = mrb_as_float(mrb, kw_values[0]);
   }
-  if (mrb_undef_p(kw_values[1])) {
-    kw_values[1] = mrb_fixnum_value(95);
+
+  float glyph_count = 95;
+  if (!mrb_undef_p(kw_values[1])) {
+    glyph_count = mrb_as_float(mrb, kw_values[1]);
   }
 
   int* font_chars{ nullptr };
@@ -63,8 +66,7 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_data_init(self, nullptr, &Font_type);
   font = static_cast<Font*>(malloc(sizeof(Font)));
 
-  *font = LoadFontEx(
-    path, mrb_fixnum(kw_values[0]), font_chars, mrb_fixnum(kw_values[1]));
+  *font = LoadFontEx(path, size, font_chars, glyph_count);
 
   setup_Font(mrb,
              self,
