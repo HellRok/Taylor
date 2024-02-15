@@ -1,4 +1,6 @@
-# Camera2D is used for simply moving a viewport around.
+# {Camera2D} is used for drawing the world through a viewport.
+#
+# TODO: A full code example
 class Camera2D
   # @return [Vector2]
   attr_reader :offset, :target
@@ -33,16 +35,6 @@ class Camera2D
       rotation: rotation,
       zoom: zoom
     }
-  end
-
-  # Draws the world through the lens of the camera
-  # @yield The block that calls your rendering logic
-  # @return [nil]
-  def drawing(&block)
-    begin_mode2D(self)
-    block.call
-  ensure
-    end_mode2D
   end
 
   # Pass in a vector with world coordinates to see what that translates to in

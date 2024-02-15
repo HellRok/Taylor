@@ -32,4 +32,24 @@ class Camera2D
     # mrb_Camera2D_set_zoom
     # src/mruby_integration/models/camera2d.cpp
   end
+
+  # Draws the world through the lens of the {Camera2D}.
+  # rectangle = Rectangle.new(2, 2, 6, 6)
+  #
+  # ```ruby
+  # rectangle = Rectangle[100, 100, 50, 50]
+  # camera = Camera2D.new(offset: Vector2[100, 150])
+  #
+  # camera.draw do
+  #     rectangle.draw(colour: RED)
+  # end
+  # ```
+  #
+  # @yield The block that calls your rendering logic
+  # @return [nil]
+  def draw(&block)
+    # mrb_Camera2D_set_zoom
+    # src/mruby_integration/models/camera2d.cpp
+    nil
+  end
 end

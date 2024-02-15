@@ -26,34 +26,3 @@ def fixture_core_drawing_scissor_mode
     w, w, w, w, w, w, w, w, w, w
   ]
 end
-
-def fixture_core_drawing_mode2D
-  w = RAYWHITE
-  r = RED
-  [
-    [
-      w, w, w, w, w, w, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w,
-      w, w, r, r, r, r, r, r, w, w,
-      w, w, r, r, r, r, r, r, w, w,
-      w, w, r, r, r, r, r, r, w, w,
-      w, w, r, r, r, r, r, r, w, w,
-      w, w, r, r, r, r, r, r, w, w,
-      w, w, r, r, r, r, r, r, w, w,
-      w, w, w, w, w, w, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w
-    ],
-    [
-      r, r, r, r, r, r, w, w, w, w,
-      r, r, r, r, r, r, w, w, w, w,
-      r, r, r, r, r, r, w, w, w, w,
-      r, r, r, r, r, r, w, w, w, w,
-      r, r, r, r, r, r, w, w, w, w,
-      r, r, r, r, r, r, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w,
-      w, w, w, w, w, w, w, w, w, w
-    ]
-  ]
-end

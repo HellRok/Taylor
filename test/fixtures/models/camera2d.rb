@@ -1,4 +1,4 @@
-def fixture_camera2d_drawing
+def fixture_camera2d_draw
   w = RAYWHITE
   r = RED
   [

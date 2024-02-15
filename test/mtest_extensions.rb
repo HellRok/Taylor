@@ -8,7 +8,7 @@ module MTest
         elsif exp.all? { |obj| obj == exp.first } && act.all? { |obj| obj == act.first }
           "Expected: #{exp.first.to_h}\n Actual: #{act.first.to_h}"
         else
-          "Expected:\n#{print_colour_data(exp)}\n Actual:\n#{print_colour_data(act)}"
+          "Expected:\n#{colour_data(exp)}\n Actual:\n#{colour_data(act)}"
         end
       else
         original_diff(exp, act)

@@ -65,8 +65,8 @@ mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     zoom = mrb_as_float(mrb, kw_values[3]);
   }
 
-  ivar_attr_vector2(mrb, self, camera->offset, offset);
   ivar_attr_vector2(mrb, self, camera->target, target);
+  ivar_attr_vector2(mrb, self, camera->offset, offset);
   ivar_attr_float(mrb, self, camera->rotation, rotation);
   ivar_attr_float(mrb, self, camera->zoom, zoom);
 
@@ -90,6 +90,25 @@ mrb_Camera2D_set_zoom(mrb_state* mrb, mrb_value self) -> mrb_value
   attr_setter_float(mrb, self, Camera2D_type, Camera2D, zoom, zoom);
 }
 
+auto
+mrb_Camera2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Camera2D* camera;
+  Data_Get_Struct(mrb, self, &Camera2D_type, camera);
+  mrb_assert(camera != nullptr);
+
+  mrb_value block;
+  mrb_get_args(mrb, "&!", &block);
+
+  BeginMode2D(*camera);
+
+  mrb_yield(mrb, block, mrb_nil_value());
+
+  EndMode2D();
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Camera2D(mrb_state* mrb)
 {
@@ -107,6 +126,8 @@ append_models_Camera2D(mrb_state* mrb)
                     MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Camera2D_class, "zoom=", mrb_Camera2D_set_zoom, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Camera2D_class, "draw", mrb_Camera2D_draw, MRB_ARGS_BLOCK());
 
   load_ruby_models_camera2d(mrb);
 }
