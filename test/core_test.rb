@@ -12,21 +12,6 @@ class Test
       assert_equal fixture_clear_background, get_screen_data.data
     end
 
-    def test_get_world_to_screen2D
-      skip_unless_display_present
-
-      set_window_title(__method__.to_s)
-      vector = Vector2.new(5, 5)
-      camera = Camera2D.new
-
-      assert_equal Vector2.new(5, 5), get_world_to_screen2D(vector, camera)
-
-      camera.target.x = 5
-      camera.target.y = 5
-
-      assert_equal Vector2.new(0, 0), get_world_to_screen2D(vector, camera)
-    end
-
     def test_get_screen_to_world2D
       skip_unless_display_present
 

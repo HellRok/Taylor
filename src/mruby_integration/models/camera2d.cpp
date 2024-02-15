@@ -109,6 +109,26 @@ mrb_Camera2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Camera2D_as_in_viewport(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Camera2D* camera;
+  Data_Get_Struct(mrb, self, &Camera2D_type, camera);
+  mrb_assert(camera != nullptr);
+
+  Vector2* vector;
+  mrb_get_args(mrb, "d", &vector, &Vector2_type);
+
+  auto* return_vector = static_cast<Vector2*>(malloc(sizeof(Vector2)));
+  *return_vector = GetWorldToScreen2D(*vector, *camera);
+  mrb_value obj = mrb_obj_value(
+    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, return_vector));
+
+  setup_Vector2(mrb, obj, return_vector, return_vector->x, return_vector->y);
+
+  return obj;
+}
+
 void
 append_models_Camera2D(mrb_state* mrb)
 {
@@ -128,6 +148,11 @@ append_models_Camera2D(mrb_state* mrb)
     mrb, Camera2D_class, "zoom=", mrb_Camera2D_set_zoom, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Camera2D_class, "draw", mrb_Camera2D_draw, MRB_ARGS_BLOCK());
+  mrb_define_method(mrb,
+                    Camera2D_class,
+                    "as_in_viewport",
+                    mrb_Camera2D_as_in_viewport,
+                    MRB_ARGS_REQ(1));
 
   load_ruby_models_camera2d(mrb);
 }

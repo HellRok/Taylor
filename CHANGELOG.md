@@ -32,6 +32,8 @@
 - Removed begin_mode2D and end_mode2D
 - Renamed Camera2D#drawing to Camera2D#draw
 - Camera2D#draw is now C++ backed
+- Removed get_world_to_screen2D
+- Camera2D#as_in_viewport is now C++ backed
 
 ## v0.3.14.1
 
