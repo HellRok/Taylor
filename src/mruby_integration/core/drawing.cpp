@@ -30,23 +30,6 @@ mrb_end_drawing(mrb_state*, mrb_value) -> mrb_value
 }
 
 auto
-mrb_begin_mode2D(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Camera2D* camera;
-  mrb_get_args(mrb, "d", &camera, &Camera2D_type);
-
-  BeginMode2D(*camera);
-  return mrb_nil_value();
-}
-
-auto
-mrb_end_mode2D(mrb_state*, mrb_value) -> mrb_value
-{
-  EndMode2D();
-  return mrb_nil_value();
-}
-
-auto
 mrb_begin_texture_mode(mrb_state* mrb, mrb_value) -> mrb_value
 {
   RenderTexture* texture;
@@ -112,10 +95,6 @@ append_core_drawing(mrb_state* mrb)
                     MRB_ARGS_NONE());
   mrb_define_method(
     mrb, mrb->kernel_module, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, mrb->kernel_module, "begin_mode2D", mrb_begin_mode2D, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, mrb->kernel_module, "end_mode2D", mrb_end_mode2D, MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "begin_texture_mode",

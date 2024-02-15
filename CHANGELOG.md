@@ -29,6 +29,9 @@
 - Added Vector2[]
 - Added Vector2#/
 - Camera2D#initialize now takes keyword arguments
+- Removed begin_mode2D and end_mode2D
+- Renamed Camera2D#drawing to Camera2D#draw
+- Camera2D#draw is now C++ backed
 
 ## v0.3.14.1
 

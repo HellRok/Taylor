@@ -29,15 +29,15 @@ def flush_frames(count)
   count.times { flush_frame }
 end
 
-def print_raw_colour_data(data, width: 10)
-  puts data.each_slice(width).each { |row|
+def raw_colour_data(data, width: 10)
+  data.each_slice(width).each { |row|
     puts row.map { |colour|
       "Colour.new(#{colour.red}, #{colour.green}, #{colour.blue}, #{colour.alpha}), "
     }.join
   }
 end
 
-def print_colour_data(data, width: 10)
+def colour_data(data, width: 10)
   map = ""
   data.each_slice(width).each { |row|
     row.each { |colour|
@@ -67,9 +67,9 @@ def print_colour_data(data, width: 10)
     map << "\n"
   }
 
-  puts map
+  map
 end
 
-def print_image_data(image)
-  puts print_colour_data(image.data, width: image.width)
+def image_data(image)
+  print_colour_data(image.data, width: image.width)
 end

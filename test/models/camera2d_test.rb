@@ -78,7 +78,7 @@ class Test
         )
       end
 
-      def test_drawing
+      def test_draw
         skip_unless_display_present
 
         set_window_title(__method__.to_s)
@@ -87,25 +87,24 @@ class Test
         camera = Camera2D.new
 
         clear_and_draw do
-          flush_frame
-          camera.drawing do
-            draw_rectangle_rec(rectangle, RED)
+          camera.draw do
+            rectangle.draw(colour: RED)
           end
         end
 
-        assert_equal fixture_camera2d_drawing[0], get_screen_data.data
+        assert_equal fixture_camera2d_draw[0], get_screen_data.data
         clear_background(RAYWHITE)
 
         camera.offset.x = -2
         camera.offset.y = -2
 
         clear_and_draw do
-          camera.drawing do
+          camera.draw do
             draw_rectangle_rec(rectangle, RED)
           end
         end
 
-        assert_equal fixture_camera2d_drawing[1], get_screen_data.data
+        assert_equal fixture_camera2d_draw[1], get_screen_data.data
       end
     end
   end
