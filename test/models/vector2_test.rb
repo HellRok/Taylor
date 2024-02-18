@@ -77,6 +77,12 @@ class Test
       def test_to_h
         assert_equal({x: 3, y: -4}, Vector2.new(3, -4).to_h)
       end
+
+      def test_inspect
+        vector = Vector2[3, 4]
+
+        assert_equal "#<Vector2:0x#{vector.object_id.to_s(16)} x:3.0 y:4.0>", vector.inspect
+      end
     end
   end
 end

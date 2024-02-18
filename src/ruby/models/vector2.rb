@@ -181,6 +181,23 @@ class Vector2
     }
   end
 
+  # Returns a string representation of the {Vector2} that's useful for debugging.
+  #
+  # ```ruby
+  # vector = Vector2[6, 8]
+  #
+  # puts vector.inspect
+  # # => #<Vector2:0x102bd20 x:6.0 y:8.0>
+  #
+  # p vector
+  # # => #<Vector2:0x102bd20 x:6.0 y:8.0>
+  # ```
+  #
+  # @return [String]
+  def inspect
+    "#<Vector2:0x#{object_id.to_s(16)} x:#{x} y:#{y}>"
+  end
+
   # A Vector2 setup at 0, 0
   ZERO = Vector2.new(0, 0)
 end
