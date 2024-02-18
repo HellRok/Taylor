@@ -34,6 +34,8 @@
 - Camera2D#draw is now C++ backed
 - Removed get_world_to_screen2D
 - Camera2D#as_in_viewport is now C++ backed
+- Removed get_screen_to_world2D
+- Camera2D#as_in_world is now C++ backed
 
 ## v0.3.14.1
 
