@@ -113,6 +113,13 @@ class Test
 
         assert_equal Vector2[4, 4], camera.as_in_viewport(vector)
       end
+
+      def test_as_in_world
+        camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
+        vector = Vector2[4, 4]
+
+        assert_equal Vector2[3, 3], camera.as_in_world(vector)
+      end
     end
   end
 end

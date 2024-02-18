@@ -74,4 +74,26 @@ class Camera2D
     # src/mruby_integration/models/camera2d.cpp
     Vector2[2, 2]
   end
+
+  # Pass in a vector with screen coordinates to see what that translates to in
+  # the world from camera's viewport.
+  #
+  # ```ruby
+  #  camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
+  #  vector = Vector2[4, 4]
+  #
+  #  translated_vector = camera.as_in_world(vector)
+  #  puts translated_vector.x
+  #  # => 3
+  #  puts translated_vector.y
+  #  # => 3
+  # ```
+  #
+  # @param vector [Vector2]
+  # @return [Vector2]
+  def as_in_world(vector)
+    # mrb_Camera2D_as_in_world
+    # src/mruby_integration/models/camera2d.cpp
+    Vector2[2, 2]
+  end
 end

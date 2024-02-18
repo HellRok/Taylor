@@ -36,12 +36,4 @@ class Camera2D
       zoom: zoom
     }
   end
-
-  # Pass in a vector with camera viewport coordinates to see what that
-  # translates to in the world.
-  # @param vector [Vector2]
-  # @return [Vector2]
-  def as_in_world(vector)
-    get_screen_to_world2D(vector, self)
-  end
 end
