@@ -6,7 +6,7 @@ class Test
       set_window_title(__method__.to_s)
 
       clear_and_draw do
-        clear_background(RED)
+        clear_background(Colour::RED)
       end
 
       assert_equal fixture_clear_background, get_screen_data.data

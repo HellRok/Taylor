@@ -7,7 +7,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_pixel(2, 2, VIOLET)
+          draw_pixel(2, 2, Colour::VIOLET)
         end
 
         assert_within 99, fixture_draw_pixel, get_screen_data.data
@@ -19,7 +19,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_pixel_v(Vector2.new(2, 2), VIOLET)
+          draw_pixel_v(Vector2.new(2, 2), Colour::VIOLET)
         end
 
         assert_within 99, fixture_draw_pixel, get_screen_data.data

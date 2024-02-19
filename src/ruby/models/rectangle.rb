@@ -31,7 +31,7 @@ class Rectangle
     rounded: false,
     radius: 0.5,    # only used when rounded is true
     segments: 8,    # only used when rounded is true
-    colour: BLACK
+    colour: Colour::BLACK
   )
 
     if rounded

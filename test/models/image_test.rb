@@ -57,13 +57,13 @@ class Test
       end
 
       def test_generate
-        image = Image.generate(width: 10, height: 10, colour: GREEN)
+        image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
         assert_equal fixture_models_generate, image.data
         unload_image(image)
       end
 
       def test_copy
-        image = Image.generate(width: 10, height: 10, colour: GREEN)
+        image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
         copy = image.copy
         assert_equal image.data, copy.data
         unload_image(image)
@@ -199,16 +199,16 @@ class Test
       end
 
       def test_image_tint!
-        image = Image.generate(width: 1, height: 1, colour: BLUE)
+        image = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
 
-        image.tint!(GREEN)
+        image.tint!(Colour::GREEN)
         assert_equal fixture_models_image_tint!, image.data
 
         image.unload
       end
 
       def test_image_invert!
-        image = Image.generate(width: 1, height: 1, colour: BLACK)
+        image = Image.generate(width: 1, height: 1, colour: Colour::BLACK)
 
         image.invert!
         assert_equal fixture_models_image_invert!, image.data
@@ -217,9 +217,9 @@ class Test
       end
 
       def test_image_grayscale!
-        red = Image.generate(width: 1, height: 1, colour: RED)
-        blue = Image.generate(width: 1, height: 1, colour: BLUE)
-        green = Image.generate(width: 1, height: 1, colour: GREEN)
+        red = Image.generate(width: 1, height: 1, colour: Colour::RED)
+        blue = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
+        green = Image.generate(width: 1, height: 1, colour: Colour::GREEN)
 
         red.grayscale!
         blue.grayscale!
@@ -235,8 +235,8 @@ class Test
       end
 
       def test_image_contrast!
-        darken = Image.generate(width: 1, height: 1, colour: LIME)
-        lighten = Image.generate(width: 1, height: 1, colour: LIME)
+        darken = Image.generate(width: 1, height: 1, colour: Colour::LIME)
+        lighten = Image.generate(width: 1, height: 1, colour: Colour::LIME)
 
         darken.contrast!(10)
         lighten.contrast!(-10)
@@ -249,7 +249,7 @@ class Test
       end
 
       def test_image_contrast_too_low
-        image = Image.generate(width: 1, height: 1, colour: LIME)
+        image = Image.generate(width: 1, height: 1, colour: Colour::LIME)
 
         assert_raise(ArgumentError) {
           image.contrast!(-101)
@@ -259,7 +259,7 @@ class Test
       end
 
       def test_image_contrast_too_high
-        image = Image.generate(width: 1, height: 1, colour: LIME)
+        image = Image.generate(width: 1, height: 1, colour: Colour::LIME)
 
         assert_raise(ArgumentError) {
           image.contrast!(101)
@@ -269,8 +269,8 @@ class Test
       end
 
       def test_image_brightness!
-        darken = Image.generate(width: 1, height: 1, colour: VIOLET)
-        lighten = Image.generate(width: 1, height: 1, colour: VIOLET)
+        darken = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
+        lighten = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
 
         darken.brightness!(-10)
         lighten.brightness!(10)
@@ -283,7 +283,7 @@ class Test
       end
 
       def test_image_brightness_too_low
-        image = Image.generate(width: 1, height: 1, colour: VIOLET)
+        image = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
 
         assert_raise(ArgumentError) {
           image.brightness!(-256)
@@ -293,7 +293,7 @@ class Test
       end
 
       def test_image_brightness_too_high
-        image = Image.generate(width: 1, height: 1, colour: VIOLET)
+        image = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
 
         assert_raise(ArgumentError) {
           image.brightness!(256)
@@ -305,14 +305,14 @@ class Test
       def test_image_replace!
         image = load_image("assets/test.png")
 
-        image.replace!(WHITE, BLUE)
+        image.replace!(Colour::WHITE, Colour::BLUE)
         assert_equal fixture_models_image_replace!, image.data
 
         image.unload
       end
 
       def test_image_draw!
-        image = Image.generate(width: 3, height: 3, colour: RAYWHITE)
+        image = Image.generate(width: 3, height: 3, colour: Colour::RAYWHITE)
         to_copy = load_image("assets/test.png")
 
         image.draw!(
@@ -327,7 +327,7 @@ class Test
       end
 
       def test_image_draw_no_args!
-        image = Image.generate(width: 3, height: 3, colour: RAYWHITE)
+        image = Image.generate(width: 3, height: 3, colour: Colour::RAYWHITE)
         to_copy = load_image("assets/test.png")
 
         image.draw!(image: to_copy)

@@ -7,7 +7,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_line(0, 0, 10, 10, GREEN)
+          draw_line(0, 0, 10, 10, Colour::GREEN)
         end
 
         assert_within 99, fixture_draw_line, get_screen_data.data
@@ -19,7 +19,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_line_v(Vector2.new(0, 0), Vector2.new(10, 10), GREEN)
+          draw_line_v(Vector2.new(0, 0), Vector2.new(10, 10), Colour::GREEN)
         end
 
         assert_within 99, fixture_draw_line, get_screen_data.data
@@ -31,7 +31,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_line_ex(Vector2.new(0, 0), Vector2.new(10, 10), 3, GREEN)
+          draw_line_ex(Vector2.new(0, 0), Vector2.new(10, 10), 3, Colour::GREEN)
         end
 
         assert_within 99, fixture_draw_line_ex, get_screen_data.data
@@ -43,7 +43,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_line_bezier(Vector2.new(0, 0), Vector2.new(10, 10), 1, GREEN)
+          draw_line_bezier(Vector2.new(0, 0), Vector2.new(10, 10), 1, Colour::GREEN)
         end
 
         assert_within 99, fixture_draw_line_bezier, get_screen_data.data
@@ -55,7 +55,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_line_bezier_quad(Vector2.new(0, 0), Vector2.new(10, 10), Vector2.new(7, 3), 1, GREEN)
+          draw_line_bezier_quad(Vector2.new(0, 0), Vector2.new(10, 10), Vector2.new(7, 3), 1, Colour::GREEN)
         end
 
         assert_within 99, fixture_draw_line_bezier_quad, get_screen_data.data

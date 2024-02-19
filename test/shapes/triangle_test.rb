@@ -11,7 +11,7 @@ class Test
             Vector2.new(5, 0),
             Vector2.new(0, 7),
             Vector2.new(10, 7),
-            BLUE
+            Colour::BLUE
           )
         end
 
@@ -28,7 +28,7 @@ class Test
             Vector2.new(5, 0),
             Vector2.new(0, 7),
             Vector2.new(10, 7),
-            BLUE
+            Colour::BLUE
           )
         end
 

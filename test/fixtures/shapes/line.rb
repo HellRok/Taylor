@@ -1,6 +1,6 @@
 def fixture_draw_line
-  w = RAYWHITE
-  g = GREEN
+  w = Colour::RAYWHITE
+  g = Colour::GREEN
   [
     g, w, w, w, w, w, w, w, w, w,
     w, g, w, w, w, w, w, w, w, w,
@@ -16,8 +16,8 @@ def fixture_draw_line
 end
 
 def fixture_draw_line_ex
-  w = RAYWHITE
-  g = GREEN
+  w = Colour::RAYWHITE
+  g = Colour::GREEN
   [
     g, g, g, w, w, w, w, w, w, w,
     g, g, g, g, w, w, w, w, w, w,
@@ -33,8 +33,8 @@ def fixture_draw_line_ex
 end
 
 def fixture_draw_line_bezier
-  w = RAYWHITE
-  g = GREEN
+  w = Colour::RAYWHITE
+  g = Colour::GREEN
   [
     g, g, g, w, w, w, w, w, w, w,
     w, w, w, g, w, w, w, w, w, w,
@@ -50,8 +50,8 @@ def fixture_draw_line_bezier
 end
 
 def fixture_draw_line_bezier_quad
-  w = RAYWHITE
-  g = GREEN
+  w = Colour::RAYWHITE
+  g = Colour::GREEN
   [
     g, g, w, w, w, w, w, w, w, w,
     w, w, g, g, w, w, w, w, w, w,

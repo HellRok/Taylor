@@ -42,7 +42,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
 
@@ -58,7 +58,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
 
@@ -221,7 +221,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -244,7 +244,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -267,7 +267,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -290,7 +290,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -323,7 +323,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -346,7 +346,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -369,7 +369,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -392,7 +392,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -522,7 +522,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -545,7 +545,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -568,7 +568,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -591,7 +591,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -624,7 +624,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -647,7 +647,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -670,7 +670,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)
@@ -693,7 +693,7 @@ class Test
 
         clear_and_draw do
           shader.draw do
-            Rectangle.new(0, 0, 10, 10).draw(colour: RED)
+            Rectangle.new(0, 0, 10, 10).draw(colour: Colour::RED)
           end
         end
         flush_frames(2)

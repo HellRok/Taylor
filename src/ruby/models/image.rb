@@ -191,7 +191,7 @@ class Image
   # @param destination [Rectangle] if left blank, will draw into the top left corner
   # @param colour [Colour] if left blank, no tinting is applied
   # @return [nil]
-  def draw!(image:, source: nil, destination: nil, colour: WHITE)
+  def draw!(image:, source: nil, destination: nil, colour: Colour::WHITE)
     source ||= Rectangle.new(0, 0, image.width, image.height)
     destination ||= Rectangle.new(0, 0, image.width, image.height)
 
@@ -204,7 +204,7 @@ class Image
   # @param height [Integer]
   # @param colour [Colour]
   # @return [Image]
-  def self.generate(width:, height:, colour: RAYWHITE)
+  def self.generate(width:, height:, colour: Colour::RAYWHITE)
     generate_image_colour(width, height, colour)
   end
 

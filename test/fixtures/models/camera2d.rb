@@ -1,6 +1,6 @@
 def fixture_camera2d_draw
-  w = RAYWHITE
-  r = RED
+  w = Colour::RAYWHITE
+  r = Colour::RED
   [
     [
       w, w, w, w, w, w, w, w, w, w,

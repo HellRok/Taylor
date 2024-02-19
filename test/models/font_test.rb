@@ -125,7 +125,7 @@ class Test
         clear_and_draw do
           font.draw(
             "O",
-            colour: GREEN
+            colour: Colour::GREEN
           )
         end
 
@@ -208,7 +208,7 @@ class Test
 
         set_window_title(__method__.to_s)
         font = Font.new("./assets/tiny.ttf", size: 6)
-        image = font.to_image("x", size: 12, colour: GREEN)
+        image = font.to_image("x", size: 12, colour: Colour::GREEN)
         # I suspect there's a bug here in Raylib where there is a filter being
         # applied somewhere in the process. Because just drawing it to the
         # screen at an exact integer scale works fine, but here it's slightly
@@ -236,7 +236,7 @@ class Test
 
         set_window_title(__method__.to_s)
         font = Font.new("./assets/tiny.ttf", size: 6)
-        image = font.to_image("xx", colour: GREEN)
+        image = font.to_image("xx", colour: Colour::GREEN)
         assert_equal fixture_font_to_image_with_colour, image.data
       ensure
         font.unload

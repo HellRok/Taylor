@@ -29,8 +29,41 @@ setup_Colour(mrb_state* mrb,
 auto
 mrb_Colour_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  mrb_int red, green, blue, alpha;
-  mrb_get_args(mrb, "iiii", &red, &green, &blue, &alpha);
+  // def initialize(
+  //   red: 0,
+  //   blue: 0,
+  //   green: 0,
+  //   alpha: 255
+  // )
+  mrb_int kw_num = 4;
+  mrb_int kw_required = 0;
+  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "red"),
+                         mrb_intern_lit(mrb, "green"),
+                         mrb_intern_lit(mrb, "blue"),
+                         mrb_intern_lit(mrb, "alpha") };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  float red = 0;
+  if (!mrb_undef_p(kw_values[0])) {
+    red = mrb_as_int(mrb, kw_values[0]);
+  }
+
+  float green = 0;
+  if (!mrb_undef_p(kw_values[1])) {
+    green = mrb_as_int(mrb, kw_values[1]);
+  }
+
+  float blue = 0;
+  if (!mrb_undef_p(kw_values[2])) {
+    blue = mrb_as_int(mrb, kw_values[2]);
+  }
+
+  float alpha = 255;
+  if (!mrb_undef_p(kw_values[3])) {
+    alpha = mrb_as_int(mrb, kw_values[3]);
+  }
 
   Color* colour = static_cast<struct Color*> DATA_PTR(self);
   if (colour) {

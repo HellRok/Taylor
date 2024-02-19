@@ -16,7 +16,7 @@ class Test
 
         set_window_title(__method__.to_s)
         drawing do
-          clear colour: GREEN
+          clear colour: Colour::GREEN
         end
         assert_equal fixture_core_drawing_clear_specified, get_screen_data.data
       end
@@ -26,17 +26,17 @@ class Test
 
         set_window_title(__method__.to_s)
         clear_and_draw do
-          clear_background(RAYWHITE)
+          clear_background(Colour::RAYWHITE)
         end
         assert_equal fixture_core_drawing_drawing, get_screen_data.data
 
         clear_and_draw do
-          clear_background(RED)
+          clear_background(Colour::RED)
         end
         assert_not_equal fixture_core_drawing_drawing, get_screen_data.data
 
         drawing do
-          clear_background(RAYWHITE)
+          clear_background(Colour::RAYWHITE)
         end
         assert_equal fixture_core_drawing_drawing, get_screen_data.data
       end
@@ -46,9 +46,9 @@ class Test
 
         set_window_title(__method__.to_s)
         drawing do
-          clear_background(RAYWHITE)
+          clear_background(Colour::RAYWHITE)
           scissor_mode(Rectangle.new(2, 2, 6, 6)) do
-            clear_background(RED)
+            clear_background(Colour::RED)
           end
         end
         assert_equal fixture_core_drawing_scissor_mode, get_screen_data.data

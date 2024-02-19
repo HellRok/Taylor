@@ -7,13 +7,13 @@ class Test
     end
 
     def test_image_generate_colour
-      image = generate_image_colour(10, 10, RAYWHITE)
+      image = generate_image_colour(10, 10, Colour::RAYWHITE)
       assert_equal fixture_generate_colour, image.data
       unload_image(image)
     end
 
     def test_image_copy
-      image = generate_image_colour(10, 10, BLUE)
+      image = generate_image_colour(10, 10, Colour::BLUE)
       copy = image_copy(image)
       assert_equal image.data, copy.data
       unload_image(image)
@@ -34,7 +34,7 @@ class Test
       set_window_title(__method__.to_s)
       font = Font.new("./assets/tiny.ttf", size: 16)
 
-      image = image_text_ex(font, "S", 16, 0, BLACK)
+      image = image_text_ex(font, "S", 16, 0, Colour::BLACK)
       assert_equal fixture_image_text_ex, image.data
 
       unload_image(image)
@@ -120,16 +120,16 @@ class Test
     end
 
     def test_image_colour_tint!
-      image = Image.generate(width: 1, height: 1, colour: BLUE)
+      image = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
 
-      image_colour_tint!(image, GREEN)
+      image_colour_tint!(image, Colour::GREEN)
       assert_equal fixture_image_colour_tint!, image.data
 
       unload_image(image)
     end
 
     def test_image_colour_invert!
-      image = Image.generate(width: 1, height: 1, colour: BLACK)
+      image = Image.generate(width: 1, height: 1, colour: Colour::BLACK)
 
       image_colour_invert!(image)
       assert_equal fixture_image_colour_invert!, image.data
@@ -138,9 +138,9 @@ class Test
     end
 
     def test_image_colour_grayscale!
-      red = Image.generate(width: 1, height: 1, colour: RED)
-      blue = Image.generate(width: 1, height: 1, colour: BLUE)
-      green = Image.generate(width: 1, height: 1, colour: GREEN)
+      red = Image.generate(width: 1, height: 1, colour: Colour::RED)
+      blue = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
+      green = Image.generate(width: 1, height: 1, colour: Colour::GREEN)
 
       image_colour_grayscale!(red)
       image_colour_grayscale!(blue)
@@ -156,8 +156,8 @@ class Test
     end
 
     def test_image_colour_contrast!
-      darken = Image.generate(width: 1, height: 1, colour: LIME)
-      lighten = Image.generate(width: 1, height: 1, colour: LIME)
+      darken = Image.generate(width: 1, height: 1, colour: Colour::LIME)
+      lighten = Image.generate(width: 1, height: 1, colour: Colour::LIME)
 
       image_colour_contrast!(darken, 50)
       image_colour_contrast!(lighten, -50)
@@ -170,8 +170,8 @@ class Test
     end
 
     def test_image_colour_brightness!
-      darken = Image.generate(width: 1, height: 1, colour: VIOLET)
-      lighten = Image.generate(width: 1, height: 1, colour: VIOLET)
+      darken = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
+      lighten = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
 
       image_colour_brightness!(darken, -50)
       image_colour_brightness!(lighten, 50)
@@ -186,14 +186,14 @@ class Test
     def test_image_colour_replace!
       image = load_image("assets/test.png")
 
-      image_colour_replace!(image, WHITE, BLUE)
+      image_colour_replace!(image, Colour::WHITE, Colour::BLUE)
       assert_equal fixture_image_colour_replace!, image.data
 
       unload_image(image)
     end
 
     def test_image_draw!
-      image = generate_image_colour(3, 3, RAYWHITE)
+      image = generate_image_colour(3, 3, Colour::RAYWHITE)
       to_copy = load_image("assets/test.png")
 
       image_draw!(
@@ -201,7 +201,7 @@ class Test
         to_copy,
         Rectangle.new(0, 0, 2, 2),
         Rectangle.new(1, 1, 2, 2),
-        WHITE
+        Colour::WHITE
       )
       assert_equal fixture_image_draw!, image.data
 
