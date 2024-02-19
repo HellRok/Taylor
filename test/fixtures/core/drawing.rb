@@ -1,18 +1,18 @@
 def fixture_core_drawing_clear_default
-  100.times.map { RAYWHITE }
+  100.times.map { Colour::RAYWHITE }
 end
 
 def fixture_core_drawing_clear_specified
-  100.times.map { GREEN }
+  100.times.map { Colour::GREEN }
 end
 
 def fixture_core_drawing_drawing
-  100.times.map { RAYWHITE }
+  100.times.map { Colour::RAYWHITE }
 end
 
 def fixture_core_drawing_scissor_mode
-  w = RAYWHITE
-  r = RED
+  w = Colour::RAYWHITE
+  r = Colour::RED
   [
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,

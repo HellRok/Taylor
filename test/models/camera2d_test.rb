@@ -88,19 +88,19 @@ class Test
 
         clear_and_draw do
           camera.draw do
-            rectangle.draw(colour: RED)
+            rectangle.draw(colour: Colour::RED)
           end
         end
 
         assert_equal fixture_camera2d_draw[0], get_screen_data.data
-        clear_background(RAYWHITE)
+        clear_background(Colour::RAYWHITE)
 
         camera.offset.x = -2
         camera.offset.y = -2
 
         clear_and_draw do
           camera.draw do
-            draw_rectangle_rec(rectangle, RED)
+            draw_rectangle_rec(rectangle, Colour::RED)
           end
         end
 

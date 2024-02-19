@@ -1,7 +1,7 @@
 def fixture_models_image_load
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, t, p,
     t, o, t,
@@ -10,16 +10,16 @@ def fixture_models_image_load
 end
 
 def fixture_models_generate_default
-  100.times.map { RAYWHITE }
+  100.times.map { Colour::RAYWHITE }
 end
 
 def fixture_models_generate
-  100.times.map { GREEN }
+  100.times.map { Colour::GREEN }
 end
 
 def fixture_models_copy_with_source
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
   [
     o, t,
     t, o
@@ -28,19 +28,19 @@ end
 
 def fixture_models_image_resize_bicubic_scaing!
   [
-    Colour.new(212, 139, 4, 255), Colour.new(226, 176, 73, 255), Colour.new(254, 255, 224, 255), Colour.new(247, 221, 255, 255), Colour.new(205, 73, 232, 255), Colour.new(186, 5, 212, 255),
-    Colour.new(226, 176, 73, 255), Colour.new(232, 194, 107, 255), Colour.new(245, 232, 179, 255), Colour.new(240, 206, 219, 255), Colour.new(216, 115, 228, 255), Colour.new(205, 73, 232, 255),
-    Colour.new(254, 255, 224, 255), Colour.new(245, 232, 179, 255), Colour.new(227, 181, 82, 255), Colour.new(225, 172, 96, 255), Colour.new(240, 206, 219, 255), Colour.new(247, 221, 255, 255),
-    Colour.new(247, 221, 255, 255), Colour.new(240, 206, 219, 255), Colour.new(225, 172, 96, 255), Colour.new(227, 181, 82, 255), Colour.new(245, 232, 179, 255), Colour.new(254, 255, 224, 255),
-    Colour.new(205, 73, 232, 255), Colour.new(216, 115, 228, 255), Colour.new(240, 206, 219, 255), Colour.new(245, 232, 179, 255), Colour.new(232, 194, 107, 255), Colour.new(226, 176, 73, 255),
-    Colour.new(186, 5, 212, 255), Colour.new(205, 73, 232, 255), Colour.new(247, 221, 255, 255), Colour.new(254, 255, 224, 255), Colour.new(226, 176, 73, 255), Colour.new(212, 139, 4, 255)
+    Colour[212, 139, 4], Colour[226, 176, 73], Colour[254, 255, 224], Colour[247, 221, 255], Colour[205, 73, 232], Colour[186, 5, 212],
+    Colour[226, 176, 73], Colour[232, 194, 107], Colour[245, 232, 179], Colour[240, 206, 219], Colour[216, 115, 228], Colour[205, 73, 232],
+    Colour[254, 255, 224], Colour[245, 232, 179], Colour[227, 181, 82], Colour[225, 172, 96], Colour[240, 206, 219], Colour[247, 221, 255],
+    Colour[247, 221, 255], Colour[240, 206, 219], Colour[225, 172, 96], Colour[227, 181, 82], Colour[245, 232, 179], Colour[254, 255, 224],
+    Colour[205, 73, 232], Colour[216, 115, 228], Colour[240, 206, 219], Colour[245, 232, 179], Colour[232, 194, 107], Colour[226, 176, 73],
+    Colour[186, 5, 212], Colour[205, 73, 232], Colour[247, 221, 255], Colour[254, 255, 224], Colour[226, 176, 73], Colour[212, 139, 4]
   ]
 end
 
 def fixture_models_image_resize_default_scaing!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, o, t, t, p, p,
     o, o, t, t, p, p,
@@ -52,9 +52,9 @@ def fixture_models_image_resize_default_scaing!
 end
 
 def fixture_models_image_crop!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, t,
     t, o,
@@ -63,9 +63,9 @@ def fixture_models_image_crop!
 end
 
 def fixture_models_image_alpha_mask
-  t = Colour.new(255, 255, 255, 0)
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 0)
+  t = Colour[255, 255, 255, 0]
+  o = Colour[218, 154, 37, 255]
+  p = Colour[195, 37, 218, 0]
   [
     o, t, p,
     t, o, t,
@@ -74,9 +74,9 @@ def fixture_models_image_alpha_mask
 end
 
 def fixture_models_image_flip_vertical!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     p, t, p,
     t, o, t,
@@ -85,9 +85,9 @@ def fixture_models_image_flip_vertical!
 end
 
 def fixture_models_image_flip_horizontal!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     p, t, o,
     t, o, t,
@@ -96,9 +96,9 @@ def fixture_models_image_flip_horizontal!
 end
 
 def fixture_models_image_rotate_nil!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     p, t, o,
     t, o, t,
@@ -111,9 +111,9 @@ def fixture_models_image_rotate_cw!
 end
 
 def fixture_models_image_rotate_ccw!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     p, t, p,
     t, o, t,
@@ -123,42 +123,42 @@ end
 
 def fixture_models_image_tint!
   [
-    Colour.new(0, 108, 45, 255)
+    Colour[0, 108, 45]
   ]
 end
 
 def fixture_models_image_invert!
   [
-    WHITE
+    Colour::WHITE
   ]
 end
 
 def fixture_models_image_grayscale!
   [
-    [Colour.new(99, 99, 99, 255)],
-    [Colour.new(98, 98, 98, 255)],
-    [Colour.new(139, 139, 139, 255)]
+    [Colour[99, 99, 99]],
+    [Colour[98, 98, 98]],
+    [Colour[139, 139, 139]]
   ]
 end
 
 def fixture_models_image_contrast!
   [
-    [Colour.new(0, 164, 30, 255)],
-    [Colour.new(24, 152, 62, 255)]
+    [Colour[0, 164, 30]],
+    [Colour[24, 152, 62]]
   ]
 end
 
 def fixture_models_image_brightness!
   [
-    [Colour.new(145, 70, 200, 255)],
-    [Colour.new(125, 50, 180, 255)]
+    [Colour[145, 70, 200]],
+    [Colour[125, 50, 180]]
   ]
 end
 
 def fixture_models_image_replace!
-  b = BLUE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  b = Colour::BLUE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, b, p,
     b, o, b,
@@ -167,9 +167,9 @@ def fixture_models_image_replace!
 end
 
 def fixture_models_image_draw_no_args!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, t, p,
     t, o, t,
@@ -178,9 +178,9 @@ def fixture_models_image_draw_no_args!
 end
 
 def fixture_models_image_draw!
-  r = RAYWHITE
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
+  r = Colour::RAYWHITE
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
   [
     r, r, r,
     r, o, t,

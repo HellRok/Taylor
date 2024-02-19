@@ -14,7 +14,7 @@ end
 
 def clear_and_draw(&block)
   begin_drawing
-  clear(colour: RAYWHITE)
+  clear(colour: Colour::RAYWHITE)
   block.call
 ensure
   end_drawing
@@ -42,21 +42,21 @@ def colour_data(data, width: 10)
   data.each_slice(width).each { |row|
     row.each { |colour|
       map << case colour
-      when BLANK
+      when Colour::BLANK
         "t"
-      when RAYWHITE
+      when Colour::RAYWHITE
         "w"
-      when BLACK
+      when Colour::BLACK
         "B"
-      when RED
+      when Colour::RED
         "r"
-      when GREEN
+      when Colour::GREEN
         "g"
-      when BLUE
+      when Colour::BLUE
         "b"
-      when PURPLE
+      when Colour::PURPLE
         "p"
-      when VIOLET
+      when Colour::VIOLET
         "v"
       else
         "?"

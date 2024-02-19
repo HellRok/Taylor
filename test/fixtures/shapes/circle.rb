@@ -1,6 +1,6 @@
 def fixture_draw_circle
-  w = RAYWHITE
-  p = PURPLE
+  w = Colour::RAYWHITE
+  p = Colour::PURPLE
   [
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
@@ -16,8 +16,8 @@ def fixture_draw_circle
 end
 
 def fixture_draw_circle_sector
-  w = RAYWHITE
-  p = PURPLE
+  w = Colour::RAYWHITE
+  p = Colour::PURPLE
   [
     w, w, w, p, p, w, w, w, w, w,
     w, p, p, p, p, w, w, w, w, w,
@@ -33,8 +33,8 @@ def fixture_draw_circle_sector
 end
 
 def fixture_draw_circle_sector_lines
-  w = RAYWHITE
-  p = PURPLE
+  w = Colour::RAYWHITE
+  p = Colour::PURPLE
   [
     w, w, p, p, p, w, w, w, w, w,
     w, p, w, w, p, w, w, w, w, w,
@@ -51,46 +51,46 @@ end
 
 def fixture_draw_circle_gradient
   [
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(5, 225, 54, 255),
-    Colour.new(30, 212, 79, 255), Colour.new(30, 212, 79, 255), Colour.new(5, 225, 54, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(5, 225, 54, 255),
-    Colour.new(58, 197, 108, 255), Colour.new(94, 178, 146, 255), Colour.new(94, 178, 146, 255),
-    Colour.new(58, 197, 108, 255), Colour.new(5, 225, 54, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(30, 212, 79, 255), Colour.new(94, 178, 146, 255), Colour.new(153, 147, 206, 255),
-    Colour.new(153, 147, 206, 255), Colour.new(94, 178, 146, 255), Colour.new(30, 212, 79, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(30, 212, 79, 255), Colour.new(94, 178, 146, 255),
-    Colour.new(153, 147, 206, 255), Colour.new(153, 147, 206, 255), Colour.new(94, 178, 146, 255),
-    Colour.new(30, 212, 79, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(5, 225, 54, 255),
-    Colour.new(58, 197, 108, 255), Colour.new(94, 178, 146, 255), Colour.new(94, 178, 146, 255),
-    Colour.new(58, 197, 108, 255), Colour.new(5, 225, 54, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(5, 225, 54, 255), Colour.new(30, 212, 79, 255),
-    Colour.new(30, 212, 79, 255), Colour.new(5, 225, 54, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255), Colour.new(245, 245, 245, 255),
-    Colour.new(245, 245, 245, 255)
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[5, 225, 54],
+    Colour[30, 212, 79], Colour[30, 212, 79], Colour[5, 225, 54],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[5, 225, 54],
+    Colour[58, 197, 108], Colour[94, 178, 146], Colour[94, 178, 146],
+    Colour[58, 197, 108], Colour[5, 225, 54], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[30, 212, 79], Colour[94, 178, 146], Colour[153, 147, 206],
+    Colour[153, 147, 206], Colour[94, 178, 146], Colour[30, 212, 79],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[30, 212, 79], Colour[94, 178, 146],
+    Colour[153, 147, 206], Colour[153, 147, 206], Colour[94, 178, 146],
+    Colour[30, 212, 79], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[5, 225, 54],
+    Colour[58, 197, 108], Colour[94, 178, 146], Colour[94, 178, 146],
+    Colour[58, 197, 108], Colour[5, 225, 54], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[5, 225, 54], Colour[30, 212, 79],
+    Colour[30, 212, 79], Colour[5, 225, 54], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245], Colour[245, 245, 245], Colour[245, 245, 245],
+    Colour[245, 245, 245]
   ]
 end
 
 def fixture_draw_circle_lines
-  w = RAYWHITE
-  p = PURPLE
+  w = Colour::RAYWHITE
+  p = Colour::PURPLE
   [
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,

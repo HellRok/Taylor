@@ -7,7 +7,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_circle(5, 5, 3, PURPLE)
+          draw_circle(5, 5, 3, Colour::PURPLE)
         end
 
         assert_within 99, fixture_draw_circle, get_screen_data.data
@@ -19,7 +19,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_circle_v(Vector2.new(5, 5), 3, PURPLE)
+          draw_circle_v(Vector2.new(5, 5), 3, Colour::PURPLE)
         end
 
         assert_within 99, fixture_draw_circle, get_screen_data.data
@@ -37,7 +37,7 @@ class Test
             180,
             270,
             8,
-            PURPLE
+            Colour::PURPLE
           )
         end
 
@@ -56,7 +56,7 @@ class Test
             180,
             270,
             8,
-            PURPLE
+            Colour::PURPLE
           )
         end
 
@@ -69,7 +69,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_circle_gradient(5, 5, 3, PURPLE, GREEN)
+          draw_circle_gradient(5, 5, 3, Colour::PURPLE, Colour::GREEN)
         end
 
         assert_within 99, fixture_draw_circle_gradient, get_screen_data.data
@@ -81,7 +81,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          draw_circle_lines(5, 5, 3, PURPLE)
+          draw_circle_lines(5, 5, 3, Colour::PURPLE)
         end
 
         assert_within 99, fixture_draw_circle_lines, get_screen_data.data

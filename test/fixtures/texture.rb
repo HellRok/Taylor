@@ -1,8 +1,8 @@
 def fixture_draw_texture
-  w = RAYWHITE
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  w = Colour::RAYWHITE
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,
@@ -18,10 +18,10 @@ def fixture_draw_texture
 end
 
 def fixture_draw_texture_pro
-  w = RAYWHITE
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  w = Colour::RAYWHITE
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, o, o, t, t, t, p, p, p, w,
     o, o, o, t, t, t, p, p, p, w,

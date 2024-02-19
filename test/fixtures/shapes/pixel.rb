@@ -1,6 +1,6 @@
 def fixture_draw_pixel
-  w = RAYWHITE
-  v = VIOLET
+  w = Colour::RAYWHITE
+  v = Colour::VIOLET
   [
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, w, w, w, w, w, w,

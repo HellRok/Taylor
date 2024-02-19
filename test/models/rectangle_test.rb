@@ -44,7 +44,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          Rectangle.new(2, 2, 5, 5).draw(origin: Vector2::ZERO, rotation: 45, colour: RED)
+          Rectangle.new(2, 2, 5, 5).draw(origin: Vector2::ZERO, rotation: 45, colour: Colour::RED)
         end
 
         assert_within 99, fixture_draw_rectangle_pro, get_screen_data.data
@@ -56,7 +56,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          Rectangle.new(2, 2, 8, 8).draw(outline: true, colour: RED)
+          Rectangle.new(2, 2, 8, 8).draw(outline: true, colour: Colour::RED)
         end
 
         assert_within 99, fixture_draw_rectangle_lines_ex, get_screen_data.data
@@ -68,7 +68,7 @@ class Test
         set_window_title(__method__.to_s)
 
         clear_and_draw do
-          Rectangle.new(1, 1, 8, 8).draw(rounded: true, radius: 0.5, segments: 8, colour: RED)
+          Rectangle.new(1, 1, 8, 8).draw(rounded: true, radius: 0.5, segments: 8, colour: Colour::RED)
         end
 
         assert_within 99, fixture_draw_rectangle_rounded, get_screen_data.data
@@ -81,7 +81,7 @@ class Test
 
         clear_and_draw do
           Rectangle.new(2, 2, 6, 6).draw(
-            rounded: true, radius: 0.5, segments: 8, outline: true, thickness: 2, colour: RED
+            rounded: true, radius: 0.5, segments: 8, outline: true, thickness: 2, colour: Colour::RED
           )
         end
 

@@ -1,6 +1,6 @@
 def fixture_draw_triangle
-  w = RAYWHITE
-  b = BLUE
+  w = Colour::RAYWHITE
+  b = Colour::BLUE
   [
     w, w, w, w, w, w, w, w, w, w,
     w, w, w, w, b, b, w, w, w, w,
@@ -16,8 +16,8 @@ def fixture_draw_triangle
 end
 
 def fixture_draw_triangle_lines
-  w = RAYWHITE
-  b = BLUE
+  w = Colour::RAYWHITE
+  b = Colour::BLUE
   [
     w, w, w, w, b, b, w, w, w, w,
     w, w, w, b, w, w, b, w, w, w,

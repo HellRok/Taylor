@@ -1,7 +1,7 @@
 def fixture_image_load
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, t, p,
     t, o, t,
@@ -10,12 +10,12 @@ def fixture_image_load
 end
 
 def fixture_generate_colour
-  100.times.map { RAYWHITE }
+  100.times.map { Colour::RAYWHITE }
 end
 
 def fixture_image_from_image
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
   [
     o, t,
     t, o
@@ -24,40 +24,40 @@ end
 
 def fixture_image_text_ex
   [
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 58), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 86), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 86), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 114), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 58), Colour.new(0, 0, 0, 86), Colour.new(0, 0, 0, 86), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 171), Colour.new(0, 0, 0, 114), Colour.new(0, 0, 0, 86), Colour.new(0, 0, 0, 86), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 86), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 255), Colour.new(0, 0, 0, 86), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0),
-    Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0), Colour.new(0, 0, 0, 0)
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 58], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 86], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 86], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 171], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 171], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 114], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 58], Colour[0, 0, 0, 86], Colour[0, 0, 0, 86], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 171], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 171], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 114], Colour[0, 0, 0, 86], Colour[0, 0, 0, 86], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 86], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 86], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
+    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0]
   ]
 end
 
 def fixture_image_resize!
   [
-    Colour.new(212, 139, 4, 255), Colour.new(226, 176, 73, 255), Colour.new(254, 255, 224, 255), Colour.new(247, 221, 255, 255), Colour.new(205, 73, 232, 255), Colour.new(186, 5, 212, 255),
-    Colour.new(226, 176, 73, 255), Colour.new(232, 194, 107, 255), Colour.new(245, 232, 179, 255), Colour.new(240, 206, 219, 255), Colour.new(216, 115, 228, 255), Colour.new(205, 73, 232, 255),
-    Colour.new(254, 255, 224, 255), Colour.new(245, 232, 179, 255), Colour.new(227, 181, 82, 255), Colour.new(225, 172, 96, 255), Colour.new(240, 206, 219, 255), Colour.new(247, 221, 255, 255),
-    Colour.new(247, 221, 255, 255), Colour.new(240, 206, 219, 255), Colour.new(225, 172, 96, 255), Colour.new(227, 181, 82, 255), Colour.new(245, 232, 179, 255), Colour.new(254, 255, 224, 255),
-    Colour.new(205, 73, 232, 255), Colour.new(216, 115, 228, 255), Colour.new(240, 206, 219, 255), Colour.new(245, 232, 179, 255), Colour.new(232, 194, 107, 255), Colour.new(226, 176, 73, 255),
-    Colour.new(186, 5, 212, 255), Colour.new(205, 73, 232, 255), Colour.new(247, 221, 255, 255), Colour.new(254, 255, 224, 255), Colour.new(226, 176, 73, 255), Colour.new(212, 139, 4, 255)
+    Colour[212, 139, 4, 255], Colour[226, 176, 73], Colour[254, 255, 224], Colour[247, 221, 255], Colour[205, 73, 232], Colour[186, 5, 212],
+    Colour[226, 176, 73], Colour[232, 194, 107], Colour[245, 232, 179], Colour[240, 206, 219], Colour[216, 115, 228], Colour[205, 73, 232],
+    Colour[254, 255, 224], Colour[245, 232, 179], Colour[227, 181, 82], Colour[225, 172, 96], Colour[240, 206, 219], Colour[247, 221, 255],
+    Colour[247, 221, 255], Colour[240, 206, 219], Colour[225, 172, 96], Colour[227, 181, 82], Colour[245, 232, 179], Colour[254, 255, 224],
+    Colour[205, 73, 232], Colour[216, 115, 228], Colour[240, 206, 219], Colour[245, 232, 179], Colour[232, 194, 107], Colour[226, 176, 73],
+    Colour[186, 5, 212], Colour[205, 73, 232], Colour[247, 221, 255], Colour[254, 255, 224], Colour[226, 176, 73], Colour[212, 139, 4]
   ]
 end
 
 def fixture_image_resize_nearest_neighbour!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, o, t, t, p, p,
     o, o, t, t, p, p,
@@ -69,9 +69,9 @@ def fixture_image_resize_nearest_neighbour!
 end
 
 def fixture_image_crop!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, t, p,
     t, o, t
@@ -79,9 +79,9 @@ def fixture_image_crop!
 end
 
 def fixture_image_alpha_mask!
-  t = Colour.new(255, 255, 255, 0)
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 0)
+  t = Colour[255, 255, 255, 0]
+  o = Colour[218, 154, 37, 255]
+  p = Colour[195, 37, 218, 0]
   [
     o, t, p,
     t, o, t,
@@ -90,9 +90,9 @@ def fixture_image_alpha_mask!
 end
 
 def fixture_image_flip_vertical!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     p, t, p,
     t, o, t,
@@ -101,9 +101,9 @@ def fixture_image_flip_vertical!
 end
 
 def fixture_image_flip_horizontal!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     p, t, o,
     t, o, t,
@@ -112,9 +112,9 @@ def fixture_image_flip_horizontal!
 end
 
 def fixture_image_rotate_cw!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     p, t, o,
     t, o, t,
@@ -123,9 +123,9 @@ def fixture_image_rotate_cw!
 end
 
 def fixture_image_rotate_ccw!
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     p, t, p,
     t, o, t,
@@ -135,42 +135,42 @@ end
 
 def fixture_image_colour_tint!
   [
-    Colour.new(0, 108, 45, 255)
+    Colour[0, 108, 45]
   ]
 end
 
 def fixture_image_colour_invert!
   [
-    WHITE
+    Colour::WHITE
   ]
 end
 
 def fixture_image_colour_grayscale!
   [
-    [Colour.new(99, 99, 99, 255)],
-    [Colour.new(98, 98, 98, 255)],
-    [Colour.new(139, 139, 139, 255)]
+    [Colour[99, 99, 99]],
+    [Colour[98, 98, 98]],
+    [Colour[139, 139, 139]]
   ]
 end
 
 def fixture_image_colour_contrast!
   [
-    [Colour.new(0, 196, 0, 255)],
-    [Colour.new(95, 135, 107, 255)]
+    [Colour[0, 196, 0]],
+    [Colour[95, 135, 107]]
   ]
 end
 
 def fixture_image_colour_brightness!
   [
-    [Colour.new(185, 110, 240, 255)],
-    [Colour.new(85, 10, 140, 255)]
+    [Colour[185, 110, 240]],
+    [Colour[85, 10, 140]]
   ]
 end
 
 def fixture_image_colour_replace!
-  b = BLUE
-  o = Colour.new(218, 154, 37, 255)
-  p = Colour.new(195, 37, 218, 255)
+  b = Colour::BLUE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
   [
     o, b, p,
     b, o, b,
@@ -179,9 +179,9 @@ def fixture_image_colour_replace!
 end
 
 def fixture_image_draw!
-  r = RAYWHITE
-  t = WHITE
-  o = Colour.new(218, 154, 37, 255)
+  r = Colour::RAYWHITE
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
   [
     r, r, r,
     r, o, t,
