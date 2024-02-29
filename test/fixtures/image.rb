@@ -1,14 +1,3 @@
-def fixture_image_load
-  t = Colour::WHITE
-  o = Colour[218, 154, 37]
-  p = Colour[195, 37, 218]
-  [
-    o, t, p,
-    t, o, t,
-    p, t, o
-  ]
-end
-
 def fixture_generate_colour
   100.times.map { Colour::RAYWHITE }
 end

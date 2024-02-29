@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include <cstdlib>
 
+#include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/struct_types.hpp"
@@ -31,8 +32,12 @@ setup_Image(mrb_state* mrb,
 auto
 mrb_Image_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  mrb_int width, height, mipmaps, format;
-  mrb_get_args(mrb, "iiii", &width, &height, &mipmaps, &format);
+  char* path;
+  mrb_get_args(mrb, "z", &path);
+
+  if (!FileExists(path)) {
+    raise_not_found_error(mrb, Image_class);
+  }
 
   Image* image = static_cast<Image*> DATA_PTR(self);
   if (image) {
@@ -40,8 +45,15 @@ mrb_Image_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   }
   mrb_data_init(self, nullptr, &Image_type);
   image = static_cast<Image*>(malloc(sizeof(Image)));
+  *image = LoadImage(path);
 
-  setup_Image(mrb, self, image, width, height, mipmaps, format);
+  setup_Image(mrb,
+              self,
+              image,
+              image->width,
+              image->height,
+              image->mipmaps,
+              image->format);
 
   mrb_data_init(self, image, &Image_type);
   return self;
@@ -78,30 +90,6 @@ mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
   return return_array;
 }
 
-auto
-mrb_Image_set_width(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Image_type, Image, width, width);
-}
-
-auto
-mrb_Image_set_height(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Image_type, Image, height, height);
-}
-
-auto
-mrb_Image_set_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Image_type, Image, mipmaps, mipmaps);
-}
-
-auto
-mrb_Image_set_format(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Image_type, Image, format, format);
-}
-
 void
 append_models_Image(mrb_state* mrb)
 {
@@ -111,14 +99,6 @@ append_models_Image(mrb_state* mrb)
     mrb, Image_class, "initialize", mrb_Image_initialize, MRB_ARGS_REQ(5));
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Image_class, "width=", mrb_Image_set_width, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Image_class, "height=", mrb_Image_set_height, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Image_class, "mipmaps=", mrb_Image_set_mipmaps, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Image_class, "format=", mrb_Image_set_format, MRB_ARGS_REQ(1));
 
   load_ruby_models_image(mrb);
 }

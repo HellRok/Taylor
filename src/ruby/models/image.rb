@@ -14,15 +14,6 @@ class Image
     }
   end
 
-  # Loads an image from the specified path
-  # @param path [String]
-  # @raise [Image::NotFound] If the file specified by path doesn't exist
-  # @return [Image]
-  def self.load(path)
-    raise Image::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
-    load_image(path)
-  end
-
   # Unloads the texture from memory
   # @return [nil]
   def unload

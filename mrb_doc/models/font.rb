@@ -12,12 +12,13 @@ class Font
     Font.new
   end
 
-  # Creates a new instance of Font
+  # Creates a new instance of {Font}
   #
   # ```ruby
   # font = Font.new("/assets/my_cool_font.ttf", size: 16)
   # ```
   #
+  # @param path [String]
   # @param size [Integer]
   # @param glyph_count [Integer]
   # @return [Font]

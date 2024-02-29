@@ -1,4 +1,4 @@
-def fixture_models_image_load
+def fixture_models_image_new
   t = Colour::WHITE
   o = Colour[218, 154, 37]
   p = Colour[195, 37, 218]
