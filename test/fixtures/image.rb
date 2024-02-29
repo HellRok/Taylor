@@ -2,15 +2,6 @@ def fixture_generate_colour
   100.times.map { Colour::RAYWHITE }
 end
 
-def fixture_image_from_image
-  t = Colour::WHITE
-  o = Colour[218, 154, 37]
-  [
-    o, t,
-    t, o
-  ]
-end
-
 def fixture_image_text_ex
   [
     Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],

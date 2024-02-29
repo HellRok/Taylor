@@ -9,25 +9,6 @@ def generate_image_colour(width, height, colour)
   Image.new
 end
 
-# Copies an image to a new object
-# @param image [Image]
-# @return [Image]
-def image_copy(image)
-  # mrb_image_copy
-  # src/mruby_integration/image.cpp
-  Image.new
-end
-
-# Returns a subsection of an image
-# @param image [Image]
-# @param source [Rectangle]
-# @return [Image]
-def image_from_image(image, source)
-  # mrb_image_from_image
-  # src/mruby_integration/image.cpp
-  Image.new
-end
-
 # Creates an image from the font
 # @param font [Font] Which font to draw with
 # @param text [String] The text to put on the screen

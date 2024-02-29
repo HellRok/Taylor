@@ -31,48 +31,6 @@ mrb_generate_image_colour(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_image_copy(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  auto* copy = static_cast<Image*>(malloc(sizeof(Image)));
-  *copy = ImageCopy(*image);
-
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, copy));
-
-  setup_Image(
-    mrb, obj, copy, copy->width, copy->height, copy->mipmaps, copy->format);
-
-  return obj;
-}
-
-auto
-mrb_image_from_image(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  Rectangle* rectangle;
-  mrb_get_args(mrb, "dd", &image, &Image_type, &rectangle, &Rectangle_type);
-
-  auto* result = static_cast<Image*>(malloc(sizeof(Image)));
-  *result = ImageFromImage(*image, *rectangle);
-
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
-
-  setup_Image(mrb,
-              obj,
-              result,
-              result->width,
-              result->height,
-              result->mipmaps,
-              result->format);
-
-  return obj;
-}
-
-auto
 mrb_image_text_ex(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Font* font;
@@ -385,13 +343,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "image_copy", mrb_image_copy, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_from_image",
-                    mrb_image_from_image,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "image_text_ex",

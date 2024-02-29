@@ -14,18 +14,6 @@ class Image
     }
   end
 
-  # Copies the image to a new object. If `source` is specified it'll only be
-  # that section of the image that is returned.
-  # @param source [Rectangle]
-  # @return [Image]
-  def copy(source: nil)
-    if source
-      image_from_image(self, source)
-    else
-      image_copy(self)
-    end
-  end
-
   # Returns a texture of the image
   # @return [Texture2D]
   def to_texture
