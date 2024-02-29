@@ -23,6 +23,12 @@ class Test
         font.unload
       end
 
+      def test_initialize_fail
+        assert_raise(Font::NotFound) {
+          Font.new("./assets/fail.ttf")
+        }
+      end
+
       def test_default
         font = Font.default
 

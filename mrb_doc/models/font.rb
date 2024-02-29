@@ -12,7 +12,10 @@ class Font
     Font.new
   end
 
-  # Creates a new instance of {Font}
+  # Loads a font file off of the disk. If the file does not exist, it will
+  # raise a {Font::NotFound} error.
+  #
+  # Currently only ttf files are supported.
   #
   # ```ruby
   # font = Font.new("/assets/my_cool_font.ttf", size: 16)
@@ -22,6 +25,7 @@ class Font
   # @param size [Integer]
   # @param glyph_count [Integer]
   # @return [Font]
+  # @raise [Font::NotFound]
   def initialize(path, size: 32, glyph_count: 95)
     # mrb_Font_initialize
     # src/mruby_integration/models/font.cpp

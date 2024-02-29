@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include <cstdlib>
 
+#include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/models/image.hpp"
@@ -46,6 +47,10 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, "z:", &path, &kwargs);
+
+  if (!FileExists(path)) {
+    raise_not_found_error(mrb, Font_class);
+  }
 
   float size = 32;
   if (!mrb_undef_p(kw_values[0])) {
