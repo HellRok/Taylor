@@ -66,6 +66,15 @@ class Test
         copy.unload
       end
 
+      def test_copy_with_source
+        image = Image.new("assets/test.png")
+        new_image = image.copy(source: Rectangle.new(1, 1, 2, 2))
+        assert_equal fixture_models_image_copy_with_source, new_image.data
+      ensure
+        image.unload
+        new_image.unload
+      end
+
       def test_to_texture
         skip_unless_display_present
 
@@ -78,15 +87,6 @@ class Test
       ensure
         texture.unload
         image.unload
-      end
-
-      def test_copy_with_source
-        image = Image.new("assets/test.png")
-        new_image = image.copy(source: Rectangle.new(1, 1, 2, 2))
-        assert_equal fixture_models_image_copy_with_source, new_image.data
-      ensure
-        image.unload
-        new_image.unload
       end
 
       def test_resize_default_scaling!

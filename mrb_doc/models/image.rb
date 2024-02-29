@@ -46,6 +46,27 @@ class Image
     nil
   end
 
+  # Copies the image to a new object. If `source` is specified it'll only be
+  # that section of the image that is returned.
+  #
+  # ```ruby
+  # image = Image.new("./assets/my_cool_image.png")
+  #
+  # # This creates a copy of the whole image
+  # copy = image.copy
+  #
+  # # This will only copy the portion x from 10 to 110, and y from 20 to 70
+  # subsection = image.copy(source: Rectangle[10, 20, 100, 50])
+  # ```
+  #
+  # @param source [Rectangle]
+  # @return [Image]
+  def copy(source: Rectangle[0, 0, width, height])
+    # mrb_Image_copy
+    # src/mruby_integration/models/image.cpp
+    Image.new
+  end
+
   # Returns an array containing the image data as an array of Colour objects
   # @return [Array<Colour>]
   def data

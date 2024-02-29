@@ -89,6 +89,49 @@ mrb_Image_export(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  // def copy(source: Rectangle[0, 0, width, height])
+  mrb_int kw_num = 1;
+  mrb_int kw_required = 0;
+  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "source") };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  Rectangle* source;
+  if (mrb_undef_p(kw_values[0])) {
+    auto default_source = Rectangle{
+      0, 0, static_cast<float>(image->width), static_cast<float>(image->height)
+    };
+    source = &default_source;
+  } else {
+    source = static_cast<struct Rectangle*> DATA_PTR(kw_values[0]);
+  }
+
+  auto* result = static_cast<Image*>(malloc(sizeof(Image)));
+  *result = ImageFromImage(*image, *source);
+
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
+
+  setup_Image(mrb,
+              obj,
+              result,
+              result->width,
+              result->height,
+              result->mipmaps,
+              result->format);
+
+  return obj;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -130,6 +173,7 @@ append_models_Image(mrb_state* mrb)
     mrb, Image_class, "unload", mrb_Image_unload, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Image_class, "export", mrb_Image_export, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "copy", mrb_Image_copy, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
 

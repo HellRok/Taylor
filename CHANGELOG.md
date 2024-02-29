@@ -46,6 +46,8 @@
 - Removed unload_image
 - Image.export is now C++ backed
 - Removed export_image
+- Image.copy is now C++ backed
+- Removed image_copy and image_from_image
 
 ## v0.3.14.1
 
