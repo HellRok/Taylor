@@ -1,12 +1,3 @@
-# Loads an image from a file
-# @param path [String]
-# @return [Image]
-def load_image(path)
-  # mrb_load_image
-  # src/mruby_integration/image.cpp
-  Image.new
-end
-
 # Unloads an image
 # @param image [Image]
 # @return [nil]

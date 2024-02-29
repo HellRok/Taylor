@@ -39,6 +39,8 @@
 - Added Vector2#inspect for better debugging
 - Colour.new now takes keyword arguments
 - Added Colour[]
+- Image.new is now C++ backed and takes a path
+- Removed load_image
 
 ## v0.3.14.1
 

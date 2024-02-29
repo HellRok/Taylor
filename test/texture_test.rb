@@ -5,7 +5,7 @@ class Test
 
       set_window_title(__method__.to_s)
 
-      image = Image.load("assets/test.png")
+      image = Image.new("assets/test.png")
       texture = load_texture_from_image(image)
       clear_and_draw do
         draw_texture(texture, 3, 3, Colour::WHITE)

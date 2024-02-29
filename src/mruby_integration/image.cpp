@@ -7,29 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_load_image(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  char* path;
-  mrb_get_args(mrb, "z", &path);
-
-  auto* image = static_cast<Image*>(malloc(sizeof(Image)));
-  *image = LoadImage(path);
-
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
-
-  setup_Image(mrb,
-              obj,
-              image,
-              image->width,
-              image->height,
-              image->mipmaps,
-              image->format);
-
-  return obj;
-}
-
-auto
 mrb_unload_image(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
@@ -431,8 +408,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "load_image", mrb_load_image, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, mrb->kernel_module, "unload_image", mrb_unload_image, MRB_ARGS_REQ(1));
   mrb_define_method(

@@ -1,11 +1,5 @@
 class Test
   class Image_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_image_load
-      image = load_image("assets/test.png")
-      assert_equal fixture_image_load, image.data
-      unload_image(image)
-    end
-
     def test_image_generate_colour
       image = generate_image_colour(10, 10, Colour::RAYWHITE)
       assert_equal fixture_generate_colour, image.data
@@ -21,7 +15,7 @@ class Test
     end
 
     def test_image_from_image
-      image = load_image("assets/test.png")
+      image = Image.new("assets/test.png")
       new_image = image_from_image(image, Rectangle.new(1, 1, 2, 2))
       assert_equal fixture_image_from_image, new_image.data
       unload_image(image)
@@ -42,29 +36,29 @@ class Test
     end
 
     def test_image_resize!
-      image = load_image("assets/test.png")
+      image = Image.new("assets/test.png")
       image_resize!(image, 6, 6)
       assert_equal fixture_image_resize!, image.data
       unload_image(image)
     end
 
     def test_image_resize_nearest_neighbour!
-      image = load_image("assets/test.png")
+      image = Image.new("assets/test.png")
       image_resize_nearest_neighbour!(image, 6, 6)
       assert_equal fixture_image_resize_nearest_neighbour!, image.data
       unload_image(image)
     end
 
     def test_image_crop!
-      image = load_image("assets/test.png")
+      image = Image.new("assets/test.png")
       image_crop!(image, Rectangle.new(0, 0, 3, 2))
       assert_equal fixture_image_crop!, image.data
       unload_image(image)
     end
 
     def test_image_alpha_mask!
-      image = load_image("assets/test.png")
-      mask = load_image("assets/alpha.png")
+      image = Image.new("assets/test.png")
+      mask = Image.new("assets/alpha.png")
 
       image_alpha_mask!(image, mask)
       assert_equal fixture_image_alpha_mask!, image.data
@@ -74,7 +68,7 @@ class Test
     end
 
     def test_image_mipmaps!
-      image = load_image("assets/test.png")
+      image = Image.new("assets/test.png")
       assert_equal 1, image.mipmaps
 
       image_mipmaps!(image)
@@ -84,7 +78,7 @@ class Test
     end
 
     def test_image_flip_vertical!
-      image = load_image("assets/asymettrical.png")
+      image = Image.new("assets/asymettrical.png")
 
       image_flip_vertical!(image)
       assert_equal fixture_image_flip_vertical!, image.data
@@ -93,7 +87,7 @@ class Test
     end
 
     def test_image_flip_horizontal!
-      image = load_image("assets/asymettrical.png")
+      image = Image.new("assets/asymettrical.png")
 
       image_flip_horizontal!(image)
       assert_equal fixture_image_flip_horizontal!, image.data
@@ -102,7 +96,7 @@ class Test
     end
 
     def test_image_rotate_cw!
-      image = load_image("assets/asymettrical.png")
+      image = Image.new("assets/asymettrical.png")
 
       image_rotate_cw!(image)
       assert_equal fixture_image_rotate_cw!, image.data
@@ -111,7 +105,7 @@ class Test
     end
 
     def test_image_rotate_ccw!
-      image = load_image("assets/asymettrical.png")
+      image = Image.new("assets/asymettrical.png")
 
       image_rotate_ccw!(image)
       assert_equal fixture_image_rotate_ccw!, image.data
@@ -184,7 +178,7 @@ class Test
     end
 
     def test_image_colour_replace!
-      image = load_image("assets/test.png")
+      image = Image.new("assets/test.png")
 
       image_colour_replace!(image, Colour::WHITE, Colour::BLUE)
       assert_equal fixture_image_colour_replace!, image.data
@@ -194,7 +188,7 @@ class Test
 
     def test_image_draw!
       image = generate_image_colour(3, 3, Colour::RAYWHITE)
-      to_copy = load_image("assets/test.png")
+      to_copy = Image.new("assets/test.png")
 
       image_draw!(
         image,
