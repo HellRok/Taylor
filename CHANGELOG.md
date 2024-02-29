@@ -42,6 +42,8 @@
 - Image.new is now C++ backed and takes a path
 - Removed load_image
 - Font.new now raises when the file cannot be found
+- Image.unload is now C++ backed
+- Removed unload_image
 
 ## v0.3.14.1
 

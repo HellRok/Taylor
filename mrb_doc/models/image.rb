@@ -17,6 +17,20 @@ class Image
     Image.new
   end
 
+  # Unloads the {Image} from memory.
+  #
+  # ```ruby
+  # image = Image.new("/assets/image.png")
+  # image.unload
+  # ```
+  #
+  # @return [nil]
+  def unload
+    # mrb_Image_unload
+    # src/mruby_integration/models/image.cpp
+    nil
+  end
+
   # Returns an array containing the image data as an array of Colour objects
   # @return [Array<Colour>]
   def data

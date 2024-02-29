@@ -5,7 +5,7 @@ class Test
         image = Image.new("./assets/test.png")
         assert_equal fixture_models_image_new, image.data
       ensure
-        unload_image(image)
+        image.unload
       end
 
       def test_initialize_fail
@@ -26,26 +26,31 @@ class Test
           },
           image.to_h
         )
+      ensure
+        image.unload
       end
 
       def test_generate_default
         image = Image.generate(width: 10, height: 10)
         assert_equal fixture_models_generate_default, image.data
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_generate
         image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
         assert_equal fixture_models_generate, image.data
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_copy
         image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
         copy = image.copy
         assert_equal image.data, copy.data
-        unload_image(image)
-        unload_image(copy)
+      ensure
+        image.unload
+        copy.unload
       end
 
       def test_to_texture
@@ -57,7 +62,7 @@ class Test
 
         assert_equal image.width, texture.width
         assert_equal image.height, texture.height
-
+      ensure
         texture.unload
         image.unload
       end
@@ -66,22 +71,25 @@ class Test
         image = Image.new("assets/test.png")
         new_image = image.copy(source: Rectangle.new(1, 1, 2, 2))
         assert_equal fixture_models_copy_with_source, new_image.data
-        unload_image(image)
-        unload_image(new_image)
+      ensure
+        image.unload
+        new_image.unload
       end
 
       def test_resize_default_scaling!
         image = Image.new("./assets/test.png")
         image.resize!(width: 6, height: 6)
         assert_equal fixture_models_image_resize_default_scaing!, image.data
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_resize_bicubic_scaling!
         image = Image.new("./assets/test.png")
         image.resize!(width: 6, height: 6, scaling: :bicubic)
         assert_equal fixture_models_image_resize_bicubic_scaing!, image.data
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_resize_incorrect_scaling!
@@ -89,14 +97,16 @@ class Test
         assert_raise(ArgumentError) {
           image.resize!(width: 6, height: 6, scaling: :nope)
         }
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_crop!
         image = Image.new("./assets/test.png")
         image.crop!(Rectangle.new(0, 0, 2, 3))
         assert_equal fixture_models_image_crop!, image.data
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_alpha_mask
@@ -106,7 +116,7 @@ class Test
         image.alpha_mask = mask
 
         assert_equal fixture_models_image_alpha_mask, image.data
-
+      ensure
         mask.unload
         image.unload
       end
@@ -117,7 +127,7 @@ class Test
 
         image.generate_mipmaps!
         assert_equal 2, image.mipmaps
-
+      ensure
         image.unload
       end
 
@@ -126,7 +136,7 @@ class Test
 
         image.flip_vertical!
         assert_equal fixture_models_image_flip_vertical!, image.data
-
+      ensure
         image.unload
       end
 
@@ -135,7 +145,7 @@ class Test
 
         image.flip_horizontal!
         assert_equal fixture_models_image_flip_horizontal!, image.data
-
+      ensure
         image.unload
       end
 
@@ -144,7 +154,7 @@ class Test
 
         image.rotate!
         assert_equal fixture_models_image_rotate_nil!, image.data
-
+      ensure
         image.unload
       end
 
@@ -153,7 +163,7 @@ class Test
 
         image.rotate! :cw
         assert_equal fixture_models_image_rotate_cw!, image.data
-
+      ensure
         image.unload
       end
 
@@ -162,7 +172,7 @@ class Test
 
         image.rotate! :ccw
         assert_equal fixture_models_image_rotate_ccw!, image.data
-
+      ensure
         image.unload
       end
 
@@ -172,7 +182,7 @@ class Test
         assert_raise(ArgumentError) {
           image.rotate! :blah
         }
-
+      ensure
         image.unload
       end
 
@@ -181,7 +191,7 @@ class Test
 
         image.tint!(Colour::GREEN)
         assert_equal fixture_models_image_tint!, image.data
-
+      ensure
         image.unload
       end
 
@@ -190,7 +200,7 @@ class Test
 
         image.invert!
         assert_equal fixture_models_image_invert!, image.data
-
+      ensure
         image.unload
       end
 
@@ -206,7 +216,7 @@ class Test
         assert_equal fixture_models_image_grayscale![0], red.data
         assert_equal fixture_models_image_grayscale![1], blue.data
         assert_equal fixture_models_image_grayscale![2], green.data
-
+      ensure
         red.unload
         blue.unload
         green.unload
@@ -221,9 +231,9 @@ class Test
 
         assert_equal fixture_models_image_contrast![0], darken.data
         assert_equal fixture_models_image_contrast![1], lighten.data
-
-        unload_image(darken)
-        unload_image(lighten)
+      ensure
+        darken.unload
+        lighten.unload
       end
 
       def test_image_contrast_too_low
@@ -232,8 +242,8 @@ class Test
         assert_raise(ArgumentError) {
           image.contrast!(-101)
         }
-
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_image_contrast_too_high
@@ -242,8 +252,8 @@ class Test
         assert_raise(ArgumentError) {
           image.contrast!(101)
         }
-
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_image_brightness!
@@ -255,9 +265,9 @@ class Test
 
         assert_equal fixture_models_image_brightness![1], darken.data
         assert_equal fixture_models_image_brightness![0], lighten.data
-
-        unload_image(darken)
-        unload_image(lighten)
+      ensure
+        darken.unload
+        lighten.unload
       end
 
       def test_image_brightness_too_low
@@ -266,8 +276,8 @@ class Test
         assert_raise(ArgumentError) {
           image.brightness!(-256)
         }
-
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_image_brightness_too_high
@@ -276,8 +286,8 @@ class Test
         assert_raise(ArgumentError) {
           image.brightness!(256)
         }
-
-        unload_image(image)
+      ensure
+        image.unload
       end
 
       def test_image_replace!
@@ -285,7 +295,7 @@ class Test
 
         image.replace!(Colour::WHITE, Colour::BLUE)
         assert_equal fixture_models_image_replace!, image.data
-
+      ensure
         image.unload
       end
 
@@ -299,7 +309,7 @@ class Test
           destination: Rectangle.new(1, 1, 2, 2)
         )
         assert_equal fixture_models_image_draw!, image.data
-
+      ensure
         image.unload
         to_copy.unload
       end
@@ -310,7 +320,7 @@ class Test
 
         image.draw!(image: to_copy)
         assert_equal fixture_models_image_draw_no_args!, image.data
-
+      ensure
         image.unload
         to_copy.unload
       end
