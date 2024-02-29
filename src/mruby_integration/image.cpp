@@ -7,17 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_unload_image(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  UnloadImage(*image);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_export_image(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
@@ -408,8 +397,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "unload_image", mrb_unload_image, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, mrb->kernel_module, "export_image", mrb_export_image, MRB_ARGS_REQ(2));
 

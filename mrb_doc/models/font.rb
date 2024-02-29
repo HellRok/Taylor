@@ -85,7 +85,13 @@ class Font
     Vector2[33, 16]
   end
 
-  # Unloads the font from memory
+  # Unloads the {Font} from memory.
+  #
+  # ```ruby
+  # font = Font.new("/assets/my_cool_font.ttf", size: 16)
+  # font.unload
+  # ```
+  #
   # @return [nil]
   def unload
     # mrb_Font_unload

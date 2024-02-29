@@ -14,12 +14,6 @@ class Image
     }
   end
 
-  # Unloads the texture from memory
-  # @return [nil]
-  def unload
-    unload_image(self)
-  end
-
   # Exports an image to a file
   # @param path [String]
   # @return [nil]

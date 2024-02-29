@@ -3,23 +3,26 @@ class Test
     def test_image_generate_colour
       image = generate_image_colour(10, 10, Colour::RAYWHITE)
       assert_equal fixture_generate_colour, image.data
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_copy
       image = generate_image_colour(10, 10, Colour::BLUE)
       copy = image_copy(image)
       assert_equal image.data, copy.data
-      unload_image(image)
-      unload_image(copy)
+    ensure
+      image.unload
+      copy.unload
     end
 
     def test_image_from_image
       image = Image.new("assets/test.png")
       new_image = image_from_image(image, Rectangle.new(1, 1, 2, 2))
       assert_equal fixture_image_from_image, new_image.data
-      unload_image(image)
-      unload_image(new_image)
+    ensure
+      image.unload
+      new_image.unload
     end
 
     def test_image_text_ex
@@ -30,8 +33,8 @@ class Test
 
       image = image_text_ex(font, "S", 16, 0, Colour::BLACK)
       assert_equal fixture_image_text_ex, image.data
-
-      unload_image(image)
+    ensure
+      image.unload
       font.unload
     end
 
@@ -39,21 +42,24 @@ class Test
       image = Image.new("assets/test.png")
       image_resize!(image, 6, 6)
       assert_equal fixture_image_resize!, image.data
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_resize_nearest_neighbour!
       image = Image.new("assets/test.png")
       image_resize_nearest_neighbour!(image, 6, 6)
       assert_equal fixture_image_resize_nearest_neighbour!, image.data
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_crop!
       image = Image.new("assets/test.png")
       image_crop!(image, Rectangle.new(0, 0, 3, 2))
       assert_equal fixture_image_crop!, image.data
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_alpha_mask!
@@ -62,9 +68,9 @@ class Test
 
       image_alpha_mask!(image, mask)
       assert_equal fixture_image_alpha_mask!, image.data
-
-      unload_image(mask)
-      unload_image(image)
+    ensure
+      mask.unload
+      image.unload
     end
 
     def test_image_mipmaps!
@@ -73,8 +79,8 @@ class Test
 
       image_mipmaps!(image)
       assert_equal 2, image.mipmaps
-
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_flip_vertical!
@@ -82,8 +88,8 @@ class Test
 
       image_flip_vertical!(image)
       assert_equal fixture_image_flip_vertical!, image.data
-
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_flip_horizontal!
@@ -91,8 +97,8 @@ class Test
 
       image_flip_horizontal!(image)
       assert_equal fixture_image_flip_horizontal!, image.data
-
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_rotate_cw!
@@ -100,8 +106,8 @@ class Test
 
       image_rotate_cw!(image)
       assert_equal fixture_image_rotate_cw!, image.data
-
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_rotate_ccw!
@@ -109,8 +115,8 @@ class Test
 
       image_rotate_ccw!(image)
       assert_equal fixture_image_rotate_ccw!, image.data
-
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_colour_tint!
@@ -118,8 +124,8 @@ class Test
 
       image_colour_tint!(image, Colour::GREEN)
       assert_equal fixture_image_colour_tint!, image.data
-
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_colour_invert!
@@ -127,8 +133,8 @@ class Test
 
       image_colour_invert!(image)
       assert_equal fixture_image_colour_invert!, image.data
-
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_colour_grayscale!
@@ -143,10 +149,10 @@ class Test
       assert_equal fixture_image_colour_grayscale![0], red.data
       assert_equal fixture_image_colour_grayscale![1], blue.data
       assert_equal fixture_image_colour_grayscale![2], green.data
-
-      unload_image(red)
-      unload_image(blue)
-      unload_image(green)
+    ensure
+      red.unload
+      blue.unload
+      green.unload
     end
 
     def test_image_colour_contrast!
@@ -158,9 +164,9 @@ class Test
 
       assert_equal fixture_image_colour_contrast![0], darken.data
       assert_equal fixture_image_colour_contrast![1], lighten.data
-
-      unload_image(darken)
-      unload_image(lighten)
+    ensure
+      darken.unload
+      lighten.unload
     end
 
     def test_image_colour_brightness!
@@ -172,9 +178,9 @@ class Test
 
       assert_equal fixture_image_colour_brightness![1], darken.data
       assert_equal fixture_image_colour_brightness![0], lighten.data
-
-      unload_image(darken)
-      unload_image(lighten)
+    ensure
+      darken.unload
+      lighten.unload
     end
 
     def test_image_colour_replace!
@@ -182,8 +188,8 @@ class Test
 
       image_colour_replace!(image, Colour::WHITE, Colour::BLUE)
       assert_equal fixture_image_colour_replace!, image.data
-
-      unload_image(image)
+    ensure
+      image.unload
     end
 
     def test_image_draw!
@@ -198,9 +204,9 @@ class Test
         Colour::WHITE
       )
       assert_equal fixture_image_draw!, image.data
-
-      unload_image(image)
-      unload_image(to_copy)
+    ensure
+      image.unload
+      to_copy.unload
     end
   end
 end

@@ -1,12 +1,3 @@
-# Unloads an image
-# @param image [Image]
-# @return [nil]
-def unload_image(image)
-  # mrb_unload_image
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Exports an image to a file
 # @param image [Image]
 # @param path [String]
