@@ -31,6 +31,21 @@ class Image
     nil
   end
 
+  # Exports an {Image} to a file.
+  #
+  # ```ruby
+  # image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
+  # image.export("./my_green_image.png")
+  # ```
+  #
+  # @param path [String]
+  # @return [nil]
+  def export(path)
+    # mrb_Image_unload
+    # src/mruby_integration/models/image.cpp
+    nil
+  end
+
   # Returns an array containing the image data as an array of Colour objects
   # @return [Array<Colour>]
   def data

@@ -30,16 +30,29 @@ class Test
         image.unload
       end
 
+      def test_export
+        path = "./green-#{Time.now.to_i}.png"
+        image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
+        image.export(path)
+
+        exported_image = Image.new(path)
+        assert_equal fixture_models_image_export, exported_image.data
+      ensure
+        image.unload
+        exported_image.unload
+        File.delete(path)
+      end
+
       def test_generate_default
         image = Image.generate(width: 10, height: 10)
-        assert_equal fixture_models_generate_default, image.data
+        assert_equal fixture_models_image_generate_default, image.data
       ensure
         image.unload
       end
 
       def test_generate
         image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
-        assert_equal fixture_models_generate, image.data
+        assert_equal fixture_models_image_generate, image.data
       ensure
         image.unload
       end
@@ -70,7 +83,7 @@ class Test
       def test_copy_with_source
         image = Image.new("assets/test.png")
         new_image = image.copy(source: Rectangle.new(1, 1, 2, 2))
-        assert_equal fixture_models_copy_with_source, new_image.data
+        assert_equal fixture_models_image_copy_with_source, new_image.data
       ensure
         image.unload
         new_image.unload

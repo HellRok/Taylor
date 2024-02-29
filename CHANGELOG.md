@@ -44,6 +44,8 @@
 - Font.new now raises when the file cannot be found
 - Image.unload is now C++ backed
 - Removed unload_image
+- Image.export is now C++ backed
+- Removed export_image
 
 ## v0.3.14.1
 

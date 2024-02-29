@@ -9,15 +9,19 @@ def fixture_models_image_new
   ]
 end
 
-def fixture_models_generate_default
-  100.times.map { Colour::RAYWHITE }
-end
-
-def fixture_models_generate
+def fixture_models_image_export
   100.times.map { Colour::GREEN }
 end
 
-def fixture_models_copy_with_source
+def fixture_models_image_generate_default
+  100.times.map { Colour::RAYWHITE }
+end
+
+def fixture_models_image_generate
+  100.times.map { Colour::GREEN }
+end
+
+def fixture_models_image_copy_with_source
   t = Colour::WHITE
   o = Colour[218, 154, 37]
   [
