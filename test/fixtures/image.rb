@@ -2,27 +2,6 @@ def fixture_generate_colour
   100.times.map { Colour::RAYWHITE }
 end
 
-def fixture_image_text_ex
-  [
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 58], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 86], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 86], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 171], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 171], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 114], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 58], Colour[0, 0, 0, 86], Colour[0, 0, 0, 86], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 171], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 171], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 171], Colour[0, 0, 0, 114], Colour[0, 0, 0, 86], Colour[0, 0, 0, 86], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 86], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 255], Colour[0, 0, 0, 86], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0],
-    Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0], Colour[0, 0, 0, 0]
-  ]
-end
-
 def fixture_image_resize!
   [
     Colour[212, 139, 4, 255], Colour[226, 176, 73], Colour[254, 255, 224], Colour[247, 221, 255], Colour[205, 73, 232], Colour[186, 5, 212],
