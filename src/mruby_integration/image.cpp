@@ -7,18 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_export_image(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  char* path;
-  mrb_get_args(mrb, "dz", &image, &Image_type, &path);
-
-  ExportImage(*image, path);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_generate_image_colour(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int width, height;
@@ -397,9 +385,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "export_image", mrb_export_image, MRB_ARGS_REQ(2));
-
   mrb_define_method(
     mrb, mrb->kernel_module, "image_copy", mrb_image_copy, MRB_ARGS_REQ(1));
   mrb_define_method(mrb,

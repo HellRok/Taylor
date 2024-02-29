@@ -14,13 +14,6 @@ class Image
     }
   end
 
-  # Exports an image to a file
-  # @param path [String]
-  # @return [nil]
-  def export(path)
-    export_image(self, path)
-  end
-
   # Copies the image to a new object. If `source` is specified it'll only be
   # that section of the image that is returned.
   # @param source [Rectangle]
