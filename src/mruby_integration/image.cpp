@@ -31,41 +31,6 @@ mrb_generate_image_colour(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_image_text_ex(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Font* font;
-  mrb_value text;
-  mrb_float font_size, spacing;
-  Color* colour;
-  mrb_get_args(mrb,
-               "dSffd",
-               &font,
-               &Font_type,
-               &text,
-               &font_size,
-               &spacing,
-               &colour,
-               &Colour_type);
-
-  auto* result = static_cast<Image*>(malloc(sizeof(Image)));
-  *result =
-    ImageTextEx(*font, mrb_str_to_cstr(mrb, text), font_size, spacing, *colour);
-
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
-
-  setup_Image(mrb,
-              obj,
-              result,
-              result->width,
-              result->height,
-              result->mipmaps,
-              result->format);
-
-  return obj;
-}
-
-auto
 mrb_image_resize(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value image_obj;
@@ -343,11 +308,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_text_ex",
-                    mrb_image_text_ex,
-                    MRB_ARGS_REQ(5));
   mrb_define_method(
     mrb, mrb->kernel_module, "image_crop!", mrb_image_crop, MRB_ARGS_REQ(2));
   mrb_define_method(mrb,

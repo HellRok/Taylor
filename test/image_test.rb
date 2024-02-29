@@ -7,19 +7,6 @@ class Test
       image.unload
     end
 
-    def test_image_text_ex
-      skip_unless_display_present
-
-      set_window_title(__method__.to_s)
-      font = Font.new("./assets/tiny.ttf", size: 16)
-
-      image = image_text_ex(font, "S", 16, 0, Colour::BLACK)
-      assert_equal fixture_image_text_ex, image.data
-    ensure
-      image.unload
-      font.unload
-    end
-
     def test_image_resize!
       image = Image.new("assets/test.png")
       image_resize!(image, 6, 6)

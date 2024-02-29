@@ -9,19 +9,6 @@ def generate_image_colour(width, height, colour)
   Image.new
 end
 
-# Creates an image from the font
-# @param font [Font] Which font to draw with
-# @param text [String] The text to put on the screen
-# @param font_size [Integer]
-# @param font_padding [Integer]
-# @param colour [Colour]
-# @return [Image]
-def image_text_ex(font, text, font_size, font_padding, colour)
-  # mrb_image_text_ex
-  # src/mruby_integration/image.cpp
-  Image.new
-end
-
 # Resizes the image using a bicubic scaling algorithm. Useful for things like
 # photos, not great for pixel art.
 # @param image [Image]

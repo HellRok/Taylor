@@ -48,6 +48,7 @@
 - Removed export_image
 - Image.copy is now C++ backed
 - Removed image_copy and image_from_image
+- Removed image_text_ex
 
 ## v0.3.14.1
 
