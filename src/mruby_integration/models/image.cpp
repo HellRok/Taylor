@@ -4,6 +4,7 @@
 #include "mruby/data.h"
 #include "raylib.h"
 #include <cstdlib>
+#include <cstring>
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
@@ -180,6 +181,63 @@ mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_resize_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  // def resize!(width:, height:, sizing: :nearest_neighbour)
+  mrb_int kw_num = 3;
+  mrb_int kw_required = 2;
+  mrb_sym kw_names[] = {
+    mrb_intern_lit(mrb, "width"),
+    mrb_intern_lit(mrb, "height"),
+    mrb_intern_lit(mrb, "scaler"),
+  };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  int width = 0;
+  if (!mrb_undef_p(kw_values[0])) {
+    width = mrb_as_int(mrb, kw_values[0]);
+  }
+
+  int height = 0;
+  if (!mrb_undef_p(kw_values[1])) {
+    height = mrb_as_int(mrb, kw_values[1]);
+  }
+
+  const char* scaler;
+  if (mrb_undef_p(kw_values[2])) {
+    scaler = "nearest_neighbour";
+  } else {
+    mrb_sym sym = mrb_obj_to_sym(mrb, kw_values[2]);
+    scaler = mrb_sym_name(mrb, sym);
+  }
+
+  if (strcmp(scaler, "nearest_neighbour") == 0) {
+    ImageResizeNN(image, width, height);
+  } else if (strcmp(scaler, "bicubic") == 0) {
+    ImageResize(image, width, height);
+  } else {
+    mrb_raise(mrb,
+              E_ARGUMENT_ERROR,
+              "Invalid scaler provided, you must provide :bicubic or "
+              ":nearest_neighbour");
+  }
+
+  mrb_iv_set(
+    mrb, self, mrb_intern_cstr(mrb, "@width"), mrb_int_value(mrb, width));
+  mrb_iv_set(
+    mrb, self, mrb_intern_cstr(mrb, "@height"), mrb_int_value(mrb, height));
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -224,6 +282,8 @@ append_models_Image(mrb_state* mrb)
   mrb_define_method(
     mrb, Image_class, "export", mrb_Image_export, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Image_class, "copy", mrb_Image_copy, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Image_class, "resize!", mrb_Image_resize_bang, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
 

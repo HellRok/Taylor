@@ -7,28 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_resize(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_value image_obj;
-  mrb_int width, height;
-  mrb_get_args(mrb, "oii", &image_obj, &width, &height);
-
-  auto* image =
-    static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
-
-  ImageResize(image, width, height);
-
-  mrb_iv_set(
-    mrb, image_obj, mrb_intern_cstr(mrb, "@width"), mrb_int_value(mrb, width));
-  mrb_iv_set(mrb,
-             image_obj,
-             mrb_intern_cstr(mrb, "@height"),
-             mrb_int_value(mrb, height));
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_crop(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Rectangle* rectangle;
@@ -215,28 +193,6 @@ mrb_image_colour_replace(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_image_resize_nearest_neighbour(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_value image_obj;
-  mrb_int width, height;
-  mrb_get_args(mrb, "oii", &image_obj, &width, &height);
-
-  auto* image =
-    static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
-
-  ImageResizeNN(image, width, height);
-
-  mrb_iv_set(
-    mrb, image_obj, mrb_intern_cstr(mrb, "@width"), mrb_int_value(mrb, width));
-  mrb_iv_set(mrb,
-             image_obj,
-             mrb_intern_cstr(mrb, "@height"),
-             mrb_int_value(mrb, height));
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_draw(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image *destination, *source;
@@ -302,16 +258,6 @@ append_images(mrb_state* mrb)
                     mrb_image_mipmaps,
                     MRB_ARGS_REQ(1));
 
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_resize!",
-                    mrb_image_resize,
-                    MRB_ARGS_REQ(3));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_resize_nearest_neighbour!",
-                    mrb_image_resize_nearest_neighbour,
-                    MRB_ARGS_REQ(3));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "image_flip_vertical!",

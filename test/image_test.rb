@@ -1,21 +1,5 @@
 class Test
   class Image_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_image_resize!
-      image = Image.new("assets/test.png")
-      image_resize!(image, 6, 6)
-      assert_equal fixture_image_resize!, image.data
-    ensure
-      image.unload
-    end
-
-    def test_image_resize_nearest_neighbour!
-      image = Image.new("assets/test.png")
-      image_resize_nearest_neighbour!(image, 6, 6)
-      assert_equal fixture_image_resize_nearest_neighbour!, image.data
-    ensure
-      image.unload
-    end
-
     def test_image_crop!
       image = Image.new("assets/test.png")
       image_crop!(image, Rectangle.new(0, 0, 3, 2))
