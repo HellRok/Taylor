@@ -2,6 +2,7 @@ require "json"
 require "fileutils"
 require "rake/clean"
 require "rake/loaders/makefile"
+require "standard/rake"
 
 CLEAN.include("./build/*")
 CLEAN.include("./dist/*")
@@ -43,6 +44,8 @@ end
 task "format:fix" do
   sh "clang-format -i $(git ls-files *.{cpp,hpp})"
 end
+
+task pretty: ["standard:fix", "format:fix", "lint:fix"]
 
 rule ".o" => ->(file) { source_for(file) } do |task|
   FileUtils.mkdir_p(File.dirname(task.name))

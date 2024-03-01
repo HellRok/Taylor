@@ -1,14 +1,3 @@
-# Generates a new image of width by height in the specified colour.
-# @param width [Integer]
-# @param height [Integer]
-# @param colour [Colour]
-# @return [Image]
-def generate_image_colour(width, height, colour)
-  # mrb_generate_image_colour
-  # src/mruby_integration/image.cpp
-  Image.new
-end
-
 # Resizes the image using a bicubic scaling algorithm. Useful for things like
 # photos, not great for pixel art.
 # @param image [Image]

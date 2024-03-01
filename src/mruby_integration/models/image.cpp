@@ -89,6 +89,54 @@ mrb_Image_export(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_generate(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  // def self.generate(width:, height:, colour: Colour::BLANK)
+  mrb_int kw_num = 3;
+  mrb_int kw_required = 2;
+  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "width"),
+                         mrb_intern_lit(mrb, "height"),
+                         mrb_intern_lit(mrb, "colour") };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  int width = 0;
+  if (!mrb_undef_p(kw_values[0])) {
+    width = mrb_as_int(mrb, kw_values[0]);
+  }
+
+  int height = 0;
+  if (!mrb_undef_p(kw_values[1])) {
+    height = mrb_as_int(mrb, kw_values[1]);
+  }
+
+  Color* colour;
+  if (mrb_undef_p(kw_values[2])) {
+    auto default_colour = Color{ 0, 0, 0, 0 };
+    colour = &default_colour;
+  } else {
+    colour = static_cast<struct Color*> DATA_PTR(kw_values[2]);
+  }
+
+  auto* image = static_cast<Image*>(malloc(sizeof(Image)));
+  *image = GenImageColor(width, height, *colour);
+
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
+
+  setup_Image(mrb,
+              obj,
+              image,
+              image->width,
+              image->height,
+              image->mipmaps,
+              image->format);
+
+  return obj;
+}
+
+auto
 mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -167,6 +215,8 @@ append_models_Image(mrb_state* mrb)
 {
   Image_class = mrb_define_class(mrb, "Image", mrb->object_class);
   MRB_SET_INSTANCE_TT(Image_class, MRB_TT_DATA);
+  mrb_define_class_method(
+    mrb, Image_class, "generate", mrb_Image_generate, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "initialize", mrb_Image_initialize, MRB_ARGS_REQ(5));
   mrb_define_method(

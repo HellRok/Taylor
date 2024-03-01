@@ -44,11 +44,13 @@
 - Font.new now raises when the file cannot be found
 - Image.unload is now C++ backed
 - Removed unload_image
-- Image.export is now C++ backed
+- Image#export is now C++ backed
 - Removed export_image
-- Image.copy is now C++ backed
+- Image#copy is now C++ backed
 - Removed image_copy and image_from_image
 - Removed image_text_ex
+- Image.generate is now C++ backed
+- Removed generate_image_colour
 
 ## v0.3.14.1
 
