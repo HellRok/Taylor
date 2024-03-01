@@ -2,7 +2,6 @@ require "json"
 require "fileutils"
 require "rake/clean"
 require "rake/loaders/makefile"
-require "standard/rake"
 
 CLEAN.include("./build/*")
 CLEAN.include("./dist/*")
@@ -45,7 +44,11 @@ task "format:fix" do
   sh "clang-format -i $(git ls-files *.{cpp,hpp})"
 end
 
-task pretty: ["standard:fix", "format:fix", "lint:fix"]
+task pretty: ["format:fix", "lint:fix"] do
+  # I do this because loading the gem breaks a lot of the build and I don't
+  # want to add ruby-dev everywhere.
+  sh "bundle exec rake standardrb --fix"
+end
 
 rule ".o" => ->(file) { source_for(file) } do |task|
   FileUtils.mkdir_p(File.dirname(task.name))
