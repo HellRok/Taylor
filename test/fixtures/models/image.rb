@@ -30,7 +30,7 @@ def fixture_models_image_copy_with_source
   ]
 end
 
-def fixture_models_image_resize_bicubic_scaing!
+def fixture_models_image_resize_bang_bicubic_scaler
   [
     Colour[212, 139, 4], Colour[226, 176, 73], Colour[254, 255, 224], Colour[247, 221, 255], Colour[205, 73, 232], Colour[186, 5, 212],
     Colour[226, 176, 73], Colour[232, 194, 107], Colour[245, 232, 179], Colour[240, 206, 219], Colour[216, 115, 228], Colour[205, 73, 232],
@@ -41,15 +41,21 @@ def fixture_models_image_resize_bicubic_scaing!
   ]
 end
 
-def fixture_models_image_resize_default_scaing!
+def fixture_models_image_resize_bang_default_scaler
   t = Colour::WHITE
   o = Colour[218, 154, 37]
   p = Colour[195, 37, 218]
   [
     o, o, t, t, p, p,
     o, o, t, t, p, p,
+    o, o, t, t, p, p,
+    o, o, t, t, p, p,
     t, t, o, o, t, t,
     t, t, o, o, t, t,
+    t, t, o, o, t, t,
+    t, t, o, o, t, t,
+    p, p, t, t, o, o,
+    p, p, t, t, o, o,
     p, p, t, t, o, o,
     p, p, t, t, o, o
   ]

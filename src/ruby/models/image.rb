@@ -20,25 +20,6 @@ class Image
     load_texture_from_image(self)
   end
 
-  # Resizes the image, defaults to using the nearest neighbour algorithm which
-  # is useful for pixel art.
-  # @param width [Integer]
-  # @param height [Integer]
-  # @param scaling [Symbol] Valid options are :nearest_neighbour and :bicubic
-  # @return [Image]
-  def resize!(width:, height:, scaling: :nearest_neighbour)
-    case scaling
-    when :bicubic
-      image_resize!(self, width, height)
-    when :nearest_neighbour
-      image_resize_nearest_neighbour!(self, width, height)
-    else
-      raise ArgumentError.new("Unknown scaler \"#{scaling}\", valid options are: :bicubic, :nearest_neighbour")
-    end
-
-    self
-  end
-
   # Crops the image to the section in the rectangle
   # @param rectangle [Rectangle]
   # @return [Image]

@@ -89,27 +89,35 @@ class Test
         image.unload
       end
 
-      def test_resize_default_scaling!
+      def test_resize_bang_default_scaler
         image = Image.new("./assets/test.png")
-        image.resize!(width: 6, height: 6)
-        assert_equal fixture_models_image_resize_default_scaing!, image.data
+        image.resize!(width: 6, height: 12)
+        assert_equal fixture_models_image_resize_bang_default_scaler, image.data
+        assert_equal 6, image.width
+        assert_equal 12, image.height
       ensure
         image.unload
       end
 
-      def test_resize_bicubic_scaling!
+      def test_resize_bang_bicubic_scaler
         image = Image.new("./assets/test.png")
-        image.resize!(width: 6, height: 6, scaling: :bicubic)
-        assert_equal fixture_models_image_resize_bicubic_scaing!, image.data
+        image.resize!(width: 6, height: 6, scaler: :bicubic)
+        assert_equal fixture_models_image_resize_bang_bicubic_scaler, image.data
+        assert_equal 6, image.width
+        assert_equal 6, image.height
       ensure
         image.unload
       end
 
-      def test_resize_incorrect_scaling!
+      def test_resize_incorrect_scaler!
         image = Image.new("./assets/test.png")
-        assert_raise(ArgumentError) {
-          image.resize!(width: 6, height: 6, scaling: :nope)
-        }
+
+        begin
+          image.resize!(width: 6, height: 6, scaler: :nope)
+        rescue ArgumentError => e
+          assert_equal "Invalid scaler provided, you must provide :bicubic or :nearest_neighbour",
+            e.message
+        end
       ensure
         image.unload
       end

@@ -51,6 +51,8 @@
 - Removed image_text_ex
 - Image.generate is now C++ backed
 - Removed generate_image_colour
+- Image.resize! is now C++ backed
+- Removed image_resize! and image_resize_nearest_neighbour!
 
 ## v0.3.14.1
 

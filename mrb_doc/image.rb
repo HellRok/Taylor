@@ -1,27 +1,3 @@
-# Resizes the image using a bicubic scaling algorithm. Useful for things like
-# photos, not great for pixel art.
-# @param image [Image]
-# @param width [Integer]
-# @param height [Integer]
-# @return [nil]
-def image_resize!(image, width, height)
-  # mrb_image_resize
-  # src/mruby_integration/image.cpp
-  nil
-end
-
-# Resizes the image using a nearest-neighbour scaling algorithm. Useful for things like
-# pixel art, not great for photos.
-# @param image [Image]
-# @param width [Integer]
-# @param height [Integer]
-# @return [nil]
-def image_resize_nearest_neighbour!(image, width, height)
-  # mrb_image_resize_nearest_neighbour
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Crops the image to the section in the rectangle
 # @param image [Image]
 # @param rectangle [Rectangle]

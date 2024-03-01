@@ -1,28 +1,3 @@
-def fixture_image_resize!
-  [
-    Colour[212, 139, 4, 255], Colour[226, 176, 73], Colour[254, 255, 224], Colour[247, 221, 255], Colour[205, 73, 232], Colour[186, 5, 212],
-    Colour[226, 176, 73], Colour[232, 194, 107], Colour[245, 232, 179], Colour[240, 206, 219], Colour[216, 115, 228], Colour[205, 73, 232],
-    Colour[254, 255, 224], Colour[245, 232, 179], Colour[227, 181, 82], Colour[225, 172, 96], Colour[240, 206, 219], Colour[247, 221, 255],
-    Colour[247, 221, 255], Colour[240, 206, 219], Colour[225, 172, 96], Colour[227, 181, 82], Colour[245, 232, 179], Colour[254, 255, 224],
-    Colour[205, 73, 232], Colour[216, 115, 228], Colour[240, 206, 219], Colour[245, 232, 179], Colour[232, 194, 107], Colour[226, 176, 73],
-    Colour[186, 5, 212], Colour[205, 73, 232], Colour[247, 221, 255], Colour[254, 255, 224], Colour[226, 176, 73], Colour[212, 139, 4]
-  ]
-end
-
-def fixture_image_resize_nearest_neighbour!
-  t = Colour::WHITE
-  o = Colour[218, 154, 37]
-  p = Colour[195, 37, 218]
-  [
-    o, o, t, t, p, p,
-    o, o, t, t, p, p,
-    t, t, o, o, t, t,
-    t, t, o, o, t, t,
-    p, p, t, t, o, o,
-    p, p, t, t, o, o
-  ]
-end
-
 def fixture_image_crop!
   t = Colour::WHITE
   o = Colour[218, 154, 37]

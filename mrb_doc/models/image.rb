@@ -83,6 +83,45 @@ class Image
     Image.new
   end
 
+  # Resizes the image using one of the two scalers.
+  #
+  # `:nearest_neighbour` is useful for scaling up pixel art and works best in
+  # exact integer scaling.
+  #
+  # ```ruby
+  # image = Image.new("./assets/pixel_art.png")
+  # p [image.width, image.height]
+  # # => [8, 8]
+  #
+  # image.resize!(width: 16, height: 16)
+  # p [image.width, image.height]
+  # # => [16, 16]
+  # ```
+  #
+  # `:bicubic` is useful for scaling up normal images and works well at any
+  # scaling.
+  #
+  # ```ruby
+  # image = Image.new("./assets/background.png")
+  # p [image.width, image.height]
+  # # => [1280, 720]
+  #
+  # image.resize!(width: 1920, height: 1080, scaler: :bicubic)
+  # p [image.width, image.height]
+  # # => [1920, 1080]
+  # ```
+  #
+  # @param width [Integer]
+  # @param height [Integer]
+  # @param scaler [Symbol] Valid options are :nearest_neighbour and :bicubic
+  # @return [Image]
+  # @raises [ArgumentError] When passed an invalid scaler
+  def resize!(width:, height:, scaler: :nearest_neighbour)
+    # mrb_Image_resize_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of Colour objects
   # @return [Array<Colour>]
   def data
