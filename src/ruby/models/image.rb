@@ -165,15 +165,6 @@ class Image
     self
   end
 
-  # Generates a new image of width by height in the specified colour.
-  # @param width [Integer]
-  # @param height [Integer]
-  # @param colour [Colour]
-  # @return [Image]
-  def self.generate(width:, height:, colour: Colour::RAYWHITE)
-    generate_image_colour(width, height, colour)
-  end
-
   # Used for alerting the user the image was not found at the specified path
   class NotFound < StandardError; end
 end

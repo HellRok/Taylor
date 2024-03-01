@@ -1,4 +1,20 @@
 class Image
+  # Generates a new {Image} of width by height in the specified colour.
+  #
+  # ```ruby
+  # image = Image.generate(width: 128, height: 128, colour: Colour::ORANGE)
+  # ```
+  #
+  # @param width [Integer]
+  # @param height [Integer]
+  # @param colour [Colour]
+  # @return [Image]
+  def self.generate(width:, height:, colour: Colour::BLANK)
+    # mrb_Image_generate
+    # src/mruby_integration/models/image.cpp
+    Image.new
+  end
+
   # Loads an image file off of the disk. If the file does not exist, it will
   # raise an {Image::NotFound} error.
   #

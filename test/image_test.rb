@@ -1,12 +1,5 @@
 class Test
   class Image_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_image_generate_colour
-      image = generate_image_colour(10, 10, Colour::RAYWHITE)
-      assert_equal fixture_generate_colour, image.data
-    ensure
-      image.unload
-    end
-
     def test_image_resize!
       image = Image.new("assets/test.png")
       image_resize!(image, 6, 6)
@@ -162,7 +155,7 @@ class Test
     end
 
     def test_image_draw!
-      image = generate_image_colour(3, 3, Colour::RAYWHITE)
+      image = Image.generate(width: 3, height: 3, colour: Colour::RAYWHITE)
       to_copy = Image.new("assets/test.png")
 
       image_draw!(

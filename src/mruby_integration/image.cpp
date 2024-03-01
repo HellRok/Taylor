@@ -7,30 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_generate_image_colour(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int width, height;
-  Color* colour;
-  mrb_get_args(mrb, "iid", &width, &height, &colour, &Colour_type);
-
-  auto* image = static_cast<Image*>(malloc(sizeof(Image)));
-  *image = GenImageColor(width, height, *colour);
-
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
-
-  setup_Image(mrb,
-              obj,
-              image,
-              image->width,
-              image->height,
-              image->mipmaps,
-              image->format);
-
-  return obj;
-}
-
-auto
 mrb_image_resize(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value image_obj;
@@ -386,12 +362,6 @@ append_images(mrb_state* mrb)
                     mrb->kernel_module,
                     "image_colour_replace!",
                     mrb_image_colour_replace,
-                    MRB_ARGS_REQ(3));
-
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "generate_image_colour",
-                    mrb_generate_image_colour,
                     MRB_ARGS_REQ(3));
 
   mrb_define_method(

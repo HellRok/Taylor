@@ -14,7 +14,7 @@ def fixture_models_image_export
 end
 
 def fixture_models_image_generate_default
-  100.times.map { Colour::RAYWHITE }
+  100.times.map { Colour::BLANK }
 end
 
 def fixture_models_image_generate

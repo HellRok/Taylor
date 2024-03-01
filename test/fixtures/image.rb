@@ -1,7 +1,3 @@
-def fixture_generate_colour
-  100.times.map { Colour::RAYWHITE }
-end
-
 def fixture_image_resize!
   [
     Colour[212, 139, 4, 255], Colour[226, 176, 73], Colour[254, 255, 224], Colour[247, 221, 255], Colour[205, 73, 232], Colour[186, 5, 212],
