@@ -122,6 +122,26 @@ class Image
     self
   end
 
+  # Crops the {Image} to the section specified by `source`.
+  #
+  # ```ruby
+  # image = Image.new("./assets/spritesheet.png")
+  # p [image.width, image.height]
+  # # => [64, 128]
+  #
+  # image.crop!(source: Rectangle[8, 16, 8, 8])
+  # p [image.width, image.height]
+  # # => [8, 8]
+  # ```
+  #
+  # @param source [Rectangle]
+  # @return [Image]
+  def crop!(source: rectangle)
+    # mrb_Image_crop_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of Colour objects
   # @return [Array<Colour>]
   def data

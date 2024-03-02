@@ -124,8 +124,10 @@ class Test
 
       def test_crop!
         image = Image.new("./assets/test.png")
-        image.crop!(Rectangle.new(0, 0, 2, 3))
+        image.crop!(source: Rectangle.new(0, 0, 2, 3))
         assert_equal fixture_models_image_crop!, image.data
+        assert_equal 2, image.width
+        assert_equal 3, image.height
       ensure
         image.unload
       end

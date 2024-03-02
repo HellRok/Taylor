@@ -20,14 +20,6 @@ class Image
     load_texture_from_image(self)
   end
 
-  # Crops the image to the section in the rectangle
-  # @param rectangle [Rectangle]
-  # @return [Image]
-  def crop!(rectangle)
-    image_crop!(self, rectangle)
-    self
-  end
-
   # Applies the alpha of the mask to the image
   # @param mask [Image]
   # @return [Image]

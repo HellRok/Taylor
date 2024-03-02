@@ -238,6 +238,48 @@ mrb_Image_resize_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  // def crop!(source:)
+  mrb_int kw_num = 1;
+  mrb_int kw_required = 1;
+  mrb_sym kw_names[] = {
+    mrb_intern_lit(mrb, "source"),
+  };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  Rectangle* source;
+  if (mrb_undef_p(kw_values[0])) {
+    auto default_source = Rectangle{
+      0, 0, static_cast<float>(image->width), static_cast<float>(image->height)
+    };
+    source = &default_source;
+  } else {
+    source = static_cast<struct Rectangle*> DATA_PTR(kw_values[0]);
+  }
+
+  ImageCrop(image, *source);
+
+  mrb_iv_set(mrb,
+             self,
+             mrb_intern_cstr(mrb, "@width"),
+             mrb_int_value(mrb, source->width));
+  mrb_iv_set(mrb,
+             self,
+             mrb_intern_cstr(mrb, "@height"),
+             mrb_int_value(mrb, source->height));
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -284,6 +326,8 @@ append_models_Image(mrb_state* mrb)
   mrb_define_method(mrb, Image_class, "copy", mrb_Image_copy, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "resize!", mrb_Image_resize_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Image_class, "crop!", mrb_Image_crop_bang, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
 
