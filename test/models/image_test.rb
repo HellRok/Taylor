@@ -172,39 +172,20 @@ class Test
         image.unload
       end
 
-      def test_image_rotate_nil!
+      def test_image_rotate_clockwise!
         image = Image.new("assets/asymettrical.png")
 
-        image.rotate!
-        assert_equal fixture_models_image_rotate_nil!, image.data
+        image.rotate_clockwise!
+        assert_equal fixture_models_image_rotate_clockwise!, image.data
       ensure
         image.unload
       end
 
-      def test_image_rotate_cw!
+      def test_image_rotate_counter_clockwise!
         image = Image.new("assets/asymettrical.png")
 
-        image.rotate! :cw
-        assert_equal fixture_models_image_rotate_cw!, image.data
-      ensure
-        image.unload
-      end
-
-      def test_image_rotate_ccw!
-        image = Image.new("assets/asymettrical.png")
-
-        image.rotate! :ccw
-        assert_equal fixture_models_image_rotate_ccw!, image.data
-      ensure
-        image.unload
-      end
-
-      def test_image_rotate_invalid_direction!
-        image = Image.new("assets/asymettrical.png")
-
-        assert_raise(ArgumentError) {
-          image.rotate! :blah
-        }
+        image.rotate_counter_clockwise!
+        assert_equal fixture_models_image_rotate_counter_clockwise!, image.data
       ensure
         image.unload
       end

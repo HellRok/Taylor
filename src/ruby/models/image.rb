@@ -34,21 +34,6 @@ class Image
     self
   end
 
-  # Rotates the image either clockwise or counter-clockwise
-  # @param direction [Symbol] Valid options are :cw and :ccw
-  # @raise [ArgumentError] If the direction is invalid
-  # @return [Image]
-  def rotate!(direction = :cw)
-    raise ArgumentError.new("Value must be :ccw, :cw, or nil") unless [:ccw, :cw, nil].include?(direction)
-
-    if direction == :ccw
-      image_rotate_ccw!(self)
-    else
-      image_rotate_cw!(self)
-    end
-    self
-  end
-
   # Tints the image with the specified colour
   # @param colour [Colour]
   # @return [nil]

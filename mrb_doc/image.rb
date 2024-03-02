@@ -16,24 +16,6 @@ def image_mipmaps!(image)
   nil
 end
 
-# Rotates the image clockwise 90 degrees
-# @param image [Image]
-# @return [nil]
-def image_rotate_cw!(image)
-  # mrb_image_rotate_cw
-  # src/mruby_integration/image.cpp
-  nil
-end
-
-# Rotates the image counter-clockwise 90 degrees
-# @param image [Image]
-# @return [nil]
-def image_rotate_ccw!(image)
-  # mrb_image_rotate_ccw
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Tints the image with the specified colour
 # @param image [Image]
 # @param colour [Colour]
