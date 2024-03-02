@@ -1,16 +1,5 @@
 class Test
   class Image_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_image_alpha_mask!
-      image = Image.new("assets/test.png")
-      mask = Image.new("assets/alpha.png")
-
-      image_alpha_mask!(image, mask)
-      assert_equal fixture_image_alpha_mask!, image.data
-    ensure
-      mask.unload
-      image.unload
-    end
-
     def test_image_mipmaps!
       image = Image.new("assets/test.png")
       assert_equal 1, image.mipmaps

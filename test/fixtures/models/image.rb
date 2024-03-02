@@ -72,7 +72,7 @@ def fixture_models_image_crop!
   ]
 end
 
-def fixture_models_image_alpha_mask
+def fixture_models_image_alpha_mask!
   t = Colour[255, 255, 255, 0]
   o = Colour[218, 154, 37, 255]
   p = Colour[195, 37, 218, 0]

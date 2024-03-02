@@ -142,6 +142,22 @@ class Image
     self
   end
 
+  # Applies the alpha mask to this {Image}.
+  #
+  # ```ruby
+  # image = Image.new("./assets/sprite.png")
+  # mask = Image.new("./assets/sprite_mask.png")
+  # image.alpha_mask!(mask)
+  # ```
+  #
+  # @param mask [Image]
+  # @return [Image]
+  def alpha_mask!(mask)
+    # mrb_Image_alpha_mask_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of Colour objects
   # @return [Array<Colour>]
   def data

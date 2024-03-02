@@ -109,7 +109,7 @@ class Test
         image.unload
       end
 
-      def test_resize_incorrect_scaler!
+      def test_resize_bang_incorrect_scaler
         image = Image.new("./assets/test.png")
 
         begin
@@ -132,13 +132,13 @@ class Test
         image.unload
       end
 
-      def test_alpha_mask
+      def test_alpha_mask!
         image = Image.new("./assets/test.png")
         mask = Image.new("./assets/alpha.png")
 
-        image.alpha_mask = mask
+        image.alpha_mask!(mask)
 
-        assert_equal fixture_models_image_alpha_mask, image.data
+        assert_equal fixture_models_image_alpha_mask!, image.data
       ensure
         mask.unload
         image.unload

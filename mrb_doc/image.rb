@@ -1,13 +1,3 @@
-# Applies the alpha of the mask to the image
-# @param image [Image]
-# @param alpha_mask [Image]
-# @return [nil]
-def image_alpha_mask!(image, alpha_mask)
-  # mrb_image_alpha_mask
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Pre-multiplies the alpha for the image
 # @param image [Image]
 # @return [nil]
