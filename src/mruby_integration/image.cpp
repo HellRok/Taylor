@@ -37,28 +37,6 @@ mrb_image_mipmaps(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_image_rotate_cw(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  ImageRotateCW(image);
-
-  return mrb_nil_value();
-}
-
-auto
-mrb_image_rotate_ccw(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  ImageRotateCCW(image);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_colour_tint(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
@@ -192,17 +170,6 @@ append_images(mrb_state* mrb)
                     mrb->kernel_module,
                     "image_mipmaps!",
                     mrb_image_mipmaps,
-                    MRB_ARGS_REQ(1));
-
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_rotate_cw!",
-                    mrb_image_rotate_cw,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_rotate_ccw!",
-                    mrb_image_rotate_ccw,
                     MRB_ARGS_REQ(1));
 
   mrb_define_method(mrb,

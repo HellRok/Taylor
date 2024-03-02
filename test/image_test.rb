@@ -10,24 +10,6 @@ class Test
       image.unload
     end
 
-    def test_image_rotate_cw!
-      image = Image.new("assets/asymettrical.png")
-
-      image_rotate_cw!(image)
-      assert_equal fixture_image_rotate_cw!, image.data
-    ensure
-      image.unload
-    end
-
-    def test_image_rotate_ccw!
-      image = Image.new("assets/asymettrical.png")
-
-      image_rotate_ccw!(image)
-      assert_equal fixture_image_rotate_ccw!, image.data
-    ensure
-      image.unload
-    end
-
     def test_image_colour_tint!
       image = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
 

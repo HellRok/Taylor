@@ -105,7 +105,7 @@ def fixture_models_image_flip_horizontally!
   ]
 end
 
-def fixture_models_image_rotate_nil!
+def fixture_models_image_rotate_clockwise!
   t = Colour::WHITE
   o = Colour[218, 154, 37]
   p = Colour[195, 37, 218]
@@ -116,11 +116,7 @@ def fixture_models_image_rotate_nil!
   ]
 end
 
-def fixture_models_image_rotate_cw!
-  fixture_models_image_rotate_nil!
-end
-
-def fixture_models_image_rotate_ccw!
+def fixture_models_image_rotate_counter_clockwise!
   t = Colour::WHITE
   o = Colour[218, 154, 37]
   p = Colour[195, 37, 218]

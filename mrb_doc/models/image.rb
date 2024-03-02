@@ -186,6 +186,34 @@ class Image
     self
   end
 
+  # Rotates the {Image} 90 degrees clockwise
+  #
+  # ```ruby
+  # sprite = Image.new("./assets/sprite.png")
+  # sprite.rotate_clockwise!
+  # ```
+  #
+  # @return [Image]
+  def rotate_clockwise!
+    # mrb_Image_rotate_clockwise_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
+  # Rotates the {Image} 90 degrees counter clockwise
+  #
+  # ```ruby
+  # sprite = Image.new("./assets/sprite.png")
+  # sprite.rotate_counter_clockwise!
+  # ```
+  #
+  # @return [Image]
+  def rotate_counter_clockwise!
+    # mrb_Image_rotate_counter_clockwise_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of Colour objects
   # @return [Array<Colour>]
   def data

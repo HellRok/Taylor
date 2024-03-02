@@ -61,6 +61,9 @@
 - Renamed Image#flip_vertical! to Image#flip_vertically!
 - Renamed Image#flip_horizontal! to Image#flip_horizontally!
 - Removed image_flip_vertical! and image_flip_horizontal!
+- Removed Image#rotate!
+- Added Image#rotate_clockwise! and Image#rotate_counter_clockwise!
+- Removed image_rotate_cw! and image_rotate_ccw!
 
 ## v0.3.14.1
 
