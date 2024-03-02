@@ -55,6 +55,7 @@
 - Removed image_resize! and image_resize_nearest_neighbour!
 - Image.crop! is now C++ backed
 - removed image_crop!
+- Added Rectangle[]
 
 ## v0.3.14.1
 
