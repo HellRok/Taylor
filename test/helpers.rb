@@ -5,7 +5,7 @@ def reset_window
   else
     set_window_size 10, 10
   end
-  flush_frame
+  flush_frame until get_screen_width == 10 && get_screen_height == 10
 end
 
 def skip_unless_display_present
