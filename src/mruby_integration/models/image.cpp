@@ -280,6 +280,21 @@ mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_alpha_mask_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image *image, *alpha_mask;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  mrb_get_args(mrb, "d", &alpha_mask, &Image_type);
+
+  ImageAlphaMask(image, *alpha_mask);
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -328,6 +343,11 @@ append_models_Image(mrb_state* mrb)
     mrb, Image_class, "resize!", mrb_Image_resize_bang, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "crop!", mrb_Image_crop_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    Image_class,
+                    "alpha_mask!",
+                    mrb_Image_alpha_mask_bang,
+                    MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
 

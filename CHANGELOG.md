@@ -56,6 +56,9 @@
 - Image.crop! is now C++ backed
 - removed image_crop!
 - Added Rectangle[]
+- Removed Image#alpha_mask=
+- Added Image#alpha_mask!
+- Removed image_mask_alpha!
 
 ## v0.3.14.1
 

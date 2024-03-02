@@ -218,11 +218,6 @@ append_images(mrb_state* mrb)
 {
   mrb_define_method(mrb,
                     mrb->kernel_module,
-                    "image_alpha_mask!",
-                    mrb_image_alpha_mask,
-                    MRB_ARGS_REQ(2));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
                     "image_alpha_premultiply!",
                     mrb_image_alpha_premultiply,
                     MRB_ARGS_REQ(1));

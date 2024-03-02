@@ -20,13 +20,6 @@ class Image
     load_texture_from_image(self)
   end
 
-  # Applies the alpha of the mask to the image
-  # @param mask [Image]
-  # @return [Image]
-  def alpha_mask=(mask)
-    image_alpha_mask!(self, mask)
-  end
-
   # Pre-multiplies the alpha for the image
   # @return [Image]
   def premultiply_alpha!

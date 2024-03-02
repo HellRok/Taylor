@@ -1,24 +1,3 @@
-def fixture_image_crop!
-  t = Colour::WHITE
-  o = Colour[218, 154, 37]
-  p = Colour[195, 37, 218]
-  [
-    o, t, p,
-    t, o, t
-  ]
-end
-
-def fixture_image_alpha_mask!
-  t = Colour[255, 255, 255, 0]
-  o = Colour[218, 154, 37, 255]
-  p = Colour[195, 37, 218, 0]
-  [
-    o, t, p,
-    t, o, t,
-    p, t, o
-  ]
-end
-
 def fixture_image_flip_vertical!
   t = Colour::WHITE
   o = Colour[218, 154, 37]
