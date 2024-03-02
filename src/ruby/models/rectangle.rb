@@ -3,6 +3,28 @@ class Rectangle
   # @return [Integer]
   attr_reader :x, :y, :width, :height
 
+  # Shorthand for initializing a new {Rectangle}.
+  #
+  # ```ruby
+  # source = Rectangle[8, 16, 24, 32]
+  # p source.to_h
+  # # => {
+  # #      x: 8,
+  # #      y: 16,
+  # #      width: 24,
+  # #      height: 32,
+  # #    }
+  # ```
+  #
+  # @param y [Float]
+  # @param x [Float]
+  # @param width [Float]
+  # @param height [Float]
+  # @return [Rectangle]
+  def self.[](x, y, width, height)
+    new(x, y, width, height)
+  end
+
   # Return the object represented by a Hash
   # @return [Hash]
   def to_h
