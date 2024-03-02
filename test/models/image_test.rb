@@ -154,20 +154,20 @@ class Test
         image.unload
       end
 
-      def test_image_flip_vertical!
+      def test_image_flip_vertically!
         image = Image.new("assets/asymettrical.png")
 
-        image.flip_vertical!
-        assert_equal fixture_models_image_flip_vertical!, image.data
+        image.flip_vertically!
+        assert_equal fixture_models_image_flip_vertically!, image.data
       ensure
         image.unload
       end
 
-      def test_image_flip_horizontal!
+      def test_image_flip_horizontally!
         image = Image.new("assets/asymettrical.png")
 
-        image.flip_horizontal!
-        assert_equal fixture_models_image_flip_horizontal!, image.data
+        image.flip_horizontally!
+        assert_equal fixture_models_image_flip_horizontally!, image.data
       ensure
         image.unload
       end

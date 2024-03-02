@@ -158,6 +158,34 @@ class Image
     self
   end
 
+  # Flips the {Image} upside down
+  #
+  # ```ruby
+  # sprite = Image.new("./assets/sprite.png")
+  # sprite.flip_vertically!
+  # ```
+  #
+  # @return [Image]
+  def flip_vertically!
+    # mrb_Image_flip_vertically_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
+  # Flips the {Image} sideways
+  #
+  # ```ruby
+  # sprite = Image.new("./assets/sprite.png")
+  # sprite.flip_horizontally!
+  # ```
+  #
+  # @return [Image]
+  def flip_horizontally!
+    # mrb_Image_flip_horizontally_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of Colour objects
   # @return [Array<Colour>]
   def data

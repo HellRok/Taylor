@@ -1,25 +1,3 @@
-def fixture_image_flip_vertical!
-  t = Colour::WHITE
-  o = Colour[218, 154, 37]
-  p = Colour[195, 37, 218]
-  [
-    p, t, p,
-    t, o, t,
-    o, t, p
-  ]
-end
-
-def fixture_image_flip_horizontal!
-  t = Colour::WHITE
-  o = Colour[218, 154, 37]
-  p = Colour[195, 37, 218]
-  [
-    p, t, o,
-    t, o, t,
-    p, t, p
-  ]
-end
-
 def fixture_image_rotate_cw!
   t = Colour::WHITE
   o = Colour[218, 154, 37]

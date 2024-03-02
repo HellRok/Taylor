@@ -34,20 +34,6 @@ class Image
     self
   end
 
-  # Flips the image upside down
-  # @return [Image]
-  def flip_vertical!
-    image_flip_vertical!(self)
-    self
-  end
-
-  # Flips the image sideways
-  # @return [Image]
-  def flip_horizontal!
-    image_flip_horizontal!(self)
-    self
-  end
-
   # Rotates the image either clockwise or counter-clockwise
   # @param direction [Symbol] Valid options are :cw and :ccw
   # @raise [ArgumentError] If the direction is invalid
