@@ -1,13 +1,5 @@
 class Test
   class Image_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_image_crop!
-      image = Image.new("assets/test.png")
-      image_crop!(image, Rectangle.new(0, 0, 3, 2))
-      assert_equal fixture_image_crop!, image.data
-    ensure
-      image.unload
-    end
-
     def test_image_alpha_mask!
       image = Image.new("assets/test.png")
       mask = Image.new("assets/alpha.png")

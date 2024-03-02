@@ -53,6 +53,8 @@
 - Removed generate_image_colour
 - Image.resize! is now C++ backed
 - Removed image_resize! and image_resize_nearest_neighbour!
+- Image.crop! is now C++ backed
+- removed image_crop!
 
 ## v0.3.14.1
 

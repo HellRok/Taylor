@@ -7,30 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_crop(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Rectangle* rectangle;
-  mrb_value image_obj;
-  mrb_get_args(mrb, "od", &image_obj, &rectangle, &Rectangle_type);
-
-  auto* image =
-    static_cast<Image*>(mrb_data_get_ptr(mrb, image_obj, &Image_type));
-
-  ImageCrop(image, *rectangle);
-
-  mrb_iv_set(mrb,
-             image_obj,
-             mrb_intern_cstr(mrb, "@width"),
-             mrb_int_value(mrb, rectangle->width));
-  mrb_iv_set(mrb,
-             image_obj,
-             mrb_intern_cstr(mrb, "@height"),
-             mrb_int_value(mrb, rectangle->height));
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_alpha_mask(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image *image, *alpha_mask;
@@ -240,8 +216,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "image_crop!", mrb_image_crop, MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "image_alpha_mask!",

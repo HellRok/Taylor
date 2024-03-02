@@ -1,13 +1,3 @@
-# Crops the image to the section in the rectangle
-# @param image [Image]
-# @param rectangle [Rectangle]
-# @return [nil]
-def image_crop!(image, rectangle)
-  # mrb_image_crop
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Applies the alpha of the mask to the image
 # @param image [Image]
 # @param alpha_mask [Image]
