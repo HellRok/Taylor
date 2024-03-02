@@ -7,29 +7,11 @@ def image_alpha_premultiply!(image)
   nil
 end
 
-# Flips the image vertically
-# @param image [Image]
-# @return [nil]
-def image_flip_vertical!(image)
-  # mrb_image_flip_vertical
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Generates mipmaps for the specified image
 # @param image [Image]
 # @return [nil]
 def image_mipmaps!(image)
   # mrb_image_mipmaps
-  # src/mruby_integration/image.cpp
-  nil
-end
-
-# Flips the image horizontally
-# @param image [Image]
-# @return [nil]
-def image_flip_horizontal!(image)
-  # mrb_image_flip_horizontal
   # src/mruby_integration/image.cpp
   nil
 end

@@ -83,7 +83,7 @@ def fixture_models_image_alpha_mask!
   ]
 end
 
-def fixture_models_image_flip_vertical!
+def fixture_models_image_flip_vertically!
   t = Colour::WHITE
   o = Colour[218, 154, 37]
   p = Colour[195, 37, 218]
@@ -94,7 +94,7 @@ def fixture_models_image_flip_vertical!
   ]
 end
 
-def fixture_models_image_flip_horizontal!
+def fixture_models_image_flip_horizontally!
   t = Colour::WHITE
   o = Colour[218, 154, 37]
   p = Colour[195, 37, 218]

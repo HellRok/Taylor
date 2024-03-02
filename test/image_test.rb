@@ -10,24 +10,6 @@ class Test
       image.unload
     end
 
-    def test_image_flip_vertical!
-      image = Image.new("assets/asymettrical.png")
-
-      image_flip_vertical!(image)
-      assert_equal fixture_image_flip_vertical!, image.data
-    ensure
-      image.unload
-    end
-
-    def test_image_flip_horizontal!
-      image = Image.new("assets/asymettrical.png")
-
-      image_flip_horizontal!(image)
-      assert_equal fixture_image_flip_horizontal!, image.data
-    ensure
-      image.unload
-    end
-
     def test_image_rotate_cw!
       image = Image.new("assets/asymettrical.png")
 

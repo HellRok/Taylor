@@ -56,9 +56,11 @@
 - Image.crop! is now C++ backed
 - removed image_crop!
 - Added Rectangle[]
-- Removed Image#alpha_mask=
-- Added Image#alpha_mask!
+- Renamed Image#alpha_mask= to Image#alpha_mask!
 - Removed image_mask_alpha!
+- Renamed Image#flip_vertical! to Image#flip_vertically!
+- Renamed Image#flip_horizontal! to Image#flip_horizontally!
+- Removed image_flip_vertical! and image_flip_horizontal!
 
 ## v0.3.14.1
 

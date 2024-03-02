@@ -7,34 +7,12 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_alpha_mask(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image *image, *alpha_mask;
-  mrb_get_args(mrb, "dd", &image, &Image_type, &alpha_mask, &Image_type);
-
-  ImageAlphaMask(image, *alpha_mask);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_alpha_premultiply(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
   mrb_get_args(mrb, "d", &image, &Image_type);
 
   ImageAlphaPremultiply(image);
-
-  return mrb_nil_value();
-}
-
-auto
-mrb_image_flip_vertical(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  ImageFlipVertical(image);
 
   return mrb_nil_value();
 }
@@ -54,17 +32,6 @@ mrb_image_mipmaps(mrb_state* mrb, mrb_value) -> mrb_value
              image_obj,
              mrb_intern_cstr(mrb, "@mipmaps"),
              mrb_int_value(mrb, image->mipmaps));
-
-  return mrb_nil_value();
-}
-
-auto
-mrb_image_flip_horizontal(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  ImageFlipHorizontal(image);
 
   return mrb_nil_value();
 }
@@ -227,16 +194,6 @@ append_images(mrb_state* mrb)
                     mrb_image_mipmaps,
                     MRB_ARGS_REQ(1));
 
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_flip_vertical!",
-                    mrb_image_flip_vertical,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_flip_horizontal!",
-                    mrb_image_flip_horizontal,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "image_rotate_cw!",

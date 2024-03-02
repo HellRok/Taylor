@@ -295,6 +295,32 @@ mrb_Image_alpha_mask_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_flip_vertically_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  ImageFlipVertical(image);
+
+  return self;
+}
+
+auto
+mrb_Image_flip_horizontally_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  ImageFlipHorizontal(image);
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -348,6 +374,16 @@ append_models_Image(mrb_state* mrb)
                     "alpha_mask!",
                     mrb_Image_alpha_mask_bang,
                     MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    Image_class,
+                    "flip_vertically!",
+                    mrb_Image_flip_vertically_bang,
+                    MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    Image_class,
+                    "flip_horizontally!",
+                    mrb_Image_flip_horizontally_bang,
+                    MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
 
