@@ -40,7 +40,7 @@ class Texture2D
   # @param rotation [Integer] in degrees
   # @param colour [Colour]
   # @return [nil]
-  def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation: 0, colour: WHITE)
+  def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation: 0, colour: Colour::WHITE)
     @source = source unless source.nil?
     @source ||= Rectangle.new(0, 0, width, height)
     @destination = destination unless destination.nil?

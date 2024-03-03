@@ -47,7 +47,7 @@ end
 task pretty: ["format:fix", "lint:fix"] do
   # I do this because loading the gem breaks a lot of the build and I don't
   # want to add ruby-dev everywhere.
-  sh "bundle exec rake standardrb --fix"
+  sh "bundle exec standardrb --fix"
 end
 
 rule ".o" => ->(file) { source_for(file) } do |task|

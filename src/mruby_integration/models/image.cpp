@@ -9,6 +9,7 @@
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/colour.hpp"
+#include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 #include "ruby/models/image.hpp"
@@ -378,6 +379,32 @@ mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
   return return_array;
 }
 
+auto
+mrb_Image_to_texture(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  auto* texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
+  *texture = LoadTextureFromImage(*image);
+
+  mrb_value obj = mrb_obj_value(
+    Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
+
+  setup_Texture2D(mrb,
+                  obj,
+                  texture,
+                  texture->id,
+                  texture->width,
+                  texture->height,
+                  texture->mipmaps,
+                  texture->format);
+
+  return obj;
+}
+
 void
 append_models_Image(mrb_state* mrb)
 {
@@ -423,6 +450,8 @@ append_models_Image(mrb_state* mrb)
                     MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Image_class, "to_texture", mrb_Image_to_texture, MRB_ARGS_NONE());
 
   load_ruby_models_image(mrb);
 }
