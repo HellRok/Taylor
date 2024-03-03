@@ -221,4 +221,19 @@ class Image
     # src/mruby_integration/models/image.cpp
     [Colour.new]
   end
+
+  # Returns a {Texture2D} of the {Image}
+  #
+  # ```ruby
+  # image = Imag.new("./assets/sprite.png")
+  # sprite = image.to_texture
+  # sprite.draw
+  # ```
+  #
+  # @return [Texture2D]
+  def to_texture
+    # mrb_Image_to_texture
+    # src/mruby_integration/models/image.cpp
+    Texture2D.new
+  end
 end

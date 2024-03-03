@@ -74,17 +74,18 @@ class Builder
   def lint(fix: false)
     if fix
       <<~CMD
+        git ls-files *.{cpp,hpp} |
+        xargs -P$(nproc) -I{} \
         clang-tidy \
-          --fix-errors
-          $(git ls-files *.{cpp,hpp}) \
+          --fix-errors \
+          {} \
           -- -std=c++17 #{@includes} #{@defines} \
           2>/dev/null
       CMD
     else
-      cores = `grep 'cpu cores' /proc/cpuinfo`.lines.count
       <<~CMD
         find . -type f -name "*.[c,h]pp" |
-        xargs -P#{cores} -I{} \
+        xargs -P$(nproc) -I{} \
         clang-tidy \
           --warnings-as-errors=* \
           {} \

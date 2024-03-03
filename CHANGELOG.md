@@ -51,9 +51,9 @@
 - Removed image_text_ex
 - Image.generate is now C++ backed
 - Removed generate_image_colour
-- Image.resize! is now C++ backed
+- Image#resize! is now C++ backed
 - Removed image_resize! and image_resize_nearest_neighbour!
-- Image.crop! is now C++ backed
+- Image#crop! is now C++ backed
 - removed image_crop!
 - Added Rectangle[]
 - Renamed Image#alpha_mask= to Image#alpha_mask!
@@ -64,6 +64,8 @@
 - Removed Image#rotate!
 - Added Image#rotate_clockwise! and Image#rotate_counter_clockwise!
 - Removed image_rotate_cw! and image_rotate_ccw!
+- Image#to_texture is now C++ backed
+- Removed load_texture_from_image
 
 ## v0.3.14.1
 

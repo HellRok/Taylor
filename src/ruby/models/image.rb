@@ -14,12 +14,6 @@ class Image
     }
   end
 
-  # Returns a texture of the image
-  # @return [Texture2D]
-  def to_texture
-    load_texture_from_image(self)
-  end
-
   # Pre-multiplies the alpha for the image
   # @return [Image]
   def premultiply_alpha!

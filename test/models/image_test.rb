@@ -84,6 +84,12 @@ class Test
 
         assert_equal image.width, texture.width
         assert_equal image.height, texture.height
+
+        clear_and_draw do
+          texture.draw(destination: Rectangle[3, 3, 3, 3])
+        end
+
+        assert_equal fixture_models_image_to_texture, get_screen_data.data
       ensure
         texture.unload
         image.unload

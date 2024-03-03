@@ -193,3 +193,22 @@ def fixture_models_image_draw!
     r, t, o
   ]
 end
+
+def fixture_models_image_to_texture
+  w = Colour::RAYWHITE
+  t = Colour::WHITE
+  o = Colour[218, 154, 37]
+  p = Colour[195, 37, 218]
+  [
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, o, t, p, w, w, w, w,
+    w, w, w, t, o, t, w, w, w, w,
+    w, w, w, p, t, o, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w,
+    w, w, w, w, w, w, w, w, w, w
+  ]
+end
