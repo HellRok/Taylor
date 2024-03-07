@@ -1,4 +1,4 @@
-# Loads a font from a file
+# Loads a font from a file.
 # @param path [String]
 # @return [Font]
 def load_font(path)
@@ -7,7 +7,7 @@ def load_font(path)
   Font.new
 end
 
-# Loads a font from a file with extended options
+# Loads a font from a file with extended options.
 # @param path [String]
 # @param font_size [Integer]
 # @param char_count [Integer]
@@ -18,7 +18,7 @@ def load_font_ex(path, font_size, char_count)
   Font.new
 end
 
-# Unloads a font from memory
+# Unloads a font from memory.
 # @param font [Font]
 # @return [nil]
 def unload_font(font)
@@ -38,7 +38,7 @@ def draw_fps(x, y)
 end
 
 # Draws the current frame rate at the passed in x and y coordinates.
-# @param text [String] The text to put on the screen
+# @param text [String] The text to put on the screen.
 # @param x [Integer]
 # @param y [Integer]
 # @param font_size [Integer]
@@ -50,9 +50,9 @@ def draw_text(text, x, y, font_size, colour)
   nil
 end
 
-# Draws the text at the given position, size, padding, and colour with the specified font
-# @param font [Font] Which font to draw with
-# @param text [String] The text to put on the screen
+# Draws the text at the given position, size, padding, and colour with the specified font.
+# @param font [Font] Which font to draw with.
+# @param text [String] The text to put on the screen.
 # @param position [Vector2]
 # @param font_size [Integer]
 # @param font_padding [Integer]
@@ -64,9 +64,9 @@ def draw_text_ex(font, text, position, font_size, font_padding, colour)
   nil
 end
 
-# Returns the size of the text for the given font
-# @param font [Font] Which font to draw with
-# @param text [String] The text to put on the screen
+# Returns the size of the text for the given font.
+# @param font [Font] Which font to draw with.
+# @param text [String] The text to put on the screen.
 # @param font_size [Integer]
 # @param font_padding [Integer]
 # @return [Vector2]

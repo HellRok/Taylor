@@ -1,4 +1,4 @@
-# Loads a texture from a file
+# Loads a texture from a file.
 # @param path [String]
 # @return [Texture2D]
 def load_texture(path)
@@ -7,7 +7,7 @@ def load_texture(path)
   Texture2D.new
 end
 
-# Loads a texture from an image object
+# Loads a texture from an image object.
 # @param image [Image]
 # @return [Texture2D]
 def load_texture_from_image(image)
@@ -16,7 +16,7 @@ def load_texture_from_image(image)
   Texture2D.new
 end
 
-# Unloads a texture
+# Unloads a texture.
 # @param texture [Texture2D]
 # @return [nil]
 def unload_texture(texture)
@@ -25,7 +25,7 @@ def unload_texture(texture)
   nil
 end
 
-# Draws a texture, the colour will apply a tint and alpha levels
+# Draws a texture, the colour will apply a tint and alpha levels.
 # @param texture [Texture2D]
 # @param x [Integer]
 # @param y [Integer]
@@ -38,7 +38,7 @@ def draw_texture(texture, x, y, colour)
 end
 
 # Draws a section of texture with the specified rotation to the scaled to the
-# destination rectangle, the colour will apply a tint and alpha levels
+# destination rectangle, the colour will apply a tint and alpha levels.
 # @param texture [Texture2D]
 # @param source [Rectangle]
 # @param destination [Rectangle]
@@ -52,7 +52,7 @@ def draw_texture_pro(texture, source, destination, origin, rotation, colour)
   nil
 end
 
-# Returns a new colour which is a faded version of the original
+# Returns a new colour which is a faded version of the original.
 # @param colour [Colour
 # @return [Colour]
 def fade(colour)
@@ -61,7 +61,7 @@ def fade(colour)
   Colour.new
 end
 
-# Generates mipmaps for the {Texture2D}
+# Generates mipmaps for the {Texture2D}.
 # @param texture [Texture2D]
 # @return [nil]
 def generate_texture_mipmaps(texture)
@@ -70,9 +70,9 @@ def generate_texture_mipmaps(texture)
   nil
 end
 
-# Sets the filtering for the {Texture2D}
+# Sets the filtering for the {Texture2D}.
 # @param texture [Texture2D]
-# @param filter [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}
+# @param filter [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}.
 # @return [nil]
 def set_texture_filter(texture, filter)
   # mrb_set_texture_filter

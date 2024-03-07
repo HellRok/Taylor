@@ -1,4 +1,4 @@
-# Loads an image from a file
+# Loads an image from a file.
 # @param path [String]
 # @return [Image]
 def load_image(path)
@@ -7,7 +7,7 @@ def load_image(path)
   Image.new
 end
 
-# Unloads an image
+# Unloads an image.
 # @param image [Image]
 # @return [nil]
 def unload_image(image)
@@ -16,7 +16,7 @@ def unload_image(image)
   nil
 end
 
-# Exports an image to a file
+# Exports an image to a file.
 # @param image [Image]
 # @param path [String]
 # @return [nil]
@@ -37,7 +37,7 @@ def generate_image_colour(width, height, colour)
   Image.new
 end
 
-# Copies an image to a new object
+# Copies an image to a new object.
 # @param image [Image]
 # @return [Image]
 def image_copy(image)
@@ -46,7 +46,7 @@ def image_copy(image)
   Image.new
 end
 
-# Returns a subsection of an image
+# Returns a subsection of an image.
 # @param image [Image]
 # @param source [Rectangle]
 # @return [Image]
@@ -56,9 +56,9 @@ def image_from_image(image, source)
   Image.new
 end
 
-# Creates an image from the font
-# @param font [Font] Which font to draw with
-# @param text [String] The text to put on the screen
+# Creates an image from the font.
+# @param font [Font] Which font to draw with.
+# @param text [String] The text to put on the screen.
 # @param font_size [Integer]
 # @param font_padding [Integer]
 # @param colour [Colour]
@@ -93,7 +93,7 @@ def image_resize_nearest_neighbour!(image, width, height)
   nil
 end
 
-# Crops the image to the section in the rectangle
+# Crops the image to the section in the rectangle.
 # @param image [Image]
 # @param rectangle [Rectangle]
 # @return [nil]
@@ -103,7 +103,7 @@ def image_crop!(image, rectangle)
   nil
 end
 
-# Applies the alpha of the mask to the image
+# Applies the alpha of the mask to the image.
 # @param image [Image]
 # @param alpha_mask [Image]
 # @return [nil]
@@ -113,7 +113,7 @@ def image_alpha_mask!(image, alpha_mask)
   nil
 end
 
-# Pre-multiplies the alpha for the image
+# Pre-multiplies the alpha for the image.
 # @param image [Image]
 # @return [nil]
 def image_alpha_premultiply!(image)
@@ -122,7 +122,7 @@ def image_alpha_premultiply!(image)
   nil
 end
 
-# Flips the image vertically
+# Flips the image vertically.
 # @param image [Image]
 # @return [nil]
 def image_flip_vertical!(image)
@@ -131,7 +131,7 @@ def image_flip_vertical!(image)
   nil
 end
 
-# Generates mipmaps for the specified image
+# Generates mipmaps for the specified image.
 # @param image [Image]
 # @return [nil]
 def image_mipmaps!(image)
@@ -140,7 +140,7 @@ def image_mipmaps!(image)
   nil
 end
 
-# Flips the image horizontally
+# Flips the image horizontally.
 # @param image [Image]
 # @return [nil]
 def image_flip_horizontal!(image)
@@ -149,7 +149,7 @@ def image_flip_horizontal!(image)
   nil
 end
 
-# Rotates the image clockwise 90 degrees
+# Rotates the image clockwise 90 degrees.
 # @param image [Image]
 # @return [nil]
 def image_rotate_cw!(image)
@@ -158,7 +158,7 @@ def image_rotate_cw!(image)
   nil
 end
 
-# Rotates the image counter-clockwise 90 degrees
+# Rotates the image counter-clockwise 90 degrees.
 # @param image [Image]
 # @return [nil]
 def image_rotate_ccw!(image)
@@ -167,7 +167,7 @@ def image_rotate_ccw!(image)
   nil
 end
 
-# Tints the image with the specified colour
+# Tints the image with the specified colour.
 # @param image [Image]
 # @param colour [Colour]
 # @return [nil]
@@ -177,7 +177,7 @@ def image_colour_tint!(image, colour)
   nil
 end
 
-# Inverts the colours of the image
+# Inverts the colours of the image.
 # @param image [Image]
 # @return [nil]
 def image_colour_invert!(image)
@@ -186,7 +186,7 @@ def image_colour_invert!(image)
   nil
 end
 
-# Converts the image to grayscale
+# Converts the image to grayscale.
 # @param image [Image]
 # @return [nil]
 def image_colour_grayscale!(image)
@@ -195,9 +195,9 @@ def image_colour_grayscale!(image)
   nil
 end
 
-# Change the contrast of the image
+# Change the contrast of the image.
 # @param image [Image]
-# @param contrast [Float] a value between -100 and 100
+# @param contrast [Float] a value between -100 and 100.
 # @return [nil]
 def image_colour_contrast!(image, contrast)
   # mrb_image_colour_contrast
@@ -205,9 +205,9 @@ def image_colour_contrast!(image, contrast)
   nil
 end
 
-# Change the brightness of the image
+# Change the brightness of the image.
 # @param image [Image]
-# @param brightness [Float] a value between -255 and 255
+# @param brightness [Float] a value between -255 and 255.
 # @return [nil]
 def image_colour_brightness!(image, brightness)
   # mrb_image_colour_brightness
@@ -215,7 +215,7 @@ def image_colour_brightness!(image, brightness)
   nil
 end
 
-# Replace the old Colour with the new Colour
+# Replace the old Colour with the new Colour.
 # @param image [Image]
 # @param old_colour [Colour]
 # @param new_colour [Colour]
@@ -240,7 +240,7 @@ def image_draw!(destination, source, source_rectangle, destination_rectangle, co
   nil
 end
 
-# Returns an Image object with the screen data
+# Returns an Image object with the screen data.
 # @return [Image]
 def get_screen_data
   # mrb_get_screen_data
