@@ -37,7 +37,7 @@ def draw_texture(texture, x, y, colour)
   nil
 end
 
-# Draws a section of texture with the specified rotation to the scaled to the
+# Draws a section of texture with the specified rotation scaled to the
 # destination rectangle, the colour will apply a tint and alpha levels.
 # @param texture [Texture2D]
 # @param source [Rectangle]
