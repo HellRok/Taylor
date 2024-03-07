@@ -197,7 +197,7 @@ end
 
 # Change the contrast of the image.
 # @param image [Image]
-# @param contrast [Float] a value between -100 and 100.
+# @param contrast [Float] A value between -100 and 100.
 # @return [nil]
 def image_colour_contrast!(image, contrast)
   # mrb_image_colour_contrast
@@ -207,7 +207,7 @@ end
 
 # Change the brightness of the image.
 # @param image [Image]
-# @param brightness [Float] a value between -255 and 255.
+# @param brightness [Float] A value between -255 and 255.
 # @return [nil]
 def image_colour_brightness!(image, brightness)
   # mrb_image_colour_brightness
