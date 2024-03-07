@@ -1,4 +1,4 @@
-# Translates the vector to where it is on the screen according to the camera
+# Translates the vector to where it is on the screen according to the camera.
 # @param vector [Vector2]
 # @param camera [Camera2D]
 # @return [Vector2]
@@ -8,7 +8,7 @@ def get_world_to_screen2D(vector, camera)
   Vector2.new
 end
 
-# Translates the vector to where it is in the world based on it the camera
+# Translates the vector to where it is in the world based on it the camera.
 # @param vector [Vector2]
 # @param camera [Camera2D]
 # @return [Vector2]

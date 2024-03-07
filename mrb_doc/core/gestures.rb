@@ -8,7 +8,7 @@ def set_gestures_enabled(flags)
   nil
 end
 
-# Returns the detected gestures based on their constant
+# Returns the detected gestures based on their constant.
 # @return [Integer]
 def get_gesture_detected
   # mrb_get_gesture_detected

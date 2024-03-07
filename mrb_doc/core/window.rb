@@ -1,4 +1,4 @@
-# Initialises a window for rendering
+# Initialises a window for rendering.
 # @param width [Integer]
 # @param height [Integer]
 # @param title [String]
@@ -17,7 +17,7 @@ def window_should_close?
   false
 end
 
-# Close the open window
+# Close the open window.
 # @return [nil]
 def close_window
   # mrb_close_window
@@ -53,7 +53,7 @@ def set_window_state(flags)
   nil
 end
 
-# Checks if the window has the FLAG_FULLSCREEN_MODE state set
+# Checks if the window has the FLAG_FULLSCREEN_MODE state set.
 # @return [Boolean]
 def window_fullscreen?
   # mrb_window_fullscreen
@@ -61,7 +61,7 @@ def window_fullscreen?
   true
 end
 
-# Checks if the window has the FLAG_WINDOW_HIDDEN state set
+# Checks if the window has the FLAG_WINDOW_HIDDEN state set.
 # @return [Boolean]
 def window_hidden?
   # mrb_window_hidden
@@ -69,7 +69,7 @@ def window_hidden?
   false
 end
 
-# Checks if the window has the FLAG_WINDOW_MINIMISED state set
+# Checks if the window has the FLAG_WINDOW_MINIMISED state set.
 # @return [Boolean]
 def window_minimised?
   # mrb_window_minimised
@@ -77,7 +77,7 @@ def window_minimised?
   false
 end
 
-# Checks if the window has the FLAG_WINDOW_MAXIMISED state set
+# Checks if the window has the FLAG_WINDOW_MAXIMISED state set.
 # @return [Boolean]
 def window_maximised?
   # mrb_window_maximised
@@ -85,7 +85,7 @@ def window_maximised?
   true
 end
 
-# Checks if the window has focus
+# Checks if the window has focus.
 # @return [Boolean]
 def window_focused?
   # mrb_window_focused
@@ -93,7 +93,7 @@ def window_focused?
   true
 end
 
-# Checks if the window was resized since the last frame
+# Checks if the window was resized since the last frame.
 # @return [Boolean]
 def window_resized?
   # mrb_window_resized
@@ -111,7 +111,7 @@ def clear_window_state(flags)
   nil
 end
 
-# Toggles the fullscreen state
+# Toggles the fullscreen state.
 # @return [nil]
 def toggle_fullscreen
   # mrb_toggle_fullscreen
@@ -119,7 +119,7 @@ def toggle_fullscreen
   nil
 end
 
-# Maximises the window
+# Maximises the window.
 # @return [nil]
 def maximise_window
   # mrb_maximise_window
@@ -127,7 +127,7 @@ def maximise_window
   nil
 end
 
-# Minimises the window
+# Minimises the window.
 # @return [nil]
 def minimise_window
   # mrb_minimise_window
@@ -135,8 +135,8 @@ def minimise_window
   nil
 end
 
-# Restores the window from being maximised or minimised
-# @note I don't think it currently works for restoring from minimised
+# Restores the window from being maximised or minimised.
+# @note I don't think it currently works for restoring from minimised.
 # @return [nil]
 def restore_window
   # mrb_restore_window
@@ -144,7 +144,7 @@ def restore_window
   nil
 end
 
-# Sets the icon for the current window
+# Sets the icon for the current window.
 # @param image [Image]
 # @return [nil]
 def set_window_icon(image)
@@ -153,7 +153,7 @@ def set_window_icon(image)
   nil
 end
 
-# Sets the title for the current window
+# Sets the title for the current window.
 # @param title [String]
 # @return [nil]
 def set_window_title(title)
@@ -162,7 +162,7 @@ def set_window_title(title)
   nil
 end
 
-# Sets the position for the current window
+# Sets the position for the current window.
 # @param x [Integer]
 # @param y [Integer]
 # @return [nil]
@@ -172,7 +172,7 @@ def set_window_position(x, y)
   nil
 end
 
-# Sets the monitor for the current window
+# Sets the monitor for the current window.
 # @param monitor [Integer]
 # @return [nil]
 def set_window_monitor(monitor)
@@ -181,7 +181,7 @@ def set_window_monitor(monitor)
   nil
 end
 
-# Sets the minimum allowed size for the current window
+# Sets the minimum allowed size for the current window.
 # @param width [Integer]
 # @param height [Integer]
 # @return [nil]
@@ -201,7 +201,7 @@ def set_window_size(width, height)
   nil
 end
 
-# Gets the width of the window
+# Gets the width of the window.
 # @return [Integer]
 def get_screen_width
   # mrb_get_screen_width
@@ -209,7 +209,7 @@ def get_screen_width
   640
 end
 
-# Gets the height of the window
+# Gets the height of the window.
 # @return [Integer]
 def get_screen_height
   # mrb_get_screen_height
@@ -217,7 +217,7 @@ def get_screen_height
   480
 end
 
-# Gets the total number of monitors the user has
+# Gets the total number of monitors the user has.
 # @return [Integer]
 def get_monitor_count
   # mrb_get_monitor_count
@@ -225,7 +225,7 @@ def get_monitor_count
   2
 end
 
-# Gets the id of the current monitor
+# Gets the id of the current monitor.
 # @return [Integer]
 def get_current_monitor
   # mrb_get_current_monitor
@@ -233,7 +233,7 @@ def get_current_monitor
   0
 end
 
-# Gets the position of the specified monitor
+# Gets the position of the specified monitor.
 # @param monitor [Integer]
 # @return [Vector2]
 def get_monitor_position(monitor)
@@ -242,7 +242,7 @@ def get_monitor_position(monitor)
   Vector2.new(0, 0)
 end
 
-# Gets the width of the specified monitor
+# Gets the width of the specified monitor.
 # @param monitor [Integer]
 # @return [Integer]
 def get_monitor_width(monitor)
@@ -251,7 +251,7 @@ def get_monitor_width(monitor)
   1920
 end
 
-# Gets the height of the specified monitor
+# Gets the height of the specified monitor.
 # @param monitor [Integer]
 # @return [Integer]
 def get_monitor_height(monitor)
@@ -260,7 +260,7 @@ def get_monitor_height(monitor)
   1080
 end
 
-# Gets the refresh rate of the specified monitor
+# Gets the refresh rate of the specified monitor.
 # @param monitor [Integer]
 # @return [Integer]
 def get_monitor_refresh_rate(monitor)
@@ -269,7 +269,7 @@ def get_monitor_refresh_rate(monitor)
   60
 end
 
-# Gets the position of the window
+# Gets the position of the window.
 # @return [Vector2]
 def get_window_position
   # mrb_get_window_position
@@ -277,7 +277,7 @@ def get_window_position
   Vector2.new(10, 10)
 end
 
-# Gets the scale of the window
+# Gets the scale of the window.
 # @return [Vector2]
 def get_window_scale_dpi
   # mrb_get_window_scale_dpi

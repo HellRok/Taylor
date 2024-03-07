@@ -20,8 +20,8 @@ def set_config_flags(flags)
   nil
 end
 
-# Sets the logging level
-# @param level [Integer] A value between 0 and 5
+# Sets the logging level.
+# @param level [Integer] A value between 0 and 5.
 # @return [nil]
 def set_trace_log_level(level)
   # mrb_set_trace_log_level
@@ -29,7 +29,7 @@ def set_trace_log_level(level)
   nil
 end
 
-# Opens the URL in the users browser
+# Opens the URL in the users browser.
 # @param url [String]
 # @return [nil]
 def open_url(url)
@@ -38,7 +38,7 @@ def open_url(url)
   nil
 end
 
-# Sets the clipboard value
+# Sets the clipboard value.
 # @param text [String]
 # @return [nil]
 def set_clipboard_text(text)
@@ -47,7 +47,7 @@ def set_clipboard_text(text)
   nil
 end
 
-# Gets the clipboard value
+# Gets the clipboard value.
 # @return [String]
 def get_clipboard_text
   # mrb_get_clipboard_text
