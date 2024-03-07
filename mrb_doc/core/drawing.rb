@@ -40,7 +40,7 @@ def end_mode2D
   nil
 end
 
-# Starts drawing to the RenderTexture.
+# Starts drawing to the {RenderTexture}.
 # @param texture [RenderTexture]
 # @return [nil]
 def begin_texture_mode(texture)
@@ -49,7 +49,7 @@ def begin_texture_mode(texture)
   nil
 end
 
-# Stops drawing to the RenderTexture.
+# Stops drawing to the {RenderTexture}.
 # @return [nil]
 def end_texture_mode
   # mrb_end_texture_mode
@@ -57,7 +57,7 @@ def end_texture_mode
   nil
 end
 
-# All draw calls within will be drawn through the Shader.
+# All draw calls within will be drawn through the {Shader}.
 # @param shader [Shader]
 # @return [nil]
 def begin_shader_mode(shader)
@@ -66,7 +66,7 @@ def begin_shader_mode(shader)
   nil
 end
 
-# Stops drawing through the Shader.
+# Stops drawing through the {Shader}.
 # @return [nil]
 def end_shader_mode
   # mrb_end_shader_mode

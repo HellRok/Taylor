@@ -33,8 +33,9 @@ def window_ready?
   true
 end
 
-# Checks if the window has the state set, to pass in multiple you can do so like:
-#   `window_state?(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)`
+# Checks if the window has the state set.
+# @example Passing multiple flags.
+#   window_state?(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
 # @param flags [Integer]
 # @return [Boolean]
 def window_state?(flags)
@@ -43,8 +44,9 @@ def window_state?(flags)
   true
 end
 
-# Sets the specified states on the window, to pass in multiple you can do so like:
-#   `set_window_state(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)`
+# Sets the specified states on the window.
+# @example Passing multiple flags.
+#   set_window_state(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
 # @param flags [Integer]
 # @return [nil]
 def set_window_state(flags)
@@ -53,7 +55,7 @@ def set_window_state(flags)
   nil
 end
 
-# Checks if the window has the FLAG_FULLSCREEN_MODE state set.
+# Checks if the window has the {FLAG_FULLSCREEN_MODE} state set.
 # @return [Boolean]
 def window_fullscreen?
   # mrb_window_fullscreen
@@ -61,7 +63,7 @@ def window_fullscreen?
   true
 end
 
-# Checks if the window has the FLAG_WINDOW_HIDDEN state set.
+# Checks if the window has the {FLAG_WINDOW_HIDDEN} state set.
 # @return [Boolean]
 def window_hidden?
   # mrb_window_hidden
@@ -69,7 +71,7 @@ def window_hidden?
   false
 end
 
-# Checks if the window has the FLAG_WINDOW_MINIMISED state set.
+# Checks if the window has the {FLAG_WINDOW_MINIMISED} state set.
 # @return [Boolean]
 def window_minimised?
   # mrb_window_minimised
@@ -77,7 +79,7 @@ def window_minimised?
   false
 end
 
-# Checks if the window has the FLAG_WINDOW_MAXIMISED state set.
+# Checks if the window has the {FLAG_WINDOW_MAXIMISED} state set.
 # @return [Boolean]
 def window_maximised?
   # mrb_window_maximised
@@ -101,8 +103,9 @@ def window_resized?
   false
 end
 
-# Clears the specified states on the window, to pass in multiple you can do so like:
-#   `clear_window_state(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)`
+# Clears the specified states on the window.
+# @example Passing multiple flags.
+#   clear_window_state(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
 # @param flags [Integer]
 # @return [nil]
 def clear_window_state(flags)
@@ -191,7 +194,7 @@ def set_window_min_size(width, height)
   nil
 end
 
-# Sets the size for the current window
+# Sets the size for the current window.
 # @param width [Integer]
 # @param height [Integer]
 # @return [nil]
