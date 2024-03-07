@@ -53,7 +53,7 @@ def draw_texture_pro(texture, source, destination, origin, rotation, colour)
 end
 
 # Returns a new colour which is a faded version of the original.
-# @param colour [Colour
+# @param colour [Colour]
 # @return [Colour]
 def fade(colour)
   # mrb_fade
