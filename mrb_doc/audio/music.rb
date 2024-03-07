@@ -1,4 +1,4 @@
-# Loads a music object from a file
+# Loads a music object from a file.
 # @param path [String]
 # @return [Music]
 def load_music_stream(path)
@@ -7,7 +7,7 @@ def load_music_stream(path)
   Music.new
 end
 
-# Unloads a music object
+# Unloads a music object.
 # @param music [Music]
 # @return [nil]
 def unload_music_stream(music)
@@ -16,7 +16,7 @@ def unload_music_stream(music)
   nil
 end
 
-# Starts playback of a music object from the beginning
+# Starts playback of a music object from the beginning.
 # @param music [Music]
 # @return [nil]
 def play_music_stream(music)
@@ -25,7 +25,7 @@ def play_music_stream(music)
   nil
 end
 
-# Checks whether or not a music object is currently playing
+# Checks whether or not a music object is currently playing.
 # @param music [Music]
 # @return [Boolean]
 def music_playing?(music)
@@ -34,7 +34,7 @@ def music_playing?(music)
   true
 end
 
-# Updates the buffer for the specified music, you should call this every frame
+# Updates the buffer for the specified music, you should call this every frame.
 # @param music [Music]
 # @return [nil]
 def update_music_stream(music)
@@ -43,7 +43,7 @@ def update_music_stream(music)
   nil
 end
 
-# Stops a music object from playing
+# Stops a music object from playing.
 # @param music [Music]
 # @return [nil]
 def stop_music_stream(music)
@@ -52,7 +52,7 @@ def stop_music_stream(music)
   nil
 end
 
-# Pauses a music object so it can be resumed
+# Pauses a music object so it can be resumed.
 # @param music [Music]
 # @return [nil]
 def pause_music_stream(music)
@@ -61,7 +61,7 @@ def pause_music_stream(music)
   nil
 end
 
-# Resumes a paused music object
+# Resumes a paused music object.
 # @param music [Music]
 # @return [nil]
 def resume_music_stream(music)
@@ -70,9 +70,9 @@ def resume_music_stream(music)
   nil
 end
 
-# Sets volume for a music object
+# Sets volume for a music object.
 # @param music [Music]
-# @param volume [Float] A value between 0.0 and 1.0
+# @param volume [Float] A value between 0.0 and 1.0.
 # @return [nil]
 def set_music_volume(music, volume)
   # mrb_set_music_volume
@@ -80,7 +80,7 @@ def set_music_volume(music, volume)
   nil
 end
 
-# Sets pitch for a music object
+# Sets pitch for a music object.
 # @param music [Music]
 # @param pitch [Float]
 # @return [nil]
@@ -90,18 +90,18 @@ def set_music_pitch(music, pitch)
   nil
 end
 
-# Gets the length of a music object in seconds
+# Gets the length of a music object in seconds.
 # @param music [Music]
-# @return [Float] The length of the music object is seconds
+# @return [Float] The length of the music object is seconds.
 def get_music_time_length(music)
   # mrb_get_music_time_length
   # src/mruby_integration/audio/music.cpp
   nil
 end
 
-# Gets the time played of a music object in seconds
+# Gets the time played of a music object in seconds.
 # @param music [Music]
-# @return [Float] The length of the music object is seconds
+# @return [Float] The length of the music object is seconds.
 def get_music_time_played(music)
   # mrb_get_music_time_played
   # src/mruby_integration/audio/music.cpp
