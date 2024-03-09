@@ -222,6 +222,28 @@ class Image
     self
   end
 
+  # Generates the [mipmaps](https://en.wikipedia.org/wiki/Mipmap) for the
+  # {Image}.
+  #
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #
+  #   puts sprite.mipmaps
+  #   # => 1
+  #
+  #   p [sprite.width, sprite.height]
+  #   # => [16, 16]
+  #
+  #   puts sprite.mipmaps
+  #   # => 5
+  #
+  # @return [Image]
+  def generate_mipmaps!
+    # mrb_Image_generate_mipmaps_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of Colour objects.
   #
   # @return [Array<Colour>]

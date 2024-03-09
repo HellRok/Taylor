@@ -1,15 +1,5 @@
 class Test
   class Image_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_image_mipmaps!
-      image = Image.new("assets/test.png")
-      assert_equal 1, image.mipmaps
-
-      image_mipmaps!(image)
-      assert_equal 2, image.mipmaps
-    ensure
-      image.unload
-    end
-
     def test_image_colour_tint!
       image = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
 

@@ -362,6 +362,24 @@ mrb_Image_premultiply_alpha_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_generate_mipmaps_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  ImageMipmaps(image);
+
+  mrb_iv_set(mrb,
+             self,
+             mrb_intern_cstr(mrb, "@mipmaps"),
+             mrb_int_value(mrb, image->mipmaps));
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -465,6 +483,11 @@ append_models_Image(mrb_state* mrb)
                     Image_class,
                     "premultiply_alpha!",
                     mrb_Image_premultiply_alpha_bang,
+                    MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    Image_class,
+                    "generate_mipmaps!",
+                    mrb_Image_generate_mipmaps_bang,
                     MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());

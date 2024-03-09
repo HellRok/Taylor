@@ -151,11 +151,11 @@ class Test
       end
 
       def test_generate_mipmaps!
-        image = Image.new("./assets/test.png")
+        image = Image.generate(width: 16, height: 16)
         assert_equal 1, image.mipmaps
 
         image.generate_mipmaps!
-        assert_equal 2, image.mipmaps
+        assert_equal 5, image.mipmaps
       ensure
         image.unload
       end
