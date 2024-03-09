@@ -14,13 +14,6 @@ class Image
     }
   end
 
-  # Pre-multiplies the alpha for the image
-  # @return [Image]
-  def premultiply_alpha!
-    image_alpha_premultiply!(self)
-    self
-  end
-
   # Generates mipmaps for the image
   # @return [Image]
   def generate_mipmaps!

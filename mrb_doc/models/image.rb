@@ -214,6 +214,27 @@ class Image
     self
   end
 
+  # Premultiplies the alpha into the colour values. Useful for after you've
+  # applied an aplha mask.
+  #
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #   mask = Image.generate(
+  #     width: 16,
+  #     height: 16,
+  #     colour: Colour[128, 128, 128, 128],
+  #   )
+  #
+  #   sprite.alpha_mask!(mask)
+  #   sprite.premultiply_alpha!
+  #
+  # @return [Image]
+  def premultiply_alpha!
+    # mrb_Image_premultiply_alpha_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of Colour objects
   # @return [Array<Colour>]
   def data

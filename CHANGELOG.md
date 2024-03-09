@@ -66,6 +66,8 @@
 - Removed image_rotate_cw! and image_rotate_ccw!
 - Image#to_texture is now C++ backed
 - Removed load_texture_from_image
+- Image#premultiply_alpha is now C++ backed
+- Removed image_alpha_premultiply
 
 ## v0.3.14.1
 

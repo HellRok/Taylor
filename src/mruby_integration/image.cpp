@@ -7,17 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_alpha_premultiply(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  ImageAlphaPremultiply(image);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_mipmaps(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value image_obj;
@@ -161,11 +150,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_alpha_premultiply!",
-                    mrb_image_alpha_premultiply,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "image_mipmaps!",
