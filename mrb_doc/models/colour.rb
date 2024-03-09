@@ -1,9 +1,9 @@
 class Colour
-  # Creates a new instance of Colour
-  # @param red [Integer] a value between 0 and 255
-  # @param blue [Integer] a value between 0 and 255
-  # @param green [Integer] a value between 0 and 255
-  # @param alpha [Integer] a value between 0 and 255
+  # Creates a new instance of Colour.
+  # @param red [Integer] A value between 0 and 255
+  # @param blue [Integer] A value between 0 and 255.
+  # @param green [Integer] A value between 0 and 255.
+  # @param alpha [Integer] A value between 0 and 255.
   # @return [Colour]
   def initialize(red, green, blue, alpha)
     # mrb_Colour_initialize

@@ -1,6 +1,6 @@
 class Music
-  # Creates a new instance of Music
-  # @param context_type [Integer] A value between 0 and 6
+  # Creates a new instance of Music.
+  # @param context_type [Integer] A value between 0 and 6.
   # @param looping [Boolean]
   # @param frame_count [Integer]
   # @return [Music]
