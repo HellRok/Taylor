@@ -41,20 +41,20 @@ it's pretty straight forward for Linux.
 ### Linux
 
 1. Install the build dependencies:  
-  - **Fedora:**  
-    ```console
-    $ sudo dnf groupinstall "Development Tools" "Development Libraries"; sudo dnf install ruby
-    ```  
-  - **Ubuntu/Debian:**  
-    ```console
-    $ sudo apt-get install build-essential ruby
-    ```
+    - **Fedora:**  
+        ```console
+        $ sudo dnf groupinstall "Development Tools" "Development Libraries"; sudo dnf install ruby
+        ```  
+    - **Ubuntu/Debian:**  
+        ```console
+        $ sudo apt-get install build-essential ruby
+        ```
 3. You should now just be able to run `rake` and wait a few seconds.
 4. The final binary will be located on `dist/linux/debug/taylor`.
 5. **Optional**: if you want the nice command line interface, you'll need to run this:  
-     ```console
-      $ ./dist/linux/debug/taylor ./cli-tool/cli.rb
-      ```
+    ```console
+    $ ./dist/linux/debug/taylor ./cli-tool/cli.rb
+    ```
 
 You can make make a script that runs Taylor with the CLI directly:
 ```shell
