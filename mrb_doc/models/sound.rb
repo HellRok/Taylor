@@ -1,5 +1,5 @@
 class Sound
-  # Creates a new instance of Sound
+  # Creates a new instance of {Sound}.
   # @param frame_count [Integer]
   # @return [Sound]
   def initialize(frame_count)

@@ -1,5 +1,5 @@
 class Shader
-  # Creates a new instance of Shader
+  # Creates a new instance of {Shader}.
   # @param id [Integer]
   # @return [Shader]
   def initialize(id)
