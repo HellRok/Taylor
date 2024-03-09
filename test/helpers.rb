@@ -32,7 +32,7 @@ end
 def raw_colour_data(data, width: 10)
   data.each_slice(width).each { |row|
     puts row.map { |colour|
-      "Colour.new(#{colour.red}, #{colour.green}, #{colour.blue}, #{colour.alpha}), "
+      "Colour[{colour.red}, #{colour.green}, #{colour.blue}, #{colour.alpha}], "
     }.join
   }
 end

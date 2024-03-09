@@ -349,6 +349,19 @@ mrb_Image_rotate_counter_clockwise_bang(mrb_state* mrb, mrb_value self)
 }
 
 auto
+mrb_Image_premultiply_alpha_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  ImageAlphaPremultiply(image);
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -447,6 +460,11 @@ append_models_Image(mrb_state* mrb)
                     Image_class,
                     "rotate_counter_clockwise!",
                     mrb_Image_rotate_counter_clockwise_bang,
+                    MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    Image_class,
+                    "premultiply_alpha!",
+                    mrb_Image_premultiply_alpha_bang,
                     MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());

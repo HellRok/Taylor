@@ -127,6 +127,14 @@ def fixture_models_image_rotate_counter_clockwise!
   ]
 end
 
+def fixture_models_image_premultiply_alpha!
+  [
+    Colour[109, 77, 18, 128], Colour[128, 128, 128, 128], Colour[97, 18, 109, 128],
+    Colour[128, 128, 128, 128], Colour[109, 77, 18, 128], Colour[128, 128, 128, 128],
+    Colour[97, 18, 109, 128], Colour[128, 128, 128, 128], Colour[109, 77, 18, 128]
+  ]
+end
+
 def fixture_models_image_tint!
   [
     Colour[0, 108, 45]

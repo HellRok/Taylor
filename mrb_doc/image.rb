@@ -1,12 +1,3 @@
-# Pre-multiplies the alpha for the image
-# @param image [Image]
-# @return [nil]
-def image_alpha_premultiply!(image)
-  # mrb_image_alpha_premultiply
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Generates mipmaps for the specified image
 # @param image [Image]
 # @return [nil]

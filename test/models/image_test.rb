@@ -196,6 +196,22 @@ class Test
         image.unload
       end
 
+      def test_image_premultiply_alpha!
+        image = Image.new("./assets/test.png")
+        mask = Image.generate(
+          width: 3,
+          height: 3,
+          colour: Colour[128, 128, 128, 128]
+        )
+
+        image.alpha_mask!(mask)
+        image.premultiply_alpha!
+
+        assert_equal fixture_models_image_premultiply_alpha!, image.data
+      ensure
+        image.unload
+      end
+
       def test_image_tint!
         image = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
 
