@@ -1,4 +1,4 @@
-# Inverts the colours of the image
+# Inverts the colours of the image.
 # @param image [Image]
 # @return [nil]
 def image_colour_invert!(image)
@@ -7,7 +7,7 @@ def image_colour_invert!(image)
   nil
 end
 
-# Converts the image to grayscale
+# Converts the image to grayscale.
 # @param image [Image]
 # @return [nil]
 def image_colour_grayscale!(image)
@@ -16,9 +16,9 @@ def image_colour_grayscale!(image)
   nil
 end
 
-# Change the contrast of the image
+# Change the contrast of the image.
 # @param image [Image]
-# @param contrast [Float] a value between -100 and 100
+# @param contrast [Float] A value between -100 and 100.
 # @return [nil]
 def image_colour_contrast!(image, contrast)
   # mrb_image_colour_contrast
@@ -26,9 +26,9 @@ def image_colour_contrast!(image, contrast)
   nil
 end
 
-# Change the brightness of the image
+# Change the brightness of the image.
 # @param image [Image]
-# @param brightness [Float] a value between -255 and 255
+# @param brightness [Float] A value between -255 and 255.
 # @return [nil]
 def image_colour_brightness!(image, brightness)
   # mrb_image_colour_brightness
@@ -36,7 +36,7 @@ def image_colour_brightness!(image, brightness)
   nil
 end
 
-# Replace the old Colour with the new Colour
+# Replace the old Colour with the new Colour.
 # @param image [Image]
 # @param old_colour [Colour]
 # @param new_colour [Colour]
@@ -61,7 +61,7 @@ def image_draw!(destination, source, source_rectangle, destination_rectangle, co
   nil
 end
 
-# Returns an Image object with the screen data
+# Returns an Image object with the screen data.
 # @return [Image]
 def get_screen_data
   # mrb_get_screen_data
