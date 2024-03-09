@@ -50,7 +50,7 @@ end
 # @param shader [Shader]
 # @param variable_location [Integer] The value you got from {get_shader_location}.
 # @param variables [Array]
-# @param variable_type [Integer] Valid options are {Shader::Uniform::FLOAT}, {Shader::Uniform::VEC2}, {Shader::Uniform::VEC3}, {Shader::Uniform::VEC4}, {Shader::Uniform::INT}, {Shader::Uniform::IVEC2}, {Shader::Uniform::IVEC3}, or {Shader::Uniform::IVEC4}.
+# @param variable_type [Integer] Valid options are {Shader::Uniform::FLOAT}, {Shader::Uniform::VEC2}, {Shader::Uniform::VEC3}, {Shader::Uniform::VEC4}, {Shader::Uniform::INT}, {Shader::Uniform::IVEC2}, {Shader::Uniform::IVEC3} or {Shader::Uniform::IVEC4}.
 # @return [Integer]
 def set_shader_values(shader, variable_location, variables, variable_type)
   # mrb_set_shader_values

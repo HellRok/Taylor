@@ -63,7 +63,7 @@ end
 
 # Sets the filtering for the {Texture2D}.
 # @param texture [Texture2D]
-# @param filter [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}.
+# @param filter [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X} or {TEXTURE_FILTER_ANISOTROPIC_16X}.
 # @return [nil]
 def set_texture_filter(texture, filter)
   # mrb_set_texture_filter
