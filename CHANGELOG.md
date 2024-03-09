@@ -68,6 +68,8 @@
 - Removed load_texture_from_image
 - Image#premultiply_alpha is now C++ backed
 - Removed image_alpha_premultiply
+- Image#generate_mipmaps! is now C++ backed
+- Removed image_mipmaps!
 
 ## v0.3.14.1
 

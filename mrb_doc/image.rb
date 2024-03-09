@@ -1,12 +1,3 @@
-# Generates mipmaps for the specified image
-# @param image [Image]
-# @return [nil]
-def image_mipmaps!(image)
-  # mrb_image_mipmaps
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Tints the image with the specified colour
 # @param image [Image]
 # @param colour [Colour]

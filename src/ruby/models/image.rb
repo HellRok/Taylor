@@ -14,13 +14,6 @@ class Image
     }
   end
 
-  # Generates mipmaps for the image
-  # @return [Image]
-  def generate_mipmaps!
-    image_mipmaps!(self)
-    self
-  end
-
   # Tints the image with the specified colour
   # @param colour [Colour]
   # @return [nil]
