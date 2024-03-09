@@ -1,7 +1,7 @@
 class Camera2D
   # Creates a new instance of {Camera2D}.
   #
-  # @example Basic usage.
+  # @example Basic usage
   #   player = Vector2[400, 240]
   #
   #   camera = Camera2D.new(offset: player)
@@ -34,7 +34,7 @@ class Camera2D
 
   # Draws the world through the lens of the {Camera2D}.
   #
-  # @example Basic usage.
+  # @example Basic usage
   #   rectangle = Rectangle[100, 100, 50, 50]
   #   camera = Camera2D.new(offset: Vector2[100, 150])
   #
@@ -53,7 +53,7 @@ class Camera2D
   # Pass in a vector with world coordinates to see what that translates to in
   # the camera's viewport.
   #
-  # @example Basic usage.
+  # @example Basic usage
   #   camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
   #   vector = Vector2[3, 3]
   #
@@ -72,7 +72,7 @@ class Camera2D
   # Pass in a vector with screen coordinates to see what that translates to in
   # the world from camera's viewport.
   #
-  # @example Basic usage.
+  # @example Basic usage
   #   camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
   #   vector = Vector2[4, 4]
   #

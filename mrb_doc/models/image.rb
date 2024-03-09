@@ -83,7 +83,7 @@ class Image
   # exact integer scaling. And `:bicubic` is useful for scaling up normal 
   # images and works well at any scaling.
   #
-  # @example Scaling an image using the nearest-neighbour scaler.
+  # @example Scaling an image using the nearest-neighbour scaler
   #   image = Image.new("./assets/pixel_art.png")
   #   p [image.width, image.height] # => [8, 8]
   #
@@ -91,7 +91,7 @@ class Image
   #   image.resize!(width: 16, height: 16)
   #   p [image.width, image.height] # => [16, 16]
   #
-  # @example Scaling an image using the bicubic scaler.
+  # @example Scaling an image using the bicubic scaler
   #   image = Image.new("./assets/background.png")
   #   p [image.width, image.height] # => [1280, 720]
   #
