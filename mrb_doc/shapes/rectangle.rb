@@ -1,4 +1,4 @@
-# Draw a rectangle
+# Draw a rectangle.
 # @param x [Integer]
 # @param y [Integer]
 # @param width [Integer]
@@ -11,7 +11,7 @@ def draw_rectangle(x, y, width, height, colour)
   nil
 end
 
-# Draw a rectangle
+# Draw a rectangle.
 # @param rectangle [Rectangle]
 # @param colour [Colour]
 # @return [nil]
@@ -21,7 +21,7 @@ def draw_rectangle_rec(rectangle, colour)
   nil
 end
 
-# Draw a rectangle with rotation
+# Draw a rectangle with rotation.
 # @param rectangle [Rectangle]
 # @param origin [Vector2]
 # @param rotation [Float]
@@ -32,8 +32,8 @@ def draw_rectangle_pro(rectangle, origin, rotation, colour)
   # src/mruby_integration/shapes/rectangle.cpp
   nil
 end
-
-# Draw a rectangle with a gradient vertically
+  
+# Draw a rectangle with a gradient vertically.
 # @param x [Integer]
 # @param y [Integer]
 # @param width [Integer]
@@ -47,7 +47,7 @@ def draw_rectangle_gradient_v(x, y, width, height, colour1, colour2)
   nil
 end
 
-# Draw a rectangle with a gradient horizontally
+# Draw a rectangle with a gradient horizontally.
 # @param x [Integer]
 # @param y [Integer]
 # @param width [Integer]
@@ -61,7 +61,7 @@ def draw_rectangle_gradient_h(x, y, width, height, colour1, colour2)
   nil
 end
 
-# Draw a rectangle with a gradient from each vertex
+# Draw a rectangle with a gradient from each vertex.
 # @param rectangle [Rectangle]
 # @param colour1 [Colour]
 # @param colour2 [Colour]
@@ -74,7 +74,7 @@ def draw_rectangle_gradient_ex(rectangle, colour1, colour2, colour3, colour4)
   nil
 end
 
-# Draw a rectangle outline
+# Draw a rectangle outline.
 # @param x [Integer]
 # @param y [Integer]
 # @param width [Integer]
@@ -87,7 +87,7 @@ def draw_rectangle_lines(x, y, width, height, colour)
   nil
 end
 
-# Draw a rectangle outline with the specific thickness
+# Draw a rectangle outline with the specific thickness.
 # @param rectangle [Rectangle]
 # @param thickness [Integer]
 # @param colour [Colour]
@@ -98,10 +98,10 @@ def draw_rectangle_lines_ex(rectangle, thickness, colour)
   nil
 end
 
-# Draw a rectangle with rounded corners
+# Draw a rectangle with rounded corners.
 # @param rectangle [Rectangle]
-# @param radius [Float] A value between 0.0 and 1.0
-# @param segments [Integer] How smooth to draw the corners
+# @param radius [Float] A value between 0.0 and 1.0.
+# @param segments [Integer] How smooth to draw the corners.
 # @param colour [Colour]
 # @return [nil]
 def draw_rectangle_rounded(rectangle, radius, segments, colour)
@@ -109,11 +109,11 @@ def draw_rectangle_rounded(rectangle, radius, segments, colour)
   # src/mruby_integration/shapes/rectangle.cpp
   nil
 end
-
-# Draw the outline of a rectangle with rounded corners
+  
+# Draw the outline of a rectangle with rounded corners.
 # @param rectangle [Rectangle]
-# @param radius [Float] A value between 0.0 and 1.0
-# @param segments [Integer] How smooth to draw the corners
+# @param radius [Float] A value between 0.0 and 1.0.
+# @param segments [Integer] How smooth to draw the corners.
 # @param thickness [Integer]
 # @param colour [Colour]
 # @return [nil]
