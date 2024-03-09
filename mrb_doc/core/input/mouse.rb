@@ -34,7 +34,7 @@ def mouse_button_up?(button)
   false
 end
 
-# Returns the current mouse x position in the window
+# Returns the current mouse x position in the window.
 # @return [Integer]
 def get_mouse_x
   # mrb_get_mouse_x
@@ -42,7 +42,7 @@ def get_mouse_x
   64
 end
 
-# Returns the current mouse y position in the window
+# Returns the current mouse y position in the window.
 # @return [Integer]
 def get_mouse_y
   # mrb_get_mouse_y
@@ -50,7 +50,7 @@ def get_mouse_y
   64
 end
 
-# Returns the current mouse position in the window
+# Returns the current mouse position in the window.
 # @return [Vector2]
 def get_mouse_position
   # mrb_get_mouse_position
@@ -58,7 +58,7 @@ def get_mouse_position
   Vector2.new
 end
 
-# Sets the position of the muose
+# Sets the position of the muose.
 # @param x [Integer]
 # @param y [Integer]
 # @return [nil]
@@ -68,7 +68,7 @@ def set_mouse_position(x, y)
   nil
 end
 
-# Sets the offset for all mouse position functions
+# Sets the offset for all mouse position functions.
 # @param x [Integer]
 # @param y [Integer]
 # @return [nil]
@@ -78,7 +78,7 @@ def set_mouse_offset(x, y)
   nil
 end
 
-# Sets the scaling for all mouse position functions
+# Sets the scaling for all mouse position functions.
 # @param x [Float]
 # @param y [Float]
 # @return [nil]
@@ -88,7 +88,7 @@ def set_mouse_scale(x, y)
   nil
 end
 
-# Returns the movement of the mouse wheel since last frame
+# Returns the movement of the mouse wheel since last frame.
 # @return [Float]
 def get_mouse_wheel_move
   # mrb_get_mouse_wheel_move
@@ -96,7 +96,7 @@ def get_mouse_wheel_move
   0.5
 end
 
-# Sets the mouse cursor
+# Sets the mouse cursor.
 # @param cursor [Integer]
 # @return [nil]
 def set_mouse_cursor(cursor)
