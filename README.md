@@ -51,7 +51,7 @@ it's pretty straight forward for Linux.
     ```
 3. You should now just be able to run `rake` and wait a few seconds.
 4. The final binary will be located on `dist/linux/debug/taylor`.
-5. **Optional**: if you want the nice command line interface, you'll need to run it:  
+5. **Optional**: if you want the nice command line interface, you'll need to run this:  
      ```console
       $ ./dist/linux/debug/taylor ./cli-tool/cli.rb
       ```
@@ -65,7 +65,7 @@ TAYLOR_PATH=/home/sean/code/taylor/
 ```
 
 Save it as `taylor` and mark it as executable (`chmod +x taylor`), then put it in your 
-PATH (on Linux, you can drop it on `~/.local/bin/`) so you can execute it from anywhere.
+PATH (You can drop it on `~/.local/bin/`) so you can execute it from anywhere.
 
 ### Docker
 
