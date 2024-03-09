@@ -1,4 +1,12 @@
 # Taylor
+
+⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ 
+Taylor is currently under going a major refactor, if you'd like to do a PR
+please do it against the
+[major refactor](https://github.com/HellRok/Taylor/tree/major-refactor)
+branch.
+⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ 
+
 ## Made for Games
 
 [![Build status](https://badge.buildkite.com/0cb81ca8e3b8f43a2998bc15f90323a2eb8429669e819b7697.svg)](https://buildkite.com/oequacki/taylor)
