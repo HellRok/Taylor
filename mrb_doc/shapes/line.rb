@@ -1,4 +1,4 @@
-# Draw a line between the start and end points
+# Draw a line between the start and end points.
 # @param start_x [Integer]
 # @param start_y [Integer]
 # @param end_x [Integer]
@@ -11,7 +11,7 @@ def draw_line(start_x, start_y, end_x, end_y, colour)
   nil
 end
 
-# Draw a line between the start and end points using Vector2s
+# Draw a line between the start and end points using {Vector2}s.
 # @param start [Vector2]
 # @param stop [Vector2]
 # @param colour [Colour]
@@ -22,7 +22,7 @@ def draw_line_v(start, stop, colour)
   nil
 end
 
-# Draw a line between the start and end points using Vector2s and specified thickness
+# Draw a line between the start and end points using {Vector2}s and specified thickness.
 # @param start [Vector2]
 # @param stop [Vector2]
 # @param thickness [Float]
@@ -34,7 +34,7 @@ def draw_line_ex(start, stop, thickness, colour)
   nil
 end
 
-# Draw a bezier curve between the start and end points using Vector2s and specified thickness
+# Draw a bezier curve between the start and end points using {Vector2}s and specified thickness.
 # @param start [Vector2]
 # @param stop [Vector2]
 # @param thickness [Float]
@@ -46,7 +46,7 @@ def draw_line_bezier(start, stop, thickness, colour)
   nil
 end
 
-# Draw a bezier curve between the start and end points passing through the control using Vector2s and specified thickness
+# Draw a bezier curve between the start and end points passing through the control using {Vector2}s and specified thickness
 # @param start [Vector2]
 # @param stop [Vector2]
 # @param control [Vector2]
