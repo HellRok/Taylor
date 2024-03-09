@@ -1,8 +1,6 @@
-# You'll want to call this function after you've called `end_drawing` or you'll
+# You'll want to call this function after you've called {end_drawing} or you'll
 # find that you don't get everything that you think you've drawn.
-#
-# The extension of `filename` will dictate how the screenshot is saved.
-# @param filename [String]
+# @param filename [String] The filename to save to. The extension will dictate how it is saved.
 # @return [nil]
 def take_screenshot(filename)
   # mrb_take_screenshot
@@ -10,8 +8,9 @@ def take_screenshot(filename)
   nil
 end
 
-# Enable specific config flags, to pass in multiple you can do so like:
-#   `set_config_flags(FLAG_WINDOW_TOPMOST | FLAG_WINDOW_RESIZABLE)`
+# Enable specific config flags. 
+# @example Passing multiple flags.
+#   set_config_flags(FLAG_WINDOW_TOPMOST | FLAG_WINDOW_RESIZABLE)
 # @param flags [Integer]
 # @return [nil]
 def set_config_flags(flags)
@@ -20,8 +19,8 @@ def set_config_flags(flags)
   nil
 end
 
-# Sets the logging level
-# @param level [Integer] A value between 0 and 5
+# Sets the logging level.
+# @param level [Integer] A value between 0 and 5.
 # @return [nil]
 def set_trace_log_level(level)
   # mrb_set_trace_log_level
@@ -29,7 +28,7 @@ def set_trace_log_level(level)
   nil
 end
 
-# Opens the URL in the users browser
+# Opens the URL in the user's browser.
 # @param url [String]
 # @return [nil]
 def open_url(url)
@@ -38,7 +37,7 @@ def open_url(url)
   nil
 end
 
-# Sets the clipboard value
+# Sets the clipboard value.
 # @param text [String]
 # @return [nil]
 def set_clipboard_text(text)
@@ -47,7 +46,7 @@ def set_clipboard_text(text)
   nil
 end
 
-# Gets the clipboard value
+# Gets the clipboard value.
 # @return [String]
 def get_clipboard_text
   # mrb_get_clipboard_text

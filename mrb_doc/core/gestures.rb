@@ -1,5 +1,6 @@
-# Enable only specific gestures, to pass in multiple you can do so like:
-#   `set_gestures_enabled(GESTURE_TAP | GESTURE_SWIPE_UP)`
+# Enable only specific gestures, 
+# @example Passing multiple flags.
+#   set_gestures_enabled(GESTURE_TAP | GESTURE_SWIPE_UP)
 # @param flags [Integer]
 # @return [nil]
 def set_gestures_enabled(flags)
@@ -8,7 +9,7 @@ def set_gestures_enabled(flags)
   nil
 end
 
-# Returns the detected gestures based on their constant
+# Returns the detected gestures based on their constant.
 # @return [Integer]
 def get_gesture_detected
   # mrb_get_gesture_detected

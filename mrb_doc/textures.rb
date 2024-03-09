@@ -1,4 +1,4 @@
-# Loads a texture from a file
+# Loads a texture from a file.
 # @param path [String]
 # @return [Texture2D]
 def load_texture(path)
@@ -7,7 +7,20 @@ def load_texture(path)
   Texture2D.new
 end
 
+<<<<<<< HEAD
 # Unloads a texture
+=======
+# Loads a texture from an image object.
+# @param image [Image]
+# @return [Texture2D]
+def load_texture_from_image(image)
+  # mrb_load_texture_from_image
+  # src/mruby_integration/textures.cpp
+  Texture2D.new
+end
+
+# Unloads a texture.
+>>>>>>> aea7c7f62eefa36f5930ba95057904e50b2036d4
 # @param texture [Texture2D]
 # @return [nil]
 def unload_texture(texture)
@@ -16,7 +29,7 @@ def unload_texture(texture)
   nil
 end
 
-# Draws a texture, the colour will apply a tint and alpha levels
+# Draws a texture, the colour will apply a tint and alpha levels.
 # @param texture [Texture2D]
 # @param x [Integer]
 # @param y [Integer]
@@ -28,8 +41,8 @@ def draw_texture(texture, x, y, colour)
   nil
 end
 
-# Draws a section of texture with the specified rotation to the scaled to the
-# destination rectangle, the colour will apply a tint and alpha levels
+# Draws a section of texture with the specified rotation scaled to the
+# destination rectangle, the colour will apply a tint and alpha levels.
 # @param texture [Texture2D]
 # @param source [Rectangle]
 # @param destination [Rectangle]
@@ -43,8 +56,8 @@ def draw_texture_pro(texture, source, destination, origin, rotation, colour)
   nil
 end
 
-# Returns a new colour which is a faded version of the original
-# @param colour [Colour
+# Returns a new colour which is a faded version of the original.
+# @param colour [Colour]
 # @return [Colour]
 def fade(colour)
   # mrb_fade
@@ -52,7 +65,7 @@ def fade(colour)
   Colour.new
 end
 
-# Generates mipmaps for the {Texture2D}
+# Generates mipmaps for the {Texture2D}.
 # @param texture [Texture2D]
 # @return [nil]
 def generate_texture_mipmaps(texture)
@@ -61,9 +74,9 @@ def generate_texture_mipmaps(texture)
   nil
 end
 
-# Sets the filtering for the {Texture2D}
+# Sets the filtering for the {Texture2D}.
 # @param texture [Texture2D]
-# @param filter [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}
+# @param filter [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}.
 # @return [nil]
 def set_texture_filter(texture, filter)
   # mrb_set_texture_filter

@@ -34,7 +34,11 @@ def key_up?(key)
   False
 end
 
+<<<<<<< HEAD
 # Sets the key for should_window_close? to listen for.
+=======
+# Sets the key for {window_should_close?} to listen for.
+>>>>>>> aea7c7f62eefa36f5930ba95057904e50b2036d4
 # @param key [Integer]
 # @return [nil]
 def set_exit_key(key)
