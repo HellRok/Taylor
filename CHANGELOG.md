@@ -70,6 +70,8 @@
 - Removed image_alpha_premultiply
 - Image#generate_mipmaps! is now C++ backed
 - Removed image_mipmaps!
+- Image#tint! is now C++ backed
+- Removed image_colour_tint!
 
 ## v0.3.14.1
 

@@ -215,7 +215,7 @@ class Test
       def test_image_tint!
         image = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
 
-        image.tint!(Colour::GREEN)
+        image.tint!(colour: Colour::GREEN)
         assert_equal fixture_models_image_tint!, image.data
       ensure
         image.unload

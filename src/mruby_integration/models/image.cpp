@@ -380,6 +380,35 @@ mrb_Image_generate_mipmaps_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_tint_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  // def tint!(colour:)
+  mrb_int kw_num = 1;
+  mrb_int kw_required = 1;
+  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "colour") };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  Color* colour;
+  if (mrb_undef_p(kw_values[0])) {
+    auto default_colour = Color{ 0, 0, 0, 0 };
+    colour = &default_colour;
+  } else {
+    colour = static_cast<struct Color*> DATA_PTR(kw_values[0]);
+  }
+
+  ImageColorTint(image, *colour);
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -489,6 +518,8 @@ append_models_Image(mrb_state* mrb)
                     "generate_mipmaps!",
                     mrb_Image_generate_mipmaps_bang,
                     MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Image_class, "tint!", mrb_Image_tint_bang, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
   mrb_define_method(

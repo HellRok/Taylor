@@ -1,14 +1,5 @@
 class Test
   class Image_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_image_colour_tint!
-      image = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
-
-      image_colour_tint!(image, Colour::GREEN)
-      assert_equal fixture_image_colour_tint!, image.data
-    ensure
-      image.unload
-    end
-
     def test_image_colour_invert!
       image = Image.generate(width: 1, height: 1, colour: Colour::BLACK)
 

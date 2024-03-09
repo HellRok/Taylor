@@ -244,6 +244,20 @@ class Image
     self
   end
 
+  # Tints the image with the specified {Colour}.
+  #
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.tint!(colour: Colour::PURPLE)
+  #
+  # @param colour [Colour]
+  # @return [Image]
+  def tint!(colour:)
+    # mrb_Image_tint_bang
+    # src/mruby_integration/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of Colour objects.
   #
   # @return [Array<Colour>]
