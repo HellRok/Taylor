@@ -1,9 +1,8 @@
 class Image
   # Generates a new {Image} of width by height in the specified colour.
   #
-  # ```ruby
-  # image = Image.generate(width: 128, height: 128, colour: Colour::ORANGE)
-  # ```
+  # @example Basic usage
+  #   image = Image.generate(width: 128, height: 128, colour: Colour::ORANGE)
   #
   # @param width [Integer]
   # @param height [Integer]
@@ -20,9 +19,8 @@ class Image
   #
   # Supported image types are png, jpg, bmp, qoi, gif, dds, hdr.
   #
-  # ```ruby
-  # image = Image.new("/assets/image.png")
-  # ```
+  # @example Basic usage
+  #   image = Image.new("/assets/image.png")
   #
   # @param path [Integer]
   # @return [Image]
@@ -35,10 +33,9 @@ class Image
 
   # Unloads the {Image} from memory.
   #
-  # ```ruby
-  # image = Image.new("/assets/image.png")
-  # image.unload
-  # ```
+  # @example Basic usage
+  #   image = Image.new("/assets/image.png")
+  #   image.unload
   #
   # @return [nil]
   def unload
@@ -49,10 +46,9 @@ class Image
 
   # Exports an {Image} to a file.
   #
-  # ```ruby
-  # image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
-  # image.export("./my_green_image.png")
-  # ```
+  # @example Basic usage
+  #   image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
+  #   image.export("./my_green_image.png")
   #
   # @param path [String]
   # @return [nil]
@@ -65,15 +61,14 @@ class Image
   # Copies the image to a new object. If `source` is specified it'll only be
   # that section of the image that is returned.
   #
-  # ```ruby
-  # image = Image.new("./assets/my_cool_image.png")
+  # @example Basic usage
+  #   image = Image.new("./assets/my_cool_image.png")
   #
-  # # This creates a copy of the whole image
-  # copy = image.copy
+  #   # This creates a copy of the whole image
+  #   copy = image.copy
   #
-  # # This will only copy the portion x from 10 to 110, and y from 20 to 70
-  # subsection = image.copy(source: Rectangle[10, 20, 100, 50])
-  # ```
+  #   # This will only copy the portion x from 10 to 110, and y from 20 to 70
+  #   subsection = image.copy(source: Rectangle[10, 20, 100, 50])
   #
   # @param source [Rectangle]
   # @return [Image]
@@ -88,34 +83,32 @@ class Image
   # `:nearest_neighbour` is useful for scaling up pixel art and works best in
   # exact integer scaling.
   #
-  # ```ruby
-  # image = Image.new("./assets/pixel_art.png")
-  # p [image.width, image.height]
-  # # => [8, 8]
+  # @example Basic usage
+  #   image = Image.new("./assets/pixel_art.png")
+  #   p [image.width, image.height]
+  #   # => [8, 8]
   #
-  # image.resize!(width: 16, height: 16)
-  # p [image.width, image.height]
-  # # => [16, 16]
-  # ```
+  #   image.resize!(width: 16, height: 16)
+  #   p [image.width, image.height]
+  #   # => [16, 16]
   #
   # `:bicubic` is useful for scaling up normal images and works well at any
   # scaling.
   #
-  # ```ruby
-  # image = Image.new("./assets/background.png")
-  # p [image.width, image.height]
-  # # => [1280, 720]
+  # @example Basic usage
+  #   image = Image.new("./assets/background.png")
+  #   p [image.width, image.height]
+  #   # => [1280, 720]
   #
-  # image.resize!(width: 1920, height: 1080, scaler: :bicubic)
-  # p [image.width, image.height]
-  # # => [1920, 1080]
-  # ```
+  #   image.resize!(width: 1920, height: 1080, scaler: :bicubic)
+  #   p [image.width, image.height]
+  #   # => [1920, 1080]
   #
   # @param width [Integer]
   # @param height [Integer]
   # @param scaler [Symbol] Valid options are :nearest_neighbour and :bicubic
   # @return [Image]
-  # @raises [ArgumentError] When passed an invalid scaler
+  # @raise [ArgumentError] When passed an invalid scaler
   def resize!(width:, height:, scaler: :nearest_neighbour)
     # mrb_Image_resize_bang
     # src/mruby_integration/models/image.cpp
@@ -124,15 +117,14 @@ class Image
 
   # Crops the {Image} to the section specified by `source`.
   #
-  # ```ruby
-  # image = Image.new("./assets/spritesheet.png")
-  # p [image.width, image.height]
-  # # => [64, 128]
+  # @example Basic usage
+  #   image = Image.new("./assets/spritesheet.png")
+  #   p [image.width, image.height]
+  #   # => [64, 128]
   #
-  # image.crop!(source: Rectangle[8, 16, 8, 8])
-  # p [image.width, image.height]
-  # # => [8, 8]
-  # ```
+  #   image.crop!(source: Rectangle[8, 16, 8, 8])
+  #   p [image.width, image.height]
+  #   # => [8, 8]
   #
   # @param source [Rectangle]
   # @return [Image]
@@ -144,11 +136,10 @@ class Image
 
   # Applies the alpha mask to this {Image}.
   #
-  # ```ruby
-  # image = Image.new("./assets/sprite.png")
-  # mask = Image.new("./assets/sprite_mask.png")
-  # image.alpha_mask!(mask)
-  # ```
+  # @example Basic usage
+  #   image = Image.new("./assets/sprite.png")
+  #   mask = Image.new("./assets/sprite_mask.png")
+  #   image.alpha_mask!(mask)
   #
   # @param mask [Image]
   # @return [Image]
@@ -158,12 +149,11 @@ class Image
     self
   end
 
-  # Flips the {Image} upside down
+  # Flips the {Image} upside down.
   #
-  # ```ruby
-  # sprite = Image.new("./assets/sprite.png")
-  # sprite.flip_vertically!
-  # ```
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.flip_vertically!
   #
   # @return [Image]
   def flip_vertically!
@@ -172,12 +162,11 @@ class Image
     self
   end
 
-  # Flips the {Image} sideways
+  # Flips the {Image} sideways.
   #
-  # ```ruby
-  # sprite = Image.new("./assets/sprite.png")
-  # sprite.flip_horizontally!
-  # ```
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.flip_horizontally!
   #
   # @return [Image]
   def flip_horizontally!
@@ -186,12 +175,11 @@ class Image
     self
   end
 
-  # Rotates the {Image} 90 degrees clockwise
+  # Rotates the {Image} 90 degrees clockwise.
   #
-  # ```ruby
-  # sprite = Image.new("./assets/sprite.png")
-  # sprite.rotate_clockwise!
-  # ```
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.rotate_clockwise!
   #
   # @return [Image]
   def rotate_clockwise!
@@ -200,12 +188,11 @@ class Image
     self
   end
 
-  # Rotates the {Image} 90 degrees counter clockwise
+  # Rotates the {Image} 90 degrees counter clockwise.
   #
-  # ```ruby
-  # sprite = Image.new("./assets/sprite.png")
-  # sprite.rotate_counter_clockwise!
-  # ```
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.rotate_counter_clockwise!
   #
   # @return [Image]
   def rotate_counter_clockwise!
@@ -235,7 +222,8 @@ class Image
     self
   end
 
-  # Returns an array containing the image data as an array of Colour objects
+  # Returns an array containing the image data as an array of Colour objects.
+  #
   # @return [Array<Colour>]
   def data
     # mrb_Image_get_data
@@ -243,13 +231,12 @@ class Image
     [Colour.new]
   end
 
-  # Returns a {Texture2D} of the {Image}
+  # Returns a {Texture2D} of the {Image}.
   #
-  # ```ruby
-  # image = Imag.new("./assets/sprite.png")
-  # sprite = image.to_texture
-  # sprite.draw
-  # ```
+  # @example Basic usage
+  #   image = Imag.new("./assets/sprite.png")
+  #   sprite = image.to_texture
+  #   sprite.draw
   #
   # @return [Texture2D]
   def to_texture

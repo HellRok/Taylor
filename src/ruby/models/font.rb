@@ -1,40 +1,38 @@
 # The Font class is used for displaying TTF fonts
 #
-# ```ruby
-# font = Font.new("./assets/comic_sans.ttf", size: 16)
+# @example Basic usage
+#   font = Font.new("./assets/comic_sans.ttf", size: 16)
 #
-# font.draw("Hello", x: 16, y: 12, colour: Colour::GREEN)
+#   font.draw("Hello", x: 16, y: 12, colour: Colour::GREEN)
 #
-# position = Vector2[30, 42]
-# font.draw("Hello", position: position, colour: Colour::GREEN)
+#   position = Vector2[30, 42]
+#   font.draw("Hello", position: position, colour: Colour::GREEN)
 #
-# font.unload
-# ```
+#   font.unload
 class Font
   # @return [Integer]
   attr_reader :size, :glyph_count, :glyph_padding, :texture
 
   # Return the object represented by a Hash
   #
-  # ```ruby
-  # font = Font.new("./assets/my_font.ttf", size: 16)
+  # @example Basic usage
+  #   font = Font.new("./assets/my_font.ttf", size: 16)
   #
-  # p font.to_h
-  # # => {
-  # #      :size=>16,
-  # #      :glyph_count=>95,
-  # #      :glyph_padding=>4,
-  # #      :texture=>{
-  # #        :id=>3.0,
-  # #        :width=>512.0,
-  # #        :height=>512.0,
-  # #        :mipmaps=>1.0,
-  # #        :format=>2.0
-  # #      }
-  # #    }
+  #   p font.to_h
+  #   # => {
+  #   #      :size=>16,
+  #   #      :glyph_count=>95,
+  #   #      :glyph_padding=>4,
+  #   #      :texture=>{
+  #   #        :id=>3.0,
+  #   #        :width=>512.0,
+  #   #        :height=>512.0,
+  #   #        :mipmaps=>1.0,
+  #   #        :format=>2.0
+  #   #      }
+  #   #    }
   #
-  # font.unload
-  # ```
+  #   font.unload
   #
   # @return [Hash]
   def to_h
