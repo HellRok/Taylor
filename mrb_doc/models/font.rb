@@ -1,7 +1,7 @@
 class Font
   # Returns the default built in {Font}. You may not want to {unload} this one!
   #
-  # @exmaple Using the default font.
+  # @example Using the default font
   #   Font.default.draw("Hello!")
   #
   # @return [Font]
