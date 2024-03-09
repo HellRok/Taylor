@@ -5,16 +5,15 @@ class Rectangle
 
   # Shorthand for initializing a new {Rectangle}.
   #
-  # ```ruby
-  # source = Rectangle[8, 16, 24, 32]
-  # p source.to_h
-  # # => {
-  # #      x: 8,
-  # #      y: 16,
-  # #      width: 24,
-  # #      height: 32,
-  # #    }
-  # ```
+  # @example Basic usage
+  #   source = Rectangle[8, 16, 24, 32]
+  #   p source.to_h
+  #   # => {
+  #   #      x: 8,
+  #   #      y: 16,
+  #   #      width: 24,
+  #   #      height: 32,
+  #   #    }
   #
   # @param y [Float]
   # @param x [Float]
