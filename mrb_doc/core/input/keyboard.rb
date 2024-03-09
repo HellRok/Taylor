@@ -34,7 +34,7 @@ def key_up?(key)
   False
 end
 
-# Sets the key for should_window_close? to listen for
+# Sets the key that {window_should_close?} should listen for.
 # @param key [Integer]
 # @return [nil]
 def set_exit_key(key)
@@ -43,7 +43,7 @@ def set_exit_key(key)
   nil
 end
 
-# Returns the keycode for the pressed key, call it multiple times for queued keys
+# Returns the keycode for the pressed key, call it multiple times for queued keys.
 # @return [Integer]
 def get_key_pressed
   # mrb_get_key_pressed
@@ -51,7 +51,7 @@ def get_key_pressed
   64
 end
 
-# Returns the charcode for the pressed key, call it multiple times for queued keys
+# Returns the charcode for the pressed key, call it multiple times for queued keys.
 # @return [Integer]
 def get_char_pressed
   # mrb_getchar_pressed
