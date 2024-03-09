@@ -9,7 +9,7 @@ def take_screenshot(filename)
 end
 
 # Enable specific config flags.
-# @example Passing multiple flags.
+# @example Passing multiple flags
 #   set_config_flags(FLAG_WINDOW_TOPMOST | FLAG_WINDOW_RESIZABLE)
 # @param flags [Integer]
 # @return [nil]

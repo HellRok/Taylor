@@ -34,7 +34,7 @@ def window_ready?
 end
 
 # Checks if the window has the state set
-# @ Passing multiple flags.
+# @ Passing multiple flags
 #   window_state?(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
 # @param flags [Integer]
 # @return [Boolean]
@@ -45,7 +45,7 @@ def window_state?(flags)
 end
 
 # Sets the specified states on the window.
-# @example Passing multiple flags.
+# @example Passing multiple flags
 #   set_window_state(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
 # @param flags [Integer]
 # @return [nil]
@@ -104,7 +104,7 @@ def window_resized?
 end
 
 # Clears the specified states on the window.
-# @example Passing multiple flags.
+# @example Passing multiple flags
 #   clear_window_state(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
 # @param flags [Integer]
 # @return [nil]

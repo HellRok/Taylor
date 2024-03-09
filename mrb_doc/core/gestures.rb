@@ -1,5 +1,5 @@
 # Enable only specific gestures.
-# @example Passing multiple flags.
+# @example Passing multiple flags
 #   set_gestures_enabled(GESTURE_TAP | GESTURE_SWIPE_UP)
 # @param flags [Integer]
 # @return [nil]

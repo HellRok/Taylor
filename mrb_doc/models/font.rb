@@ -16,7 +16,7 @@ class Font
   #
   # Currently only TTF files are supported.
   #
-  # @example Basic usage.
+  # @example Basic usage
   #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
   #
   # @param path [String]
@@ -32,7 +32,7 @@ class Font
 
   # Draw the text to the screen using the loaded {Font}.
   #
-  # @example Drawing text on screen using a custom font.
+  # @example Drawing text on screen using a custom font
   #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
   # 
   #   font.draw("Hello", x: 15, y: 12, colour: Colour::BLUE)
@@ -58,7 +58,7 @@ class Font
 
   # Returns the measurements of the text if drawn by the {Font}.
   #
-  # @example Measuring a string.
+  # @example Measuring a string
   #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
   #
   #   hello_size = font.measure("Hello")
@@ -80,7 +80,7 @@ class Font
 
   # Unloads the {Font} from memory.
   #
-  # @example Basic usage.
+  # @example Basic usage
   #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
   #   font.unload
   #
@@ -101,7 +101,7 @@ class Font
 
   # Creates an {Image} of the text using the {Font}.
   #
-  # @example Creating an image from the string "Hello".
+  # @example Creating an image from the string "Hello"
   #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
   #
   #   image = font.to_image("Hello", colour: Colour::PINK)
