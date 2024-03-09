@@ -1,4 +1,4 @@
-# Shows the cursor
+# Shows the cursor.
 # @return [nil]
 def show_cursor
   # mrb_show_cursor
@@ -6,7 +6,7 @@ def show_cursor
   nil
 end
 
-# Hides the cursor
+# Hides the cursor.
 # @return [nil]
 def hide_cursor
   # mrb_hide_cursor
@@ -14,7 +14,7 @@ def hide_cursor
   nil
 end
 
-# Checks if the cursor is hidden
+# Checks if the cursor is hidden.
 # @return [Boolean]
 def cursor_hidden?
   # mrb_cursor_hidden
@@ -22,7 +22,7 @@ def cursor_hidden?
   true
 end
 
-# Enables and shows the cursor
+# Enables and shows the cursor.
 # @return [nil]
 def enable_cursor
   # mrb_enable_cursor
@@ -30,7 +30,7 @@ def enable_cursor
   nil
 end
 
-# Disables the cursor and hides it
+# Disables the cursor and hides it.
 # @return [nil]
 def disable_cursor
   # mrb_disable_cursor
@@ -38,7 +38,7 @@ def disable_cursor
   nil
 end
 
-# Checks if the cursor is in the window
+# Checks if the cursor is in the window.
 # @return [Boolean]
 def cursor_on_screen?
   # mrb_cursor_on_screen
