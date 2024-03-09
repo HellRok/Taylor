@@ -7,18 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_colour_tint(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  Color* colour;
-  mrb_get_args(mrb, "dd", &image, &Image_type, &colour, &Colour_type);
-
-  ImageColorTint(image, *colour);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_colour_invert(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
@@ -131,11 +119,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_colour_tint!",
-                    mrb_image_colour_tint,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "image_colour_invert!",

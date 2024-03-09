@@ -1,13 +1,3 @@
-# Tints the image with the specified colour
-# @param image [Image]
-# @param colour [Colour]
-# @return [nil]
-def image_colour_tint!(image, colour)
-  # mrb_image_colour_tint
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Inverts the colours of the image
 # @param image [Image]
 # @return [nil]

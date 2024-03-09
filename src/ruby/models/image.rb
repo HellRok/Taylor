@@ -14,14 +14,6 @@ class Image
     }
   end
 
-  # Tints the image with the specified colour
-  # @param colour [Colour]
-  # @return [nil]
-  def tint!(colour)
-    image_colour_tint!(self, colour)
-    self
-  end
-
   # Inverts the colours of the image
   # @return [nil]
   def invert!
