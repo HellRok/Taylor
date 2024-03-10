@@ -1,12 +1,3 @@
-# Converts the image to grayscale.
-# @param image [Image]
-# @return [nil]
-def image_colour_grayscale!(image)
-  # mrb_image_colour_grayscale
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Change the contrast of the image.
 # @param image [Image]
 # @param contrast [Float] A value between -100 and 100.

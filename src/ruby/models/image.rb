@@ -14,13 +14,6 @@ class Image
     }
   end
 
-  # Converts the image to grayscale
-  # @return [nil]
-  def grayscale!
-    image_colour_grayscale!(self)
-    self
-  end
-
   # Change the contrast of the image
   # @param contrast [Float] a value between -100 and 100
   # @raise [ArgumentError] If the contrast is outside of the allowed range

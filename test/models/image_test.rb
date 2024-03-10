@@ -230,18 +230,18 @@ class Test
         image.unload
       end
 
-      def test_image_grayscale!
+      def test_image_greyscale!
         red = Image.generate(width: 1, height: 1, colour: Colour::RED)
         blue = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
         green = Image.generate(width: 1, height: 1, colour: Colour::GREEN)
 
-        red.grayscale!
-        blue.grayscale!
-        green.grayscale!
+        red.greyscale!
+        blue.greyscale!
+        green.greyscale!
 
-        assert_equal fixture_models_image_grayscale![0], red.data
-        assert_equal fixture_models_image_grayscale![1], blue.data
-        assert_equal fixture_models_image_grayscale![2], green.data
+        assert_equal fixture_models_image_greyscale![0], red.data
+        assert_equal fixture_models_image_greyscale![1], blue.data
+        assert_equal fixture_models_image_greyscale![2], green.data
       ensure
         red.unload
         blue.unload
