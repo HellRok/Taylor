@@ -76,6 +76,8 @@
 - Removed image_colour_invert!
 - Image#grayscale! was renamed to Image#greyscale! and is now C++ backed
 - Removed image_colour_grayscale!
+- Image#contrast! is now C++ backed
+- Removed image_colour_contrast!
 
 ## v0.3.14.1
 

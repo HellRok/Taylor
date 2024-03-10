@@ -1,19 +1,5 @@
 class Test
   class Image_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_image_colour_contrast!
-      darken = Image.generate(width: 1, height: 1, colour: Colour::LIME)
-      lighten = Image.generate(width: 1, height: 1, colour: Colour::LIME)
-
-      image_colour_contrast!(darken, 50)
-      image_colour_contrast!(lighten, -50)
-
-      assert_equal fixture_image_colour_contrast![0], darken.data
-      assert_equal fixture_image_colour_contrast![1], lighten.data
-    ensure
-      darken.unload
-      lighten.unload
-    end
-
     def test_image_colour_brightness!
       darken = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
       lighten = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
