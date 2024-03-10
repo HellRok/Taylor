@@ -247,6 +247,19 @@ class Image
     self
   end
 
+  # Inverts the {Colour}s of the {Image}.
+  #
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.invert!
+  #
+  # @return [Image]
+  def invert!
+    # mrb_Image_invert_bang
+    # src/mruby_integration/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of {Colour} objects.
   #
   # @return [Array<Colour>]

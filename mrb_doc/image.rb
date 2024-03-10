@@ -1,12 +1,3 @@
-# Inverts the colours of the image.
-# @param image [Image]
-# @return [nil]
-def image_colour_invert!(image)
-  # mrb_image_colour_invert
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Converts the image to grayscale.
 # @param image [Image]
 # @return [nil]

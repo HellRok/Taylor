@@ -14,13 +14,6 @@ class Image
     }
   end
 
-  # Inverts the colours of the image
-  # @return [nil]
-  def invert!
-    image_colour_invert!(self)
-    self
-  end
-
   # Converts the image to grayscale
   # @return [nil]
   def grayscale!

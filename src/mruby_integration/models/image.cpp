@@ -409,6 +409,19 @@ mrb_Image_tint_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_invert_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  ImageColorInvert(image);
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -520,6 +533,8 @@ append_models_Image(mrb_state* mrb)
                     MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Image_class, "tint!", mrb_Image_tint_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Image_class, "invert!", mrb_Image_invert_bang, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
   mrb_define_method(
