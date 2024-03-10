@@ -58,7 +58,7 @@ def get_mouse_position
   Vector2.new
 end
 
-# Sets the position of the muose.
+# Sets the position of the mouse.
 # @param x [Integer]
 # @param y [Integer]
 # @return [nil]

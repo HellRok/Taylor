@@ -58,7 +58,7 @@ class Image
     nil
   end
 
-  # Copies the image to a new object. 
+  # Copies the image to a new object.
   #
   # @example Basic usage
   #   image = Image.new("./assets/my_cool_image.png")
@@ -80,7 +80,7 @@ class Image
   # Resizes the image using one of the two scalers.
   #
   # `:nearest_neighbour` is useful for scaling up pixel art and works best in
-  # exact integer scaling. And `:bicubic` is useful for scaling up normal 
+  # exact integer scaling. And `:bicubic` is useful for scaling up normal
   # images and works well at any scaling.
   #
   # @example Scaling an image using the nearest-neighbour scaler

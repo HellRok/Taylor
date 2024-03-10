@@ -34,7 +34,7 @@ def window_ready?
 end
 
 # Checks if the window has the state set
-# @ Passing multiple flags
+# @example Passing multiple flags
 #   window_state?(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
 # @param flags [Integer]
 # @return [Boolean]
@@ -193,7 +193,7 @@ def set_window_min_size(width, height)
   # src/mruby_integration/core/window.cpp
   nil
 end
-  
+
 # Sets the size for the current window.
 # @param width [Integer]
 # @param height [Integer]

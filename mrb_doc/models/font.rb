@@ -34,7 +34,7 @@ class Font
   #
   # @example Drawing text on screen using a custom font
   #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
-  # 
+  #
   #   font.draw("Hello", x: 15, y: 12, colour: Colour::BLUE)
   #
   #   position = Vector[80, 90]
