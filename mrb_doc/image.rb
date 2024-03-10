@@ -1,13 +1,3 @@
-# Change the brightness of the image.
-# @param image [Image]
-# @param brightness [Float] A value between -255 and 255.
-# @return [nil]
-def image_colour_brightness!(image, brightness)
-  # mrb_image_colour_brightness
-  # src/mruby_integration/image.cpp
-  nil
-end
-
 # Replace the old Colour with the new Colour.
 # @param image [Image]
 # @param old_colour [Colour]

@@ -23,17 +23,6 @@ class Image
     self
   end
 
-  # Change the brightness of the image
-  # @param brightness [Float] a value between -255 and 255
-  # @raise [ArgumentError] If the brightness is outside of the allowed range
-  # @return [nil]
-  def brightness!(brightness)
-    raise ArgumentError.new("Must be within (-255..255)") if brightness < -255 || brightness > 255
-
-    image_colour_brightness!(self, brightness)
-    self
-  end
-
   # Draws the specified portion of the image into the specified region of the
   # this image.
   # @param image [Image]

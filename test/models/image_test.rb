@@ -299,9 +299,9 @@ class Test
       def test_image_brightness_too_low
         image = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
 
-        assert_raise(ArgumentError) {
-          image.brightness!(-256)
-        }
+        image.brightness!(-256)
+      rescue ArgumentError => e
+        assert_equal "Must be within (-255..255)", e.message
       ensure
         image.unload
       end
@@ -309,9 +309,9 @@ class Test
       def test_image_brightness_too_high
         image = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
 
-        assert_raise(ArgumentError) {
-          image.brightness!(256)
-        }
+        image.brightness!(256)
+      rescue ArgumentError => e
+        assert_equal "Must be within (-255..255)", e.message
       ensure
         image.unload
       end

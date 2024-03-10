@@ -7,18 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_colour_brightness(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_int brightness;
-  mrb_get_args(mrb, "di", &image, &Image_type, &brightness);
-
-  ImageColorBrightness(image, brightness);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_colour_replace(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
@@ -85,11 +73,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_colour_brightness!",
-                    mrb_image_colour_brightness,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "image_colour_replace!",

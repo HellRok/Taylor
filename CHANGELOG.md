@@ -78,6 +78,8 @@
 - Removed image_colour_grayscale!
 - Image#contrast! is now C++ backed
 - Removed image_colour_contrast!
+- Image#brightness! is now C++ backed
+- Removed image_colour_brightness!
 
 ## v0.3.14.1
 
