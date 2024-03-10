@@ -14,15 +14,6 @@ class Image
     }
   end
 
-  # Replace the old Colour with the new Colour
-  # @param old_colour [Colour]
-  # @param new_colour [Colour]
-  # @return [nil]
-  def replace!(old_colour, new_colour)
-    image_colour_replace!(self, old_colour, new_colour)
-    self
-  end
-
   # Draws the specified portion of the image into the specified region of the
   # this image.
   # @param image [Image]

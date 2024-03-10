@@ -311,6 +311,21 @@ class Image
     self
   end
 
+  # Replace all instances of the `from` {Colour} with the `to` {Colour}.
+  #
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.brightness!(from: Colour[255, 0, 0], to: Colour::GREEN)
+  #
+  # @param from [Colour]
+  # @param to [Colour]
+  # @return [Image]
+  def replace!(from:, to:)
+    # mrb_Image_replace_bang
+    # src/mruby_integration/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of {Colour} objects.
   #
   # @return [Array<Colour>]
