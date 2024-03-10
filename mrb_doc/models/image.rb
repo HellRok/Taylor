@@ -247,6 +247,19 @@ class Image
     self
   end
 
+  # Converts the {Image} to greyscale.
+  #
+  # @example Basic usage
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.greyscale!
+  #
+  # @return [Image]
+  def greyscale!
+    # mrb_Image_greyscale_bang
+    # src/mruby_integration/image.cpp
+    self
+  end
+
   # Inverts the {Colour}s of the {Image}.
   #
   # @example Basic usage

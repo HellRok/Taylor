@@ -147,7 +147,7 @@ def fixture_models_image_invert!
   ]
 end
 
-def fixture_models_image_grayscale!
+def fixture_models_image_greyscale!
   [
     [Colour[99, 99, 99]],
     [Colour[98, 98, 98]],

@@ -1,23 +1,5 @@
 class Test
   class Image_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_image_colour_grayscale!
-      red = Image.generate(width: 1, height: 1, colour: Colour::RED)
-      blue = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
-      green = Image.generate(width: 1, height: 1, colour: Colour::GREEN)
-
-      image_colour_grayscale!(red)
-      image_colour_grayscale!(blue)
-      image_colour_grayscale!(green)
-
-      assert_equal fixture_image_colour_grayscale![0], red.data
-      assert_equal fixture_image_colour_grayscale![1], blue.data
-      assert_equal fixture_image_colour_grayscale![2], green.data
-    ensure
-      red.unload
-      blue.unload
-      green.unload
-    end
-
     def test_image_colour_contrast!
       darken = Image.generate(width: 1, height: 1, colour: Colour::LIME)
       lighten = Image.generate(width: 1, height: 1, colour: Colour::LIME)
