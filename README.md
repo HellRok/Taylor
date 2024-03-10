@@ -1,9 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://www.taylormadetech.dev/"><img src="https://github.com/Chadowo/Taylor/assets/83732118/d99706ca-5582-406e-b7ee-287de154fc12" alt="Taylor"></a>
-  <br>
-  Taylor
-  <br>
+  <a href="https://www.taylormadetech.dev/"><img src="https://github.com/Chadowo/Taylor/assets/83732118/4e03a4d6-d07a-4d71-8592-e695114e90ae" alt="Taylor" width="636" height="250"></a>
 </h1>
 <h4 align="center">Made for Games</h4>
 
@@ -41,14 +38,20 @@ it's pretty straight forward for Linux.
 ### Linux
 
 1. Install the build dependencies:  
-    - **Fedora:**  
-        ```console
-        $ sudo dnf groupinstall "Development Tools" "Development Libraries"; sudo dnf install ruby
-        ```  
-    - **Ubuntu/Debian:**  
-        ```console
-        $ sudo apt-get install build-essential ruby
-        ```
+    <details>
+      <summary>Fedora</summary>  
+      
+      ```console
+      $ sudo dnf groupinstall "Development Tools" "Development Libraries"; sudo dnf install ruby
+      ``` 
+    </details>
+    <details> 
+      <summary>Ubuntu/Debian</summary>
+      
+      ```console
+      $ sudo apt-get install build-essential ruby
+      ```
+    </details> 
 3. You should now just be able to run `rake` and wait a few seconds.
 4. The final binary will be located on `dist/linux/debug/taylor`.
 5. **Optional**: if you want the nice command line interface, you'll need to run this:  
@@ -71,14 +74,14 @@ PATH (You can drop it on `~/.local/bin/`) so you can execute it from anywhere.
 
 To build all the Docker images you can run the following command:
 
-```console
+```
 $ bundle exec rake docker:build:all
 ```
 
 If you also want to compile the mruby and raylib dependencies yourself there are
 docker images for that too, just run:
 
-```console
+```
 $ bundle exec rake docker:build:{mruby,raylib}
 ```
 
