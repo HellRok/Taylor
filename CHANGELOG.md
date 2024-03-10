@@ -72,6 +72,8 @@
 - Removed image_mipmaps!
 - Image#tint! is now C++ backed
 - Removed image_colour_tint!
+- Image#invert! is now C++ backed
+- Removed image_colour_invert!
 
 ## v0.3.14.1
 

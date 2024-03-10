@@ -7,17 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_colour_invert(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  ImageColorInvert(image);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_colour_grayscale(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
@@ -119,11 +108,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_colour_invert!",
-                    mrb_image_colour_invert,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "image_colour_grayscale!",
