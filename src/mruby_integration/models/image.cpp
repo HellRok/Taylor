@@ -475,6 +475,46 @@ mrb_Image_brightness_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_replace_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  // def replace!(from: Colour::VIOLET, to: Colour::BLANK)
+  mrb_int kw_num = 2;
+  mrb_int kw_required = 0;
+  mrb_sym kw_names[] = {
+    mrb_intern_lit(mrb, "from"),
+    mrb_intern_lit(mrb, "to"),
+  };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  Color* from;
+  if (mrb_undef_p(kw_values[0])) {
+    auto default_from = Color{ 135, 60, 190, 255 };
+    from = &default_from;
+  } else {
+    from = static_cast<struct Color*> DATA_PTR(kw_values[0]);
+  }
+
+  Color* to;
+  if (mrb_undef_p(kw_values[1])) {
+    auto default_to = Color{ 0, 0, 0, 0 };
+    to = &default_to;
+  } else {
+    to = static_cast<struct Color*> DATA_PTR(kw_values[1]);
+  }
+
+  ImageColorReplace(image, *from, *to);
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -597,6 +637,8 @@ append_models_Image(mrb_state* mrb)
                     "brightness!",
                     mrb_Image_brightness_bang,
                     MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Image_class, "replace!", mrb_Image_replace_bang, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
   mrb_define_method(

@@ -317,10 +317,19 @@ class Test
       end
 
       def test_image_replace!
+        image = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
+
+        image.replace!
+        assert_equal fixture_models_image_replace!, image.data
+      ensure
+        image.unload
+      end
+
+      def test_image_replace_bang_with_options
         image = Image.new("assets/test.png")
 
-        image.replace!(Colour::WHITE, Colour::BLUE)
-        assert_equal fixture_models_image_replace!, image.data
+        image.replace!(from: Colour::WHITE, to: Colour::BLUE)
+        assert_equal fixture_models_image_replace_bang_with_options, image.data
       ensure
         image.unload
       end

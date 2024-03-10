@@ -7,25 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_colour_replace(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  Color *old_colour, *new_colour;
-  mrb_get_args(mrb,
-               "ddd",
-               &image,
-               &Image_type,
-               &old_colour,
-               &Colour_type,
-               &new_colour,
-               &Colour_type);
-
-  ImageColorReplace(image, *old_colour, *new_colour);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_draw(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image *destination, *source;
@@ -73,12 +54,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_colour_replace!",
-                    mrb_image_colour_replace,
-                    MRB_ARGS_REQ(3));
-
   mrb_define_method(
     mrb, mrb->kernel_module, "image_draw!", mrb_image_draw, MRB_ARGS_REQ(5));
 

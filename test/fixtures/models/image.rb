@@ -170,6 +170,10 @@ def fixture_models_image_brightness!
 end
 
 def fixture_models_image_replace!
+  [Colour::BLANK]
+end
+
+def fixture_models_image_replace_bang_with_options
   b = Colour::BLUE
   o = Colour[218, 154, 37]
   p = Colour[195, 37, 218]

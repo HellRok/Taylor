@@ -80,6 +80,8 @@
 - Removed image_colour_contrast!
 - Image#brightness! is now C++ backed
 - Removed image_colour_brightness!
+- Image#replace! is now C++ backed and takes kwargs
+- Removed image_colour_replace!
 
 ## v0.3.14.1
 
