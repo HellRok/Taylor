@@ -32,9 +32,6 @@ If you'd like to see some examples, check them out on the [online playground!](h
 
 **Note**: Currently there are no instructions for Windows and OSX.
 
-There's a couple reasons you may want to compile Taylor yourself and thankfully
-it's pretty straight forward for Linux.
-
 ### Linux
 
 1. Install the build dependencies:  
@@ -79,7 +76,7 @@ $ bundle exec rake docker:build:all
 ```
 
 If you also want to compile the mruby and raylib dependencies yourself there are
-docker images for that too, just run:
+Docker images for that too, just run:
 
 ```
 $ bundle exec rake docker:build:{mruby,raylib}
