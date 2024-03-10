@@ -1,4 +1,4 @@
-# Get the position within the window of the specified touch
+# Get the position within the window of the specified touch.
 # @param index [Integer]
 # @return [Vector2]
 def get_touch_position(index)

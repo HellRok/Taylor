@@ -1,5 +1,5 @@
 class Vector2
-  # Creates a new instance of Vector2
+  # Creates a new instance of {Vector2}.
   # @param x [Float]
   # @param y [Float]
   # @return [Vector2]

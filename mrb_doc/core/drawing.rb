@@ -1,4 +1,4 @@
-# Clears the screen with the specified colour
+# Clears the screen with the specified colour.
 # @param colour [Colour]
 # @return [nil]
 def clear_background(colour)
@@ -7,7 +7,7 @@ def clear_background(colour)
   nil
 end
 
-# Starts drawing to the screen
+# Starts drawing to the screen.
 # @return [nil]
 def begin_drawing
   # mrb_begin_drawing
@@ -15,7 +15,7 @@ def begin_drawing
   nil
 end
 
-# Ends drawing to the screen
+# Ends drawing to the screen.
 # @return [nil]
 def end_drawing
   # mrb_end_drawing
@@ -23,7 +23,7 @@ def end_drawing
   nil
 end
 
-# Starts drawing to the RenderTexture
+# Starts drawing to the {RenderTexture}.
 # @param texture [RenderTexture]
 # @return [nil]
 def begin_texture_mode(texture)
@@ -32,7 +32,7 @@ def begin_texture_mode(texture)
   nil
 end
 
-# Stops drawing to the RenderTexture
+# Stops drawing to the {RenderTexture}.
 # @return [nil]
 def end_texture_mode
   # mrb_end_texture_mode
@@ -40,7 +40,7 @@ def end_texture_mode
   nil
 end
 
-# All draw calls within will be drawn through the Shader
+# All draw calls within will be drawn through the {Shader}.
 # @param shader [Shader]
 # @return [nil]
 def begin_shader_mode(shader)
@@ -49,7 +49,7 @@ def begin_shader_mode(shader)
   nil
 end
 
-# Stops drawing through the Shader
+# Stops drawing through the {Shader}.
 # @return [nil]
 def end_shader_mode
   # mrb_end_shader_mode
@@ -57,7 +57,7 @@ def end_shader_mode
   nil
 end
 
-# In scissor mode only draw calls within the defined area will actually be drawn
+# In scissor mode only draw calls within the defined area will actually be drawn.
 # @param x [Integer]
 # @param y [Integer]
 # @param width [Integer]
@@ -69,7 +69,7 @@ def begin_scissor_mode(x, y, width, height)
   nil
 end
 
-# End scissor mode
+# End scissor mode.
 # @return [nil]
 def end_scissor_mode
   # mrb_end_scissor_mode

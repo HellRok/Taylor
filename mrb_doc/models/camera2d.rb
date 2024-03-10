@@ -1,16 +1,15 @@
 class Camera2D
   # Creates a new instance of {Camera2D}.
   #
-  # ```ruby
-  # player = Vector2[400, 240]
+  # @example Basic usage
+  #   player = Vector2[400, 240]
   #
-  # camera = Camera2D.new(offset: player)
+  #   camera = Camera2D.new(offset: player)
   #
-  # player.x = 200
-  # player.y = 120
+  #   player.x = 200
+  #   player.y = 120
   #
-  # camera.offset = player
-  # ```
+  #   camera.offset = player
   #
   # @param offset [Vector2]
   # @param target [Vector2]
@@ -34,18 +33,16 @@ class Camera2D
   end
 
   # Draws the world through the lens of the {Camera2D}.
-  # rectangle = Rectangle.new(2, 2, 6, 6)
   #
-  # ```ruby
-  # rectangle = Rectangle[100, 100, 50, 50]
-  # camera = Camera2D.new(offset: Vector2[100, 150])
+  # @example Basic usage
+  #   rectangle = Rectangle[100, 100, 50, 50]
+  #   camera = Camera2D.new(offset: Vector2[100, 150])
   #
-  # camera.draw do
-  #     rectangle.draw(colour: RED)
-  # end
-  # ```
+  #   camera.draw do
+  #       rectangle.draw(colour: RED)
+  #   end
   #
-  # @yield The block that calls your rendering logic
+  # @yield The block that calls your rendering logic.
   # @return [nil]
   def draw(&block)
     # mrb_Camera2D_set_zoom
@@ -56,16 +53,13 @@ class Camera2D
   # Pass in a vector with world coordinates to see what that translates to in
   # the camera's viewport.
   #
-  # ```ruby
-  #  camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
-  #  vector = Vector2[3, 3]
+  # @example Basic usage
+  #   camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
+  #   vector = Vector2[3, 3]
   #
-  #  translated_vector = camera.as_in_viewport(vector)
-  #  puts translated_vector.x
-  #  # => 4
-  #  puts translated_vector.y
-  #  # => 4
-  # ```
+  #   translated_vector = camera.as_in_viewport(vector)
+  #   puts translated_vector.x # => 4
+  #   puts translated_vector.y # => 4
   #
   # @param vector [Vector2]
   # @return [Vector2]
@@ -78,16 +72,13 @@ class Camera2D
   # Pass in a vector with screen coordinates to see what that translates to in
   # the world from camera's viewport.
   #
-  # ```ruby
-  #  camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
-  #  vector = Vector2[4, 4]
+  # @example Basic usage
+  #   camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
+  #   vector = Vector2[4, 4]
   #
-  #  translated_vector = camera.as_in_world(vector)
-  #  puts translated_vector.x
-  #  # => 3
-  #  puts translated_vector.y
-  #  # => 3
-  # ```
+  #   translated_vector = camera.as_in_world(vector)
+  #   puts translated_vector.x # => 3
+  #   puts translated_vector.y # => 3
   #
   # @param vector [Vector2]
   # @return [Vector2]

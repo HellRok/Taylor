@@ -1,4 +1,4 @@
-# Checks if a Vector2 is inside a Rectangle
+# Checks if a {Vector2} is inside a {Rectangle}.
 # @param point [Vector2]
 # @param rectangle [Rectangle]
 # @return [Boolean]

@@ -1,4 +1,4 @@
-# Draw a circle
+# Draw a circle.
 # @param x [Integer]
 # @param y [Integer]
 # @param radius [Float]
@@ -10,7 +10,7 @@ def draw_circle(x, y, radius, colour)
   nil
 end
 
-# Draw a circle
+# Draw a circle.
 # @param vector [Vector2]
 # @param radius [Float]
 # @param colour [Colour]
@@ -21,12 +21,12 @@ def draw_circle_v(vector, radius, colour)
   nil
 end
 
-# Draw a circle sector
+# Draw a circle sector.
 # @param vector [Vector2]
 # @param radius [Float]
 # @param start_angle [Float]
 # @param end_angle [Float]
-# @param segments [Integer] How smooth to draw the sector
+# @param segments [Integer] How smooth to draw the sector.
 # @param colour [Colour]
 # @return [nil]
 def draw_circle_sector(vector, radius, start_angle, end_angle, segments, colour)
@@ -35,12 +35,12 @@ def draw_circle_sector(vector, radius, start_angle, end_angle, segments, colour)
   nil
 end
 
-# Draw a circle sector outline
+# Draw a circle sector outline.
 # @param vector [Vector2]
 # @param radius [Float]
 # @param start_angle [Float]
 # @param end_angle [Float]
-# @param segments [Integer] How smooth to draw the sector
+# @param segments [Integer] How smooth to draw the sector.
 # @param colour [Colour]
 # @return [nil]
 def draw_circle_sector_lines(vector, radius, start_angle, end_angle, segments, colour)
@@ -49,7 +49,7 @@ def draw_circle_sector_lines(vector, radius, start_angle, end_angle, segments, c
   nil
 end
 
-# Draw a circle filled with a gradient
+# Draw a circle filled with a gradient.
 # @param x [Integer]
 # @param y [Integer]
 # @param radius [Float]
@@ -62,7 +62,7 @@ def draw_circle_gradient(x, y, radius, colour1, colour2)
   nil
 end
 
-# Draw the outline of a circle
+# Draw the outline of a circle.
 # @param x [Integer]
 # @param y [Integer]
 # @param radius [Float]

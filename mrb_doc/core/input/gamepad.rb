@@ -1,4 +1,4 @@
-# Return whether or not the specified gamepad is available
+# Return whether or not the specified gamepad is available.
 # @param index [Integer]
 # @return [Bool]
 def gamepad_available?(index)
@@ -7,7 +7,7 @@ def gamepad_available?(index)
   true
 end
 
-# Returns the specified gamepads name
+# Returns the specified gamepad's name.
 # @param index [Integer]
 # @return [String]
 def get_gamepad_name(index)
@@ -56,7 +56,7 @@ def gamepad_button_up?(index, button)
   true
 end
 
-# Returns the last pressed gamepad button
+# Returns the last pressed gamepad button.
 # @return [Integer]
 def get_gamepad_button_pressed
   # mrb_get_gamepad_button_pressed
@@ -64,7 +64,7 @@ def get_gamepad_button_pressed
   0
 end
 
-# Returns the count of axis for the specified gamepad
+# Returns the count of axis for the specified gamepad.
 # @param index [Integer]
 # @return [Integer]
 def get_gamepad_axis_count(index)
@@ -73,7 +73,7 @@ def get_gamepad_axis_count(index)
   2
 end
 
-# Returns the movement of the specified axis for the specified gamepad
+# Returns the movement of the specified axis for the specified gamepad.
 # @param index [Integer]
 # @param axis [Integer]
 # @return [Float] -1.0 to 1.0
@@ -84,7 +84,7 @@ def get_gamepad_axis_movement(index, axis)
 end
 
 # Setup gamepad mappings using the
-# [SDL_GameControllerDB](https://github.com/gabomdq/SDL_GameControllerDB) format
+# [SDL_GameControllerDB](https://github.com/gabomdq/SDL_GameControllerDB) format.
 # @param mappings [String]
 # @return [Integer]
 def set_gamepad_mappings(mappings)

@@ -1,4 +1,4 @@
-# Have their been files dropped that haven't been dealt with?
+# Have there been files dropped that haven't been dealt with?
 # @return [nil]
 def files_dropped?
   # mrb_files_dropped

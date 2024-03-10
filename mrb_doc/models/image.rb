@@ -14,10 +14,10 @@ class Image
     Image.new
   end
 
-  # Loads an image file off of the disk. If the file does not exist, it will
+  # Loads an image file from the disk. If the file does not exist, it will
   # raise an {Image::NotFound} error.
   #
-  # Supported image types are png, jpg, bmp, qoi, gif, dds, hdr.
+  # Supported image formats are: PNG, JPG, BMP, QOI, GIF, DDS and HDR.
   #
   # @example Basic usage
   #   image = Image.new("/assets/image.png")
@@ -58,8 +58,7 @@ class Image
     nil
   end
 
-  # Copies the image to a new object. If `source` is specified it'll only be
-  # that section of the image that is returned.
+  # Copies the image to a new object. 
   #
   # @example Basic usage
   #   image = Image.new("./assets/my_cool_image.png")
@@ -70,7 +69,7 @@ class Image
   #   # This will only copy the portion x from 10 to 110, and y from 20 to 70
   #   subsection = image.copy(source: Rectangle[10, 20, 100, 50])
   #
-  # @param source [Rectangle]
+  # @param source [Rectangle] If specified, only this section of the image will be copied.
   # @return [Image]
   def copy(source: Rectangle[0, 0, width, height])
     # mrb_Image_copy
@@ -81,34 +80,29 @@ class Image
   # Resizes the image using one of the two scalers.
   #
   # `:nearest_neighbour` is useful for scaling up pixel art and works best in
-  # exact integer scaling.
+  # exact integer scaling. And `:bicubic` is useful for scaling up normal 
+  # images and works well at any scaling.
   #
-  # @example Basic usage
+  # @example Scaling an image using the nearest-neighbour scaler
   #   image = Image.new("./assets/pixel_art.png")
-  #   p [image.width, image.height]
-  #   # => [8, 8]
+  #   p [image.width, image.height] # => [8, 8]
   #
+  #   # Nearest-neighbour is the default so no need to specify
   #   image.resize!(width: 16, height: 16)
-  #   p [image.width, image.height]
-  #   # => [16, 16]
+  #   p [image.width, image.height] # => [16, 16]
   #
-  # `:bicubic` is useful for scaling up normal images and works well at any
-  # scaling.
-  #
-  # @example Basic usage
+  # @example Scaling an image using the bicubic scaler
   #   image = Image.new("./assets/background.png")
-  #   p [image.width, image.height]
-  #   # => [1280, 720]
+  #   p [image.width, image.height] # => [1280, 720]
   #
   #   image.resize!(width: 1920, height: 1080, scaler: :bicubic)
-  #   p [image.width, image.height]
-  #   # => [1920, 1080]
+  #   p [image.width, image.height] # => [1920, 1080]
   #
   # @param width [Integer]
   # @param height [Integer]
-  # @param scaler [Symbol] Valid options are :nearest_neighbour and :bicubic
+  # @param scaler [:nearest_neighbour, :bicubic]
   # @return [Image]
-  # @raise [ArgumentError] When passed an invalid scaler
+  # @raise [ArgumentError] When passed an invalid scaler.
   def resize!(width:, height:, scaler: :nearest_neighbour)
     # mrb_Image_resize_bang
     # src/mruby_integration/models/image.cpp
@@ -119,12 +113,10 @@ class Image
   #
   # @example Basic usage
   #   image = Image.new("./assets/spritesheet.png")
-  #   p [image.width, image.height]
-  #   # => [64, 128]
+  #   p [image.width, image.height] # => [64, 128]
   #
   #   image.crop!(source: Rectangle[8, 16, 8, 8])
-  #   p [image.width, image.height]
-  #   # => [8, 8]
+  #   p [image.width, image.height] # => [8, 8]
   #
   # @param source [Rectangle]
   # @return [Image]
@@ -202,7 +194,7 @@ class Image
   end
 
   # Premultiplies the alpha into the colour values. Useful for after you've
-  # applied an aplha mask.
+  # applied an alpha mask.
   #
   # @example Basic usage
   #   sprite = Image.new("./assets/sprite.png")
@@ -228,14 +220,11 @@ class Image
   # @example Basic usage
   #   sprite = Image.new("./assets/sprite.png")
   #
-  #   puts sprite.mipmaps
-  #   # => 1
+  #   puts sprite.mipmaps # => 1
   #
-  #   p [sprite.width, sprite.height]
-  #   # => [16, 16]
+  #   p [sprite.width, sprite.height] # => [16, 16]
   #
-  #   puts sprite.mipmaps
-  #   # => 5
+  #   puts sprite.mipmaps # => 5
   #
   # @return [Image]
   def generate_mipmaps!
@@ -258,7 +247,7 @@ class Image
     self
   end
 
-  # Returns an array containing the image data as an array of Colour objects.
+  # Returns an array containing the image data as an array of {Colour} objects.
   #
   # @return [Array<Colour>]
   def data

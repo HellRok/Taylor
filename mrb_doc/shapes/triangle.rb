@@ -1,4 +1,4 @@
-# Draw a triangle
+# Draw a triangle.
 # @param left [Vector2]
 # @param right [Vector2]
 # @param top [Vector2]
@@ -10,7 +10,7 @@ def draw_triangle(left, right, top, colour)
   nil
 end
 
-# Draw the outline of a triangle
+# Draw the outline of a triangle.
 # @param left [Vector2]
 # @param right [Vector2]
 # @param top [Vector2]

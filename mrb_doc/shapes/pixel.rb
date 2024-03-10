@@ -1,4 +1,4 @@
-# Draw a pixel
+# Draw a pixel.
 # @param x [Integer]
 # @param y [Integer]
 # @param colour [Colour]
@@ -9,7 +9,7 @@ def draw_pixel(x, y, colour)
   nil
 end
 
-# Draw a pixel using a Vector2
+# Draw a pixel using a {Vector2}.
 # @param position [Vector2]
 # @param colour [Colour]
 # @return [nil]

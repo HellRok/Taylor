@@ -1,9 +1,8 @@
 class Font
-  # Returns the default built in {Font}. You may not want to `unload` this one!
+  # Returns the default built in {Font}. You may not want to {unload} this one!
   #
-  # ```ruby
-  # Font.default.draw("Hello!")
-  # ```
+  # @example Using the default font
+  #   Font.default.draw("Hello!")
   #
   # @return [Font]
   def self.default
@@ -12,14 +11,13 @@ class Font
     Font.new
   end
 
-  # Loads a font file off of the disk. If the file does not exist, it will
+  # Loads a font file from the disk. If the file does not exist, it will
   # raise a {Font::NotFound} error.
   #
-  # Currently only ttf files are supported.
+  # Currently only TTF files are supported.
   #
-  # ```ruby
-  # font = Font.new("/assets/my_cool_font.ttf", size: 16)
-  # ```
+  # @example Basic usage
+  #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
   #
   # @param path [String]
   # @param size [Integer]
@@ -34,20 +32,19 @@ class Font
 
   # Draw the text to the screen using the loaded {Font}.
   #
-  # ```ruby
-  # font = Font.new("/assets/my_cool_font.ttf", size: 16)
+  # @example Drawing text on screen using a custom font
+  #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
+  # 
+  #   font.draw("Hello", x: 15, y: 12, colour: Colour::BLUE)
   #
-  # font.draw("Hello", x: 15, y: 12, colour: Colour::BLUE)
+  #   position = Vector[80, 90]
+  #   font.draw("Hello", position: position, colour: Colour::BLUE)
   #
-  # position = Vector[80, 90]
-  # font.draw("Hello", position: position, colour: Colour::BLUE)
+  #   font.unload
   #
-  # font.unload
-  # ```
-  #
-  # @param text [String] The text to draw on the screen
+  # @param text [String] The text to draw on the screen.
   # @param size [Float]
-  # @param spacing [Float] How much spacing to have between letters
+  # @param spacing [Float] How much spacing to have between letters.
   # @param x [Float]
   # @param y [Float]
   # @param position [Vector2]
@@ -61,23 +58,19 @@ class Font
 
   # Returns the measurements of the text if drawn by the {Font}.
   #
-  # ```ruby
-  # font = Font.new("/assets/my_cool_font.ttf", size: 16)
+  # @example Measuring a string
+  #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
   #
-  # hello_size = font.measure("Hello")
+  #   hello_size = font.measure("Hello")
   #
-  # puts hello_size.width
-  # # => 33
+  #   puts hello_size.width # => 33
+  #   puts hello_size.height # => 16
   #
-  # puts hello_size.height
-  # # => 16
+  #   font.unload
   #
-  # font.unload
-  # ```
-  #
-  # @param text [String] The text to draw on the screen
+  # @param text [String] The text to measure.
   # @param size [Float]
-  # @param spacing [Float] How much spacing to have between letters
+  # @param spacing [Float] How much spacing to have between letters.
   # @return [Vector2]
   def measure(text, size: self.size, spacing: 0)
     # mrb_Font_measure
@@ -87,10 +80,9 @@ class Font
 
   # Unloads the {Font} from memory.
   #
-  # ```ruby
-  # font = Font.new("/assets/my_cool_font.ttf", size: 16)
-  # font.unload
-  # ```
+  # @example Basic usage
+  #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
+  #   font.unload
   #
   # @return [nil]
   def unload
@@ -99,7 +91,7 @@ class Font
     nil
   end
 
-  # Checks if the font is loaded and ready to go
+  # Checks if the font is loaded and ready to go.
   # @return [Boolean]
   def ready?
     # mrb_Font_ready
@@ -109,18 +101,17 @@ class Font
 
   # Creates an {Image} of the text using the {Font}.
   #
-  # ```ruby
-  # font = Font.new("/assets/my_cool_font.ttf", size: 16)
+  # @example Creating an image from the string "Hello"
+  #   font = Font.new("/assets/my_cool_font.ttf", size: 16)
   #
-  # image = font.to_image("Hello", colour: Colour::PINK)
+  #   image = font.to_image("Hello", colour: Colour::PINK)
   #
-  # image.export("my_cool_text.jpg")
+  #   image.export("my_cool_text.jpg")
   #
-  # font.unload
-  # image.unload
-  # ```
+  #   font.unload
+  #   image.unload
   #
-  # @param text [String] The text to turn into an {Image}
+  # @param text [String] The text to turn into an {Image}.
   # @param size [Integer]
   # @param spacing [Integer]
   # @param colour [Colour]

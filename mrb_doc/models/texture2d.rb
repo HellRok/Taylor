@@ -1,5 +1,5 @@
 class Texture2D
-  # Creates a new instance of Texture2D
+  # Creates a new instance of {Texture2D}.
   # @param id [Integer]
   # @param width [Integer]
   # @param height [Integer]

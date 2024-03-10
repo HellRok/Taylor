@@ -1,4 +1,4 @@
-# Loads a sound object from a file
+# Loads a sound object from a file.
 # @param path [String]
 # @return [Sound]
 def load_sound(path)
@@ -7,7 +7,7 @@ def load_sound(path)
   Sound.new
 end
 
-# Unloads a sound object
+# Unloads a sound object.
 # @param sound [Sound]
 # @return [nil]
 def unload_sound(sound)
@@ -16,7 +16,7 @@ def unload_sound(sound)
   nil
 end
 
-# Plays a sound object
+# Plays a sound object.
 # @param sound [Sound]
 # @return [nil]
 def play_sound(sound)
@@ -25,7 +25,7 @@ def play_sound(sound)
   nil
 end
 
-# Stops a sound object
+# Stops a sound object.
 # @param sound [Sound]
 # @return [nil]
 def stop_sound(sound)
@@ -34,7 +34,7 @@ def stop_sound(sound)
   nil
 end
 
-# Pauses a sound object so it can be resumed
+# Pauses a sound object so it can be resumed.
 # @param sound [Sound]
 # @return [nil]
 def pause_sound(sound)
@@ -43,7 +43,7 @@ def pause_sound(sound)
   nil
 end
 
-# Resumes a paused sound object
+# Resumes a paused sound object.
 # @param sound [Sound]
 # @return [nil]
 def resume_sound(sound)
@@ -52,7 +52,7 @@ def resume_sound(sound)
   nil
 end
 
-# Checks whether or not a sound object is currently playing
+# Checks whether or not a sound object is currently playing.
 # @param sound [Sound]
 # @return [Boolean]
 def sound_playing?(sound)
@@ -61,9 +61,9 @@ def sound_playing?(sound)
   true
 end
 
-# Sets the volume of the sound object
+# Sets the volume of the sound object.
 # @param sound [Sound]
-# @param volume [Float] a value between 0.0 and 1.0
+# @param volume [Float] A value between 0.0 and 1.0.
 # @return [nil]
 def set_sound_volume(sound, volume)
   # mrb_set_sound_volume
@@ -71,7 +71,7 @@ def set_sound_volume(sound, volume)
   1
 end
 
-# Sets the pitch of the sound object
+# Sets the pitch of the sound object.
 # @param sound [Sound]
 # @param pitch [Float]
 # @return [nil]

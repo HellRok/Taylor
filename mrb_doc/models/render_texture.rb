@@ -1,5 +1,5 @@
 class RenderTexture
-  # Creates a new instance of RenderTexture
+  # Creates a new instance of {RenderTexture}.
   # @param width [Integer]
   # @param height [Integer]
   # @return [RenderTexture]
@@ -9,7 +9,7 @@ class RenderTexture
     RenderTexture.new
   end
 
-  # Unloads the render texture from memory
+  # Unloads the render texture from memory.
   # @return [nil]
   def unload
     # src/mruby_integration/models/render_texture.cpp

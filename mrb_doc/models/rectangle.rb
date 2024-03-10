@@ -1,5 +1,5 @@
 class Rectangle
-  # Creates a new instance of Rectangle
+  # Creates a new instance of {Rectangle}.
   # @param x [Integer]
   # @param y [Integer]
   # @param width [Integer]
