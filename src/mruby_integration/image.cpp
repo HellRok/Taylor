@@ -7,18 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_colour_contrast(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-  mrb_float contrast;
-  mrb_get_args(mrb, "df", &image, &Image_type, &contrast);
-
-  ImageColorContrast(image, contrast);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_image_colour_brightness(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
@@ -97,11 +85,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "image_colour_contrast!",
-                    mrb_image_colour_contrast,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "image_colour_brightness!",

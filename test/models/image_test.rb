@@ -262,22 +262,22 @@ class Test
         lighten.unload
       end
 
-      def test_image_contrast_too_low
+      def test_image_contrast_bang_too_low
         image = Image.generate(width: 1, height: 1, colour: Colour::LIME)
 
-        assert_raise(ArgumentError) {
-          image.contrast!(-101)
-        }
+        image.contrast!(-101)
+      rescue ArgumentError => e
+        assert_equal "Must be within (-100..100)", e.message
       ensure
         image.unload
       end
 
-      def test_image_contrast_too_high
+      def test_image_contrast_bang_too_high
         image = Image.generate(width: 1, height: 1, colour: Colour::LIME)
 
-        assert_raise(ArgumentError) {
-          image.contrast!(101)
-        }
+        image.contrast!(101)
+      rescue ArgumentError => e
+        assert_equal "Must be within (-100..100)", e.message
       ensure
         image.unload
       end

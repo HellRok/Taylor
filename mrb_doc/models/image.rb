@@ -273,6 +273,25 @@ class Image
     self
   end
 
+  # Change the contrast of the {Image}.
+  #
+  # @example Raise the contrast
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.contrast!(50)
+  #
+  # @example Lower the contrast
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.contrast!(-50)
+  #
+  # @param contrast [Float] A value between -100 and 100.
+  # @raise [ArgumentError] If the contrast is outside of the allowed range.
+  # @return [Image]
+  def contrast!(contrast)
+    # mrb_Image_contrast_bang
+    # src/mruby_integration/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of {Colour} objects.
   #
   # @return [Array<Colour>]

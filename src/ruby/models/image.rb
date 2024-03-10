@@ -14,17 +14,6 @@ class Image
     }
   end
 
-  # Change the contrast of the image
-  # @param contrast [Float] a value between -100 and 100
-  # @raise [ArgumentError] If the contrast is outside of the allowed range
-  # @return [nil]
-  def contrast!(contrast)
-    raise ArgumentError.new("Must be within (-100..100)") if contrast < -100 || contrast > 100
-
-    image_colour_contrast!(self, contrast)
-    self
-  end
-
   # Replace the old Colour with the new Colour
   # @param old_colour [Colour]
   # @param new_colour [Colour]
