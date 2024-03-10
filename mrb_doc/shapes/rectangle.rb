@@ -32,7 +32,7 @@ def draw_rectangle_pro(rectangle, origin, rotation, colour)
   # src/mruby_integration/shapes/rectangle.cpp
   nil
 end
-  
+
 # Draw a rectangle with a gradient vertically.
 # @param x [Integer]
 # @param y [Integer]
@@ -109,7 +109,7 @@ def draw_rectangle_rounded(rectangle, radius, segments, colour)
   # src/mruby_integration/shapes/rectangle.cpp
   nil
 end
-  
+
 # Draw the outline of a rectangle with rounded corners.
 # @param rectangle [Rectangle]
 # @param radius [Float] A value between 0.0 and 1.0.
