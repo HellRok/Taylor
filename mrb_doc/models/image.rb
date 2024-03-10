@@ -292,6 +292,25 @@ class Image
     self
   end
 
+  # Change the brightness of the {Image}.
+  #
+  # @example Raise the brightness
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.brightness!(128)
+  #
+  # @example Lower the brightness
+  #   sprite = Image.new("./assets/sprite.png")
+  #   sprite.brightness!(-128)
+  #
+  # @param brightness [Float] a value between -255 and 255
+  # @raise [ArgumentError] If the brightness is outside of the allowed range
+  # @return [nil]
+  def brightness!(brightness)
+    # mrb_Image_brightness_bang
+    # src/mruby_integration/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of {Colour} objects.
   #
   # @return [Array<Colour>]

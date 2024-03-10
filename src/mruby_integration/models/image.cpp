@@ -455,6 +455,26 @@ mrb_Image_contrast_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_brightness_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  mrb_float brightness;
+  mrb_get_args(mrb, "f", &brightness);
+
+  if (brightness < -255 || brightness > 255) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Must be within (-255..255)");
+  }
+
+  ImageColorBrightness(image, brightness);
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -572,6 +592,11 @@ append_models_Image(mrb_state* mrb)
     mrb, Image_class, "greyscale!", mrb_Image_greyscale_bang, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Image_class, "contrast!", mrb_Image_contrast_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    Image_class,
+                    "brightness!",
+                    mrb_Image_brightness_bang,
+                    MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
   mrb_define_method(
