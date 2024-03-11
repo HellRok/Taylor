@@ -14,21 +14,6 @@ class Image
     }
   end
 
-  # Draws the specified portion of the image into the specified region of the
-  # this image.
-  # @param image [Image]
-  # @param source [Rectangle] if left blank, will use the whole image
-  # @param destination [Rectangle] if left blank, will draw into the top left corner
-  # @param colour [Colour] if left blank, no tinting is applied
-  # @return [nil]
-  def draw!(image:, source: nil, destination: nil, colour: Colour::WHITE)
-    source ||= Rectangle.new(0, 0, image.width, image.height)
-    destination ||= Rectangle.new(0, 0, image.width, image.height)
-
-    image_draw!(self, image, source, destination, colour)
-    self
-  end
-
   # Used for alerting the user the image was not found at the specified path
   class NotFound < StandardError; end
 end

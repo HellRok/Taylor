@@ -82,6 +82,8 @@
 - Removed image_colour_brightness!
 - Image#replace! is now C++ backed and takes kwargs
 - Removed image_colour_replace!
+- Image#draw! is now C++ backed
+- Removed image_draw!
 
 ## v0.3.14.1
 

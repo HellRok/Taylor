@@ -515,6 +515,73 @@ mrb_Image_replace_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Image* image;
+
+  Data_Get_Struct(mrb, self, &Image_type, image);
+  mrb_assert(image != nullptr);
+
+  // def draw!(
+  //   image:,
+  //   source: Rectangle[0, 0, image.width, image.height],
+  //   destination: Rectangle[0, 0, image.width, image.height],
+  //   colour: Colour::WHITE
+  // )
+  mrb_int kw_num = 4;
+  mrb_int kw_required = 1;
+  mrb_sym kw_names[] = {
+    mrb_intern_lit(mrb, "image"),
+    mrb_intern_lit(mrb, "source"),
+    mrb_intern_lit(mrb, "destination"),
+    mrb_intern_lit(mrb, "colour"),
+  };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  Image* draw_image;
+  if (mrb_undef_p(kw_values[0])) {
+    auto default_image = Image{ 0, 0, 0, 0, 0 };
+    draw_image = &default_image;
+  } else {
+    draw_image = static_cast<struct Image*> DATA_PTR(kw_values[0]);
+  }
+
+  Rectangle* source;
+  if (mrb_undef_p(kw_values[1])) {
+    auto default_source = Rectangle{
+      0, 0, static_cast<float>(image->width), static_cast<float>(image->height)
+    };
+    source = &default_source;
+  } else {
+    source = static_cast<struct Rectangle*> DATA_PTR(kw_values[1]);
+  }
+
+  Rectangle* destination;
+  if (mrb_undef_p(kw_values[2])) {
+    auto default_destination = Rectangle{
+      0, 0, static_cast<float>(image->width), static_cast<float>(image->height)
+    };
+    destination = &default_destination;
+  } else {
+    destination = static_cast<struct Rectangle*> DATA_PTR(kw_values[2]);
+  }
+
+  Color* colour;
+  if (mrb_undef_p(kw_values[3])) {
+    auto default_colour = Color{ 255, 255, 255, 255 };
+    colour = &default_colour;
+  } else {
+    colour = static_cast<struct Color*> DATA_PTR(kw_values[3]);
+  }
+
+  ImageDraw(image, *draw_image, *source, *destination, *colour);
+
+  return self;
+}
+
+auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Image* image;
@@ -639,6 +706,8 @@ append_models_Image(mrb_state* mrb)
                     MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "replace!", mrb_Image_replace_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Image_class, "draw!", mrb_Image_draw_bang, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
   mrb_define_method(
