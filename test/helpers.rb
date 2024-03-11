@@ -1,11 +1,6 @@
 def reset_window
-  if windows?
-    close_window
-    init_window(10, 10, "Taylor Test Suite")
-  else
-    set_window_size 10, 10
-  end
-  flush_frame until get_screen_width == 10 && get_screen_height == 10
+  close_window
+  init_window(10, 10, "Taylor Test Suite")
 end
 
 def skip_unless_display_present
