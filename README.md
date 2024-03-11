@@ -1,8 +1,8 @@
 <h1 align="center">
   <br>
   <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Chadowo/Taylor/assets/83732118/eb2c45e8-93b4-4933-ac44-c0dbf4351b96" alt="Taylor Logo" width="636">
-  <img src="https://github.com/Chadowo/Taylor/assets/83732118/63e7544e-bc79-4fb2-976f-50ed45fd0c2a" alt="Taylor Logo" width="636">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/images/logo_dark.png" alt="Taylor" width="636" height="250">
+  <img src="assets/images/logo.png" alt="Taylor" width="636" height="250">
   </picture>
 </h1>
 <h4 align="center">Made for Games</h4>
