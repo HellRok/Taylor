@@ -1,8 +1,8 @@
 <h1 align="center">
   <br>
   <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/images/logo.png" alt="Taylor" width="636" height="250">
-  <img src="assets/images/logo_dark.png" alt="Taylor" width="636" height="250">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/images/logo.png" alt="Taylor logo" width="636">
+  <img src="assets/images/logo_dark.png" alt="Taylor logo" width="636">
   </picture>
 </h1>
 <h4 align="center">Made for Games</h4>
