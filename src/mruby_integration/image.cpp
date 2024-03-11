@@ -7,31 +7,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_image_draw(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image *destination, *source;
-  Rectangle *destination_rectangle, *source_rectangle;
-  Color* colour;
-  mrb_get_args(mrb,
-               "ddddd",
-               &destination,
-               &Image_type,
-               &source,
-               &Image_type,
-               &source_rectangle,
-               &Rectangle_type,
-               &destination_rectangle,
-               &Rectangle_type,
-               &colour,
-               &Colour_type);
-
-  ImageDraw(
-    destination, *source, *source_rectangle, *destination_rectangle, *colour);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 {
   auto* image = static_cast<Image*>(malloc(sizeof(Image)));
@@ -54,9 +29,6 @@ mrb_get_screen_data(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_images(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "image_draw!", mrb_image_draw, MRB_ARGS_REQ(5));
-
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "get_screen_data",

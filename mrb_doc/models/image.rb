@@ -326,6 +326,49 @@ class Image
     self
   end
 
+  # Draw one image onto another. You can specify the `source` to draw a subset
+  # of the {Image}.
+  #
+  # @example Creating a background from a tilemap
+  #   tilemap = Image.new("./assets/tilemap.png")
+  #   grass = Rectangle[0, 0, 16, 16]
+  #   tree  = Rectangle[16, 0, 16, 16]
+  #   rock  = Rectangle[0, 16, 16, 16]
+  #   house = Rectangle[16, 16, 16, 16]
+  #   tiles = [grass, tree, rock, house]
+  #
+  #   background_tiles = Vector2[32, 16]
+  #   background = Image.generate(width: background_tiles.width * 16, height: background_tiles.height * 16)
+  #
+  #   background_tiles.height.to_i.times do |y|
+  #     background_tiles.width.to_i.times do |x|
+  #       background.draw!(
+  #         image: tilemap,
+  #         source: tiles.sample,
+  #         destination: Rectangle[
+  #           x * 16, y * 16,
+  #           16, 16
+  #         ]
+  #       )
+  #     end
+  #   end
+  #
+  # @param image [Image]
+  # @param source [Rectangle] If left blank, will use the whole image.
+  # @param destination [Rectangle] If left blank, will draw into the top left corner.
+  # @param colour [Colour]
+  # @return [nil]
+  def draw!(
+    image:,
+    source: Rectangle[0, 0, image.width, image.height],
+    destination: Rectangle[0, 0, image.width, image.height],
+    colour: Colour::WHITE
+  )
+    # mrb_Image_draw_bang
+    # src/mruby_integration/models/image.cpp
+    self
+  end
+
   # Returns an array containing the image data as an array of {Colour} objects.
   #
   # @return [Array<Colour>]

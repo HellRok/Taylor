@@ -184,7 +184,7 @@ def fixture_models_image_replace_bang_with_options
   ]
 end
 
-def fixture_models_image_draw_no_args!
+def fixture_models_image_draw_bang_no_args
   t = Colour::WHITE
   o = Colour[218, 154, 37]
   p = Colour[195, 37, 218]

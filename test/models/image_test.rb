@@ -349,12 +349,12 @@ class Test
         to_copy.unload
       end
 
-      def test_image_draw_no_args!
+      def test_image_draw_bang_no_args
         image = Image.generate(width: 3, height: 3, colour: Colour::RAYWHITE)
         to_copy = Image.new("assets/test.png")
 
         image.draw!(image: to_copy)
-        assert_equal fixture_models_image_draw_no_args!, image.data
+        assert_equal fixture_models_image_draw_bang_no_args, image.data
       ensure
         image.unload
         to_copy.unload
