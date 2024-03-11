@@ -14,7 +14,7 @@ DISPLAY=:1 openbox &> /dev/null &
 export OPENBOX_PID=$!
 echo OPENBOX_PID: $XVFB_PID
 
-../dist/linux/debug/taylor ../cli-tool/cli.rb test.rb
+../dist/linux/debug/taylor ../cli-tool/cli.rb test.rb 2> /dev/null
 export NATIVE_EXIT_CODE=$?
 
 if [[ NATIVE_EXIT_CODE -gt 0 ]]; then
