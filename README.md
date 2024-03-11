@@ -1,6 +1,9 @@
 <h1 align="center">
   <br>
-  <a href="https://www.taylormadetech.dev/"><img src="https://github.com/Chadowo/Taylor/assets/83732118/4e03a4d6-d07a-4d71-8592-e695114e90ae" alt="Taylor" width="636" height="250"></a>
+  <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Chadowo/Taylor/assets/83732118/eb2c45e8-93b4-4933-ac44-c0dbf4351b96" alt="Taylor" width="636" height="250">
+  <img src="https://github.com/Chadowo/Taylor/assets/83732118/63e7544e-bc79-4fb2-976f-50ed45fd0c2a" alt="Taylor" width="636" height="250">
+  </picture>
 </h1>
 <h4 align="center">Made for Games</h4>
 
