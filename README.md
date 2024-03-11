@@ -12,7 +12,6 @@
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/HellRok/Taylor/total?label=total%20downloads)
 ![GitHub License](https://img.shields.io/github/license/HellRok/Taylor)
 
-
 [Website](https://www.taylormadetech.dev) | [Cheat Sheet](https://www.taylormadetech.dev/documentation/tutorials/cheat_sheet/) | [Documentation](https://www.taylormadetech.dev/documentation/taylor/latest/) | [Try it Out Online](https://www.taylormadetech.dev/playground/)
 
 ## What's This?
@@ -52,25 +51,30 @@ If you'd like to see some examples, check them out on the [online playground!](h
       $ sudo apt-get install build-essential ruby
       ```
     </details> 
-3. You should now just be able to run `rake` and wait a few seconds.
-4. The final binary will be located on `dist/linux/debug/taylor`.
-5. **Optional**: if you want the nice command line interface, you'll need to run this:  
+3. You should now be able to just run `rake` and wait a few seconds. Once the compilation finalises, the
+   binary will be located on `dist/linux/debug/taylor`. 
+4. **Optional**: if you want the nice command line interface, you'll need to run this script:  
     ```console
     $ ./dist/linux/debug/taylor ./cli-tool/cli.rb
     ```
 
-You can make make a script that runs Taylor with the CLI directly:
+Additionally, You may want to add the Taylor executable to your PATH so you can call it from anywhere. You can 
+use the following shell script as a base, it'll also run the CLI for you:
+
 ```shell
 #!/usr/bin/env bash
-TAYLOR_PATH=/home/sean/code/taylor/
+TAYLOR_PATH=/home/sean/code/taylor/ # Change to where you cloned the repo
 
 "$TAYLOR_PATH/dist/linux/debug/taylor" "$TAYLOR_PATH/cli-tool/cli.rb" "$@"
 ```
 
-Save it as `taylor` and mark it as executable (`chmod +x taylor`), then put it in your 
-PATH (You can drop it on `~/.local/bin/`) so you can execute it from anywhere.
+Save it as `taylor` and make it executable (`chmod +x taylor`), then add this on the end of your `.bashrc`:
 
-### Docker
+```bash
+export PATH="$HOME/code/taylor:$PATH" # Change the path to where you saved the shell script
+```
+
+## Docker
 
 To build all the Docker images you can run the following command:
 
