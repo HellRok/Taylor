@@ -2,7 +2,7 @@
   <br>
   <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/images/logo.png" alt="Taylor logo" width="400">
-  <img src="assets/images/logo_dark.png" alt="Taylor logo" width="500">
+  <img src="assets/images/logo_dark.png" alt="Taylor logo" width="400">
   </picture>
 </h1>
 <h4 align="center">Made for Games</h4>
