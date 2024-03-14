@@ -8,10 +8,8 @@
 #
 #   player_position += player_velocity * delta
 #
-#   puts player_position.x
-#   # => 7.0333...
-#   puts player_position.y
-#   # => 8.0333...
+#   puts player_position.x # => 7.0333...
+#   puts player_position.y # => 8.0333...
 class Vector2
   # @return [Float]
   attr_reader :x, :y
@@ -24,10 +22,8 @@ class Vector2
   # @example Basic usage
   #   position = Vector2[10, 12]
   #
-  #   puts position.x
-  #   # => 10
-  #   puts position.y
-  #   # => 12
+  #   puts position.x # => 10
+  #   puts position.y # => 12
   #
   # @param x [Float]
   # @param y [Float]
@@ -40,11 +36,9 @@ class Vector2
   # the same position.
   #
   # @example Basic usage
-  #   puts Vector2[3, 4] == Vector2[3, 4]
-  #   # => true
+  #   puts Vector2[3, 4] == Vector2[3, 4] # => true
   #
-  #   puts Vector2[3, 4] == Vector2[4, 3]
-  #   # => false
+  #   puts Vector2[3, 4] == Vector2[4, 3] # => false
   #
   # @param other [Vector2]
   # @return [Boolean]
@@ -61,10 +55,8 @@ class Vector2
   #
   #   vector_both = vector_1 + vector_2
   #
-  #   puts vector_both.x
-  #   # => 4
-  #   puts vector_both.y
-  #   # => 6
+  #   puts vector_both.x # => 4
+  #   puts vector_both.y # => 6
   #
   # @param other [Vector2]
   # @return [Vector2]
@@ -83,10 +75,8 @@ class Vector2
   #
   #   vector_both = vector_1 - vector_2
   #
-  #   puts vector_both.x
-  #   # => 1
-  #   puts vector_both.y
-  #   # => 3
+  #   puts vector_both.x # => 1
+  #   puts vector_both.y # => 3
   #
   # @param other [Vector2]
   # @return [Vector2]
@@ -101,14 +91,12 @@ class Vector2
 
   # Scale the {Vector2} by the scalar.
   #
-  # @example Basic usag@example Basic usage
+  # @example Basic usage
   #   vector = Vector2[2, 4]
   #   vector *= 3
   #
-  #   puts vector.x
-  #   # => 6
-  #   puts vector.y
-  #   # => 12
+  #   puts vector.x # => 6
+  #   puts vector.y # => 12
   #
   # @param other [Numeric]
   # @return [Vector2]
@@ -127,10 +115,8 @@ class Vector2
   #   vector = Vector2[2, 3]
   #   vector /= 2
   #
-  #   puts vector.x
-  #   # => 1
-  #   puts vector.y
-  #   # => 1.5
+  #   puts vector.x # => 1
+  #   puts vector.y # => 1.5
   #
   # @param other [Numeric]
   # @return [Vector2]
@@ -146,8 +132,7 @@ class Vector2
   # @example Basic usage
   #   vector = Vector2[3, 4]
   #
-  #   puts vector.length
-  #   # => 5
+  #   puts vector.length # => 5
   #
   # @return [Numeric]
   def length
@@ -160,6 +145,7 @@ class Vector2
   #   vector = Vector2[6, 8]
   #
   #   p vector.to_h
+  #
   #   # => {
   #   #      x: 6,
   #   #      y: 8
@@ -178,17 +164,15 @@ class Vector2
   # @example Basic usage
   #   vector = Vector2[6, 8]
   #
-  #   puts vector.inspect
-  #   # => #<Vector2:0x102bd20 x:6.0 y:8.0>
+  #   puts vector.inspect # => #<Vector2:0x102bd20 x:6.0 y:8.0>
   #
-  #   p vector
-  #   # => #<Vector2:0x102bd20 x:6.0 y:8.0>
+  #   p vector # => #<Vector2:0x102bd20 x:6.0 y:8.0>
   #
   # @return [String]
   def inspect
     "#<Vector2:0x#{object_id.to_s(16)} x:#{x} y:#{y}>"
   end
 
-  # A Vector2 setup at 0, 0
+  # A Vector2 setup at 0, 0.
   ZERO = Vector2.new(0, 0)
 end

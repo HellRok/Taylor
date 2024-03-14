@@ -1,4 +1,4 @@
-# The Font class is used for displaying TTF fonts
+# The Font class is used for displaying TTF fonts.
 #
 # @example Basic usage
 #   font = Font.new("./assets/comic_sans.ttf", size: 16)
@@ -19,6 +19,7 @@ class Font
   #   font = Font.new("./assets/my_font.ttf", size: 16)
   #
   #   p font.to_h
+  #
   #   # => {
   #   #      :size=>16,
   #   #      :glyph_count=>95,
@@ -50,18 +51,17 @@ class Font
   # {TEXTURE_FILTER_POINT}, but otherwise you'll want to set it to something
   # nicer.
   #
-  # ```
-  # font = Font.new("./assets/windings.ttf")
-  # font.filter = TEXTURE_FILTER_ANISOTROPIC_16X
-  # ```
+  # @example Setting the filtering of a texture to anisotropic
+  #   font = Font.new("./assets/windings.ttf")
+  #   font.filter = TEXTURE_FILTER_ANISOTROPIC_16X
   #
-  # @param val [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}
+  # @param val [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X} or {TEXTURE_FILTER_ANISOTROPIC_16X}
   # @return [Integer]
   def filter=(val)
     texture.generate_mipmaps
     texture.filter = val
   end
 
-  # Used for alerting the user the font was not found at the specified path
+  # Used for alerting the user if the font was not found at the specified path.
   class NotFound < StandardError; end
 end
