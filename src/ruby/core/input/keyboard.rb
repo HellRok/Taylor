@@ -111,21 +111,21 @@ KEY_LEFT = 263
 KEY_DOWN = 264
 # Key up.
 KEY_UP = 265
-# Key page_up.
+# Key page up.
 KEY_PAGE_UP = 266
-# Key page_down.
+# Key page down.
 KEY_PAGE_DOWN = 267
 # Key home.
 KEY_HOME = 268
 # Key end.
 KEY_END = 269
-# Key caps_lock.
+# Key caps lock.
 KEY_CAPS_LOCK = 280
-# Key scroll_lock.
+# Key scroll lock.
 KEY_SCROLL_LOCK = 281
-# Key num_lock.
+# Key num lock.
 KEY_NUM_LOCK = 282
-# Key print_screen.
+# Key print screen.
 KEY_PRINT_SCREEN = 283
 # Key pause.
 KEY_PAUSE = 284
@@ -153,29 +153,29 @@ KEY_F10 = 299
 KEY_F11 = 300
 # Key f12.
 KEY_F12 = 301
-# Key left_shift.
+# Key left shift.
 KEY_LEFT_SHIFT = 340
-# Key left_control.
+# Key left control.
 KEY_LEFT_CONTROL = 341
-# Key left_alt.
+# Key left alt.
 KEY_LEFT_ALT = 342
-# Key left_super.
+# Key left super.
 KEY_LEFT_SUPER = 343
-# Key right_shift.
+# Key right shift.
 KEY_RIGHT_SHIFT = 344
-# Key right_control.
+# Key right control.
 KEY_RIGHT_CONTROL = 345
-# Key right_alt.
+# Key right alt.
 KEY_RIGHT_ALT = 346
-# Key right_super.
+# Key right super.
 KEY_RIGHT_SUPER = 347
-# Key kb_menu.
+# Key kb menu.
 KEY_KB_MENU = 348
-# Key left_bracket.
+# Key left bracket.
 KEY_LEFT_BRACKET = 91
 # Key backslash.
 KEY_BACKSLASH = 92
-# Key right_bracket.
+# Key right bracket.
 KEY_RIGHT_BRACKET = 93
 # Key grave.
 KEY_GRAVE = 96
