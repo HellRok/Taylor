@@ -219,7 +219,7 @@ KEY_KP_EQUAL = 336
 KEY_BACK = 4
 # Android menu.
 KEY_MENU = 82
-# Android volume_up.
+# Android volume up.
 KEY_VOLUME_UP = 24
-# Android volume_down.
+# Android volume down.
 KEY_VOLUME_DOWN = 25
