@@ -1,3 +1,5 @@
+# @!group Keyboard input
+
 # Key apostrophe.
 KEY_APOSTROPHE = 39
 # Key comma.
@@ -223,3 +225,5 @@ KEY_MENU = 82
 KEY_VOLUME_UP = 24
 # Android volume down.
 KEY_VOLUME_DOWN = 25
+
+# @!endgroup

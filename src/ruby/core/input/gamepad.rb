@@ -1,3 +1,5 @@
+# @!group Gamepad input
+
 # Unknown gamepad button.
 GAMEPAD_BUTTON_UNKNOWN = 0
 
@@ -58,3 +60,5 @@ GAMEPAD_AXIS_RIGHT_Y = 3
 GAMEPAD_AXIS_LEFT_TRIGGER = 4
 # Pressure level for right trigger [1..-1] (pressure-level).
 GAMEPAD_AXIS_RIGHT_TRIGGER = 5
+
+# @!endgroup

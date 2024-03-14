@@ -1,3 +1,5 @@
+# @!group Mouse input
+
 # Left mouse button.
 MOUSE_LEFT_BUTTON = 0
 # Right mouse button.
@@ -27,3 +29,5 @@ MOUSE_CURSOR_RESIZE_NESW = 8
 MOUSE_CURSOR_RESIZE_ALL = 9
 # Mouse cursor not allowed.
 MOUSE_CURSOR_NOT_ALLOWED = 10
+
+# @!endgroup
