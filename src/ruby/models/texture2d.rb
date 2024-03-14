@@ -71,7 +71,7 @@ class Texture2D
   class NotFound < StandardError; end
 end
 
-# @!group Filters
+# @!group Texture filters
 
 # No filter, just pixel approximation.
 TEXTURE_FILTER_POINT = 0
