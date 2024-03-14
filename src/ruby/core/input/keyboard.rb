@@ -131,6 +131,7 @@ KEY_NUM_LOCK = 282
 KEY_PRINT_SCREEN = 283
 # Key pause.
 KEY_PAUSE = 284
+
 # Key F1.
 KEY_F1 = 290
 # Key F2.
@@ -155,6 +156,7 @@ KEY_F10 = 299
 KEY_F11 = 300
 # Key F12.
 KEY_F12 = 301
+
 # Key left shift.
 KEY_LEFT_SHIFT = 340
 # Key left control.
