@@ -8,6 +8,7 @@ class Rectangle
   # @example Basic usage
   #   source = Rectangle[8, 16, 24, 32]
   #   p source.to_h
+  #
   #   # => {
   #   #      x: 8,
   #   #      y: 16,
@@ -24,7 +25,7 @@ class Rectangle
     new(x, y, width, height)
   end
 
-  # Return the object represented by a Hash
+  # Return the object represented by a Hash.
   # @return [Hash]
   def to_h
     {
@@ -35,14 +36,14 @@ class Rectangle
     }
   end
 
-  # Draws a rectangle in several configurations
+  # Draws a rectangle in several configurations.
   # @param origin [Vector2]
-  # @param rotation [Float] only usable when outline and rounded are false
+  # @param rotation [Float] Only usable when `outline` and `rounded` are false.
   # @param outline [Boolean]
-  # @param thickness [Integer] only used when outline is true
+  # @param thickness [Integer] Only used when `outline` is true.
   # @param rounded [Boolean]
-  # @param radius [Float] A value between 0.0 and 1.0 and only used when rounded is true
-  # @raise [ArgumentError] If the radius is out of bounds
+  # @param radius [Float] A value between 0.0 and 1.0 and only used when rounded is true.
+  # @raise [ArgumentError] If the radius is out of bounds.
   # @return [Rectangle]
   def draw(
     origin: Vector2::ZERO,
