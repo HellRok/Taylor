@@ -1,4 +1,4 @@
-# The Shader class is for doing operations on the GPU
+# The Shader class is for doing operations on the GPU.
 class Shader
   # @return [Integer]
   attr_reader :id
@@ -26,14 +26,14 @@ class Shader
     end
   end
 
-  # Unloads the Shader from memory
+  # Unloads the Shader from memory.
   # @return [nil]
   def unload
     unload_shader(self)
   end
 
-  # Instead of rendering straight to the screen, render through this Shader first
-  # @yield The block that calls your rendering logic
+  # Instead of rendering straight to the screen, render through this Shader first.
+  # @yield The block that calls your rendering logic.
   # @return [nil]
   def draw(&block)
     begin_shader_mode(self)
@@ -58,13 +58,13 @@ class Shader
   # Sets the variable to the specified value, will auto detect the
   # `variable_type` if no `variable_type` is passed in. You must pass in either
   # `variable` or `variable_location`.
-  # @param value [Integer,Float] Either a single value or an array of 4 or less
+  # @param value [Integer, Float] Either a single value or an array of 4 or less.
   # @param variable [String]
   # @param variable_location [Integer]
   # @param variable_type [Integer] Must be one of {Shader::Uniform::FLOAT},
   #   {Shader::Uniform::VEC2}, {Shader::Uniform::VEC3}, {Shader::Uniform::VEC4},
-  #   {Shader::Uniform::INT}, {Shader::Uniform::IVEC2}, {Shader::Uniform::IVEC3},
-  #   {Shader::Uniform::IVEC4}. If left blank Taylor will make a best guess what
+  #   {Shader::Uniform::INT}, {Shader::Uniform::IVEC2}, {Shader::Uniform::IVEC3} or
+  #   {Shader::Uniform::IVEC4}. If left blank Taylor will make a best guess at what
   #   you wanted to hand in.
   # @return [nil]
   def set_value(value:, variable: nil, variable_location: nil, variable_type: nil)
@@ -94,15 +94,15 @@ class Shader
   # Sets the variables to the specified values, will auto detect the
   # `variable_type` if no `variable_type` is passed in. You must pass in either
   # `variable` or `variable_location`.
-  # @param values [Array[Integer,Float]] An Array of either single values or arrays of 4 or less
+  # @param values [Array<Integer, Float>] An Array of either single values or arrays of 4 or less.
   # @param variable [String]
   # @param variable_location [Integer]
   # @param variable_type [Integer] Must be one of {Shader::Uniform::FLOAT},
   #   {Shader::Uniform::VEC2}, {Shader::Uniform::VEC3}, {Shader::Uniform::VEC4},
-  #   {Shader::Uniform::INT}, {Shader::Uniform::IVEC2}, {Shader::Uniform::IVEC3},
-  #   {Shader::Uniform::IVEC4}. If left blank Taylor will make a best guess what
+  #   {Shader::Uniform::INT}, {Shader::Uniform::IVEC2}, {Shader::Uniform::IVEC3} or
+  #   {Shader::Uniform::IVEC4}. If left blank Taylor will make a best guess at what
   #   you wanted to hand in.
-  # @return [Nil]
+  # @return [nil]
   def set_values(values:, variable: nil, variable_location: nil, variable_type: nil)
     unless values.is_a?(Array)
       raise ArgumentError, "You must pass an array of values"
@@ -129,12 +129,12 @@ class Shader
 
   private
 
-  # Takes a set of values that would be passed to {Shader#set_values} or
-  # {Shader#set_value} and tries it's best to determine which enum value is
+  # Takes a set of values that would be passed to {set_values} or
+  # {set_value} and tries it's best to determine which enum value is
   # most fitting.
-  # @param values [Array[Integer,Float]] An Array of either single values or arrays of 4 or less
-  # @return [Shader::Uniform::FLOAT, Shader::Uniform::VEC2, Shader::Uniform::VEC3, Shader::Uniform::VEC4, Shader::Uniform::INT, Shader::Uniform::IVEC2, Shader::Uniform::IVEC3, Shader::Uniform::IVEC4]
-  # @raise [ArgumentError] When it can't detect what value it should be, we consider that bad enough to raise
+  # @param values [Array<Integer, Float>] An Array of either single values or arrays of 4 or less.
+  # @return [Shader::Uniform::FLOAT, Shader::Uniform::VEC2, Shader::Uniform::VEC3, Shader::Uniform::VEC4, Shader::Uniform::INT, Shader::Uniform::IVEC2, Shader::Uniform::IVEC3, Shader::Uniform::IVEC4].
+  # @raise [ArgumentError] When it can't detect what value it should be, we consider that bad enough to raise.
   def detect_uniform_type(values:)
     case values.first
     when Numeric
@@ -186,24 +186,29 @@ class Shader
     end
   end
 
-  # An encapsulating module for enums
+  # An encapsulating module for enums.
   module Uniform
-    # A single float value
+    # @!group Uniform types
+
+    # A single float value.
     FLOAT = 0
-    # An array of 2 floats
+    # An array of 2 floats.
     VEC2 = 1
-    # An array of 3 floats
+    # An array of 3 floats.
     VEC3 = 2
-    # An array of 4 floats
+    # An array of 4 floats.
     VEC4 = 3
-    # An single integer value
+
+    # A single integer value.
     INT = 4
-    # An array of 2 integers
+    # An array of 2 integers.
     IVEC2 = 5
-    # An array of 3 integers
+    # An array of 3 integers.
     IVEC3 = 6
-    # An array of 4 integers
+    # An array of 4 integers.
     IVEC4 = 7
     # SAMPLER2D = 8
+    
+    # @!endgroup
   end
 end

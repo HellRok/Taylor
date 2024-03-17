@@ -8,7 +8,7 @@ class Camera2D
   # @return [Float]
   attr_reader :rotation, :zoom
 
-  # Update the x and y values of the offset to match the passed in [Vector2]
+  # Update the x and y values of the offset to match the passed in [Vector2].
   # @param other [Vector2]
   # @return [Vector2]
   def offset=(other)
@@ -17,7 +17,7 @@ class Camera2D
     offset
   end
 
-  # Update the x and y values of the target to match the passed in [Vector2]
+  # Update the x and y values of the target to match the passed in [Vector2].
   # @param other [Vector2]
   # @return [Vector2]
   def target=(other)
@@ -26,7 +26,7 @@ class Camera2D
     target
   end
 
-  # Return the object represented by a Hash
+  # Return the object represented by a Hash.
   # @return [Hash]
   def to_h
     {

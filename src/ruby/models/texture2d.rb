@@ -3,7 +3,7 @@ class Texture2D
   # @return [Integer]
   attr_reader :id, :width, :height, :mipmaps, :format
 
-  # Return the object represented by a Hash
+  # Return the object represented by a Hash.
   # @return [Hash]
   def to_h
     {
@@ -15,16 +15,16 @@ class Texture2D
     }
   end
 
-  # Loads a texture from the specified path
+  # Loads a texture from the specified path.
   # @param path [String]
-  # @raise [Texture2D::NotFound] If the file specified by path doesn't exist
+  # @raise [Texture2D::NotFound] If the file specified by path doesn't exist.
   # @return [Texture2D]
   def self.load(path)
     raise Texture2D::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
     load_texture(path)
   end
 
-  # Unloads the texture from memory
+  # Unloads the texture from memory.
   # @return [nil]
   def unload
     unload_texture(self)
@@ -32,12 +32,10 @@ class Texture2D
 
   # Draws the texture segment defined by source at the given destination,
   # rotated around the origin in the specified colour.
-  # If source is not defined it defaults to the full image.
-  # If destination is not defined it defaults to source.
-  # @param source [Rectangle]
-  # @param destination [Rectangle]
+  # @param source [Rectangle] If not defined it defaults to the full image.
+  # @param destination [Rectangle] If not defined it defaults to source.
   # @param origin [Vector2]
-  # @param rotation [Integer] in degrees
+  # @param rotation [Integer] In degrees.
   # @param colour [Colour]
   # @return [nil]
   def draw(source: nil, destination: nil, origin: Vector2::ZERO, rotation: 0, colour: Colour::WHITE)
@@ -56,32 +54,36 @@ class Texture2D
     )
   end
 
-  # Sets the filtering for the {Texture2D}
-  # @param val [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X}, or {TEXTURE_FILTER_ANISOTROPIC_16X}
+  # Sets the filtering for the {Texture2D}.
+  # @param val [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X} or {TEXTURE_FILTER_ANISOTROPIC_16X}.
   # @return [Integer]
   def filter=(val)
     set_texture_filter(self, val)
   end
 
-  # Generates mipmaps for the {Texture2D}
+  # Generates mipmaps for the {Texture2D}.
   # @return [Integer]
   def generate_mipmaps
     generate_texture_mipmaps(self)
   end
 
-  # Used for alerting the user the texture was not found at the specified path
+  # Used for alerting the user if the texture was not found at the specified path.
   class NotFound < StandardError; end
 end
 
-# No filter, just pixel approximation
+# @!group Texture filters
+
+# No filter, just pixel approximation.
 TEXTURE_FILTER_POINT = 0
-# Linear filtering
+# Linear filtering.
 TEXTURE_FILTER_BILINEAR = 1
-# Trilinear filtering (linear with mipmaps)
+# Trilinear filtering (linear with mipmaps).
 TEXTURE_FILTER_TRILINEAR = 2
-# Anisotropic filtering 4x
+# Anisotropic filtering 4x.
 TEXTURE_FILTER_ANISOTROPIC_4X = 3
-# Anisotropic filtering 8x
+# Anisotropic filtering 8x.
 TEXTURE_FILTER_ANISOTROPIC_8X = 4
-# Anisotropic filtering 16x
+# Anisotropic filtering 16x.
 TEXTURE_FILTER_ANISOTROPIC_16X = 5
+
+# @!endgroup

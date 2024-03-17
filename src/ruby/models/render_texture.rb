@@ -1,4 +1,4 @@
-# The RenderTexture class is used to draw things to a texture
+# The RenderTexture class is used to draw things to a texture.
 class RenderTexture
   # @return [Texture2D]
   attr_reader :texture
@@ -6,7 +6,7 @@ class RenderTexture
   # @return [Integer]
   attr_reader :width, :height
 
-  # Return the object represented by a Hash
+  # Return the object represented by a Hash.
   # @return [Hash]
   def to_h
     {
@@ -16,8 +16,8 @@ class RenderTexture
     }
   end
 
-  # Instead of rending to the screen, render to this RenderTexture
-  # @yield The block that calls your rendering logic
+  # Instead of rending to the screen, render to this RenderTexture.
+  # @yield The block that calls your rendering logic.
   # @return [nil]
   def drawing(&block)
     begin_texture_mode(self)

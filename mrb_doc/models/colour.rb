@@ -1,6 +1,6 @@
 class Colour
   # Creates a new instance of Colour.
-  # @param red [Integer] A value between 0 and 255
+  # @param red [Integer] A value between 0 and 255.
   # @param blue [Integer] A value between 0 and 255.
   # @param green [Integer] A value between 0 and 255.
   # @param alpha [Integer] A value between 0 and 255.

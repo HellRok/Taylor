@@ -9,7 +9,7 @@ class Music
   # @return [Boolean]
   attr_reader :looping
 
-  # Return the object represented by a Hash
+  # Return the object represented by a Hash.
   # @return [Hash]
   def to_h
     {
@@ -19,9 +19,9 @@ class Music
     }
   end
 
-  # Loads a music file from the specified path
+  # Loads a music file from the specified path.
   # @param path [String]
-  # @raise [Music::NotFound] If the file specified by path doesn't exist
+  # @raise [Music::NotFound] If the file specified by path doesn't exist.
   # @return [Music]
   def self.load(path)
     raise Music::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
@@ -31,20 +31,20 @@ class Music
     }
   end
 
-  # Unloads the music from memory
+  # Unloads the music from memory.
   # @return [nil]
   def unload
     unload_music_stream(self)
   end
 
-  # Starts playing the music
+  # Starts playing the music.
   # @return [nil]
   def play
     play_music_stream(self)
   end
 
   # This method should be called every update to keep the music playing
-  # smoothly
+  # smoothly.
   # @return [nil]
   def update
     update_music_stream(self)
@@ -56,19 +56,19 @@ class Music
     music_playing?(self)
   end
 
-  # Stops the music, you will need to call Music#play to start it again
+  # Stops the music, you will need to call {play} to start it again.
   # @return [nil]
   def stop
     stop_music_stream(self)
   end
 
-  # Pauses the music, you will need to call Music#resume to start it again
+  # Pauses the music, you will need to call {resume} to start it again.
   # @return [nil]
   def pause
     pause_music_stream(self)
   end
 
-  # Resumes the music playing
+  # Resumes the music playing.
   # @return [nil]
   def resume
     resume_music_stream(self)
@@ -86,9 +86,9 @@ class Music
     get_music_time_played(self)
   end
 
-  # Set the volume
-  # @param value [Float] a value between 0 and 1
-  # @raise [ArgumentError] If the value is out of bounds
+  # Set the volume.
+  # @param value [Float] A value between 0 and 1.
+  # @raise [ArgumentError] If the value is out of bounds.
   # @return [nil]
   def volume=(value)
     unless (0..1).cover?(value)
@@ -99,7 +99,7 @@ class Music
     set_music_volume(self, value)
   end
 
-  # Set the pitch
+  # Set the pitch.
   # @param value [Float]
   # @return [nil]
   def pitch=(value)
@@ -107,24 +107,28 @@ class Music
     set_music_pitch(self, value)
   end
 
-  # Used for alerting the user the music file was not found at the specified path
+  # Used for alerting the user if the music file was not found at the specified path.
   class NotFound < StandardError; end
 
   # Just a vanity class to make the types of music files read a little clearer.
   class Type
-    # Music format none
+    # @!group Music formats
+     
+    # Music format none.
     NONE = 0
-    # Music format wav
+    # Music format WAV.
     WAV = 1
-    # Music format ogg
+    # Music format OGG.
     OGG = 2
-    # Music format flac
+    # Music format FLAC.
     FLAC = 3
-    # Music format mp3
+    # Music format MP3.
     MP3 = 4
-    # Music format xm
+    # Music format XM.
     XM = 5
-    # Music format mo
+    # Music format MO.
     MO = 6
+
+    # @!endgroup
   end
 end
