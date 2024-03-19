@@ -5,6 +5,7 @@ class Test
         assert_false Audio.ready?
 
         Audio.open
+        flush_frame until Audio.ready?
         assert_true Audio.ready?
 
         Audio.close
@@ -15,6 +16,7 @@ class Test
 
       def test_volume
         Audio.open
+        flush_frame until Audio.ready?
 
         skip "Waiting on Raylib 5.0"
 
@@ -31,6 +33,7 @@ class Test
 
       def test_volume_equals_errors
         Audio.open
+        flush_frame until Audio.ready?
 
         begin
           Audio.volume = -1
