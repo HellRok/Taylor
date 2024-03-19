@@ -113,7 +113,7 @@ class Music
   # Just a vanity class to make the types of music files read a little clearer.
   class Type
     # @!group Music formats
-     
+
     # Music format none.
     NONE = 0
     # Music format WAV.

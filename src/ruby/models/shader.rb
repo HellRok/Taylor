@@ -208,7 +208,7 @@ class Shader
     # An array of 4 integers.
     IVEC4 = 7
     # SAMPLER2D = 8
-    
+
     # @!endgroup
   end
 end
