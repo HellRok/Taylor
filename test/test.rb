@@ -14,6 +14,7 @@ require "fixtures/web"
 
 require "core/drawing_test"
 require "core_test"
+require "models/audio_test"
 require "models/camera2d_test"
 require "models/colour_test"
 require "models/font_test"

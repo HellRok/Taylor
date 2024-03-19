@@ -84,6 +84,8 @@
 - Removed image_colour_replace!
 - Image#draw! is now C++ backed
 - Removed image_draw!
+- Added Audio.open, Audio.close, Audio.ready?, and Audio.volume=
+- Removed init_audio_device, close_audio_device, audio_device_ready?, and set_master_volume
 
 ## v0.3.14.1
 
