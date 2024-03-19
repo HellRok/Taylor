@@ -5,4 +5,4 @@
 extern RClass* Audio_class;
 
 void
-append_audio(mrb_state*);
+append_models_Audio(mrb_state*);
