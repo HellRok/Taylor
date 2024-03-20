@@ -2,6 +2,8 @@ class Test
   class Models
     class Audio_Test < MTest::Unit::TestCaseWithAnalytics
       def test_ready?
+        skip "Can't open and close audio more than once in WINE." if windows?
+
         assert_false Audio.ready?
 
         Audio.open
@@ -32,6 +34,7 @@ class Test
       end
 
       def test_volume_equals_errors
+        skip "Can't open and close audio more than once in WINE." if windows?
         Audio.open
         flush_frame until Audio.ready?
 
