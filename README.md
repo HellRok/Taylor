@@ -19,7 +19,7 @@
 Taylor is a game engine I've built using [mruby](https://mruby.org/) and
 [raylib](https://www.raylib.com/). I'm trying to build a very simple way for
 people to get into game development. This is trying to replicate the simplicity
-of [QBasic](https://es.wikipedia.org/wiki/QBASIC) but with a more of a modern approach.
+of [QBasic](https://wikipedia.org/wiki/QBasic) but with a more of a modern approach.
 
 ## Getting Started
 
