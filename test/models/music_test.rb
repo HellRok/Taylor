@@ -2,36 +2,100 @@ class Test
   class Models
     class Music_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
-        music = Music.new(1, true, 2)
+        music = Music.new("./assets/test.ogg")
 
-        assert_kind_of Music, music
-        assert_equal 1, music.context_type
+        assert_equal Music::Type::OGG, music.context_type
+        assert_equal 1, music.volume
+        assert_equal 1, music.pitch
+        assert_equal 88200, music.frame_count
+        assert_equal 2, music.length
+        assert_equal false, music.playing?
         assert_equal true, music.looping
-        assert_equal 2, music.frame_count
+      ensure
+        music.unload
       end
 
-      def test_assignment
-        music = Music.new(0, false, 0)
-        music.context_type = 4
-        music.looping = true
-        music.frame_count = 2
+      def test_initialize_with_arguments
+        music = Music.new("./assets/test.ogg", looping: false, volume: 0.75, pitch: 0.9)
 
-        assert_equal 4, music.context_type
-        assert_equal true, music.looping
-        assert_equal 2, music.frame_count
+        assert_equal Music::Type::OGG, music.context_type
+        assert_equal 0.75, music.volume
+        assert_equal 0.9, music.pitch
+        assert_equal 88200, music.frame_count
+        assert_equal 2, music.length
+        assert_equal false, music.playing?
+        assert_equal false, music.looping
+      ensure
+        music.unload
+      end
+
+      def test_initialize_fail_not_found
+        assert_raise(Music::NotFound) {
+          Music.new("./assets/fail.ogg")
+        }
+      end
+
+      def test_initialize_fail_volume
+        begin
+          Music.new("./assets/test.ogg", volume: 1.1)
+          fail "Previous line should have raised"
+        rescue ArgumentError => e
+          assert_equal "Volume must be within (0.0..1.0)", e.message
+        end
+
+        begin
+          Music.new("./assets/test.ogg", volume: -0.1)
+          fail "Previous line should have raised"
+        rescue ArgumentError => e
+          assert_equal "Volume must be within (0.0..1.0)", e.message
+        end
+      end
+
+      def test_initialize_fail_pitch
+        begin
+          Music.new("./assets/test.ogg", pitch: 1.1)
+          fail "Previous line should have raised"
+        rescue ArgumentError => e
+          assert_equal "Pitch must be within (0.0..1.0)", e.message
+        end
+
+        begin
+          Music.new("./assets/test.ogg", pitch: -0.1)
+          fail "Previous line should have raised"
+        rescue ArgumentError => e
+          assert_equal "Pitch must be within (0.0..1.0)", e.message
+        end
+      end
+
+      def test_looping=
+        music = Music.new("./assets/test.ogg", looping: true)
+
+        assert_true music.looping
+
+        music.looping = false
+        assert_false music.looping
+
+        music.looping = true
+        assert_true music.looping
+      ensure
+        music.unload
       end
 
       def test_to_h
-        music = Music.new(1, false, 3)
+        music = Music.new("./assets/test.ogg")
 
         assert_equal(
           {
-            context_type: 1,
-            looping: false,
-            frame_count: 3
+            context_type: 2,
+            looping: true,
+            frame_count: 88200,
+            volume: 1.0,
+            pitch: 1.0
           },
           music.to_h
         )
+      ensure
+        music.unload
       end
     end
   end
