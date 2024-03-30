@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include <cstdlib>
 
+#include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
 
@@ -27,9 +28,42 @@ setup_Music(mrb_state* mrb,
 auto
 mrb_Music_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  mrb_int context_type, frame_count;
-  mrb_bool looping;
-  mrb_get_args(mrb, "ibi", &context_type, &looping, &frame_count);
+  char* path;
+
+  // Music.new("./assets/test.ogg", looping: true, volume: 1, pitch: 1)
+  mrb_int kw_num = 3;
+  mrb_int kw_required = 0;
+  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "looping"),
+                         mrb_intern_lit(mrb, "volume"),
+                         mrb_intern_lit(mrb, "pitch") };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, "z:", &path, &kwargs);
+
+  if (!FileExists(path)) {
+    raise_not_found_error(mrb, Music_class);
+  }
+
+  bool looping = true;
+  if (!mrb_undef_p(kw_values[0])) {
+    looping = mrb_equal(mrb, kw_values[0], mrb_true_value());
+  }
+
+  double volume = 1.0;
+  if (!mrb_undef_p(kw_values[1])) {
+    volume = mrb_as_float(mrb, kw_values[1]);
+  }
+  if (volume < 0.0 || volume > 1.0) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Volume must be within (0.0..1.0)");
+  }
+
+  double pitch = 1.0;
+  if (!mrb_undef_p(kw_values[2])) {
+    pitch = mrb_as_float(mrb, kw_values[2]);
+  }
+  if (pitch < 0.0 || pitch > 1.0) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Pitch must be within (0.0..1.0)");
+  }
 
   Music* music = static_cast<struct Music*> DATA_PTR(self);
   if (music) {
@@ -38,16 +72,44 @@ mrb_Music_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_data_init(self, nullptr, &Music_type);
   music = static_cast<Music*>(malloc(sizeof(Music)));
 
-  setup_Music(mrb, self, music, context_type, looping, frame_count);
+  *music = LoadMusicStream(path);
+
+  setup_Music(mrb, self, music, music->ctxType, looping, music->frameCount);
+  SetMusicVolume(*music, volume);
+  SetMusicPitch(*music, pitch);
+  music->looping = looping;
+
+  mrb_iv_set(
+    mrb, self, mrb_intern_cstr(mrb, "@volume"), mrb_float_value(mrb, volume));
+  mrb_iv_set(
+    mrb, self, mrb_intern_cstr(mrb, "@pitch"), mrb_float_value(mrb, pitch));
 
   mrb_data_init(self, music, &Music_type);
   return self;
 }
 
 auto
-mrb_Music_set_context_type(mrb_state* mrb, mrb_value self) -> mrb_value
+mrb_Music_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  attr_setter_int(mrb, self, Music_type, Music, ctxType, context_type);
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  UnloadMusicStream(*music);
+
+  return mrb_nil_value();
+}
+
+auto
+mrb_Music_get_looping(mrb_state* mrb, mrb_value self) -> mrb_bool
+{
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  return music->looping;
 }
 
 auto
@@ -56,31 +118,17 @@ mrb_Music_set_looping(mrb_state* mrb, mrb_value self) -> mrb_value
   attr_setter_bool(mrb, self, Music_type, Music, looping, looping);
 }
 
-auto
-mrb_Music_set_frame_count(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Music_type, Music, frameCount, frame_count);
-}
-
 void
 append_models_Music(mrb_state* mrb)
 {
   Music_class = mrb_define_class(mrb, "Music", mrb->object_class);
   MRB_SET_INSTANCE_TT(Music_class, MRB_TT_DATA);
   mrb_define_method(
-    mrb, Music_class, "initialize", mrb_Music_initialize, MRB_ARGS_REQ(3));
-  mrb_define_method(mrb,
-                    Music_class,
-                    "context_type=",
-                    mrb_Music_set_context_type,
-                    MRB_ARGS_REQ(1));
+    mrb, Music_class, "initialize", mrb_Music_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Music_class, "unload", mrb_Music_unload, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Music_class, "looping=", mrb_Music_set_looping, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    Music_class,
-                    "frame_count=",
-                    mrb_Music_set_frame_count,
-                    MRB_ARGS_REQ(1));
 
   load_ruby_models_music(mrb);
 }

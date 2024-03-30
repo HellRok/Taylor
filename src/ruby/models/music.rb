@@ -15,26 +15,10 @@ class Music
     {
       context_type: context_type,
       looping: looping,
-      frame_count: frame_count
+      frame_count: frame_count,
+      volume: volume,
+      pitch: pitch
     }
-  end
-
-  # Loads a music file from the specified path.
-  # @param path [String]
-  # @raise [Music::NotFound] If the file specified by path doesn't exist.
-  # @return [Music]
-  def self.load(path)
-    raise Music::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
-    load_music_stream(path).tap { |music|
-      music.volume = 1
-      music.pitch = 1
-    }
-  end
-
-  # Unloads the music from memory.
-  # @return [nil]
-  def unload
-    unload_music_stream(self)
   end
 
   # Starts playing the music.

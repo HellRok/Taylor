@@ -86,6 +86,8 @@
 - Removed image_draw!
 - Added Audio.open, Audio.close, Audio.ready?, and Audio.volume=
 - Removed init_audio_device, close_audio_device, audio_device_ready?, and set_master_volume
+- Music#initialize and Music#unload are now C++ backed
+- Remove load_music_stream, unload_music_stream, Music#context_type=, and Music#frame_count=
 
 ## v0.3.14.1
 

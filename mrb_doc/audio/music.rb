@@ -1,21 +1,3 @@
-# Loads a music object from a file.
-# @param path [String]
-# @return [Music]
-def load_music_stream(path)
-  # mrb_load_music_stream
-  # src/mruby_integration/audio/music.cpp
-  Music.new
-end
-
-# Unloads a music object.
-# @param music [Music]
-# @return [nil]
-def unload_music_stream(music)
-  # mrb_unload_music_stream
-  # src/mruby_integration/audio/music.cpp
-  nil
-end
-
 # Starts playback of a music object from the beginning.
 # @param music [Music]
 # @return [nil]
