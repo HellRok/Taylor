@@ -92,6 +92,8 @@
 - Removed play_music_stream, music_playing?, stop_music_stream
 - Music#played is now C++ backed
 - Removed get_music_time_played
+- Music#update is now C++ backed
+- Removed update_music_stream
 
 ## v0.3.14.1
 

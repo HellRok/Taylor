@@ -123,4 +123,29 @@ class Music
     # src/mruby_integration/models/music.cpp
     16.76
   end
+
+  # This method must be called every update to keep the {Music} playing
+  # smoothly.
+  #
+  # @example Basic usage
+  #   Audio.open
+  #   music = Music.new("./assets/background_music.ogg")
+  #   music.play
+  #
+  #   until window_should_close?
+  #     music.update
+  #
+  #     draw do
+  #       # Render all the things
+  #     end
+  #   end
+  #
+  #   Audio.close
+  #
+  # @return [nil]
+  def update
+    # mrb_Music_played
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
 end

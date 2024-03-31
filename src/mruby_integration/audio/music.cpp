@@ -6,17 +6,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_update_music_stream(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Music* music;
-  mrb_get_args(mrb, "d", &music, &Music_type);
-
-  UpdateMusicStream(*music);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_pause_music_stream(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Music* music;
@@ -74,11 +63,6 @@ mrb_get_music_time_length(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_audio_music(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "update_music_stream",
-                    mrb_update_music_stream,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "pause_music_stream",

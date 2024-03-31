@@ -1,12 +1,3 @@
-# Updates the buffer for the specified music, you should call this every frame.
-# @param music [Music]
-# @return [nil]
-def update_music_stream(music)
-  # mrb_update_music_stream
-  # src/mruby_integration/audio/music.cpp
-  nil
-end
-
 # Pauses a music object so it can be resumed.
 # @param music [Music]
 # @return [nil]
