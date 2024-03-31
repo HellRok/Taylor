@@ -96,6 +96,7 @@
 - Removed update_music_stream
 - Music#pause and Music#resume are now C++ backed
 - Removed pause_music_stream and resume_music_stream
+- Added cancel_main_loop
 
 ## v0.3.14.1
 

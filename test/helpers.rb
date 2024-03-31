@@ -2,6 +2,11 @@ def use_window?
   !ENV.fetch("DISPLAY", "").empty? || browser? || windows?
 end
 
+def noop
+  sleep 1
+  flush_frame
+end
+
 def reset_window
   close_window
   init_window(10, 10, "Taylor Test Suite")
@@ -32,7 +37,7 @@ end
 def raw_colour_data(data, width: 10)
   data.each_slice(width).each { |row|
     puts row.map { |colour|
-      "Colour[{colour.red}, #{colour.green}, #{colour.blue}, #{colour.alpha}], "
+      "Colour[#{colour.red}, #{colour.green}, #{colour.blue}, #{colour.alpha}], "
     }.join
   }
 end

@@ -24,6 +24,14 @@ mrb_set_main_loop(mrb_state* mrb, mrb_value self)
 
   return mrb_nil_value();
 }
+
+mrb_value
+mrb_cancel_main_loop(mrb_state* mrb, mrb_value self)
+{
+  emscripten_cancel_main_loop();
+
+  return mrb_nil_value();
+}
 #endif
 
 void
@@ -35,12 +43,21 @@ append_web(mrb_state* mrb)
                     "set_main_loop",
                     mrb_set_main_loop,
                     MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    mrb->kernel_module,
+                    "cancel_main_loop",
+                    mrb_cancel_main_loop,
+                    MRB_ARGS_REQ(1));
 #endif
 
 #ifndef __EMSCRIPTEN__
   mrb_load_string(mrb, R"(
     def set_main_loop(main_loop_method)
       raise PlatformSpecificMethodCalledOnWrongPlatformError, 'set_main_loop is only available for Web exports'
+    end
+
+    def cancel_main_loop
+      raise PlatformSpecificMethodCalledOnWrongPlatformError, 'cancel_main_loop is only available for Web exports'
     end
   )");
 #endif
