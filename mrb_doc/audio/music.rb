@@ -1,21 +1,3 @@
-# Pauses a music object so it can be resumed.
-# @param music [Music]
-# @return [nil]
-def pause_music_stream(music)
-  # mrb_pause_music_stream
-  # src/mruby_integration/audio/music.cpp
-  nil
-end
-
-# Resumes a paused music object.
-# @param music [Music]
-# @return [nil]
-def resume_music_stream(music)
-  # mrb_resume_music_stream
-  # src/mruby_integration/audio/music.cpp
-  nil
-end
-
 # Sets volume for a music object.
 # @param music [Music]
 # @param volume [Float] A value between 0.0 and 1.0.

@@ -148,4 +148,42 @@ class Music
     # src/mruby_integration/models/music.cpp
     nil
   end
+
+  # Pauses the {Music}, you will need to call {Music#resume} to start it again.
+  #
+  # @example Basic usage
+  #   Audio.open
+  #   music = Music.new("./assets/background_music.ogg")
+  #   music.play
+  #   music.pause
+  #   # ...
+  #   music.resume
+  #
+  #   Audio.close
+  #
+  # @return [nil]
+  def pause
+    # mrb_Music_pause
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # Resumes the {Music} playing.
+  #
+  # @example Basic usage
+  #   Audio.open
+  #   music = Music.new("./assets/background_music.ogg")
+  #   music.play
+  #   music.pause
+  #   # ...
+  #   music.resume
+  #
+  #   Audio.close
+  #
+  # @return [nil]
+  def resume
+    # mrb_Music_resume
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
 end

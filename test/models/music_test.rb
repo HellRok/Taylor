@@ -149,6 +149,42 @@ class Test
         end
         Audio.close
       end
+
+      def test_pause_resume
+        skip "Can't open and close audio more than once in WINE." if windows?
+        Audio.open
+        music = Music.new("./assets/test.ogg", looping: false)
+
+        assert_equal 0, music.played
+
+        music.play
+        5.times do
+          music.update
+          flush_frame
+        end
+
+        current_state = music.played
+        music.pause
+        5.times do
+          music.update
+          flush_frame
+        end
+
+        assert_equal current_state, music.played
+        music.resume
+
+        5.times do
+          music.update
+          flush_frame
+        end
+        assert_true music.played > current_state
+      ensure
+        if music
+          music.stop
+          music.unload
+        end
+        Audio.close
+      end
     end
   end
 end
