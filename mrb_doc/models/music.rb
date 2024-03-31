@@ -49,4 +49,17 @@ class Music
     # src/mruby_integration/models/music.cpp
     true
   end
+
+  # Gets the `looping` of the {Music} object.
+  #
+  # @example Basic usage
+  #   music = Music.new("./assets/background_music.ogg", looping: true)
+  #   puts music.looping #=> true
+  #
+  # @return [Boolean]
+  def looping
+    # mrb_Music_get_looping
+    # src/mruby_integration/models/music.cpp
+    true
+  end
 end
