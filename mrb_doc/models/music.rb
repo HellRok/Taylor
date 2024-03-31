@@ -106,4 +106,21 @@ class Music
     # src/mruby_integration/models/music.cpp
     nil
   end
+
+  # Returns how long the {Music} has been played for in seconds this loop.
+  #
+  # @example Basic usage
+  #   music = Music.new("./assets/background_music.ogg")
+  #   puts music.played #=> 0.0
+  #   music.play
+  #   # ...
+  #   # Some time has passed
+  #   puts music.played #=> 87.45
+  #
+  # @return [Float]
+  def played
+    # mrb_Music_played
+    # src/mruby_integration/models/music.cpp
+    16.76
+  end
 end

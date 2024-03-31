@@ -53,12 +53,3 @@ def get_music_time_length(music)
   # src/mruby_integration/audio/music.cpp
   nil
 end
-
-# Gets the time played of a music object in seconds.
-# @param music [Music]
-# @return [Float] The length of the music object in seconds
-def get_music_time_played(music)
-  # mrb_get_music_time_played
-  # src/mruby_integration/audio/music.cpp
-  nil
-end

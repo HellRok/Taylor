@@ -43,12 +43,6 @@ class Music
     get_music_time_length(self)
   end
 
-  # How long has the music been played for this loop?
-  # @return [Float]
-  def played
-    get_music_time_played(self)
-  end
-
   # Set the volume.
   # @param value [Float] A value between 0 and 1.
   # @raise [ArgumentError] If the value is out of bounds.

@@ -1,3 +1,7 @@
+def use_window?
+  !ENV.fetch("DISPLAY", "").empty? || browser? || windows?
+end
+
 def reset_window
   close_window
   init_window(10, 10, "Taylor Test Suite")
@@ -15,13 +19,14 @@ ensure
   end_drawing
 end
 
-def flush_frame
+def flush_frame(&block)
   begin_drawing
+  block&.call
   end_drawing
 end
 
-def flush_frames(count)
-  count.times { flush_frame }
+def flush_frames(count, &block)
+  count.times { flush_frame(&block) }
 end
 
 def raw_colour_data(data, width: 10)
