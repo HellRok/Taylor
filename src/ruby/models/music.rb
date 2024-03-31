@@ -6,9 +6,6 @@ class Music
   # @return [Float]
   attr_reader :volume, :pitch
 
-  # @return [Boolean]
-  attr_reader :looping
-
   # Return the object represented by a Hash.
   # @return [Hash]
   def to_h

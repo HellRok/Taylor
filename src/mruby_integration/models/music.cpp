@@ -102,14 +102,14 @@ mrb_Music_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
-mrb_Music_get_looping(mrb_state* mrb, mrb_value self) -> mrb_bool
+mrb_Music_get_looping(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Music* music;
 
   Data_Get_Struct(mrb, self, &Music_type, music);
   mrb_assert(music != nullptr);
 
-  return music->looping;
+  return mrb_bool_value(music->looping);
 }
 
 auto
@@ -127,6 +127,8 @@ append_models_Music(mrb_state* mrb)
     mrb, Music_class, "initialize", mrb_Music_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Music_class, "unload", mrb_Music_unload, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Music_class, "looping", mrb_Music_get_looping, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Music_class, "looping=", mrb_Music_set_looping, MRB_ARGS_REQ(1));
 
