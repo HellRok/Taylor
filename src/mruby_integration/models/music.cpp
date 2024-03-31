@@ -118,6 +118,48 @@ mrb_Music_set_looping(mrb_state* mrb, mrb_value self) -> mrb_value
   attr_setter_bool(mrb, self, Music_type, Music, looping, looping);
 }
 
+auto
+mrb_Music_play(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  if (!IsAudioDeviceReady()) {
+    const char* message = "You must use Audio.open before calling Music#play.";
+    raise_audio_not_open_error(mrb, message);
+  }
+
+  PlayMusicStream(*music);
+
+  return mrb_nil_value();
+}
+
+auto
+mrb_Music_playing(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  return mrb_bool_value(IsMusicStreamPlaying(*music));
+}
+
+auto
+mrb_Music_stop(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  StopMusicStream(*music);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Music(mrb_state* mrb)
 {
@@ -131,6 +173,10 @@ append_models_Music(mrb_state* mrb)
     mrb, Music_class, "looping", mrb_Music_get_looping, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Music_class, "looping=", mrb_Music_set_looping, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Music_class, "play", mrb_Music_play, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Music_class, "playing?", mrb_Music_playing, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Music_class, "stop", mrb_Music_stop, MRB_ARGS_NONE());
 
   load_ruby_models_music(mrb);
 }

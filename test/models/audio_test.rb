@@ -59,6 +59,7 @@ class Test
         skip "Waiting on Raylib 5.0"
 
         Audio.volume
+        fail "Previous line should have raised"
       rescue Audio::NotOpen => e
         assert_equal "You must use Audio.open before calling Audio.volume.", e.message
       end

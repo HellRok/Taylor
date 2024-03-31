@@ -88,6 +88,8 @@
 - Removed init_audio_device, close_audio_device, audio_device_ready?, and set_master_volume
 - Music#initialize and Music#unload are now C++ backed
 - Remove load_music_stream, unload_music_stream, Music#context_type=, and Music#frame_count=
+- Music#play, Music#playing?, Music#stop are now C++ backed
+- Removed play_music_stream, music_playing?, stop_music_stream
 
 ## v0.3.14.1
 
