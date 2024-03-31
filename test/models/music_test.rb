@@ -130,6 +130,7 @@ class Test
 
       def test_played
         skip "Can't open and close audio more than once in WINE." if windows?
+        skip "Browsers disable audio unless human interaction is detected." if browser?
         Audio.open
         music = Music.new("./assets/test.ogg", looping: false)
 
@@ -152,10 +153,11 @@ class Test
 
       def test_pause_resume
         skip "Can't open and close audio more than once in WINE." if windows?
+        skip "Browsers disable audio unless human interaction is detected." if browser?
         Audio.open
         music = Music.new("./assets/test.ogg", looping: false)
 
-        assert_equal 0, music.played
+        assert_equal 0, music.played, "Is 0 before playing"
 
         music.play
         5.times do
@@ -170,14 +172,14 @@ class Test
           flush_frame
         end
 
-        assert_equal current_state, music.played
+        assert_equal current_state, music.played, "Matches the amount of time passed before pausing"
         music.resume
 
         5.times do
           music.update
           flush_frame
         end
-        assert_true music.played > current_state
+        assert_true music.played > current_state, "Is further along since resuming"
       ensure
         if music
           music.stop

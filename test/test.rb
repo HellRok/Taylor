@@ -44,16 +44,27 @@ if use_window?
   set_target_fps(10)
 end
 
-result = MTest::Unit.new.run.positive?
-close_window if use_window?
+$started = false
+def main
+  result = MTest::Unit.new.run.positive?
+  close_window if use_window?
 
-persist_buildkite_test_analytics unless browser?
+  persist_buildkite_test_analytics unless browser?
 
-# The browser version doesn't exit cleanly unless specifically told to.
+  # The browser version doesn't exit cleanly unless specifically told to.
+  if browser?
+    puts "ANALYTICS: #{$buildkite_test_analytics.to_json}"
+    puts "EXIT CODE: #{result ? 1 : 0}"
+    cancel_main_loop
+    set_main_loop "noop"
+    exit!
+  elsif result
+    exit! 1
+  end
+end
+
 if browser?
-  puts "ANALYTICS: #{$buildkite_test_analytics.to_json}"
-  puts "EXIT CODE: #{result ? 1 : 0}"
-  exit!
-elsif result
-  exit! 1
+  set_main_loop "main"
+else
+  main
 end
