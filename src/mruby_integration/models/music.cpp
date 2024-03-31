@@ -171,6 +171,19 @@ mrb_Music_played(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_float_value(mrb, GetMusicTimePlayed(*music));
 }
 
+auto
+mrb_Music_update(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  UpdateMusicStream(*music);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Music(mrb_state* mrb)
 {
@@ -190,6 +203,8 @@ append_models_Music(mrb_state* mrb)
   mrb_define_method(mrb, Music_class, "stop", mrb_Music_stop, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Music_class, "played", mrb_Music_played, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Music_class, "update", mrb_Music_update, MRB_ARGS_NONE());
 
   load_ruby_models_music(mrb);
 }

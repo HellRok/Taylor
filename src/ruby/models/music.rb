@@ -18,13 +18,6 @@ class Music
     }
   end
 
-  # This method should be called every update to keep the music playing
-  # smoothly.
-  # @return [nil]
-  def update
-    update_music_stream(self)
-  end
-
   # Pauses the music, you will need to call {resume} to start it again.
   # @return [nil]
   def pause
