@@ -127,6 +127,28 @@ class Test
           assert_equal "You must use Audio.open before calling Music#play.", e.message
         end
       end
+
+      def test_played
+        skip "Can't open and close audio more than once in WINE." if windows?
+        Audio.open
+        music = Music.new("./assets/test.ogg", looping: false)
+
+        assert_equal 0, music.played
+
+        music.play
+        5.times do
+          music.update
+          flush_frame
+        end
+
+        assert_false music.played.zero?
+      ensure
+        if music
+          music.stop
+          music.unload
+        end
+        Audio.close
+      end
     end
   end
 end

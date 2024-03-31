@@ -71,15 +71,6 @@ mrb_get_music_time_length(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_float_value(mrb, GetMusicTimeLength(*music));
 }
 
-auto
-mrb_get_music_time_played(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Music* music;
-  mrb_get_args(mrb, "d", &music, &Music_type);
-
-  return mrb_float_value(mrb, GetMusicTimePlayed(*music));
-}
-
 void
 append_audio_music(mrb_state* mrb)
 {
@@ -112,10 +103,5 @@ append_audio_music(mrb_state* mrb)
                     mrb->kernel_module,
                     "get_music_time_length",
                     mrb_get_music_time_length,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_music_time_played",
-                    mrb_get_music_time_played,
                     MRB_ARGS_REQ(1));
 }

@@ -39,9 +39,13 @@ require "shapes/triangle_test"
 require "texture_test"
 require "web"
 
-init_window(10, 10, "blah") if !ENV.fetch("DISPLAY", "").empty? || browser? || windows?
+if use_window?
+  init_window(10, 10, "blah")
+  set_target_fps(10)
+end
+
 result = MTest::Unit.new.run.positive?
-close_window if !ENV.fetch("DISPLAY", "").empty? || browser? || windows?
+close_window if use_window?
 
 persist_buildkite_test_analytics unless browser?
 

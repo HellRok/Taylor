@@ -90,6 +90,8 @@
 - Remove load_music_stream, unload_music_stream, Music#context_type=, and Music#frame_count=
 - Music#play, Music#playing?, Music#stop are now C++ backed
 - Removed play_music_stream, music_playing?, stop_music_stream
+- Music#played is now C++ backed
+- Removed get_music_time_played
 
 ## v0.3.14.1
 
