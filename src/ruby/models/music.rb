@@ -18,18 +18,6 @@ class Music
     }
   end
 
-  # Pauses the music, you will need to call {resume} to start it again.
-  # @return [nil]
-  def pause
-    pause_music_stream(self)
-  end
-
-  # Resumes the music playing.
-  # @return [nil]
-  def resume
-    resume_music_stream(self)
-  end
-
   # How long does this music go for?
   # @return [Float]
   def length

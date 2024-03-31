@@ -184,6 +184,32 @@ mrb_Music_update(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Music_pause(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  PauseMusicStream(*music);
+
+  return mrb_nil_value();
+}
+
+auto
+mrb_Music_resume(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  ResumeMusicStream(*music);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Music(mrb_state* mrb)
 {
@@ -205,6 +231,10 @@ append_models_Music(mrb_state* mrb)
     mrb, Music_class, "played", mrb_Music_played, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Music_class, "update", mrb_Music_update, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Music_class, "pause", mrb_Music_pause, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Music_class, "resume", mrb_Music_resume, MRB_ARGS_NONE());
 
   load_ruby_models_music(mrb);
 }
