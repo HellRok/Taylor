@@ -1,35 +1,8 @@
-# Starts playback of a music object from the beginning.
-# @param music [Music]
-# @return [nil]
-def play_music_stream(music)
-  # mrb_play_music_stream
-  # src/mruby_integration/audio/music.cpp
-  nil
-end
-
-# Checks whether or not a music object is currently playing.
-# @param music [Music]
-# @return [Boolean]
-def music_playing?(music)
-  # mrb_music_playing
-  # src/mruby_integration/audio/music.cpp
-  true
-end
-
 # Updates the buffer for the specified music, you should call this every frame.
 # @param music [Music]
 # @return [nil]
 def update_music_stream(music)
   # mrb_update_music_stream
-  # src/mruby_integration/audio/music.cpp
-  nil
-end
-
-# Stops a music object from playing.
-# @param music [Music]
-# @return [nil]
-def stop_music_stream(music)
-  # mrb_stop_music_stream
   # src/mruby_integration/audio/music.cpp
   nil
 end

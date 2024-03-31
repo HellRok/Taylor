@@ -97,6 +97,36 @@ class Test
       ensure
         music.unload
       end
+
+      def test_play
+        skip "Can't open and close audio more than once in WINE." if windows?
+        Audio.open
+        music = Music.new("./assets/test.ogg", looping: false)
+
+        assert_false music.playing?
+        music.play
+        assert_true music.playing?
+        music.stop
+        assert_false music.playing?
+      ensure
+        if music
+          music.stop
+          music.unload
+        end
+        Audio.close
+      end
+
+      def test_play_without_audio
+        music = Music.new("./assets/test.ogg", looping: false)
+
+        assert_false music.playing?
+        begin
+          music.play
+          fail "Previous line should have raised"
+        rescue Audio::NotOpen => e
+          assert_equal "You must use Audio.open before calling Music#play.", e.message
+        end
+      end
     end
   end
 end

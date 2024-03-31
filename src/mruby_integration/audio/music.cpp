@@ -6,43 +6,12 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_play_music_stream(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Music* music;
-  mrb_get_args(mrb, "d", &music, &Music_type);
-
-  PlayMusicStream(*music);
-
-  return mrb_nil_value();
-}
-
-auto
-mrb_music_playing(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Music* music;
-  mrb_get_args(mrb, "d", &music, &Music_type);
-
-  return mrb_bool_value(IsMusicStreamPlaying(*music));
-}
-
-auto
 mrb_update_music_stream(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Music* music;
   mrb_get_args(mrb, "d", &music, &Music_type);
 
   UpdateMusicStream(*music);
-
-  return mrb_nil_value();
-}
-
-auto
-mrb_stop_music_stream(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Music* music;
-  mrb_get_args(mrb, "d", &music, &Music_type);
-
-  StopMusicStream(*music);
 
   return mrb_nil_value();
 }
@@ -116,23 +85,8 @@ append_audio_music(mrb_state* mrb)
 {
   mrb_define_method(mrb,
                     mrb->kernel_module,
-                    "play_music_stream",
-                    mrb_play_music_stream,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "music_playing?",
-                    mrb_music_playing,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
                     "update_music_stream",
                     mrb_update_music_stream,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "stop_music_stream",
-                    mrb_stop_music_stream,
                     MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,

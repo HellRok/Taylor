@@ -18,29 +18,11 @@ class Music
     }
   end
 
-  # Starts playing the music.
-  # @return [nil]
-  def play
-    play_music_stream(self)
-  end
-
   # This method should be called every update to keep the music playing
   # smoothly.
   # @return [nil]
   def update
     update_music_stream(self)
-  end
-
-  # Is the music currently playing?
-  # @return [Boolean]
-  def playing?
-    music_playing?(self)
-  end
-
-  # Stops the music, you will need to call {play} to start it again.
-  # @return [nil]
-  def stop
-    stop_music_stream(self)
   end
 
   # Pauses the music, you will need to call {resume} to start it again.

@@ -12,7 +12,8 @@ class Music
   # @param volume [Float] A value between 0.0 and 1.0.
   # @param pitch [Float] A value between 0.0 and 1.0.
   # @return [Music]
-  # @raise [Music::NotFound,ArgumentError]
+  # @raise [Music::NotFound] Raised when the file to load is not found.
+  # @raise [ArgumentError] Raised when passing an invalid volume or pitch.
   def initialize(path, looping: true, volume: 1.0, pitch: 1.0)
     # mrb_Music_initialize
     # src/mruby_integration/models/music.cpp
@@ -61,5 +62,48 @@ class Music
     # mrb_Music_get_looping
     # src/mruby_integration/models/music.cpp
     true
+  end
+
+  # Starts playing the {Music} from the beginning.
+  #
+  # @example Basic usage
+  #   music = Music.new("./assets/background_music.ogg")
+  #   music.play
+  #
+  # @return [nil]
+  # @raise [Audio::NotOpen] Raised when trying to set the volume before opening the {Audio} system.
+  def play
+    # mrb_Music_play
+    # src/mruby_integration/models/music.cpp
+    nil
+  end
+
+  # Is the {Music} currently playing?
+  #
+  # @example Basic usage
+  #   music = Music.new("./assets/background_music.ogg")
+  #   puts music.playing #=> false
+  #   music.play
+  #   puts music.playing #=> true
+  #
+  # @return [Boolean]
+  def playing?
+    # mrb_Music_playing
+    # src/mruby_integration/models/music.cpp
+    true
+  end
+
+  # Stops the {Music}, you will need to call {Music#play} to start it again.
+  #
+  # @example Basic usage
+  #   music = Music.new("./assets/background_music.ogg")
+  #   music.play
+  #   music.stop
+  #
+  # @return [nil]
+  def stop
+    # mrb_Music_stop
+    # src/mruby_integration/models/music.cpp
+    nil
   end
 end

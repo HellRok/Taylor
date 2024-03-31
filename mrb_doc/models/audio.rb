@@ -56,6 +56,7 @@ class Audio
   # @param volume [Float] A number between 0 and 100.
   # @return [nil]
   # @raise [ArgumentError] Raised when passed an invalid volume.
+  # @raise [Audio::NotOpen] Raised when trying to set the volume before opening the {Audio} system.
   def self.volume=(volume)
     # mrb_Audio_set_volume
     # src/mruby_integration/models/audio.cpp
