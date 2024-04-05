@@ -17,12 +17,3 @@ def set_music_pitch(music, pitch)
   # src/mruby_integration/audio/music.cpp
   nil
 end
-
-# Gets the length of a music object in seconds.
-# @param music [Music]
-# @return [Float] The length of the music object in seconds.
-def get_music_time_length(music)
-  # mrb_get_music_time_length
-  # src/mruby_integration/audio/music.cpp
-  nil
-end
