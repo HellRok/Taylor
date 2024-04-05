@@ -187,6 +187,13 @@ class Test
         end
         Audio.close
       end
+
+      def test_length
+        music = Music.new("./assets/test.ogg", looping: false)
+        assert_equal 2.0, music.length
+      ensure
+        music.unload
+      end
     end
   end
 end

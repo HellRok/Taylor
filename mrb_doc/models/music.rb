@@ -186,4 +186,17 @@ class Music
     # src/mruby_integration/models/music.cpp
     nil
   end
+
+  # Returns how long the {Music} goes for in seconds.
+  #
+  # @example Basic usage
+  #   music = Music.new("./assets/background_music.ogg")
+  #   puts music.length #=> 36.35
+  #
+  # @return [Float]
+  def length
+    # mrb_Music_length
+    # src/mruby_integration/models/music.cpp
+    36.35
+  end
 end

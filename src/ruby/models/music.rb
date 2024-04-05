@@ -18,12 +18,6 @@ class Music
     }
   end
 
-  # How long does this music go for?
-  # @return [Float]
-  def length
-    get_music_time_length(self)
-  end
-
   # Set the volume.
   # @param value [Float] A value between 0 and 1.
   # @raise [ArgumentError] If the value is out of bounds.
