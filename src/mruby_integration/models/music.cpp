@@ -221,6 +221,28 @@ mrb_Music_length(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_float_value(mrb, GetMusicTimeLength(*music));
 }
 
+auto
+mrb_Music_set_volume(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  mrb_float volume;
+  mrb_get_args(mrb, "f", &volume);
+
+  if (volume < 0 || volume > 1) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Volume must be within (0.0..1.0)");
+  }
+
+  mrb_iv_set(
+    mrb, self, mrb_intern_cstr(mrb, "@volume"), mrb_float_value(mrb, volume));
+  SetMusicVolume(*music, volume);
+
+  return mrb_float_value(mrb, volume);
+}
+
 void
 append_models_Music(mrb_state* mrb)
 {
@@ -248,6 +270,8 @@ append_models_Music(mrb_state* mrb)
     mrb, Music_class, "resume", mrb_Music_resume, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Music_class, "length", mrb_Music_length, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Music_class, "volume=", mrb_Music_set_volume, MRB_ARGS_REQ(1));
 
   load_ruby_models_music(mrb);
 }
