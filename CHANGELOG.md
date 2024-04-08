@@ -99,6 +99,8 @@
 - Added cancel_main_loop
 - Music#length is now C++ backed
 - Removed get_music_time_length
+- Music#volume= is now C++ backed
+- Removed set_music_volume
 
 ## v0.3.14.1
 

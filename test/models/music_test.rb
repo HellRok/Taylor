@@ -194,6 +194,36 @@ class Test
       ensure
         music.unload
       end
+
+      def test_set_volume
+        music = Music.new("./assets/test.ogg", looping: false)
+        assert_equal 1.0, music.volume
+
+        assert_equal 0.5, (music.volume = 0.5)
+        assert_equal 0.5, music.volume
+      ensure
+        music.unload
+      end
+
+      def test_set_volume_fail
+        music = Music.new("./assets/test.ogg", looping: false)
+
+        begin
+          music.volume = 1.1
+          fail "Previous line should have raised"
+        rescue ArgumentError => e
+          assert_equal "Volume must be within (0.0..1.0)", e.message
+        end
+
+        begin
+          music.volume = -0.1
+          fail "Previous line should have raised"
+        rescue ArgumentError => e
+          assert_equal "Volume must be within (0.0..1.0)", e.message
+        end
+      ensure
+        music.unload
+      end
     end
   end
 end

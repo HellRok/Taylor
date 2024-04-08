@@ -199,4 +199,21 @@ class Music
     # src/mruby_integration/models/music.cpp
     36.35
   end
+
+  # Set the volume for this {Music}.
+  #
+  # @example Basic usage
+  #   music = Music.new("./assets/background_music.ogg")
+  #   puts music.volume #=> 1.0
+  #   music.volume = 0.9
+  #   puts music.volume #=> 0.9
+  #
+  # @param value [Float] A value between 0.0 and 1.0.
+  # @return [Float]
+  # @raise [ArgumentError] If the volume is out of bounds.
+  def volume=(value)
+    # mrb_Music_set_volume
+    # src/mruby_integration/models/music.cpp
+    0.79
+  end
 end
