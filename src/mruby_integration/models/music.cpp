@@ -240,6 +240,24 @@ mrb_Music_set_volume(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_float_value(mrb, volume);
 }
 
+auto
+mrb_Music_set_pitch(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Music* music;
+
+  Data_Get_Struct(mrb, self, &Music_type, music);
+  mrb_assert(music != nullptr);
+
+  mrb_float pitch;
+  mrb_get_args(mrb, "f", &pitch);
+
+  mrb_iv_set(
+    mrb, self, mrb_intern_cstr(mrb, "@pitch"), mrb_float_value(mrb, pitch));
+  SetMusicPitch(*music, pitch);
+
+  return mrb_float_value(mrb, pitch);
+}
+
 void
 append_models_Music(mrb_state* mrb)
 {
@@ -269,6 +287,8 @@ append_models_Music(mrb_state* mrb)
     mrb, Music_class, "length", mrb_Music_length, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Music_class, "volume=", mrb_Music_set_volume, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Music_class, "pitch=", mrb_Music_set_pitch, MRB_ARGS_REQ(1));
 
   load_ruby_models_music(mrb);
 }

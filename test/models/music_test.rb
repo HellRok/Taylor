@@ -208,6 +208,19 @@ class Test
       ensure
         music.unload
       end
+
+      def test_set_pitch
+        music = Music.new("./assets/test.ogg", looping: false)
+        assert_equal 1.0, music.pitch
+
+        assert_equal 0.5, (music.pitch = 0.5)
+        assert_equal 0.5, music.pitch
+
+        assert_equal 1.5, (music.pitch = 1.5)
+        assert_equal 1.5, music.pitch
+      ensure
+        music.unload
+      end
     end
   end
 end

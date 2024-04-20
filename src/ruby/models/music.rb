@@ -18,14 +18,6 @@ class Music
     }
   end
 
-  # Set the pitch.
-  # @param value [Float]
-  # @return [nil]
-  def pitch=(value)
-    @pitch = value
-    set_music_pitch(self, value)
-  end
-
   # Used for alerting the user if the music file was not found at the specified path.
   class NotFound < StandardError; end
 
