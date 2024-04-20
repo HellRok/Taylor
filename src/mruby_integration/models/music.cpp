@@ -61,9 +61,6 @@ mrb_Music_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   if (!mrb_undef_p(kw_values[2])) {
     pitch = mrb_as_float(mrb, kw_values[2]);
   }
-  if (pitch < 0.0 || pitch > 1.0) {
-    mrb_raise(mrb, E_ARGUMENT_ERROR, "Pitch must be within (0.0..1.0)");
-  }
 
   Music* music = static_cast<struct Music*> DATA_PTR(self);
   if (music) {

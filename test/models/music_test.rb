@@ -51,22 +51,6 @@ class Test
         end
       end
 
-      def test_initialize_fail_pitch
-        begin
-          Music.new("./assets/test.ogg", pitch: 1.1)
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Pitch must be within (0.0..1.0)", e.message
-        end
-
-        begin
-          Music.new("./assets/test.ogg", pitch: -0.1)
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Pitch must be within (0.0..1.0)", e.message
-        end
-      end
-
       def test_looping=
         music = Music.new("./assets/test.ogg", looping: true)
 
