@@ -10,10 +10,10 @@ class Music
   #
   # @param looping [Boolean]
   # @param volume [Float] A value between 0.0 and 1.0.
-  # @param pitch [Float] A value between 0.0 and 1.0.
+  # @param pitch [Float]
   # @return [Music]
   # @raise [Music::NotFound] Raised when the file to load is not found.
-  # @raise [ArgumentError] Raised when passing an invalid volume or pitch.
+  # @raise [ArgumentError] Raised when passing an invalid volume.
   def initialize(path, looping: true, volume: 1.0, pitch: 1.0)
     # mrb_Music_initialize
     # src/mruby_integration/models/music.cpp
