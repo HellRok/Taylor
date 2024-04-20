@@ -216,4 +216,22 @@ class Music
     # src/mruby_integration/models/music.cpp
     0.79
   end
+
+  # Set the pitch for this {Music}.
+  #
+  # @example Basic usage
+  #   music = Music.new("./assets/background_music.ogg")
+  #   puts music.pitch #=> 1.0
+  #   music.pitch = 0.9
+  #   puts music.pitch #=> 0.9
+  #   music.pitch = 1.5
+  #   puts music.pitch #=> 1.5
+  #
+  # @param value [Float]
+  # @return [Float]
+  def pitch=(value)
+    # mrb_Music_set_pitch
+    # src/mruby_integration/models/music.cpp
+    0.8
+  end
 end
