@@ -1,8 +1,5 @@
 # The Sound class holds shorter sounds, these are usually used for sound effects.
 class Sound
-  # @return [Integer]
-  attr_reader :frame_count
-
   # @return [Float]
   attr_reader :volume, :pitch
 
@@ -10,19 +7,9 @@ class Sound
   # @return [Hash]
   def to_h
     {
-      frame_count: frame_count
-    }
-  end
-
-  # Loads a sound file from the specified path.
-  # @param path [String]
-  # @raise [Sound::NotFound] If the file specified by path doesn't exist.
-  # @return [Sound]
-  def self.load(path)
-    raise Sound::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
-    load_sound(path).tap { |sound|
-      sound.volume = 1
-      sound.pitch = 1
+      frame_count: frame_count,
+      volume: volume,
+      pitch: pitch
     }
   end
 

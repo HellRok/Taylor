@@ -1,12 +1,3 @@
-# Loads a sound object from a file.
-# @param path [String]
-# @return [Sound]
-def load_sound(path)
-  # mrb_load_sound
-  # src/mruby_integration/audio/sound.cpp
-  Sound.new
-end
-
 # Unloads a sound object.
 # @param sound [Sound]
 # @return [nil]
