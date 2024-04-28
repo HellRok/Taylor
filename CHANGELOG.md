@@ -103,6 +103,9 @@
 - Removed set_music_volume
 - Music#pitch= is now C++ backed
 - Removed set_music_pitch
+- Sound#initialize is now C++ backed
+- Removed Sound#frame_count=
+- Removed load_sound
 
 ## v0.3.14.1
 
