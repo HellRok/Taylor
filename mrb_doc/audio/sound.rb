@@ -1,12 +1,3 @@
-# Unloads a sound object.
-# @param sound [Sound]
-# @return [nil]
-def unload_sound(sound)
-  # mrb_load_sound
-  # src/mruby_integration/audio/sound.cpp
-  nil
-end
-
 # Plays a sound object.
 # @param sound [Sound]
 # @return [nil]

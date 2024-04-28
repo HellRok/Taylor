@@ -106,6 +106,8 @@
 - Sound#initialize is now C++ backed
 - Removed Sound#frame_count=
 - Removed load_sound
+- Sound#unload is now C++ backed
+- Removed unload_sound
 
 ## v0.3.14.1
 

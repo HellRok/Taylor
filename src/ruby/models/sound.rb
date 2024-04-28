@@ -13,12 +13,6 @@ class Sound
     }
   end
 
-  # Unloads the sound from memory.
-  # @return [nil]
-  def unload
-    unload_sound(self)
-  end
-
   # Starts playing the sound.
   # @return [nil]
   def play
