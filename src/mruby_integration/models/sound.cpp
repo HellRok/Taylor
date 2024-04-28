@@ -65,6 +65,19 @@ mrb_Sound_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Sound_unload(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Sound* sound;
+
+  Data_Get_Struct(mrb, self, &Sound_type, sound);
+  mrb_assert(sound != nullptr);
+
+  UnloadSound(*sound);
+
+  return mrb_nil_value();
+}
+
+auto
 mrb_Sound_frame_count(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Sound* sound;
@@ -82,6 +95,8 @@ append_models_Sound(mrb_state* mrb)
   MRB_SET_INSTANCE_TT(Sound_class, MRB_TT_DATA);
   mrb_define_method(
     mrb, Sound_class, "initialize", mrb_Sound_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Sound_class, "unload", mrb_Sound_unload, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Sound_class, "frame_count", mrb_Sound_frame_count, MRB_ARGS_NONE());
 
