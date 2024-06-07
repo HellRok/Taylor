@@ -1,12 +1,3 @@
-# Plays a sound object.
-# @param sound [Sound]
-# @return [nil]
-def play_sound(sound)
-  # mrb_play_sound
-  # src/mruby_integration/audio/sound.cpp
-  nil
-end
-
 # Stops a sound object.
 # @param sound [Sound]
 # @return [nil]

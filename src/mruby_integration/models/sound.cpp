@@ -88,6 +88,19 @@ mrb_Sound_frame_count(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_float_value(mrb, sound->frameCount);
 }
 
+auto
+mrb_Sound_play(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Sound* sound;
+
+  Data_Get_Struct(mrb, self, &Sound_type, sound);
+  mrb_assert(sound != nullptr);
+
+  PlaySound(*sound);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Sound(mrb_state* mrb)
 {
@@ -99,6 +112,7 @@ append_models_Sound(mrb_state* mrb)
     mrb, Sound_class, "unload", mrb_Sound_unload, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Sound_class, "frame_count", mrb_Sound_frame_count, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Sound_class, "play", mrb_Sound_play, MRB_ARGS_NONE());
 
   load_ruby_models_sound(mrb);
 }

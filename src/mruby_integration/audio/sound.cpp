@@ -6,17 +6,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_play_sound(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Sound* sound;
-  mrb_get_args(mrb, "d", &sound, &Sound_type);
-
-  PlaySound(*sound);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_stop_sound(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Sound* sound;
@@ -85,8 +74,6 @@ mrb_set_sound_pitch(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_audio_sound(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "play_sound", mrb_play_sound, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, mrb->kernel_module, "stop_sound", mrb_stop_sound, MRB_ARGS_REQ(1));
   mrb_define_method(

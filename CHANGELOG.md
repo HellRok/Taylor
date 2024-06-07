@@ -108,6 +108,8 @@
 - Removed load_sound
 - Sound#unload is now C++ backed
 - Removed unload_sound
+- Sound#play is now C++ backed
+- Removed play_sound
 
 ## v0.3.14.1
 
