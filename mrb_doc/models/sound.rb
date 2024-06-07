@@ -34,7 +34,7 @@ class Sound
     nil
   end
 
-  # Returns the frame_count for the {Sonud} object.
+  # Returns the frame_count for the {Sound}.
   #
   # @example Basic usage
   #   beep = Sound.new("./assets/beep.wav")
@@ -45,6 +45,19 @@ class Sound
     # mrb_Sound_frame_count
     # src/mruby_integration/models/sound.cpp
     96000
+  end
+
+  # Starts playing the {Sound}.
+  #
+  # @example Basic usage
+  #   beep = Sound.new("./assets/beep.wav")
+  #   beep.play
+  #
+  # @return [nil]
+  def play
+    # mrb_Sound_play
+    # src/mruby_integration/models/sound.cpp
+    nil
   end
 
   class NotFound < StandardError

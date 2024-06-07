@@ -13,12 +13,6 @@ class Sound
     }
   end
 
-  # Starts playing the sound.
-  # @return [nil]
-  def play
-    play_sound(self)
-  end
-
   # Stops the sound, you will need to call {play} to start it again.
   # @return [nil]
   def stop
