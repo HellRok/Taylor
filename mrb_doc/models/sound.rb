@@ -51,11 +51,30 @@ class Sound
   #
   # @example Basic usage
   #   beep = Sound.new("./assets/beep.wav")
+  #   puts beep.playing? #=> false
   #   beep.play
+  #   puts beep.playing? #=> true
   #
   # @return [nil]
   def play
     # mrb_Sound_play
+    # src/mruby_integration/models/sound.cpp
+    nil
+  end
+
+  # Starts playing the {Sound}.
+  #
+  # @example Basic usage
+  #   beep = Sound.new("./assets/beep.wav")
+  #   beep.play
+  #   #...
+  #   puts beep.playing? #=> true
+  #   beep.stop
+  #   puts beep.playing? #=> false
+  #
+  # @return [nil]
+  def stop
+    # mrb_Sound_stop
     # src/mruby_integration/models/sound.cpp
     nil
   end
