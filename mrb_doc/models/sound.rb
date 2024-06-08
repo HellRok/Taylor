@@ -62,7 +62,7 @@ class Sound
     nil
   end
 
-  # Starts playing the {Sound}.
+  # Stops playing the {Sound}.
   #
   # @example Basic usage
   #   beep = Sound.new("./assets/beep.wav")
@@ -75,6 +75,43 @@ class Sound
   # @return [nil]
   def stop
     # mrb_Sound_stop
+    # src/mruby_integration/models/sound.cpp
+    nil
+  end
+
+  # Pauses the {Sound} so it can be resumed later with {Sound#resume}.
+  #
+  # @example Basic usage
+  #   beep = Sound.new("./assets/beep.wav")
+  #   beep.play
+  #   #...
+  #   puts beep.playing? #=> true
+  #   beep.pause
+  #   puts beep.playing? #=> false
+  #
+  # @return [nil]
+  def pause
+    # mrb_Sound_pause
+    # src/mruby_integration/models/sound.cpp
+    nil
+  end
+
+  # Resumes a paused {Sound}.
+  #
+  # @example Basic usage
+  #   beep = Sound.new("./assets/beep.wav")
+  #   beep.play
+  #   #...
+  #   puts beep.playing? #=> true
+  #   beep.pause
+  #   puts beep.playing? #=> false
+  #   #...
+  #   beep.resume
+  #   puts beep.playing? #=> true
+  #
+  # @return [nil]
+  def resume
+    # mrb_Sound_resume
     # src/mruby_integration/models/sound.cpp
     nil
   end
