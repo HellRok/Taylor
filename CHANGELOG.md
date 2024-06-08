@@ -110,6 +110,12 @@
 - Removed unload_sound
 - Sound#play is now C++ backed
 - Removed play_sound
+- Sound#stop is now C++ backed
+- Removed stop_sound
+- Sound#pause is now C++ backed
+- Removed pause_sound
+- Sound#resume is now C++ backed
+- Removed resume_sound
 
 ## v0.3.14.1
 

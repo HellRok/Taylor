@@ -114,6 +114,32 @@ mrb_Sound_stop(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Sound_pause(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Sound* sound;
+
+  Data_Get_Struct(mrb, self, &Sound_type, sound);
+  mrb_assert(sound != nullptr);
+
+  PauseSound(*sound);
+
+  return mrb_nil_value();
+}
+
+auto
+mrb_Sound_resume(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Sound* sound;
+
+  Data_Get_Struct(mrb, self, &Sound_type, sound);
+  mrb_assert(sound != nullptr);
+
+  ResumeSound(*sound);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Sound(mrb_state* mrb)
 {
@@ -127,6 +153,10 @@ append_models_Sound(mrb_state* mrb)
     mrb, Sound_class, "frame_count", mrb_Sound_frame_count, MRB_ARGS_NONE());
   mrb_define_method(mrb, Sound_class, "play", mrb_Sound_play, MRB_ARGS_NONE());
   mrb_define_method(mrb, Sound_class, "stop", mrb_Sound_stop, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Sound_class, "pause", mrb_Sound_pause, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Sound_class, "resume", mrb_Sound_resume, MRB_ARGS_NONE());
 
   load_ruby_models_sound(mrb);
 }
