@@ -116,6 +116,30 @@ class Sound
     nil
   end
 
+  # Is the {Sound} currently playing?
+  #
+  # @example Basic usage
+  #   beep = Sound.new("./assets/beep.wav")
+  #   puts beep.playing? #=> false
+  #
+  #   beep.play
+  #   puts beep.playing? #=> true
+  #
+  #   #...
+  #   beep.pause
+  #   puts beep.playing? #=> false
+  #
+  #   #...
+  #   beep.resume
+  #   puts beep.playing? #=> true
+  #
+  # @return [Boolean]
+  def playing?
+    # mrb_Sound_playing
+    # src/mruby_integration/models/sound.cpp
+    true
+  end
+
   class NotFound < StandardError
   end
 end

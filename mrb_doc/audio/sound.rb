@@ -1,12 +1,3 @@
-# Checks whether or not a sound object is currently playing.
-# @param sound [Sound]
-# @return [Boolean]
-def sound_playing?(sound)
-  # mrb_sound_playing
-  # src/mruby_integration/audio/sound.cpp
-  true
-end
-
 # Sets the volume of the sound object.
 # @param sound [Sound]
 # @param volume [Float] A value between 0.0 and 1.0.

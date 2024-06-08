@@ -116,6 +116,8 @@
 - Removed pause_sound
 - Sound#resume is now C++ backed
 - Removed resume_sound
+- Sound#playing? is now C++ backed
+- Removed sound_playing?
 
 ## v0.3.14.1
 
