@@ -1,12 +1,3 @@
-# Stops a sound object.
-# @param sound [Sound]
-# @return [nil]
-def stop_sound(sound)
-  # mrb_stop_sound
-  # src/mruby_integration/audio/sound.cpp
-  nil
-end
-
 # Pauses a sound object so it can be resumed.
 # @param sound [Sound]
 # @return [nil]
