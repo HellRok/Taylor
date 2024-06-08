@@ -136,6 +136,59 @@ class Test
         sound&.unload
         Audio.close
       end
+
+      def test_volume=
+        skip "Can't open and close audio more than once in WINE." if windows?
+        Audio.open
+        sound = Sound.new("./assets/test.wav")
+
+        assert_equal 1.0, sound.volume
+        assert_equal 0.3, sound.volume = 0.3
+        assert_equal 0.3, sound.volume
+      ensure
+        sound&.unload
+        Audio.close
+      end
+
+      def test_fail_volume=
+        skip "Can't open and close audio more than once in WINE." if windows?
+        Audio.open
+        sound = Sound.new("./assets/test.wav")
+
+        assert_equal 1.0, sound.volume
+
+        begin
+          sound.volume = 1.1
+          fail "Previous line should have raised"
+        rescue ArgumentError => e
+          assert_equal "Volume must be within (0.0..1.0)", e.message
+        end
+
+        begin
+          sound.volume = -0.1
+          fail "Previous line should have raised"
+        rescue ArgumentError => e
+          assert_equal "Volume must be within (0.0..1.0)", e.message
+        end
+
+        assert_equal 1.0, sound.volume
+      ensure
+        sound&.unload
+        Audio.close
+      end
+
+      def test_pitch=
+        skip "Can't open and close audio more than once in WINE." if windows?
+        Audio.open
+        sound = Sound.new("./assets/test.wav")
+
+        assert_equal 1.0, sound.pitch
+        assert_equal 0.3, sound.pitch = 0.3
+        assert_equal 0.3, sound.pitch
+      ensure
+        sound&.unload
+        Audio.close
+      end
     end
   end
 end

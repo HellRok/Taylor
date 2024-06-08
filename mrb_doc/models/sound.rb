@@ -140,6 +140,41 @@ class Sound
     true
   end
 
+  # Set volume for the {Sound}.
+  #
+  # @example Basic usage
+  #   beep = Sound.new("./assets/beep.wav")
+  #   puts beep.volume #=> 1.0
+  #   beep.volume = 0.9
+  #   puts beep.volume #=> 0.9
+  #
+  # @param value [Float] A value between 0.0 and 1.0.
+  # @return [Float]
+  # @raise [ArgumentError] If the volume is out of bounds.
+  def volume=(value)
+    # mrb_Sound_set_volume
+    # src/mruby_integration/models/sound.cpp
+    0.5
+  end
+
+  # Set pitch for the {Sound}.
+  #
+  # @example Basic usage
+  #   beep = Sound.new("./assets/beep.wav")
+  #   puts beep.pitch #=> 1.0
+  #   beep.pitch = 0.9
+  #   puts beep.pitch #=> 0.9
+  #   beep.pitch = 1.5
+  #   puts beep.pitch #=> 1.5
+  #
+  # @param value [Float]
+  # @return [Float]
+  def pitch=(value)
+    # mrb_Sound_set_pitch
+    # src/mruby_integration/models/sound.cpp
+    0.5
+  end
+
   class NotFound < StandardError
   end
 end

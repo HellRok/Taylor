@@ -118,6 +118,10 @@
 - Removed resume_sound
 - Sound#playing? is now C++ backed
 - Removed sound_playing?
+- Sound#volume= is now C++ backed
+- Removed set_sound_volume
+- Sound#pitch= is now C++ backed
+- Removed set_sound_pitch
 
 ## v0.3.14.1
 

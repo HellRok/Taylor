@@ -151,6 +151,46 @@ mrb_Sound_playing(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_bool_value(IsSoundPlaying(*sound));
 }
 
+auto
+mrb_Sound_set_volume(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Sound* sound;
+
+  Data_Get_Struct(mrb, self, &Sound_type, sound);
+  mrb_assert(sound != nullptr);
+
+  mrb_float volume;
+  mrb_get_args(mrb, "f", &volume);
+
+  if (volume < 0 || volume > 1) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Volume must be within (0.0..1.0)");
+  }
+
+  mrb_iv_set(
+    mrb, self, mrb_intern_cstr(mrb, "@volume"), mrb_float_value(mrb, volume));
+  SetSoundVolume(*sound, volume);
+
+  return mrb_float_value(mrb, volume);
+}
+
+auto
+mrb_Sound_set_pitch(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Sound* sound;
+
+  Data_Get_Struct(mrb, self, &Sound_type, sound);
+  mrb_assert(sound != nullptr);
+
+  mrb_float pitch;
+  mrb_get_args(mrb, "f", &pitch);
+
+  mrb_iv_set(
+    mrb, self, mrb_intern_cstr(mrb, "@pitch"), mrb_float_value(mrb, pitch));
+  SetSoundPitch(*sound, pitch);
+
+  return mrb_float_value(mrb, pitch);
+}
+
 void
 append_models_Sound(mrb_state* mrb)
 {
@@ -170,6 +210,10 @@ append_models_Sound(mrb_state* mrb)
     mrb, Sound_class, "resume", mrb_Sound_resume, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Sound_class, "playing?", mrb_Sound_playing, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Sound_class, "volume=", mrb_Sound_set_volume, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Sound_class, "pitch=", mrb_Sound_set_pitch, MRB_ARGS_REQ(1));
 
   load_ruby_models_sound(mrb);
 }
