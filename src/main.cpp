@@ -9,7 +9,6 @@
 #include "mruby/irep.h"
 
 #include "argv.hpp"
-#include "mruby_integration/audio.hpp"
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/images.hpp"
 #include "mruby_integration/shaders.hpp"
@@ -55,7 +54,6 @@ main(int argc, char** argv) -> int
                    mrb_str_new_cstr(mrb, GetWorkingDirectory()));
   populate_argv(mrb, argc, argv);
 
-  append_audio(mrb);
   append_core(mrb);
   append_images(mrb);
   append_shaders(mrb);
