@@ -13,12 +13,6 @@ class Sound
     }
   end
 
-  # Is the sound currently playing?
-  # @return [Boolean]
-  def playing?
-    sound_playing?(self)
-  end
-
   # Set the volume.
   # @param value [Float] A value between 0 and 1.
   # @raise [ArgumentError] If the value is out of bounds.

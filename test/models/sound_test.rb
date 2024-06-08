@@ -123,6 +123,19 @@ class Test
         sound&.unload
         Audio.close
       end
+
+      def test_playing?
+        skip "Can't open and close audio more than once in WINE." if windows?
+        Audio.open
+        sound = Sound.new("./assets/test.wav")
+
+        assert_false sound.playing?
+        sound.play
+        assert_true sound.playing?
+      ensure
+        sound&.unload
+        Audio.close
+      end
     end
   end
 end
