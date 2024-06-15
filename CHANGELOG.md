@@ -124,6 +124,8 @@
 - Removed set_sound_pitch
 - Add Cursor.hide, Cursor.show, and Cursor.hidden?
 - Removed show_cursor, hide_cursor, and cursor_hidden?
+- Add Cursor.disable, Cursor.enable, and Cursor.disabled?
+- Removed enable_cursor and disable_cursor
 
 ## v0.3.14.1
 

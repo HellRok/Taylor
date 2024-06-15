@@ -49,4 +49,52 @@ class Cursor
     # src/mruby_integration/models/sound.cpp
     true
   end
+
+  # This will enable the {Cursor} after it's been disabled.
+  #
+  # @example Basic usage
+  #   Cursor.disable
+  #   puts Cursor.disabled? #=> true
+  #   #...
+  #   Cursor.enable
+  #   puts Cursor.disabled? #=> false
+  #
+  # @return [nil]
+  def self.enable
+    # mrb_Cursor_enable
+    # src/mruby_integration/models/sound.cpp
+    nil
+  end
+
+  # This will disable the {Cursor}, it will NOT operate as normal and no clicks
+  # or movement will be reported.
+  #
+  # @example Basic usage
+  #   puts Cursor.disabled? #=> false
+  #   Cursor.disable
+  #   puts Cursor.disabled? #=> true
+  #
+  # @return [nil]
+  def self.disable
+    # mrb_Cursor_disable
+    # src/mruby_integration/models/sound.cpp
+    nil
+  end
+
+  # Check whether or not the {Cursor} is disabled.
+  #
+  # @example Basic usage
+  #   puts Cursor.disabled? #=> false
+  #   Cursor.disable
+  #   puts Cursor.disabled? #=> true
+  #   #...
+  #   Cursor.enable
+  #   puts Cursor.disabled? #=> false
+  #
+  # @return [Boolean]
+  def self.disabled?
+    # mrb_Cursor_disabled
+    # src/mruby_integration/models/sound.cpp
+    true
+  end
 end
