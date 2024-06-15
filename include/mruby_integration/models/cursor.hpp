@@ -3,4 +3,4 @@
 #include "mruby.h"
 
 void
-append_structs(mrb_state*);
+append_models_Cursor(mrb_state*);
