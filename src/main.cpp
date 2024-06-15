@@ -11,9 +11,9 @@
 #include "argv.hpp"
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/images.hpp"
+#include "mruby_integration/models.hpp"
 #include "mruby_integration/shaders.hpp"
 #include "mruby_integration/shapes.hpp"
-#include "mruby_integration/structs.hpp"
 #include "mruby_integration/text.hpp"
 #include "mruby_integration/textures.hpp"
 #include "platform.hpp"
@@ -56,9 +56,9 @@ main(int argc, char** argv) -> int
 
   append_core(mrb);
   append_images(mrb);
+  append_models(mrb);
   append_shaders(mrb);
   append_shapes(mrb);
-  append_structs(mrb);
   append_text(mrb);
   append_textures(mrb);
 

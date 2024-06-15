@@ -4,7 +4,7 @@
 #include "mruby/data.h"
 #include <string>
 
-#include "mruby_integration/structs.hpp"
+#include "mruby_integration/models.hpp"
 
 void
 add_parent(void*, std::string);

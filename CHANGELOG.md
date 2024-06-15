@@ -122,6 +122,8 @@
 - Removed set_sound_volume
 - Sound#pitch= is now C++ backed
 - Removed set_sound_pitch
+- Add Cursor.hide, Cursor.show, and Cursor.hidden?
+- Removed show_cursor, hide_cursor, and cursor_hidden?
 
 ## v0.3.14.1
 
