@@ -126,6 +126,8 @@
 - Removed show_cursor, hide_cursor, and cursor_hidden?
 - Add Cursor.disable, Cursor.enable, and Cursor.disabled?
 - Removed enable_cursor and disable_cursor
+- Cursor.on_screen? is now C++ backed
+- Removed cursor_on_screen?
 
 ## v0.3.14.1
 

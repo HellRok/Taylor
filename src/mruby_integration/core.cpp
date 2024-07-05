@@ -1,6 +1,5 @@
 #include "mruby.h"
 
-#include "mruby_integration/core/cursor.hpp"
 #include "mruby_integration/core/drawing.hpp"
 #include "mruby_integration/core/files.hpp"
 #include "mruby_integration/core/gestures.hpp"
@@ -14,7 +13,6 @@
 void
 append_core(mrb_state* mrb)
 {
-  append_core_cursor(mrb);
   append_core_drawing(mrb);
   append_core_files(mrb);
   append_core_gestures(mrb);

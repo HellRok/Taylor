@@ -56,6 +56,19 @@ class Test
       ensure
         Cursor.enable
       end
+
+      def test_on_screen?
+        skip "xdotool not available" unless XDo.available?
+
+        XDo::Mouse.move_to(0, 0)
+        set_window_position(50, 50)
+        flush_frame
+        assert_false Cursor.on_screen?
+
+        XDo::Mouse.move_to(55, 55)
+        flush_frame
+        assert_true Cursor.on_screen?
+      end
     end
   end
 end
