@@ -14,7 +14,7 @@ class Cursor
   # @return [nil]
   def self.show
     # mrb_Cursor_show
-    # src/mruby_integration/models/sound.cpp
+    # src/mruby_integration/models/cursor.cpp
     nil
   end
 
@@ -29,7 +29,7 @@ class Cursor
   # @return [nil]
   def self.hide
     # mrb_Cursor_hide
-    # src/mruby_integration/models/sound.cpp
+    # src/mruby_integration/models/cursor.cpp
     nil
   end
 
@@ -46,7 +46,7 @@ class Cursor
   # @return [Boolean]
   def self.hidden?
     # mrb_Cursor_hidden
-    # src/mruby_integration/models/sound.cpp
+    # src/mruby_integration/models/cursor.cpp
     true
   end
 
@@ -62,7 +62,7 @@ class Cursor
   # @return [nil]
   def self.enable
     # mrb_Cursor_enable
-    # src/mruby_integration/models/sound.cpp
+    # src/mruby_integration/models/cursor.cpp
     nil
   end
 
@@ -77,7 +77,7 @@ class Cursor
   # @return [nil]
   def self.disable
     # mrb_Cursor_disable
-    # src/mruby_integration/models/sound.cpp
+    # src/mruby_integration/models/cursor.cpp
     nil
   end
 
@@ -94,7 +94,21 @@ class Cursor
   # @return [Boolean]
   def self.disabled?
     # mrb_Cursor_disabled
-    # src/mruby_integration/models/sound.cpp
+    # src/mruby_integration/models/cursor.cpp
+    true
+  end
+
+  # Check whether or not the {Cursor} is within the bounds of the {Window}.
+  #
+  # @example Basic usage
+  #   puts Cursor.on_screen? #=> false
+  #   # Player moves the mouse within the window
+  #   puts Cursor.on_screen? #=> true
+  #
+  # @return [Boolean]
+  def self.on_screen?
+    # mrb_Cursor_on_screen
+    # src/mruby_integration/models/cursor.cpp
     true
   end
 end
