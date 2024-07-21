@@ -128,6 +128,8 @@
 - Removed enable_cursor and disable_cursor
 - Cursor.on_screen? is now C++ backed
 - Removed cursor_on_screen?
+- Add Mouse.pressed?
+- Removed mouse_button_pressed?
 
 ## v0.3.14.1
 

@@ -1,5 +1,5 @@
 # The {Cursor} class is used for management of your mouse cursor. It's handy
-# for when you want to either completely disable the cursor or imploment your
+# for when you want to either completely disable the cursor or implement your
 # own.
 class Cursor
   # This will show the {Cursor} after it's been hidden.

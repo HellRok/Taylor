@@ -4,6 +4,7 @@
 #include "mruby_integration/models/cursor.hpp"
 #include "mruby_integration/models/font.hpp"
 #include "mruby_integration/models/image.hpp"
+#include "mruby_integration/models/mouse.hpp"
 #include "mruby_integration/models/music.hpp"
 #include "mruby_integration/models/rectangle.hpp"
 #include "mruby_integration/models/render_texture.hpp"
@@ -21,6 +22,7 @@ append_models(mrb_state* mrb)
   append_models_Cursor(mrb);
   append_models_Font(mrb);
   append_models_Image(mrb);
+  append_models_Mouse(mrb);
   append_models_Music(mrb);
   append_models_Rectangle(mrb);
   append_models_RenderTexture(mrb);
