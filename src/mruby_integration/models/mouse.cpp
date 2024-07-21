@@ -18,6 +18,15 @@ mrb_Mouse_pressed(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_bool_value(IsMouseButtonPressed(button));
 }
 
+auto
+mrb_Mouse_down(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_int button;
+  mrb_get_args(mrb, "i", &button);
+
+  return mrb_bool_value(IsMouseButtonDown(button));
+}
+
 void
 append_models_Mouse(mrb_state* mrb)
 {
@@ -26,6 +35,8 @@ append_models_Mouse(mrb_state* mrb)
 
   mrb_define_class_method(
     mrb, Mouse_class, "pressed?", mrb_Mouse_pressed, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Mouse_class, "down?", mrb_Mouse_down, MRB_ARGS_REQ(1));
 
   load_ruby_models_mouse(mrb);
 }

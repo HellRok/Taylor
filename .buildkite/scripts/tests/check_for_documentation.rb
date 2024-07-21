@@ -117,8 +117,8 @@ undocumented_methods = cpp_methods - documented_methods
 not_coded_methods = documented_methods - cpp_methods
 overlap = cpp_methods & documented_methods
 
-puts "These methods are documented:"
-overlap.sort.each { |method| puts "\t✓ #{method}" }
+# puts "These methods are documented:"
+# overlap.sort.each { |method| puts "\t✓ #{method}" }
 
 if undocumented_methods.any?
   puts "Found these methods without documentation:"

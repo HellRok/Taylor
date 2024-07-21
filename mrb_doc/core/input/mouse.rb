@@ -1,12 +1,3 @@
-# Is the specified mouse button down?
-# @param button [Integer]
-# @return [Boolean]
-def mouse_button_down?(button)
-  # mrb_mouse_button_down
-  # src/mruby_integration/core/input/mouse.cpp
-  true
-end
-
 # Has the specified mouse button been released?
 # @param button [Integer]
 # @return [Boolean]
