@@ -1,12 +1,3 @@
-# Is the specified mouse button pressed?
-# @param button [Integer]
-# @return [Boolean]
-def mouse_button_pressed?(button)
-  # mrb_mouse_button_pressed
-  # src/mruby_integration/core/input/mouse.cpp
-  true
-end
-
 # Is the specified mouse button down?
 # @param button [Integer]
 # @return [Boolean]
