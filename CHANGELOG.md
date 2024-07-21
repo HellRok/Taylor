@@ -130,6 +130,8 @@
 - Removed cursor_on_screen?
 - Add Mouse.pressed?
 - Removed mouse_button_pressed?
+- Add Mouse.down?
+- Removed mouse_button_down?
 
 ## v0.3.14.1
 
