@@ -11,11 +11,11 @@ if windows?
   module MTest
     class Unit
       def puts *a
-        super(*a)
+        super
       end
 
       def print *a
-        super(*a)
+        super
       end
     end
   end
