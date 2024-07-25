@@ -136,6 +136,8 @@
 - Removed mouse_button_released?
 - Add Mouse.up?
 - Removed mouse_button_up?
+- Add Mouse.position
+- Removed mouse_get_x, mouse_get_y, mouse_get_position
 
 ## v0.3.14.1
 

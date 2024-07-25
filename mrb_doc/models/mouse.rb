@@ -82,4 +82,17 @@ class Mouse
     # src/mruby_integration/models/mouse.cpp
     true
   end
+
+  # Returns the {Mouse} position as a {Vector2}.
+  #
+  # @example Basic usage
+  #   puts Mouse.position
+  #   # => Vector2[10, 15]
+  #
+  # @return [Vector2]
+  def self.position
+    # mrb_Mouse_position
+    # src/mruby_integration/models/mouse.cpp
+    true
+  end
 end

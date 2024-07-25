@@ -3,6 +3,7 @@
 #include "mruby/data.h"
 #include "raylib.h"
 
+#include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 #include "ruby/models/mouse.hpp"
@@ -45,6 +46,20 @@ mrb_Mouse_up(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_bool_value(IsMouseButtonUp(button));
 }
 
+auto
+mrb_Mouse_position(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
+  *position = GetMousePosition();
+
+  mrb_value obj = mrb_obj_value(
+    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
+
+  setup_Vector2(mrb, obj, position, position->x, position->y);
+
+  return obj;
+}
+
 void
 append_models_Mouse(mrb_state* mrb)
 {
@@ -59,6 +74,8 @@ append_models_Mouse(mrb_state* mrb)
     mrb, Mouse_class, "released?", mrb_Mouse_released, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Mouse_class, "up?", mrb_Mouse_up, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Mouse_class, "position", mrb_Mouse_position, MRB_ARGS_NONE());
 
   load_ruby_models_mouse(mrb);
 }

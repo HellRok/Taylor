@@ -94,6 +94,20 @@ class Test
         XDo::Mouse.button_up(XDo::Mouse::BUTTON[:left]) if XDo.available?
         flush_frame
       end
+
+      def test_position
+        skip "xdotool not available" unless XDo.available?
+
+        set_window_position(50, 50)
+        XDo::Mouse.move_to(55, 55)
+        flush_frame
+
+        assert_equal Vector2[5, 5], Mouse.position
+
+        XDo::Mouse.move_to(59, 57)
+        flush_frame
+        assert_equal Vector2[9, 7], Mouse.position
+      end
     end
   end
 end
