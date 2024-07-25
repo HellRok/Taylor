@@ -40,4 +40,24 @@ class Mouse
     # src/mruby_integration/models/mouse.cpp
     true
   end
+
+  # Returns true the frame after the {Mouse} button has been released, but will
+  # return false for the following frames until the button is released again.
+  #
+  # @example Basic usage
+  #   puts Mouse.released?(Mouse::LEFT) #=> false
+  #
+  #   # User releases their left mouse button
+  #   puts Mouse.released?(Mouse::LEFT) #=> true
+  #
+  #   # One frame passes, left mouse button still released
+  #   puts Mouse.released?(Mouse::LEFT) #=> false
+  #
+  # @param button [Integer]
+  # @return [Boolean]
+  def self.released?(button)
+    # mrb_Mouse_released?
+    # src/mruby_integration/models/mouse.cpp
+    true
+  end
 end

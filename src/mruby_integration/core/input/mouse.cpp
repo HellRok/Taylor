@@ -7,15 +7,6 @@
 #include "ruby/core/input/mouse.hpp"
 
 auto
-mrb_mouse_button_released(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int button;
-  mrb_get_args(mrb, "i", &button);
-
-  return mrb_bool_value(IsMouseButtonReleased(button));
-}
-
-auto
 mrb_mouse_button_up(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int button;
@@ -103,11 +94,6 @@ mrb_set_mouse_cursor(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_input_mouse(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "mouse_button_released?",
-                    mrb_mouse_button_released,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "mouse_button_up?",
