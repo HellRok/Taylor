@@ -36,6 +36,15 @@ mrb_Mouse_released(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_bool_value(IsMouseButtonReleased(button));
 }
 
+auto
+mrb_Mouse_up(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_int button;
+  mrb_get_args(mrb, "i", &button);
+
+  return mrb_bool_value(IsMouseButtonUp(button));
+}
+
 void
 append_models_Mouse(mrb_state* mrb)
 {
@@ -48,6 +57,8 @@ append_models_Mouse(mrb_state* mrb)
     mrb, Mouse_class, "down?", mrb_Mouse_down, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Mouse_class, "released?", mrb_Mouse_released, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Mouse_class, "up?", mrb_Mouse_up, MRB_ARGS_REQ(1));
 
   load_ruby_models_mouse(mrb);
 }

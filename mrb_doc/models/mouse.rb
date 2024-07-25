@@ -60,4 +60,26 @@ class Mouse
     # src/mruby_integration/models/mouse.cpp
     true
   end
+
+  # Returns true if the button is not being held down.
+  #
+  # @example Basic usage
+  #   puts Mouse.up?(Mouse::LEFT) #=> true
+  #
+  #   # User holds down their left mouse button
+  #   puts Mouse.up?(Mouse::LEFT) #=> false
+  #
+  #   # One frame passes, left mouse button still held down
+  #   puts Mouse.up?(Mouse::LEFT) #=> false
+  #
+  #   # User releases the button and one frame passes
+  #   puts Mouse.up?(Mouse::LEFT) #=> true
+  #
+  # @param button [Integer]
+  # @return [Boolean]
+  def self.up?(button)
+    # mrb_Mouse_up?
+    # src/mruby_integration/models/mouse.cpp
+    true
+  end
 end

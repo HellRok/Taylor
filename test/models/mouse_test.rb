@@ -69,6 +69,31 @@ class Test
         XDo::Mouse.button_up(XDo::Mouse::BUTTON[:left]) if XDo.available?
         flush_frame
       end
+
+      def test_up?
+        skip "xdotool not available" unless XDo.available?
+
+        set_window_position(50, 50)
+        XDo::Mouse.move_to(55, 55)
+        flush_frame
+
+        assert_true Mouse.up?(Mouse::LEFT), "When no mouse button is pressed"
+
+        XDo::Mouse.button_down(XDo::Mouse::BUTTON[:left])
+        flush_frame
+
+        assert_false Mouse.up?(Mouse::LEFT), "When the mouse button is held down"
+        flush_frame
+        assert_false Mouse.up?(Mouse::LEFT), "And it reports false for multiple frames"
+
+        XDo::Mouse.button_up(XDo::Mouse::BUTTON[:left]) if XDo.available?
+        flush_frame
+
+        assert_true Mouse.up?(Mouse::LEFT), "Then reports true when released"
+      ensure
+        XDo::Mouse.button_up(XDo::Mouse::BUTTON[:left]) if XDo.available?
+        flush_frame
+      end
     end
   end
 end
