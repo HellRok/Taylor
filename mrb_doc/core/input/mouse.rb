@@ -1,27 +1,3 @@
-# Returns the current mouse x position in the window.
-# @return [Integer]
-def get_mouse_x
-  # mrb_get_mouse_x
-  # src/mruby_integration/core/input/mouse.cpp
-  64
-end
-
-# Returns the current mouse y position in the window.
-# @return [Integer]
-def get_mouse_y
-  # mrb_get_mouse_y
-  # src/mruby_integration/core/input/mouse.cpp
-  64
-end
-
-# Returns the current mouse position in the window.
-# @return [Vector2]
-def get_mouse_position
-  # mrb_get_mouse_position
-  # src/mruby_integration/core/input/mouse.cpp
-  Vector2.new
-end
-
 # Sets the position of the mouse.
 # @param x [Integer]
 # @param y [Integer]

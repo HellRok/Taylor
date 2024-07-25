@@ -7,32 +7,6 @@
 #include "ruby/core/input/mouse.hpp"
 
 auto
-mrb_get_mouse_x(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  return mrb_int_value(mrb, GetMouseX());
-}
-
-auto
-mrb_get_mouse_y(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  return mrb_int_value(mrb, GetMouseY());
-}
-
-auto
-mrb_get_mouse_position(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
-  *position = GetMousePosition();
-
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
-
-  setup_Vector2(mrb, obj, position, position->x, position->y);
-
-  return obj;
-}
-
-auto
 mrb_set_mouse_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
@@ -85,15 +59,6 @@ mrb_set_mouse_cursor(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_input_mouse(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "get_mouse_x", mrb_get_mouse_x, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, mrb->kernel_module, "get_mouse_y", mrb_get_mouse_y, MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_mouse_position",
-                    mrb_get_mouse_position,
-                    MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "set_mouse_position",
