@@ -1,12 +1,3 @@
-# Is the specified mouse button not down?
-# @param button [Integer]
-# @return [Boolean]
-def mouse_button_up?(button)
-  # mrb_mouse_button_up
-  # src/mruby_integration/core/input/mouse.cpp
-  false
-end
-
 # Returns the current mouse x position in the window.
 # @return [Integer]
 def get_mouse_x

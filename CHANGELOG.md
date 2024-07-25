@@ -134,6 +134,8 @@
 - Removed mouse_button_down?
 - Add Mouse.released?
 - Removed mouse_button_released?
+- Add Mouse.up?
+- Removed mouse_button_up?
 
 ## v0.3.14.1
 
