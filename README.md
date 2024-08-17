@@ -32,7 +32,8 @@ If you'd like to see some examples, check them out on the [online playground!](h
 
 ## Compile Yourself!
 
-**Note**: Currently there are no instructions for Windows and OSX.
+> [!NOTE]
+> Currently there are no instructions for Windows and OSX.
 
 ### Linux
 
