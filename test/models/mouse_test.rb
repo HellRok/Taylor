@@ -108,6 +108,14 @@ class Test
         flush_frame
         assert_equal Vector2[9, 7], Mouse.position
       end
+
+      def test_position=
+        Mouse.position = Vector2[4, 8]
+        assert_equal Vector2[4, 8], Mouse.position, "The mouse position has been set"
+
+        Mouse.position = Vector2[6, 3]
+        assert_equal Vector2[6, 3], Mouse.position, "The mouse position has been set again"
+      end
     end
   end
 end

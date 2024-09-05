@@ -7,17 +7,6 @@
 #include "ruby/core/input/mouse.hpp"
 
 auto
-mrb_set_mouse_position(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int x, y;
-  mrb_get_args(mrb, "ii", &x, &y);
-
-  SetMousePosition(x, y);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_set_mouse_offset(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int x, y;
@@ -59,11 +48,6 @@ mrb_set_mouse_cursor(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_input_mouse(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "set_mouse_position",
-                    mrb_set_mouse_position,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "set_mouse_offset",
