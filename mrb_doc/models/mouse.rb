@@ -93,6 +93,24 @@ class Mouse
   def self.position
     # mrb_Mouse_position
     # src/mruby_integration/models/mouse.cpp
-    true
+    Vector2[10, 15]
+  end
+
+  # Sets the position of the {Mouse}.
+  #
+  # @example Basic usage
+  #   puts Mouse.position
+  #   # => Vector2[10, 15]
+  #
+  #   Mouse.position = Vector2[20, 45]
+  #   puts Mouse.position
+  #   # => Vector2[20, 45]
+  #
+  # @param vector [Vector2]
+  # @return [nil]
+  def self.position=(vector)
+    # mrb_Mouse_set_position
+    # src/mruby_integration/models/mouse.cpp
+    nil
   end
 end
