@@ -102,4 +102,6 @@ loop do
     puts taylor_logs
     exit 1
   end
+ensure
+  driver.quit
 end
