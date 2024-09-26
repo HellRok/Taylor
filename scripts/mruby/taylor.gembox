@@ -1,4 +1,4 @@
-MRuby::Gembox.new do |conf|
+MRuby::GemBox.new do |conf|
   # These are the default libraries
   conf.gembox "stdlib"
   conf.gembox "stdlib-ext"
