@@ -2,7 +2,7 @@ FROM taylor/build-linux as mruby_base
 
 WORKDIR /app
 RUN git clone --branch 3.2.0 --depth 1 https://github.com/mruby/mruby.git .
-COPY ./scripts/mruby/linux.rb /app/build_config/
+COPY ./scripts/mruby/taylor.gembox ./scripts/mruby/linux.rb /app/build_config/
 RUN MRUBY_CONFIG=linux rake
 
 FROM taylor/build-android as mruby_android
