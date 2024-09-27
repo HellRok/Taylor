@@ -144,6 +144,8 @@
 - Removed set_mouse_offset
 - Add Mouse.scale=
 - Removed set_mouse_scale
+- Add Mouse.wheel_moved
+- Removed get_mouse_wheel_move
 
 ## v0.3.14.1
 

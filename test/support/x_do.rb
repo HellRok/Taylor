@@ -32,12 +32,16 @@ module XDo
       `#{command}`
     end
 
-    def self.button_down(button)
-      `#{XDo.command} mousedown #{button}`
-    end
+    def self.button_down(button) = `#{XDo.command} mousedown #{button}`
 
-    def self.button_up(button)
-      `#{XDo.command} mouseup #{button}`
-    end
+    def self.button_up(button) = `#{XDo.command} mouseup #{button}`
+
+    def self.scroll_up = `#{XDo.command} click 4`
+
+    def self.scroll_down = `#{XDo.command} click 5`
+
+    def self.scroll_left = `#{XDo.command} click 6`
+
+    def self.scroll_right = `#{XDo.command} click 7`
   end
 end

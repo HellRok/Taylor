@@ -137,7 +137,7 @@ class Mouse
     nil
   end
 
-  # Sets the scaling of the {Mouse}. This will effect all future
+  # Sets the scaling of the {Mouse}. This will affect all future
   # {Mouse.position} checks.
   #
   # @example Basic usage
@@ -163,5 +163,31 @@ class Mouse
     # mrb_Mouse_set_scale
     # src/mruby_integration/models/mouse.cpp
     nil
+  end
+
+  # Returns the amount the scroll wheel has moved since last frame as a
+  # {Vector2} where {Vector2#y} is scrolling up and down and {Vector2#x} is
+  # scrolling left and right.
+  #
+  # @example Basic usage
+  #   puts Mouse.wheel_moved # => Vector2[0, 0]
+  #
+  #   # User scrolls up
+  #   puts Mouse.wheel_moved # => Vector2[0, 1]
+  #
+  #   # User scrolls down
+  #   puts Mouse.wheel_moved # => Vector2[0, -1]
+  #
+  #   # User scrolls left
+  #   puts Mouse.wheel_moved # => Vector2[1, 0]
+  #
+  #   # User scrolls right
+  #   puts Mouse.wheel_moved # => Vector2[-1, 0]
+  #
+  # @return [Vector2]
+  def self.wheel_moved
+    # mrb_Mouse_wheel_moved
+    # src/mruby_integration/models/mouse.cpp
+    Vector2[0, 2]
   end
 end

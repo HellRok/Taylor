@@ -93,6 +93,20 @@ mrb_Mouse_set_scale(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Mouse_wheel_moved(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  auto* delta = static_cast<Vector2*>(malloc(sizeof(Vector2)));
+  *delta = GetMouseWheelMoveV();
+
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, delta));
+
+  setup_Vector2(mrb, obj, delta, delta->x, delta->y);
+
+  return obj;
+}
+
 void
 append_models_Mouse(mrb_state* mrb)
 {
@@ -115,6 +129,8 @@ append_models_Mouse(mrb_state* mrb)
     mrb, Mouse_class, "offset=", mrb_Mouse_set_offset, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Mouse_class, "scale=", mrb_Mouse_set_scale, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Mouse_class, "wheel_moved", mrb_Mouse_wheel_moved, MRB_ARGS_NONE());
 
   load_ruby_models_mouse(mrb);
 }
