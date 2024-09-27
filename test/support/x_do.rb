@@ -16,7 +16,7 @@ module XDo
       wheel_down: 5
     }
 
-    def self.move_to(x, y, sync: true)
+    def self.move_to(x, y, sync: false)
       command = "#{XDo.command} mousemove "
       command << "--sync " if sync
       command << "#{x} #{y}"

@@ -71,6 +71,17 @@ mrb_Mouse_set_position(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Mouse_set_offset(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  Vector2* vector;
+  mrb_get_args(mrb, "d", &vector, &Vector2_type);
+
+  SetMouseOffset(vector->x, vector->y);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Mouse(mrb_state* mrb)
 {
@@ -89,6 +100,8 @@ append_models_Mouse(mrb_state* mrb)
     mrb, Mouse_class, "position", mrb_Mouse_position, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Mouse_class, "position=", mrb_Mouse_set_position, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Mouse_class, "offset=", mrb_Mouse_set_offset, MRB_ARGS_REQ(1));
 
   load_ruby_models_mouse(mrb);
 }
