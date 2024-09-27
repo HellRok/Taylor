@@ -136,4 +136,32 @@ class Mouse
     # src/mruby_integration/models/mouse.cpp
     nil
   end
+
+  # Sets the scaling of the {Mouse}. This will effect all future
+  # {Mouse.position} checks.
+  #
+  # @example Basic usage
+  #   puts Mouse.position
+  #   # => Vector2[10, 15]
+  #
+  #   Mouse.scale = Vector[0.5, 2]
+  #   puts Mouse.position
+  #   # => Vector2[5, 30]
+  #
+  #   # The player moves their mouse around
+  #
+  #   puts Mouse.position
+  #   # => Vector2[200, 300]
+  #
+  #   Mouse.scale = Vector[1, 1]
+  #   puts Mouse.position
+  #   # => Vector2[400, 150]
+  #
+  # @param vector [Vector2]
+  # @return [nil]
+  def self.scale=(vector)
+    # mrb_Mouse_set_scale
+    # src/mruby_integration/models/mouse.cpp
+    nil
+  end
 end

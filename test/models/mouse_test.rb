@@ -132,6 +132,22 @@ class Test
       ensure
         Mouse.offset = Vector2[0, 0]
       end
+
+      def test_scale=
+        skip "xdotool not available" unless XDo.available?
+
+        Mouse.position = Vector2[1, 1]
+        assert_equal Vector2[1, 1], Mouse.position, "Initial position"
+        Mouse.scale = Vector2[0.5, 2.0]
+        assert_equal Vector2[0.5, 2.0], Mouse.position, "Initial scaled position"
+
+        XDo::Mouse.move_by(2, 2)
+        flush_frame
+
+        assert_equal Vector2[1.5, 6.0], Mouse.position, "The mouse moves in a scaled way"
+      ensure
+        Mouse.scale = Vector2[1, 1]
+      end
     end
   end
 end

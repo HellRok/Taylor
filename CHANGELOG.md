@@ -142,6 +142,8 @@
 - Removed set_mouse_position
 - Add Mouse.offset=
 - Removed set_mouse_offset
+- Add Mouse.scale=
+- Removed set_mouse_scale
 
 ## v0.3.14.1
 
