@@ -24,6 +24,14 @@ module XDo
       `#{command}`
     end
 
+    def self.move_by(x, y, sync: false)
+      command = "#{XDo.command} mousemove_relative "
+      command << "--sync " if sync
+      command << "#{x} #{y}"
+
+      `#{command}`
+    end
+
     def self.button_down(button)
       `#{XDo.command} mousedown #{button}`
     end

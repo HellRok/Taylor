@@ -7,17 +7,6 @@
 #include "ruby/core/input/mouse.hpp"
 
 auto
-mrb_set_mouse_scale(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int x, y;
-  mrb_get_args(mrb, "ff", &x, &y);
-
-  SetMouseScale(x, y);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_get_mouse_wheel_move(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_float_value(mrb, GetMouseWheelMove());
@@ -37,11 +26,6 @@ mrb_set_mouse_cursor(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_input_mouse(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "set_mouse_scale",
-                    mrb_set_mouse_scale,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "get_mouse_wheel_move",
