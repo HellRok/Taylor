@@ -146,6 +146,8 @@
 - Removed set_mouse_scale
 - Add Mouse.wheel_moved
 - Removed get_mouse_wheel_move
+- Add Cursor.icon, Cursor.icon=, and Cursor icon constants
+- Removed set_mouse_cursor
 
 ## v0.3.14.1
 

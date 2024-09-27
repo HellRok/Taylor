@@ -69,6 +69,43 @@ class Test
         flush_frame
         assert_true Cursor.on_screen?
       end
+
+      def test_icon=
+        assert_equal Cursor::DEFAULT, Cursor.icon
+
+        Cursor.icon = Cursor::CROSSHAIR
+        assert_equal Cursor::CROSSHAIR, Cursor.icon
+      ensure
+        Cursor.icon = Cursor::DEFAULT
+      end
+
+      def test_icon_equals_too_low
+        assert_equal Cursor::DEFAULT, Cursor.icon
+
+        begin
+          Cursor.icon = -1
+        rescue ArgumentError => e
+          assert_equal "Must be within (0..10)", e.message
+        end
+
+        assert_equal Cursor::DEFAULT, Cursor.icon
+      ensure
+        Cursor.icon = Cursor::DEFAULT
+      end
+
+      def test_icon_equals_too_high
+        assert_equal Cursor::DEFAULT, Cursor.icon
+
+        begin
+          Cursor.icon = 11
+        rescue ArgumentError => e
+          assert_equal "Must be within (0..10)", e.message
+        end
+
+        assert_equal Cursor::DEFAULT, Cursor.icon
+      ensure
+        Cursor.icon = Cursor::DEFAULT
+      end
     end
   end
 end
