@@ -148,6 +148,27 @@ class Test
       ensure
         Mouse.scale = Vector2[1, 1]
       end
+
+      def test_wheel_moved
+        skip "xdotool not available" unless XDo.available?
+
+        assert_equal Vector2[0, 0], Mouse.wheel_moved, "Initial position"
+        XDo::Mouse.scroll_up
+        flush_frame
+        assert_equal Vector2[0, 1], Mouse.wheel_moved, "User has scrolled up"
+
+        XDo::Mouse.scroll_down
+        flush_frame
+        assert_equal Vector2[0, -1], Mouse.wheel_moved, "User has scrolled down"
+
+        XDo::Mouse.scroll_left
+        flush_frame
+        assert_equal Vector2[1, 0], Mouse.wheel_moved, "User has scrolled left"
+
+        XDo::Mouse.scroll_right
+        flush_frame
+        assert_equal Vector2[-1, 0], Mouse.wheel_moved, "User has scrolled right"
+      end
     end
   end
 end
