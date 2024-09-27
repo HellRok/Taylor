@@ -111,4 +111,33 @@ class Cursor
     # src/mruby_integration/models/cursor.cpp
     true
   end
+
+  # Returns the currently used {Cursor} icon.
+  #
+  # @example Basic usage
+  #   puts Cursor.icon #=> Cursor::DEFAULT
+  #   Cursor.icon = Cursor::IBEAM
+  #   puts Cursor.icon #=> Cursor::IBEAM
+  #
+  # @return [Integer]
+  def self.icon
+    # mrb_Cursor_icon
+    # src/mruby_integration/models/cursor.cpp
+    Cursor::DEFAULT
+  end
+
+  # Sets the {Cursor} icon.
+  #
+  # @example Basic usage
+  #   puts Cursor.icon #=> Cursor::DEFAULT
+  #   Cursor.icon = Cursor::IBEAM
+  #   puts Cursor.icon #=> Cursor::IBEAM
+  #
+  # @param icon [Cursor::DEFAULT, Cursor::ARROW, Cursor::IBEAM, Cursor::CROSSHAIR, Cursor::POINTING_HAND, Cursor::RESIZE_EAST_WEST, Cursor::RESIZE_NORTH_SOUTH, Cursor::RESIZE_NORTH_WEST_TO_SOUTH_EAST, Cursor::RESIZE_NORTH_EAST_TO_S_OUTH_WEST, Cursor::RESIZE_ALL, Cursor::NOT_ALLOWED]
+  # @return [Boolean]
+  def self.icon=(icon)
+    # mrb_Cursor_icon
+    # src/mruby_integration/models/cursor.cpp
+    Cursor::DEFAULT
+  end
 end
