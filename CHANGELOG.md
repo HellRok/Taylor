@@ -140,6 +140,8 @@
 - Removed mouse_get_x, mouse_get_y, get_mouse_position
 - Add Mouse.position=
 - Removed set_mouse_position
+- Add Mouse.offset=
+- Removed set_mouse_offset
 
 ## v0.3.14.1
 

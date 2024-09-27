@@ -113,4 +113,27 @@ class Mouse
     # src/mruby_integration/models/mouse.cpp
     nil
   end
+
+  # Sets the offset of the {Mouse}. This will effect all future
+  # {Mouse.position} checks.
+  #
+  # @example Basic usage
+  #   puts Mouse.position
+  #   # => Vector2[10, 15]
+  #
+  #   Mouse.offset = Vector[5, 10]
+  #   puts Mouse.position
+  #   # => Vector2[15, 25]
+  #
+  #   Mouse.position = Vector2[20, 45]
+  #   puts Mouse.position
+  #   # => Vector2[25, 55]
+  #
+  # @param vector [Vector2]
+  # @return [nil]
+  def self.offset=(vector)
+    # mrb_Mouse_set_offset
+    # src/mruby_integration/models/mouse.cpp
+    nil
+  end
 end

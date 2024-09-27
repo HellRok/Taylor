@@ -1,13 +1,3 @@
-# Sets the offset for all mouse position functions.
-# @param x [Integer]
-# @param y [Integer]
-# @return [nil]
-def set_mouse_offset(x, y)
-  # mrb_set_mouse_offset
-  # src/mruby_integration/core/input/mouse.cpp
-  nil
-end
-
 # Sets the scaling for all mouse position functions.
 # @param x [Float]
 # @param y [Float]
