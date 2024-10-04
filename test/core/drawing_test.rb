@@ -53,6 +53,49 @@ class Test
         end
         assert_equal fixture_core_drawing_scissor_mode, get_screen_data.data
       end
+
+      def test_blend_mode
+        skip_unless_display_present
+
+        set_window_title(__method__.to_s)
+
+        red = Image.generate(width: 2, height: 2, colour: Colour::RED).to_texture
+        green = Image.generate(width: 2, height: 2, colour: Colour::GREEN).to_texture
+        green_transparent = Image.generate(width: 2, height: 2, colour: Colour[0, 228, 48, 127]).to_texture
+        drawing do
+          red.draw(destination: Rectangle.new(0, 0, 2, 2))
+          blend_mode(BLEND_ADDITIVE) do
+            green.draw(destination: Rectangle.new(0, 0, 2, 2))
+          end
+
+          red.draw(destination: Rectangle.new(2, 0, 2, 2))
+          blend_mode(BLEND_MULTIPLIED) do
+            green.draw(destination: Rectangle.new(2, 0, 2, 2))
+          end
+
+          red.draw(destination: Rectangle.new(4, 0, 2, 2))
+          blend_mode(BLEND_ADD_COLORS) do
+            green.draw(destination: Rectangle.new(4, 0, 2, 2))
+          end
+
+          red.draw(destination: Rectangle.new(6, 0, 2, 2))
+          blend_mode(BLEND_SUBTRACT_COLORS) do
+            green.draw(destination: Rectangle.new(6, 0, 2, 2))
+          end
+
+          red.draw(destination: Rectangle.new(8, 0, 2, 2))
+          blend_mode(BLEND_ALPHA) do
+            green_transparent.draw(destination: Rectangle.new(8, 0, 2, 2))
+          end
+
+          red.draw(destination: Rectangle.new(0, 2, 2, 2))
+          blend_mode(BLEND_ALPHA_PREMULTIPLY) do
+            green_transparent.draw(destination: Rectangle.new(0, 2, 2, 2))
+          end
+        end
+
+        assert_equal fixture_core_drawing_blend_mode, get_screen_data.data
+      end
     end
   end
 end
