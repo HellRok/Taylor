@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+log() {
+  echo "[ ${0} ]" "${@}"
+}
+
+set -euo pipefail
+
+log "Setting up for headless tests"
+export DISPLAY=:1
+Xvfb :1 -screen 0 1280x800x24 &> /dev/null &
+export XVFB_PID=$!
+
+log XVFB_PID: $XVFB_PID
+while [ ! -e /tmp/.X11-unix/X1 ]; do sleep 0.25; done
+
+openbox &> /dev/null &
+export OPENBOX_PID=$!
+log OPENBOX_PID: $XVFB_PID
+
+log "Compiling fresh"
+
+bundle exec rake clean linux:build

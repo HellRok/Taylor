@@ -5,21 +5,12 @@ export DISPLAY=:1
 
 rake linux:build windows:build || exit 1
 
-Xvfb :1 -screen 0 1280x800x24 &> /dev/null &
-export XVFB_PID=$!
-
-echo XVFB_PID: $XVFB_PID
-
-DISPLAY=:1 openbox &> /dev/null &
-export OPENBOX_PID=$!
-echo OPENBOX_PID: $XVFB_PID
+pushd test/
 
 ../dist/linux/debug/taylor ../cli-tool/cli.rb test.rb 2> /dev/null
 export NATIVE_EXIT_CODE=$?
 
 if [[ NATIVE_EXIT_CODE -gt 0 ]]; then
-  kill $OPENBOX_PID &> /dev/null
-  kill $XVFB_PID &> /dev/null
   echo "Linux: $NATIVE_EXIT_CODE"
   exit $NATIVE_EXIT_CODE
 fi
@@ -27,10 +18,8 @@ fi
 wine ../dist/windows/debug/taylor.exe ../cli-tool/cli.rb test.rb 2> /dev/null
 export WINE_EXIT_CODE=$?
 
-kill $OPENBOX_PID &> /dev/null
-kill $XVFB_PID &> /dev/null
-
 echo "Linux: $NATIVE_EXIT_CODE"
 echo "Wine:  $WINE_EXIT_CODE"
 
+popd
 exit $NATIVE_EXIT_CODE || $WINE_EXIT_CODE

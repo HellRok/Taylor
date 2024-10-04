@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DIRNAME=$(dirname -- "${0}")
+SCRIPT_DIR=$(cd -- "${DIRNAME}" > /dev/null 2>&1 && pwd)
+
+source "${SCRIPT_DIR}"/shared.lib.sh
+
+usage() {
+  echo "usage: $0 [-h]"
+  echo ""
+  echo "Stops the development environment"
+  echo ""
+  echo "OPTIONS"
+  echo ""
+  echo "  -h - show this help"
+}
+
+while getopts ":h" opt "${@}"; do
+  case ${opt} in
+    h)
+      usage
+      exit 0
+      ;;
+    ?)
+      log "Invalid option: ${OPTARG}"
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND -1))
+
+check_for_docker
+
+log "Stopping dev environment"
+docker compose \
+  --ansi=never \
+  --env-file "${SCRIPT_DIR}"/docker/docker-compose.env \
+  --file "${SCRIPT_DIR}"/docker/docker-compose.dev.yml \
+  down
+
+log "Dev environment stopped"
+
