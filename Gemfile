@@ -5,9 +5,6 @@ gem "rake"
 gem "standardrb"
 
 group :development do
-  gem "solargraph"
-  gem "solargraph-standardrb"
-
   gem "rackup"
 end
 

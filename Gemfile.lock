@@ -2,87 +2,53 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
-    backport (1.2.0)
     base64 (0.2.0)
-    benchmark (0.3.0)
-    diff-lcs (1.5.1)
-    e2mmap (0.1.0)
-    jaro_winkler (1.6.0)
     json (2.7.2)
-    kramdown (2.4.0)
-      rexml
-    kramdown-parser-gfm (1.1.0)
-      kramdown (~> 2.0)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
-    logger (1.6.0)
-    nokogiri (1.16.6-x86_64-linux)
-      racc (~> 1.4)
-    parallel (1.25.1)
-    parser (3.3.4.0)
+    logger (1.6.1)
+    parallel (1.26.3)
+    parser (3.3.5.0)
       ast (~> 2.4.1)
       racc
-    racc (1.8.0)
+    racc (1.8.1)
     rack (3.1.7)
     rackup (2.1.0)
       rack (>= 3)
       webrick (~> 1.8)
     rainbow (3.1.1)
     rake (13.2.1)
-    rbs (2.8.4)
     redcarpet (3.6.0)
     regexp_parser (2.9.2)
-    reverse_markdown (2.1.1)
-      nokogiri
-    rexml (3.3.2)
-      strscan
-    rubocop (1.64.1)
+    rexml (3.3.8)
+    rubocop (1.65.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8, < 3.0)
+      regexp_parser (>= 2.4, < 3.0)
       rexml (>= 3.2.5, < 4.0)
       rubocop-ast (>= 1.31.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.31.3)
+    rubocop-ast (1.32.3)
       parser (>= 3.3.1.0)
     rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
-    selenium-webdriver (4.23.0)
+    selenium-webdriver (4.25.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    solargraph (0.50.0)
-      backport (~> 1.2)
-      benchmark
-      bundler (~> 2.0)
-      diff-lcs (~> 1.4)
-      e2mmap
-      jaro_winkler (~> 1.5)
-      kramdown (~> 2.3)
-      kramdown-parser-gfm (~> 1.1)
-      parser (~> 3.0)
-      rbs (~> 2.0)
-      reverse_markdown (~> 2.0)
-      rubocop (~> 1.38)
-      thor (~> 1.0)
-      tilt (~> 2.0)
-      yard (~> 0.9, >= 0.9.24)
-    solargraph-standardrb (0.0.4)
-      solargraph (>= 0.39.1)
-      standard (>= 0.4.1)
-    standard (1.39.2)
+    standard (1.40.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
-      rubocop (~> 1.64.0)
+      rubocop (~> 1.65.0)
       standard-custom (~> 1.0.0)
       standard-performance (~> 1.4)
     standard-custom (1.0.2)
@@ -93,13 +59,10 @@ GEM
       rubocop-performance (~> 1.21.0)
     standardrb (1.0.1)
       standard
-    strscan (3.1.0)
-    thor (1.3.1)
-    tilt (2.4.0)
-    unicode-display_width (2.5.0)
-    webrick (1.8.1)
+    unicode-display_width (2.6.0)
+    webrick (1.8.2)
     websocket (1.2.11)
-    yard (0.9.36)
+    yard (0.9.37)
 
 PLATFORMS
   x86_64-linux
@@ -109,10 +72,8 @@ DEPENDENCIES
   rake
   redcarpet
   selenium-webdriver
-  solargraph
-  solargraph-standardrb
   standardrb
   yard
 
 BUNDLED WITH
-   2.5.16
+   2.5.21

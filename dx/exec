@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DIRNAME=$(dirname -- "${0}")
+SCRIPT_DIR=$(cd -- "${DIRNAME}" > /dev/null 2>&1 && pwd)
+
+source "${SCRIPT_DIR}"/shared.lib.sh
+
+SERVICE=app
+TTY=
+
+usage() {
+  echo "usage: $0 [-h] [-s service] command"
+  echo ""
+  echo "Executes a command inside a container"
+  echo ""
+  echo "OPTIONS"
+  echo ""
+  echo "  -s service - Set the service name for the"
+  echo "             - command (defaults to '${SERVICE}')"
+  echo "  -t         - Don't run as an interactive terminal"
+  echo "  -h         - show this help"
+  echo ""
+  echo "ARGUMENTS"
+  echo ""
+  echo "  command - a command line to execute inside the container"
+  echo ""
+  echo "EXAMPLES"
+  echo ""
+  echo "  # 'log in' to the '${SERVICE}' container"
+  echo "  dx/exec bin/bash"
+  echo ""
+  echo "  # run bin/setup in the '${SERVICE}' container"
+  echo "  dx/exec bin/setup"
+  echo ""
+  echo "  # run 'redis-cli' in the 'redis' container"
+  echo "  dx/exec -s redis redis-cli"
+}
+
+while getopts ":h:ts:" opt "${@}"; do
+  case ${opt} in
+    s)
+      SERVICE="${OPTARG}"
+      ;;
+    t)
+      TTY=" -T "
+      ;;
+    h)
+      usage
+      exit 0
+      ;;
+    ?)
+      log "Invalid option: ${OPTARG}"
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND -1))
+
+check_for_docker
+
+log "Executing '${@}' inside of container with service named '${SERVICE}'"
+docker compose \
+  --ansi=never \
+  --env-file "${SCRIPT_DIR}/docker/docker-compose.env" \
+  --file "${SCRIPT_DIR}/docker/docker-compose.dev.yml" \
+  exec \
+  ${TTY} \
+  "${SERVICE}" \
+  "${@}"
+
+log "Execution complete"
+

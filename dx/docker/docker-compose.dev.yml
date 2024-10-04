@@ -1,0 +1,11 @@
+services:
+  app:
+    image: ${IMAGE}
+    init: true
+    user: "me"
+    volumes:
+      - type: "bind"
+        source: "../../"
+        target: "/home/me/app"
+    ports:
+      - "3001:3000"
