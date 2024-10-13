@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 log() {
   echo "[ ${0} ]" "${@}"
@@ -20,4 +21,4 @@ log OPENBOX_PID: $XVFB_PID
 
 log "Compiling fresh"
 
-bundle exec rake clean linux:build
+bundle exec rake clean linux:build windows:build

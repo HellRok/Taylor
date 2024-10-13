@@ -7,5 +7,7 @@ services:
       - type: "bind"
         source: "../../"
         target: "/home/me/app"
+    devices:
+      - /dev/snd:/dev/snd
     ports:
       - "3001:3000"

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -u
+
+
+rake linux:release:build || exit 1
+
+pushd test/
+
+DISPLAY=:1 ../dist/linux/release/taylor ../cli-tool/cli.rb test.rb
+EXIT_CODE=$?
+
+popd
+exit $EXIT_CODE
