@@ -36,7 +36,7 @@ def fixture_core_drawing_blend_mode
   mu = Colour.new(red: 0, green: 37, blue: 10, alpha: 255) # Multiplied
   ac = Colour.new(red: 230, green: 255, blue: 103, alpha: 255) # Add colors
   su = Colour.new(red: 0, green: 187, blue: 0, alpha: 255) # Subtract colors
-  al = Colour.new(red: 115, green: 134, blue: 52, alpha: 255) # Alpha
+  al = Colour.new(red: 115, green: 135, blue: 52, alpha: 255) # Alpha
   ap = Colour.new(red: 115, green: 249, blue: 76, alpha: 255) # Alpha premultiply
   [
     ad, ad, mu, mu, ac, ac, su, su, al, al,
