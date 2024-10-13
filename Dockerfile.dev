@@ -74,6 +74,6 @@ RUN git clone https://github.com/asdf-vm/asdf.git /home/me/.asdf --branch ${ASDF
 RUN asdf plugin-add ruby && asdf install ruby ${RUBY_VERSION} && asdf global ruby ${RUBY_VERSION}
 
 RUN gem install bundler && \
-  bundle config set path /home/me/gems
+  bundle config set path vendor/bundle
 
 CMD ["sleep", "infinity"]

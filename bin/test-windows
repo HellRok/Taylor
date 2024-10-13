@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -u
+
+rake windows:release:build || exit 1
+
+pushd test/
+
+DISPLAY=:1 wine ../dist/windows/release/taylor.exe ../cli-tool/cli.rb test.rb 2> /dev/null
+EXIT_CODE=$?
+
+popd
+exit $EXIT_CODE

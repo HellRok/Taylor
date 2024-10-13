@@ -4,6 +4,8 @@ releases
 src/ruby/**/*.cpp
 include/ruby
 
+vendor/bundle
+
 cli-tool/exports
 test/exports
 test/test-analytics.json
