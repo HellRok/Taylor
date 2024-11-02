@@ -19,6 +19,6 @@ openbox &> /dev/null &
 export OPENBOX_PID=$!
 log OPENBOX_PID: $XVFB_PID
 
-log "Compiling fresh"
+log "Cleaning up"
 
-bundle exec rake clean linux:build windows:build
+bundle exec rake clean

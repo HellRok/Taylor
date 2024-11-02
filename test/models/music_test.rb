@@ -83,7 +83,7 @@ class Test
       end
 
       def test_play
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         music = Music.new("./assets/test.ogg", looping: false)
 
@@ -113,7 +113,7 @@ class Test
       end
 
       def test_played
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         skip "Browsers disable audio unless human interaction is detected." if browser?
         Audio.open
         music = Music.new("./assets/test.ogg", looping: false)
@@ -136,7 +136,7 @@ class Test
       end
 
       def test_pause_resume
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         skip "Browsers disable audio unless human interaction is detected." if browser?
         Audio.open
         music = Music.new("./assets/test.ogg", looping: false)

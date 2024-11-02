@@ -2,6 +2,12 @@ def use_window?
   !ENV.fetch("DISPLAY", "").empty? || browser? || windows?
 end
 
+def skip_unless_audio_enabled
+  skip "User skipped audio tests" if ENV["SKIP_AUDIO_TESTS"]
+  skip "Can't open and close audio more than once in WINE" if windows?
+  skip "No sound device found" unless File.exist? "/dev/snd"
+end
+
 def noop
   sleep 1
   flush_frame

@@ -1,77 +1,106 @@
-FROM debian:12
+FROM debian:12 AS asdf_install
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
 ENV ASDF_VERSION=v0.14.1
-ENV RUBY_VERSION=latest
 ENV PATH="/home/me/.asdf/shims:/home/me/.asdf/bin:$PATH"
 
-RUN apt-get update --quiet --yes
+WORKDIR /home/me/app
 
-RUN apt-get install --quiet --yes curl git
+COPY .tool-versions /home/me/.tool-versions
 
-# Install linux build dependencies
-RUN apt-get install --quiet --yes \
-      build-essential \
-      clang-format \
-      clang-tidy
+RUN <<SETUP
+apt-get update --quiet --yes
 
-# Install dependencies for ruby compilation
-RUN apt-get install --quiet --yes ruby-build libffi-dev libyaml-dev
+BASE_DEPS="curl git"
+RUBY_DEPS="ruby-build libffi-dev libyaml-dev"
+LINUX_BUILD_DEPS="build-essential "
 
-# Setup audio test
-RUN <<SHELL
-  cat << EOF > /etc/asound.conf
+apt-get install --quiet --yes \
+  ${BASE_DEPS} \
+  ${RUBY_DEPS} \
+  ${LINUX_BUILD_DEPS}
+SETUP
+
+RUN <<LOGIN
+groupadd --gid ${GROUP_ID} mygroup
+useradd -ms /bin/bash me --uid ${USER_ID} --gid ${GROUP_ID}
+chown -R me /home/me
+LOGIN
+
+USER me
+
+RUN git clone https://github.com/asdf-vm/asdf.git /home/me/.asdf --branch ${ASDF_VERSION}
+
+RUN asdf plugin-add ruby && asdf install ruby
+
+FROM debian:12
+
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+ENV PATH="/home/me/.asdf/shims:/home/me/.asdf/bin:$PATH"
+
+RUN <<SETUP
+apt-get update --quiet --yes
+
+BASE_DEPS="curl git clang-format clang-tidy"
+DEV_TOOLS="sudo valgrind gdb vim"
+RUBY_DEPS="ruby-build libffi-dev libyaml-dev"
+LINUX_BUILD_DEPS="build-essential "
+WINDOWS_BUILD_DEPS="mingw-w64"
+TEST_DEPS="alsa-utils openbox unzip wget xdotool xvfb"
+WINDOWS_TEST_DEPS="wine"
+WEB_TEST_DEPS="firefox-esr"
+
+apt-get install --quiet --yes \
+  ${BASE_DEPS} \
+  ${DEV_TOOLS} \
+  ${RUBY_DEPS} \
+  ${LINUX_BUILD_DEPS} \
+  ${WINDOWS_BUILD_DEPS} \
+  ${TEST_DEPS} \
+  ${WINDOWS_TEST_DEPS} \
+  ${WEB_TEST_DEPS}
+SETUP
+
+ARG PCM_DEVICE="hw:0,3"
+ARG PCM_CARD="0"
+
+RUN <<AUDIO
+cat << EOF > /etc/asound.conf
 pcm.!default {
         type plug
         slave {
-                pcm "hw:0,3"
+                pcm "${PCM_DEVICE}"
         }
 }
 
 ctl.!default {
         type hw
-        card 0
+        card ${PCM_CARD}
 }
-EOF
-SHELL
-
-# Install base test dependencies
-RUN \
-  apt-get install -y --no-install-recommends \
-    openbox \
-    unzip \
-    wget \
-    xdotool \
-    xvfb
-
-# Install windows test dependencies
-RUN \
-  apt-get install -y --no-install-recommends \
-    mingw-w64 \
-    wine
-
-# Install web test dependencies
-RUN \
-  apt-get install -y --no-install-recommends \
-    firefox-esr
+AUDIO
 
 WORKDIR /home/me/app
 
 # Setup the group and user to match your local system
-RUN groupadd --gid ${GROUP_ID} mygroup && \
-  useradd -ms /bin/bash me --uid ${USER_ID} --gid ${GROUP_ID} && \
-  chown -R me /home/me
+RUN <<LOGIN
+groupadd --gid ${GROUP_ID} mygroup
+useradd -ms /bin/bash me --uid ${USER_ID} --gid ${GROUP_ID} --password $(perl -e 'print crypt($ARGV[0], "password")' 'password') 
+adduser me audio
+adduser me sudo
+chown -R me /home/me
+LOGIN
 
 USER me
 
 RUN echo "source /home/me/.asdf/asdf.sh" >> /home/me/.bashrc && \
   echo "source /home/me/.asdf/completions/asdf.bash" >> /home/me/.bashrc
 
-RUN git clone https://github.com/asdf-vm/asdf.git /home/me/.asdf --branch ${ASDF_VERSION}
-
-RUN asdf plugin-add ruby && asdf install ruby ${RUBY_VERSION} && asdf global ruby ${RUBY_VERSION}
+COPY --from=asdf_install /home/me/.asdf /home/me/.asdf
+COPY .tool-versions /home/me/.tool-versions
 
 RUN gem install bundler && \
   bundle config set path vendor/bundle

@@ -8,6 +8,7 @@ services:
         source: "../../"
         target: "/home/me/app"
     devices:
-      - /dev/snd:/dev/snd
+      - /dev:/dev
+    privileged: true
     ports:
       - "3001:3000"

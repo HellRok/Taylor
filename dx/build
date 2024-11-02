@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DIRNAME=$(dirname -- "${0}")
+SCRIPT_DIR=$(cd -- "${DIRNAME}" > /dev/null 2>&1 && pwd)
+
+source "${SCRIPT_DIR}"/shared.lib.sh
+source "${SCRIPT_DIR}"/docker/docker-compose.env
+
+usage() {
+  echo "usage: $0 [-h]"
+  echo ""
+  echo "Builds the development Docker image from Dockerfile.dev"
+  echo ""
+  echo "OPTIONS"
+  echo ""
+  echo "  -h - show this help"
+}
+
+while getopts ":h" opt "${@}"; do
+  case ${opt} in
+    h)
+      usage
+      exit 0
+      ;;
+    ?)
+      log "Invalid option: ${OPTARG}"
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND -1))
+
+check_for_docker
+
+PCM_ARGS=
+PCM_DEVICE=${PCM_DEVICE:-}
+if [[ ! -z ${PCM_DEVICE} ]]; then
+  PCM_ARGS="--build-arg PCM_DEVICE=${PCM_DEVICE}"
+fi
+
+PCM_CARD=${PCM_CARD:-}
+if [[ ! -z ${PCM_CARD} ]]; then
+  PCM_ARGS="${PCM_ARGS} --build-arg PCM_CARD=${PCM_CARD}"
+fi
+
+log "Building Docker image '${IMAGE}'"
+docker build \
+  --file "${ROOT_DIR}/Dockerfile.dev" \
+  --platform "linux/amd64" \
+  --build-arg USER_ID="${USER_ID}" \
+  --build-arg GROUP_ID="${GROUP_ID}" \
+  ${PCM_ARGS} \
+  --tag "${IMAGE}" \
+  "${ROOT_DIR}"
+
+log "Docker image '${IMAGE}' is built"

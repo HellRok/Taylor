@@ -2,7 +2,7 @@ class Test
   class Models
     class Sound_Test < MTest::Unit::TestCaseWithAnalytics
       def test_initialize
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 
@@ -15,7 +15,7 @@ class Test
       end
 
       def test_initialize_with_arguments
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav", volume: 0.5, pitch: 1.3)
 
@@ -50,7 +50,7 @@ class Test
       end
 
       def test_to_h
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 
@@ -68,7 +68,7 @@ class Test
       end
 
       def test_play
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 
@@ -81,7 +81,7 @@ class Test
       end
 
       def test_stop
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 
@@ -95,7 +95,7 @@ class Test
       end
 
       def test_pause
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 
@@ -109,7 +109,7 @@ class Test
       end
 
       def test_resume
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 
@@ -125,7 +125,7 @@ class Test
       end
 
       def test_playing?
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 
@@ -138,7 +138,7 @@ class Test
       end
 
       def test_volume=
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 
@@ -151,7 +151,7 @@ class Test
       end
 
       def test_fail_volume=
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 
@@ -178,7 +178,7 @@ class Test
       end
 
       def test_pitch=
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         sound = Sound.new("./assets/test.wav")
 

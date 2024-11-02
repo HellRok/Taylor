@@ -2,7 +2,7 @@ class Test
   class Models
     class Audio_Test < MTest::Unit::TestCaseWithAnalytics
       def test_ready?
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
 
         assert_false Audio.ready?
 
@@ -17,6 +17,8 @@ class Test
       end
 
       def test_volume
+        skip_unless_audio_enabled
+
         Audio.open
         flush_frame until Audio.ready?
 
@@ -34,7 +36,7 @@ class Test
       end
 
       def test_volume_equals_errors
-        skip "Can't open and close audio more than once in WINE." if windows?
+        skip_unless_audio_enabled
         Audio.open
         flush_frame until Audio.ready?
 
@@ -57,6 +59,7 @@ class Test
 
       def test_volume_before_open
         skip "Waiting on Raylib 5.0"
+        skip_unless_audio_enabled
 
         Audio.volume
         fail "Previous line should have raised"
