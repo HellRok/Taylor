@@ -96,13 +96,15 @@ LOGIN
 
 USER me
 
-RUN echo "source /home/me/.asdf/asdf.sh" >> /home/me/.bashrc && \
-  echo "source /home/me/.asdf/completions/asdf.bash" >> /home/me/.bashrc
-
 COPY --from=asdf_install /home/me/.asdf /home/me/.asdf
 COPY .tool-versions /home/me/.tool-versions
 
-RUN gem install bundler && \
-  bundle config set path vendor/bundle
+RUN <<SETUP
+echo "source /home/me/.asdf/asdf.sh" >> /home/me/.bashrc
+echo "source /home/me/.asdf/completions/asdf.bash" >> /home/me/.bashrc
+
+gem install bundler
+bundle config set path vendor/bundle
+SETUP
 
 CMD ["sleep", "infinity"]
