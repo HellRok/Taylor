@@ -41,7 +41,7 @@ task "format:check" do
 end
 
 task "format:fix" do
-  sh "echo $(git ls-files *.{cpp,hpp}) | clang-format"
+  sh "clang-format -i $(git ls-files *.{cpp,hpp})"
 end
 
 task pretty: ["format:fix", "lint:fix"] do

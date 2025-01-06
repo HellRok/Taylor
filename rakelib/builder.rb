@@ -74,7 +74,7 @@ class Builder
   def lint(fix: false)
     if fix
       <<~CMD
-        git ls-files *.{cpp,hpp} |
+        find . -type f -name "*.[c,h]pp" |
         xargs -P$(nproc) -I{} \
         clang-tidy \
           --fix-errors \

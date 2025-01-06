@@ -149,6 +149,16 @@
 - Add Cursor.icon, Cursor.icon=, and Cursor icon constants
 - Removed set_mouse_cursor
 - Add blend_mode
+- Add Key.pressed?
+- Removed key_pressed?
+- Add Key.down?
+- Removed key_down?
+- Add Key.released?
+- Removed key_released?
+- Add Key.up?
+- Removed key_up?
+- Add Key.pressed
+- Removed get_key_pressed
 
 ## v0.3.14.1
 

@@ -44,4 +44,10 @@ module XDo
 
     def self.scroll_right = `#{XDo.command} click 7`
   end
+
+  class Key
+    def self.down(key) = `#{XDo.command} keydown #{key}`
+
+    def self.up(key) = `#{XDo.command} keyup #{key}`
+  end
 end
