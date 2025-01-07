@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo Building binaries
-bundle exec rake linux:release:build windows:release:build &> /dev/null
+bundle exec rake linux:build linux:release:build windows:release:build &> /dev/null
 
 if [[ $? -gt 0 ]]; then
   echo "Building failed"

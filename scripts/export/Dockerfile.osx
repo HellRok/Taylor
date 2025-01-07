@@ -1,4 +1,4 @@
-FROM taylor/build-osx as build_base
+FROM taylor/build-osx AS build_base
 WORKDIR /app/export
 
 COPY --from=taylor/export /usr/bin/taylor /usr/bin/taylor

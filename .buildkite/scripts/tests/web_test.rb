@@ -7,7 +7,7 @@ require "net/https"
 
 root = File.expand_path "."
 server = WEBrick::HTTPServer.new(
-  Port: 3001,
+  Port: 9999,
   DocumentRoot: root,
   Logger: WEBrick::Log.new("/dev/null"),
   AccessLog: []
@@ -19,7 +19,7 @@ options = Selenium::WebDriver::Firefox::Options.new(args: ["-headless"])
 
 driver = Selenium::WebDriver.for(:firefox, options: options)
 
-driver.get("http://localhost:3001")
+driver.get("http://localhost:9999")
 
 def upload_analytics(analytics)
   return unless ENV["BUILDKITE_TEST_ANALYTICS_KEY"]

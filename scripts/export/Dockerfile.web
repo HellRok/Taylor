@@ -1,4 +1,4 @@
-FROM taylor/build-web as build_base
+FROM taylor/build-web AS build_base
 WORKDIR /app/export
 # I'm not really sure why but EM_CACHE is required for the docker export to work on OSX.
 ENV \
