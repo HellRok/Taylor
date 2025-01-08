@@ -110,7 +110,6 @@ class Test
       end
 
       def test_position=
-        skip "xdotool not available" unless XDo.available?
         Mouse.position = Vector2[4, 8]
         assert_equal Vector2[4, 8], Mouse.position, "The mouse position has been set"
 
@@ -119,16 +118,11 @@ class Test
       end
 
       def test_offset=
-        skip "xdotool not available" unless XDo.available?
         Mouse.position = Vector2[1, 1]
         Mouse.offset = Vector2[2, 3]
         assert_equal Vector2[3, 4], Mouse.position, "The mouse has been offset by 2, 3"
 
-        skip "xdotool not available" unless XDo.available?
-
-        set_window_position(50, 50)
-        XDo::Mouse.move_to(55, 55)
-        flush_frame
+        Mouse.position = Vector2[5, 5]
 
         assert_equal Vector2[7, 8], Mouse.position, "The mouse continues to be offset by 2, 3"
       ensure
