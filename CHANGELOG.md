@@ -159,6 +159,8 @@
 - Removed key_up?
 - Add Key.pressed
 - Removed get_key_pressed
+- Add Key.pressed_character
+- Removed get_char_pressed
 
 ## v0.3.14.1
 

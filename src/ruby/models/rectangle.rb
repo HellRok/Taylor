@@ -55,7 +55,6 @@ class Rectangle
     segments: 8,    # only used when rounded is true
     colour: Colour::BLACK
   )
-
     if rounded
       unless (0..1).cover?(radius)
         raise ArgumentError, "Radius must fall between 0 and 1, you gave me #{radius}"

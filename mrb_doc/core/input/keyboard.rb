@@ -6,11 +6,3 @@ def set_exit_key(key)
   # src/mruby_integration/core/input/keyboard.cpp
   nil
 end
-
-# Returns the charcode for the pressed key, call it multiple times for queued keys.
-# @return [Integer]
-def get_char_pressed
-  # mrb_getchar_pressed
-  # src/mruby_integration/core/input/keyboard.cpp
-  64
-end

@@ -46,7 +46,7 @@ module XDo
   end
 
   class Key
-    def self.down(key) = `#{XDo.command} keydown #{key}`
+    def self.down(key, modifier: nil) = `#{XDo.command} keydown #{modifier ? "#{modifier}+#{key}" : key}`
 
     def self.up(key) = `#{XDo.command} keyup #{key}`
   end

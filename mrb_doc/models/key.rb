@@ -138,4 +138,30 @@ class Key
     # src/mruby_integration/models/key.cpp
     Key::Q
   end
+
+  # Returns the least recently pressed key since last frame as a character.
+  # Call it multiple times until you get `nil` to know you've gotten all the characters.
+  #
+  # @example Basic usage
+  #   Key.pressed_character
+  #   # => nil
+  #
+  #   # The user types "wasd" and then a frame advances
+  #   Key.pressed_character
+  #   # => "w"
+  #   Key.pressed_character
+  #   # => "a"
+  #   Key.pressed_character
+  #   # => "s"
+  #   Key.pressed_character
+  #   # => "d"
+  #   Key.pressed_character
+  #   # => nil
+  #
+  # @return [nil,String]
+  def self.pressed_character(key)
+    # mrb_Key_get_pressed_character
+    # src/mruby_integration/models/key.cpp
+    "q"
+  end
 end

@@ -60,6 +60,21 @@ mrb_Key_get_pressed(mrb_state* mrb, mrb_value) -> mrb_value
   }
 }
 
+auto
+mrb_Key_get_pressed_character(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  int char_code = GetCharPressed();
+
+  if (char_code > 0) {
+    char key[0];
+    key[0] = static_cast<char>(char_code);
+
+    return mrb_str_new_cstr(mrb, key);
+  } else {
+    return mrb_nil_value();
+  }
+}
+
 void
 append_models_Key(mrb_state* mrb)
 {
@@ -74,6 +89,11 @@ append_models_Key(mrb_state* mrb)
   mrb_define_class_method(mrb, Key_class, "up?", mrb_Key_up, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Key_class, "pressed", mrb_Key_get_pressed, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb,
+                          Key_class,
+                          "pressed_character",
+                          mrb_Key_get_pressed_character,
+                          MRB_ARGS_NONE());
 
   load_ruby_models_key(mrb);
 }

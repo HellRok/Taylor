@@ -17,7 +17,10 @@ class Test
         flush_frame
         assert_false Key.pressed?(Key::A), "The a key has been released"
       ensure
-        XDo::Key.up(:a) if XDo.available?
+        if XDo.available?
+          XDo::Key.up(:a)
+          flush_frame
+        end
       end
 
       def test_down?
@@ -36,7 +39,10 @@ class Test
         flush_frame
         assert_false Key.down?(Key::B), "The b key has been released"
       ensure
-        XDo::Key.up(:b) if XDo.available?
+        if XDo.available?
+          XDo::Key.up(:b)
+          flush_frame
+        end
       end
 
       def test_released?
@@ -55,7 +61,10 @@ class Test
         flush_frame
         assert_false Key.released?(Key::C), "A frame has passed since the c key was released"
       ensure
-        XDo::Key.up(:c) if XDo.available?
+        if XDo.available?
+          XDo::Key.up(:c)
+          flush_frame
+        end
       end
 
       def test_up?
@@ -74,7 +83,10 @@ class Test
         flush_frame
         assert_true Key.up?(Key::D), "A frame has passed since the d key was released"
       ensure
-        XDo::Key.up(:d) if XDo.available?
+        if XDo.available?
+          XDo::Key.up(:d)
+          flush_frame
+        end
       end
 
       def test_pressed
@@ -101,6 +113,35 @@ class Test
           XDo::Key.up(:b)
           XDo::Key.up(:c)
           XDo::Key.up(:d)
+          flush_frame
+        end
+      end
+
+      def test_pressed_character
+        skip "xdotool not available" unless XDo.available?
+
+        assert_equal nil, Key.pressed, "No frame has happened and no key has been pressed"
+
+        XDo::Key.down(:a)
+        XDo::Key.down(:b)
+        flush_frame
+        assert_equal "a", Key.pressed_character, "a was the first pressed key"
+        assert_equal "b", Key.pressed_character, "b was the second pressed key"
+        assert_equal nil, Key.pressed_character, "No other key was pressed"
+
+        XDo::Key.down(:d)
+        XDo::Key.down(:c, modifier: "shift")
+        flush_frame
+        assert_equal "d", Key.pressed_character, "d was the first pressed key"
+        assert_equal "C", Key.pressed_character, "c was the second pressed key but shift was also held"
+        assert_equal nil, Key.pressed_character, "No other key was pressed"
+      ensure
+        if XDo.available?
+          XDo::Key.up(:a)
+          XDo::Key.up(:b)
+          XDo::Key.up(:d)
+          XDo::Key.up(:c, modifier: "shift")
+          flush_frame
         end
       end
     end
