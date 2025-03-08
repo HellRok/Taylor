@@ -14,5 +14,6 @@ gem "redcarpet"
 
 # Testing
 group :test do
+  gem "webrick"
   gem "selenium-webdriver"
 end
