@@ -1,11 +1,3 @@
-# Has the user pressed ESC or the close button?
-# @return [Boolean]
-def window_should_close?
-  # mrb_window_should_close
-  # src/mruby_integration/core/window.cpp
-  false
-end
-
 # Close the open window.
 # @return [nil]
 def close_window

@@ -60,6 +60,12 @@ mrb_Window_title(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_str_new_cstr(mrb, title);
 }
 
+auto
+mrb_Window_close(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  return mrb_bool_value(WindowShouldClose());
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -73,6 +79,8 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "height", mrb_Window_height, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "title", mrb_Window_title, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "close?", mrb_Window_close, MRB_ARGS_NONE());
 
   load_ruby_models_window(mrb);
 }

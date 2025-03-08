@@ -20,6 +20,15 @@ class Test
       ensure
         reset_window
       end
+
+      def test_close?
+        assert_equal false, Window.close?
+
+        XDo::Key.press "Escape"
+        flush_frame
+
+        assert_equal true, Window.close?
+      end
     end
   end
 end

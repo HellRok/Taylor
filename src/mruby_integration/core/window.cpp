@@ -7,12 +7,6 @@
 #include "ruby/core/window.hpp"
 
 auto
-mrb_window_should_close(mrb_state*, mrb_value) -> mrb_value
-{
-  return mrb_bool_value(WindowShouldClose());
-}
-
-auto
 mrb_close_window(mrb_state*, mrb_value) -> mrb_value
 {
   CloseWindow();
@@ -271,11 +265,6 @@ mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_window(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "window_should_close?",
-                    mrb_window_should_close,
-                    MRB_ARGS_NONE());
   mrb_define_method(
     mrb, mrb->kernel_module, "close_window", mrb_close_window, MRB_ARGS_NONE());
   mrb_define_method(mrb,

@@ -74,4 +74,26 @@ class Window
     # src/mruby_integration/models/window.cpp
     "Taylor Game"
   end
+
+  # Checks if the user has asked the {Window} to close since last frame.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #  until Window.close?
+  #    drawing do
+  #      # Render your stuff here
+  #    end
+  #  end
+  #
+  # @return [Boolean]
+  def self.close?
+    # mrb_Window_close
+    # src/mruby_integration/models/window.cpp
+    false
+  end
 end
