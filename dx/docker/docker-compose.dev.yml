@@ -10,5 +10,3 @@ services:
     devices:
       - /dev:/dev
     privileged: true
-    ports:
-      - "3001:3000"

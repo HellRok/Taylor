@@ -156,14 +156,14 @@ class Test
       set_target_fps 5
 
       flush_frame
-      assert_equal 10, get_screen_width
-      assert_equal 10, get_screen_height
+      assert_equal 10, Window.width
+      assert_equal 10, Window.height
 
       set_window_size 128, 48
 
       flush_frames 5
-      assert_equal 128, get_screen_width
-      assert_equal 48, get_screen_height
+      assert_equal 128, Window.width
+      assert_equal 48, Window.height
     ensure
       reset_window if window_ready?
     end

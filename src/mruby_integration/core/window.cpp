@@ -7,17 +7,6 @@
 #include "ruby/core/window.hpp"
 
 auto
-mrb_init_window(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int width, height;
-  char* title;
-  mrb_get_args(mrb, "iiz", &width, &height, &title);
-
-  InitWindow(width, height, title);
-  return mrb_nil_value();
-}
-
-auto
 mrb_window_should_close(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(WindowShouldClose());
@@ -196,18 +185,6 @@ mrb_set_window_size(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_get_screen_width(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  return mrb_int_value(mrb, GetScreenWidth());
-}
-
-auto
-mrb_get_screen_height(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  return mrb_int_value(mrb, GetScreenHeight());
-}
-
-auto
 mrb_get_monitor_count(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetMonitorCount());
@@ -294,8 +271,6 @@ mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_window(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "window_should_close?",
@@ -403,16 +378,6 @@ append_core_window(mrb_state* mrb)
                     "set_window_size",
                     mrb_set_window_size,
                     MRB_ARGS_REQ(2));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_screen_width",
-                    mrb_get_screen_width,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_screen_height",
-                    mrb_get_screen_height,
-                    MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "get_monitor_count",

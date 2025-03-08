@@ -15,7 +15,7 @@ end
 
 def reset_window
   close_window
-  init_window(10, 10, "Taylor Test Suite")
+  Window.open(width: 10, height: 10, title: "Taylor Test Suite")
 end
 
 def skip_unless_display_present

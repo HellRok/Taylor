@@ -13,6 +13,7 @@
 #include "mruby_integration/models/sound.hpp"
 #include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/models/vector2.hpp"
+#include "mruby_integration/models/window.hpp"
 
 void
 append_models(mrb_state* mrb)
@@ -32,4 +33,5 @@ append_models(mrb_state* mrb)
   append_models_Sound(mrb);
   append_models_Texture2D(mrb);
   append_models_Vector2(mrb);
+  append_models_Window(mrb);
 }

@@ -30,6 +30,7 @@ require "models/shader_test"
 require "models/sound_test"
 require "models/texture2d_test"
 require "models/vector2_test"
+require "models/window_test"
 require "platform"
 require "shader_test"
 require "shapes/circle_test"
@@ -44,7 +45,7 @@ require "texture_test"
 require "web"
 
 if use_window?
-  init_window(10, 10, "blah")
+  Window.open(width: 10, height: 10, title: "Taylor Test Suite")
   set_target_fps(10)
 end
 

@@ -161,6 +161,12 @@
 - Removed get_key_pressed
 - Add Key.pressed_character
 - Removed get_char_pressed
+- Added Window.open
+- Removed init_window
+- Added Window.width
+- Removed get_screen_width
+- Added Window.height
+- Removed get_screen_height
 
 ## v0.3.14.1
 

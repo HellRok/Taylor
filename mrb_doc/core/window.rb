@@ -1,14 +1,3 @@
-# Initialises a window for rendering.
-# @param width [Integer]
-# @param height [Integer]
-# @param title [String]
-# @return [nil]
-def init_window(width, height, title)
-  # mrb_init_window
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
 # Has the user pressed ESC or the close button?
 # @return [Boolean]
 def window_should_close?
@@ -202,22 +191,6 @@ def set_window_size(width, height)
   # mrb_set_window_size
   # src/mruby_integration/core/window.cpp
   nil
-end
-
-# Gets the width of the window.
-# @return [Integer]
-def get_screen_width
-  # mrb_get_screen_width
-  # src/mruby_integration/core/window.cpp
-  640
-end
-
-# Gets the height of the window.
-# @return [Integer]
-def get_screen_height
-  # mrb_get_screen_height
-  # src/mruby_integration/core/window.cpp
-  480
 end
 
 # Gets the total number of monitors the user has.
