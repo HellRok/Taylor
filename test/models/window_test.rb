@@ -22,6 +22,8 @@ class Test
       end
 
       def test_close?
+        skip "xdotool not available" unless XDo.available?
+
         assert_equal false, Window.close?
 
         XDo::Key.press "Escape"
