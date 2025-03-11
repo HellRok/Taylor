@@ -1,5 +1,5 @@
 class Window
-  # Initialises a window for rendering.
+  # Initialises the {Window} for rendering.
   #
   # @example Basic usage
   #   Window.open(
@@ -16,6 +16,55 @@ class Window
     # mrb_Window_open
     # src/mruby_integration/models/window.cpp
     nil
+  end
+
+  # Closes the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   #... later
+  #
+  #   Window.close
+  #
+  # @return [nil]
+  def self.close
+    # mrb_Window_close
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
+
+  # Has the {Window} been initialised and is it ready for drawing?
+  #
+  # @example Basic usage
+  #   puts Window.ready?
+  #   # => false
+  #
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.ready?
+  #   # => true
+  #
+  #   #... later
+  #
+  #   Window.close
+  #
+  #   puts Window.ready?
+  #   # => false
+  #
+  # @return [Boolean]
+  def self.ready?
+    # mrb_Window_ready
+    # src/mruby_integration/models/window.cpp
+    true
   end
 
   # Gets the width of the {Window}.
@@ -92,7 +141,7 @@ class Window
   #
   # @return [Boolean]
   def self.close?
-    # mrb_Window_close
+    # mrb_Window_close_question
     # src/mruby_integration/models/window.cpp
     false
   end

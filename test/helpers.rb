@@ -14,7 +14,7 @@ def noop
 end
 
 def reset_window
-  close_window
+  Window.close
   Window.open(width: 10, height: 10, title: "Taylor Test Suite")
 end
 

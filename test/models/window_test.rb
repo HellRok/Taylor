@@ -6,7 +6,7 @@ class Test
         assert_equal 10, Window.height
         assert_equal "Taylor Test Suite", Window.title
 
-        close_window
+        Window.close
 
         Window.open(
           width: 12,
@@ -30,6 +30,16 @@ class Test
         flush_frame
 
         assert_equal true, Window.close?
+      end
+
+      def test_ready?
+        assert_true Window.ready?
+
+        Window.close
+        assert_false Window.ready?
+
+        Window.open(width: 10, height: 10, title: "Taylor Test Suite")
+        assert_true Window.ready?
       end
     end
   end

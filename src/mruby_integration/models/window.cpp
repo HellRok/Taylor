@@ -43,6 +43,19 @@ mrb_Window_open(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
+mrb_Window_close(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  CloseWindow();
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_ready(mrb_state*, mrb_value) -> mrb_value
+{
+  return mrb_bool_value(IsWindowReady());
+}
+
+auto
 mrb_Window_width(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetScreenWidth());
@@ -61,7 +74,7 @@ mrb_Window_title(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Window_close(mrb_state* mrb, mrb_value) -> mrb_value
+mrb_Window_close_question(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_bool_value(WindowShouldClose());
 }
@@ -74,13 +87,17 @@ append_models_Window(mrb_state* mrb)
   mrb_define_class_method(
     mrb, Window_class, "open", mrb_Window_open, MRB_ARGS_REQ(1));
   mrb_define_class_method(
+    mrb, Window_class, "close", mrb_Window_close, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "ready?", mrb_Window_ready, MRB_ARGS_NONE());
+  mrb_define_class_method(
     mrb, Window_class, "width", mrb_Window_width, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "height", mrb_Window_height, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "title", mrb_Window_title, MRB_ARGS_NONE());
   mrb_define_class_method(
-    mrb, Window_class, "close?", mrb_Window_close, MRB_ARGS_NONE());
+    mrb, Window_class, "close?", mrb_Window_close_question, MRB_ARGS_NONE());
 
   load_ruby_models_window(mrb);
 }

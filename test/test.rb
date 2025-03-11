@@ -52,7 +52,7 @@ end
 $started = false
 def main
   result = MTest::Unit.new.run.positive?
-  close_window if use_window?
+  Window.close if use_window?
 
   persist_buildkite_test_analytics unless browser?
 

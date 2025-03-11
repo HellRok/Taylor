@@ -1,19 +1,3 @@
-# Close the open window.
-# @return [nil]
-def close_window
-  # mrb_close_window
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
-# Has the window been initialised and ready for rendering?
-# @return [Boolean]
-def window_ready?
-  # mrb_window_ready
-  # src/mruby_integration/core/window.cpp
-  true
-end
-
 # Checks if the window has the state set
 # @example Passing multiple flags
 #   window_state?(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)

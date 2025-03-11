@@ -169,6 +169,10 @@
 - Removed get_screen_height
 - Added Window.close?
 - Removed window_should_close?
+- Added Window.close
+- Removed window_close
+- Added Window.ready?
+- Removed window_ready
 
 ## v0.3.14.1
 
