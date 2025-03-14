@@ -44,7 +44,7 @@ class Test
       assert_equal 128, Window.width
       assert_equal 48, Window.height
     ensure
-      reset_window if window_ready?
+      reset_window if Window.ready?
     end
 
     def test_clipboard
