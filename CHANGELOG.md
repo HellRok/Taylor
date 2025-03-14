@@ -173,6 +173,30 @@
 - Removed window_close
 - Added Window.ready?
 - Removed window_ready
+- Added Window.flag?
+- Removed window_state?
+- Added Window.flags=
+- Removed set_window_state
+- Added Window.fullscreen?
+- Removed window_fullscreen?
+- Added Window.minimised?
+- Removed window_minimised?
+- Added Window.maximised?
+- Removed window_maximised?
+- Added Window.focused?
+- Removed window_focused?
+- Added Window.hidden?
+- Removed window_hidden?
+- Added Window.always_on_top?
+- Added Window.always_run?
+- Added Window.transparent?
+- Added Window.high_dpi?
+- Added Window.vsync_hinted?
+- Added Window.msaa_4x_hinted?
+- Added Window.interlaced_hinted?
+- Added Window.clear_flag
+- Removed clear_window_state
+- Added Window.config=
 
 ## v0.3.14.1
 

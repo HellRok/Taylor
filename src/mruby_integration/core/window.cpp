@@ -4,71 +4,10 @@
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
 
-#include "ruby/core/window.hpp"
-
-auto
-mrb_window_state(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int flag;
-  mrb_get_args(mrb, "i", &flag);
-
-  return mrb_bool_value(IsWindowState(flag));
-}
-
-auto
-mrb_set_window_state(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int flag;
-  mrb_get_args(mrb, "i", &flag);
-
-  SetWindowState(flag);
-  return mrb_nil_value();
-}
-
-auto
-mrb_window_fullscreen(mrb_state*, mrb_value) -> mrb_value
-{
-  return mrb_bool_value(IsWindowFullscreen());
-}
-
-auto
-mrb_window_hidden(mrb_state*, mrb_value) -> mrb_value
-{
-  return mrb_bool_value(IsWindowHidden());
-}
-
-auto
-mrb_window_minimised(mrb_state*, mrb_value) -> mrb_value
-{
-  return mrb_bool_value(IsWindowMinimized());
-}
-
-auto
-mrb_window_maximised(mrb_state*, mrb_value) -> mrb_value
-{
-  return mrb_bool_value(IsWindowMaximized());
-}
-
-auto
-mrb_window_focused(mrb_state*, mrb_value) -> mrb_value
-{
-  return mrb_bool_value(IsWindowFocused());
-}
-
 auto
 mrb_window_resized(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsWindowResized());
-}
-
-auto
-mrb_clear_window_state(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int flag;
-  mrb_get_args(mrb, "i", &flag);
-
-  ClearWindowState(flag);
-  return mrb_nil_value();
 }
 
 auto
@@ -254,48 +193,8 @@ append_core_window(mrb_state* mrb)
 {
   mrb_define_method(mrb,
                     mrb->kernel_module,
-                    "window_fullscreen?",
-                    mrb_window_fullscreen,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "window_hidden?",
-                    mrb_window_hidden,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "window_minimised?",
-                    mrb_window_minimised,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "window_maximised?",
-                    mrb_window_maximised,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "window_focused?",
-                    mrb_window_focused,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
                     "window_resized?",
                     mrb_window_resized,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "window_state?",
-                    mrb_window_state,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "set_window_state",
-                    mrb_set_window_state,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "clear_window_state",
-                    mrb_clear_window_state,
                     MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
@@ -387,6 +286,4 @@ append_core_window(mrb_state* mrb)
                     "get_window_scale_dpi",
                     mrb_get_window_scale_dpi,
                     MRB_ARGS_NONE());
-
-  load_ruby_core_window(mrb);
 }

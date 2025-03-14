@@ -79,6 +79,45 @@ mrb_Window_close_question(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_bool_value(WindowShouldClose());
 }
 
+auto
+mrb_Window_flag_question(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_int flag;
+  mrb_get_args(mrb, "i", &flag);
+
+  return mrb_bool_value(IsWindowState(flag));
+}
+
+auto
+mrb_Window_flags_equal(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_int flag;
+  mrb_get_args(mrb, "i", &flag);
+
+  SetWindowState(flag);
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_config_equals(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_int flag;
+  mrb_get_args(mrb, "i", &flag);
+
+  SetConfigFlags(flag);
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_clear_flag(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_int flag;
+  mrb_get_args(mrb, "i", &flag);
+
+  ClearWindowState(flag);
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -98,6 +137,14 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "title", mrb_Window_title, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "close?", mrb_Window_close_question, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "flag?", mrb_Window_flag_question, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "flags=", mrb_Window_flags_equal, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "config=", mrb_Window_config_equals, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "clear_flag", mrb_Window_clear_flag, MRB_ARGS_REQ(1));
 
   load_ruby_models_window(mrb);
 }

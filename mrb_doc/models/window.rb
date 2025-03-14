@@ -133,16 +133,122 @@ class Window
   #     title: "My super cool game!"
   #   )
   #
-  #  until Window.close?
-  #    drawing do
-  #      # Render your stuff here
-  #    end
-  #  end
+  #   until Window.close?
+  #     drawing do
+  #       # Render your stuff here
+  #     end
+  #   end
   #
   # @return [Boolean]
   def self.close?
     # mrb_Window_close_question
     # src/mruby_integration/models/window.cpp
     false
+  end
+
+  # Checks if the flag or config for the {Window} has been set.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.fullscreen?
+  #   # => false
+  #
+  #   Window.flags = Window::Flag::FULLSCREEN
+  #
+  #   puts Window.fullscreen?
+  #   # => true
+  #
+  # @param flag [Integer] The flag to check for, check {Window::Flag} for valid options.
+  # @return [Boolean]
+  def self.flag?(flag)
+    # mrb_Window_flag_question
+    # src/mruby_integration/models/window.cpp
+    true
+  end
+
+  # Sets the flags for the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.fullscreen?
+  #   # => false
+  #   puts Window.resizable?
+  #   # => false
+  #
+  #   Window.flags = Window::Flag::RESIZABLE | Window::Flag::FULLSCREEN
+  #
+  #   puts Window.fullscreen?
+  #   # => true
+  #   puts Window.resizable?
+  #   # => true
+  #
+  # @param flag [Integer] The flag to set, check {Window::Flag} for valid options.
+  # @return [nil]
+  def self.flags=(flag)
+    # mrb_Window_flags_equal
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
+
+  # Sets the configuration for the {Window} before you open it.
+  #
+  # @example Basic usage
+  #   Window.config = Window::Flag::MSAA_4X_HINT
+  #
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.msaa_4x_hinted?
+  #   # => true
+  #
+  # @param flag [Integer] The flag to set, check {Window::Flag} for valid options.
+  # @return [nil]
+  def self.config=(flag)
+    # mrb_Window_config_equals
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
+
+  # Clears the flag for the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.resizable?
+  #   # => false
+  #
+  #   Window.flags = Window::Flag::RESIZABLE
+  #
+  #   puts Window.resizable?
+  #   # => true
+  #
+  #   Window.clear_flag = Window::Flag::RESIZABLE
+  #
+  #   puts Window.resizable?
+  #   # => false
+  #
+  # @param flag [Integer] The flag to check for, check {Window::Flag} for valid options.
+  # @return [nil]
+  def self.clear_flag(flag)
+    # mrb_Window_clear_flag
+    # src/mruby_integration/models/window.cpp
+    nil
   end
 end

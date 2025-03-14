@@ -13,13 +13,34 @@ def noop
   flush_frame
 end
 
-def reset_window
-  Window.close
+def reset_window(&block)
+  Window.close if Window.ready?
+  block.call if block_given?
   Window.open(width: 10, height: 10, title: "Taylor Test Suite")
+  clear_all_flags
+  set_target_fps(10)
+end
+
+def clear_all_flags
+  Window.clear_flag(Window::Flag::VSYNC_HINT)
+  Window.clear_flag(Window::Flag::MSAA_4X_HINT)
+  Window.clear_flag(Window::Flag::INTERLACED_HINT)
+
+  Window.clear_flag(Window::Flag::FULLSCREEN)
+  Window.clear_flag(Window::Flag::RESIZABLE)
+  Window.clear_flag(Window::Flag::UNDECORATED)
+  Window.clear_flag(Window::Flag::HIDDEN)
+  Window.clear_flag(Window::Flag::MINIMISED)
+  Window.clear_flag(Window::Flag::MAXIMISED)
+  Window.clear_flag(Window::Flag::UNFOCUSED)
+  Window.clear_flag(Window::Flag::ALWAYS_ON_TOP)
+  Window.clear_flag(Window::Flag::ALWAYS_RUN)
+  Window.clear_flag(Window::Flag::TRANSPARENT)
+  Window.clear_flag(Window::Flag::HIGH_DPI)
 end
 
 def skip_unless_display_present
-  skip unless window_ready?
+  skip unless Window.ready?
 end
 
 def clear_and_draw(&block)

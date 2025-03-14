@@ -1,4 +1,4 @@
-# Sets the key that {window_should_close?} should listen for.
+# Sets the key that {Window.close?} should listen for.
 # @param key [Integer]
 # @return [nil]
 def set_exit_key(key)

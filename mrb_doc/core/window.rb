@@ -1,82 +1,9 @@
-# Checks if the window has the state set
-# @example Passing multiple flags
-#   window_state?(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
-# @param flags [Integer]
-# @return [Boolean]
-def window_state?(flags)
-  # mrb_window_state
-  # src/mruby_integration/core/window.cpp
-  true
-end
-
-# Sets the specified states on the window.
-# @example Passing multiple flags
-#   set_window_state(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
-# @param flags [Integer]
-# @return [nil]
-def set_window_state(flags)
-  # mrb_clear_window_state
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
-# Checks if the window has the {FLAG_FULLSCREEN_MODE} state set.
-# @return [Boolean]
-def window_fullscreen?
-  # mrb_window_fullscreen
-  # src/mruby_integration/core/window.cpp
-  true
-end
-
-# Checks if the window has the {FLAG_WINDOW_HIDDEN} state set.
-# @return [Boolean]
-def window_hidden?
-  # mrb_window_hidden
-  # src/mruby_integration/core/window.cpp
-  false
-end
-
-# Checks if the window has the {FLAG_WINDOW_MINIMISED} state set.
-# @return [Boolean]
-def window_minimised?
-  # mrb_window_minimised
-  # src/mruby_integration/core/window.cpp
-  false
-end
-
-# Checks if the window has the {FLAG_WINDOW_MAXIMISED} state set.
-# @return [Boolean]
-def window_maximised?
-  # mrb_window_maximised
-  # src/mruby_integration/core/window.cpp
-  true
-end
-
-# Checks if the window has focus.
-# @return [Boolean]
-def window_focused?
-  # mrb_window_focused
-  # src/mruby_integration/core/window.cpp
-  true
-end
-
 # Checks if the window was resized since the last frame.
 # @return [Boolean]
 def window_resized?
   # mrb_window_resized
   # src/mruby_integration/core/window.cpp
   false
-end
-
-# Clears the specified states on the window.
-# @example Passing multiple flags
-#   clear_window_state(FLAG_WINDOW_ALWAYS_RUN | FLAG_WINDOW_HIDDEN)
-# @param flags [Integer]
-# @return [nil]
-def clear_window_state(flags)
-  # mrb_clear_window_state
-  # src/mruby_integration/core/window.cpp
-  nil
 end
 
 # Toggles the fullscreen state.

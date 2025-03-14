@@ -44,10 +44,7 @@ require "shapes/triangle_test"
 require "texture_test"
 require "web"
 
-if use_window?
-  Window.open(width: 10, height: 10, title: "Taylor Test Suite")
-  set_target_fps(10)
-end
+reset_window if use_window?
 
 $started = false
 def main

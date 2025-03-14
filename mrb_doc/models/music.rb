@@ -132,7 +132,7 @@ class Music
   #   music = Music.new("./assets/background_music.ogg")
   #   music.play
   #
-  #   until window_should_close?
+  #   until Window.close?
   #     music.update
   #
   #     draw do
