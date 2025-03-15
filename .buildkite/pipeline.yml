@@ -80,18 +80,21 @@ steps:
   - wait
 
   - label: 'Taylor Tests - Linux'
+    artifact_paths:
+      - ./test-analytics.json
     commands:
       - .buildkite/scripts/tests/test_suite_linux.sh
-      - buildkite-agent artifact upload test-analytics.json
       - .buildkite/scripts/tests/upload_test_analytics.sh /tmp/buildkite/taylor-test-suite/linux/test-analytics.json
 
   - label: 'Taylor Tests - Windows'
+    artifact_paths:
+      - ./test-analytics.json
     commands:
       - .buildkite/scripts/tests/test_suite_windows.sh
-      - buildkite-agent artifact upload test-analytics.json
       - .buildkite/scripts/tests/upload_test_analytics.sh /tmp/buildkite/taylor-test-suite/windows/test-analytics.json
 
   - label: 'Taylor Tests - Web'
+    artifact_paths:
+      - ./test-analytics.json
     commands:
       - .buildkite/scripts/tests/test_suite_web.sh
-      - buildkite-agent artifact upload test-analytics.json
