@@ -9,7 +9,7 @@ root = File.expand_path "."
 server = WEBrick::HTTPServer.new(
   Port: 9999,
   DocumentRoot: root,
-  Logger: WEBrick::Log.new("/dev/null"),
+  Logger: WEBrick::Log.new(File::NULL),
   AccessLog: []
 )
 
@@ -49,6 +49,8 @@ def upload_analytics(analytics)
     },
     data: analytics
   }.to_json
+
+  File.write("test-analytics.json", analytics)
 
   request = Net::HTTP::Post.new(uri.request_uri, headers)
   request.body = body
