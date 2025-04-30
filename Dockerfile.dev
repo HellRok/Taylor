@@ -3,7 +3,9 @@ FROM debian:12 AS asdf_install
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
-ENV ASDF_VERSION=v0.14.1
+ENV ASDF_VERSION=v0.16.4
+ENV ASDF_PLATFORM=amd64
+ENV ASDF_URL=https://github.com/asdf-vm/asdf/releases/download/$ASDF_VERSION/asdf-$ASDF_VERSION-linux-$ASDF_PLATFORM.tar.gz
 ENV PATH="/home/me/.asdf/shims:/home/me/.asdf/bin:$PATH"
 
 WORKDIR /home/me/app
@@ -13,7 +15,7 @@ COPY .tool-versions /home/me/.tool-versions
 RUN <<SETUP
 apt-get update --quiet --yes
 
-BASE_DEPS="curl git"
+BASE_DEPS="wget curl git"
 RUBY_DEPS="ruby-build libffi-dev libyaml-dev"
 LINUX_BUILD_DEPS="build-essential "
 
@@ -31,9 +33,14 @@ LOGIN
 
 USER me
 
-RUN git clone https://github.com/asdf-vm/asdf.git /home/me/.asdf --branch ${ASDF_VERSION}
+RUN <<ASDF
+wget -O /home/me/asdf.tar.gz "${ASDF_URL}"
+tar xfv /home/me/asdf.tar.gz
+mkdir -p /home/me/.asdf/bin/
+mv asdf /home/me/.asdf/bin/asdf
+ASDF
 
-RUN asdf plugin-add ruby && asdf install ruby
+RUN asdf plugin add ruby && asdf install ruby
 
 FROM debian:12
 
