@@ -1,15 +1,25 @@
-require "./templates/game_template"
+unless released?
+  original_dir = Dir.getwd
+  Dir.chdir(File.expand_path(File.dirname(ARGV.shift)))
+  $:.unshift Dir.getwd
+end
 
-require "./lib/overrides"
+require "templates/game_template"
 
-require "./app/commands/export"
-require "./app/commands/new"
-require "./app/commands/run"
-require "./app/commands/squash"
-require "./app/commands/version"
+require "lib/overrides"
 
-$:.unshift WORKING_DIRECTORY
-Dir.chdir WORKING_DIRECTORY
+require "app/commands/export"
+require "app/commands/new"
+require "app/commands/run"
+require "app/commands/squash"
+require "app/commands/version"
+
+unless released?
+  $:.shift
+  Dir.chdir(original_dir)
+end
+
+$:.unshift Dir.getwd
 
 options = if File.exist?("./taylor-config.json")
   JSON.parse(File.read("./taylor-config.json"))
