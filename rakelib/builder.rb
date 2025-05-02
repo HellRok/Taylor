@@ -1,4 +1,8 @@
+require_relative "builder/commands"
+
 class Builder
+  def self.base = @@base ||= new
+
   def self.builders
     @@builders ||= {}
   end
@@ -24,20 +28,58 @@ class Builder
     @@builders[platform].generate_o_for(task)
   end
 
-  attr_accessor :variant, :platform,
-    :cxx, :cxxflags, :defines, :includes, :static_links, :ldflags
+  attr_accessor :variant, :platform, :cxx, :cxxflags, :ldflags
 
-  def after_initialize
+  def initialize
     @variant = :debug
 
-    @includes ||= ""
-    @includes << " -I ./include/ -I ./vendor/ -I ./vendor/raylib/include/ -I ./vendor/mruby/"
-
-    @defines ||= ""
+    @includes = []
+    @defines = []
     @defines << " -DEXPORT" if ENV["EXPORT"]
+    @static_links = []
 
     setup_options
+
+    if mock_raylib?
+      @defines << " -DMOCK_RAYLIB"
+    end
+
+    setup_platform
+    setup_includes
+    setup_static_links
   end
+
+  def setup_includes
+    @includes << "-I ./include/"
+    @includes << "-I ./vendor/"
+    @includes << "-I ./vendor/raylib/include/" unless mock_raylib?
+    @includes << "-I ./vendor/mruby/"
+  end
+
+  def setup_static_links
+    @static_links << "./vendor/#{@platform}/libmruby.a"
+    @static_links << "./vendor/#{@platform}/raylib/lib/libraylib.a" unless mock_raylib?
+  end
+
+  def build_dependencies
+    [
+      (mock_raylib? ? "raylib:mock" : "raylib:unmock"),
+      :setup_ephemeral_files,
+      :build_depends,
+      :build_objects
+    ]
+  end
+
+  def after_initialize
+  end
+
+  def setup_platform = nil
+
+  def defines = @defines.join(" ")
+
+  def includes = @includes.join(" ")
+
+  def static_links = @static_links.join(" ")
 
   def setup_options
     @options ||= File.exist?("/app/game/taylor-config.json") ?
@@ -46,66 +88,7 @@ class Builder
       }
   end
 
-  def name
-    @options["name"]
-  end
+  def mock_raylib? = @options.fetch("mock_raylib", false) || ENV.key?("MOCK_RAYLIB")
 
-  def objects_folder
-    "build/#{@platform}/#{@variant}"
-  end
-
-  def generate_mf_for(task)
-    <<-CMD.squeeze(" ").strip
-      #{@cxx} #{@cxxflags} #{@includes} #{@defines} -c #{task.source} \
-        #{@ldflags} \
-        -MM \
-        -MT #{task.name.gsub(SRC_FOLDER, objects_folder).ext(".o")}
-    CMD
-  end
-
-  def generate_o_for(task)
-    <<-CMD.squeeze(" ").strip
-    #{@cxx} #{@cxxflags} #{@includes} #{@defines} -c #{task.source} \
-      -o #{task.name} \
-      #{@ldflags}
-    CMD
-  end
-
-  def lint(fix: false)
-    if fix
-      <<~CMD
-        find . -type f -name "*.[c,h]pp" |
-        xargs -P$(nproc) -I{} \
-        clang-tidy \
-          --fix-errors \
-          {} \
-          -- -std=c++17 #{@includes} #{@defines} \
-          2>/dev/null
-      CMD
-    else
-      <<~CMD
-        find . -type f -name "*.[c,h]pp" |
-        xargs -P$(nproc) -I{} \
-        clang-tidy \
-          --warnings-as-errors=* \
-          {} \
-          -- -std=c++17 #{@includes} #{@defines} \
-          2>/dev/null
-      CMD
-    end
-  end
-
-  def compile
-    <<-CMD.squeeze(" ").strip
-      #{@cxx} \
-        -o "./dist/#{@platform}/#{@variant}/#{name}" \
-        #{@cxxflags} \
-        #{(variant == :release) ? @release_flags : ""} \
-        #{@defines} \
-        #{@includes} \
-        #{objects(objects_folder).join " "} \
-        #{@static_links} \
-        #{@ldflags}
-    CMD
-  end
+  def name = @options["name"]
 end

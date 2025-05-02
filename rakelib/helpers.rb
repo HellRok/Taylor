@@ -15,23 +15,11 @@ def ephemeral_files_for_ruby
 end
 
 SRC_FOLDER = "src"
-SRC = (
-  Rake::FileList["#{SRC_FOLDER}/**/*.cpp"] +
-  ephemeral_files_for_ruby.map { "src/#{_1.ext(".cpp")}" }
-).uniq
 
 def source_for(o_file)
-  SRC.detect { |file|
+  Builder.base.source_files.detect { |file|
     file.ext("").gsub(SRC_FOLDER, "") == o_file.ext("").gsub(/^build\/(#{PLATFORMS.join("|")})\/(#{VARIANTS.join("|")})/, "")
   }
-end
-
-def objects(objects_folder)
-  SRC.ext(".o").map { |file| file.gsub(SRC_FOLDER, objects_folder) }
-end
-
-def depends(objects_folder)
-  SRC.ext(".mf").map { |file| file.gsub(SRC_FOLDER, objects_folder) }
 end
 
 def write_hpp_file(hpp_file)

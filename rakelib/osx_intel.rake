@@ -2,7 +2,7 @@ require_relative "builder"
 require_relative "helpers"
 
 class OSXIntelBuilder < Builder
-  def initialize
+  def setup_platform
     @platform = "osx/intel"
     @cxx = "x86_64-apple-darwin20.4-clang++"
     @cxxflags = " -Oz -mmacosx-version-min=11.3 -stdlib=libc++"
@@ -15,15 +15,14 @@ class OSXIntelBuilder < Builder
       -framework GLUT \
       -framework OpenGL
     EOS
-    @includes = "-I /opt/osxcross/target/SDK/MacOSX11.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
-    @static_links = "./vendor/osx_intel/libmruby.a ./vendor/osx_intel/raylib/lib/libraylib.a"
+    @includes << "-I /opt/osxcross/target/SDK/MacOSX11.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
     @release_flags = "-03"
-
-    after_initialize
   end
 
-  def name
-    "#{@options["name"]}-intel"
+  def name = "#{@options["name"]}-intel"
+
+  def strip
+    sh "x86_64-apple-darwin20.4-strip \"./dist/#{builder.platform}/#{builder.variant}/#{builder.name}\""
   end
 end
 
@@ -31,20 +30,20 @@ builder = OSXIntelBuilder.new
 Builder.register(builder)
 
 namespace "osx/intel" do
-  multitask build_depends: depends("build/osx/intel/debug")
-  multitask build_objects: objects("build/osx/intel/debug")
-  task build: [:setup_ephemeral_files, :build_depends, :build_objects]
+  multitask build_depends: builder.depends
+  multitask build_objects: builder.objects
+  task build: builder.build_dependencies
   desc "Build for osx/intel in debug mode"
   task build: "build:osx/intel:debug"
 
   namespace :release do
     task :strip do
-      sh "x86_64-apple-darwin20.4-strip \"./dist/#{builder.platform}/#{builder.variant}/#{builder.name}\""
+      builder.strip
     end
 
-    multitask build_depends: depends("build/osx/intel/release")
-    multitask build_objects: objects("build/osx/intel/release")
-    task build: [:setup_ephemeral_files, :build_depends, :build_objects]
+    multitask build_depends: builder.depends
+    multitask build_objects: builder.objects
+    task build: builder.build_dependencies
     task build: "build:osx/intel:release"
     desc "Build for osx/intel in release mode"
     task build: "osx/intel:release:strip"

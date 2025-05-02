@@ -2,7 +2,7 @@ require_relative "builder"
 require_relative "helpers"
 
 class AndroidBuilder < Builder
-  def initialize
+  def setup_platform
     @name = "libmain.so"
     @platform = "android"
     @cxx = "aarch64-linux-android29-clang++"
@@ -19,20 +19,20 @@ class AndroidBuilder < Builder
     @includes = "-I /ndk/android-ndk-r25b/sources/android/native_app_glue/"
     @release_flags = "-O2"
 
-    @static_links = <<-EOS.chomp
-      -shared \
-      -l log \
-      -l android \
-      -l EGL \
-      -l GLESv2 \
-      -l OpenSLES \
-      -l atomic \
-      -u ANativeActivity_onCreate \
-      -Wl,-soname,libmain.so \
-      ./vendor/android/libmruby.a \
-      ./vendor/android/raylib/lib/libraylib.a \
-      /ndk/android-ndk-r25b/sources/android/native_app_glue/android_native_app_glue.a
-    EOS
+    @static_links += [
+      "-shared",
+      "-l log",
+      "-l android",
+      "-l EGL",
+      "-l GLESv2",
+      "-l OpenSLES",
+      "-l atomic",
+      "-u ANativeActivity_onCreate",
+      "-Wl,-soname,libmain.so",
+      "./vendor/android/libmruby.a",
+      "./vendor/android/raylib/lib/libraylib.a",
+      "/ndk/android-ndk-r25b/sources/android/native_app_glue/android_native_app_glue"
+    ]
 
     after_initialize
   end
@@ -44,24 +44,28 @@ class AndroidBuilder < Builder
   def apk_name(final: false)
     "#{@options["name"]}#{"-unzipped" unless final}.apk"
   end
+
+  def strip
+    sh <<-CMD
+        /ndk/android-ndk-r25b/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip \
+          "./dist/#{builder.platform}/#{builder.variant}/#{builder.name}"
+    CMD
+  end
 end
 
 builder = AndroidBuilder.new
 Builder.register(builder)
 
 namespace :android do
-  multitask build_depends: depends("build/android/debug")
-  multitask build_objects: objects("build/android/debug")
-  task build: [:setup_ephemeral_files, :build_depends, :build_objects]
+  multitask build_depends: builder.depends
+  multitask build_objects: builder.objects
+  task build: builder.build_dependencies
   desc "Build for android in debug mode"
   task build: "build:android:debug"
 
   namespace :release do
     task :strip do
-      sh <<-CMD
-        /ndk/android-ndk-r25b/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip \
-          "./dist/#{builder.platform}/#{builder.variant}/#{builder.name}"
-      CMD
+      builder.strip
     end
 
     task :native_app_glue do
@@ -89,9 +93,9 @@ namespace :android do
     end
     task build: :native_app_glue
 
-    multitask build_depends: depends("build/android/release")
-    multitask build_objects: objects("build/android/release")
-    task build: [:setup_ephemeral_files, :build_depends, :build_objects]
+    multitask build_depends: builder.depends
+    multitask build_objects: builder.objects
+    task build: builder.build_dependencies
     task build: "build:android:release"
 
     task :build_apk do

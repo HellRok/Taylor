@@ -4,9 +4,14 @@ releases
 src/ruby/**/*.cpp
 include/ruby
 
+# Used for mocking out Raylib
+src/raylib.cpp
+include/raylib.h
+
 vendor/bundle
 
 cli-tool/exports
+cli-tool/test-analytics.json
 test/exports
 test/test-analytics.json
 

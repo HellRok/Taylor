@@ -54,7 +54,11 @@ mrb_windows(mrb_state*, mrb_value) -> mrb_value
 auto
 mrb_released(mrb_state*, mrb_value) -> mrb_value
 {
+#ifdef EXPORT
   return mrb_true_value();
+#else
+  return mrb_false_value();
+#endif
 }
 
 void

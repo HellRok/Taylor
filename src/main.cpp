@@ -18,6 +18,7 @@
 #include "mruby_integration/textures.hpp"
 #include "platform.hpp"
 #include "platform_specific/web.hpp"
+#include "taylor.hpp"
 #include "web.hpp"
 #include "workarounds/mingw.hpp"
 
@@ -32,26 +33,10 @@ main(int argc, char** argv) -> int
   workarounds_mingw_attach_console();
 #endif
 
-  const char* path;
-#ifndef EXPORT
-  if (argv) {
-    path = argv[1];
-  } else {
-    path = "./game.rb";
-  }
-#endif
-#ifdef EXPORT
-  path = argv[0];
-#endif
-
   mrb_state* mrb = mrb_open();
 
   mrb_define_const(
     mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
-  mrb_define_const(mrb,
-                   mrb->kernel_module,
-                   "WORKING_DIRECTORY",
-                   mrb_str_new_cstr(mrb, GetWorkingDirectory()));
   populate_argv(mrb, argc, argv);
 
   append_core(mrb);
@@ -62,6 +47,7 @@ main(int argc, char** argv) -> int
   append_text(mrb);
   append_textures(mrb);
 
+  append_taylor(mrb);
   append_platform(mrb);
 
   append_web(mrb);
@@ -71,15 +57,17 @@ main(int argc, char** argv) -> int
   workarounds_mingw_msg_dontwait(mrb);
 #endif
 
-#ifndef EXPORT
-  FILE* game_file = fopen(path, "re");
-  ChangeDirectory(GetDirectoryPath(path));
-  mrb_load_file(mrb, game_file);
-#endif
-
 #ifdef EXPORT
-  ChangeDirectory(GetDirectoryPath(path));
+  mrb_load_string(mrb, "Dir.chdir(File.dirname(ARGV.shift))");
   mrb_load_irep(mrb, game);
+
+#else
+  if (argc < 1) {
+    exit(1);
+  }
+  FILE* game_file = fopen(argv[1], "re");
+  mrb_load_string(mrb, "ARGV.shift");
+  mrb_load_file(mrb, game_file);
 #endif
 
   if (mrb->exc) {

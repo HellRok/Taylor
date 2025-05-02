@@ -2,7 +2,8 @@
 
 IGNORED_FILES = [
   "./src/mruby_integration/buildkite_analytics.cpp",
-  "./src/platform_specific/web.cpp"
+  "./src/platform_specific/web.cpp",
+  "./src/taylor.cpp"
 ]
 
 def cpp_methods

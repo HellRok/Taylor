@@ -1,0 +1,87 @@
+class Builder
+  module Commands
+    def objects_folder = "build/#{@platform}/#{@variant}"
+
+    def objects
+      Builder.base.source_files.ext(".o").map { |file| file.gsub(SRC_FOLDER, objects_folder) }
+    end
+
+    def depends
+      Builder.base.source_files.ext(".mf").map { |file| file.gsub(SRC_FOLDER, objects_folder) }
+    end
+
+    def source_files
+      return @source_files if @source_files
+      @source_files = (
+        Rake::FileList["#{SRC_FOLDER}/**/*.cpp"] +
+        ephemeral_files_for_ruby.map { "src/#{_1.ext(".cpp")}" }
+      ).uniq
+
+      if mock_raylib?
+        @source_files += Rake::FileList["src/raylib.cpp"]
+      else
+        @source_files -= Rake::FileList["src/raylib.cpp"]
+      end
+
+      # uniq! is for some reason returning nil?
+      @source_files = @source_files.uniq
+    end
+
+    def generate_mf_for(task)
+      <<-CMD.squeeze(" ").strip
+      #{@cxx} #{@cxxflags} #{includes} #{defines} -c #{task.source} \
+        #{@ldflags} \
+        -MM \
+        -MT #{task.name.gsub(SRC_FOLDER, objects_folder).ext(".o")}
+      CMD
+    end
+
+    def generate_o_for(task)
+      <<-CMD.squeeze(" ").strip
+    #{@cxx} #{@cxxflags} #{includes} #{defines} -c #{task.source} \
+      -o #{task.name} \
+      #{@ldflags}
+      CMD
+    end
+
+    def lint(fix: false)
+      if fix
+        <<~CMD
+          find . -type f -name "*.[c,h]pp" |
+          xargs -P$(nproc) -I{} \
+          clang-tidy \
+            --fix-errors \
+            {} \
+            -- -std=c++17 #{includes} #{defines} \
+            2>/dev/null
+        CMD
+      else
+        <<~CMD
+          find . -type f -name "*.[c,h]pp" |
+          xargs -P$(nproc) -I{} \
+          clang-tidy \
+            --warnings-as-errors=* \
+            {} \
+            -- -std=c++17 #{includes} #{defines} \
+            2>/dev/null
+        CMD
+      end
+    end
+
+    def compile
+      <<-CMD.squeeze(" ").strip
+      #{@cxx} \
+        -o "./dist/#{@platform}/#{@variant}/#{name}" \
+        #{@cxxflags} \
+        #{(variant == :release) ? @release_flags : ""} \
+        #{defines} \
+        #{includes} \
+        #{objects.join " "} \
+        #{static_links} \
+        #{@ldflags}
+      CMD
+    end
+  end
+
+  include Commands
+end

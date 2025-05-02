@@ -7,6 +7,8 @@ CLEAN.include("./build/*")
 CLEAN.include("./dist/*")
 CLEAN.include("./releases/*")
 CLEAN.include("./src/ruby/**/*.cpp")
+CLEAN.include("./src/raylib.cpp")
+CLEAN.include("./include/raylib.h")
 CLEAN.include("./include/ruby")
 
 task default: "linux:build"

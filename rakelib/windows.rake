@@ -2,19 +2,20 @@ require_relative "builder"
 require_relative "helpers"
 
 class WindowsBuilder < Builder
-  def initialize
+  def platform_setup
     @platform = "windows"
     @cxx = "x86_64-w64-mingw32-g++"
     @ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -lwinmm -l raylib -l pthread"
-    @static_links = "./vendor/windows/libmruby.a ./vendor/windows/raylib/lib/libraylib.a"
     @release_flags = "-03"
     @cxxflags = "-std=c++17 -no-pie -Wall -Wextra -mwindows -static-libstdc++"
-
-    after_initialize
   end
 
   def name
     "#{@options["name"]}.exe"
+  end
+
+  def strip
+    sh %(x86_64-w64-mingw32-strip "./dist/#{builder.platform}/#{builder.variant}/#{builder.name}")
   end
 end
 
@@ -28,21 +29,21 @@ VARIANTS.each { |variant|
 }
 
 namespace :windows do
-  multitask build_depends: depends("build/windows/debug")
-  multitask build_objects: objects("build/windows/debug")
-  task build: [:setup_ephemeral_files, :build_depends, :build_objects]
+  multitask build_depends: builder.depends
+  multitask build_objects: builder.objects
+  task build: builder.build_dependencies
   task build: "build:windows:debug"
   desc "Build for windows in debug mode"
   task build: "windows:debug:copy_dlls"
 
   namespace :release do
     task :strip do
-      sh "x86_64-w64-mingw32-strip \"./dist/#{builder.platform}/#{builder.variant}/#{builder.name}\""
+      builder.strip
     end
 
-    multitask build_depends: depends("build/windows/release")
-    multitask build_objects: objects("build/windows/release")
-    task build: [:setup_ephemeral_files, :build_depends, :build_objects]
+    multitask build_depends: builder.depends
+    multitask build_objects: builder.objects
+    task build: builder.build_dependencies
     task build: "build:windows:release"
     task build: "windows:release:copy_dlls"
     desc "Build for windows in release mode"

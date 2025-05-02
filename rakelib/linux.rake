@@ -2,36 +2,35 @@ require_relative "builder"
 require_relative "helpers"
 
 class LinuxBuilder < Builder
-  def initialize
+  def setup_platform
     @platform = "linux"
     @cxx = "g++"
     @cxxflags = "-std=c++17"
     @ldflags = "-l dl -l pthread"
-    @static_links = "./vendor/linux/libmruby.a ./vendor/linux/raylib/lib/libraylib.a"
     @release_flags = "-03"
-
-    after_initialize
   end
+
+  def strip = sh "strip \"./dist/#{@platform}/#{@variant}/#{@name}\""
 end
 
 builder = LinuxBuilder.new
 Builder.register(builder)
 
 namespace :linux do
-  multitask build_depends: depends("build/linux/debug")
-  multitask build_objects: objects("build/linux/debug")
-  task build: [:setup_ephemeral_files, :build_depends, :build_objects]
+  multitask build_depends: builder.depends
+  multitask build_objects: builder.objects
+  task build: builder.build_dependencies
   desc "Build for linux in debug mode"
   task build: "build:linux:debug"
 
   namespace :release do
     task :strip do
-      sh "strip \"./dist/#{builder.platform}/#{builder.variant}/#{builder.name}\""
+      builder.strip
     end
 
-    multitask build_depends: depends("build/linux/release")
-    multitask build_objects: objects("build/linux/release")
-    task build: [:setup_ephemeral_files, :build_depends, :build_objects]
+    multitask build_depends: builder.depends
+    multitask build_objects: builder.objects
+    task build: builder.build_dependencies
     task build: "build:linux:release"
     desc "Build for linux in release mode"
     task build: "linux:release:strip"
