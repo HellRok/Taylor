@@ -38,7 +38,8 @@ class Texture2D
   # @param rotation [Integer] In degrees.
   # @param colour [Colour]
   # @return [nil]
-  def draw(source: Rectangle[0, 0, width, height], destination: source, origin: Vector2::ZERO, rotation: 0, colour: Colour::WHITE)
+  def draw(source: Rectangle[0, 0, width, height], destination: nil, origin: Vector2::ZERO, rotation: 0, colour: Colour::WHITE)
+    destination ||= source
     draw_texture_pro(
       self,
       source,

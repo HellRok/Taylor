@@ -1,12 +1,17 @@
-task "include/raylib.h" => "raylib:mock"
-task "src/raylib.cpp" => "raylib:mock"
-
 task "raylib:unmock" do
   File.delete("include/raylib.h") if File.exist?("include/raylib.h")
   File.delete("src/raylib.cpp") if File.exist?("src/raylib.cpp")
 end
 
 task "raylib:mock" do
+  # Manually skip this step since I can't make rake do it
+  if File.exist?("include/raylib.h") && File.exist?("src/raylib.cpp")
+    mocked_time = [File.mtime("include/raylib.h"), File.mtime("src/raylib.cpp")].min
+    original_time = [File.mtime("rakelib/generate_mock_raylib.rake"), File.mtime("vendor/raylib/include/raylib.h")].max
+
+    next if original_time < mocked_time
+  end
+
   header = ""
   source = ""
 
