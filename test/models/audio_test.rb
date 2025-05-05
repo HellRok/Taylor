@@ -1,45 +1,27 @@
 class Test
   class Models
-    class Audio_Test < MTest::Unit::TestCaseWithAnalytics
-      def test_ready?
-        skip_unless_audio_enabled
-
-        assert_false Audio.ready?
-
+    class Audio_Test < Test::Base
+      def test_open
         Audio.open
-        flush_frame until Audio.ready?
-        assert_true Audio.ready?
 
-        Audio.close
-        assert_false Audio.ready?
-      ensure
-        Audio.close
+        assert_called ["(InitAudioDevice) { }"]
+      end
+
+      def test_ready?
+        Audio.ready?
+
+        assert_called ["(IsAudioDeviceReady) { }"]
       end
 
       def test_volume
-        skip_unless_audio_enabled
-
-        Audio.open
-        flush_frame until Audio.ready?
-
         skip "Waiting on Raylib 5.0"
 
-        assert_equal 100, Audio.volume
+        Audio.volume
 
-        Audio.volume = 50
-        assert_equal 50, Audio.volume
-
-        Audio.volume += 10
-        assert_equal 60, Audio.volume
-      ensure
-        Audio.close
+        assert_called ["(GetMasterVolume) { }"]
       end
 
-      def test_volume_equals_errors
-        skip_unless_audio_enabled
-        Audio.open
-        flush_frame until Audio.ready?
-
+      def test_volume_equals_errors_too_low
         begin
           Audio.volume = -1
           fail "Previous line should have raised"
@@ -47,28 +29,43 @@ class Test
           assert_equal "Must be within (0..100)", e.message
         end
 
+        assert_called ["(IsAudioDeviceReady) { }"]
+      end
+
+      def test_volume_equals_errors_too_high
         begin
           Audio.volume = 101
           fail "Previous line should have raised"
         rescue ArgumentError => e
           assert_equal "Must be within (0..100)", e.message
         end
-      ensure
-        Audio.close
+
+        assert_called ["(IsAudioDeviceReady) { }"]
       end
 
       def test_volume_before_open
         skip "Waiting on Raylib 5.0"
         skip_unless_audio_enabled
 
+        Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
+
         Audio.volume
-        fail "Previous line should have raised"
+
+        assert_called ["(IsAudioDeviceReady) { }"]
+
+        fail "Audio.volume should have raised"
       rescue Audio::NotOpen => e
         assert_equal "You must use Audio.open before calling Audio.volume.", e.message
       end
 
       def test_set_volume_before_open
+        Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
+
         Audio.volume = 50
+
+        assert_called ["(IsAudioDeviceReady) { }"]
+
+        fail "Audio.volume= should have raised"
       rescue Audio::NotOpen => e
         assert_equal "You must use Audio.open before calling Audio.volume=.", e.message
       end

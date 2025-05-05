@@ -17,8 +17,8 @@ task "raylib:mock" do
     "BeginScissorMode" => {},
     "BeginShaderMode" => {},
     "BeginTextureMode" => {},
-    "ChangeDirectory" => {return: "true"},
-    "CheckCollisionPointRec" => {return: "true"},
+    "ChangeDirectory" => {return: true},
+    "CheckCollisionPointRec" => {return: true},
     "ClearBackground" => {},
     "ClearWindowState" => {},
     "CloseAudioDevice" => {},
@@ -65,43 +65,43 @@ task "raylib:mock" do
     "EndScissorMode" => {},
     "EndShaderMode" => {},
     "EndTextureMode" => {},
-    "ExportImage" => {return: "true"},
-    "Fade" => {return: "PURPLE"},
-    "FileExists" => {return: "true"},
-    "GenImageColor" => {return: "Image{}"},
+    "ExportImage" => {return: true},
+    "Fade" => {return: true},
+    "FileExists" => {return: true},
+    "GenImageColor" => {return: true},
     "GenTextureMipmaps" => {},
-    "GetCharPressed" => {return: "57"},
-    "*GetClipboardText" => {return: '"clipboard text"'},
-    "GetCurrentMonitor" => {return: "0"},
-    "*GetDirectoryPath" => {return: '"/path"'},
-    "GetFontDefault" => {return: "Font{}"},
-    "GetFPS" => {return: "60"},
-    "GetFrameTime" => {return: "0.016"},
-    "GetGamepadAxisCount" => {return: "2"},
-    "GetGamepadAxisMovement" => {return: "0.1"},
-    "GetGamepadButtonPressed" => {return: "1"},
-    "*GetGamepadName" => {return: '"controller"'},
-    "GetGestureDetected" => {return: "1"},
-    "GetKeyPressed" => {return: "true"},
-    "GetMonitorCount" => {return: "1"},
-    "GetMonitorHeight" => {return: "800"},
-    "GetMonitorPosition" => {return: "Vector2{}"},
-    "GetMonitorRefreshRate" => {return: "60"},
-    "GetMonitorWidth" => {return: "480"},
-    "GetMousePosition" => {return: "Vector2{}"},
-    "GetMouseWheelMoveV" => {return: "Vector2{}"},
-    "GetMusicTimeLength" => {return: "0.1"},
-    "GetMusicTimePlayed" => {return: "0.1"},
-    "GetScreenHeight" => {return: "1080"},
-    "GetScreenToWorld2D" => {return: "Vector2{}"},
-    "GetScreenWidth" => {return: "1920"},
-    "GetShaderLocation" => {return: "1"},
-    "GetTime" => {return: "0.1"},
-    "GetTouchPosition" => {return: "Vector2{}"},
-    "GetWindowPosition" => {return: "Vector2{}"},
-    "GetWindowScaleDPI" => {return: "Vector2{}"},
-    "*GetWorkingDirectory" => {return: '"/working/directory"'},
-    "GetWorldToScreen2D" => {return: "Vector2{}"},
+    "GetCharPressed" => {return: true},
+    "*GetClipboardText" => {return: true},
+    "GetCurrentMonitor" => {return: true},
+    "*GetDirectoryPath" => {return: true},
+    "GetFontDefault" => {return: true},
+    "GetFPS" => {return: true},
+    "GetFrameTime" => {return: true},
+    "GetGamepadAxisCount" => {return: true},
+    "GetGamepadAxisMovement" => {return: true},
+    "GetGamepadButtonPressed" => {return: true},
+    "*GetGamepadName" => {return: true},
+    "GetGestureDetected" => {return: true},
+    "GetKeyPressed" => {return: true},
+    "GetMonitorCount" => {return: true},
+    "GetMonitorHeight" => {return: true},
+    "GetMonitorPosition" => {return: true},
+    "GetMonitorRefreshRate" => {return: true},
+    "GetMonitorWidth" => {return: true},
+    "GetMousePosition" => {return: true},
+    "GetMouseWheelMoveV" => {return: true},
+    "GetMusicTimeLength" => {return: true},
+    "GetMusicTimePlayed" => {return: true},
+    "GetScreenHeight" => {return: true},
+    "GetScreenToWorld2D" => {return: true},
+    "GetScreenWidth" => {return: true},
+    "GetShaderLocation" => {return: true},
+    "GetTime" => {return: true},
+    "GetTouchPosition" => {return: true},
+    "GetWindowPosition" => {return: true},
+    "GetWindowScaleDPI" => {return: true},
+    "*GetWorkingDirectory" => {return: true},
+    "GetWorldToScreen2D" => {return: true},
     "HideCursor" => {},
     "ImageAlphaMask" => {},
     "ImageAlphaPremultiply" => {},
@@ -115,53 +115,53 @@ task "raylib:mock" do
     "ImageDraw" => {},
     "ImageFlipHorizontal" => {},
     "ImageFlipVertical" => {},
-    "ImageFromImage" => {return: "Image{}"},
+    "ImageFromImage" => {return: true},
     "ImageMipmaps" => {},
     "ImageResize" => {},
     "ImageResizeNN" => {},
     "ImageRotateCCW" => {},
     "ImageRotateCW" => {},
-    "ImageTextEx" => {return: "Image{}"},
+    "ImageTextEx" => {return: true},
     "InitAudioDevice" => {},
     "InitWindow" => {},
-    "IsAudioDeviceReady" => {return: "true"},
-    "IsCursorHidden" => {return: "true"},
-    "IsCursorOnScreen" => {return: "true"},
-    "IsFileDropped" => {return: "true"},
-    "IsFontReady" => {return: "true"},
-    "IsGamepadAvailable" => {return: "true"},
-    "IsGamepadButtonDown" => {return: "true"},
-    "IsGamepadButtonPressed" => {return: "true"},
-    "IsGamepadButtonReleased" => {return: "true"},
-    "IsGamepadButtonUp" => {return: "true"},
-    "IsKeyDown" => {return: "true"},
-    "IsKeyPressed" => {return: "true"},
-    "IsKeyReleased" => {return: "true"},
-    "IsKeyUp" => {return: "true"},
-    "IsMouseButtonDown" => {return: "true"},
-    "IsMouseButtonPressed" => {return: "true"},
-    "IsMouseButtonReleased" => {return: "true"},
-    "IsMouseButtonUp" => {return: "true"},
-    "IsMusicStreamPlaying" => {return: "true"},
-    "IsShaderReady" => {return: "true"},
-    "IsSoundPlaying" => {return: "true"},
-    "IsWindowReady" => {return: "true"},
-    "IsWindowResized" => {return: "true"},
-    "IsWindowState" => {return: "true"},
-    "LoadDroppedFiles" => {return: "FilePathList{}"},
-    "LoadFontEx" => {return: "Font{}"},
-    "*LoadImageColors" => {return: "colors", before: "Color colors[] = { PURPLE };"},
-    "LoadImageFromScreen" => {return: "Image{}"},
-    "LoadImage" => {return: "Image{}"},
-    "LoadMusicStream" => {return: "Music{}"},
-    "LoadRenderTexture" => {return: "RenderTexture2D()"},
-    "LoadShaderFromMemory" => {return: "Shader{}"},
-    "LoadShader" => {return: "Shader{}"},
-    "LoadSound" => {return: "Sound{}"},
-    "LoadTextureFromImage" => {return: "Texture2D{}"},
-    "LoadTexture" => {return: "Texture2D{}"},
+    "IsAudioDeviceReady" => {return: true},
+    "IsCursorHidden" => {return: true},
+    "IsCursorOnScreen" => {return: true},
+    "IsFileDropped" => {return: true},
+    "IsFontReady" => {return: true},
+    "IsGamepadAvailable" => {return: true},
+    "IsGamepadButtonDown" => {return: true},
+    "IsGamepadButtonPressed" => {return: true},
+    "IsGamepadButtonReleased" => {return: true},
+    "IsGamepadButtonUp" => {return: true},
+    "IsKeyDown" => {return: true},
+    "IsKeyPressed" => {return: true},
+    "IsKeyReleased" => {return: true},
+    "IsKeyUp" => {return: true},
+    "IsMouseButtonDown" => {return: true},
+    "IsMouseButtonPressed" => {return: true},
+    "IsMouseButtonReleased" => {return: true},
+    "IsMouseButtonUp" => {return: true},
+    "IsMusicStreamPlaying" => {return: true},
+    "IsShaderReady" => {return: true},
+    "IsSoundPlaying" => {return: true},
+    "IsWindowReady" => {return: true},
+    "IsWindowResized" => {return: true},
+    "IsWindowState" => {return: true},
+    "LoadDroppedFiles" => {return: true},
+    "LoadFontEx" => {return: true},
+    "*LoadImageColors" => {return: true},
+    "LoadImageFromScreen" => {return: true},
+    "LoadImage" => {return: true},
+    "LoadMusicStream" => {return: true},
+    "LoadRenderTexture" => {return: true},
+    "LoadShaderFromMemory" => {return: true},
+    "LoadShader" => {return: true},
+    "LoadSound" => {return: true},
+    "LoadTextureFromImage" => {return: true},
+    "LoadTexture" => {return: true},
     "MaximizeWindow" => {},
-    "MeasureTextEx" => {return: "Vector2{ 10, 10 }"},
+    "MeasureTextEx" => {return: true},
     "MinimizeWindow" => {},
     "OpenURL" => {},
     "PauseMusicStream" => {},
@@ -174,7 +174,7 @@ task "raylib:mock" do
     "SetClipboardText" => {},
     "SetConfigFlags" => {},
     "SetExitKey" => {},
-    "SetGamepadMappings" => {return: "1"},
+    "SetGamepadMappings" => {return: true},
     "SetGesturesEnabled" => {},
     "SetMasterVolume" => {},
     "SetMouseCursor" => {},
@@ -210,7 +210,7 @@ task "raylib:mock" do
     "UnloadSound" => {},
     "UnloadTexture" => {},
     "UpdateMusicStream" => {},
-    "WindowShouldClose" => {return: "true"}
+    "WindowShouldClose" => {return: true}
   }
 
   def setup_source
@@ -247,7 +247,11 @@ task "raylib:mock" do
 
       case type
       when "const char"
-        source << append.call(%(" #{name}: '" << #{name} << "' ";))
+        source << <<~CPP
+          if (#{name}) {
+            signature << " #{name}: '" << #{name} << "'";
+          }
+        CPP
 
       when "const void"
         source << append.call(%(" #{name}: ??? ";))
@@ -331,6 +335,7 @@ task "raylib:mock" do
 
       when "Texture2D"
         source << append.call(%(" #{name}: { ";))
+        source << call_on.call(name, "id", pointer)
         source << call_on.call(name, "width", pointer)
         source << call_on.call(name, "height", pointer)
         source << call_on.call(name, "mipmaps", pointer)
@@ -343,11 +348,14 @@ task "raylib:mock" do
         source << call_on.call(name, "y", pointer)
         source << append.call(%("}";))
 
+      when "int"
+        source << append.call(%(" #{name}: " << #{name};))
+
       else
         source << if pointer
-          append.call(%(" #{name}: " << std::to_string(*#{name}) << " ";))
+          append.call(%(" #{name}: " << std::to_string(*#{name});))
         else
-          append.call(%(" #{name}: " << std::to_string(#{name}) << " ";))
+          append.call(%(" #{name}: " << std::to_string(#{name});))
         end
       end
     end
@@ -367,7 +375,7 @@ task "raylib:mock" do
       next
     end
 
-    return_value, method_name, arguments = line.match(/RLAPI (.*) (.*)\((.*)\);/).captures
+    return_type, method_name, arguments = line.match(/RLAPI (.*) (.*)\((.*)\);/).captures
 
     if mocks[method_name]
       new_method = ""
@@ -375,18 +383,38 @@ task "raylib:mock" do
       new_method << "  #{mocks[method_name][:before]}\n" if mocks[method_name][:before]
 
       new_method << <<~CPP
-        #{return_value} #{method_name}(#{arguments}) {
+        #{return_type} #{method_name}(#{arguments}) {
           std::ostringstream signature;
           signature << "(#{method_name}) {";
         #{parse_arguments(arguments)}
           signature << " }";
 
-          AppendCall(signature.str());
+          append_call(signature.str());
       CPP
 
       new_method << "  #{mocks[method_name][:body]}\n" if mocks[method_name][:body]
-      new_method << "  return #{mocks[method_name][:return]};\n" if mocks[method_name][:return]
-      new_method << "  #{mocks[method_name][:manual_return]}\n" if mocks[method_name][:manual_return]
+      if mocks[method_name][:return]
+        new_method << if return_type == "const char"
+          %(  return mocked_const_char_call_for("#{method_name}");\n)
+
+        elsif method_name == "*LoadImageColors"
+          # This is trigger a `-Wreturn-local-addr` issue, but I can't see
+          # how Raylib would do it without doing that? So I'm just going to
+          # accept it for now.
+          <<~CPP
+            Color result;
+            mocked_call_for_LoadImageColors(&result);
+            return &result;
+          CPP
+
+        else
+          <<~CPP
+            #{return_type} result;
+            mocked_call_for("#{method_name}", &result);
+            return result;
+          CPP
+        end
+      end
 
       new_method << "}\n"
 

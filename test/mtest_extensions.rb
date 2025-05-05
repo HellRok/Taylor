@@ -3,6 +3,8 @@ module MTest
     alias_method :original_diff, :diff
     def diff(exp, act)
       if [exp, act].all? { |obj| obj.is_a?(Array) && obj.all? { |item| item.is_a?(Colour) } }
+        # Format big blocks of colour in a reasonable-ish way, I mean we're
+        # in a terminal, it can only be so good.
         if exp.length != act.length
           "Expected length: #{exp.length}\n Actual length: #{act.length}"
         elsif exp.all? { |obj| obj == exp.first } && act.all? { |obj| obj == act.first }
@@ -10,6 +12,21 @@ module MTest
         else
           "Expected:\n#{colour_data(exp)}\n Actual:\n#{colour_data(act)}"
         end
+
+      elsif [exp, act].all? { |obj| obj.is_a?(Array) && obj.all? { |item| item.is_a?(String) } }
+        # When comparing arrays of strings, I find this formatting way more useful,
+        # especially since Raylib call checks are now just arrays of strings.
+        format_array = lambda { |arr|
+          return "[]" if arr.empty?
+
+          "[\n".tap { |result|
+            arr.each { result << "    #{mu_pp _1},\n" }
+            result << "  ]"
+          }
+        }
+
+        "\n  Expected: #{format_array.call(exp)}\nGot: #{format_array.call(act)}"
+
       else
         original_diff(exp, act)
       end
@@ -44,6 +61,19 @@ module MTest
       actual_percent = 100 - (difference * 100)
 
       assert_operator percent, :<=, actual_percent, msg
+    end
+
+    # Checks if the calls were made to Raylib.
+    # @param calls [String[]] The expected calls
+    # @return [true]
+    def assert_called(calls)
+      assert_equal calls, Taylor::Raylib.calls
+    end
+
+    # Checks if no calls were made to Raylib
+    # @return [true]
+    def assert_no_calls
+      assert_empty Taylor::Raylib.calls
     end
   end
 end

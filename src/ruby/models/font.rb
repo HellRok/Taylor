@@ -62,6 +62,22 @@ class Font
     texture.filter = val
   end
 
+  # A method used to generate the mock data for Raylib.
+  #
+  # @example Basic usage
+  #   Taylor::Raylib.mock_call(
+  #     "GetFontDefault",
+  #     Font.mock_return(size: 10, glyph_count: 224, glyph_padding: 0)
+  #   )
+  #
+  # @param size [Integer]
+  # @param glyph_count [Integer]
+  # @param glyph_padding [Integer]
+  # @return [String]
+  def self.mock_return(size: 0, glyph_count: 0, glyph_padding: 0)
+    [size, glyph_count, glyph_padding].map(&:to_s).join(" ")
+  end
+
   # Used for alerting the user if the font was not found at the specified path.
   class NotFound < StandardError; end
 end

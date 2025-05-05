@@ -1,122 +1,145 @@
 class Test
   class Models
-    class Image_Test < MTest::Unit::TestCaseWithAnalytics
+    class Image_Test < Test::Base
       def test_initialize
-        image = Image.new("./assets/test.png")
-        assert_equal fixture_models_image_new, image.data
-      ensure
-        image.unload
+        Image.new("./assets/test.png")
+
+        assert_called [
+          "(FileExists) { fileName: './assets/test.png' }",
+          "(LoadImage) { fileName: './assets/test.png' }"
+        ]
       end
 
       def test_initialize_fail
+        Taylor::Raylib.mock_call("FileExists", "false")
+
         assert_raise(Image::NotFound) {
           Image.new("./assets/fail.png")
         }
+
+        assert_called [
+          "(FileExists) { fileName: './assets/fail.png' }"
+        ]
+      end
+
+      def test_unload
+        Taylor::Raylib.mock_call("LoadImage", Image.mock_return(width: 2, height: 3, mipmaps: 4, format: 5))
+        image = Image.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        image.unload
+
+        assert_called [
+          "(UnloadImage) { image: { width: 2 height: 3 mipmaps: 4 format: 5 } }"
+        ]
       end
 
       def test_to_h
+        Taylor::Raylib.mock_call("LoadImage", Image.mock_return(width: 1, height: 2, mipmaps: 3, format: 4))
+
         image = Image.new("./assets/test.png")
 
         assert_equal(
           {
-            width: 3,
-            height: 3,
-            mipmaps: 1,
+            width: 1,
+            height: 2,
+            mipmaps: 3,
             format: 4
           },
           image.to_h
         )
-      ensure
-        image.unload
       end
 
       def test_export
-        path = "./green-#{Time.now.to_i}.png"
-        image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
-        image.export(path)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 3, height: 4, mipmaps: 5, format: 5))
+        image = Image.generate(width: 3, height: 4)
+        Taylor::Raylib.reset_calls
 
-        exported_image = Image.new(path)
-        assert_equal fixture_models_image_export, exported_image.data
-      ensure
-        image.unload
-        exported_image.unload
-        File.delete(path)
+        image.export("./blah.png")
+        assert_called [
+          "(ExportImage) { image: { width: 3 height: 4 mipmaps: 5 format: 5 } fileName: './blah.png' }"
+        ]
       end
 
       def test_generate_default
-        image = Image.generate(width: 10, height: 10)
-        assert_equal fixture_models_image_generate_default, image.data
-      ensure
-        image.unload
+        Image.generate(width: 10, height: 11)
+
+        assert_called [
+          "(GenImageColor) { width: 10 height: 11 color: { r: 0 g: 0 b: 0 a: 0 } }"
+        ]
       end
 
       def test_generate
-        image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
-        assert_equal fixture_models_image_generate, image.data
-      ensure
-        image.unload
+        Image.generate(width: 11, height: 12, colour: Colour::GREEN)
+
+        assert_called [
+          "(GenImageColor) { width: 11 height: 12 color: { r: 0 g: 228 b: 48 a: 255 } }"
+        ]
       end
 
       def test_copy
-        image = Image.generate(width: 10, height: 10, colour: Colour::GREEN)
-        copy = image.copy
-        assert_equal image.data, copy.data
-      ensure
-        image.unload
-        copy.unload
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 4, height: 5, mipmaps: 6, format: 7))
+        image = Image.generate(width: 4, height: 5)
+        Taylor::Raylib.reset_calls
+
+        image.copy
+
+        assert_called [
+          "(ImageFromImage) { image: { width: 4 height: 5 mipmaps: 6 format: 7 } rec: { x: 0.000000 y: 0.000000 width: 4.000000 height: 5.000000 } }"
+        ]
       end
 
       def test_copy_with_source
-        image = Image.new("assets/test.png")
-        new_image = image.copy(source: Rectangle.new(1, 1, 2, 2))
-        assert_equal fixture_models_image_copy_with_source, new_image.data
-      ensure
-        image.unload
-        new_image.unload
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 5, height: 6, mipmaps: 7, format: 8))
+        image = Image.generate(width: 5, height: 6)
+        Taylor::Raylib.reset_calls
+
+        image.copy(source: Rectangle.new(1, 2, 3, 4))
+        assert_called [
+          "(ImageFromImage) { image: { width: 5 height: 6 mipmaps: 7 format: 8 } rec: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } }"
+        ]
       end
 
       def test_to_texture
-        skip_unless_display_present
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 6, height: 7, mipmaps: 8, format: 9))
+        image = Image.generate(width: 6, height: 7)
+        Taylor::Raylib.reset_calls
 
-        set_window_title(__method__.to_s)
-        image = Image.new("./assets/test.png")
-        texture = image.to_texture
+        image.to_texture
 
-        assert_equal image.width, texture.width
-        assert_equal image.height, texture.height
-
-        clear_and_draw do
-          texture.draw(destination: Rectangle[3, 3, 3, 3])
-        end
-
-        assert_equal fixture_models_image_to_texture, get_screen_data.data
-      ensure
-        texture.unload
-        image.unload
+        assert_called [
+          "(LoadTextureFromImage) { image: { width: 6 height: 7 mipmaps: 8 format: 9 } }"
+        ]
       end
 
       def test_resize_bang_default_scaler
-        image = Image.new("./assets/test.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 7, height: 8, mipmaps: 9, format: 10))
+        image = Image.generate(width: 7, height: 8)
+        Taylor::Raylib.reset_calls
+
         image.resize!(width: 6, height: 12)
-        assert_equal fixture_models_image_resize_bang_default_scaler, image.data
-        assert_equal 6, image.width
-        assert_equal 12, image.height
-      ensure
-        image.unload
+
+        assert_called [
+          "(ImageResizeNN) { image: { width: 7 height: 8 mipmaps: 9 format: 10 } newWidth: 6 newHeight: 12 }"
+        ]
       end
 
       def test_resize_bang_bicubic_scaler
-        image = Image.new("./assets/test.png")
-        image.resize!(width: 6, height: 6, scaler: :bicubic)
-        assert_equal fixture_models_image_resize_bang_bicubic_scaler, image.data
-        assert_equal 6, image.width
-        assert_equal 6, image.height
-      ensure
-        image.unload
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 8, height: 9, mipmaps: 10, format: 11))
+        image = Image.generate(width: 8, height: 9)
+        Taylor::Raylib.reset_calls
+
+        image.resize!(width: 6, height: 7, scaler: :bicubic)
+
+        assert_called [
+          "(ImageResize) { image: { width: 8 height: 9 mipmaps: 10 format: 11 } newWidth: 6 newHeight: 7 }"
+        ]
       end
 
       def test_resize_bang_incorrect_scaler
-        image = Image.new("./assets/test.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return)
+        image = Image.generate(width: 1, height: 1)
+        Taylor::Raylib.reset_calls
 
         begin
           image.resize!(width: 6, height: 6, scaler: :nope)
@@ -124,240 +147,281 @@ class Test
           assert_equal "Invalid scaler provided, you must provide :bicubic or :nearest_neighbour",
             e.message
         end
-      ensure
-        image.unload
+
+        assert_no_calls
       end
 
       def test_crop!
-        image = Image.new("./assets/test.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 9, height: 10, mipmaps: 11, format: 12))
+        image = Image.generate(width: 9, height: 10)
+        Taylor::Raylib.reset_calls
+
         image.crop!(source: Rectangle.new(0, 0, 2, 3))
-        assert_equal fixture_models_image_crop!, image.data
-        assert_equal 2, image.width
-        assert_equal 3, image.height
-      ensure
-        image.unload
+
+        assert_called [
+          "(ImageCrop) { image: { width: 9 height: 10 mipmaps: 11 format: 12 } crop: { x: 0.000000 y: 0.000000 width: 2.000000 height: 3.000000 } }"
+        ]
       end
 
       def test_alpha_mask!
-        image = Image.new("./assets/test.png")
-        mask = Image.new("./assets/alpha.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 10, height: 11, mipmaps: 12, format: 13))
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 11, height: 12, mipmaps: 13, format: 14))
+        image = Image.generate(width: 10, height: 11)
+        mask = Image.generate(width: 11, height: 12)
+        Taylor::Raylib.reset_calls
 
         image.alpha_mask!(mask)
 
-        assert_equal fixture_models_image_alpha_mask!, image.data
-      ensure
-        mask.unload
-        image.unload
+        assert_called [
+          "(ImageAlphaMask) { image: { width: 10 height: 11 mipmaps: 12 format: 13 } alphaMask: { width: 11 height: 12 mipmaps: 13 format: 14 } }"
+        ]
       end
 
       def test_generate_mipmaps!
-        image = Image.generate(width: 16, height: 16)
-        assert_equal 1, image.mipmaps
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 12, height: 13, mipmaps: 14, format: 15))
+        image = Image.generate(width: 12, height: 13)
+        Taylor::Raylib.reset_calls
 
         image.generate_mipmaps!
-        assert_equal 5, image.mipmaps
-      ensure
-        image.unload
+
+        assert_called [
+          "(ImageMipmaps) { image: { width: 12 height: 13 mipmaps: 14 format: 15 } }"
+        ]
       end
 
       def test_image_flip_vertically!
-        image = Image.new("assets/asymettrical.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 13, height: 14, mipmaps: 15, format: 16))
+        image = Image.generate(width: 13, height: 14)
+        Taylor::Raylib.reset_calls
 
         image.flip_vertically!
-        assert_equal fixture_models_image_flip_vertically!, image.data
-      ensure
-        image.unload
+
+        assert_called [
+          "(ImageFlipVertical) { image: { width: 13 height: 14 mipmaps: 15 format: 16 } }"
+        ]
       end
 
       def test_image_flip_horizontally!
-        image = Image.new("assets/asymettrical.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 14, height: 15, mipmaps: 16, format: 17))
+        image = Image.generate(width: 14, height: 15)
+        Taylor::Raylib.reset_calls
 
         image.flip_horizontally!
-        assert_equal fixture_models_image_flip_horizontally!, image.data
-      ensure
-        image.unload
+
+        assert_called [
+          "(ImageFlipHorizontal) { image: { width: 14 height: 15 mipmaps: 16 format: 17 } }"
+        ]
       end
 
       def test_image_rotate_clockwise!
-        image = Image.new("assets/asymettrical.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 15, height: 16, mipmaps: 17, format: 18))
+        image = Image.generate(width: 15, height: 16)
+        Taylor::Raylib.reset_calls
 
         image.rotate_clockwise!
-        assert_equal fixture_models_image_rotate_clockwise!, image.data
-      ensure
-        image.unload
+
+        assert_called [
+          "(ImageRotateCW) { image: { width: 15 height: 16 mipmaps: 17 format: 18 } }"
+        ]
       end
 
       def test_image_rotate_counter_clockwise!
-        image = Image.new("assets/asymettrical.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 16, height: 17, mipmaps: 18, format: 19))
+        image = Image.generate(width: 16, height: 17)
+        Taylor::Raylib.reset_calls
 
         image.rotate_counter_clockwise!
-        assert_equal fixture_models_image_rotate_counter_clockwise!, image.data
-      ensure
-        image.unload
+
+        assert_called [
+          "(ImageRotateCCW) { image: { width: 16 height: 17 mipmaps: 18 format: 19 } }"
+        ]
       end
 
       def test_image_premultiply_alpha!
-        image = Image.new("./assets/test.png")
-        mask = Image.generate(
-          width: 3,
-          height: 3,
-          colour: Colour[128, 128, 128, 128]
-        )
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 17, height: 18, mipmaps: 19, format: 20))
+        image = Image.generate(width: 17, height: 18)
+        Taylor::Raylib.reset_calls
 
-        image.alpha_mask!(mask)
         image.premultiply_alpha!
 
-        assert_equal fixture_models_image_premultiply_alpha!, image.data
-      ensure
-        image.unload
+        assert_called [
+          "(ImageAlphaPremultiply) { image: { width: 17 height: 18 mipmaps: 19 format: 20 } }"
+        ]
       end
 
       def test_image_tint!
-        image = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 18, height: 19, mipmaps: 20, format: 21))
+        image = Image.generate(width: 18, height: 19)
+        Taylor::Raylib.reset_calls
 
-        image.tint!(colour: Colour::GREEN)
-        assert_equal fixture_models_image_tint!, image.data
-      ensure
-        image.unload
+        image.tint!(colour: Colour[0, 1, 2, 3])
+
+        assert_called [
+          "(ImageColorTint) { image: { width: 18 height: 19 mipmaps: 20 format: 21 } color: { r: 0 g: 1 b: 2 a: 3 } }"
+        ]
       end
 
       def test_image_invert!
-        image = Image.generate(width: 1, height: 1, colour: Colour::BLACK)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 19, height: 20, mipmaps: 21, format: 22))
+        image = Image.generate(width: 19, height: 20)
+        Taylor::Raylib.reset_calls
 
         image.invert!
-        assert_equal fixture_models_image_invert!, image.data
-      ensure
-        image.unload
+
+        assert_called [
+          "(ImageColorInvert) { image: { width: 19 height: 20 mipmaps: 21 format: 22 } }"
+        ]
       end
 
       def test_image_greyscale!
-        red = Image.generate(width: 1, height: 1, colour: Colour::RED)
-        blue = Image.generate(width: 1, height: 1, colour: Colour::BLUE)
-        green = Image.generate(width: 1, height: 1, colour: Colour::GREEN)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 20, height: 21, mipmaps: 22, format: 23))
+        image = Image.generate(width: 20, height: 21)
+        Taylor::Raylib.reset_calls
 
-        red.greyscale!
-        blue.greyscale!
-        green.greyscale!
+        image.greyscale!
 
-        assert_equal fixture_models_image_greyscale![0], red.data
-        assert_equal fixture_models_image_greyscale![1], blue.data
-        assert_equal fixture_models_image_greyscale![2], green.data
-      ensure
-        red.unload
-        blue.unload
-        green.unload
+        assert_called [
+          "(ImageColorGrayscale) { image: { width: 20 height: 21 mipmaps: 22 format: 23 } }"
+        ]
       end
 
       def test_image_contrast!
-        darken = Image.generate(width: 1, height: 1, colour: Colour::LIME)
-        lighten = Image.generate(width: 1, height: 1, colour: Colour::LIME)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 21, height: 22, mipmaps: 23, format: 24))
+        image = Image.generate(width: 21, height: 22)
+        Taylor::Raylib.reset_calls
 
-        darken.contrast!(10)
-        lighten.contrast!(-10)
+        image.contrast!(10)
 
-        assert_equal fixture_models_image_contrast![0], darken.data
-        assert_equal fixture_models_image_contrast![1], lighten.data
-      ensure
-        darken.unload
-        lighten.unload
+        assert_called [
+          "(ImageColorContrast) { image: { width: 21 height: 22 mipmaps: 23 format: 24 } contrast: 10.000000 }"
+        ]
       end
 
       def test_image_contrast_bang_too_low
-        image = Image.generate(width: 1, height: 1, colour: Colour::LIME)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return)
+        image = Image.generate(width: 1, height: 1)
+        Taylor::Raylib.reset_calls
 
-        image.contrast!(-101)
-      rescue ArgumentError => e
-        assert_equal "Must be within (-100..100)", e.message
-      ensure
-        image.unload
+        begin
+          image.contrast!(-101)
+        rescue ArgumentError => e
+          assert_equal "Must be within (-100..100)", e.message
+        end
+
+        assert_no_calls
       end
 
       def test_image_contrast_bang_too_high
-        image = Image.generate(width: 1, height: 1, colour: Colour::LIME)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return)
+        image = Image.generate(width: 1, height: 1)
+        Taylor::Raylib.reset_calls
 
-        image.contrast!(101)
-      rescue ArgumentError => e
-        assert_equal "Must be within (-100..100)", e.message
-      ensure
-        image.unload
+        begin
+          image.contrast!(101)
+        rescue ArgumentError => e
+          assert_equal "Must be within (-100..100)", e.message
+        end
+
+        assert_no_calls
       end
 
       def test_image_brightness!
-        darken = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
-        lighten = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 22, height: 23, mipmaps: 24, format: 25))
+        image = Image.generate(width: 22, height: 23)
+        Taylor::Raylib.reset_calls
 
-        darken.brightness!(-10)
-        lighten.brightness!(10)
+        image.brightness!(-10)
+        image.brightness!(10)
 
-        assert_equal fixture_models_image_brightness![1], darken.data
-        assert_equal fixture_models_image_brightness![0], lighten.data
-      ensure
-        darken.unload
-        lighten.unload
+        assert_called [
+          "(ImageColorBrightness) { image: { width: 22 height: 23 mipmaps: 24 format: 25 } brightness: -10 }",
+          "(ImageColorBrightness) { image: { width: 22 height: 23 mipmaps: 24 format: 25 } brightness: 10 }"
+        ]
       end
 
       def test_image_brightness_too_low
-        image = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return)
+        image = Image.generate(width: 1, height: 1)
+        Taylor::Raylib.reset_calls
 
-        image.brightness!(-256)
-      rescue ArgumentError => e
-        assert_equal "Must be within (-255..255)", e.message
-      ensure
-        image.unload
+        begin
+          image.brightness!(-256)
+        rescue ArgumentError => e
+          assert_equal "Must be within (-255..255)", e.message
+        end
+
+        assert_no_calls
       end
 
       def test_image_brightness_too_high
-        image = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return)
+        image = Image.generate(width: 1, height: 1)
+        Taylor::Raylib.reset_calls
 
-        image.brightness!(256)
-      rescue ArgumentError => e
-        assert_equal "Must be within (-255..255)", e.message
-      ensure
-        image.unload
+        begin
+          image.brightness!(256)
+        rescue ArgumentError => e
+          assert_equal "Must be within (-255..255)", e.message
+        end
+
+        assert_no_calls
       end
 
       def test_image_replace!
-        image = Image.generate(width: 1, height: 1, colour: Colour::VIOLET)
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 23, height: 24, mipmaps: 25, format: 26))
+        image = Image.generate(width: 23, height: 24)
+        Taylor::Raylib.reset_calls
 
         image.replace!
-        assert_equal fixture_models_image_replace!, image.data
-      ensure
-        image.unload
+
+        assert_called [
+          "(ImageColorReplace) { image: { width: 23 height: 24 mipmaps: 25 format: 26 } color: { r: 135 g: 60 b: 190 a: 255 } replace: { r: 0 g: 0 b: 0 a: 0 } }"
+        ]
       end
 
       def test_image_replace_bang_with_options
-        image = Image.new("assets/test.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 24, height: 25, mipmaps: 26, format: 27))
+        image = Image.generate(width: 24, height: 25)
+        Taylor::Raylib.reset_calls
 
-        image.replace!(from: Colour::WHITE, to: Colour::BLUE)
-        assert_equal fixture_models_image_replace_bang_with_options, image.data
-      ensure
-        image.unload
+        image.replace!(from: Colour[1, 2, 3, 4], to: Colour[5, 6, 7, 8])
+
+        assert_called [
+          "(ImageColorReplace) { image: { width: 24 height: 25 mipmaps: 26 format: 27 } color: { r: 1 g: 2 b: 3 a: 4 } replace: { r: 5 g: 6 b: 7 a: 8 } }"
+        ]
       end
 
       def test_image_draw!
-        image = Image.generate(width: 3, height: 3, colour: Colour::RAYWHITE)
-        to_copy = Image.new("assets/test.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 25, height: 26, mipmaps: 27, format: 28))
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 26, height: 27, mipmaps: 28, format: 29))
+        image = Image.generate(width: 25, height: 26)
+        to_copy = Image.generate(width: 26, height: 27)
+        Taylor::Raylib.reset_calls
 
         image.draw!(
           image: to_copy,
-          source: Rectangle.new(0, 0, 2, 2),
-          destination: Rectangle.new(1, 1, 2, 2)
+          source: Rectangle[1, 2, 3, 4],
+          destination: Rectangle[5, 6, 7, 8],
+          colour: Colour[9, 10, 11, 12]
         )
-        assert_equal fixture_models_image_draw!, image.data
-      ensure
-        image.unload
-        to_copy.unload
+
+        assert_called [
+          "(ImageDraw) { dst: { width: 25 height: 26 mipmaps: 27 format: 28 } src: { width: 26 height: 27 mipmaps: 28 format: 29 } srcRec: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } dstRec: { x: 5.000000 y: 6.000000 width: 7.000000 height: 8.000000 } tint: { r: 9 g: 10 b: 11 a: 12 } }"
+        ]
       end
 
       def test_image_draw_bang_no_args
-        image = Image.generate(width: 3, height: 3, colour: Colour::RAYWHITE)
-        to_copy = Image.new("assets/test.png")
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 27, height: 28, mipmaps: 29, format: 30))
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 28, height: 29, mipmaps: 30, format: 31))
+        image = Image.generate(width: 27, height: 28)
+        to_copy = Image.generate(width: 28, height: 29)
+        Taylor::Raylib.reset_calls
 
         image.draw!(image: to_copy)
-        assert_equal fixture_models_image_draw_bang_no_args, image.data
-      ensure
-        image.unload
-        to_copy.unload
+
+        assert_called [
+          "(ImageDraw) { dst: { width: 27 height: 28 mipmaps: 29 format: 30 } src: { width: 28 height: 29 mipmaps: 30 format: 31 } srcRec: { x: 0.000000 y: 0.000000 width: 27.000000 height: 28.000000 } dstRec: { x: 0.000000 y: 0.000000 width: 27.000000 height: 28.000000 } tint: { r: 255 g: 255 b: 255 a: 255 } }"
+        ]
       end
     end
   end

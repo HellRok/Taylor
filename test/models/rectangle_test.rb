@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Rectangle_Test < MTest::Unit::TestCaseWithAnalytics
+    class Rectangle_Test < Test::Base
       def test_initialize
         rectangle = Rectangle.new(1, 2, 3, 4)
 
@@ -49,65 +49,53 @@ class Test
       end
 
       def test_draw_rectangle
-        skip_unless_display_present
+        Rectangle[1, 2, 3, 4].draw(origin: Vector2[5, 6], rotation: 7, colour: Colour[8, 9, 10, 11])
 
-        set_window_title(__method__.to_s)
-
-        clear_and_draw do
-          Rectangle.new(2, 2, 5, 5).draw(origin: Vector2::ZERO, rotation: 45, colour: Colour::RED)
-        end
-
-        assert_within 99, fixture_draw_rectangle_pro, get_screen_data.data
+        assert_called [
+          "(DrawRectanglePro) { rec: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } origin: { x: 5.000000 y: 6.000000 } rotation: 7.000000 color: { r: 8 g: 9 b: 10 a: 11 } }"
+        ]
       end
 
       def test_draw_rectangle_with_outline_not_rounded
-        skip_unless_display_present
+        Rectangle[2, 3, 4, 5].draw(thickness: 6, outline: true, colour: Colour[7, 8, 9, 10])
 
-        set_window_title(__method__.to_s)
-
-        clear_and_draw do
-          Rectangle.new(2, 2, 8, 8).draw(outline: true, colour: Colour::RED)
-        end
-
-        assert_within 99, fixture_draw_rectangle_lines_ex, get_screen_data.data
+        assert_called [
+          "(DrawRectangleLinesEx) { rec: { x: 2.000000 y: 3.000000 width: 4.000000 height: 5.000000 } lineThick: 6.000000 color: { r: 7 g: 8 b: 9 a: 10 } }"
+        ]
       end
 
       def test_draw_rectangle_no_outline_but_rounded
-        skip_unless_display_present
+        Rectangle[3, 4, 5, 6].draw(rounded: true, radius: 0.5, segments: 7, colour: Colour[8, 9, 10, 11])
 
-        set_window_title(__method__.to_s)
-
-        clear_and_draw do
-          Rectangle.new(1, 1, 8, 8).draw(rounded: true, radius: 0.5, segments: 8, colour: Colour::RED)
-        end
-
-        assert_within 99, fixture_draw_rectangle_rounded, get_screen_data.data
+        assert_called [
+          "(DrawRectangleRounded) { rec: { x: 3.000000 y: 4.000000 width: 5.000000 height: 6.000000 } roundness: 0.500000 segments: 7 color: { r: 8 g: 9 b: 10 a: 11 } }"
+        ]
       end
 
       def test_draw_rectangle_with_outline_and_rounded
-        skip_unless_display_present
+        Rectangle[4, 5, 6, 7].draw(
+          rounded: true, radius: 0.85, segments: 8, outline: true, thickness: 9, colour: Colour[10, 11, 12, 13]
+        )
 
-        set_window_title(__method__.to_s)
-
-        clear_and_draw do
-          Rectangle.new(2, 2, 6, 6).draw(
-            rounded: true, radius: 0.5, segments: 8, outline: true, thickness: 2, colour: Colour::RED
-          )
-        end
-
-        assert_within 99, fixture_draw_rectangle_rounded_lines, get_screen_data.data
+        assert_called [
+          "(DrawRectangleRoundedLines) { rec: { x: 4.000000 y: 5.000000 width: 6.000000 height: 7.000000 } roundness: 0.850000 segments: 8 lineThick: 9.000000 color: { r: 10 g: 11 b: 12 a: 13 } }"
+        ]
       end
 
       def test_draw_rectangle_raises_when_radius_below_zero
         assert_raise(ArgumentError) {
           Rectangle.new(2, 2, 6, 6).draw(rounded: true, radius: -0.1)
         }
+
+        assert_no_calls
       end
 
       def test_draw_rectangle_raises_when_radius_above_one
         assert_raise(ArgumentError) {
           Rectangle.new(2, 2, 6, 6).draw(rounded: true, radius: 1.1)
         }
+
+        assert_no_calls
       end
     end
   end

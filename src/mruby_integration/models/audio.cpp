@@ -52,7 +52,7 @@ mrb_Audio_set_volume(mrb_state* mrb, mrb_value) -> mrb_value
  *auto
  *mrb_Audio_volume(mrb_state* mrb, mrb_value) -> mrb_value
  *{
- *  return mrb_float_value(GetMasterVolume(volume));
+ *  return mrb_float_value(GetMasterVolume());
  *}
  */
 

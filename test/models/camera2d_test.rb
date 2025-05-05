@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Camera2D_Test < MTest::Unit::TestCaseWithAnalytics
+    class Camera2D_Test < Test::Base
       def test_initialize
         camera = Camera2D.new(
           target: Vector2.new(1, 2),
@@ -79,46 +79,55 @@ class Test
       end
 
       def test_draw
-        skip_unless_display_present
-
-        set_window_title(__method__.to_s)
-        set_target_fps 5
         rectangle = Rectangle.new(2, 2, 6, 6)
         camera = Camera2D.new
 
-        clear_and_draw do
-          camera.draw do
-            rectangle.draw(colour: Colour::RED)
-          end
+        camera.draw do
+          rectangle.draw(colour: Colour::RED)
         end
 
-        assert_equal fixture_camera2d_draw[0], get_screen_data.data
-        clear_background(Colour::RAYWHITE)
+        assert_called [
+          "(BeginMode2D) { camera: { offset.x: 0.000000 offset.y: 0.000000 target.x: 0.000000 target.y: 0.000000 rotation: 0.000000 zoom: 1.000000 } }",
+          "(DrawRectanglePro) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } origin: { x: 0.000000 y: 0.000000 } rotation: 0.000000 color: { r: 230 g: 41 b: 55 a: 255 } }",
+          "(EndMode2D) { }"
+        ]
+
+        Taylor::Raylib.reset_calls
 
         camera.offset.x = -2
-        camera.offset.y = -2
+        camera.offset.y = -3
 
-        clear_and_draw do
-          camera.draw do
-            draw_rectangle_rec(rectangle, Colour::RED)
-          end
+        camera.draw do
+          draw_rectangle_rec(rectangle, Colour::RED)
         end
 
-        assert_equal fixture_camera2d_draw[1], get_screen_data.data
+        assert_called [
+          "(BeginMode2D) { camera: { offset.x: -2.000000 offset.y: -3.000000 target.x: 0.000000 target.y: 0.000000 rotation: 0.000000 zoom: 1.000000 } }",
+          "(DrawRectangleRec) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } color: { r: 230 g: 41 b: 55 a: 255 } }",
+          "(EndMode2D) { }"
+        ]
       end
 
       def test_as_in_viewport
         camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
         vector = Vector2[3, 3]
 
-        assert_equal Vector2[4, 4], camera.as_in_viewport(vector)
+        camera.as_in_viewport(vector)
+
+        assert_called [
+          "(GetWorldToScreen2D) { position: { x: 3.000000 y: 3.000000 } camera: { offset.x: 3.000000 offset.y: 2.000000 target.x: 2.000000 target.y: 1.000000 rotation: 0.000000 zoom: 1.000000 } }"
+        ]
       end
 
       def test_as_in_world
         camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
         vector = Vector2[4, 4]
 
-        assert_equal Vector2[3, 3], camera.as_in_world(vector)
+        camera.as_in_world(vector)
+
+        assert_called [
+          "(GetScreenToWorld2D) { position: { x: 4.000000 y: 4.000000 } camera: { offset.x: 3.000000 offset.y: 2.000000 target.x: 2.000000 target.y: 1.000000 rotation: 0.000000 zoom: 1.000000 } }"
+        ]
       end
     end
   end

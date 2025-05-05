@@ -25,4 +25,19 @@ class RenderTexture
   ensure
     end_texture_mode
   end
+
+  # A method used to generate the mock data for Raylib.
+  #
+  # @example Basic usage
+  #   Taylor::Raylib.mock_call(
+  #     "LoadRenderTexture",
+  #     RenderTexture.mock_return(width: 10, height: 10)
+  #   )
+  #
+  # @param width [Integer]
+  # @param height [Integer]
+  # @return [String]
+  def self.mock_return(width: 10, height: 10)
+    [width, height].map(&:to_s).join(" ")
+  end
 end

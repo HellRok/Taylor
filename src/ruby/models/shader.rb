@@ -127,6 +127,20 @@ class Shader
     )
   end
 
+  # A method used to generate the mock data for Raylib.
+  #
+  # @example Basic usage
+  #   Taylor::Raylib.mock_call(
+  #     "LoadShader",
+  #     Shader.mock_return(id: 1)
+  #   )
+  #
+  # @param id [Integer]
+  # @return [String]
+  def self.mock_return(id: 1)
+    id.to_s
+  end
+
   private
 
   # Takes a set of values that would be passed to {set_values} or

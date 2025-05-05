@@ -1,39 +1,47 @@
 class Test
   class Models
-    class Sound_Test < MTest::Unit::TestCaseWithAnalytics
+    class Sound_Test < Test::Base
       def test_initialize
-        skip_unless_audio_enabled
-        Audio.open
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 2))
         sound = Sound.new("./assets/test.wav")
 
         assert_equal 1, sound.volume
         assert_equal 1, sound.pitch
-        assert_equal 24228, sound.frame_count
-      ensure
-        sound&.unload
-        Audio.close
+        assert_equal 2, sound.frame_count
+
+        assert_called [
+          "(FileExists) { fileName: './assets/test.wav' }",
+          "(LoadSound) { fileName: './assets/test.wav' }",
+          "(SetSoundVolume) { sound: { frameCount: 2 } volume: 1.000000 }",
+          "(SetSoundPitch) { sound: { frameCount: 2 } pitch: 1.000000 }"
+        ]
       end
 
       def test_initialize_with_arguments
-        skip_unless_audio_enabled
-        Audio.open
-        sound = Sound.new("./assets/test.wav", volume: 0.5, pitch: 1.3)
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 3))
+        Sound.new("./assets/test.wav", volume: 0.5, pitch: 1.3)
 
-        assert_equal 0.5, sound.volume
-        assert_equal 1.3, sound.pitch
-        assert_equal 24228, sound.frame_count
-      ensure
-        sound&.unload
-        Audio.close
+        assert_called [
+          "(FileExists) { fileName: './assets/test.wav' }",
+          "(LoadSound) { fileName: './assets/test.wav' }",
+          "(SetSoundVolume) { sound: { frameCount: 3 } volume: 0.500000 }",
+          "(SetSoundPitch) { sound: { frameCount: 3 } pitch: 1.300000 }"
+        ]
       end
 
       def test_initialize_fail_not_found
+        Taylor::Raylib.mock_call("FileExists", "false")
+
         assert_raise(Sound::NotFound) {
           Sound.new("./assets/fail.wav")
         }
+
+        assert_called [
+          "(FileExists) { fileName: './assets/fail.wav' }"
+        ]
       end
 
-      def test_initialize_fail_volume
+      def test_initialize_fail_volume_too_high
         begin
           Sound.new("./assets/test.wav", volume: 1.1)
           fail "Previous line should have raised"
@@ -41,119 +49,127 @@ class Test
           assert_equal "Volume must be within (0.0..1.0)", e.message
         end
 
+        assert_called [
+          "(FileExists) { fileName: './assets/test.wav' }"
+        ]
+      end
+
+      def test_initialize_fail_volume_too_low
         begin
           Sound.new("./assets/test.wav", volume: -0.1)
           fail "Previous line should have raised"
         rescue ArgumentError => e
           assert_equal "Volume must be within (0.0..1.0)", e.message
         end
+
+        assert_called [
+          "(FileExists) { fileName: './assets/test.wav' }"
+        ]
       end
 
       def test_to_h
-        skip_unless_audio_enabled
-        Audio.open
-        sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 4))
+        sound = Sound.new("./assets/test.wav", volume: 0.25, pitch: 1.25)
 
         assert_equal(
           {
-            frame_count: 24228,
-            volume: 1.0,
-            pitch: 1.0
+            frame_count: 4,
+            volume: 0.25,
+            pitch: 1.25
           },
           sound.to_h
         )
-      ensure
-        sound&.unload
-        Audio.close
+
+        assert_called [
+          "(FileExists) { fileName: './assets/test.wav' }",
+          "(LoadSound) { fileName: './assets/test.wav' }",
+          "(SetSoundVolume) { sound: { frameCount: 4 } volume: 0.250000 }",
+          "(SetSoundPitch) { sound: { frameCount: 4 } pitch: 1.250000 }"
+        ]
       end
 
       def test_play
-        skip_unless_audio_enabled
-        Audio.open
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 5))
         sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.reset_calls
 
-        assert_false sound.playing?
         sound.play
-        assert_true sound.playing?
-      ensure
-        sound&.unload
-        Audio.close
+
+        assert_called [
+          "(PlaySound) { sound: { frameCount: 5 } }"
+        ]
       end
 
       def test_stop
-        skip_unless_audio_enabled
-        Audio.open
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 6))
         sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.reset_calls
 
-        sound.play
-        assert_true sound.playing?
         sound.stop
-        assert_false sound.playing?
-      ensure
-        sound&.unload
-        Audio.close
+
+        assert_called [
+          "(StopSound) { sound: { frameCount: 6 } }"
+        ]
       end
 
       def test_pause
-        skip_unless_audio_enabled
-        Audio.open
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 7))
         sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.reset_calls
 
-        sound.play
-        assert_true sound.playing?
         sound.pause
-        assert_false sound.playing?
-      ensure
-        sound&.unload
-        Audio.close
+
+        assert_called [
+          "(PauseSound) { sound: { frameCount: 7 } }"
+        ]
       end
 
       def test_resume
-        skip_unless_audio_enabled
-        Audio.open
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 8))
         sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.reset_calls
 
-        sound.play
-        assert_true sound.playing?
-        sound.pause
-        assert_false sound.playing?
         sound.resume
-        assert_true sound.playing?
-      ensure
-        sound&.unload
-        Audio.close
+
+        assert_called [
+          "(ResumeSound) { sound: { frameCount: 8 } }"
+        ]
       end
 
       def test_playing?
-        skip_unless_audio_enabled
-        Audio.open
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 9))
+        Taylor::Raylib.mock_call("IsSoundPlaying", "false")
+        Taylor::Raylib.mock_call("IsSoundPlaying", "true")
+
         sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.reset_calls
 
         assert_false sound.playing?
-        sound.play
         assert_true sound.playing?
-      ensure
-        sound&.unload
-        Audio.close
+
+        assert_called [
+          "(IsSoundPlaying) { sound: { frameCount: 9 } }",
+          "(IsSoundPlaying) { sound: { frameCount: 9 } }"
+        ]
       end
 
       def test_volume=
-        skip_unless_audio_enabled
-        Audio.open
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 10))
         sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.reset_calls
 
         assert_equal 1.0, sound.volume
-        assert_equal 0.3, sound.volume = 0.3
+        assert_equal 0.3, (sound.volume = 0.3)
         assert_equal 0.3, sound.volume
-      ensure
-        sound&.unload
-        Audio.close
+
+        assert_called [
+          "(SetSoundVolume) { sound: { frameCount: 10 } volume: 0.300000 }"
+        ]
       end
 
       def test_fail_volume=
-        skip_unless_audio_enabled
-        Audio.open
         sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.reset_calls
 
         assert_equal 1.0, sound.volume
 
@@ -164,6 +180,9 @@ class Test
           assert_equal "Volume must be within (0.0..1.0)", e.message
         end
 
+        assert_equal 1.0, sound.volume
+        assert_no_calls
+
         begin
           sound.volume = -0.1
           fail "Previous line should have raised"
@@ -172,22 +191,24 @@ class Test
         end
 
         assert_equal 1.0, sound.volume
+        assert_no_calls
       ensure
         sound&.unload
         Audio.close
       end
 
       def test_pitch=
-        skip_unless_audio_enabled
-        Audio.open
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 11))
         sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.reset_calls
 
         assert_equal 1.0, sound.pitch
-        assert_equal 0.3, sound.pitch = 0.3
-        assert_equal 0.3, sound.pitch
-      ensure
-        sound&.unload
-        Audio.close
+        assert_equal 0.2, sound.pitch = 0.2
+        assert_equal 0.2, sound.pitch
+
+        assert_called [
+          "(SetSoundPitch) { sound: { frameCount: 11 } pitch: 0.200000 }"
+        ]
       end
     end
   end

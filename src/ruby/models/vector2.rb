@@ -173,6 +173,21 @@ class Vector2
     "#<Vector2:0x#{object_id.to_s(16)} x:#{x} y:#{y}>"
   end
 
+  # A method used to generate the mock data for Raylib.
+  #
+  # @example Basic usage
+  #   Taylor::Raylib.mock_call(
+  #     "GetMousePosition",
+  #     Vector2.mock_return(x: 1, y: 2)
+  #   )
+  #
+  # @param x [Float]
+  # @param y [Float]
+  # @return [String]
+  def self.mock_return(x: 0, y: 0)
+    [x, y].map(&:to_s).join(" ")
+  end
+
   # A Vector2 setup at 0, 0.
   ZERO = Vector2.new(0, 0)
 end

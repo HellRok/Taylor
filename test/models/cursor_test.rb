@@ -1,73 +1,41 @@
 class Test
   class Models
-    class Cursor_Test < MTest::Unit::TestCaseWithAnalytics
+    class Cursor_Test < Test::Base
       def test_show
-        assert_false Cursor.hidden?
-        Cursor.hide
-        assert_true Cursor.hidden?
         Cursor.show
-        assert_false Cursor.hidden?
-      ensure
-        Cursor.show
+        assert_called ["(ShowCursor) { }"]
       end
 
       def test_hide
-        assert_false Cursor.hidden?
         Cursor.hide
-        assert_true Cursor.hidden?
-      ensure
-        Cursor.show
+        assert_called ["(HideCursor) { }"]
       end
 
       def test_hidden?
-        assert_false Cursor.hidden?
-        Cursor.hide
-        assert_true Cursor.hidden?
-        Cursor.show
-        assert_false Cursor.hidden?
-      ensure
-        Cursor.show
+        Cursor.hidden?
+        assert_called ["(IsCursorHidden) { }"]
       end
 
       def test_enable
-        assert_false Cursor.disabled?
-        Cursor.disable
-        assert_true Cursor.disabled?
         Cursor.enable
-        assert_false Cursor.disabled?
-      ensure
-        Cursor.enable
+        assert_called ["(EnableCursor) { }"]
       end
 
       def test_disable
-        assert_false Cursor.disabled?
         Cursor.disable
-        assert_true Cursor.disabled?
-      ensure
-        Cursor.enable
+        assert_called ["(DisableCursor) { }"]
       end
 
       def test_disabled?
-        assert_false Cursor.disabled?
         Cursor.disable
         assert_true Cursor.disabled?
         Cursor.enable
         assert_false Cursor.disabled?
-      ensure
-        Cursor.enable
       end
 
       def test_on_screen?
-        skip "xdotool not available" unless XDo.available?
-
-        XDo::Mouse.move_to(0, 0)
-        set_window_position(50, 50)
-        flush_frame
-        assert_false Cursor.on_screen?
-
-        XDo::Mouse.move_to(55, 55)
-        flush_frame
-        assert_true Cursor.on_screen?
+        Cursor.on_screen?
+        assert_called ["(IsCursorOnScreen) { }"]
       end
 
       def test_icon=
@@ -75,6 +43,7 @@ class Test
 
         Cursor.icon = Cursor::CROSSHAIR
         assert_equal Cursor::CROSSHAIR, Cursor.icon
+        assert_called ["(SetMouseCursor) { cursor: 3 }"]
       ensure
         Cursor.icon = Cursor::DEFAULT
       end
@@ -86,6 +55,7 @@ class Test
           Cursor.icon = -1
         rescue ArgumentError => e
           assert_equal "Must be within (0..10)", e.message
+          assert_called []
         end
 
         assert_equal Cursor::DEFAULT, Cursor.icon
@@ -100,6 +70,7 @@ class Test
           Cursor.icon = 11
         rescue ArgumentError => e
           assert_equal "Must be within (0..10)", e.message
+          assert_called []
         end
 
         assert_equal Cursor::DEFAULT, Cursor.icon
