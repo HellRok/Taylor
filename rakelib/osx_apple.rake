@@ -37,8 +37,8 @@ namespace "osx/apple" do
   task build: "build:osx/apple:debug"
 
   namespace :release do
-    multitask build_depends: builder.depends
-    multitask build_objects: builder.objects
+    multitask build_depends: builder.depends("release")
+    multitask build_objects: builder.objects("release")
     task build: builder.build_dependencies
     desc "Build for osx/apple in release mode"
     task build: "build:osx/apple:release"

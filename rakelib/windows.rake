@@ -13,10 +13,6 @@ class WindowsBuilder < Builder
   def name
     "#{@options["name"]}.exe"
   end
-
-  def strip
-    sh %(x86_64-w64-mingw32-strip "./dist/#{builder.platform}/#{builder.variant}/#{builder.name}")
-  end
 end
 
 builder = WindowsBuilder.new
@@ -38,11 +34,11 @@ namespace :windows do
 
   namespace :release do
     task :strip do
-      builder.strip
+      sh %(x86_64-w64-mingw32-strip "./dist/#{builder.platform}/#{builder.variant}/#{builder.name}")
     end
 
-    multitask build_depends: builder.depends
-    multitask build_objects: builder.objects
+    multitask build_depends: builder.depends("release")
+    multitask build_objects: builder.objects("release")
     task build: builder.build_dependencies
     task build: "build:windows:release"
     task build: "windows:release:copy_dlls"

@@ -44,13 +44,6 @@ class AndroidBuilder < Builder
   def apk_name(final: false)
     "#{@options["name"]}#{"-unzipped" unless final}.apk"
   end
-
-  def strip
-    sh <<-CMD
-        /ndk/android-ndk-r25b/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip \
-          "./dist/#{builder.platform}/#{builder.variant}/#{builder.name}"
-    CMD
-  end
 end
 
 builder = AndroidBuilder.new
@@ -65,7 +58,10 @@ namespace :android do
 
   namespace :release do
     task :strip do
-      builder.strip
+      sh <<-CMD
+        /ndk/android-ndk-r25b/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip \
+          "./dist/#{builder.platform}/#{builder.variant}/#{builder.name}"
+      CMD
     end
 
     task :native_app_glue do
@@ -93,8 +89,8 @@ namespace :android do
     end
     task build: :native_app_glue
 
-    multitask build_depends: builder.depends
-    multitask build_objects: builder.objects
+    multitask build_depends: builder.depends("release")
+    multitask build_objects: builder.objects("release")
     task build: builder.build_dependencies
     task build: "build:android:release"
 

@@ -1,13 +1,13 @@
 class Builder
   module Commands
-    def objects_folder = "build/#{@platform}/#{@variant}"
+    def objects_folder(variant = nil) = "build/#{@platform}/#{variant || @variant}"
 
-    def objects
-      Builder.base.source_files.ext(".o").map { |file| file.gsub(SRC_FOLDER, objects_folder) }
+    def objects(variant = nil)
+      Builder.base.source_files.ext(".o").map { |file| file.gsub(SRC_FOLDER, objects_folder(variant)) }
     end
 
-    def depends
-      Builder.base.source_files.ext(".mf").map { |file| file.gsub(SRC_FOLDER, objects_folder) }
+    def depends(variant = nil)
+      Builder.base.source_files.ext(".mf").map { |file| file.gsub(SRC_FOLDER, objects_folder(variant)) }
     end
 
     def source_files

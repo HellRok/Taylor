@@ -20,10 +20,6 @@ class OSXIntelBuilder < Builder
   end
 
   def name = "#{@options["name"]}-intel"
-
-  def strip
-    sh "x86_64-apple-darwin20.4-strip \"./dist/#{builder.platform}/#{builder.variant}/#{builder.name}\""
-  end
 end
 
 builder = OSXIntelBuilder.new
@@ -38,11 +34,11 @@ namespace "osx/intel" do
 
   namespace :release do
     task :strip do
-      builder.strip
+      sh "x86_64-apple-darwin20.4-strip \"./dist/#{builder.platform}/#{builder.variant}/#{builder.name}\""
     end
 
-    multitask build_depends: builder.depends
-    multitask build_objects: builder.objects
+    multitask build_depends: builder.depends("release")
+    multitask build_objects: builder.objects("release")
     task build: builder.build_dependencies
     task build: "build:osx/intel:release"
     desc "Build for osx/intel in release mode"

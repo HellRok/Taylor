@@ -9,8 +9,6 @@ class LinuxBuilder < Builder
     @ldflags = "-l dl -l pthread"
     @release_flags = "-03"
   end
-
-  def strip = sh "strip \"./dist/#{@platform}/#{@variant}/#{@name}\""
 end
 
 builder = LinuxBuilder.new
@@ -25,11 +23,11 @@ namespace :linux do
 
   namespace :release do
     task :strip do
-      builder.strip
+      sh "strip \"./dist/#{builder.platform}/#{builder.variant}/#{builder.name}\""
     end
 
-    multitask build_depends: builder.depends
-    multitask build_objects: builder.objects
+    multitask build_depends: builder.depends("release")
+    multitask build_objects: builder.objects("release")
     task build: builder.build_dependencies
     task build: "build:linux:release"
     desc "Build for linux in release mode"
