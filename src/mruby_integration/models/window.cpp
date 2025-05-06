@@ -43,7 +43,7 @@ mrb_Window_open(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Window_close(mrb_state* mrb, mrb_value) -> mrb_value
+mrb_Window_close(mrb_state*, mrb_value) -> mrb_value
 {
   CloseWindow();
   return mrb_nil_value();
@@ -74,7 +74,7 @@ mrb_Window_title(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Window_close_question(mrb_state* mrb, mrb_value) -> mrb_value
+mrb_Window_close_question(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(WindowShouldClose());
 }

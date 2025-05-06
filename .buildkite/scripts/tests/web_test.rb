@@ -74,7 +74,9 @@ end
 start_time = Time.now
 analytics = nil
 
-loop do
+exit_code = nil
+
+while exit_code.nil?
   sleep 0.1
 
   taylor_logs = driver.find_element(:css, "#logs").text
@@ -89,21 +91,19 @@ loop do
     if log.include?("EXIT CODE:")
       _, code = log.split("EXIT CODE: ")
       persist_analytics(analytics)
-      exit code.to_i
+      exit_code = code.to_i
     end
   }
 
   # Give the tests 1 minute to run (which should be ample)
   if Time.now - start_time > 60
     puts "TIMED OUT AFTER 1 MINUTE"
-    puts "Browser Logs"
-    puts "-----------"
-    browser_logs.each { puts _1.message }
     puts "Taylor Logs"
     puts "-----------"
     puts taylor_logs
-    exit 1
+    exit_code = 1
   end
-ensure
-  driver.quit
 end
+
+driver.quit
+exit exit_code

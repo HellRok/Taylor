@@ -1,41 +1,38 @@
 #!/usr/bin/env bash
 
-echo Building binaries
+export MOCK_RAYLIB=1
+
+log() {
+  echo "[ $0 ] $@"
+}
+
+log "Building binaries"
 bundle exec rake linux:build linux:release:build windows:release:build &> /dev/null
 
+
 if [[ $? -gt 0 ]]; then
-  echo "Building failed"
+  log "Building failed"
   exit 1
 fi
 
-echo Building docker
+log "Building docker"
 bundle exec rake docker:build:all &> /dev/null
 
 if [[ $? -gt 0 ]]; then
-  echo "Building failed"
+  log "Building failed"
   exit 1
 fi
 
 rm -rf exports
 mkdir -p exports
-echo Exporting
+log Exporting
 mkdir -p /tmp/blah
-taylor-dev export --build-cache /tmp/blah &> /dev/null
+taylor-dev export --export-targets web --build-cache /tmp/blah &> /dev/null
 
 if [[ $? -gt 0 ]]; then
-  echo "Exporting failed"
+  log "Exporting failed"
   exit 1
 fi
-
-export DISPLAY=:1
-
-Xvfb :1 -screen 0 1280x800x24 &> /dev/null &
-export XVFB_PID=$!
-
-echo XVFB_PID: $XVFB_PID
-
-DISPLAY=:1 openbox &> /dev/null &
-export OPENBOX_PID=$!
 
 ../dist/linux/release/taylor ../cli-tool/cli.rb test.rb
 export NATIVE_EXIT_CODE=$?
@@ -49,12 +46,8 @@ export WEB_EXIT_CODE=$?
 
 popd
 
-
-kill $OPENBOX_PID &> /dev/null
-kill $XVFB_PID &> /dev/null
-
-echo "Linux: $NATIVE_EXIT_CODE"
-echo "Wine:  $WINE_EXIT_CODE"
-echo "Web:   $WEB_EXIT_CODE"
+log "Linux: $NATIVE_EXIT_CODE"
+log "Wine:  $WINE_EXIT_CODE"
+log "Web:   $WEB_EXIT_CODE"
 
 exit $NATIVE_EXIT_CODE || $WINE_EXIT_CODE || $WEB_EXIT_CODE

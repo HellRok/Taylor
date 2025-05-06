@@ -18,5 +18,6 @@
   ],
   "web": {
     "shell_path": "shell.html"
-  }
+  },
+  "mock_raylib": true
 }

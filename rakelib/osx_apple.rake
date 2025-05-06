@@ -17,8 +17,6 @@ class OSXAppleBuilder < Builder
     EOS
     @includes << "-I /opt/osxcross/target/SDK/MacOSX11.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
     @release_flags = "-03"
-
-    after_initialize
   end
 
   def name

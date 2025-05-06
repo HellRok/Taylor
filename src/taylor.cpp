@@ -21,7 +21,7 @@ append_call(std::string call) -> void
 }
 
 auto
-mrb_Taylor_Raylib_mocked(mrb_state* mrb, mrb_value) -> mrb_value
+mrb_Taylor_Raylib_mocked(mrb_state*, mrb_value) -> mrb_value
 {
 #ifdef MOCK_RAYLIB
   return mrb_true_value();
@@ -44,6 +44,7 @@ mrb_Taylor_Raylib_calls(mrb_state* mrb, mrb_value) -> mrb_value
   return result;
 }
 
+#ifdef MOCK_RAYLIB
 auto
 mocked_const_char_call_for(std::string method) -> const char*
 {
@@ -112,13 +113,13 @@ mocked_call_for(std::string method, int* result) -> void
 }
 
 auto
-mocked_call_for(std::string method, Color* result) -> void
+mocked_call_for(std::string, Color* result) -> void
 {
   *result = Color{ 0, 0, 0, 0 };
 }
 
 auto
-mocked_call_for(std::string method, FilePathList* result) -> void
+mocked_call_for(std::string, FilePathList* result) -> void
 {
   *result = FilePathList{ 0, 0 };
 }
@@ -289,11 +290,11 @@ mocked_call_for(std::string method, Sound* result) -> void
 auto
 mocked_call_for(std::string method, Texture* result) -> void
 {
-  unsigned int id;
-  int width;
-  int height;
-  int mipmaps;
-  int format;
+  unsigned int id = 0;
+  int width = 0;
+  int height = 0;
+  int mipmaps = 0;
+  int format = 0;
 
   if (raylib_method_call_mock_returns.count(method) > 0 &&
       !raylib_method_call_mock_returns[method].empty()) {
@@ -341,6 +342,7 @@ mocked_call_for(std::string method, Vector2* result) -> void
   }
   *result = Vector2{ x, y };
 }
+#endif // MOCK_RAYLIB
 
 auto
 mrb_Taylor_Raylib_mock_call(mrb_state* mrb, mrb_value) -> mrb_value
@@ -359,7 +361,7 @@ mrb_Taylor_Raylib_mock_call(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Taylor_Raylib_reset_calls(mrb_state* mrb, mrb_value) -> mrb_value
+mrb_Taylor_Raylib_reset_calls(mrb_state*, mrb_value) -> mrb_value
 {
   raylib_method_calls.clear();
 

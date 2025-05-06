@@ -213,6 +213,7 @@ namespace :compress do
 
   task :move do
     sh "mv /app/game/exports/**/*.zip /app/game/exports/"
+    sh "chown ${USER_ID}:${GROUP_ID} /app/game/exports/*.zip"
     sh "rm -rf \"/app/game/exports/#{export_target.split("/").first}\""
   end
 

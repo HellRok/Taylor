@@ -5,22 +5,13 @@ ENV \
   PATH="/app/emsdk:/app/emsdk/node/14.15.5_64bit/bin:/app/emsdk/upstream/emscripten:${PATH}" \
   EM_CACHE="/app/emsdk/upstream/emscripten/cache"
 
-# This seems to take a really long time on some machines, so let's leave it as
-# a separate step to keep rebuild times low.
-RUN chmod -R o+w \
-    /app/emsdk
-
-COPY --from=taylor/export /usr/bin/taylor /usr/bin/taylor
+COPY --from=taylor/export /usr/bin/taylor /app/mruby/bin/mrbc /usr/bin/
 COPY --from=taylor/export /app/taylor /app/taylor
-COPY --from=taylor/export /app/mruby/bin/mrbc /bin/
 COPY . /app/export
 
-RUN chmod -R o+w \
-    /app/export \
-    /app/taylor \
-    /app/taylor/include
-
 ENV \
+  USER_ID=1000 \
+  GROUP_ID=1000 \
   EXPORT=web \
   LANG=en_US.UTF-8 \
   LANGUAGE=en_US.UTF-8 \

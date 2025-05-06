@@ -2,12 +2,12 @@ require_relative "builder"
 require_relative "helpers"
 
 class WindowsBuilder < Builder
-  def platform_setup
+  def setup_platform
     @platform = "windows"
     @cxx = "x86_64-w64-mingw32-g++"
+    @cxxflags = "-std=c++17 -no-pie -Wall -Wextra -mwindows -static-libstdc++"
     @ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -lwinmm -l raylib -l pthread"
     @release_flags = "-03"
-    @cxxflags = "-std=c++17 -no-pie -Wall -Wextra -mwindows -static-libstdc++"
   end
 
   def name

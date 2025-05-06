@@ -33,8 +33,6 @@ class AndroidBuilder < Builder
       "./vendor/android/raylib/lib/libraylib.a",
       "/ndk/android-ndk-r25b/sources/android/native_app_glue/android_native_app_glue"
     ]
-
-    after_initialize
   end
 
   def name

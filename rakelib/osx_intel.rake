@@ -19,7 +19,9 @@ class OSXIntelBuilder < Builder
     @release_flags = "-03"
   end
 
-  def name = "#{@options["name"]}-intel"
+  def name
+    "#{@options["name"]}-intel"
+  end
 end
 
 builder = OSXIntelBuilder.new

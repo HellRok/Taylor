@@ -80,25 +80,28 @@ module Taylor
       end
 
       def docker_build
-        base_command = "docker run -u $(id -u ${USER}):$(id -g ${USER})"
-        base_command << " --mount type=bind,source=#{Dir.pwd},target=/app/game"
-        base_command << " --mount type=bind,source=#{File.expand_path(@options[:"export-directory"])},target=/app/game/exports"
+        base_command = ["docker run"]
+        base_command << "--mount type=bind,source=#{Dir.pwd},target=/app/game"
+        base_command << "--mount type=bind,source=#{File.expand_path(@options[:"export-directory"])},target=/app/game/exports"
 
         if @options[:"build-cache"]
           create_build_cache_folder
-          base_command << " --mount type=bind,source=#{File.expand_path(@options[:"build-cache"])},target=/app/taylor/build/"
+          base_command << "--mount type=bind,source=#{File.expand_path(@options[:"build-cache"])},target=/app/taylor/build/"
         end
+
+        base_command << "--env USER_ID=$(id -u ${USER})"
+        base_command << "--env GROUP_ID=$(id -g ${USER})"
 
         @options[:"export-targets"].each do |target|
           command = base_command.dup
 
-          command << " --env EXPORT=#{target}" if target.include?("/")
-          command << " hellrok/taylor:#{target.split("/").first}-v#{TAYLOR_VERSION}"
+          command << "--env EXPORT=#{target}" if target.include?("/")
+          command << "hellrok/taylor:#{target.split("/").first}-v#{TAYLOR_VERSION}"
 
           if options[:"dry-run"]
-            puts command
+            puts command.join(" ")
           else
-            `#{command}`
+            `#{command.join(" ")}`
           end
         end
       end

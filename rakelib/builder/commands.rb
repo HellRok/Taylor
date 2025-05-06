@@ -1,6 +1,8 @@
 class Builder
   module Commands
-    def objects_folder(variant = nil) = "build/#{@platform}/#{variant || @variant}"
+    def objects_folder(variant = nil)
+      "build/#{@platform}/#{variant || @variant}"
+    end
 
     def objects(variant = nil)
       Builder.base.source_files.ext(".o").map { |file| file.gsub(SRC_FOLDER, objects_folder(variant)) }
@@ -12,6 +14,7 @@ class Builder
 
     def source_files
       return @source_files if @source_files
+
       @source_files = (
         Rake::FileList["#{SRC_FOLDER}/**/*.cpp"] +
         ephemeral_files_for_ruby.map { "src/#{_1.ext(".cpp")}" }

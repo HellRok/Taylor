@@ -46,7 +46,15 @@ require "models/vector2_test"
 
 result = MTest::Unit.new.run.positive?
 
+if browser?
+  puts "ANALYTICS: #{$buildkite_test_analytics.to_json}"
+  puts "EXIT CODE: #{result ? 1 : 0}"
+  cancel_main_loop
+  set_main_loop "noop"
+end
+
 exit! 1 if result
+exit!
 # reset_window if use_window?
 #
 # $started = false

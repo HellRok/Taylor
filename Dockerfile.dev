@@ -53,17 +53,15 @@ RUN <<SETUP
 apt-get update --quiet --yes
 
 BASE_DEPS="curl git clang-format clang-tidy"
-DEV_TOOLS="sudo valgrind gdb vim"
 RUBY_DEPS="ruby-build libffi-dev libyaml-dev"
 LINUX_BUILD_DEPS="build-essential "
 WINDOWS_BUILD_DEPS="mingw-w64"
-TEST_DEPS="alsa-utils openbox unzip wget xdotool xvfb"
+TEST_DEPS="unzip wget"
 WINDOWS_TEST_DEPS="wine"
 WEB_TEST_DEPS="firefox-esr"
 
 apt-get install --quiet --yes \
   ${BASE_DEPS} \
-  ${DEV_TOOLS} \
   ${RUBY_DEPS} \
   ${LINUX_BUILD_DEPS} \
   ${WINDOWS_BUILD_DEPS} \
@@ -71,24 +69,6 @@ apt-get install --quiet --yes \
   ${WINDOWS_TEST_DEPS} \
   ${WEB_TEST_DEPS}
 SETUP
-
-ARG PCM_DEVICE="hw:0,3"
-ARG PCM_CARD="0"
-
-RUN <<AUDIO
-cat << EOF > /etc/asound.conf
-pcm.!default {
-        type plug
-        slave {
-                pcm "${PCM_DEVICE}"
-        }
-}
-
-ctl.!default {
-        type hw
-        card ${PCM_CARD}
-}
-AUDIO
 
 WORKDIR /home/me/app
 

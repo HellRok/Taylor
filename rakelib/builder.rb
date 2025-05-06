@@ -1,7 +1,9 @@
 require_relative "builder/commands"
 
 class Builder
-  def self.base = @@base ||= new
+  def self.base
+    @@base ||= new
+  end
 
   def self.builders
     @@builders ||= {}
@@ -70,16 +72,21 @@ class Builder
     ]
   end
 
-  def after_initialize
+  def setup_platform
+    nil
   end
 
-  def setup_platform = nil
+  def defines
+    @defines.join(" ")
+  end
 
-  def defines = @defines.join(" ")
+  def includes
+    @includes.join(" ")
+  end
 
-  def includes = @includes.join(" ")
-
-  def static_links = @static_links.join(" ")
+  def static_links
+    @static_links.join(" ")
+  end
 
   def setup_options
     @options ||= File.exist?("/app/game/taylor-config.json") ?
@@ -88,7 +95,11 @@ class Builder
       }
   end
 
-  def mock_raylib? = @options.fetch("mock_raylib", false) || ENV.key?("MOCK_RAYLIB")
+  def name
+    @options["name"]
+  end
 
-  def name = @options["name"]
+  def mock_raylib?
+    @options.fetch("mock_raylib", false) || ENV.key?("MOCK_RAYLIB")
+  end
 end
