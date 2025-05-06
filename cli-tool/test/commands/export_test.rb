@@ -59,25 +59,28 @@ class Test
 
       def test_check_docker_command_default_dry_run
         export_command = Taylor::Commands::Export.new(["--dry-run"], {})
-        assert export_command.backtick_data.nil?
+        assert_true export_command.backtick_data.nil?
 
         assert_include(
           export_command.puts_data,
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:linux-v#{TAYLOR_VERSION}"
           ].join(" ")
         )
+
         assert_include(
           export_command.puts_data,
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:windows-v#{TAYLOR_VERSION}"
           ].join(" ")
         )
@@ -85,9 +88,10 @@ class Test
           export_command.puts_data,
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "--env EXPORT=osx/intel",
             "hellrok/taylor:osx-v#{TAYLOR_VERSION}"
           ].join(" ")
@@ -96,9 +100,10 @@ class Test
           export_command.puts_data,
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "--env EXPORT=osx/apple",
             "hellrok/taylor:osx-v#{TAYLOR_VERSION}"
           ].join(" ")
@@ -107,9 +112,10 @@ class Test
           export_command.puts_data,
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:web-v#{TAYLOR_VERSION}"
           ].join(" ")
         )
@@ -117,59 +123,64 @@ class Test
 
       def test_check_docker_command_default
         export_command = Taylor::Commands::Export.new([], {})
-        assert export_command.puts_data.nil?
+        assert_true export_command.puts_data.nil?
 
         assert_equal(
-          export_command.backtick_data[0],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:linux-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[0]
         )
         assert_equal(
-          export_command.backtick_data[1],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:windows-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[1]
         )
         assert_equal(
-          export_command.backtick_data[2],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "--env EXPORT=osx/intel",
             "hellrok/taylor:osx-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[2]
         )
         assert_equal(
-          export_command.backtick_data[3],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "--env EXPORT=osx/apple",
             "hellrok/taylor:osx-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[3]
         )
         assert_equal(
-          export_command.backtick_data[4],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:web-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[4]
         )
       ensure
         Dir.rmdir("exports")
@@ -178,14 +189,15 @@ class Test
       def test_check_docker_command_export_directory_flag
         export_command = Taylor::Commands::Export.new(["--export-directory", "releases_flag"], {})
         assert_equal(
-          export_command.backtick_data[0],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "releases_flag")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:linux-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[0]
         )
       ensure
         Dir.rmdir("releases_flag")
@@ -194,14 +206,15 @@ class Test
       def test_check_docker_command_export_directory_option
         export_command = Taylor::Commands::Export.new([], {"export_directory" => "releases_option"})
         assert_equal(
-          export_command.backtick_data[0],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "releases_option")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:linux-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[0]
         )
       ensure
         Dir.rmdir("releases_option")
@@ -210,26 +223,28 @@ class Test
       def test_check_docker_command_export_targets_options
         export_command = Taylor::Commands::Export.new([], {"export_targets" => "linux,web"})
 
-        assert_equal(export_command.backtick_data.size, 2)
+        assert_equal 2, export_command.backtick_data.size
         assert_equal(
-          export_command.backtick_data[0],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:linux-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[0]
         )
         assert_equal(
-          export_command.backtick_data[1],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:web-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[1]
         )
       ensure
         Dir.rmdir("exports")
@@ -238,26 +253,28 @@ class Test
       def test_check_docker_command_export_targets_flag
         export_command = Taylor::Commands::Export.new(["--export-targets", "linux,web"], {})
 
-        assert_equal(export_command.backtick_data.size, 2)
+        assert_equal 2, export_command.backtick_data.size
         assert_equal(
-          export_command.backtick_data[0],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:linux-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[0]
         )
         assert_equal(
-          export_command.backtick_data[1],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:web-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[1]
         )
       ensure
         Dir.rmdir("exports")
@@ -275,15 +292,16 @@ class Test
 
         assert_true Dir.exist?("./build_cache_flag")
         assert_equal(
-          export_command.backtick_data[0],
           [
             "docker run",
-            "-u $(id -u ${USER}):$(id -g ${USER})",
             "--mount type=bind,source=#{Dir.pwd},target=/app/game",
             "--mount type=bind,source=#{File.join(Dir.pwd, "exports")},target=/app/game/exports",
             "--mount type=bind,source=#{File.join(Dir.pwd, "build_cache_flag")},target=/app/taylor/build/",
+            "--env USER_ID=$(id -u ${USER})",
+            "--env GROUP_ID=$(id -g ${USER})",
             "hellrok/taylor:linux-v#{TAYLOR_VERSION}"
-          ].join(" ")
+          ].join(" "),
+          export_command.backtick_data[0]
         )
       ensure
         Dir.rmdir("build_cache_flag")
