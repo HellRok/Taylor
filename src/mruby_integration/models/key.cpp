@@ -2,7 +2,7 @@
 #include "mruby/class.h"
 #include "mruby/data.h"
 #include "raylib.h"
-#include <cstdlib>
+#include <string>
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
@@ -66,10 +66,9 @@ mrb_Key_get_pressed_character(mrb_state* mrb, mrb_value) -> mrb_value
   int char_code = GetCharPressed();
 
   if (char_code > 0) {
-    char key[0];
-    key[0] = static_cast<char>(char_code);
+    std::string key = { static_cast<char>(char_code) };
 
-    return mrb_str_new_cstr(mrb, key);
+    return mrb_str_new_cstr(mrb, key.c_str());
   } else {
     return mrb_nil_value();
   }
