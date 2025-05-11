@@ -26,7 +26,7 @@ mrb_set_main_loop(mrb_state* mrb, mrb_value self)
 }
 
 mrb_value
-mrb_cancel_main_loop(mrb_state* mrb, mrb_value self)
+mrb_cancel_main_loop(mrb_state*, mrb_value)
 {
   emscripten_cancel_main_loop();
 

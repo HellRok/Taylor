@@ -87,8 +87,8 @@ COPY --from=asdf_install /home/me/.asdf /home/me/.asdf
 COPY .tool-versions /home/me/.tool-versions
 
 RUN <<SETUP
-echo "source /home/me/.asdf/asdf.sh" >> /home/me/.bashrc
-echo "source /home/me/.asdf/completions/asdf.bash" >> /home/me/.bashrc
+echo "export PATH=\"${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH\"" >> /home/me/.bashrc
+echo ". <(asdf completion bash)" >> /home/me/.bashrc
 
 gem install bundler
 bundle config set path vendor/bundle

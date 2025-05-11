@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 set -u
 
+export MOCK_RAYLIB=1
+
+log() {
+  echo "[ $0 ] $@"
+}
+
+log "Building Taylor"
 rake linux:release:build || exit 1
 
 pushd test/
 
+log "Running tests"
 ../dist/linux/release/taylor ../cli-tool/cli.rb test.rb
 EXIT_CODE=$?
 
