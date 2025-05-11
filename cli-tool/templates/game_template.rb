@@ -4,10 +4,10 @@ def game_template
     $LOAD_PATHS
 
     # Open up a window
-    init_window(800, 480, "$NAME")
+    Window.open(width: 800, height: 480, title: "$NAME")
 
     # Setup audio so we can play sounds
-    init_audio_device
+    Audio.open
 
     # Get the current monitor frame rate and set our target framerate to match.
     set_target_fps(get_monitor_refresh_rate(get_current_monitor))
@@ -23,9 +23,9 @@ def game_template
         # Your drawing logic goes here
 
         clear
-        draw_text(
+        Font.default.draw(
           "Welcome to your first Taylor application!",
-          190, 200, 20, DARKGRAY
+          x: 190, y: 200, size: 20, spacing: 2, colour: Colour::DARKGRAY
         )
       end
     end
@@ -34,10 +34,10 @@ def game_template
       set_main_loop 'main'
     else
       # Detect window close button or ESC key
-      main until window_should_close?
+      main until Window.close?
     end
 
-    close_audio_device
-    close_window
+    Audio.close
+    Window.close
   STR
 end
