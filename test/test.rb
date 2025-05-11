@@ -1,16 +1,8 @@
 require "mtest_overrides"
 require "mtest_extensions"
-require "helpers"
-require "support/x_do"
 
 require "base"
 
-require "fixtures/core"
-require "fixtures/font"
-require "fixtures/shader"
-require "fixtures/shapes"
-require "fixtures/texture"
-require "fixtures/models"
 require "fixtures/web"
 
 require "core/drawing_test"
@@ -34,13 +26,9 @@ require "models/window_test"
 require "platform_test"
 # require "shapes/circle_test"
 # require "shapes/collision_test"
-# require "shapes/ellipse_test"
 # require "shapes/line_test"
 # require "shapes/pixel_test"
 # require "shapes/rectangle_test"
-# require "shapes/ring_test"
-# require "shapes/triangle_test"
-# require "texture_test"
 require "web_test"
 
 result = MTest::Unit.new.run.positive?
