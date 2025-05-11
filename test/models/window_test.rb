@@ -13,6 +13,17 @@ class Test
         ]
       end
 
+      def test_close
+        Window.open
+        Taylor::Raylib.reset_calls
+
+        Window.close
+
+        assert_called [
+          "(CloseWindow) { }"
+        ]
+      end
+
       def test_close?
         Taylor::Raylib.mock_call("WindowShouldClose", "false")
         Taylor::Raylib.mock_call("WindowShouldClose", "true")
@@ -39,46 +50,105 @@ class Test
         ]
       end
 
-      def test_window_states
+      def test_width
+        # Yes, this is the right method, for some reason it's called 'Screen' here?
+        Taylor::Raylib.mock_call("GetScreenWidth", "2")
+        Window.open(width: 2)
+        Taylor::Raylib.reset_calls
+
+        assert_equal 2, Window.width
+
+        assert_called [
+          "(GetScreenWidth) { }"
+        ]
+      end
+
+      def test_height
+        # Yes, this is the right method, for some reason it's called 'Screen' here?
+        Taylor::Raylib.mock_call("GetScreenHeight", "3")
+        Window.open(height: 3)
+        Taylor::Raylib.reset_calls
+
+        assert_equal 3, Window.height
+
+        assert_called [
+          "(GetScreenHeight) { }"
+        ]
+      end
+
+      def test_title
+        Window.open(title: "test title")
+        Taylor::Raylib.reset_calls
+
+        assert_equal "test title", Window.title
+
+        assert_no_calls
+      end
+
+      def test_flags=
+        Window.flags = Window::Flag::FULLSCREEN
+
+        assert_called [
+          "(SetWindowState) { flags: 2 }"
+        ]
+      end
+
+      def test_config=
+        Window.config = Window::Flag::RESIZABLE
+
+        assert_called [
+          "(SetConfigFlags) { flags: 4 }"
+        ]
+      end
+
+      def test_clear_flag
+        Window.clear_flag(Window::Flag::UNDECORATED)
+
+        assert_called [
+          "(ClearWindowState) { flags: 8 }"
+        ]
+      end
+
+      def test_window_state_checks
         8.times {
           Taylor::Raylib.mock_call("IsWindowState", "false")
           Taylor::Raylib.mock_call("IsWindowState", "true")
         }
 
-        assert_false Window.flag?(Window::Flag::FULLSCREEN)
-        assert_true Window.fullscreen?
-        assert_false Window.minimised?
-        assert_true Window.hidden?
-        assert_false Window.maximised?
-        assert_true Window.always_run?
-        assert_false Window.resizable?
-        assert_true Window.always_on_top?
-        assert_false Window.undecorated?
-        assert_true Window.vsync_hinted?
-        assert_false Window.msaa_4x_hinted?
-        assert_true Window.interlaced_hinted?
-        assert_false Window.unfocused?
-        assert_false Window.focused? # It's backwards
-        assert_false Window.transparent?
-        assert_true Window.high_dpi?
+        Window.flag?(Window::Flag::FULLSCREEN)
+        Window.fullscreen?
+        Window.resizable?
+        Window.undecorated?
+        Window.transparent?
+        Window.msaa_4x_hinted?
+        Window.vsync_hinted?
+        Window.hidden?
+        Window.always_run?
+        Window.minimised?
+        Window.maximised?
+        Window.unfocused?
+        Window.focused?
+        Window.always_on_top?
+        Window.high_dpi?
+        Window.interlaced_hinted?
 
         assert_called [
-          "(IsWindowState) { flag: 2 }",
-          "(IsWindowState) { flag: 2 }",
-          "(IsWindowState) { flag: 512 }",
-          "(IsWindowState) { flag: 128 }",
-          "(IsWindowState) { flag: 1024 }",
-          "(IsWindowState) { flag: 256 }",
-          "(IsWindowState) { flag: 4 }",
-          "(IsWindowState) { flag: 4096 }",
-          "(IsWindowState) { flag: 8 }",
-          "(IsWindowState) { flag: 64 }",
-          "(IsWindowState) { flag: 32 }",
-          "(IsWindowState) { flag: 65536 }",
-          "(IsWindowState) { flag: 2048 }",
-          "(IsWindowState) { flag: 2048 }",
-          "(IsWindowState) { flag: 16 }",
-          "(IsWindowState) { flag: 8192 }"
+          "(IsWindowState) { flag: #{Window::Flag::FULLSCREEN} }",
+          "(IsWindowState) { flag: #{Window::Flag::FULLSCREEN} }",
+          "(IsWindowState) { flag: #{Window::Flag::RESIZABLE} }",
+          "(IsWindowState) { flag: #{Window::Flag::UNDECORATED} }",
+          "(IsWindowState) { flag: #{Window::Flag::TRANSPARENT} }",
+          "(IsWindowState) { flag: #{Window::Flag::MSAA_4X_HINT} }",
+          "(IsWindowState) { flag: #{Window::Flag::VSYNC_HINT} }",
+          "(IsWindowState) { flag: #{Window::Flag::HIDDEN} }",
+          "(IsWindowState) { flag: #{Window::Flag::ALWAYS_RUN} }",
+          "(IsWindowState) { flag: #{Window::Flag::MINIMISED} }",
+          "(IsWindowState) { flag: #{Window::Flag::MAXIMISED} }",
+          "(IsWindowState) { flag: #{Window::Flag::UNFOCUSED} }",
+          "(IsWindowState) { flag: #{Window::Flag::UNFOCUSED} }",
+          "(IsWindowState) { flag: #{Window::Flag::ALWAYS_ON_TOP} }",
+          "(IsWindowState) { flag: #{Window::Flag::HIGH_DPI} }",
+          "(IsWindowState) { flag: #{Window::Flag::INTERLACED_HINT} }"
         ]
       end
     end
