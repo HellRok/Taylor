@@ -151,6 +151,16 @@ class Test
           "(IsWindowState) { flag: #{Window::Flag::INTERLACED_HINT} }"
         ]
       end
+
+      def test_exit_key=
+        Window.exit_key = Key::PERIOD
+        Window.exit_key = Key::ESCAPE
+
+        assert_called [
+          "(SetExitKey) { key: 46 }",
+          "(SetExitKey) { key: 256 }"
+        ]
+      end
     end
   end
 end

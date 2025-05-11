@@ -197,6 +197,8 @@
 - Added Window.clear_flag
 - Removed clear_window_state
 - Added Window.config=
+- Added Window.exit_key=
+- Removed set_exit_key
 
 ## v0.3.14.1
 

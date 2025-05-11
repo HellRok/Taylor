@@ -8,7 +8,7 @@ log() {
 }
 
 log "Building Taylor"
-rake linux:release:build || exit 1
+bundle exec rake linux:release:build || exit 1
 
 log "Building docker"
 bundle exec rake docker:build:export:web &> /dev/null

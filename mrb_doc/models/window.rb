@@ -251,4 +251,35 @@ class Window
     # src/mruby_integration/models/window.cpp
     nil
   end
+
+  # Sets the key that {Window.close?} listens for.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.close?
+  #   # => false
+  #
+  #   # Player presses 'q'
+  #
+  #   puts Window.close?
+  #   # => false
+  #
+  #   Window.exit_key = KEY::Q
+  #   # Player presses 'q'
+  #
+  #   puts Window.close?
+  #   # => true
+  #
+  # @param key [Integer] The key to listen for to close the window
+  # @return [nil]
+  def self.exit_key=(key)
+    # mrb_Window_set_exit_key
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
 end

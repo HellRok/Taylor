@@ -118,6 +118,17 @@ mrb_Window_clear_flag(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Window_set_exit_key(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_int key;
+  mrb_get_args(mrb, "i", &key);
+
+  SetExitKey(key);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -145,6 +156,8 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "config=", mrb_Window_config_equals, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "clear_flag", mrb_Window_clear_flag, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "exit_key=", mrb_Window_set_exit_key, MRB_ARGS_REQ(1));
 
   load_ruby_models_window(mrb);
 }
