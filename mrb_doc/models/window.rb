@@ -304,6 +304,36 @@ class Window
   def self.resized?
     # mrb_Window_resized
     # src/mruby_integration/models/window.cpp
+    True
+  end
+
+  # If the {Window} is not fullscreen, fullscreens it. If the {Window} is
+  # fullscreen, it turns it back into a window.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.fullscreen?
+  #   # => false
+  #
+  #   Window.toggle_fullscreen
+  #
+  #   puts Window.fullscreen?
+  #   # => true
+  #
+  #   Window.toggle_fullscreen
+  #
+  #   puts Window.fullscreen?
+  #   # => false
+  #
+  # @return [nil]
+  def self.toggle_fullscreen
+    # mrb_Window_toggle_fullscreen
+    # src/mruby_integration/models/window.cpp
     nil
   end
 end

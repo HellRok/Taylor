@@ -174,6 +174,14 @@ class Test
           "(IsWindowResized) { }"
         ]
       end
+
+      def test_toggle_fullscreen
+        Window.toggle_fullscreen
+
+        assert_called [
+          "(ToggleFullscreen) { }"
+        ]
+      end
     end
   end
 end

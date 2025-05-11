@@ -135,6 +135,13 @@ mrb_Window_resized(mrb_state*, mrb_value) -> mrb_value
   return mrb_bool_value(IsWindowResized());
 }
 
+auto
+mrb_Window_toggle_fullscreen(mrb_state*, mrb_value) -> mrb_value
+{
+  ToggleFullscreen();
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -166,6 +173,11 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "exit_key=", mrb_Window_set_exit_key, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "resized?", mrb_Window_resized, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb,
+                          Window_class,
+                          "toggle_fullscreen",
+                          mrb_Window_toggle_fullscreen,
+                          MRB_ARGS_NONE());
 
   load_ruby_models_window(mrb);
 }

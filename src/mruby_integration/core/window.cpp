@@ -5,13 +5,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_toggle_fullscreen(mrb_state*, mrb_value) -> mrb_value
-{
-  ToggleFullscreen();
-  return mrb_nil_value();
-}
-
-auto
 mrb_maximise_window(mrb_state*, mrb_value) -> mrb_value
 {
   MaximizeWindow();
@@ -185,11 +178,6 @@ mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_window(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "toggle_fullscreen",
-                    mrb_toggle_fullscreen,
-                    MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "maximise_window",

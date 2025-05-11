@@ -201,6 +201,8 @@
 - Removed set_exit_key
 - Added Window.resized?
 - Removed window_resized?
+- Added Window.toggle_fullscreen
+- Removed toggle_fullscreen
 
 ## v0.3.14.1
 

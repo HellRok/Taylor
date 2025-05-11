@@ -1,11 +1,3 @@
-# Toggles the fullscreen state.
-# @return [nil]
-def toggle_fullscreen
-  # mrb_toggle_fullscreen
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
 # Maximises the window.
 # @return [nil]
 def maximise_window
