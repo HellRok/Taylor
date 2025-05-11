@@ -5,12 +5,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_window_resized(mrb_state*, mrb_value) -> mrb_value
-{
-  return mrb_bool_value(IsWindowResized());
-}
-
-auto
 mrb_toggle_fullscreen(mrb_state*, mrb_value) -> mrb_value
 {
   ToggleFullscreen();
@@ -191,11 +185,6 @@ mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_window(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "window_resized?",
-                    mrb_window_resized,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "toggle_fullscreen",

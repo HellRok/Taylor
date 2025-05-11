@@ -8,7 +8,7 @@ log() {
 }
 
 log "Building Taylor"
-bundle exec rake windows:release:build || exit 1
+bundle exec rake windows:release:build 2> /dev/null || exit 1
 
 pushd test/
 

@@ -161,6 +161,19 @@ class Test
           "(SetExitKey) { key: 256 }"
         ]
       end
+
+      def test_resized?
+        Taylor::Raylib.mock_call("IsWindowResized", "false")
+        Taylor::Raylib.mock_call("IsWindowResized", "true")
+
+        assert_false Window.resized?
+        assert_true Window.resized?
+
+        assert_called [
+          "(IsWindowResized) { }",
+          "(IsWindowResized) { }"
+        ]
+      end
     end
   end
 end

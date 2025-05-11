@@ -1,11 +1,3 @@
-# Checks if the window was resized since the last frame.
-# @return [Boolean]
-def window_resized?
-  # mrb_window_resized
-  # src/mruby_integration/core/window.cpp
-  false
-end
-
 # Toggles the fullscreen state.
 # @return [nil]
 def toggle_fullscreen

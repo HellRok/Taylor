@@ -282,4 +282,28 @@ class Window
     # src/mruby_integration/models/window.cpp
     nil
   end
+
+  # Returns `true` if the {Window} has been resized since the last frame.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.resized?
+  #   # => false
+  #
+  #   # Player resizes the window by going full screen
+  #
+  #   puts Window.resized?
+  #   # => true
+  #
+  # @return [Boolean]
+  def self.resized?
+    # mrb_Window_resized
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
 end

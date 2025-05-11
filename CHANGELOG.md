@@ -199,6 +199,8 @@
 - Added Window.config=
 - Added Window.exit_key=
 - Removed set_exit_key
+- Added Window.resized?
+- Removed window_resized?
 
 ## v0.3.14.1
 
