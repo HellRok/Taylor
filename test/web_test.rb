@@ -1,10 +1,10 @@
 class Test
-  class Web_Test < MTest::Unit::TestCaseWithAnalytics
+  class Web_Test < Test::Base
     if browser?
       # According to
       # https://emscripten.org/docs/api_reference/emscripten.h.html#c.emscripten_cancel_main_loop
       # we actually can't leave the main_loop we set here, so I guess we just
-      # leave this as  a non-test?
+      # leave this as a non-test?
       def test_set_main_loop
         # set_main_loop 'set_main_loop_stub'
         # assert_true $set_main_loop_run

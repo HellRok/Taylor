@@ -32,7 +32,6 @@ require "models/texture2d_test"
 require "models/vector2_test"
 require "models/window_test"
 require "platform_test"
-# require "shader_test"
 # require "shapes/circle_test"
 # require "shapes/collision_test"
 # require "shapes/ellipse_test"
@@ -42,7 +41,7 @@ require "platform_test"
 # require "shapes/ring_test"
 # require "shapes/triangle_test"
 # require "texture_test"
-# require "web"
+require "web_test"
 
 result = MTest::Unit.new.run.positive?
 
