@@ -92,7 +92,7 @@ class Test
         Taylor::Commands::New.new(["--name", "./test/test_game"], {})
         data = File.read("./test/test_game/game.rb").lines
         assert_equal "$: << './vendor'\n", data[1]
-        assert_equal "init_window(800, 480, \"./test/test_game\")\n", data[4]
+        assert_equal %(Window.open(width: 800, height: 480, title: "./test/test_game")\n), data[4]
       ensure
         delete_project("./test/test_game")
       end
@@ -108,7 +108,7 @@ class Test
         data = File.read("./test/test_game_the_sequel/game.rb").lines
         assert_equal "$: << './third_party'\n", data[1]
         assert_equal "$: << './black_box'\n", data[2]
-        assert_equal "init_window(800, 480, \"./test/test_game_the_sequel\")\n", data[5]
+        assert_equal %(Window.open(width: 800, height: 480, title: "./test/test_game_the_sequel")\n), data[5]
       ensure
         File.delete(File.join("./test", "test_game_the_sequel", "game.rb"))
         File.delete(File.join("./test", "test_game_the_sequel", "taylor-config.json"))
