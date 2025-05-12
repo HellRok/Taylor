@@ -336,4 +336,81 @@ class Window
     # src/mruby_integration/models/window.cpp
     nil
   end
+
+  # Maximises the {Window} on the current screen.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.maximised?
+  #   # => false
+  #
+  #   Window.maximise
+  #
+  #   puts Window.maximised?
+  #   # => true
+  #
+  # @return [nil]
+  def self.maximise
+    # mrb_Window_maximise
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
+
+  # Minimises the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.minimised?
+  #   # => false
+  #
+  #   Window.minimise
+  #
+  #   puts Window.minimised?
+  #   # => true
+  #
+  # @return [nil]
+  def self.minimise
+    # mrb_Window_minimise
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
+
+  # Restores a minimised {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.minimised?
+  #   # => false
+  #
+  #   Window.minimise
+  #
+  #   puts Window.minimised?
+  #   # => true
+  #
+  #   Window.restore
+  #
+  #   puts Window.minimised?
+  #   # => false
+  #
+  # @return [nil]
+  def self.restore
+    # mrb_Window_restore
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
 end

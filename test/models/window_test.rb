@@ -182,6 +182,30 @@ class Test
           "(ToggleFullscreen) { }"
         ]
       end
+
+      def test_maximise
+        Window.maximise
+
+        assert_called [
+          "(MaximizeWindow) { }"
+        ]
+      end
+
+      def test_minimise
+        Window.minimise
+
+        assert_called [
+          "(MinimizeWindow) { }"
+        ]
+      end
+
+      def test_restore
+        Window.restore
+
+        assert_called [
+          "(RestoreWindow) { }"
+        ]
+      end
     end
   end
 end

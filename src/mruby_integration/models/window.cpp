@@ -142,6 +142,27 @@ mrb_Window_toggle_fullscreen(mrb_state*, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Window_maximise(mrb_state*, mrb_value) -> mrb_value
+{
+  MaximizeWindow();
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_minimise(mrb_state*, mrb_value) -> mrb_value
+{
+  MinimizeWindow();
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_restore(mrb_state*, mrb_value) -> mrb_value
+{
+  RestoreWindow();
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -178,6 +199,12 @@ append_models_Window(mrb_state* mrb)
                           "toggle_fullscreen",
                           mrb_Window_toggle_fullscreen,
                           MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "maximise", mrb_Window_maximise, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "minimise", mrb_Window_minimise, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "restore", mrb_Window_restore, MRB_ARGS_NONE());
 
   load_ruby_models_window(mrb);
 }

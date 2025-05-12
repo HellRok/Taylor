@@ -5,27 +5,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_maximise_window(mrb_state*, mrb_value) -> mrb_value
-{
-  MaximizeWindow();
-  return mrb_nil_value();
-}
-
-auto
-mrb_minimise_window(mrb_state*, mrb_value) -> mrb_value
-{
-  MinimizeWindow();
-  return mrb_nil_value();
-}
-
-auto
-mrb_restore_window(mrb_state*, mrb_value) -> mrb_value
-{
-  RestoreWindow();
-  return mrb_nil_value();
-}
-
-auto
 mrb_set_window_icon(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Image* image;
@@ -178,21 +157,6 @@ mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_window(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "maximise_window",
-                    mrb_maximise_window,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "minimise_window",
-                    mrb_minimise_window,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "restore_window",
-                    mrb_restore_window,
-                    MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "set_window_icon",

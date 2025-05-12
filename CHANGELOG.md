@@ -203,6 +203,12 @@
 - Removed window_resized?
 - Added Window.toggle_fullscreen
 - Removed toggle_fullscreen
+- Added Window.maxmimse
+- Removed maximise_window
+- Added Window.minimise
+- Removed minimise_window
+- Added Window.restore
+- Removed restore_window
 
 ## v0.3.14.1
 

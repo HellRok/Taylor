@@ -1,28 +1,3 @@
-# Maximises the window.
-# @return [nil]
-def maximise_window
-  # mrb_maximise_window
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
-# Minimises the window.
-# @return [nil]
-def minimise_window
-  # mrb_minimise_window
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
-# Restores the window from being maximised or minimised.
-# @note I don't think it currently works for restoring from minimised.
-# @return [nil]
-def restore_window
-  # mrb_restore_window
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
 # Sets the icon for the current window.
 # @param image [Image]
 # @return [nil]
