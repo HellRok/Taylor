@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+log() {
+  echo "[ $0 ] $@"
+}
+
+log "Building Taylor"
+bundle exec rake linux:release:build 2> /dev/null || exit 1
+
+pushd cli-tool/
+
+log "Running tests"
+../dist/linux/release/taylor ../cli-tool/cli.rb test/test.rb
+EXIT_CODE=$?
+
+popd
+exit $EXIT_CODE

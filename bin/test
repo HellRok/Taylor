@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -u
+
+DIRNAME=$(dirname -- "${0}")
+SCRIPT_DIR=$(cd -- "${DIRNAME}" > /dev/null 2>&1 && pwd)
+source "${SCRIPT_DIR}"/shared.lib.sh
+
+start "Linux tests"
+job_output=$(./bin/test-linux 2>&1)
+result $?
+
+start "Windows tests"
+job_output=$(./bin/test-windows 2>&1)
+result $?
+
+start "Browser tests"
+job_output=$(./bin/test-web 2>&1)
+result $?
+
+start "CLI tests"
+job_output=$(./bin/test-cli 2>&1)
+result $?
+
+start "Documentation check"
+job_output=$(.buildkite/scripts/tests/check_for_documentation.rb 2>&1)
+result $?
+
+start "Linting"
+job_output=$(bundle 2>&1)
+result $?

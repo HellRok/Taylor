@@ -1,20 +1,16 @@
 #!/usr/bin/env bash
 set -u
 
+DIRNAME=$(dirname -- "${0}")
+SCRIPT_DIR=$(cd -- "${DIRNAME}" > /dev/null 2>&1 && pwd)
+source "${SCRIPT_DIR}"/shared.lib.sh
+
 export MOCK_RAYLIB=1
 
-log() {
-  echo "[ $0 ] $@"
-}
-
 log "Building Taylor"
-bundle exec rake windows:release:build 2> /dev/null || exit 1
+bundle exec rake windows:release:build &> /dev/null || exit 1
 
 pushd test/
 
 log "Running tests"
 wine ../dist/windows/release/taylor.exe ../cli-tool/cli.rb test.rb 2> /dev/null
-EXIT_CODE=$?
-
-popd
-exit $EXIT_CODE

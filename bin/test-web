@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
+DIRNAME=$(dirname -- "${0}")
+SCRIPT_DIR=$(cd -- "${DIRNAME}" > /dev/null 2>&1 && pwd)
+source "${SCRIPT_DIR}"/shared.lib.sh
+
 export MOCK_RAYLIB=1
 
-log() {
-  echo "[ $0 ] $@"
-}
-
 log "Building Taylor"
-bundle exec rake linux:release:build 2> /dev/null || exit 1
+bundle exec rake linux:release:build &> /dev/null || exit 1
 
 log "Building docker"
 bundle exec rake docker:build:export:web &> /dev/null
@@ -18,13 +18,13 @@ if [[ $? -gt 0 ]]; then
   exit 1
 fi
 
-pushd test
+pushd test &> /dev/null
 
 log "Exporting"
 rm -rf exports
 mkdir -p exports
 mkdir -p /tmp/taylor-builds
-../dist/linux/release/taylor ../cli-tool/cli.rb export --export-targets web --build-cache /tmp/taylor-builds
+../dist/linux/release/taylor ../cli-tool/cli.rb export --export-targets web --build-cache /tmp/taylor-builds &> /dev/null
 
 if [[ $? -gt 0 ]]; then
   log "Exporting failed"
@@ -32,11 +32,6 @@ if [[ $? -gt 0 ]]; then
 fi
 
 log "Running tests"
-pushd exports
+pushd exports &> /dev/null
 unzip taylor-test-suite-web-v0.0.1.zip &> /dev/null
 ../../.buildkite/scripts/tests/web_test.rb
-export WEB_EXIT_CODE=$?
-
-popd
-popd
-exit $WEB_EXIT_CODE
