@@ -193,6 +193,14 @@ mrb_Window_set_icon(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mrb_Window_set_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  if (!IsWindowReady()) {
+    raise_error(mrb,
+                Window_class,
+                "NotReadyError",
+                "You must open the window before setting a position");
+    return mrb_nil_value();
+  }
+
   Vector2* vector;
 
   mrb_get_args(mrb, "d", &vector, &Vector2_type);

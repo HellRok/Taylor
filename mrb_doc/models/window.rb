@@ -472,6 +472,7 @@ class Window
   #
   # @param position [Vector2]
   # @return [Vector2]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.position=(position)
     # mrb_Window_set_position
     # src/mruby_integration/models/window.cpp

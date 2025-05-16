@@ -243,7 +243,20 @@ class Test
         ), "it returns the set position"
 
         assert_called [
+          "(IsWindowReady) { }",
           "(SetWindowPosition) { x: 1 y: 2 }"
+        ]
+      end
+
+      def test_position_equals_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise(Window::NotReadyError) {
+          Window.position = Vector2[1, 1]
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
