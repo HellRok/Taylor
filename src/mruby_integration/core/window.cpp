@@ -16,17 +16,6 @@ mrb_set_window_monitor(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_set_window_size(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int width, height;
-
-  mrb_get_args(mrb, "ii", &width, &height);
-
-  SetWindowSize(width, height);
-  return mrb_nil_value();
-}
-
-auto
 mrb_get_monitor_count(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, GetMonitorCount());
@@ -83,20 +72,6 @@ mrb_get_monitor_refresh_rate(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_get_window_position(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
-  *position = GetWindowPosition();
-
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
-
-  setup_Vector2(mrb, obj, position, position->x, position->y);
-
-  return obj;
-}
-
-auto
 mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value) -> mrb_value
 {
   auto* scale = static_cast<Vector2*>(malloc(sizeof(Vector2)));
@@ -118,11 +93,6 @@ append_core_window(mrb_state* mrb)
                     "set_window_monitor",
                     mrb_set_window_monitor,
                     MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "set_window_size",
-                    mrb_set_window_size,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "get_monitor_count",
@@ -153,11 +123,6 @@ append_core_window(mrb_state* mrb)
                     "get_monitor_refresh_rate",
                     mrb_get_monitor_refresh_rate,
                     MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_window_position",
-                    mrb_get_window_position,
-                    MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "get_window_scale_dpi",

@@ -453,6 +453,28 @@ class Window
     icon
   end
 
+  # Gets the position of the {Window} on the screen.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.position = Vector2[100, 200]
+  #
+  #   puts Window.position
+  #   # => Vector2[100, 100]
+  #
+  # @return [Vector2]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.position
+    # mrb_Window_position
+    # src/mruby_integration/models/window.cpp
+    Vector2[10, 10]
+  end
+
   # Sets the position of the {Window} on the screen.
   #
   # @example Basic usage
@@ -473,6 +495,26 @@ class Window
     position
   end
 
+  # Sets the size of the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.size = Vector2[1280, 720]
+  #
+  # @param size [Vector2]
+  # @return [Vector2]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.size=(size)
+    # mrb_Window_set_size
+    # src/mruby_integration/models/window.cpp
+    size
+  end
+
   # Sets the minimum size the {Window} is allowed to be.
   #
   # @example Basic usage
@@ -491,5 +533,25 @@ class Window
     # mrb_Window_set_minimum_size
     # src/mruby_integration/models/window.cpp
     size
+  end
+
+  # Sets the opacity of the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.opacity = 0.75
+  #
+  # @param opacity [Float] A value between 0.0 and 1.0.
+  # @return [Float]
+  # @raise [ArgumentError] Raised when passing an invalid opacity.
+  def self.opacity=(opacity)
+    # mrb_Window_set_opacity
+    # src/mruby_integration/models/window.cpp
+    opacity
   end
 end

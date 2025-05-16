@@ -7,16 +7,6 @@ def set_window_monitor(monitor)
   nil
 end
 
-# Sets the size for the current window.
-# @param width [Integer]
-# @param height [Integer]
-# @return [nil]
-def set_window_size(width, height)
-  # mrb_set_window_size
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
 # Gets the total number of monitors the user has.
 # @return [Integer]
 def get_monitor_count
@@ -67,14 +57,6 @@ def get_monitor_refresh_rate(monitor)
   # mrb_get_monitor_refresh_rate
   # src/mruby_integration/core/window.cpp
   60
-end
-
-# Gets the position of the window.
-# @return [Vector2]
-def get_window_position
-  # mrb_get_window_position
-  # src/mruby_integration/core/window.cpp
-  Vector2.new(10, 10)
 end
 
 # Gets the scale of the window.

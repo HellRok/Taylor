@@ -218,6 +218,13 @@
 - Added Window.minimum_size
 - Added Window.minimum_size=
 - Removed set_window_min_size
+- Added Window.size
+- Added Window.size=
+- Removed set_window_size
+- Added Window.position
+- Removed get_window_position
+- Added Window.opacity
+- Added Window.opacity=
 
 ## v0.3.14.1
 

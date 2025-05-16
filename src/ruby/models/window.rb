@@ -21,6 +21,26 @@ module Window
     @@title
   end
 
+  # Gets the size of the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.size
+  #   # => Vector2[1920, 1080]
+  #
+  # @return [Vector2]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.size
+    raise Window::NotReadyError, "You must call Window.open before Window.size" unless ready?
+
+    Vector2[width, height]
+  end
+
   # Should the {Window} try to enable [V-Sync](https://en.wikipedia.org/wiki/Screen_tearing#Vertical_synchronization)?
   #
   # @example Basic usage
@@ -309,12 +329,9 @@ module Window
   # @return [Boolean]
   def self.high_dpi? = Window.flag?(Window::Flag::HIGH_DPI)
 
-  # What is the current minimum allowed size of the {Window} as a {Vector2}?
+  # Returns the minimum allowed size of the {Window} as a {Vector2}
   #
   # @example Basic usage
-  #
-  #   puts Window.minimum_size
-  #   # => nil
   #
   #   Window.open(
   #     width: 1920,
@@ -323,15 +340,46 @@ module Window
   #   )
   #
   #   puts Window.minimum_size
-  #   # => nil
+  #   # => Vector2[0, 0]
   #
   #   Window.minimum_size = Vector2[1280, 720]
   #
   #   puts Window.minimum_size
   #   # => Vector2[1280, 720]
   #
-  # @return [nil, Boolean]
-  def self.minimum_size = @@minimum_size
+  # @return [Vector2]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.minimum_size
+    raise Window::NotReadyError, "You must call Window.open before Window.minimum_size" unless ready?
+
+    @@minimum_size || Vector2[0, 0]
+  end
+
+  # Returns the opacity of the {Window}
+  #
+  # @example Basic usage
+  #
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.opacity
+  #   # => 1.0
+  #
+  #   Window.opacity = 0.75
+  #
+  #   puts Window.opacity
+  #   # => 0.75
+  #
+  # @return [Float]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.opacity
+    raise Window::NotReadyError, "You must call Window.open before Window.opacity" unless ready?
+
+    @@opacity
+  end
 
   # This class holds all the constants for {Window} flags.
   class Flag

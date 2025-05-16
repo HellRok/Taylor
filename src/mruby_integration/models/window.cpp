@@ -60,6 +60,10 @@ mrb_Window_open(mrb_state* mrb, mrb_value) -> mrb_value
                  Window_class,
                  mrb_intern_cstr(mrb, "@@title"),
                  mrb_str_new_cstr(mrb, title));
+  mrb_mod_cv_set(mrb,
+                 Window_class,
+                 mrb_intern_cstr(mrb, "@@opacity"),
+                 mrb_float_value(mrb, 1.0));
 
   InitWindow(width, height, title);
   return mrb_nil_value();
@@ -74,6 +78,8 @@ mrb_Window_close(mrb_state* mrb, mrb_value) -> mrb_value
     mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_size"), mrb_nil_value());
   mrb_mod_cv_set(
     mrb, Window_class, mrb_intern_cstr(mrb, "@@title"), mrb_nil_value());
+  mrb_mod_cv_set(
+    mrb, Window_class, mrb_intern_cstr(mrb, "@@opacity"), mrb_nil_value());
 
   CloseWindow();
   return mrb_nil_value();
@@ -237,6 +243,22 @@ mrb_Window_set_icon(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
+mrb_Window_position(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.position")
+
+  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
+  *position = GetWindowPosition();
+
+  mrb_value obj = mrb_obj_value(
+    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
+
+  setup_Vector2(mrb, obj, position, position->x, position->y);
+
+  return obj;
+}
+
+auto
 mrb_Window_set_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.position=")
@@ -246,6 +268,19 @@ mrb_Window_set_position(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_get_args(mrb, "d", &vector, &Vector2_type);
 
   SetWindowPosition(vector->x, vector->y);
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_set_size(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.size=")
+
+  Vector2* vector;
+
+  mrb_get_args(mrb, "d", &vector, &Vector2_type);
+
+  SetWindowSize(vector->x, vector->y);
   return mrb_nil_value();
 }
 
@@ -268,6 +303,27 @@ mrb_Window_set_minimum_size(mrb_state* mrb, mrb_value) -> mrb_value
   add_owned_object(&obj);
 
   SetWindowMinSize(minimum_size->x, minimum_size->y);
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_set_opacity(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.opacity=")
+
+  mrb_float opacity;
+  mrb_get_args(mrb, "f", &opacity);
+
+  if (opacity < 0.0 || opacity > 1.0) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Opacity must be within (0.0..1.0)");
+  }
+
+  mrb_mod_cv_set(mrb,
+                 Window_class,
+                 mrb_intern_cstr(mrb, "@@opacity"),
+                 mrb_float_value(mrb, opacity));
+
+  SetWindowOpacity(opacity);
   return mrb_nil_value();
 }
 
@@ -315,12 +371,18 @@ append_models_Window(mrb_state* mrb)
   mrb_define_class_method(
     mrb, Window_class, "icon=", mrb_Window_set_icon, MRB_ARGS_REQ(1));
   mrb_define_class_method(
+    mrb, Window_class, "position", mrb_Window_position, MRB_ARGS_NONE());
+  mrb_define_class_method(
     mrb, Window_class, "position=", mrb_Window_set_position, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "size=", mrb_Window_set_size, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb,
                           Window_class,
                           "minimum_size=",
                           mrb_Window_set_minimum_size,
                           MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "opacity=", mrb_Window_set_opacity, MRB_ARGS_REQ(1));
 
   load_ruby_models_window(mrb);
 }

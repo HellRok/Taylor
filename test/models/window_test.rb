@@ -10,9 +10,14 @@ class Test
           title: "Some title"
         )
 
+        assert_equal "Some title", Window.title, "It sets the title"
+        assert_equal 1.0, Window.opacity, "It sets the opacity"
+
         assert_called [
           "(IsWindowReady) { }",
-          "(InitWindow) { width: 1 height: 2 title: 'Some title' }"
+          "(InitWindow) { width: 1 height: 2 title: 'Some title' }",
+          "(IsWindowReady) { }",
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -39,12 +44,14 @@ class Test
 
         Window.close
 
-        assert_nil Window.minimum_size, "it clears the minimum size"
+        assert_equal Vector2[0, 0], Window.minimum_size, "it clears the minimum size"
         assert_nil Window.class_variable_get(:@@title), "it clears the title"
+        assert_nil Window.class_variable_get(:@@opacity), "it clears the opacity"
 
         assert_called [
           "(IsWindowReady) { }",
-          "(CloseWindow) { }"
+          "(CloseWindow) { }",
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -441,6 +448,79 @@ class Test
         ]
       end
 
+      def test_size=
+        assert_equal Vector2[6, 7], (
+          Window.size = Vector2[6, 7]
+        ), "it returns the set size"
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(SetWindowSize) { width: 6 height: 7 }"
+        ]
+      end
+
+      def test_size_equals_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.size=") {
+          Window.size = Vector2[1, 1]
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_size
+        Taylor::Raylib.mock_call("GetScreenWidth", "8")
+        Taylor::Raylib.mock_call("GetScreenHeight", "9")
+
+        assert_equal Vector2[8, 9], Window.size, "it returns the window size"
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(IsWindowReady) { }",
+          "(GetScreenWidth) { }",
+          "(IsWindowReady) { }",
+          "(GetScreenHeight) { }"
+        ]
+      end
+
+      def test_size_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.size") {
+          Window.size
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_position
+        Taylor::Raylib.mock_call("GetWindowPosition", Vector2.mock_return(x: 10, y: 11))
+
+        assert_equal Vector2[10, 11], Window.position, "it returns the window position"
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(GetWindowPosition) { }"
+        ]
+      end
+
+      def test_position_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.position") {
+          Window.position
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
       def test_position=
         assert_equal Vector2[1, 2], (
           Window.position = Vector2[1, 2]
@@ -473,7 +553,8 @@ class Test
 
         assert_called [
           "(IsWindowReady) { }",
-          "(SetWindowMinSize) { width: 3 height: 4 }"
+          "(SetWindowMinSize) { width: 3 height: 4 }",
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -484,7 +565,7 @@ class Test
           Window.minimum_size = Vector2[1, 1]
         }
 
-        assert_nil Window.minimum_size, "it has not set the cvar"
+        assert_nil Window.class_variable_get(:@@minimum_size), "it has not set the cvar"
 
         assert_called [
           "(IsWindowReady) { }"
@@ -492,11 +573,111 @@ class Test
       end
 
       def test_minimum_size
-        assert_nil Window.minimum_size, "it is nil before it's set"
+        assert_equal Vector2[0, 0], Window.minimum_size, "it is 0, 0 before it's set"
 
         Window.minimum_size = Vector2[5, 6]
 
         assert_equal Vector2[5, 6], Window.minimum_size, "it is updated after being set"
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(IsWindowReady) { }",
+          "(SetWindowMinSize) { width: 5 height: 6 }",
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_minimum_size_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.minimum_size") {
+          Window.minimum_size
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_opacity
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+        Window.open
+        Taylor::Raylib.reset_calls
+
+        assert_equal 1.0, Window.opacity
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_opacity_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.opacity") {
+          Window.opacity
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_opacity=
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+        Window.open
+        Taylor::Raylib.reset_calls
+
+        assert_equal 1.0, Window.opacity
+
+        assert_equal 0.5, (Window.opacity = 0.5)
+
+        assert_equal 0.5, Window.opacity
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(IsWindowReady) { }",
+          "(SetWindowOpacity) { opacity: 0.500000 }",
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_opacity_equals_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.opacity=") {
+          Window.opacity = 0.5
+        }
+
+        assert_nil Window.class_variable_get(:@@opacity), "it has not set the cvar"
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_opacity_equals_too_low
+        assert_raise_with_message(ArgumentError, "Opacity must be within (0.0..1.0)") {
+          Window.opacity = -0.1
+        }
+
+        assert_nil Window.class_variable_get(:@@opacity), "it has not set the cvar"
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_opacity_equals_too_high
+        assert_raise_with_message(ArgumentError, "Opacity must be within (0.0..1.0)") {
+          Window.opacity = 1.1
+        }
+
+        assert_nil Window.class_variable_get(:@@opacity), "it has not set the cvar"
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
       end
     end
   end

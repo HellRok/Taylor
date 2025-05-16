@@ -197,6 +197,7 @@ task "raylib:mock" do
     "SetWindowIcon" => {},
     "SetWindowMinSize" => {},
     "SetWindowMonitor" => {},
+    "SetWindowOpacity" => {},
     "SetWindowPosition" => {},
     "SetWindowSize" => {},
     "SetWindowState" => {},
