@@ -78,6 +78,13 @@ function result() {
   fi
 }
 
+function barf_if_failed() {
+  if [[ $1 -ne 0 ]]; then
+    echo -e "${job_output}"
+    exit $1
+  fi
+}
+
 function start() {
   timer_start
   job_title=$@

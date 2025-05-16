@@ -7,10 +7,11 @@ source "${SCRIPT_DIR}"/shared.lib.sh
 
 export MOCK_RAYLIB=1
 
-log "Building Taylor"
-bundle exec rake windows:release:build &> /dev/null || exit 1
+log "Building Taylor for Windows"
+job_output=$(bundle exec rake windows:release:build 2>&1)
+barf_if_failed $?
 
-pushd test/
+pushd test/ &> /dev/null
 
-log "Running tests"
+log "Running tests for Windows"
 wine ../dist/windows/release/taylor.exe ../cli-tool/cli.rb test.rb 2> /dev/null

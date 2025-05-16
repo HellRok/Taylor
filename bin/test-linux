@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -u
 
 DIRNAME=$(dirname -- "${0}")
 SCRIPT_DIR=$(cd -- "${DIRNAME}" > /dev/null 2>&1 && pwd)
@@ -7,10 +7,11 @@ source "${SCRIPT_DIR}"/shared.lib.sh
 
 export MOCK_RAYLIB=1
 
-log "Building Taylor"
-bundle exec rake linux:release:build &> /dev/null || exit 1
+log "Building Taylor for Linux"
+job_output=$(bundle exec rake linux:release:build 2>&1)
+barf_if_failed $?
 
 pushd test/ &> /dev/null
 
-log "Running tests"
+log "Running tests for Linux"
 ../dist/linux/release/taylor ../cli-tool/cli.rb test.rb
