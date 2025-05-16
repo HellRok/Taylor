@@ -65,12 +65,6 @@ def upload_analytics(analytics)
   puts "Done!"
 end
 
-def persist_analytics(analytics)
-  output = File.open("test-analytics.json", "w")
-  output.write(analytics.to_json)
-  output.close
-end
-
 start_time = Time.now
 analytics = nil
 
@@ -84,13 +78,13 @@ while exit_code.nil?
   taylor_logs.each_line { |log|
     if log.include?("ANALYTICS:")
       analytics = JSON.parse(log.split(":", 2).last)
+      upload_analytics(analytics)
     else
       puts log.chomp
     end
 
     if log.include?("EXIT CODE:")
       _, code = log.split("EXIT CODE: ")
-      persist_analytics(analytics)
       exit_code = code.to_i
     end
   }
