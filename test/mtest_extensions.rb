@@ -75,5 +75,14 @@ module MTest
     def assert_no_calls
       assert_empty Taylor::Raylib.calls
     end
+
+    def assert_raise_with_message(error, message, &block)
+      block.call
+      flunk "Did not raise any error"
+    rescue error => e
+      assert_equal message, e.message
+    rescue => e
+      flunk "Raised '#{e.class}' instead of '#{error}'"
+    end
   end
 end

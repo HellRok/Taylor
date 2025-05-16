@@ -22,23 +22,17 @@ class Test
       end
 
       def test_volume_equals_errors_too_low
-        begin
+        assert_raise_with_message(ArgumentError, "Must be within (0..100)") {
           Audio.volume = -1
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Must be within (0..100)", e.message
-        end
+        }
 
         assert_called ["(IsAudioDeviceReady) { }"]
       end
 
       def test_volume_equals_errors_too_high
-        begin
+        assert_raise_with_message(ArgumentError, "Must be within (0..100)") {
           Audio.volume = 101
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Must be within (0..100)", e.message
-        end
+        }
 
         assert_called ["(IsAudioDeviceReady) { }"]
       end
@@ -49,25 +43,21 @@ class Test
 
         Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
 
-        Audio.volume
+        assert_raise_with_message(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume.") {
+          Audio.volume
+        }
 
         assert_called ["(IsAudioDeviceReady) { }"]
-
-        fail "Audio.volume should have raised"
-      rescue Audio::NotOpenError => e
-        assert_equal "You must use Audio.open before calling Audio.volume.", e.message
       end
 
       def test_set_volume_before_open
         Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
 
-        Audio.volume = 50
+        assert_raise_with_message(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume=.") {
+          Audio.volume = 50
+        }
 
         assert_called ["(IsAudioDeviceReady) { }"]
-
-        fail "Audio.volume= should have raised"
-      rescue Audio::NotOpenError => e
-        assert_equal "You must use Audio.open before calling Audio.volume=.", e.message
       end
     end
   end

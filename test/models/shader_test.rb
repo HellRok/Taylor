@@ -22,10 +22,18 @@ class Test
       def test_load_argument_errors
         assert_raise(ArgumentError) { Shader.load }
 
-        assert_raise(ArgumentError) { Shader.load(fragment_shader_path: "path", vector_shader_code: "code") }
-        assert_raise(ArgumentError) { Shader.load(fragment_shader_path: "path", fragment_shader_code: "code") }
-        assert_raise(ArgumentError) { Shader.load(vector_shader_path: "path", fragment_shader_code: "code") }
-        assert_raise(ArgumentError) { Shader.load(vector_shader_path: "path", vector_shader_code: "code") }
+        assert_raise_with_message(ArgumentError, "You can only specify paths or code, not both") {
+          Shader.load(fragment_shader_path: "path", vertex_shader_code: "code")
+        }
+        assert_raise_with_message(ArgumentError, "You can only specify paths or code, not both") {
+          Shader.load(fragment_shader_path: "path", fragment_shader_code: "code")
+        }
+        assert_raise_with_message(ArgumentError, "You can only specify paths or code, not both") {
+          Shader.load(vertex_shader_path: "path", fragment_shader_code: "code")
+        }
+        assert_raise_with_message(ArgumentError, "You can only specify paths or code, not both") {
+          Shader.load(vertex_shader_path: "path", vertex_shader_code: "code")
+        }
 
         assert_no_calls
       end

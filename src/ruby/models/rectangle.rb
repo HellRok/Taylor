@@ -57,7 +57,7 @@ class Rectangle
   )
     if rounded
       unless (0..1).cover?(radius)
-        raise ArgumentError, "Radius must fall between 0 and 1, you gave me #{radius}"
+        raise ArgumentError, "Radius must be within (0.0..1.0)"
       end
 
       if outline

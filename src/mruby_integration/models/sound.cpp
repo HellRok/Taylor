@@ -27,7 +27,7 @@ mrb_Sound_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_get_args(mrb, "z:", &path, &kwargs);
 
   if (!FileExists(path)) {
-    raise_not_found_error(mrb, Sound_class);
+    raise_not_found_error(mrb, Sound_class, path);
   }
 
   double volume = 1.0;

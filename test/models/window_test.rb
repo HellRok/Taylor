@@ -2,6 +2,8 @@ class Test
   class Models
     class Window_Test < Test::Base
       def test_open
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
         Window.open(
           width: 1,
           height: 2,
@@ -9,20 +11,52 @@ class Test
         )
 
         assert_called [
+          "(IsWindowReady) { }",
           "(InitWindow) { width: 1 height: 2 title: 'Some title' }"
+        ]
+      end
+
+      def test_open_with_window_already_open
+        Taylor::Raylib.mock_call("IsWindowReady", "true")
+
+        assert_raise_with_message(Window::AlreadyOpenError, "You can only open one Window at a time") {
+          Window.open(
+            width: 1,
+            height: 2,
+            title: "Some title"
+          )
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
       def test_close
         Window.minimum_size = Vector2[1, 1]
+        Window.title = "some title"
         Taylor::Raylib.reset_calls
 
         Window.close
 
         assert_nil Window.minimum_size, "it clears the minimum size"
+        assert_nil Window.class_variable_get(:@@title), "it clears the title"
 
         assert_called [
+          "(IsWindowReady) { }",
           "(CloseWindow) { }"
+        ]
+      end
+
+      def test_close_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.close") {
+          Window.close
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -34,8 +68,22 @@ class Test
         assert_equal true, Window.close?
 
         assert_called [
+          "(IsWindowReady) { }",
           "(WindowShouldClose) { }",
+          "(IsWindowReady) { }",
           "(WindowShouldClose) { }"
+        ]
+      end
+
+      def test_close_question_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.close?") {
+          Window.close?
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -55,39 +103,85 @@ class Test
       def test_width
         # Yes, this is the right method, for some reason it's called 'Screen' here?
         Taylor::Raylib.mock_call("GetScreenWidth", "2")
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
         Window.open(width: 2)
         Taylor::Raylib.reset_calls
 
         assert_equal 2, Window.width
 
         assert_called [
+          "(IsWindowReady) { }",
           "(GetScreenWidth) { }"
+        ]
+      end
+
+      def test_width_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(
+          Window::NotReadyError,
+          "You must call Window.open before Window.width"
+        ) { Window.width }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
       def test_height
         # Yes, this is the right method, for some reason it's called 'Screen' here?
         Taylor::Raylib.mock_call("GetScreenHeight", "3")
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
         Window.open(height: 3)
         Taylor::Raylib.reset_calls
 
         assert_equal 3, Window.height
 
         assert_called [
+          "(IsWindowReady) { }",
           "(GetScreenHeight) { }"
         ]
       end
 
+      def test_height_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(
+          Window::NotReadyError,
+          "You must call Window.open before Window.height"
+        ) { Window.height }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
       def test_title
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
         Window.open(title: "test title")
         Taylor::Raylib.reset_calls
 
         assert_equal "test title", Window.title
 
-        assert_no_calls
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_title_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.title") {
+          Window.title
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
       end
 
       def test_title=
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
         Window.open(title: "test title")
         Taylor::Raylib.reset_calls
 
@@ -99,7 +193,22 @@ class Test
 
         assert_equal "My cool new title", Window.title, "It has updated @title"
         assert_called [
-          "(SetWindowTitle) { title: 'My cool new title' }"
+          "(IsWindowReady) { }",
+          "(IsWindowReady) { }",
+          "(SetWindowTitle) { title: 'My cool new title' }",
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_title_equals_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.title=") {
+          Window.title = "Bad title"
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -175,8 +284,22 @@ class Test
         Window.exit_key = Key::ESCAPE
 
         assert_called [
+          "(IsWindowReady) { }",
           "(SetExitKey) { key: 46 }",
+          "(IsWindowReady) { }",
           "(SetExitKey) { key: 256 }"
+        ]
+      end
+
+      def test_exit_key_equals_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.exit_key=") {
+          Window.exit_key = Key::PERIOD
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -188,8 +311,22 @@ class Test
         assert_true Window.resized?
 
         assert_called [
+          "(IsWindowReady) { }",
           "(IsWindowResized) { }",
+          "(IsWindowReady) { }",
           "(IsWindowResized) { }"
+        ]
+      end
+
+      def test_resized_question_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.resized?") {
+          Window.resized?
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -197,7 +334,20 @@ class Test
         Window.toggle_fullscreen
 
         assert_called [
+          "(IsWindowReady) { }",
           "(ToggleFullscreen) { }"
+        ]
+      end
+
+      def test_toggle_fullscreen_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.toggle_fullscreen") {
+          Window.toggle_fullscreen
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -205,7 +355,20 @@ class Test
         Window.maximise
 
         assert_called [
+          "(IsWindowReady) { }",
           "(MaximizeWindow) { }"
+        ]
+      end
+
+      def test_maximise_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.maximise") {
+          Window.maximise
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -213,7 +376,20 @@ class Test
         Window.minimise
 
         assert_called [
+          "(IsWindowReady) { }",
           "(MinimizeWindow) { }"
+        ]
+      end
+
+      def test_minimise_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.minimise") {
+          Window.minimise
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -221,7 +397,20 @@ class Test
         Window.restore
 
         assert_called [
+          "(IsWindowReady) { }",
           "(RestoreWindow) { }"
+        ]
+      end
+
+      def test_restore_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.restore") {
+          Window.restore
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -233,7 +422,22 @@ class Test
         Window.icon = image
 
         assert_called [
+          "(IsWindowReady) { }",
           "(SetWindowIcon) { image: { width: 1 height: 2 mipmaps: 3 format: 4 } }"
+        ]
+      end
+
+      def test_icon_equals_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+        image = Image.generate(width: 1, height: 2)
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.icon=") {
+          Window.icon = image
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 
@@ -251,7 +455,7 @@ class Test
       def test_position_equals_without_window_ready
         Taylor::Raylib.mock_call("IsWindowReady", "false")
 
-        assert_raise(Window::NotReadyError) {
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.position=") {
           Window.position = Vector2[1, 1]
         }
 
@@ -276,7 +480,7 @@ class Test
       def test_minimum_size_equals_without_window_ready
         Taylor::Raylib.mock_call("IsWindowReady", "false")
 
-        assert_raise(Window::NotReadyError) {
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.minimum_size=") {
           Window.minimum_size = Vector2[1, 1]
         }
 

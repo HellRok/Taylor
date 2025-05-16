@@ -2,7 +2,6 @@
 #include "mruby/class.h"
 #include "mruby/data.h"
 #include "raylib.h"
-#include <cstdlib>
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
@@ -42,7 +41,7 @@ mrb_Music_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_get_args(mrb, "z:", &path, &kwargs);
 
   if (!FileExists(path)) {
-    raise_not_found_error(mrb, Music_class);
+    raise_not_found_error(mrb, Music_class, path);
   }
 
   bool looping = true;

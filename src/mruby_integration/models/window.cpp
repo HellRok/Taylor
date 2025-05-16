@@ -11,11 +11,23 @@
 
 struct RClass* Window_class;
 
-const char* title;
+#define EXIT_UNLESS_WINDOW_READY(message)                                      \
+  if (!IsWindowReady()) {                                                      \
+    raise_error(mrb, Window_class, "NotReadyError", message);                  \
+    return mrb_nil_value();                                                    \
+  }
 
 auto
 mrb_Window_open(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  if (IsWindowReady()) {
+    raise_error(mrb,
+                Window_class,
+                "AlreadyOpenError",
+                "You can only open one Window at a time");
+    return mrb_nil_value();
+  }
+
   // def self.open(width: 800, height: 480, title: "Taylor Game")
   mrb_int kw_num = 3;
   mrb_int kw_required = 0;
@@ -36,12 +48,18 @@ mrb_Window_open(mrb_state* mrb, mrb_value) -> mrb_value
     height = mrb_as_int(mrb, kw_values[1]);
   }
 
+  const char* title;
   if (mrb_undef_p(kw_values[2])) {
     title = "Taylor Game";
   } else {
     mrb_sym sym = mrb_obj_to_sym(mrb, kw_values[2]);
     title = mrb_sym_name(mrb, sym);
   }
+
+  mrb_mod_cv_set(mrb,
+                 Window_class,
+                 mrb_intern_cstr(mrb, "@@title"),
+                 mrb_str_new_cstr(mrb, title));
 
   InitWindow(width, height, title);
   return mrb_nil_value();
@@ -50,8 +68,13 @@ mrb_Window_open(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mrb_Window_close(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.close")
+
   mrb_mod_cv_set(
     mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_size"), mrb_nil_value());
+  mrb_mod_cv_set(
+    mrb, Window_class, mrb_intern_cstr(mrb, "@@title"), mrb_nil_value());
+
   CloseWindow();
   return mrb_nil_value();
 }
@@ -65,33 +88,41 @@ mrb_Window_ready(mrb_state*, mrb_value) -> mrb_value
 auto
 mrb_Window_width(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.width")
+
   return mrb_int_value(mrb, GetScreenWidth());
 }
 
 auto
 mrb_Window_height(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  return mrb_int_value(mrb, GetScreenHeight());
-}
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.height")
 
-auto
-mrb_Window_title(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  return mrb_str_new_cstr(mrb, title);
+  return mrb_int_value(mrb, GetScreenHeight());
 }
 
 auto
 mrb_Window_set_title(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.title=")
+
+  const char* title;
   mrb_get_args(mrb, "z", &title);
+
+  mrb_mod_cv_set(mrb,
+                 Window_class,
+                 mrb_intern_cstr(mrb, "@@title"),
+                 mrb_str_new_cstr(mrb, title));
 
   SetWindowTitle(title);
   return mrb_nil_value();
 }
 
 auto
-mrb_Window_close_question(mrb_state*, mrb_value) -> mrb_value
+mrb_Window_close_question(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.close?")
+
   return mrb_bool_value(WindowShouldClose());
 }
 
@@ -137,6 +168,8 @@ mrb_Window_clear_flag(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mrb_Window_set_exit_key(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.exit_key=")
+
   mrb_int key;
   mrb_get_args(mrb, "i", &key);
 
@@ -146,35 +179,46 @@ mrb_Window_set_exit_key(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Window_resized(mrb_state*, mrb_value) -> mrb_value
+mrb_Window_resized(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.resized?")
+
   return mrb_bool_value(IsWindowResized());
 }
 
 auto
-mrb_Window_toggle_fullscreen(mrb_state*, mrb_value) -> mrb_value
+mrb_Window_toggle_fullscreen(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY(
+    "You must call Window.open before Window.toggle_fullscreen")
+
   ToggleFullscreen();
   return mrb_nil_value();
 }
 
 auto
-mrb_Window_maximise(mrb_state*, mrb_value) -> mrb_value
+mrb_Window_maximise(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.maximise")
+
   MaximizeWindow();
   return mrb_nil_value();
 }
 
 auto
-mrb_Window_minimise(mrb_state*, mrb_value) -> mrb_value
+mrb_Window_minimise(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.minimise")
+
   MinimizeWindow();
   return mrb_nil_value();
 }
 
 auto
-mrb_Window_restore(mrb_state*, mrb_value) -> mrb_value
+mrb_Window_restore(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.restore")
+
   RestoreWindow();
   return mrb_nil_value();
 }
@@ -182,6 +226,8 @@ mrb_Window_restore(mrb_state*, mrb_value) -> mrb_value
 auto
 mrb_Window_set_icon(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.icon=")
+
   Image* image;
 
   mrb_get_args(mrb, "d", &image, &Image_type);
@@ -193,13 +239,7 @@ mrb_Window_set_icon(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mrb_Window_set_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  if (!IsWindowReady()) {
-    raise_error(mrb,
-                Window_class,
-                "NotReadyError",
-                "You must open the window before setting a position");
-    return mrb_nil_value();
-  }
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.position=")
 
   Vector2* vector;
 
@@ -212,13 +252,8 @@ mrb_Window_set_position(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mrb_Window_set_minimum_size(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  if (!IsWindowReady()) {
-    raise_error(mrb,
-                Window_class,
-                "NotReadyError",
-                "You must open the window before setting a minimum size");
-    return mrb_nil_value();
-  }
+  EXIT_UNLESS_WINDOW_READY(
+    "You must call Window.open before Window.minimum_size=")
 
   auto* minimum_size = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   mrb_get_args(mrb, "d", &minimum_size, &Vector2_type);
@@ -250,8 +285,6 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "width", mrb_Window_width, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "height", mrb_Window_height, MRB_ARGS_NONE());
-  mrb_define_class_method(
-    mrb, Window_class, "title", mrb_Window_title, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "title=", mrb_Window_set_title, MRB_ARGS_REQ(1));
   mrb_define_class_method(

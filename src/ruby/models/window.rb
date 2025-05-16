@@ -1,6 +1,26 @@
 # This class is used for managing your {Window} and retrieving any information
 # about it.
 module Window
+  # Gets the title of the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.title
+  #   # => "My super cool game!"
+  #
+  # @return [String]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.title
+    raise Window::NotReadyError, "You must call Window.open before Window.title" unless ready?
+
+    @@title
+  end
+
   # Should the {Window} try to enable [V-Sync](https://en.wikipedia.org/wiki/Screen_tearing#Vertical_synchronization)?
   #
   # @example Basic usage
@@ -357,4 +377,7 @@ module Window
   # Used for alerting the user they're trying to use the {Window} system without
   # first opening it.
   class NotReadyError < StandardError; end
+
+  # Used for alerting the user they're trying to open a second {Window}.
+  class AlreadyOpenError < StandardError; end
 end

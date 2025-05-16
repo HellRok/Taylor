@@ -83,7 +83,7 @@ class Test
       end
 
       def test_draw_rectangle_raises_when_radius_below_zero
-        assert_raise(ArgumentError) {
+        assert_raise_with_message(ArgumentError, "Radius must be within (0.0..1.0)") {
           Rectangle.new(2, 2, 6, 6).draw(rounded: true, radius: -0.1)
         }
 
@@ -91,7 +91,7 @@ class Test
       end
 
       def test_draw_rectangle_raises_when_radius_above_one
-        assert_raise(ArgumentError) {
+        assert_raise_with_message(ArgumentError, "Radius must be within (0.0..1.0)") {
           Rectangle.new(2, 2, 6, 6).draw(rounded: true, radius: 1.1)
         }
 

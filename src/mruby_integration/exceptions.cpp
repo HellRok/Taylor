@@ -1,3 +1,4 @@
+#include <sstream>
 #include <string>
 
 #include "mruby.h"
@@ -24,20 +25,22 @@ mrb_exc_get_module_id(mrb_state* mrb, mrb_value c) -> RClass*
   return mrb->eException_class;
 }
 
+#define RETURN_IF_ERROR(err)                                                   \
+  {                                                                            \
+    if (error == err) {                                                        \
+      return mrb_intern_lit(mrb, err);                                         \
+    }                                                                          \
+  }
+
 auto
 error_from_string(mrb_state* mrb, std::string error) -> mrb_sym
 {
   // We have this kind of dodgy method because `mrb_intern_lit` is a macro that
   // can't expand with anything other than a quoted string.
-  if (error == "NotFoundError") {
-    return mrb_intern_lit(mrb, "NotFoundError");
-  }
-  if (error == "NotOpenError") {
-    return mrb_intern_lit(mrb, "NotOpenError");
-  }
-  if (error == "NotReadyError") {
-    return mrb_intern_lit(mrb, "NotReadyError");
-  }
+  RETURN_IF_ERROR("NotFoundError")
+  RETURN_IF_ERROR("NotOpenError")
+  RETURN_IF_ERROR("NotReadyError")
+  RETURN_IF_ERROR("AlreadyOpenError")
 
   return mrb_intern_lit(mrb, "ErrorNotFoundError");
 }
@@ -57,7 +60,10 @@ raise_error(mrb_state* mrb,
 }
 
 void
-raise_not_found_error(mrb_state* mrb, RClass* klass)
+raise_not_found_error(mrb_state* mrb, RClass* klass, std::string path)
 {
-  raise_error(mrb, klass, "NotFoundError", "File not found");
+  std::stringstream message;
+  message << "Unable to find '" << path << "'";
+
+  raise_error(mrb, klass, "NotFoundError", message.str());
 }

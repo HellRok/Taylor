@@ -32,7 +32,7 @@ class Test
       def test_initialize_fail_not_found
         Taylor::Raylib.mock_call("FileExists", "false")
 
-        assert_raise(Sound::NotFoundError) {
+        assert_raise_with_message(Sound::NotFoundError, "Unable to find './assets/fail.wav'") {
           Sound.new("./assets/fail.wav")
         }
 
@@ -42,12 +42,9 @@ class Test
       end
 
       def test_initialize_fail_volume_too_high
-        begin
+        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
           Sound.new("./assets/test.wav", volume: 1.1)
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Volume must be within (0.0..1.0)", e.message
-        end
+        }
 
         assert_called [
           "(FileExists) { fileName: './assets/test.wav' }"
@@ -55,12 +52,9 @@ class Test
       end
 
       def test_initialize_fail_volume_too_low
-        begin
+        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
           Sound.new("./assets/test.wav", volume: -0.1)
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Volume must be within (0.0..1.0)", e.message
-        end
+        }
 
         assert_called [
           "(FileExists) { fileName: './assets/test.wav' }"
@@ -173,22 +167,16 @@ class Test
 
         assert_equal 1.0, sound.volume
 
-        begin
+        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
           sound.volume = 1.1
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Volume must be within (0.0..1.0)", e.message
-        end
+        }
 
         assert_equal 1.0, sound.volume
         assert_no_calls
 
-        begin
+        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
           sound.volume = -0.1
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Volume must be within (0.0..1.0)", e.message
-        end
+        }
 
         assert_equal 1.0, sound.volume
         assert_no_calls

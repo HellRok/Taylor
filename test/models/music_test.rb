@@ -50,7 +50,7 @@ class Test
       def test_initialize_fail_not_found
         Taylor::Raylib.mock_call("FileExists", "false")
 
-        assert_raise(Music::NotFoundError) {
+        assert_raise_with_message(Music::NotFoundError, "Unable to find './assets/fail.ogg'") {
           Music.new("./assets/fail.ogg")
         }
 
@@ -60,12 +60,9 @@ class Test
       end
 
       def test_initialize_fail_volume_too_high
-        begin
+        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
           Music.new("./assets/test.ogg", volume: 1.1)
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Volume must be within (0.0..1.0)", e.message
-        end
+        }
 
         assert_called [
           "(FileExists) { fileName: './assets/test.ogg' }"
@@ -73,12 +70,9 @@ class Test
       end
 
       def test_initialize_fail_volume_too_low
-        begin
+        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
           Music.new("./assets/test.ogg", volume: -0.1)
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Volume must be within (0.0..1.0)", e.message
-        end
+        }
 
         assert_called [
           "(FileExists) { fileName: './assets/test.ogg' }"
@@ -141,12 +135,9 @@ class Test
         music = Music.new("./assets/test.ogg")
         Taylor::Raylib.reset_calls
 
-        begin
+        assert_raise_with_message(Audio::NotOpenError, "You must use Audio.open before calling Music#play.") {
           music.play
-          fail "Previous line should have raised"
-        rescue Audio::NotOpenError => e
-          assert_equal "You must use Audio.open before calling Music#play.", e.message
-        end
+        }
 
         assert_called [
           "(IsAudioDeviceReady) { }"
@@ -241,12 +232,9 @@ class Test
         music = Music.new("./assets/test.ogg")
         Taylor::Raylib.reset_calls
 
-        begin
+        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
           music.volume = 1.1
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Volume must be within (0.0..1.0)", e.message
-        end
+        }
 
         assert_no_calls
       end
@@ -255,12 +243,9 @@ class Test
         music = Music.new("./assets/test.ogg")
         Taylor::Raylib.reset_calls
 
-        begin
+        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
           music.volume = -0.1
-          fail "Previous line should have raised"
-        rescue ArgumentError => e
-          assert_equal "Volume must be within (0.0..1.0)", e.message
-        end
+        }
 
         assert_no_calls
       end

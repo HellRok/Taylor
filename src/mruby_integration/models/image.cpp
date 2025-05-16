@@ -38,7 +38,7 @@ mrb_Image_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_get_args(mrb, "z", &path);
 
   if (!FileExists(path)) {
-    raise_not_found_error(mrb, Image_class);
+    raise_not_found_error(mrb, Image_class, path);
   }
 
   Image* image = static_cast<Image*> DATA_PTR(self);

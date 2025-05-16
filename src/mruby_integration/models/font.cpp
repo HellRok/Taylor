@@ -49,7 +49,7 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_get_args(mrb, "z:", &path, &kwargs);
 
   if (!FileExists(path)) {
-    raise_not_found_error(mrb, Font_class);
+    raise_not_found_error(mrb, Font_class, path);
   }
 
   float size = 32;

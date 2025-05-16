@@ -12,6 +12,7 @@ class Window
   # @param height [Integer] The height of the window in pixels
   # @param title [String] The title of the window
   # @return [nil]
+  # @raise [Window::AlreadyOpenError] If called more than once without closing the other {Window}
   def self.open(width: 800, height: 480, title: "Taylor Game")
     # mrb_Window_open
     # src/mruby_integration/models/window.cpp
@@ -32,6 +33,7 @@ class Window
   #   Window.close
   #
   # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.close
     # mrb_Window_close
     # src/mruby_integration/models/window.cpp
@@ -80,6 +82,7 @@ class Window
   #   # => 1920
   #
   # @return [Integer]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.width
     # mrb_Window_width
     # src/mruby_integration/models/window.cpp
@@ -99,29 +102,11 @@ class Window
   #   # => 1080
   #
   # @return [Integer]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.height
     # mrb_Window_height
     # src/mruby_integration/models/window.cpp
     480
-  end
-
-  # Gets the title of the {Window}.
-  #
-  # @example Basic usage
-  #   Window.open(
-  #     width: 1920,
-  #     height: 1080,
-  #     title: "My super cool game!"
-  #   )
-  #
-  #   puts Window.title
-  #   # => "My super cool game!"
-  #
-  # @return [String]
-  def self.title
-    # mrb_Window_Title
-    # src/mruby_integration/models/window.cpp
-    "Taylor Game"
   end
 
   # Sets the title for the {Window}.
@@ -143,6 +128,7 @@ class Window
   #
   # @param title [String]
   # @return [String]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.title=(title)
     # mrb_Window_set_title
     # src/mruby_integration/models/window.cpp
@@ -165,6 +151,7 @@ class Window
   #   end
   #
   # @return [Boolean]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.close?
     # mrb_Window_close_question
     # src/mruby_integration/models/window.cpp
@@ -301,11 +288,12 @@ class Window
   #   # => true
   #
   # @param key [Integer] The key to listen for to close the window
-  # @return [nil]
+  # @return [Integer]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.exit_key=(key)
     # mrb_Window_set_exit_key
     # src/mruby_integration/models/window.cpp
-    nil
+    key
   end
 
   # Returns `true` if the {Window} has been resized since the last frame.
@@ -326,6 +314,7 @@ class Window
   #   # => true
   #
   # @return [Boolean]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.resized?
     # mrb_Window_resized
     # src/mruby_integration/models/window.cpp
@@ -356,6 +345,7 @@ class Window
   #   # => false
   #
   # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.toggle_fullscreen
     # mrb_Window_toggle_fullscreen
     # src/mruby_integration/models/window.cpp
@@ -380,6 +370,7 @@ class Window
   #   # => true
   #
   # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.maximise
     # mrb_Window_maximise
     # src/mruby_integration/models/window.cpp
@@ -404,6 +395,7 @@ class Window
   #   # => true
   #
   # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.minimise
     # mrb_Window_minimise
     # src/mruby_integration/models/window.cpp
@@ -433,6 +425,7 @@ class Window
   #   # => false
   #
   # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.restore
     # mrb_Window_restore
     # src/mruby_integration/models/window.cpp
@@ -453,6 +446,7 @@ class Window
   #
   # @param icon [Image]
   # @return [Image]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.icon=(icon)
     # mrb_Window_set_icon
     # src/mruby_integration/models/window.cpp

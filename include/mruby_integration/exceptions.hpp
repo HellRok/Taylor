@@ -8,4 +8,4 @@ void
 raise_error(mrb_state*, RClass*, std::string, std::string);
 
 void
-raise_not_found_error(mrb_state*, RClass*);
+raise_not_found_error(mrb_state*, RClass*, std::string);
