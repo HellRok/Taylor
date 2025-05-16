@@ -1,6 +1,6 @@
 class Music
   # Creates a new instance of {Music}. If the file does not exist it will raise
-  # {Music::NotFound}.
+  # {Music::NotFoundError}.
   #
   # @example Basic usage
   #   music = Music.new("./assets/background_music.ogg")
@@ -12,7 +12,7 @@ class Music
   # @param volume [Float] A value between 0.0 and 1.0.
   # @param pitch [Float]
   # @return [Music]
-  # @raise [Music::NotFound] Raised when the file to load is not found.
+  # @raise [Music::NotFoundError] Raised when the file to load is not found.
   # @raise [ArgumentError] Raised when passing an invalid volume.
   def initialize(path, looping: true, volume: 1.0, pitch: 1.0)
     # mrb_Music_initialize

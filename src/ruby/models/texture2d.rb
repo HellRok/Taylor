@@ -17,10 +17,10 @@ class Texture2D
 
   # Loads a texture from the specified path.
   # @param path [String]
-  # @raise [Texture2D::NotFound] If the file specified by path doesn't exist.
+  # @raise [Texture2D::NotFoundError] If the file specified by path doesn't exist.
   # @return [Texture2D]
   def self.load(path)
-    raise Texture2D::NotFound.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
+    raise Texture2D::NotFoundError.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
     load_texture(path)
   end
 
@@ -82,7 +82,7 @@ class Texture2D
   end
 
   # Used for alerting the user if the texture was not found at the specified path.
-  class NotFound < StandardError; end
+  class NotFoundError < StandardError; end
 end
 
 # @!group Texture filters

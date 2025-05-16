@@ -1,46 +1,8 @@
-# Sets the icon for the current window.
-# @param image [Image]
-# @return [nil]
-def set_window_icon(image)
-  # mrb_set_window_icon
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
-# Sets the title for the current window.
-# @param title [String]
-# @return [nil]
-def set_window_title(title)
-  # mrb_set_window_title
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
-# Sets the position for the current window.
-# @param x [Integer]
-# @param y [Integer]
-# @return [nil]
-def set_window_position(x, y)
-  # mrb_set_window_position
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
 # Sets the monitor for the current window.
 # @param monitor [Integer]
 # @return [nil]
 def set_window_monitor(monitor)
   # mrb_set_window_monitor
-  # src/mruby_integration/core/window.cpp
-  nil
-end
-
-# Sets the minimum allowed size for the current window.
-# @param width [Integer]
-# @param height [Integer]
-# @return [nil]
-def set_window_min_size(width, height)
-  # mrb_set_window_min_size
   # src/mruby_integration/core/window.cpp
   nil
 end

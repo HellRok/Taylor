@@ -32,9 +32,10 @@ auto
 mrb_Audio_set_volume(mrb_state* mrb, mrb_value) -> mrb_value
 {
   if (!IsAudioDeviceReady()) {
-    const char* message =
-      "You must use Audio.open before calling Audio.volume=.";
-    raise_audio_not_open_error(mrb, message);
+    raise_error(mrb,
+                Audio_class,
+                "NotOpenError",
+                "You must use Audio.open before calling Audio.volume=.");
   }
 
   mrb_float volume;

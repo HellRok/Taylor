@@ -48,7 +48,7 @@ class Test
       def test_initialize_fail
         Taylor::Raylib.mock_call("FileExists", "false")
 
-        assert_raise(Font::NotFound) {
+        assert_raise(Font::NotFoundError) {
           Font.new("./assets/fail.ttf")
         }
 

@@ -14,10 +14,12 @@ class Test
       end
 
       def test_close
-        Window.open
+        Window.minimum_size = Vector2[1, 1]
         Taylor::Raylib.reset_calls
 
         Window.close
+
+        assert_nil Window.minimum_size, "it clears the minimum size"
 
         assert_called [
           "(CloseWindow) { }"
@@ -83,6 +85,22 @@ class Test
         assert_equal "test title", Window.title
 
         assert_no_calls
+      end
+
+      def test_title=
+        Window.open(title: "test title")
+        Taylor::Raylib.reset_calls
+
+        assert_equal "test title", Window.title
+
+        assert_equal "My cool new title", (
+          Window.title = "My cool new title"
+        ), "it returns the set title"
+
+        assert_equal "My cool new title", Window.title, "It has updated @title"
+        assert_called [
+          "(SetWindowTitle) { title: 'My cool new title' }"
+        ]
       end
 
       def test_flags=
@@ -205,6 +223,63 @@ class Test
         assert_called [
           "(RestoreWindow) { }"
         ]
+      end
+
+      def test_icon=
+        Taylor::Raylib.mock_call("GenImageColor", Image.mock_return(width: 1, height: 2, mipmaps: 3, format: 4))
+        image = Image.generate(width: 1, height: 2)
+        Taylor::Raylib.reset_calls
+
+        Window.icon = image
+
+        assert_called [
+          "(SetWindowIcon) { image: { width: 1 height: 2 mipmaps: 3 format: 4 } }"
+        ]
+      end
+
+      def test_position=
+        assert_equal Vector2[1, 2], (
+          Window.position = Vector2[1, 2]
+        ), "it returns the set position"
+
+        assert_called [
+          "(SetWindowPosition) { x: 1 y: 2 }"
+        ]
+      end
+
+      def test_minimum_size=
+        assert_equal Vector2[3, 4], (
+          Window.minimum_size = Vector2[3, 4]
+        ), "it returns the set minimum size"
+
+        assert_equal Vector2[3, 4], Window.minimum_size, "it retains the set minimum size"
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(SetWindowMinSize) { width: 3 height: 4 }"
+        ]
+      end
+
+      def test_minimum_size_equals_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise(Window::NotReadyError) {
+          Window.minimum_size = Vector2[1, 1]
+        }
+
+        assert_nil Window.minimum_size, "it has not set the cvar"
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_minimum_size
+        assert_nil Window.minimum_size, "it is nil before it's set"
+
+        Window.minimum_size = Vector2[5, 6]
+
+        assert_equal Vector2[5, 6], Window.minimum_size, "it is updated after being set"
       end
     end
   end

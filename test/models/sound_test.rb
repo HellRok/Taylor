@@ -32,7 +32,7 @@ class Test
       def test_initialize_fail_not_found
         Taylor::Raylib.mock_call("FileExists", "false")
 
-        assert_raise(Sound::NotFound) {
+        assert_raise(Sound::NotFoundError) {
           Sound.new("./assets/fail.wav")
         }
 

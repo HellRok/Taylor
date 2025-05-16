@@ -54,7 +54,7 @@ class Test
         assert_called ["(IsAudioDeviceReady) { }"]
 
         fail "Audio.volume should have raised"
-      rescue Audio::NotOpen => e
+      rescue Audio::NotOpenError => e
         assert_equal "You must use Audio.open before calling Audio.volume.", e.message
       end
 
@@ -66,7 +66,7 @@ class Test
         assert_called ["(IsAudioDeviceReady) { }"]
 
         fail "Audio.volume= should have raised"
-      rescue Audio::NotOpen => e
+      rescue Audio::NotOpenError => e
         assert_equal "You must use Audio.open before calling Audio.volume=.", e.message
       end
     end

@@ -13,7 +13,7 @@ class Test
       def test_initialize_fail
         Taylor::Raylib.mock_call("FileExists", "false")
 
-        assert_raise(Image::NotFound) {
+        assert_raise(Image::NotFoundError) {
           Image.new("./assets/fail.png")
         }
 

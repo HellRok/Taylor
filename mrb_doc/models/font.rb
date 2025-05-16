@@ -12,7 +12,7 @@ class Font
   end
 
   # Loads a font file from the disk. If the file does not exist, it will
-  # raise a {Font::NotFound} error.
+  # raise a {Font::NotFoundError} error.
   #
   # Currently only TTF files are supported.
   #
@@ -23,7 +23,7 @@ class Font
   # @param size [Integer]
   # @param glyph_count [Integer]
   # @return [Font]
-  # @raise [Font::NotFound]
+  # @raise [Font::NotFoundError]
   def initialize(path, size: 32, glyph_count: 95)
     # mrb_Font_initialize
     # src/mruby_integration/models/font.cpp

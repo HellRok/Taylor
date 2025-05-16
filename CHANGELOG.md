@@ -209,6 +209,15 @@
 - Removed minimise_window
 - Added Window.restore
 - Removed restore_window
+- Added Window.icon=
+- Removed set_window_icon
+- Added Window.title=
+- Removed set_window_title
+- Added Window.position=
+- Removed set_window_position
+- Added Window.minimum_size
+- Added Window.minimum_size=
+- Removed set_window_min_size
 
 ## v0.3.14.1
 

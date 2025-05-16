@@ -20,6 +20,32 @@ append_call(std::string call) -> void
   raylib_method_calls.push_back(call);
 }
 
+struct mock_result
+{
+  std::string value;
+  bool found;
+};
+
+auto
+next_mock_for(std::string method) -> mock_result
+{
+  mock_result result{ "", false };
+
+  if (raylib_method_call_mock_returns.count(method) == 0) {
+    return result;
+  }
+
+  result.found = true;
+  result.value = raylib_method_call_mock_returns[method].front();
+  raylib_method_call_mock_returns[method].pop_front();
+
+  if (raylib_method_call_mock_returns[method].empty()) {
+    raylib_method_call_mock_returns.erase(method);
+  }
+
+  return result;
+}
+
 auto
 mrb_Taylor_Raylib_mocked(mrb_state*, mrb_value) -> mrb_value
 {
@@ -48,12 +74,9 @@ mrb_Taylor_Raylib_calls(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mocked_const_char_call_for(std::string method) -> const char*
 {
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-    const char* result =
-      raylib_method_call_mock_returns[method].front().c_str();
-    raylib_method_call_mock_returns[method].pop_front();
-    return result;
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
+    return mock.value.c_str();
   }
 
   return "default";
@@ -69,10 +92,9 @@ mocked_call_for(std::string method, bool* result) -> void
 {
   *result = true;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-    *result = (raylib_method_call_mock_returns[method].front() == "true");
-    raylib_method_call_mock_returns[method].pop_front();
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
+    *result = (mock.value == "true");
   }
 }
 
@@ -81,10 +103,9 @@ mocked_call_for(std::string method, double* result) -> void
 {
   *result = 1.0;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-    *result = std::stof(raylib_method_call_mock_returns[method].front());
-    raylib_method_call_mock_returns[method].pop_front();
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
+    *result = std::stof(mock.value);
   }
 }
 
@@ -93,10 +114,9 @@ mocked_call_for(std::string method, float* result) -> void
 {
   *result = 1.0f;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-    *result = std::stof(raylib_method_call_mock_returns[method].front());
-    raylib_method_call_mock_returns[method].pop_front();
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
+    *result = std::stof(mock.value);
   }
 }
 
@@ -105,10 +125,9 @@ mocked_call_for(std::string method, int* result) -> void
 {
   *result = 1;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-    *result = std::stoi(raylib_method_call_mock_returns[method].front());
-    raylib_method_call_mock_returns[method].pop_front();
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
+    *result = std::stoi(mock.value);
   }
 }
 
@@ -133,14 +152,10 @@ mocked_call_for(std::string method, Font* result) -> void
   int glyph_count = 0;
   int glyph_padding = 0;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-
-    std::string mock = raylib_method_call_mock_returns[method].front();
-    raylib_method_call_mock_returns[method].pop_front();
-
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
     std::string temp;
-    std::stringstream stream(mock);
+    std::stringstream stream(mock.value);
 
     stream >> temp;
     size = std::stoi(temp);
@@ -164,14 +179,10 @@ mocked_call_for(std::string method, Image* result) -> void
   int mipmaps = 0;
   int format = 0;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-
-    std::string mock = raylib_method_call_mock_returns[method].front();
-    raylib_method_call_mock_returns[method].pop_front();
-
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
     std::string temp;
-    std::stringstream stream(mock);
+    std::stringstream stream(mock.value);
 
     stream >> temp;
     width = std::stoi(temp);
@@ -196,14 +207,10 @@ mocked_call_for(std::string method, Music* result) -> void
   bool looping = false;
   int ctx_type = 0;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-
-    std::string mock = raylib_method_call_mock_returns[method].front();
-    raylib_method_call_mock_returns[method].pop_front();
-
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
     std::string temp;
-    std::stringstream stream(mock);
+    std::stringstream stream(mock.value);
 
     stream >> temp;
     sample_rate = std::stoi(temp);
@@ -233,14 +240,10 @@ mocked_call_for(std::string method, RenderTexture* result) -> void
   int width = 0;
   int height = 0;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-
-    std::string mock = raylib_method_call_mock_returns[method].front();
-    raylib_method_call_mock_returns[method].pop_front();
-
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
     std::string temp;
-    std::stringstream stream(mock);
+    std::stringstream stream(mock.value);
 
     stream >> temp;
     width = std::stoi(temp);
@@ -260,14 +263,11 @@ mocked_call_for(std::string method, Shader* result) -> void
 {
   unsigned int id = 0;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-
-    std::string mock = raylib_method_call_mock_returns[method].front();
-    raylib_method_call_mock_returns[method].pop_front();
-
-    id = std::stoi(mock);
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
+    id = std::stoi(mock.value);
   }
+
   *result = Shader{ id, 0 };
 }
 
@@ -276,14 +276,11 @@ mocked_call_for(std::string method, Sound* result) -> void
 {
   unsigned int frame_count = 0;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-
-    std::string mock = raylib_method_call_mock_returns[method].front();
-    raylib_method_call_mock_returns[method].pop_front();
-
-    frame_count = std::stoi(mock);
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
+    frame_count = std::stoi(mock.value);
   }
+
   *result = Sound{ AudioStream{}, frame_count };
 }
 
@@ -296,14 +293,10 @@ mocked_call_for(std::string method, Texture* result) -> void
   int mipmaps = 0;
   int format = 0;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-
-    std::string mock = raylib_method_call_mock_returns[method].front();
-    raylib_method_call_mock_returns[method].pop_front();
-
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
     std::string temp;
-    std::stringstream stream(mock);
+    std::stringstream stream(mock.value);
 
     stream >> temp;
     id = std::stoi(temp);
@@ -326,14 +319,10 @@ mocked_call_for(std::string method, Vector2* result) -> void
   float x = 0;
   float y = 0;
 
-  if (raylib_method_call_mock_returns.count(method) > 0 &&
-      !raylib_method_call_mock_returns[method].empty()) {
-
-    std::string mock = raylib_method_call_mock_returns[method].front();
-    raylib_method_call_mock_returns[method].pop_front();
-
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
     std::string temp;
-    std::stringstream stream(mock);
+    std::stringstream stream(mock.value);
 
     stream >> temp;
     x = std::stof(temp);
@@ -361,9 +350,23 @@ mrb_Taylor_Raylib_mock_call(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
+mrb_Taylor_Raylib_all_mocks_used(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  return mrb_bool_value(raylib_method_call_mock_returns.empty());
+}
+
+auto
 mrb_Taylor_Raylib_reset_calls(mrb_state*, mrb_value) -> mrb_value
 {
   raylib_method_calls.clear();
+
+  return mrb_nil_value();
+}
+
+auto
+mrb_Taylor_Raylib_clear_mocks(mrb_state*, mrb_value) -> mrb_value
+{
+  raylib_method_call_mock_returns.clear();
 
   return mrb_nil_value();
 }
@@ -388,4 +391,14 @@ append_taylor(mrb_state* mrb)
                           "mock_call",
                           mrb_Taylor_Raylib_mock_call,
                           MRB_ARGS_REQ(2));
+  mrb_define_class_method(mrb,
+                          Raylib_module,
+                          "all_mocks_used?",
+                          mrb_Taylor_Raylib_all_mocks_used,
+                          MRB_ARGS_NONE());
+  mrb_define_class_method(mrb,
+                          Raylib_module,
+                          "clear_mocks",
+                          mrb_Taylor_Raylib_clear_mocks,
+                          MRB_ARGS_NONE());
 }

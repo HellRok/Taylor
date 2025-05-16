@@ -28,5 +28,5 @@ class Sound
   end
 
   # Used for alerting the user if the sound file was not found at the specified path.
-  class NotFound < StandardError; end
+  class NotFoundError < StandardError; end
 end

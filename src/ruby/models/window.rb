@@ -1,6 +1,6 @@
 # This class is used for managing your {Window} and retrieving any information
 # about it.
-class Window
+module Window
   # Should the {Window} try to enable [V-Sync](https://en.wikipedia.org/wiki/Screen_tearing#Vertical_synchronization)?
   #
   # @example Basic usage
@@ -289,6 +289,30 @@ class Window
   # @return [Boolean]
   def self.high_dpi? = Window.flag?(Window::Flag::HIGH_DPI)
 
+  # What is the current minimum allowed size of the {Window} as a {Vector2}?
+  #
+  # @example Basic usage
+  #
+  #   puts Window.minimum_size
+  #   # => nil
+  #
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.minimum_size
+  #   # => nil
+  #
+  #   Window.minimum_size = Vector2[1280, 720]
+  #
+  #   puts Window.minimum_size
+  #   # => Vector2[1280, 720]
+  #
+  # @return [nil, Boolean]
+  def self.minimum_size = @@minimum_size
+
   # This class holds all the constants for {Window} flags.
   class Flag
     # @!group Window flags
@@ -329,4 +353,8 @@ class Window
 
     # @!endgroup
   end
+
+  # Used for alerting the user they're trying to use the {Window} system without
+  # first opening it.
+  class NotReadyError < StandardError; end
 end

@@ -1,7 +1,12 @@
 #include "mruby.h"
 #include "mruby/class.h"
+#include "mruby/internal.h"
+#include "mruby/variable.h"
 #include "raylib.h"
 
+#include "mruby_integration/exceptions.hpp"
+#include "mruby_integration/models/vector2.hpp"
+#include "mruby_integration/struct_types.hpp"
 #include "ruby/models/window.hpp"
 
 struct RClass* Window_class;
@@ -43,8 +48,10 @@ mrb_Window_open(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Window_close(mrb_state*, mrb_value) -> mrb_value
+mrb_Window_close(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  mrb_mod_cv_set(
+    mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_size"), mrb_nil_value());
   CloseWindow();
   return mrb_nil_value();
 }
@@ -71,6 +78,15 @@ auto
 mrb_Window_title(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_str_new_cstr(mrb, title);
+}
+
+auto
+mrb_Window_set_title(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_get_args(mrb, "z", &title);
+
+  SetWindowTitle(title);
+  return mrb_nil_value();
 }
 
 auto
@@ -163,11 +179,59 @@ mrb_Window_restore(mrb_state*, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Window_set_icon(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  Image* image;
+
+  mrb_get_args(mrb, "d", &image, &Image_type);
+
+  SetWindowIcon(*image);
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_set_position(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  Vector2* vector;
+
+  mrb_get_args(mrb, "d", &vector, &Vector2_type);
+
+  SetWindowPosition(vector->x, vector->y);
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_set_minimum_size(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  if (!IsWindowReady()) {
+    raise_error(mrb,
+                Window_class,
+                "NotReadyError",
+                "You must open the window before setting a minimum size");
+    return mrb_nil_value();
+  }
+
+  auto* minimum_size = static_cast<Vector2*>(malloc(sizeof(Vector2)));
+  mrb_get_args(mrb, "d", &minimum_size, &Vector2_type);
+
+  mrb_value obj = mrb_obj_value(
+    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, minimum_size));
+  setup_Vector2(mrb, obj, minimum_size, minimum_size->x, minimum_size->y);
+
+  mrb_mod_cv_set(
+    mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_size"), obj);
+
+  add_owned_object(&obj);
+
+  SetWindowMinSize(minimum_size->x, minimum_size->y);
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
-  Window_class = mrb_define_class(mrb, "Window", mrb->object_class);
-  MRB_SET_INSTANCE_TT(Window_class, MRB_TT_DATA);
+  Window_class = mrb_define_module(mrb, "Window");
   mrb_define_class_method(
     mrb, Window_class, "open", mrb_Window_open, MRB_ARGS_REQ(1));
   mrb_define_class_method(
@@ -180,6 +244,8 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "height", mrb_Window_height, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "title", mrb_Window_title, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "title=", mrb_Window_set_title, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "close?", mrb_Window_close_question, MRB_ARGS_NONE());
   mrb_define_class_method(
@@ -205,6 +271,15 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "minimise", mrb_Window_minimise, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "restore", mrb_Window_restore, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "icon=", mrb_Window_set_icon, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "position=", mrb_Window_set_position, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb,
+                          Window_class,
+                          "minimum_size=",
+                          mrb_Window_set_minimum_size,
+                          MRB_ARGS_REQ(1));
 
   load_ruby_models_window(mrb);
 }

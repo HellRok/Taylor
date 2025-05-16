@@ -38,7 +38,7 @@ class Music
   end
 
   # Used for alerting the user if the music file was not found at the specified path.
-  class NotFound < StandardError; end
+  class NotFoundError < StandardError; end
 
   # Just a vanity class to make the types of music files read a little clearer.
   class Type

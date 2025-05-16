@@ -5,39 +5,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_set_window_icon(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Image* image;
-
-  mrb_get_args(mrb, "d", &image, &Image_type);
-
-  SetWindowIcon(*image);
-  return mrb_nil_value();
-}
-
-auto
-mrb_set_window_title(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  char* title;
-
-  mrb_get_args(mrb, "z", &title);
-
-  SetWindowTitle(title);
-  return mrb_nil_value();
-}
-
-auto
-mrb_set_window_position(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int x, y;
-
-  mrb_get_args(mrb, "ii", &x, &y);
-
-  SetWindowPosition(x, y);
-  return mrb_nil_value();
-}
-
-auto
 mrb_set_window_monitor(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int monitor;
@@ -45,17 +12,6 @@ mrb_set_window_monitor(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_get_args(mrb, "i", &monitor);
 
   SetWindowMonitor(monitor);
-  return mrb_nil_value();
-}
-
-auto
-mrb_set_window_min_size(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int width, height;
-
-  mrb_get_args(mrb, "ii", &width, &height);
-
-  SetWindowMinSize(width, height);
   return mrb_nil_value();
 }
 
@@ -159,29 +115,9 @@ append_core_window(mrb_state* mrb)
 {
   mrb_define_method(mrb,
                     mrb->kernel_module,
-                    "set_window_icon",
-                    mrb_set_window_icon,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "set_window_title",
-                    mrb_set_window_title,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "set_window_position",
-                    mrb_set_window_position,
-                    MRB_ARGS_REQ(2));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
                     "set_window_monitor",
                     mrb_set_window_monitor,
                     MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "set_window_min_size",
-                    mrb_set_window_min_size,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "set_window_size",

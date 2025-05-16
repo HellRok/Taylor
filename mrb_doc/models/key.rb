@@ -132,7 +132,7 @@ class Key
   #   Key.pressed
   #   # => nil
   #
-  # @return [nil,Integer]
+  # @return [nil, Integer]
   def self.pressed(key)
     # mrb_Key_get_pressed
     # src/mruby_integration/models/key.cpp
@@ -158,7 +158,7 @@ class Key
   #   Key.pressed_character
   #   # => nil
   #
-  # @return [nil,String]
+  # @return [nil, String]
   def self.pressed_character(key)
     # mrb_Key_get_pressed_character
     # src/mruby_integration/models/key.cpp

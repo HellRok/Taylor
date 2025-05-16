@@ -124,6 +124,31 @@ class Window
     "Taylor Game"
   end
 
+  # Sets the title for the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.title
+  #   # => "My super cool game!"
+  #
+  #   Window.title = "A cool new title :)"
+  #
+  #   puts Window.title
+  #   # => "A cool new title :)"
+  #
+  # @param title [String]
+  # @return [String]
+  def self.title=(title)
+    # mrb_Window_set_title
+    # src/mruby_integration/models/window.cpp
+    title
+  end
+
   # Checks if the user has asked the {Window} to close since last frame.
   #
   # @example Basic usage
@@ -412,5 +437,64 @@ class Window
     # mrb_Window_restore
     # src/mruby_integration/models/window.cpp
     nil
+  end
+
+  # Sets the icon for the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   icon = Image.new("./assets/my_cool_icon.png")
+  #   Window.icon = icon
+  #
+  # @param icon [Image]
+  # @return [Image]
+  def self.icon=(icon)
+    # mrb_Window_set_icon
+    # src/mruby_integration/models/window.cpp
+    icon
+  end
+
+  # Sets the position of the {Window} on the screen.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.position = Vector2[100, 200]
+  #
+  # @param position [Vector2]
+  # @return [Vector2]
+  def self.position=(position)
+    # mrb_Window_set_position
+    # src/mruby_integration/models/window.cpp
+    position
+  end
+
+  # Sets the minimum size the {Window} is allowed to be.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.minimum_size = Vector2[1280, 720]
+  #
+  # @param position [Vector2]
+  # @return [Vector2]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.minimum_size=(size)
+    # mrb_Window_set_minimum_size
+    # src/mruby_integration/models/window.cpp
+    size
   end
 end

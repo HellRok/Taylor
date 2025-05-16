@@ -50,7 +50,7 @@ class Test
       def test_initialize_fail_not_found
         Taylor::Raylib.mock_call("FileExists", "false")
 
-        assert_raise(Music::NotFound) {
+        assert_raise(Music::NotFoundError) {
           Music.new("./assets/fail.ogg")
         }
 
@@ -144,7 +144,7 @@ class Test
         begin
           music.play
           fail "Previous line should have raised"
-        rescue Audio::NotOpen => e
+        rescue Audio::NotOpenError => e
           assert_equal "You must use Audio.open before calling Music#play.", e.message
         end
 

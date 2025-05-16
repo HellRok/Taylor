@@ -32,5 +32,5 @@ class Image
   end
 
   # Used for alerting the user if the image was not found at the specified path.
-  class NotFound < StandardError; end
+  class NotFoundError < StandardError; end
 end

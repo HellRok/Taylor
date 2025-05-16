@@ -15,7 +15,7 @@ class Image
   end
 
   # Loads an image file from the disk. If the file does not exist, it will
-  # raise an {Image::NotFound} error.
+  # raise an {Image::NotFoundError} error.
   #
   # Supported image formats are: PNG, JPG, BMP, QOI, GIF, DDS and HDR.
   #
@@ -24,7 +24,7 @@ class Image
   #
   # @param path [Integer]
   # @return [Image]
-  # @raise [Image::NotFound]
+  # @raise [Image::NotFoundError]
   def initialize(path)
     # mrb_Image_initialize
     # src/mruby_integration/models/image.cpp

@@ -6,6 +6,7 @@
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
+#include "mruby_integration/models/audio.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 #include "ruby/models/music.hpp"
@@ -124,8 +125,10 @@ mrb_Music_play(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_assert(music != nullptr);
 
   if (!IsAudioDeviceReady()) {
-    const char* message = "You must use Audio.open before calling Music#play.";
-    raise_audio_not_open_error(mrb, message);
+    raise_error(mrb,
+                Audio_class,
+                "NotOpenError",
+                "You must use Audio.open before calling Music#play.");
   }
 
   PlayMusicStream(*music);

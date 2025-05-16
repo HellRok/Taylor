@@ -1,6 +1,6 @@
 class Sound
   # Creates a new instance of {Sound}. If the file does not exist it will raise
-  # {Sound::NotFound}.
+  # {Sound::NotFoundError}.
   #
   # @example Basic usage
   #   beep = Sound.new("./assets/beep.wav")
@@ -12,7 +12,7 @@ class Sound
   # @param pitch [Float]
   # @param path [String]
   # @return [Sound]
-  # @raise [Sound::NotFound] Raised when the file to load is not found.
+  # @raise [Sound::NotFoundError] Raised when the file to load is not found.
   # @raise [ArgumentError] Raised when passing an invalid volume.
   def initialize(path, volume: 1.0, pitch: 1.0)
     # mrb_Sound_initialize
@@ -175,6 +175,6 @@ class Sound
     0.5
   end
 
-  class NotFound < StandardError
+  class NotFoundError < StandardError
   end
 end
