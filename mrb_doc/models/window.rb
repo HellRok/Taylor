@@ -495,7 +495,7 @@ class Window
     position
   end
 
-  # Sets the size of the {Window}.
+  # Sets the resolution of the {Window}.
   #
   # @example Basic usage
   #   Window.open(
@@ -504,18 +504,18 @@ class Window
   #     title: "My super cool game!"
   #   )
   #
-  #   Window.size = Vector2[1280, 720]
+  #   Window.resolution = Vector2[1280, 720]
   #
-  # @param size [Vector2]
+  # @param resolution [Vector2]
   # @return [Vector2]
   # @raise [Window::NotReadyError] If called before opening the Window
-  def self.size=(size)
-    # mrb_Window_set_size
+  def self.resolution=(resolution)
+    # mrb_Window_set_resolution
     # src/mruby_integration/models/window.cpp
-    size
+    resolution
   end
 
-  # Sets the minimum size the {Window} is allowed to be.
+  # Sets the minimum resolution the {Window} is allowed to be.
   #
   # @example Basic usage
   #   Window.open(
@@ -524,15 +524,15 @@ class Window
   #     title: "My super cool game!"
   #   )
   #
-  #   Window.minimum_size = Vector2[1280, 720]
+  #   Window.minimum_resolution = Vector2[1280, 720]
   #
   # @param position [Vector2]
   # @return [Vector2]
   # @raise [Window::NotReadyError] If called before opening the Window
-  def self.minimum_size=(size)
-    # mrb_Window_set_minimum_size
+  def self.minimum_resolution=(resolution)
+    # mrb_Window_set_minimum_resolution
     # src/mruby_integration/models/window.cpp
-    size
+    resolution
   end
 
   # Sets the opacity of the {Window}.

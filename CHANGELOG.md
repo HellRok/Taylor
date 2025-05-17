@@ -225,6 +225,7 @@
 - Removed get_window_position
 - Added Window.opacity
 - Added Window.opacity=
+- Use "resolution" instead of "size"
 
 ## v0.3.14.1
 

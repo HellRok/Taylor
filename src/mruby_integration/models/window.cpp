@@ -74,8 +74,10 @@ mrb_Window_close(mrb_state* mrb, mrb_value) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.close")
 
-  mrb_mod_cv_set(
-    mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_size"), mrb_nil_value());
+  mrb_mod_cv_set(mrb,
+                 Window_class,
+                 mrb_intern_cstr(mrb, "@@minimum_resolution"),
+                 mrb_nil_value());
   mrb_mod_cv_set(
     mrb, Window_class, mrb_intern_cstr(mrb, "@@title"), mrb_nil_value());
   mrb_mod_cv_set(
@@ -272,9 +274,10 @@ mrb_Window_set_position(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Window_set_size(mrb_state* mrb, mrb_value) -> mrb_value
+mrb_Window_set_resolution(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.size=")
+  EXIT_UNLESS_WINDOW_READY(
+    "You must call Window.open before Window.resolution=")
 
   Vector2* vector;
 
@@ -285,24 +288,25 @@ mrb_Window_set_size(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Window_set_minimum_size(mrb_state* mrb, mrb_value) -> mrb_value
+mrb_Window_set_minimum_resolution(mrb_state* mrb, mrb_value) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY(
-    "You must call Window.open before Window.minimum_size=")
+    "You must call Window.open before Window.minimum_resolution=")
 
-  auto* minimum_size = static_cast<Vector2*>(malloc(sizeof(Vector2)));
-  mrb_get_args(mrb, "d", &minimum_size, &Vector2_type);
+  auto* minimum_resolution = static_cast<Vector2*>(malloc(sizeof(Vector2)));
+  mrb_get_args(mrb, "d", &minimum_resolution, &Vector2_type);
 
   mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, minimum_size));
-  setup_Vector2(mrb, obj, minimum_size, minimum_size->x, minimum_size->y);
+    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, minimum_resolution));
+  setup_Vector2(
+    mrb, obj, minimum_resolution, minimum_resolution->x, minimum_resolution->y);
 
   mrb_mod_cv_set(
-    mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_size"), obj);
+    mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_resolution"), obj);
 
   add_owned_object(&obj);
 
-  SetWindowMinSize(minimum_size->x, minimum_size->y);
+  SetWindowMinSize(minimum_resolution->x, minimum_resolution->y);
   return mrb_nil_value();
 }
 
@@ -374,12 +378,15 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "position", mrb_Window_position, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "position=", mrb_Window_set_position, MRB_ARGS_REQ(1));
-  mrb_define_class_method(
-    mrb, Window_class, "size=", mrb_Window_set_size, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb,
                           Window_class,
-                          "minimum_size=",
-                          mrb_Window_set_minimum_size,
+                          "resolution=",
+                          mrb_Window_set_resolution,
+                          MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb,
+                          Window_class,
+                          "minimum_resolution=",
+                          mrb_Window_set_minimum_resolution,
                           MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "opacity=", mrb_Window_set_opacity, MRB_ARGS_REQ(1));

@@ -21,7 +21,7 @@ module Window
     @@title
   end
 
-  # Gets the size of the {Window}.
+  # Gets the resolution of the {Window}.
   #
   # @example Basic usage
   #   Window.open(
@@ -30,13 +30,13 @@ module Window
   #     title: "My super cool game!"
   #   )
   #
-  #   puts Window.size
+  #   puts Window.resolution
   #   # => Vector2[1920, 1080]
   #
   # @return [Vector2]
   # @raise [Window::NotReadyError] If called before opening the Window
-  def self.size
-    raise Window::NotReadyError, "You must call Window.open before Window.size" unless ready?
+  def self.resolution
+    raise Window::NotReadyError, "You must call Window.open before Window.resolution" unless ready?
 
     Vector2[width, height]
   end
@@ -329,7 +329,7 @@ module Window
   # @return [Boolean]
   def self.high_dpi? = Window.flag?(Window::Flag::HIGH_DPI)
 
-  # Returns the minimum allowed size of the {Window} as a {Vector2}
+  # Returns the minimum allowed resolution of the {Window} as a {Vector2}
   #
   # @example Basic usage
   #
@@ -339,20 +339,20 @@ module Window
   #     title: "My super cool game!"
   #   )
   #
-  #   puts Window.minimum_size
+  #   puts Window.minimum_resolution
   #   # => Vector2[0, 0]
   #
-  #   Window.minimum_size = Vector2[1280, 720]
+  #   Window.minimum_resolution = Vector2[1280, 720]
   #
-  #   puts Window.minimum_size
+  #   puts Window.minimum_resolution
   #   # => Vector2[1280, 720]
   #
   # @return [Vector2]
   # @raise [Window::NotReadyError] If called before opening the Window
-  def self.minimum_size
-    raise Window::NotReadyError, "You must call Window.open before Window.minimum_size" unless ready?
+  def self.minimum_resolution
+    raise Window::NotReadyError, "You must call Window.open before Window.minimum_resolution" unless ready?
 
-    @@minimum_size || Vector2[0, 0]
+    @@minimum_resolution || Vector2[0, 0]
   end
 
   # Returns the opacity of the {Window}

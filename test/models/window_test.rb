@@ -38,13 +38,13 @@ class Test
       end
 
       def test_close
-        Window.minimum_size = Vector2[1, 1]
+        Window.minimum_resolution = Vector2[1, 1]
         Window.title = "some title"
         Taylor::Raylib.reset_calls
 
         Window.close
 
-        assert_equal Vector2[0, 0], Window.minimum_size, "it clears the minimum size"
+        assert_equal Vector2[0, 0], Window.minimum_resolution, "it clears the minimum resolution"
         assert_nil Window.class_variable_get(:@@title), "it clears the title"
         assert_nil Window.class_variable_get(:@@opacity), "it clears the opacity"
 
@@ -448,10 +448,10 @@ class Test
         ]
       end
 
-      def test_size=
+      def test_resolution=
         assert_equal Vector2[6, 7], (
-          Window.size = Vector2[6, 7]
-        ), "it returns the set size"
+          Window.resolution = Vector2[6, 7]
+        ), "it returns the set resolution"
 
         assert_called [
           "(IsWindowReady) { }",
@@ -459,11 +459,11 @@ class Test
         ]
       end
 
-      def test_size_equals_without_window_ready
+      def test_resolution_equals_without_window_ready
         Taylor::Raylib.mock_call("IsWindowReady", "false")
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.size=") {
-          Window.size = Vector2[1, 1]
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.resolution=") {
+          Window.resolution = Vector2[1, 1]
         }
 
         assert_called [
@@ -471,11 +471,11 @@ class Test
         ]
       end
 
-      def test_size
+      def test_resolution
         Taylor::Raylib.mock_call("GetScreenWidth", "8")
         Taylor::Raylib.mock_call("GetScreenHeight", "9")
 
-        assert_equal Vector2[8, 9], Window.size, "it returns the window size"
+        assert_equal Vector2[8, 9], Window.resolution, "it returns the window resolution"
 
         assert_called [
           "(IsWindowReady) { }",
@@ -486,11 +486,11 @@ class Test
         ]
       end
 
-      def test_size_without_window_ready
+      def test_resolution_without_window_ready
         Taylor::Raylib.mock_call("IsWindowReady", "false")
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.size") {
-          Window.size
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.resolution") {
+          Window.resolution
         }
 
         assert_called [
@@ -544,12 +544,12 @@ class Test
         ]
       end
 
-      def test_minimum_size=
+      def test_minimum_resolution=
         assert_equal Vector2[3, 4], (
-          Window.minimum_size = Vector2[3, 4]
-        ), "it returns the set minimum size"
+          Window.minimum_resolution = Vector2[3, 4]
+        ), "it returns the set minimum resolution"
 
-        assert_equal Vector2[3, 4], Window.minimum_size, "it retains the set minimum size"
+        assert_equal Vector2[3, 4], Window.minimum_resolution, "it retains the set minimum resolution"
 
         assert_called [
           "(IsWindowReady) { }",
@@ -558,26 +558,26 @@ class Test
         ]
       end
 
-      def test_minimum_size_equals_without_window_ready
+      def test_minimum_resolution_equals_without_window_ready
         Taylor::Raylib.mock_call("IsWindowReady", "false")
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.minimum_size=") {
-          Window.minimum_size = Vector2[1, 1]
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.minimum_resolution=") {
+          Window.minimum_resolution = Vector2[1, 1]
         }
 
-        assert_nil Window.class_variable_get(:@@minimum_size), "it has not set the cvar"
+        assert_nil Window.class_variable_get(:@@minimum_resolution), "it has not set the cvar"
 
         assert_called [
           "(IsWindowReady) { }"
         ]
       end
 
-      def test_minimum_size
-        assert_equal Vector2[0, 0], Window.minimum_size, "it is 0, 0 before it's set"
+      def test_minimum_resolution
+        assert_equal Vector2[0, 0], Window.minimum_resolution, "it is 0, 0 before it's set"
 
-        Window.minimum_size = Vector2[5, 6]
+        Window.minimum_resolution = Vector2[5, 6]
 
-        assert_equal Vector2[5, 6], Window.minimum_size, "it is updated after being set"
+        assert_equal Vector2[5, 6], Window.minimum_resolution, "it is updated after being set"
 
         assert_called [
           "(IsWindowReady) { }",
@@ -587,11 +587,11 @@ class Test
         ]
       end
 
-      def test_minimum_size_without_window_ready
+      def test_minimum_resolution_without_window_ready
         Taylor::Raylib.mock_call("IsWindowReady", "false")
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.minimum_size") {
-          Window.minimum_size
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.minimum_resolution") {
+          Window.minimum_resolution
         }
 
         assert_called [
