@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -u
 
-DIRNAME=$(dirname -- "${0}")
-SCRIPT_DIR=$(cd -- "${DIRNAME}" > /dev/null 2>&1 && pwd)
-source "${SCRIPT_DIR}"/shared.lib.sh
+source bin/lib/helpers.sh
 
 export MOCK_RAYLIB=1
 

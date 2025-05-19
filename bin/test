@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -u
 
-DIRNAME=$(dirname -- "${0}")
-SCRIPT_DIR=$(cd -- "${DIRNAME}" > /dev/null 2>&1 && pwd)
-source "${SCRIPT_DIR}"/shared.lib.sh
+source bin/lib/helpers.sh
 
 start "Linux tests"
 job_output=$(./bin/test-linux 2>&1)
@@ -25,6 +23,14 @@ start "Documentation check"
 job_output=$(.buildkite/scripts/tests/check_for_documentation.rb 2>&1)
 result $?
 
-start "Linting"
-job_output=$(bundle 2>&1)
+start "Ruby - Formatting"
+job_output=$(dx/exec bundle exec standardrb 2>&1)
+result $?
+
+start "CPP - Formatting"
+job_output=$(dx/exec bundle exec rake format:check 2>&1)
+result $?
+
+start "CPP - Linting"
+job_output=$(dx/exec bundle exec rake lint:check 2>&1)
 result $?

@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-log() {
-  echo "[ $0 ] $@"
-}
+source bin/lib/helpers.sh
 
 log "Building Taylor"
 bundle exec rake linux:release:build 2> /dev/null || exit 1
