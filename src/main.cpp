@@ -10,7 +10,6 @@
 
 #include "argv.hpp"
 #include "mruby_integration/core.hpp"
-#include "mruby_integration/images.hpp"
 #include "mruby_integration/models.hpp"
 #include "mruby_integration/shaders.hpp"
 #include "mruby_integration/shapes.hpp"
@@ -40,7 +39,6 @@ main(int argc, char** argv) -> int
   populate_argv(mrb, argc, argv);
 
   append_core(mrb);
-  append_images(mrb);
   append_models(mrb);
   append_shaders(mrb);
   append_shapes(mrb);

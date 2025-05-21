@@ -554,4 +554,24 @@ class Window
     # src/mruby_integration/models/window.cpp
     opacity
   end
+
+  # Returns an {Image} of the current state of the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   p Window.to_image
+  #   # => #<Image:0x5594c40fce60>
+  #
+  # @return [Image]
+  # @raise [NotReadyError] Raised when passing an invalid opacity.
+  def self.to_image
+    # mrb_Window_to_image
+    # src/mruby_integration/models/window.cpp
+    Image.new
+  end
 end

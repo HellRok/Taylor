@@ -5,6 +5,7 @@
 #include "raylib.h"
 
 #include "mruby_integration/exceptions.hpp"
+#include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
 #include "ruby/models/window.hpp"
@@ -331,6 +332,28 @@ mrb_Window_set_opacity(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Window_to_image(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.to_image")
+
+  auto* image = static_cast<Image*>(malloc(sizeof(Image)));
+  *image = LoadImageFromScreen();
+
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
+
+  setup_Image(mrb,
+              obj,
+              image,
+              image->width,
+              image->height,
+              image->mipmaps,
+              image->format);
+
+  return obj;
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -390,6 +413,8 @@ append_models_Window(mrb_state* mrb)
                           MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "opacity=", mrb_Window_set_opacity, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "to_image", mrb_Window_to_image, MRB_ARGS_NONE());
 
   load_ruby_models_window(mrb);
 }

@@ -226,6 +226,8 @@
 - Added Window.opacity
 - Added Window.opacity=
 - Use "resolution" instead of "size"
+- Added Window.to_image
+- Removed get_screen_data
 
 ## v0.3.14.1
 

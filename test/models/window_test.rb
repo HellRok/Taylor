@@ -679,6 +679,40 @@ class Test
           "(IsWindowReady) { }"
         ]
       end
+
+      def test_to_image
+        Taylor::Raylib.mock_call("LoadImageFromScreen", Image.mock_return(width: 2, height: 3, mipmaps: 4, format: 5))
+
+        image = Window.to_image
+
+        assert_instance_of Image, image
+        assert_equal(
+          {
+            width: 2,
+            height: 3,
+            mipmaps: 4,
+            format: 5
+          },
+          image.to_h
+        )
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(LoadImageFromScreen) { }"
+        ]
+      end
+
+      def test_to_image_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.to_image") {
+          Window.to_image
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
     end
   end
 end
