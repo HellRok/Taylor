@@ -3,24 +3,26 @@
 IGNORED_FILES = [
   "./src/mruby_integration/buildkite_analytics.cpp",
   "./src/platform_specific/web.cpp",
-  "./src/taylor.cpp"
+  "./src/taylor/raylib.cpp"
 ]
 
 def cpp_methods
   (
     Dir.glob("./src/mruby_integration/**/*.cpp") +
     Dir.glob("./src/platform_specific/*.cpp") +
+    Dir.glob("./src/taylor/*.cpp") +
     Dir.glob("./src/*.cpp")
   ).reject { |file|
     IGNORED_FILES.include?(file)
   }.flat_map { |file|
-    klass = nil
+    klass = ""
+
+    object_to_class = -> { "#{klass}#{it.gsub(/_(class|module)/, "")}" }
 
     lines = File.read(file).each_line.to_a
     lines.map.with_index { |line, index|
-      if line =~ /^\s*class\s*(.*)/
-        klass = $~[1].chomp
-        nil # we don't want to just return the klass
+      if line =~ /^.*define_module_under.*, (.*), "(.*)"/
+        klass = "#{object_to_class.call($~[1])}::"
       end
 
       # mrb_define_method(mrb, Font_class, "initialize"
@@ -29,7 +31,7 @@ def cpp_methods
         if object == "mrb->kernel_module"
           method
         else
-          "#{object.gsub("_class", "")}##{method}"
+          "#{object_to_class.call(object)}##{method}"
         end
 
       elsif /^\s*mrb_define_method/.match?(line)
@@ -49,7 +51,7 @@ def cpp_methods
         if object == "mrb->kernel_module"
           method
         else
-          "#{object.gsub("_class", "")}##{method}"
+          "#{object_to_class.call(object)}##{method}"
         end
 
       # mrb_define_class_method(mrb, Font_class, "initialize"
@@ -58,7 +60,7 @@ def cpp_methods
         if object == "mrb->kernel_module"
           method
         else
-          "#{object.gsub("_class", "")}.#{method}"
+          "#{object_to_class.call(object)}.#{method}"
         end
 
       elsif /^\s*mrb_define_class_method/.match?(line)
@@ -78,7 +80,7 @@ def cpp_methods
         if object == "mrb->kernel_module"
           method
         else
-          "#{object.gsub("_class", "")}.#{method}"
+          "#{object_to_class.call(object)}.#{method}"
         end
       end
     }.compact
@@ -90,11 +92,13 @@ def documented_methods
     .reject { |file|
       IGNORED_FILES.include?(file)
     }.flat_map { |file|
+      klasses = []
       klass = nil
 
       File.read(file).each_line.to_a.map { |line|
-        if line =~ /^\s*class\s*(.*)/
-          klass = $~[1].chomp
+        if line =~ /^\s*(class|module)\s*(.*)/
+          klasses << $~[2].chomp
+          klass = klasses.join("::")
           nil # we don't want to just return the klass
 
         elsif line =~ /^\s*def\s*(.*)/

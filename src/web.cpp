@@ -53,11 +53,11 @@ append_web(mrb_state* mrb)
 #ifndef __EMSCRIPTEN__
   mrb_load_string(mrb, R"(
     def set_main_loop(main_loop_method)
-      raise PlatformSpecificMethodCalledOnWrongPlatformError, 'set_main_loop is only available for Web exports'
+      raise Taylor::Platform::MethodCalledOnInvalidPlatformError, 'set_main_loop is only available for Web exports'
     end
 
     def cancel_main_loop
-      raise PlatformSpecificMethodCalledOnWrongPlatformError, 'cancel_main_loop is only available for Web exports'
+      raise Taylor::Platform::MethodCalledOnInvalidPlatformError, 'cancel_main_loop is only available for Web exports'
     end
   )");
 #endif

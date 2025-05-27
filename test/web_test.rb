@@ -1,6 +1,6 @@
 class Test
   class Web_Test < Test::Base
-    if browser?
+    if Taylor::Platform.browser?
       # According to
       # https://emscripten.org/docs/api_reference/emscripten.h.html#c.emscripten_cancel_main_loop
       # we actually can't leave the main_loop we set here, so I guess we just
@@ -21,19 +21,19 @@ class Test
 
     else
       def test_set_main_loop
-        assert_raise(PlatformSpecificMethodCalledOnWrongPlatformError) {
+        assert_raise(Taylor::Platform::MethodCalledOnInvalidPlatformError) {
           set_main_loop "set_main_loop_stub"
         }
       end
 
       def test_LocalStorage_get_item
-        assert_raise(PlatformSpecificMethodCalledOnWrongPlatformError) {
+        assert_raise(Taylor::Platform::MethodCalledOnInvalidPlatformError) {
           LocalStorage.get_item("test")
         }
       end
 
       def test_LocalStorage_set_item
-        assert_raise(PlatformSpecificMethodCalledOnWrongPlatformError) {
+        assert_raise(Taylor::Platform::MethodCalledOnInvalidPlatformError) {
           LocalStorage.set_item("test", "value")
         }
       end

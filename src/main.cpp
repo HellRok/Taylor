@@ -15,7 +15,6 @@
 #include "mruby_integration/shapes.hpp"
 #include "mruby_integration/text.hpp"
 #include "mruby_integration/textures.hpp"
-#include "platform.hpp"
 #include "platform_specific/web.hpp"
 #include "taylor.hpp"
 #include "web.hpp"
@@ -46,7 +45,6 @@ main(int argc, char** argv) -> int
   append_textures(mrb);
 
   append_taylor(mrb);
-  append_platform(mrb);
 
   append_web(mrb);
   append_platform_specific_web(mrb);

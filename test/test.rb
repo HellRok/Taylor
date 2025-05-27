@@ -23,23 +23,24 @@ require "models/sound_test"
 require "models/texture2d_test"
 require "models/vector2_test"
 require "models/window_test"
-require "platform_test"
 # require "shapes/circle_test"
 # require "shapes/collision_test"
 # require "shapes/line_test"
 # require "shapes/pixel_test"
 # require "shapes/rectangle_test"
+require "taylor_test"
+require "taylor/platform_test"
 require "web_test"
 
 result = MTest::Unit.new.run.positive?
 
-if browser?
+if Taylor::Platform.browser?
   puts "ANALYTICS: #{$buildkite_test_analytics.to_json}"
   puts "EXIT CODE: #{result ? 1 : 0}"
   cancel_main_loop
   set_main_loop "noop"
 else
-  persist_buildkite_test_analytics unless browser?
+  persist_buildkite_test_analytics
 end
 
 exit! 1 if result

@@ -1,4 +1,4 @@
-unless released?
+unless Taylor.released?
   original_dir = Dir.getwd
   Dir.chdir(File.expand_path(File.dirname(ARGV.shift)))
   $:.unshift Dir.getwd
@@ -14,7 +14,7 @@ require "app/commands/run"
 require "app/commands/squash"
 require "app/commands/version"
 
-unless released?
+unless Taylor.released?
   $:.shift
   Dir.chdir(original_dir)
 end

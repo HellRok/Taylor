@@ -228,6 +228,22 @@
 - Use "resolution" instead of "size"
 - Added Window.to_image
 - Removed get_screen_data
+- Added Taylor::Platform.android?
+- Removed android?
+- Added Taylor::Platform.browser?
+- Removed browser?
+- Added Taylor::Platform.linux?
+- Removed linux?
+- Added Taylor::Platform.osx?
+- Removed osx?
+- Added Taylor::Platform.windows?
+- Removed windows?
+- Added Taylor.released?
+- Removed released?
+- Addedd Taylor::Platform.os
+- Addedd Taylor::Platform.arch
+- Addedd Taylor::Platform.to_s
+- Addedd Taylor::Platform==
 
 ## v0.3.14.1
 

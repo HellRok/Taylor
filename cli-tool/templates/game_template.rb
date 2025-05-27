@@ -30,7 +30,7 @@ def game_template
       end
     end
 
-    if browser?
+    if Taylor::Platform.browser?
       set_main_loop 'main'
     else
       # Detect window close button or ESC key

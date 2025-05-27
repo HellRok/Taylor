@@ -7,7 +7,7 @@
 # just leave it here for now. Everything to do with console output has been a
 # nightmare so far for Windows.
 
-if windows?
+if Taylor::Platform.windows?
   module MTest
     class Unit
       def puts *a

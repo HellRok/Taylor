@@ -31,7 +31,6 @@ if [[ -v NO_COLOR ]]; then
   LIGHT_MAGENTA_BG=""
   LIGHT_CYAN=""
   LIGHT_CYAN_BG=""
-  CLEAR="";
   NC="";
 
 else
@@ -67,6 +66,7 @@ else
   LIGHT_MAGENTA_BG="\033[0;105m"
   LIGHT_CYAN="\033[0;96m"
   LIGHT_CYAN_BG="\033[0106m"
-  CLEAR="\033[1K\r";
   NC="\033[0m";
 fi
+
+CLEAR="\033[1K\r";
