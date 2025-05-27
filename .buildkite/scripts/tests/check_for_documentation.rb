@@ -17,7 +17,7 @@ def cpp_methods
   }.flat_map { |file|
     klass = ""
 
-    object_to_class = -> { "#{klass}#{it.gsub(/_(class|module)/, "")}" }
+    object_to_class = lambda { |obj| "#{klass}#{obj.gsub(/_(class|module)/, "")}" }
 
     lines = File.read(file).each_line.to_a
     lines.map.with_index { |line, index|
