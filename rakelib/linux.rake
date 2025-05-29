@@ -7,7 +7,6 @@ class LinuxBuilder < Builder
     @cxx = "g++"
     @cxxflags = "-std=c++17"
     @ldflags = "-l dl -l pthread"
-    @release_flags = "-03"
   end
 end
 

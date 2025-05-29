@@ -76,7 +76,7 @@ class Builder
       #{@cxx} \
         -o "./dist/#{@platform}/#{@variant}/#{name}" \
         #{@cxxflags} \
-        #{(variant == :release) ? @release_flags : ""} \
+        #{(variant == "release") ? @release_optimisation : @debug_optimisation} \
         #{defines} \
         #{includes} \
         #{objects.join " "} \

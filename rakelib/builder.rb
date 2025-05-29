@@ -40,6 +40,9 @@ class Builder
     @defines << " -DEXPORT" if ENV["EXPORT"]
     @static_links = []
 
+    @debug_optimisation = "-Og"
+    @release_optimisation = "-O2"
+
     setup_options
 
     if mock_raylib?

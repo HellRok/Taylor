@@ -8,7 +8,7 @@ class Test
 
         assert_called [
           "(FileExists) { fileName: './assets/tiny.ttf' }",
-          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 32 fontChars: 0 glyphCount: 95 }"
+          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 32 fontChars: 0x0 glyphCount: 95 }"
         ]
 
         assert_kind_of Font, font
@@ -36,7 +36,7 @@ class Test
 
         assert_called [
           "(FileExists) { fileName: './assets/tiny.ttf' }",
-          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 6 fontChars: 0 glyphCount: 100 }"
+          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 6 fontChars: 0x0 glyphCount: 100 }"
         ]
 
         assert_kind_of Font, font

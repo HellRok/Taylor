@@ -7,7 +7,6 @@ class WindowsBuilder < Builder
     @cxx = "x86_64-w64-mingw32-g++"
     @cxxflags = "-std=c++17 -no-pie -Wall -Wextra -mwindows -static-libstdc++"
     @ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -lwinmm -l raylib -l pthread"
-    @release_flags = "-03"
   end
 
   def name

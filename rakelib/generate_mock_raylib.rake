@@ -355,7 +355,21 @@ task "raylib:mock" do
         source << append.call(%("}";))
 
       when "int"
-        source << append.call(%(" #{name}: " << #{name};))
+        # Clang and GCC format pointers differently, so let's just lean with
+        # what clang prefers because I feel it makes more sense.
+        source << if pointer
+          append.call(<<~CPP)
+            " #{name}: "
+            #ifdef __clang__
+              << #{name}
+            #else
+              << "0x" << #{name}
+            #endif
+            ;
+          CPP
+        else
+          append.call(%(" #{name}: " << #{name};))
+        end
 
       else
         source << if pointer

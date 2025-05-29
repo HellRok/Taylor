@@ -5,7 +5,7 @@ class OSXAppleBuilder < Builder
   def setup_platform
     @platform = "osx/apple"
     @cxx = "arm64-apple-darwin20.4-clang++"
-    @cxxflags = " -Oz -mmacosx-version-min=11.3 -stdlib=libc++"
+    @cxxflags = "-mmacosx-version-min=11.3 -stdlib=libc++"
     @ldflags = <<-EOS.chomp
       -l dl \
       -l pthread \
@@ -16,7 +16,6 @@ class OSXAppleBuilder < Builder
       -framework OpenGL
     EOS
     @includes << "-I /opt/osxcross/target/SDK/MacOSX11.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
-    @release_flags = "-03"
   end
 
   def name

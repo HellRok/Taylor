@@ -6,7 +6,8 @@ class WebBuilder < Builder
     @platform = "web"
     @cxx = "emcc"
     @cxxflags = "-std=c++17 -Wall -Wextra"
-    @release_flags = "-O2"
+
+    @debug_optimisation = "-O0"
 
     generate_static_links
   end

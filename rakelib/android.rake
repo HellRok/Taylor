@@ -17,7 +17,6 @@ class AndroidBuilder < Builder
       -D ANDROID_API__29
     EOS
     @includes = "-I /ndk/android-ndk-r25b/sources/android/native_app_glue/"
-    @release_flags = "-O2"
 
     @static_links += [
       "-shared",
