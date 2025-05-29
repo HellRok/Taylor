@@ -360,7 +360,9 @@ task "raylib:mock" do
         source << if pointer
           append.call(<<~CPP)
             " #{name}: "
-            #ifdef __clang__
+            #ifdef __EMSCRIPTEN__
+              << "0x" << #{name}
+            #elifdef __clang__
               << #{name}
             #else
               << "0x" << #{name}
