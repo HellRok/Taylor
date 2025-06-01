@@ -240,10 +240,12 @@
 - Removed windows?
 - Added Taylor.released?
 - Removed released?
-- Addedd Taylor::Platform.os
-- Addedd Taylor::Platform.arch
-- Addedd Taylor::Platform.to_s
-- Addedd Taylor::Platform==
+- Added Taylor::Platform.os
+- Added Taylor::Platform.arch
+- Added Taylor::Platform.to_s
+- Added Taylor::Platform==
+- Added Touch.position_for, Touch[], and Touch.positions
+- Removed get_touch_position
 
 ## v0.3.14.1
 

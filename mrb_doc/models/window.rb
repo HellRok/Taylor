@@ -526,7 +526,7 @@ class Window
   #
   #   Window.minimum_resolution = Vector2[1280, 720]
   #
-  # @param position [Vector2]
+  # @param resolution [Vector2]
   # @return [Vector2]
   # @raise [Window::NotReadyError] If called before opening the Window
   def self.minimum_resolution=(resolution)
