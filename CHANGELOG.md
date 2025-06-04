@@ -254,7 +254,11 @@
 - Removed Texture2D#mipmaps=
 - Removed Texture2D#format=
 - Texture2D#unload is now C++ backed
+- Removed unload_texture
 - Texture2D#filter= is now C++ backed
+- Removed set_texture_filter
+- Texture2D#generate_texture_mipmaps is now C++ backed
+- Removed generate_texture_mipmaps
 
 ## v0.3.14.1
 

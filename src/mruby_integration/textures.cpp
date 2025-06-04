@@ -10,18 +10,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_gen_texture_mipmaps(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Texture2D* texture;
-
-  mrb_get_args(mrb, "d", &texture, &Texture2D_type);
-
-  GenTextureMipmaps(texture);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_draw_texture(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Texture2D* texture;
@@ -91,11 +79,6 @@ mrb_fade(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_textures(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "generate_texture_mipmaps",
-                    mrb_gen_texture_mipmaps,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, mrb->kernel_module, "draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
   mrb_define_method(mrb,

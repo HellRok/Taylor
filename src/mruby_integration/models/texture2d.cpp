@@ -97,6 +97,18 @@ mrb_Texture2D_filter_equals(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Texture2D_generate_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Texture2D* texture;
+  Data_Get_Struct(mrb, self, &Texture2D_type, texture);
+  mrb_assert(texture != nullptr);
+
+  GenTextureMipmaps(texture);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Texture2D(mrb_state* mrb)
 {
@@ -114,6 +126,11 @@ append_models_Texture2D(mrb_state* mrb)
                     "filter=",
                     mrb_Texture2D_filter_equals,
                     MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    Texture2D_class,
+                    "generate_mipmaps",
+                    mrb_Texture2D_generate_mipmaps,
+                    MRB_ARGS_NONE());
 
   load_ruby_models_texture2d(mrb);
 }

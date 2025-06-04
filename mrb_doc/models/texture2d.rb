@@ -47,4 +47,20 @@ class Texture2D
     # src/mruby_integration/models/texture2d.cpp
     nil
   end
+
+  # Generates [mipmaps](https://en.wikipedia.org/wiki/Mipmap) for the {Texture2D}.
+  #
+  # @example Basic usage
+  #   big_texture = Texture2D.new("/assets/my_cool_background.png")
+  #
+  #   big_texture.generate_mipmaps
+  #
+  #   big_texture.unload
+  #
+  # @return [nil]
+  def generate_mipmaps
+    # mrb_Texture2D_generate_mipmaps
+    # src/mruby_integration/textures.cpp
+    nil
+  end
 end

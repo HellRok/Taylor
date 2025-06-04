@@ -33,12 +33,3 @@ def fade(colour)
   # src/mruby_integration/textures.cpp
   Colour.new
 end
-
-# Generates mipmaps for the {Texture2D}.
-# @param texture [Texture2D]
-# @return [nil]
-def generate_texture_mipmaps(texture)
-  # mrb_gen_texture_mipmaps
-  # src/mruby_integration/textures.cpp
-  nil
-end

@@ -35,12 +35,6 @@ class Texture2D
     )
   end
 
-  # Generates mipmaps for the {Texture2D}.
-  # @return [Integer]
-  def generate_mipmaps
-    generate_texture_mipmaps(self)
-  end
-
   # A method used to generate the mock data for Raylib.
   #
   # @example Basic usage
