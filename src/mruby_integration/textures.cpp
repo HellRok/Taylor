@@ -10,17 +10,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_unload_texture(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Texture2D* texture;
-  mrb_get_args(mrb, "d", &texture, &Texture2D_type);
-
-  UnloadTexture(*texture);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_set_texture_filter(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Texture2D* texture;
@@ -115,11 +104,6 @@ mrb_fade(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_textures(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "unload_texture",
-                    mrb_unload_texture,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "set_texture_filter",

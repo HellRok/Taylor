@@ -15,12 +15,6 @@ class Texture2D
     }
   end
 
-  # Unloads the texture from memory.
-  # @return [nil]
-  def unload
-    unload_texture(self)
-  end
-
   # Draws the texture segment defined by source at the given destination,
   # rotated around the origin in the specified colour.
   # @param source [Rectangle] If not defined it defaults to the full image.

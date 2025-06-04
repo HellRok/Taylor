@@ -1,12 +1,3 @@
-# Unloads a texture.
-# @param texture [Texture2D]
-# @return [nil]
-def unload_texture(texture)
-  # mrb_unload_texture
-  # src/mruby_integration/textures.cpp
-  nil
-end
-
 # Draws a texture, the colour will apply a tint and alpha levels.
 # @param texture [Texture2D]
 # @param x [Integer]

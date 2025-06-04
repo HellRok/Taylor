@@ -61,6 +61,19 @@ mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
+auto
+mrb_Texture2D_unload(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Texture2D* texture;
+
+  Data_Get_Struct(mrb, self, &Texture2D_type, texture);
+  mrb_assert(texture != nullptr);
+
+  UnloadTexture(*texture);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Texture2D(mrb_state* mrb)
 {
@@ -71,6 +84,8 @@ append_models_Texture2D(mrb_state* mrb)
                     "initialize",
                     mrb_Texture2D_initialize,
                     MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Texture2D_class, "unload", mrb_Texture2D_unload, MRB_ARGS_NONE());
 
   load_ruby_models_texture2d(mrb);
 }
