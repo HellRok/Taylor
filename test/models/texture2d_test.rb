@@ -112,11 +112,45 @@ class Test
         texture = Texture2D.new("./assets/test.png")
         Taylor::Raylib.reset_calls
 
-        texture.filter = 8
+        texture.filter = Texture2D::BILINEAR
 
         assert_called [
-          "(SetTextureFilter) { texture: { id: 3 width: 4 height: 5 mipmaps: 6 format: 7 } filter: 8 }"
+          "(SetTextureFilter) { texture: { id: 3 width: 4 height: 5 mipmaps: 6 format: 7 } filter: 1 }"
         ]
+      end
+
+      def test_filter_equal_too_low
+        texture = Texture2D.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(
+          ArgumentError,
+          "Filter must be one of: Texture2D::NO_FILTER, " \
+            "Texture2D::BILINEAR, Texture2D::TRILINEAR, " \
+            "Texture2D::ANISOTROPIC_4X, Texture2D::ANISOTROPIC_8X, " \
+            "or Texture2D::ANISOTROPIC_16X"
+        ) {
+          texture.filter = -1
+        }
+
+        assert_no_calls
+      end
+
+      def test_filter_equal_too_high
+        texture = Texture2D.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(
+          ArgumentError,
+          "Filter must be one of: Texture2D::NO_FILTER, " \
+            "Texture2D::BILINEAR, Texture2D::TRILINEAR, " \
+            "Texture2D::ANISOTROPIC_4X, Texture2D::ANISOTROPIC_8X, " \
+            "or Texture2D::ANISOTROPIC_16X"
+        ) {
+          texture.filter = 6
+        }
+
+        assert_no_calls
       end
 
       def test_generate_mipmaps

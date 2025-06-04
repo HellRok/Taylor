@@ -10,19 +10,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_set_texture_filter(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Texture2D* texture;
-  mrb_int filter;
-
-  mrb_get_args(mrb, "di", &texture, &Texture2D_type, &filter);
-
-  SetTextureFilter(*texture, filter);
-
-  return mrb_nil_value();
-}
-
-auto
 mrb_gen_texture_mipmaps(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Texture2D* texture;
@@ -104,11 +91,6 @@ mrb_fade(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_textures(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "set_texture_filter",
-                    mrb_set_texture_filter,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "generate_texture_mipmaps",

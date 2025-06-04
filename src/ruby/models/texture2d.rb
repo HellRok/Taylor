@@ -35,13 +35,6 @@ class Texture2D
     )
   end
 
-  # Sets the filtering for the {Texture2D}.
-  # @param val [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X} or {TEXTURE_FILTER_ANISOTROPIC_16X}.
-  # @return [Integer]
-  def filter=(val)
-    set_texture_filter(self, val)
-  end
-
   # Generates mipmaps for the {Texture2D}.
   # @return [Integer]
   def generate_mipmaps
@@ -68,21 +61,21 @@ class Texture2D
 
   # Used for alerting the user if the texture was not found at the specified path.
   class NotFoundError < StandardError; end
+
+  # @!group Texture filters
+
+  # No filter, just pixel approximation.
+  NO_FILTER = 0
+  # Linear filtering.
+  BILINEAR = 1
+  # Trilinear filtering (linear with mipmaps).
+  TRILINEAR = 2
+  # Anisotropic filtering 4x.
+  ANISOTROPIC_4X = 3
+  # Anisotropic filtering 8x.
+  ANISOTROPIC_8X = 4
+  # Anisotropic filtering 16x.
+  ANISOTROPIC_16X = 5
+
+  # @!endgroup
 end
-
-# @!group Texture filters
-
-# No filter, just pixel approximation.
-TEXTURE_FILTER_POINT = 0
-# Linear filtering.
-TEXTURE_FILTER_BILINEAR = 1
-# Trilinear filtering (linear with mipmaps).
-TEXTURE_FILTER_TRILINEAR = 2
-# Anisotropic filtering 4x.
-TEXTURE_FILTER_ANISOTROPIC_4X = 3
-# Anisotropic filtering 8x.
-TEXTURE_FILTER_ANISOTROPIC_8X = 4
-# Anisotropic filtering 16x.
-TEXTURE_FILTER_ANISOTROPIC_16X = 5
-
-# @!endgroup

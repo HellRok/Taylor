@@ -48,15 +48,19 @@ class Font
   # Sets the filtering and generates mipmaps for the {Texture2D} used behind the {Font}.
   #
   # For pixel art fonts you'll want to leave it as default
-  # {TEXTURE_FILTER_POINT}, but otherwise you'll want to set it to something
+  # {Texture2D::NO_FILTER}, but otherwise you'll want to set it to something
   # nicer.
   #
   # @example Setting the filtering of a texture to anisotropic
   #   font = Font.new("./assets/windings.ttf")
-  #   font.filter = TEXTURE_FILTER_ANISOTROPIC_16X
+  #   font.filter = Texture2D::ANISOTROPIC_16X
   #
-  # @param val [Integer] What sort of filtering to apply, valid options are: {TEXTURE_FILTER_POINT}, {TEXTURE_FILTER_BILINEAR}, {TEXTURE_FILTER_TRILINEAR}, {TEXTURE_FILTER_ANISOTROPIC_4X}, {TEXTURE_FILTER_ANISOTROPIC_8X} or {TEXTURE_FILTER_ANISOTROPIC_16X}
+  # @param val [Integer] What sort of filtering to apply, valid options are:
+  #   {Texture2D::NO_FILTER}, {Texture2D::BILINEAR}, {Texture2D::TRILINEAR},
+  #   {Texture2D::ANISOTROPIC_4X}, {Texture2D::ANISOTROPIC_8X}, or
+  #   {Texture2D::ANISOTROPIC_16X}.
   # @return [Integer]
+  # @raise [ArgumentError]
   def filter=(val)
     texture.generate_mipmaps
     texture.filter = val

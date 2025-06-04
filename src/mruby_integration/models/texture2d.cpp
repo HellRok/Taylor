@@ -65,11 +65,34 @@ auto
 mrb_Texture2D_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Texture2D* texture;
-
   Data_Get_Struct(mrb, self, &Texture2D_type, texture);
   mrb_assert(texture != nullptr);
 
   UnloadTexture(*texture);
+
+  return mrb_nil_value();
+}
+
+auto
+mrb_Texture2D_filter_equals(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_int filter;
+  mrb_get_args(mrb, "i", &filter);
+
+  if (filter < 0 || filter > 5) {
+    mrb_raise(mrb,
+              E_ARGUMENT_ERROR,
+              "Filter must be one of: Texture2D::NO_FILTER, "
+              "Texture2D::BILINEAR, Texture2D::TRILINEAR, "
+              "Texture2D::ANISOTROPIC_4X, Texture2D::ANISOTROPIC_8X, "
+              "or Texture2D::ANISOTROPIC_16X");
+  }
+
+  Texture2D* texture;
+  Data_Get_Struct(mrb, self, &Texture2D_type, texture);
+  mrb_assert(texture != nullptr);
+
+  SetTextureFilter(*texture, filter);
 
   return mrb_nil_value();
 }
@@ -86,6 +109,11 @@ append_models_Texture2D(mrb_state* mrb)
                     MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Texture2D_class, "unload", mrb_Texture2D_unload, MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    Texture2D_class,
+                    "filter=",
+                    mrb_Texture2D_filter_equals,
+                    MRB_ARGS_REQ(1));
 
   load_ruby_models_texture2d(mrb);
 }
