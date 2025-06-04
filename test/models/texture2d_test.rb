@@ -2,7 +2,12 @@ class Test
   class Models
     class Texture2D_Test < Test::Base
       def test_initialize
-        texture = Texture2D.new(1, 2, 3, 4, 5)
+        Taylor::Raylib.mock_call(
+          "LoadTexture",
+          Texture2D.mock_return(id: 1, width: 2, height: 3, mipmaps: 4, format: 5)
+        )
+
+        texture = Texture2D.new("./assets/test.png")
 
         assert_kind_of Texture2D, texture
         assert_equal 1, texture.id
@@ -10,59 +15,57 @@ class Test
         assert_equal 3, texture.height
         assert_equal 4, texture.mipmaps
         assert_equal 5, texture.format
-      end
-
-      def test_assignment
-        texture = Texture2D.new(0, 0, 0, 0, 0)
-        texture.id = 5
-        texture.width = 4
-        texture.height = 3
-        texture.mipmaps = 2
-        texture.format = 1
-
-        assert_equal 5, texture.id
-        assert_equal 4, texture.width
-        assert_equal 3, texture.height
-        assert_equal 2, texture.mipmaps
-        assert_equal 1, texture.format
-      end
-
-      def test_to_h
-        texture = Texture2D.new(1, 2, 3, 4, 5)
-
-        assert_equal(
-          {
-            id: 1,
-            width: 2,
-            height: 3,
-            mipmaps: 4,
-            format: 5
-          },
-          texture.to_h
-        )
-      end
-
-      def test_load
-        Texture2D.load("./assets/test.png")
 
         assert_called [
+          "(FileExists) { fileName: './assets/test.png' }",
           "(LoadTexture) { fileName: './assets/test.png' }"
+        ]
+      end
+
+      def test_initialize_fail
+        Taylor::Raylib.mock_call("FileExists", "false")
+
+        assert_raise_with_message(Texture2D::NotFoundError, "Unable to find './assets/fail.png'") {
+          Texture2D.new("./assets/fail.png")
+        }
+
+        assert_called [
+          "(FileExists) { fileName: './assets/fail.png' }"
         ]
       end
 
       def test_unload
         Taylor::Raylib.mock_call(
           "LoadTexture",
-          Texture2D.mock_return(id: 1, width: 2, height: 3, mipmaps: 4, format: 5)
+          Texture2D.mock_return(id: 2, width: 3, height: 4, mipmaps: 5, format: 6)
         )
-        texture = Texture2D.load("./assets/test.png")
+        texture = Texture2D.new("./assets/test.png")
         Taylor::Raylib.reset_calls
 
         texture.unload
 
         assert_called [
-          "(UnloadTexture) { texture: { id: 1 width: 2 height: 3 mipmaps: 4 format: 5 } }"
+          "(UnloadTexture) { texture: { id: 2 width: 3 height: 4 mipmaps: 5 format: 6 } }"
         ]
+      end
+
+      def test_to_h
+        Taylor::Raylib.mock_call(
+          "LoadTexture",
+          Texture2D.mock_return(id: 3, width: 4, height: 5, mipmaps: 6, format: 7)
+        )
+        texture = Texture2D.new("./assets/test.png")
+
+        assert_equal(
+          {
+            id: 3,
+            width: 4,
+            height: 5,
+            mipmaps: 6,
+            format: 7
+          },
+          texture.to_h
+        )
       end
 
       def test_draw
@@ -70,7 +73,7 @@ class Test
           "LoadTexture",
           Texture2D.mock_return(id: 2, width: 3, height: 4, mipmaps: 5, format: 6)
         )
-        texture = Texture2D.load("./assets/test.png")
+        texture = Texture2D.new("./assets/test.png")
         Taylor::Raylib.reset_calls
 
         texture.draw(
@@ -91,7 +94,7 @@ class Test
           "LoadTexture",
           Texture2D.mock_return(id: 5, width: 6, height: 7, mipmaps: 8, format: 9)
         )
-        texture = Texture2D.load("./assets/test.png")
+        texture = Texture2D.new("./assets/test.png")
         Taylor::Raylib.reset_calls
 
         texture.draw
@@ -106,7 +109,7 @@ class Test
           "LoadTexture",
           Texture2D.mock_return(id: 3, width: 4, height: 5, mipmaps: 6, format: 7)
         )
-        texture = Texture2D.load("./assets/test.png")
+        texture = Texture2D.new("./assets/test.png")
         Taylor::Raylib.reset_calls
 
         texture.filter = 8
@@ -121,7 +124,7 @@ class Test
           "LoadTexture",
           Texture2D.mock_return(id: 4, width: 5, height: 6, mipmaps: 7, format: 8)
         )
-        texture = Texture2D.load("./assets/test.png")
+        texture = Texture2D.new("./assets/test.png")
         Taylor::Raylib.reset_calls
 
         texture.generate_mipmaps

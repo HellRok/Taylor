@@ -10,30 +10,6 @@
 #include "mruby_integration/struct_types.hpp"
 
 auto
-mrb_load_texture(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  char* path;
-  mrb_get_args(mrb, "z", &path);
-
-  auto* texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
-  *texture = LoadTexture(path);
-
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
-
-  setup_Texture2D(mrb,
-                  obj,
-                  texture,
-                  texture->id,
-                  texture->width,
-                  texture->height,
-                  texture->mipmaps,
-                  texture->format);
-
-  return obj;
-}
-
-auto
 mrb_unload_texture(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Texture2D* texture;
@@ -139,8 +115,6 @@ mrb_fade(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_textures(mrb_state* mrb)
 {
-  mrb_define_method(
-    mrb, mrb->kernel_module, "load_texture", mrb_load_texture, MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "unload_texture",

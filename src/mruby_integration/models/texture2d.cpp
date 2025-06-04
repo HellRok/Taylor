@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include <cstdlib>
 
+#include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"
 
@@ -31,50 +32,33 @@ setup_Texture2D(mrb_state* mrb,
 auto
 mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  mrb_int id, width, height, mipmaps, format;
-  mrb_get_args(mrb, "iiiii", &id, &width, &height, &mipmaps, &format);
+  char* path;
+  mrb_get_args(mrb, "z", &path);
 
-  Texture2D* texture = static_cast<Texture2D*> DATA_PTR(self);
+  if (!FileExists(path)) {
+    raise_not_found_error(mrb, Texture2D_class, path);
+  }
+
+  auto* texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
   if (texture) {
     mrb_free(mrb, texture);
   }
   mrb_data_init(self, nullptr, &Texture2D_type);
   texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
 
-  setup_Texture2D(mrb, self, texture, id, width, height, mipmaps, format);
+  *texture = LoadTexture(path);
+
+  setup_Texture2D(mrb,
+                  self,
+                  texture,
+                  texture->id,
+                  texture->width,
+                  texture->height,
+                  texture->mipmaps,
+                  texture->format);
 
   mrb_data_init(self, texture, &Texture2D_type);
   return self;
-}
-
-auto
-mrb_Texture2D_set_id(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, id, id);
-}
-
-auto
-mrb_Texture2D_set_width(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, width, width);
-}
-
-auto
-mrb_Texture2D_set_height(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, height, height);
-}
-
-auto
-mrb_Texture2D_set_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, mipmaps, mipmaps);
-}
-
-auto
-mrb_Texture2D_set_format(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Texture2D_type, Texture2D, format, format);
 }
 
 void
@@ -86,20 +70,7 @@ append_models_Texture2D(mrb_state* mrb)
                     Texture2D_class,
                     "initialize",
                     mrb_Texture2D_initialize,
-                    MRB_ARGS_REQ(5));
-  mrb_define_method(
-    mrb, Texture2D_class, "id=", mrb_Texture2D_set_id, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Texture2D_class, "width=", mrb_Texture2D_set_width, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Texture2D_class, "height=", mrb_Texture2D_set_height, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    Texture2D_class,
-                    "mipmaps=",
-                    mrb_Texture2D_set_mipmaps,
                     MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Texture2D_class, "format=", mrb_Texture2D_set_format, MRB_ARGS_REQ(1));
 
   load_ruby_models_texture2d(mrb);
 }

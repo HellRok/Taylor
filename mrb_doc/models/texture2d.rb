@@ -1,44 +1,16 @@
 class Texture2D
-  # Creates a new instance of {Texture2D}.
-  # @param id [Integer]
-  # @param width [Integer]
-  # @param height [Integer]
-  # @param mipmaps [Integer]
-  # @param format [Integer]
+  # Loads an image file from the disk. If the file does not exist, it will
+  # raise a {Texture2D::NotFoundError} error.
+  #
+  # @example Basic usage
+  #   texture = Texture2D.new("/assets/my_cool_sprite.png")
+  #
+  # @param path [String]
   # @return [Texture2D]
-  def initialize(id, width, height, mipmaps, format)
+  # @raise [Texture2D::NotFoundError]
+  def initialize(path)
     # mrb_Texture2D_initialize
     # src/mruby_integration/models/texture2d.cpp
     Texture2D.new
-  end
-
-  def id=(id)
-    # mrb_Texture2D_set_id
-    # src/mruby_integration/models/texture2d.cpp
-    0
-  end
-
-  def width=(width)
-    # mrb_Texture2D_set_width
-    # src/mruby_integration/models/texture2d.cpp
-    10
-  end
-
-  def height=(height)
-    # mrb_Texture2D_set_height
-    # src/mruby_integration/models/texture2d.cpp
-    10
-  end
-
-  def mipmaps=(mipmaps)
-    # mrb_Texture2D_set_mipmaps
-    # src/mruby_integration/models/texture2d.cpp
-    1
-  end
-
-  def format=(format)
-    # mrb_Texture2D_set_format
-    # src/mruby_integration/models/texture2d.cpp
-    1
   end
 end

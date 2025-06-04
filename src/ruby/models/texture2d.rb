@@ -15,15 +15,6 @@ class Texture2D
     }
   end
 
-  # Loads a texture from the specified path.
-  # @param path [String]
-  # @raise [Texture2D::NotFoundError] If the file specified by path doesn't exist.
-  # @return [Texture2D]
-  def self.load(path)
-    raise Texture2D::NotFoundError.new("Could not find file at path \"#{path}\"") unless File.exist?(path)
-    load_texture(path)
-  end
-
   # Unloads the texture from memory.
   # @return [nil]
   def unload

@@ -246,6 +246,13 @@
 - Added Taylor::Platform==
 - Added Touch.position_for, Touch[], and Touch.positions
 - Removed get_touch_position
+- Texture2D.new now only takes a path
+- Removed Texture2D.load
+- Removed Texture2D#id=
+- Removed Texture2D#width=
+- Removed Texture2D#height=
+- Removed Texture2D#mipmaps=
+- Removed Texture2D#format=
 
 ## v0.3.14.1
 

@@ -1,12 +1,3 @@
-# Loads a texture from a file.
-# @param path [String]
-# @return [Texture2D]
-def load_texture(path)
-  # mrb_load_texture
-  # src/mruby_integration/textures.cpp
-  Texture2D.new
-end
-
 # Unloads a texture.
 # @param texture [Texture2D]
 # @return [nil]
