@@ -7,6 +7,10 @@
 </h1>
 <h4 align="center">Made for Games</h4>
 
+> [!CAUTION]
+> Taylor is currently going through a major refactor, see
+> https://github.com/HellRok/Taylor/issues/35 for the current progress.
+
 ![GitHub Release](https://img.shields.io/github/v/release/HellRok/Taylor)
 [![Build status](https://badge.buildkite.com/0cb81ca8e3b8f43a2998bc15f90323a2eb8429669e819b7697.svg)](https://buildkite.com/oequacki/taylor)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/HellRok/Taylor/total?label=total%20downloads)
