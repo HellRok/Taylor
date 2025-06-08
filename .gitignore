@@ -10,9 +10,14 @@ include/raylib.h
 
 vendor/bundle
 
+doc
+.yardoc
+
 cli-tool/exports
 cli-tool/test-analytics.json
 test/exports
 test/test-analytics.json
 
 gem/*.gem
+
+.DS_Store
