@@ -8,6 +8,9 @@ steps:
 
   - label: 'CPP Checks'
     commands:
+      - gem install bundler
+      - bundle install
+      - bundle exec rake setup_ephemeral_files
       - bin/test-formatting-cpp
       - bin/test-linting-cpp
 

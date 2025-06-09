@@ -3,15 +3,12 @@ set -u
 
 source bin/lib/helpers.sh
 
-CPP_FILES=${@:-$(git ls-files --no-deleted *.cpp)}
-HPP_FILES=${@:-$(git ls-files --no-deleted *.hpp)}
+XPP_FILES=${@:-$(git ls-files --no-deleted *.{cpp,hpp})}
 
 function lint_fix() {
-  FILES=$@
-  # xargs isn't playing nice and I'm not invested enough to solve that
   clang-tidy \
     --fix-errors \
-    ${FILES} \
+    ${XPP_FILES} \
     -- -std=c++17 \
     -I ./include/ \
     -I ./vendor/ \
@@ -19,10 +16,6 @@ function lint_fix() {
     -I ./vendor/mruby/
   }
 
-log "Linting CPP files"
-job_output=$(lint_fix ${CPP_FILES} 2>&1)
-barf_if_failed $?
-
-log "Linting HPP files"
-job_output=$(lint_fix ${HPP_FILES} 2>&1)
+log "Linting CPP and HPP files"
+job_output=$(lint_fix 2>&1)
 barf_if_failed $?
