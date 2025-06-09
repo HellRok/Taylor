@@ -59,6 +59,21 @@ mrb_Monitor_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
+auto
+mrb_Monitor_current(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor.current");
+  auto* monitor = static_cast<Monitor*>(malloc(sizeof(Monitor)));
+  *monitor = Monitor{ GetCurrentMonitor() };
+
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Monitor_class, &Monitor_type, monitor));
+
+  setup_Monitor(mrb, obj, monitor, monitor->id);
+
+  return obj;
+}
+
 void
 append_models_Monitor(mrb_state* mrb)
 {
@@ -67,6 +82,8 @@ append_models_Monitor(mrb_state* mrb)
 
   mrb_define_class_method(
     mrb, Monitor_class, "count", mrb_Monitor_count, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Monitor_class, "current", mrb_Monitor_current, MRB_ARGS_NONE());
 
   mrb_define_method(
     mrb, Monitor_class, "initialize", mrb_Monitor_initialize, MRB_ARGS_REQ(1));

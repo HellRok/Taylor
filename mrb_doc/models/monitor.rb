@@ -19,6 +19,26 @@ class Monitor
     2
   end
 
+  # Returns the {Monitor} that the {Window} is currently on.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Monitor.current
+  #   # => 0
+  #
+  # @return [Monitor]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.current
+    # mrb_Monitor_current
+    # src/mruby_integration/models/monitor.cpp
+    Monitor[0]
+  end
+
   # Do not use this method directly, instead use {Monitor.[]}
   #
   # @params id [Integer]
@@ -26,6 +46,6 @@ class Monitor
   def initialize(id:)
     # mrb_Monitor_count
     # src/mruby_integration/models/monitor.cpp
-    2
+    Monitor[0]
   end
 end

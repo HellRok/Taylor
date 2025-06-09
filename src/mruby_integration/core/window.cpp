@@ -16,12 +16,6 @@ mrb_set_window_monitor(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_get_current_monitor(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  return mrb_int_value(mrb, GetCurrentMonitor());
-}
-
-auto
 mrb_get_monitor_position(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int monitor;
@@ -87,11 +81,6 @@ append_core_window(mrb_state* mrb)
                     "set_window_monitor",
                     mrb_set_window_monitor,
                     MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_current_monitor",
-                    mrb_get_current_monitor,
-                    MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "get_monitor_position",

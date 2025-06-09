@@ -113,6 +113,32 @@ class Test
           "(IsWindowReady) { }"
         ]
       end
+
+      def test_current
+        Taylor::Raylib.mock_call("GetCurrentMonitor", "3")
+
+        monitor = Monitor.current
+
+        assert_kind_of Monitor, monitor
+        assert_equal 3, monitor.id
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(GetCurrentMonitor) { }"
+        ]
+      end
+
+      def test_current_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Monitor.current") {
+          Monitor.current
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
     end
   end
 end

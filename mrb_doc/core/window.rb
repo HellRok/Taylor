@@ -7,14 +7,6 @@ def set_window_monitor(monitor)
   nil
 end
 
-# Gets the id of the current monitor.
-# @return [Integer]
-def get_current_monitor
-  # mrb_get_current_monitor
-  # src/mruby_integration/core/window.cpp
-  0
-end
-
 # Gets the position of the specified monitor.
 # @param monitor [Integer]
 # @return [Vector2]
