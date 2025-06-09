@@ -7,14 +7,6 @@ def set_window_monitor(monitor)
   nil
 end
 
-# Gets the total number of monitors the user has.
-# @return [Integer]
-def get_monitor_count
-  # mrb_get_monitor_count
-  # src/mruby_integration/core/window.cpp
-  2
-end
-
 # Gets the id of the current monitor.
 # @return [Integer]
 def get_current_monitor

@@ -265,6 +265,8 @@
 - Bump Ruby and gems
 - Texture2D#draw is now C++ backed
 - Removed draw_texture and draw_texture_pro
+- Added Monitor.count
+- Removed get_monitor_count
 
 ## v0.3.14.1
 

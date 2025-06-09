@@ -5,18 +5,14 @@
 #include "raylib.h"
 
 #include "mruby_integration/exceptions.hpp"
+#include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
+
 #include "ruby/models/window.hpp"
 
 struct RClass* Window_class;
-
-#define EXIT_UNLESS_WINDOW_READY(message)                                      \
-  if (!IsWindowReady()) {                                                      \
-    raise_error(mrb, Window_class, "NotReadyError", message);                  \
-    return mrb_nil_value();                                                    \
-  }
 
 auto
 mrb_Window_open(mrb_state* mrb, mrb_value) -> mrb_value
