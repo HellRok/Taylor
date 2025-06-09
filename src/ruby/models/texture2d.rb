@@ -15,26 +15,6 @@ class Texture2D
     }
   end
 
-  # Draws the texture segment defined by source at the given destination,
-  # rotated around the origin in the specified colour.
-  # @param source [Rectangle] If not defined it defaults to the full image.
-  # @param destination [Rectangle] If not defined it defaults to source.
-  # @param origin [Vector2]
-  # @param rotation [Integer] In degrees.
-  # @param colour [Colour]
-  # @return [nil]
-  def draw(source: Rectangle[0, 0, width, height], destination: nil, origin: Vector2::ZERO, rotation: 0, colour: Colour::WHITE)
-    destination ||= source
-    draw_texture_pro(
-      self,
-      source,
-      destination,
-      origin,
-      rotation,
-      colour
-    )
-  end
-
   # A method used to generate the mock data for Raylib.
   #
   # @example Basic usage

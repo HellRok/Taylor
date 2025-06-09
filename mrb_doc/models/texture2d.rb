@@ -60,7 +60,56 @@ class Texture2D
   # @return [nil]
   def generate_mipmaps
     # mrb_Texture2D_generate_mipmaps
-    # src/mruby_integration/textures.cpp
+    # src/mruby_integration/models/texture2d.cpp
+    nil
+  end
+
+  # Draws the {Texture2D} segment defined by source at the given destination,
+  # rotated around the origin in the specified colour.
+  #
+  # @example Basic usage
+  #   texture = Texture2D.new("/assets/my_cool_sprite.png")
+  #
+  #   # Just draw the whole texture
+  #   texture.draw(position: Vector2[100, 120])
+  #
+  #   # Rotate the texture 90 degrees when drawn
+  #   texture.draw(position: Vector2[100, 120], rotation: 90)
+  #
+  #   # Draw with half opacity
+  #   texture.draw(position: Vector2[100, 120], colour: Colour[255, 255, 255, 128])
+  #
+  #   # Stretch as you draw it
+  #   texture.draw(
+  #     source: Rectangle[0, 0, 16, 16],
+  #     destination: Rectangle[100, 120, 64, 32],
+  #   )
+  #
+  # @example Basic sprite sheet usage
+  #   sheet = Texture2D.new("/assets/my_cool_sprite_sheet.png")
+  #   player = Rectangle[0, 0, 16, 16]
+  #   grass = Rectangle[16, 0, 16, 16]
+  #
+  #   10.times do |y|
+  #     10.times do |x|
+  #       sheet.draw(source: grass, position: Vector[x * 16, y * 16])
+  #     end
+  #   end
+  #
+  #   sheet.draw(source: player, position: Vector2[32, 32])
+  #
+  #
+  # @param source [Rectangle] If not defined it defaults to the full image
+  # @param position [Vector2] If not defined it defaults to source x and y
+  # @param destination [Rectangle] If not defined it defaults to position x and y with source width and height
+  # @param origin [Vector2] Defaults to the middle of the `destination`
+  # @param rotation [Integer] In degrees
+  # @param colour [Colour]
+  # @return [nil]
+  # @raise [ArgumentError] if both `position` and `destination` are passed in
+  def draw(source: Rectangle[0, 0, width, height], position: nil, destination: nil, origin: Vector2[destination.width / 2.0, destination.height / 2.0], rotation: 0, colour: Colour::WHITE)
+    # mrb_Texture2D_draw
+    # src/mruby_integration/models/texture2d.cpp
     nil
   end
 end

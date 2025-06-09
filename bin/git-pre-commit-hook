@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -u
+set -euo pipefail
 
 source bin/lib/helpers.sh
 
@@ -10,11 +10,11 @@ log "Checking documentation"
 job_output=$(bin/test-documentation)
 barf_if_failed $?
 
-if [[ $RUBY_FILES ]]; then
+if [[ -n $RUBY_FILES ]]; then
   bin/test-formatting-ruby ${RUBY_FILES}
 fi
 
-if [[ $XPP_FILES ]]; then
+if [[ -n $XPP_FILES ]]; then
   bin/test-formatting-cpp ${XPP_FILES}
   bin/test-linting-cpp ${XPP_FILES}
 fi

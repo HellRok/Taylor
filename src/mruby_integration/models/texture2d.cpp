@@ -109,6 +109,88 @@ mrb_Texture2D_generate_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  Texture2D* texture;
+  Data_Get_Struct(mrb, self, &Texture2D_type, texture);
+  mrb_assert(texture != nullptr);
+
+  // def draw(source: Rectangle[0, 0, width, height], position: nil,
+  // destination: nil, origin: Vector2[width / 2.0, height / 2.0], rotation: 0,
+  // colour: Colour::WHITE)
+
+  mrb_int kw_num = 6;
+  mrb_int kw_required = 0;
+  mrb_sym kw_names[] = {
+    mrb_intern_lit(mrb, "source"),      mrb_intern_lit(mrb, "position"),
+    mrb_intern_lit(mrb, "destination"), mrb_intern_lit(mrb, "origin"),
+    mrb_intern_lit(mrb, "rotation"),    mrb_intern_lit(mrb, "colour")
+  };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  if (!mrb_undef_p(kw_values[1]) && !mrb_undef_p(kw_values[2])) {
+    mrb_raise(
+      mrb, E_ARGUMENT_ERROR, "Can't specify both position and destination");
+  }
+
+  Rectangle* source;
+  if (mrb_undef_p(kw_values[0])) {
+    auto default_rectangle = Rectangle{ 0,
+                                        0,
+                                        static_cast<float>(texture->width),
+                                        static_cast<float>(texture->height) };
+    source = &default_rectangle;
+  } else {
+    source = static_cast<struct Rectangle*> DATA_PTR(kw_values[0]);
+  }
+
+  Vector2* position;
+  if (mrb_undef_p(kw_values[1])) {
+    auto default_position = Vector2{ source->x, source->y };
+    position = &default_position;
+  } else {
+    position = static_cast<struct Vector2*> DATA_PTR(kw_values[1]);
+  }
+
+  Rectangle* destination;
+  if (mrb_undef_p(kw_values[2])) {
+    auto default_destination =
+      Rectangle{ position->x, position->y, source->width, source->height };
+    destination = &default_destination;
+  } else {
+    destination = static_cast<struct Rectangle*> DATA_PTR(kw_values[2]);
+  }
+
+  Vector2* origin;
+  if (mrb_undef_p(kw_values[3])) {
+    auto default_origin =
+      Vector2{ (destination->width / 2.0f), (destination->height / 2.0f) };
+    origin = &default_origin;
+  } else {
+    origin = static_cast<struct Vector2*> DATA_PTR(kw_values[3]);
+  }
+
+  float rotation = 0;
+  if (!mrb_undef_p(kw_values[4])) {
+    rotation = mrb_as_int(mrb, kw_values[4]);
+  }
+
+  Color* colour;
+  if (mrb_undef_p(kw_values[5])) {
+    auto default_colour = Color{ 255, 255, 255, 255 };
+    colour = &default_colour;
+  } else {
+    colour = static_cast<struct Color*> DATA_PTR(kw_values[5]);
+  }
+
+  DrawTexturePro(*texture, *source, *destination, *origin, rotation, *colour);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Texture2D(mrb_state* mrb)
 {
@@ -131,6 +213,8 @@ append_models_Texture2D(mrb_state* mrb)
                     "generate_mipmaps",
                     mrb_Texture2D_generate_mipmaps,
                     MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Texture2D_class, "draw", mrb_Texture2D_draw, MRB_ARGS_REQ(1));
 
   load_ruby_models_texture2d(mrb);
 }

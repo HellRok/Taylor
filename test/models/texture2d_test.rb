@@ -68,42 +68,6 @@ class Test
         )
       end
 
-      def test_draw
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 2, width: 3, height: 4, mipmaps: 5, format: 6)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
-
-        texture.draw(
-          source: Rectangle[7, 8, 9, 10],
-          destination: Rectangle[11, 12, 13, 14],
-          origin: Vector2[15, 16],
-          rotation: 17,
-          colour: Colour[18, 19, 20, 21]
-        )
-
-        assert_called [
-          "(DrawTexturePro) { texture: { id: 2 width: 3 height: 4 mipmaps: 5 format: 6 } source: { x: 7.000000 y: 8.000000 width: 9.000000 height: 10.000000 } dest: { x: 11.000000 y: 12.000000 width: 13.000000 height: 14.000000 } origin: { x: 15.000000 y: 16.000000 } rotation: 17.000000 tint: { r: 18 g: 19 b: 20 a: 21 } }"
-        ]
-      end
-
-      def test_draw_defaults
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 5, width: 6, height: 7, mipmaps: 8, format: 9)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
-
-        texture.draw
-
-        assert_called [
-          "(DrawTexturePro) { texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } dest: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } origin: { x: 0.000000 y: 0.000000 } rotation: 0.000000 tint: { r: 255 g: 255 b: 255 a: 255 } }"
-        ]
-      end
-
       def test_filter=
         Taylor::Raylib.mock_call(
           "LoadTexture",
@@ -168,18 +132,118 @@ class Test
         ]
       end
 
-      def test_fade!
+      def test_draw
         Taylor::Raylib.mock_call(
           "LoadTexture",
-          Texture2D.mock_return(id: 4, width: 5, height: 6, mipmaps: 7, format: 8)
+          Texture2D.mock_return(id: 5, width: 6, height: 7, mipmaps: 8, format: 9)
         )
         texture = Texture2D.new("./assets/test.png")
         Taylor::Raylib.reset_calls
 
-        texture.generate_mipmaps
+        texture.draw
 
         assert_called [
-          "(GenTextureMipmaps) { texture: { id: 4 width: 5 height: 6 mipmaps: 7 format: 8 } }"
+          "(DrawTexturePro) { " \
+            "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
+            "source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
+            "dest: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
+            "origin: { x: 3.000000 y: 3.500000 } " \
+            "rotation: 0.000000 " \
+            "tint: { r: 255 g: 255 b: 255 a: 255 } " \
+          "}"
+        ]
+      end
+
+      def test_draw_with_args
+        Taylor::Raylib.mock_call(
+          "LoadTexture",
+          Texture2D.mock_return(id: 6, width: 7, height: 8, mipmaps: 9, format: 10)
+        )
+        texture = Texture2D.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        texture.draw(
+          source: Rectangle[11, 12, 13, 14],
+          destination: Rectangle[15, 16, 17, 18],
+          origin: Vector2[19, 20],
+          rotation: 21,
+          colour: Colour[22, 23, 24, 25]
+        )
+
+        assert_called [
+          "(DrawTexturePro) { " \
+            "texture: { id: 6 width: 7 height: 8 mipmaps: 9 format: 10 } " \
+            "source: { x: 11.000000 y: 12.000000 width: 13.000000 height: 14.000000 } " \
+            "dest: { x: 15.000000 y: 16.000000 width: 17.000000 height: 18.000000 } " \
+            "origin: { x: 19.000000 y: 20.000000 } " \
+            "rotation: 21.000000 " \
+            "tint: { r: 22 g: 23 b: 24 a: 25 } " \
+          "}"
+        ]
+      end
+
+      def test_draw_with_position
+        Taylor::Raylib.mock_call(
+          "LoadTexture",
+          Texture2D.mock_return(id: 7, width: 8, height: 9, mipmaps: 10, format: 11)
+        )
+        texture = Texture2D.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        texture.draw(position: Vector2[1, 2])
+
+        assert_called [
+          "(DrawTexturePro) { " \
+            "texture: { id: 7 width: 8 height: 9 mipmaps: 10 format: 11 } " \
+            "source: { x: 0.000000 y: 0.000000 width: 8.000000 height: 9.000000 } " \
+            "dest: { x: 1.000000 y: 2.000000 width: 8.000000 height: 9.000000 } " \
+            "origin: { x: 4.000000 y: 4.500000 } " \
+            "rotation: 0.000000 " \
+            "tint: { r: 255 g: 255 b: 255 a: 255 } " \
+          "}"
+        ]
+      end
+
+      def test_draw_with_position_and_destination
+        Taylor::Raylib.mock_call(
+          "LoadTexture",
+          Texture2D.mock_return(id: 8, width: 9, height: 10, mipmaps: 11, format: 12)
+        )
+        texture = Texture2D.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(ArgumentError, "Can't specify both position and destination") {
+          texture.draw(
+            position: Vector2[2, 3],
+            destination: Rectangle[4, 5, 6, 7]
+          )
+        }
+
+        assert_no_calls
+      end
+
+      def test_draw_with_source_but_no_destination
+        Taylor::Raylib.mock_call(
+          "LoadTexture",
+          Texture2D.mock_return(id: 8, width: 9, height: 10, mipmaps: 11, format: 12)
+        )
+        texture = Texture2D.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        texture.draw(
+          source: Rectangle[1, 2, 3, 4]
+        )
+
+        # it uses source to populate destination
+        assert_called [
+          "(DrawTexturePro) { " \
+            "texture: { id: 8 width: 9 height: 10 mipmaps: 11 format: 12 } " \
+            "source: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } " \
+            "dest: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } " \
+            "origin: { x: 1.500000 y: 2.000000 } " \
+            "rotation: 0.000000 " \
+            "tint: { r: 255 g: 255 b: 255 a: 255 } " \
+          "}"
         ]
       end
     end

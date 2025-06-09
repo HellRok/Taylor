@@ -263,6 +263,8 @@
 - Added Colour#fade, Colour#fade!, and Colour#inspect
 - Removed fade
 - Bump Ruby and gems
+- Texture2D#draw is now C++ backed
+- Removed draw_texture and draw_texture_pro
 
 ## v0.3.14.1
 
