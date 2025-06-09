@@ -8,8 +8,6 @@ steps:
 
   - label: 'CPP Checks'
     commands:
-      - gem install bundler
-      - bundle install
       - bin/test-formatting-cpp
       - bin/test-linting-cpp
 

@@ -7,8 +7,7 @@ CPP_FILES=${@:-$(git ls-files --no-deleted *.cpp)}
 HPP_FILES=${@:-$(git ls-files --no-deleted *.hpp)}
 
 function lint_check() {
-  FILES=$1
-  # xargs isn't playing nice and I'm not invested enough to solve that
+  FILES=$@
   clang-tidy \
     --warnings-as-errors=* \
     ${FILES} \
@@ -19,10 +18,10 @@ function lint_check() {
     -I ./vendor/mruby/
 }
 
-log "Checking CPP for linting errors"
+log "Checking CPP files for linting errors"
 job_output=$(lint_check ${CPP_FILES} 2>&1)
 barf_if_failed $?
 
-log "Checking HPP for linting errors"
+log "Checking HPP files for linting errors"
 job_output=$(lint_check ${HPP_FILES} 2>&1)
 barf_if_failed $?

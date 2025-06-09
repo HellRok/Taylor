@@ -7,7 +7,7 @@ CPP_FILES=${@:-$(git ls-files --no-deleted *.cpp)}
 HPP_FILES=${@:-$(git ls-files --no-deleted *.hpp)}
 
 function lint_fix() {
-  FILES=$1
+  FILES=$@
   # xargs isn't playing nice and I'm not invested enough to solve that
   clang-tidy \
     --fix-errors \
