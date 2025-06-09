@@ -267,6 +267,7 @@
 - Removed draw_texture and draw_texture_pro
 - Added Monitor.count
 - Removed get_monitor_count
+- Added Monitor.new, Monitor[], and Monitor.all
 
 ## v0.3.14.1
 

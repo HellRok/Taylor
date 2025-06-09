@@ -1,27 +1,75 @@
 #include "mruby.h"
+#include "mruby/class.h"
 #include "raylib.h"
 
 #include "mruby_integration/exceptions.hpp"
+#include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/window.hpp"
+#include "mruby_integration/struct_types.hpp"
 
 #include "ruby/models/monitor.hpp"
 
 struct RClass* Monitor_class;
 
+struct Monitor
+{
+  int id;
+};
+
+void
+setup_Monitor(mrb_state* mrb, mrb_value object, Monitor* monitor, int id)
+{
+  ivar_attr_int(mrb, object, monitor->id, id);
+}
+
 auto
 mrb_Monitor_count(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor.count")
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor.count");
 
   return mrb_int_value(mrb, GetMonitorCount());
+}
+
+auto
+mrb_Monitor_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  // def initialize(id:)
+  mrb_int kw_num = 1;
+  mrb_int kw_required = 1;
+  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "id") };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  int id = 0;
+  if (!mrb_undef_p(kw_values[0])) {
+    id = mrb_as_int(mrb, kw_values[0]);
+  }
+
+  Monitor* monitor = static_cast<struct Monitor*> DATA_PTR(self);
+  if (monitor) {
+    mrb_free(mrb, monitor);
+  }
+  mrb_data_init(self, nullptr, &Monitor_type);
+  monitor = static_cast<Monitor*>(malloc(sizeof(Monitor)));
+
+  setup_Monitor(mrb, self, monitor, id);
+
+  mrb_data_init(self, monitor, &Monitor_type);
+  return self;
 }
 
 void
 append_models_Monitor(mrb_state* mrb)
 {
-  Monitor_class = mrb_define_module(mrb, "Monitor");
+  Monitor_class = mrb_define_class(mrb, "Monitor", mrb->object_class);
+  MRB_SET_INSTANCE_TT(Monitor_class, MRB_TT_DATA);
+
   mrb_define_class_method(
     mrb, Monitor_class, "count", mrb_Monitor_count, MRB_ARGS_NONE());
+
+  mrb_define_method(
+    mrb, Monitor_class, "initialize", mrb_Monitor_initialize, MRB_ARGS_REQ(1));
 
   load_ruby_models_monitor(mrb);
 }

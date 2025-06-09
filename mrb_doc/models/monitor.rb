@@ -18,4 +18,14 @@ class Monitor
     # src/mruby_integration/models/monitor.cpp
     2
   end
+
+  # Do not use this method directly, instead use {Monitor.[]}
+  #
+  # @params id [Integer]
+  # @return [Monitor]
+  def initialize(id:)
+    # mrb_Monitor_count
+    # src/mruby_integration/models/monitor.cpp
+    2
+  end
 end

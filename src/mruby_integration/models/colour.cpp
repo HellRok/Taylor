@@ -140,7 +140,7 @@ append_models_Colour(mrb_state* mrb)
   Colour_class = mrb_define_class(mrb, "Colour", mrb->object_class);
   MRB_SET_INSTANCE_TT(Colour_class, MRB_TT_DATA);
   mrb_define_method(
-    mrb, Colour_class, "initialize", mrb_Colour_initialize, MRB_ARGS_REQ(4));
+    mrb, Colour_class, "initialize", mrb_Colour_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Colour_class, "red=", mrb_Colour_set_red, MRB_ARGS_REQ(1));
   mrb_define_method(

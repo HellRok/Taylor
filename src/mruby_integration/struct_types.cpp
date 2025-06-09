@@ -69,6 +69,11 @@ free_image(mrb_state* mrb, void* p)
   free_klass(mrb, p, "Image");
 };
 void
+free_monitor(mrb_state* mrb, void* p)
+{
+  free_klass(mrb, p, "Monitor");
+};
+void
 free_music(mrb_state* mrb, void* p)
 {
   free_klass(mrb, p, "Music");
@@ -108,6 +113,7 @@ mrb_data_type Camera2D_type = { "Camera2D", free_camera2d };
 mrb_data_type Colour_type = { "Color", free_colour };
 mrb_data_type Font_type = { "Font", free_font };
 mrb_data_type Image_type = { "Image", free_image };
+mrb_data_type Monitor_type = { "Monitor", free_monitor };
 mrb_data_type Music_type = { "Music", free_music };
 mrb_data_type Rectangle_type = { "Rectangle", free_rectangle };
 mrb_data_type Shader_type = { "Shader", free_shader };
