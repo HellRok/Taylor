@@ -43,6 +43,8 @@ class Vector2
   # @param other [Vector2]
   # @return [Boolean]
   def ==(other)
+    return super unless other.is_a?(Vector2)
+
     x == other.x &&
       y == other.y
   end

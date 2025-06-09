@@ -167,6 +167,21 @@ class Test
           "(GenTextureMipmaps) { texture: { id: 4 width: 5 height: 6 mipmaps: 7 format: 8 } }"
         ]
       end
+
+      def test_fade!
+        Taylor::Raylib.mock_call(
+          "LoadTexture",
+          Texture2D.mock_return(id: 4, width: 5, height: 6, mipmaps: 7, format: 8)
+        )
+        texture = Texture2D.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        texture.generate_mipmaps
+
+        assert_called [
+          "(GenTextureMipmaps) { texture: { id: 4 width: 5 height: 6 mipmaps: 7 format: 8 } }"
+        ]
+      end
     end
   end
 end

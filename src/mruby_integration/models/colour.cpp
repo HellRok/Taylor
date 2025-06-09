@@ -102,6 +102,38 @@ mrb_Colour_set_alpha(mrb_state* mrb, mrb_value self) -> mrb_value
   attr_setter_int(mrb, self, Colour_type, Color, a, alpha);
 }
 
+auto
+mrb_Colour_fade(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_float alpha;
+  mrb_get_args(mrb, "f", &alpha);
+
+  if (alpha < 0 || alpha > 1) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Alpha must be within (0.0..1.0)");
+  }
+
+  Color* colour;
+
+  Data_Get_Struct(mrb, self, &Colour_type, colour);
+  mrb_assert(colour != nullptr);
+
+  auto* return_colour = static_cast<Color*>(malloc(sizeof(Color)));
+  *return_colour = Fade(*colour, alpha);
+
+  mrb_value obj = mrb_obj_value(
+    Data_Wrap_Struct(mrb, Colour_class, &Colour_type, return_colour));
+
+  setup_Colour(mrb,
+               obj,
+               return_colour,
+               return_colour->r,
+               return_colour->g,
+               return_colour->b,
+               return_colour->a);
+
+  return obj;
+}
+
 void
 append_models_Colour(mrb_state* mrb)
 {
@@ -117,6 +149,8 @@ append_models_Colour(mrb_state* mrb)
     mrb, Colour_class, "blue=", mrb_Colour_set_blue, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Colour_class, "alpha=", mrb_Colour_set_alpha, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Colour_class, "fade", mrb_Colour_fade, MRB_ARGS_REQ(1));
 
   load_ruby_models_colour(mrb);
 }

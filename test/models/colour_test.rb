@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Colour_Test < MTest::Unit::TestCaseWithAnalytics
+    class Colour_Test < Test::Base
       def test_initialize
         colour = Colour.new
 
@@ -42,7 +42,13 @@ class Test
       def test_equal
         colour = Colour.new(red: 245, green: 245, blue: 245, alpha: 255)
 
-        assert_equal Colour::RAYWHITE, colour
+        assert_true colour == Colour::RAYWHITE
+      end
+
+      def test_equal_another_type
+        colour = Colour.new(red: 245, green: 245, blue: 245, alpha: 255)
+
+        assert_false colour == Vector2[1, 2]
       end
 
       def test_assignment
@@ -70,6 +76,70 @@ class Test
           },
           colour.to_h
         )
+      end
+
+      def test_fade
+        colour = Colour.new(red: 2, green: 3, blue: 4, alpha: 5)
+
+        result = colour.fade(0.1)
+
+        assert_not_equal result, colour
+
+        assert_called [
+          "(Fade) { color: { r: 2 g: 3 b: 4 a: 5 } alpha: 0.100000 }"
+        ]
+      end
+
+      def test_fade_too_low
+        colour = Colour.new(red: 3, green: 4, blue: 5, alpha: 6)
+
+        assert_raise_with_message(ArgumentError, "Alpha must be within (0.0..1.0)") {
+          colour.fade(-0.1)
+        }
+
+        assert_no_calls
+      end
+
+      def test_fade_too_high
+        colour = Colour.new(red: 4, green: 5, blue: 6, alpha: 7)
+
+        assert_raise_with_message(ArgumentError, "Alpha must be within (0.0..1.0)") {
+          colour.fade(1.1)
+        }
+
+        assert_no_calls
+      end
+
+      def test_fade!
+        colour = Colour.new(red: 2, green: 3, blue: 4, alpha: 5)
+
+        result = colour.fade!(0.1)
+
+        assert_equal result, colour
+
+        assert_called [
+          "(Fade) { color: { r: 2 g: 3 b: 4 a: 5 } alpha: 0.100000 }"
+        ]
+      end
+
+      def test_fade_bang_too_low
+        colour = Colour.new(red: 3, green: 4, blue: 5, alpha: 6)
+
+        assert_raise_with_message(ArgumentError, "Alpha must be within (0.0..1.0)") {
+          colour.fade!(-0.1)
+        }
+
+        assert_no_calls
+      end
+
+      def test_fade_bang_too_high
+        colour = Colour.new(red: 4, green: 5, blue: 6, alpha: 7)
+
+        assert_raise_with_message(ArgumentError, "Alpha must be within (0.0..1.0)") {
+          colour.fade!(1.1)
+        }
+
+        assert_no_calls
       end
     end
   end

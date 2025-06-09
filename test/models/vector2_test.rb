@@ -1,6 +1,6 @@
 class Test
   class Models
-    class Vector2_Test < MTest::Unit::TestCaseWithAnalytics
+    class Vector2_Test < Test::Base
       def test_initialize
         vector = Vector2.new(1, 2)
 
@@ -15,6 +15,18 @@ class Test
         assert_kind_of Vector2, vector
         assert_equal 3, vector.x
         assert_equal 4, vector.y
+      end
+
+      def test_equals
+        vector = Vector2[3, 4]
+
+        assert_true vector == Vector2[3, 4]
+      end
+
+      def test_equals_another_type
+        vector = Vector2[3, 4]
+
+        assert_false vector == Rectangle[3, 4, 5, 6]
       end
 
       def test_assignment

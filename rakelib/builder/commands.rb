@@ -47,30 +47,6 @@ class Builder
       CMD
     end
 
-    def lint(fix: false)
-      if fix
-        <<~CMD
-          find . -type f -name "*.[c,h]pp" |
-          xargs -P$(nproc) -I{} \
-          clang-tidy \
-            --fix-errors \
-            {} \
-            -- -std=c++17 #{includes} #{defines} \
-            2>/dev/null
-        CMD
-      else
-        <<~CMD
-          find . -type f -name "*.[c,h]pp" |
-          xargs -P$(nproc) -I{} \
-          clang-tidy \
-            --warnings-as-errors=* \
-            {} \
-            -- -std=c++17 #{includes} #{defines} \
-            2>/dev/null
-        CMD
-      end
-    end
-
     def compile
       <<-CMD.squeeze(" ").strip
       #{@cxx} \

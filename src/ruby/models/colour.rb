@@ -1,10 +1,16 @@
-# The Colour class is used for setting the colour of basic primitives (Circles,
-# Rectangles, etc) but also for setting transparency on {Texture2D} objects.
+# The {Colour} class is used for setting the colour of basic primitives ({Circle},
+# {Rectangle}, etc) but also for setting transparency on {Texture2D} objects.
 class Colour
   # @return [Integer]
   attr_reader :red, :green, :blue, :alpha
 
   # A short form way to create new {Colour} objects.
+  #
+  # @example Basic usage
+  #   red = Colour[255, 0, 0]
+  #   green = Colour[0, 255, 0]
+  #   opaque = Colour[128, 128, 128, 196]
+  #
   # @param red [Integer] A value between 0 and 255.
   # @param blue [Integer] A value between 0 and 255.
   # @param green [Integer] A value between 0 and 255.
@@ -14,17 +20,37 @@ class Colour
     new(red: red, green: green, blue: blue, alpha: alpha)
   end
 
-  # Compares the values of two Colours.
+  # Compares the values to another {Colour}.
+  #
+  # @example Basic usage
+  #   puts Colour[200, 200, 200] == Colour::LIGHTGRAY
+  #   # => true
+  #
+  #   puts Colour[1, 2, 3, 4] == Colour::LIGHTGRAY
+  #   # => false
+  #
   # @param other [Colour]
   # @return [Boolean]
   def ==(other)
+    return super unless other.is_a?(Colour)
+
     red == other.red &&
       green == other.green &&
       blue == other.blue &&
       alpha == other.alpha
   end
 
-  # Return the object represented by a Hash.
+  # Return the {Colour} as a Hash.
+  #
+  # @example Basic usage
+  #   p Colour[64, 128, 196, 255].to_h
+  #   # => {
+  #   #      red: 64,
+  #   #      blue: 128,
+  #   #      green: 196,
+  #   #      alpha: 255,
+  #   #    }
+  #
   # @return [Hash]
   def to_h
     {
@@ -33,6 +59,41 @@ class Colour
       blue: blue,
       alpha: alpha
     }
+  end
+
+  # Fades the {Colour} to the passed in percent.
+  #
+  # @example Basic usage
+  #   faded_blue = Colour[0, 255, 0, 196]
+  #   p faded_blue
+  #   # => #<Vector2:0x5649cc302660 red:0 blue:0 green:255 alpha:196>
+  #
+  #   faded_blue.fade!(0.75)
+  #   p faded_blue
+  #   # => #<Vector2:0x5649cc302660 red:0 blue:0 green:255 alpha:191>
+  #
+  # @param alpha [Float] A value between 0.0 and 1.0.
+  # @return [Colour]
+  # @raise [ArgumentError] If the alpha is out of bounds.
+  def fade!(val)
+    fade(val).tap {
+      self.red = _1.red
+      self.green = _1.green
+      self.blue = _1.blue
+      self.alpha = _1.alpha
+    }
+  end
+
+  # Returns a string representation of the {Colour} that's useful for debugging.
+  #
+  # @example Basic usage
+  #   puts Colour::PURPLE.inspect # => #<Vector2:0x102bd20 x:6.0 y:8.0>
+  #
+  #   p Colour::PURPLE # => #<Vector2:0x102bd20 x:6.0 y:8.0>
+  #
+  # @return [String]
+  def inspect
+    "#<Vector2:0x#{object_id.to_s(16)} red:#{red} blue:#{blue} green:#{green} alpha:#{alpha}>"
   end
 
   # @!group Colours
