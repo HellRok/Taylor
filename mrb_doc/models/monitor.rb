@@ -108,4 +108,24 @@ class Monitor
     # src/mruby_integration/models/monitor.cpp
     1080
   end
+
+  # Returns the refresh rate of the {Monitor}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Monitor.current.refresh_rate
+  #   # => 60
+  #
+  # @return [Integer]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def refresh_rate
+    # mrb_Monitor_refresh_rate
+    # src/mruby_integration/models/monitor.cpp
+    60
+  end
 end

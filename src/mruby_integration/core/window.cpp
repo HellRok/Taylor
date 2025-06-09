@@ -16,15 +16,6 @@ mrb_set_window_monitor(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_get_monitor_refresh_rate(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int monitor;
-  mrb_get_args(mrb, "i", &monitor);
-
-  return mrb_int_value(mrb, GetMonitorRefreshRate(monitor));
-}
-
-auto
 mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value) -> mrb_value
 {
   auto* scale = static_cast<Vector2*>(malloc(sizeof(Vector2)));
@@ -45,11 +36,6 @@ append_core_window(mrb_state* mrb)
                     mrb->kernel_module,
                     "set_window_monitor",
                     mrb_set_window_monitor,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_monitor_refresh_rate",
-                    mrb_get_monitor_refresh_rate,
                     MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,

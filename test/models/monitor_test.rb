@@ -243,13 +243,40 @@ class Test
       end
 
       def test_resolution_without_window_ready
-        Taylor::Raylib.mock_call("GetMonitorCount", "2")
-        monitor = Monitor[1]
+        monitor = Monitor[0]
         Taylor::Raylib.mock_call("IsWindowReady", "false")
         Taylor::Raylib.reset_calls
 
         assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Monitor#resolution") {
           monitor.resolution
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_refresh_rate
+        Taylor::Raylib.mock_call("GetMonitorCount", "5")
+        Taylor::Raylib.mock_call("GetMonitorRefreshRate", "7")
+        monitor = Monitor[4]
+        Taylor::Raylib.reset_calls
+
+        assert_equal 7, monitor.refresh_rate
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(GetMonitorRefreshRate) { monitor: 4 }"
+        ]
+      end
+
+      def test_refresh_rate_without_window_ready
+        monitor = Monitor[0]
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Monitor#refresh_rate") {
+          monitor.refresh_rate
         }
 
         assert_called [
