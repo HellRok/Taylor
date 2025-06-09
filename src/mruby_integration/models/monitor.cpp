@@ -4,6 +4,7 @@
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
+#include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/models/window.hpp"
 #include "mruby_integration/struct_types.hpp"
 
@@ -74,6 +75,27 @@ mrb_Monitor_current(mrb_state* mrb, mrb_value) -> mrb_value
   return obj;
 }
 
+auto
+mrb_Monitor_position(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#position");
+
+  Monitor* monitor;
+
+  Data_Get_Struct(mrb, self, &Monitor_type, monitor);
+  mrb_assert(monitor != nullptr);
+
+  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
+  *position = GetMonitorPosition(monitor->id);
+
+  mrb_value obj = mrb_obj_value(
+    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
+
+  setup_Vector2(mrb, obj, position, position->x, position->y);
+
+  return obj;
+}
+
 void
 append_models_Monitor(mrb_state* mrb)
 {
@@ -87,6 +109,8 @@ append_models_Monitor(mrb_state* mrb)
 
   mrb_define_method(
     mrb, Monitor_class, "initialize", mrb_Monitor_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Monitor_class, "position", mrb_Monitor_position, MRB_ARGS_NONE());
 
   load_ruby_models_monitor(mrb);
 }

@@ -139,6 +139,34 @@ class Test
           "(IsWindowReady) { }"
         ]
       end
+
+      def test_position
+        Taylor::Raylib.mock_call("GetMonitorPosition", "1 2")
+        monitor = Monitor[0]
+        Taylor::Raylib.reset_calls
+
+        assert_equal Vector2[1, 2], monitor.position
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(GetMonitorPosition) { monitor: 0 }"
+        ]
+      end
+
+      def test_position_without_window_ready
+        Taylor::Raylib.mock_call("GetMonitorCount", "2")
+        monitor = Monitor[1]
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Monitor#position") {
+          monitor.position
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
     end
   end
 end

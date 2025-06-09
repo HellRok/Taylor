@@ -270,6 +270,8 @@
 - Added Monitor.new, Monitor[], and Monitor.all
 - Added Monitor.current
 - Removed get_current_monitor
+- Added Monitor#position
+- Removed get_monitor_position
 
 ## v0.3.14.1
 

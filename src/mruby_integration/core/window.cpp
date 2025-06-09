@@ -16,23 +16,6 @@ mrb_set_window_monitor(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_get_monitor_position(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int monitor;
-  mrb_get_args(mrb, "i", &monitor);
-
-  auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
-  *position = GetMonitorPosition(monitor);
-
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
-
-  setup_Vector2(mrb, obj, position, position->x, position->y);
-
-  return obj;
-}
-
-auto
 mrb_get_monitor_width(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int monitor;
@@ -80,11 +63,6 @@ append_core_window(mrb_state* mrb)
                     mrb->kernel_module,
                     "set_window_monitor",
                     mrb_set_window_monitor,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_monitor_position",
-                    mrb_get_monitor_position,
                     MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
