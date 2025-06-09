@@ -136,6 +136,19 @@ mrb_Monitor_refresh_rate(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_int_value(mrb, GetMonitorRefreshRate(monitor->id));
 }
 
+auto
+mrb_Monitor_name(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#name");
+
+  Monitor* monitor;
+
+  Data_Get_Struct(mrb, self, &Monitor_type, monitor);
+  mrb_assert(monitor != nullptr);
+
+  return mrb_str_new_cstr(mrb, GetMonitorName(monitor->id));
+}
+
 void
 append_models_Monitor(mrb_state* mrb)
 {
@@ -160,6 +173,8 @@ append_models_Monitor(mrb_state* mrb)
                     "refresh_rate",
                     mrb_Monitor_refresh_rate,
                     MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Monitor_class, "name", mrb_Monitor_name, MRB_ARGS_NONE());
 
   load_ruby_models_monitor(mrb);
 }

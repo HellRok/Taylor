@@ -283,6 +283,34 @@ class Test
           "(IsWindowReady) { }"
         ]
       end
+
+      def test_name
+        Taylor::Raylib.mock_call("GetMonitorCount", "6")
+        Taylor::Raylib.mock_call("*GetMonitorName", "monitor-name")
+        monitor = Monitor[5]
+        Taylor::Raylib.reset_calls
+
+        assert_equal "monitor-name", monitor.name
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(*GetMonitorName) { monitor: 5 }"
+        ]
+      end
+
+      def test_name_without_window_ready
+        monitor = Monitor[0]
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Monitor#name") {
+          monitor.name
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
     end
   end
 end

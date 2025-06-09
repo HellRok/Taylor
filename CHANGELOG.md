@@ -276,7 +276,8 @@
 - Removed get_monitor_width
 - Removed get_monitor_height
 - Added Monitor#refresh_rate
-- removed get_monitor_refresh_rate
+- Removed get_monitor_refresh_rate
+- Added Monitor#name
 
 ## v0.3.14.1
 

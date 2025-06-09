@@ -1,3 +1,4 @@
+#include <cstring>
 #include <deque>
 #include <sstream>
 #include <string>
@@ -76,8 +77,13 @@ auto
 mocked_const_char_call_for(std::string method) -> const char*
 {
   mock_result mock = next_mock_for(method);
+
   if (mock.found) {
-    return mock.value.c_str();
+    // Do this little dance or the pointer will point to junk soon
+    std::string mocked_value = mock.value;
+    char* result = new char[mocked_value.length() + 1];
+    strcpy(result, mocked_value.c_str());
+    return result;
   }
 
   return "default";
@@ -351,7 +357,7 @@ mrb_Taylor_Raylib_mock_call(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Taylor_Raylib_all_mocks_used(mrb_state* mrb, mrb_value) -> mrb_value
+mrb_Taylor_Raylib_all_mocks_used(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(raylib_method_call_mock_returns.empty());
 }

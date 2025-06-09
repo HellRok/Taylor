@@ -90,6 +90,7 @@ task "raylib:mock" do
     "GetKeyPressed" => {return: true},
     "GetMonitorCount" => {return: true},
     "GetMonitorHeight" => {return: true},
+    "*GetMonitorName" => {return: true},
     "GetMonitorPosition" => {return: true},
     "GetMonitorRefreshRate" => {return: true},
     "GetMonitorWidth" => {return: true},

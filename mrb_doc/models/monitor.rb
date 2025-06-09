@@ -128,4 +128,24 @@ class Monitor
     # src/mruby_integration/models/monitor.cpp
     60
   end
+
+  # Returns the name of the {Monitor}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Monitor.current.name
+  #   # => DisplayPort-2
+  #
+  # @return [String]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def name
+    # mrb_Monitor_name
+    # src/mruby_integration/models/monitor.cpp
+    "DisplayPort-2"
+  end
 end
