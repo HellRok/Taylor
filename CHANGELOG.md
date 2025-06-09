@@ -259,6 +259,7 @@
 - Removed set_texture_filter
 - Texture2D#generate_texture_mipmaps is now C++ backed
 - Removed generate_texture_mipmaps
+- Reworked some rake tasks into shell scripts
 
 ## v0.3.14.1
 

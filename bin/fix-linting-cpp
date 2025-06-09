@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -u
+
+source bin/lib/helpers.sh
+
+XPP_FILES=${@:-$(git ls-files --no-deleted *.{cpp,hpp})}
+
+function lint_fix() {
+  # xargs isn't playing nice and I'm not invested enough to solve that
+  clang-tidy \
+    --fix-errors \
+    ${XPP_FILES} \
+    -- -std=c++17 \
+    -I ./include/ \
+    -I ./vendor/ \
+    -I ./vendor/raylib/include/ \
+    -I ./vendor/mruby/
+  }
+
+log "Linting CPP and HPP files"
+job_output=$(lint_fix 2>&1)
+barf_if_failed $?

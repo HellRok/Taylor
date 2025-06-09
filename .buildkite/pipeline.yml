@@ -4,14 +4,14 @@ steps:
       - gem install bundler
       - bundle install
       - bundle exec standardrb
-      - .buildkite/scripts/tests/check_for_documentation.rb
+      - bin/test-formatting-ruby
 
   - label: 'CPP Checks'
     commands:
       - gem install bundler
       - bundle install
-      - bundle exec rake format:check
-      - bundle exec rake lint:check
+      - bin/test-formatting-cpp
+      - bin/test-linting-cpp
 
   - label: 'Taylor Build'
     commands:

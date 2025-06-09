@@ -29,29 +29,6 @@ end
 
 multitask setup_ephemeral_files: ephemeral_files_for_ruby
 
-task "lint:check" => [:setup_ephemeral_files] do
-  sh Builder.builders["linux"].lint
-end
-
-task "lint:fix" => [:setup_ephemeral_files] do
-  sh Builder.builders["linux"].lint(fix: true)
-end
-
-task "format:check" do
-  sh "clang-format --dry-run -Werror $(git ls-files *.cpp)"
-  sh "clang-format --dry-run -Werror $(git ls-files *.hpp)"
-end
-
-task "format:fix" do
-  sh "clang-format -i $(git ls-files *.{cpp,hpp})"
-end
-
-task pretty: ["format:fix", "lint:fix"] do
-  # I do this because loading the gem breaks a lot of the build and I don't
-  # want to add ruby-dev everywhere.
-  sh "bundle exec standardrb --fix"
-end
-
 rule ".o" => ->(file) { source_for(file) } do |task|
   FileUtils.mkdir_p(File.dirname(task.name))
   sh Builder.o_command_for(task)

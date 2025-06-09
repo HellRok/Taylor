@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -u
+
+source bin/lib/helpers.sh
+
+start "Formatting Ruby"
+job_output=$(./bin/fix-formatting-ruby 2>&1)
+result $?
+
+start "Formatting CPP"
+job_output=$(./bin/fix-formatting-cpp 2>&1)
+result $?
+
+start "Linting CPP"
+job_output=$(./bin/fix-linting-cpp 2>&1)
+result $?

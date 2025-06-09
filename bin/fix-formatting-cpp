@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -u
+
+source bin/lib/helpers.sh
+
+XPP_FILES=${@:-$(git ls-files --no-deleted *.{cpp,hpp})}
+
+log "Formatting CPP and HPP files"
+job_output=$(clang-format -i ${XPP_FILES})
+barf_if_failed $?

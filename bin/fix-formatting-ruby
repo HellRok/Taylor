@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -u
+
+source bin/lib/helpers.sh
+
+RUBY_FILES=${@:-$(git ls-files --no-deleted *.{rb,rake})}
+
+log "Formatting Ruby files"
+job_output=$(bundle exec standardrb --fix-unsafely ${RUBY_FILES})
+barf_if_failed $?

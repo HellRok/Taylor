@@ -22,17 +22,17 @@ job_output=$(./bin/test-cli 2>&1)
 result $?
 
 start "Documentation check"
-job_output=$(.buildkite/scripts/tests/check_for_documentation.rb 2>&1)
+job_output=$(bin/test-documentation 2>&1)
 result $?
 
 start "Ruby - Formatting"
-job_output=$(bundle exec standardrb 2>&1)
+job_output=$(bin/test-formatting-ruby 2>&1)
 result $?
 
 start "CPP - Formatting"
-job_output=$(bundle exec rake format:check 2>&1)
+job_output=$(bin/test-formatting-cpp 2>&1)
 result $?
 
 start "CPP - Linting"
-job_output=$(bundle exec rake lint:check 2>&1)
+job_output=$(bin/test-linting-cpp 2>&1)
 result $?
