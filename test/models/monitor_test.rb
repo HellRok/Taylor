@@ -154,13 +154,102 @@ class Test
       end
 
       def test_position_without_window_ready
-        Taylor::Raylib.mock_call("GetMonitorCount", "2")
-        monitor = Monitor[1]
+        monitor = Monitor[0]
         Taylor::Raylib.mock_call("IsWindowReady", "false")
         Taylor::Raylib.reset_calls
 
         assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Monitor#position") {
           monitor.position
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_width
+        Taylor::Raylib.mock_call("GetMonitorCount", "2")
+        Taylor::Raylib.mock_call("GetMonitorWidth", "3")
+        monitor = Monitor[1]
+        Taylor::Raylib.reset_calls
+
+        assert_equal 3, monitor.width
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(GetMonitorWidth) { monitor: 1 }"
+        ]
+      end
+
+      def test_width_without_window_ready
+        monitor = Monitor[0]
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Monitor#width") {
+          monitor.width
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_height
+        Taylor::Raylib.mock_call("GetMonitorCount", "3")
+        Taylor::Raylib.mock_call("GetMonitorHeight", "4")
+        monitor = Monitor[2]
+        Taylor::Raylib.reset_calls
+
+        assert_equal 4, monitor.height
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(GetMonitorHeight) { monitor: 2 }"
+        ]
+      end
+
+      def test_height_without_window_ready
+        Taylor::Raylib.mock_call("GetMonitorCount", "2")
+        monitor = Monitor[1]
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Monitor#height") {
+          monitor.height
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_resolution
+        Taylor::Raylib.mock_call("GetMonitorCount", "4")
+        Taylor::Raylib.mock_call("GetMonitorWidth", "5")
+        Taylor::Raylib.mock_call("GetMonitorHeight", "6")
+        monitor = Monitor[3]
+        Taylor::Raylib.reset_calls
+
+        assert_equal Vector2[5, 6], monitor.resolution
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(IsWindowReady) { }",
+          "(GetMonitorWidth) { monitor: 3 }",
+          "(IsWindowReady) { }",
+          "(GetMonitorHeight) { monitor: 3 }"
+        ]
+      end
+
+      def test_resolution_without_window_ready
+        Taylor::Raylib.mock_call("GetMonitorCount", "2")
+        monitor = Monitor[1]
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+        Taylor::Raylib.reset_calls
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Monitor#resolution") {
+          monitor.resolution
         }
 
         assert_called [

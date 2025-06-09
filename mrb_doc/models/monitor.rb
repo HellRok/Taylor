@@ -68,4 +68,44 @@ class Monitor
     # src/mruby_integration/models/monitor.cpp
     Vector2[0, 0]
   end
+
+  # Returns the width of the {Monitor} in pixels.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Monitor.current.width
+  #   # => 1920
+  #
+  # @return [Integer]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def width
+    # mrb_Monitor_width
+    # src/mruby_integration/models/monitor.cpp
+    1920
+  end
+
+  # Returns the height of the {Monitor} in pixels.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Monitor.current.height
+  #   # => 1080
+  #
+  # @return [Integer]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def height
+    # mrb_Monitor_height
+    # src/mruby_integration/models/monitor.cpp
+    1080
+  end
 end

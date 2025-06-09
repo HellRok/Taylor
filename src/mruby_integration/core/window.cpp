@@ -16,24 +16,6 @@ mrb_set_window_monitor(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_get_monitor_width(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int monitor;
-  mrb_get_args(mrb, "i", &monitor);
-
-  return mrb_int_value(mrb, GetMonitorWidth(monitor));
-}
-
-auto
-mrb_get_monitor_height(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int monitor;
-  mrb_get_args(mrb, "i", &monitor);
-
-  return mrb_int_value(mrb, GetMonitorHeight(monitor));
-}
-
-auto
 mrb_get_monitor_refresh_rate(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int monitor;
@@ -63,16 +45,6 @@ append_core_window(mrb_state* mrb)
                     mrb->kernel_module,
                     "set_window_monitor",
                     mrb_set_window_monitor,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_monitor_width",
-                    mrb_get_monitor_width,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_monitor_height",
-                    mrb_get_monitor_height,
                     MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,

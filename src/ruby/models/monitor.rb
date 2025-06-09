@@ -49,4 +49,24 @@ class Monitor
 
     (0..(Monitor.count - 1)).map { |id| new(id: id) }
   end
+
+  # Returns the resolution of the {Monitor} as a {Vector2}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   p Monitor.current.resolution
+  #   # => #<Vector2:0x55bb73db1ca0 x:1920 y:1080>
+  #
+  # @return [Vector2]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def resolution
+    raise Window::NotReadyError, "You must call Window.open before Monitor#resolution" unless Window.ready?
+
+    Vector2[width, height]
+  end
 end

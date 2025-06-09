@@ -272,6 +272,9 @@
 - Removed get_current_monitor
 - Added Monitor#position
 - Removed get_monitor_position
+- Added Monitor#width, Monitor#height, and Monitor#resolution
+- Removed get_monitor_width
+- Removed get_monitor_height
 
 ## v0.3.14.1
 
