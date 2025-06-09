@@ -37,7 +37,7 @@ module MTest
 
       def file_name
         best_guess = self.class.to_s.split("::").map(&:downcase)
-        second_guess = best_guess.reject { _1 == "test" }
+        second_guess = best_guess.reject { |name| name == "test" }
         best_guess_path = "#{File.join(best_guess)}.rb"
         second_guess_path = "#{File.join(second_guess)}.rb"
 

@@ -58,7 +58,7 @@ module Taylor
         if @options[:stdout]
           puts @data
         else
-          File.open("output.rb", "w") { _1.write @data }
+          File.open("output.rb", "w") { |file| file.write @data }
         end
       end
 

@@ -11,8 +11,8 @@ class Test
       def test_basic_require
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("game.rb", "w") { _1.write "require 'other_file.rb'" }
-          File.open("other_file.rb", "w") { _1.write "Other file content" }
+          File.open("game.rb", "w") { |file| file.write "require 'other_file.rb'" }
+          File.open("other_file.rb", "w") { |file| file.write "Other file content" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout"], {})
           assert_include squash_command.puts_data, "Other file content"
@@ -25,8 +25,8 @@ class Test
       def test_basic_comments
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("game.rb", "w") { _1.write "Game content\nrequire 'other_file'" }
-          File.open("other_file.rb", "w") { _1.write "Other file content\n" }
+          File.open("game.rb", "w") { |file| file.write "Game content\nrequire 'other_file'" }
+          File.open("other_file.rb", "w") { |file| file.write "Other file content\n" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout"], {})
           assert_equal squash_command.puts_data, <<~RUBY
@@ -46,7 +46,7 @@ class Test
       def test_mising_require
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("game.rb", "w") { _1.write "require 'other_file'" }
+          File.open("game.rb", "w") { |file| file.write "require 'other_file'" }
 
           assert_raise(RuntimeError) {
             Taylor::Commands::Squash.new(["--stdout"], {})
@@ -59,7 +59,7 @@ class Test
       def test_specified_input
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("beep.rb", "w") { _1.write "BEEP" }
+          File.open("beep.rb", "w") { |file| file.write "BEEP" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout", "--input", "beep.rb"], {})
           assert_include squash_command.puts_data, "BEEP"
@@ -72,7 +72,7 @@ class Test
       def test_config_input
         Taylor::Commands::New.new(["./test/test_game", "--input", "beep.rb"], {})
         Dir.chdir "./test/test_game" do
-          File.open("beep.rb", "w") { _1.write "BEEP" }
+          File.open("beep.rb", "w") { |file| file.write "BEEP" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout"], {"input" => "beep.rb"})
           assert_include squash_command.puts_data, "BEEP"
@@ -84,9 +84,9 @@ class Test
       def test_vendor_require
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("game.rb", "w") { _1.write "require 'cool_plugin/other_file'" }
+          File.open("game.rb", "w") { |file| file.write "require 'cool_plugin/other_file'" }
           Dir.mkdir("vendor/cool_plugin")
-          File.open("vendor/cool_plugin/other_file.rb", "w") { _1.write "Other file content" }
+          File.open("vendor/cool_plugin/other_file.rb", "w") { |file| file.write "Other file content" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout"], {})
           assert_include squash_command.puts_data, "Start ./vendor/cool_plugin/other_file"
@@ -101,9 +101,9 @@ class Test
       def test_load_path_require
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("game.rb", "w") { _1.write "require 'other_file'" }
+          File.open("game.rb", "w") { |file| file.write "require 'other_file'" }
           Dir.mkdir("third-party")
-          File.open("third-party/other_file.rb", "w") { _1.write "Other file content" }
+          File.open("third-party/other_file.rb", "w") { |file| file.write "Other file content" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout", "--load-paths", "./,./third-party"], {})
           assert_include squash_command.puts_data, "Start ./third-party/other_file"
@@ -118,7 +118,7 @@ class Test
       def test_commented_out_require
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("game.rb", "w") { _1.write "#require 'other_file'\n" }
+          File.open("game.rb", "w") { |file| file.write "#require 'other_file'\n" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout"], {})
           assert_equal squash_command.puts_data, "# Start game.rb\n#require 'other_file'\n# End game.rb\n"
@@ -130,8 +130,8 @@ class Test
       def test_file_not_ending_in_new_line
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("game.rb", "w") { _1.write "require 'other_file'" }
-          File.open("other_file.rb", "w") { _1.write "Other file content" }
+          File.open("game.rb", "w") { |file| file.write "require 'other_file'" }
+          File.open("other_file.rb", "w") { |file| file.write "Other file content" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout"], {})
           assert_equal squash_command.puts_data, <<~RUBY
@@ -150,7 +150,7 @@ class Test
       def test_require_in_loop
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("game.rb", "w") { _1.write "Dir.entries('mods').each { require File.join('mods', _1) }" }
+          File.open("game.rb", "w") { |file| file.write "Dir.entries('mods').each { require File.join('mods', _1) }" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout"], {})
           assert_equal squash_command.puts_data, <<~RUBY
@@ -166,7 +166,7 @@ class Test
       def test_require_with_interpolation
         Taylor::Commands::New.new(["./test/test_game"], {})
         Dir.chdir "./test/test_game" do
-          File.open("game.rb", "w") { _1.write "variable = 'test'\nrequire \"./vendor/\#{variable}\"" }
+          File.open("game.rb", "w") { |file| file.write "variable = 'test'\nrequire \"./vendor/\#{variable}\"" }
 
           squash_command = Taylor::Commands::Squash.new(["--stdout"], {})
           assert_equal squash_command.puts_data, <<~RUBY

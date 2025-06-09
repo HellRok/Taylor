@@ -262,6 +262,7 @@
 - Reworked some rake tasks into shell scripts
 - Added Colour#fade, Colour#fade!, and Colour#inspect
 - Removed fade
+- Bump Ruby and gems
 
 ## v0.3.14.1
 

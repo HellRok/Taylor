@@ -230,7 +230,7 @@ task "raylib:mock" do
   end
 
   def parse_arguments(arguments)
-    append = lambda { "  signature << #{_1}" }
+    append = lambda { |var| "  signature << #{var}" }
     call_on = lambda { |object, method, pointer|
       str = append.call(%("#{method}: "))
       str += " << std::to_string("

@@ -8,9 +8,9 @@ def ephemeral_files_for_ruby
     File.read(file)
       .lines
       .map(&:strip)
-      .select { _1.start_with?("#include") }
-      .map { _1.split('"').last }
-      .select { _1.start_with?("ruby") }
+      .select { |line| line.start_with?("#include") }
+      .map { |line| line.split('"').last }
+      .select { |line| line.start_with?("ruby") }
   }
 end
 

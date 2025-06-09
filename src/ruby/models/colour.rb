@@ -76,11 +76,11 @@ class Colour
   # @return [Colour]
   # @raise [ArgumentError] If the alpha is out of bounds.
   def fade!(val)
-    fade(val).tap {
-      self.red = _1.red
-      self.green = _1.green
-      self.blue = _1.blue
-      self.alpha = _1.alpha
+    fade(val).tap { |colour|
+      self.red = colour.red
+      self.green = colour.green
+      self.blue = colour.blue
+      self.alpha = colour.alpha
     }
   end
 

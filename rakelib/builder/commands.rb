@@ -17,7 +17,7 @@ class Builder
 
       @source_files = (
         Rake::FileList["#{SRC_FOLDER}/**/*.cpp"] +
-        ephemeral_files_for_ruby.map { "src/#{_1.ext(".cpp")}" }
+        ephemeral_files_for_ruby.map { |file| "src/#{file.ext(".cpp")}" }
       ).uniq
 
       if mock_raylib?

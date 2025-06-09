@@ -20,7 +20,7 @@ module MTest
           return "[]" if arr.empty?
 
           "[\n".tap { |result|
-            arr.each { result << "    #{mu_pp _1},\n" }
+            arr.each { |str| result << "    #{mu_pp str},\n" }
             result << "  ]"
           }
         }

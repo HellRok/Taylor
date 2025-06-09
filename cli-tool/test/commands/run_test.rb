@@ -17,7 +17,7 @@ class Test
       end
 
       def test_requires_the_command
-        File.open("./test/app.rb", "w") { _1.write "puts :hi" }
+        File.open("./test/app.rb", "w") { |file| file.write "puts :hi" }
 
         run_command = Taylor::Commands::Run.new("./test/app.rb", [], {})
         assert_equal ["./test/app.rb"], run_command.require_list
