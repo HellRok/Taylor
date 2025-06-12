@@ -20,13 +20,13 @@ def cpp_methods
     object_to_class = lambda { |obj| "#{klass}#{obj.gsub(/_(class|module)/, "")}" }
 
     lines = File.read(file).each_line.to_a
-    lines.map.with_index { |line, index|
+    lines.flat_map.with_index { |line, index|
       if line =~ /^.*define_module_under.*, (.*), "(.*)"/
         klass = "#{object_to_class.call($~[1])}::"
       end
 
-      # mrb_define_method(mrb, Font_class, "initialize"
       if line =~ /^\s*mrb_define_method.*, (.*), "(.*)"/
+        # mrb_define_method(mrb, Font_class, "initialize"
         object, method = $~[1..2]
         if object == "mrb->kernel_module"
           method
@@ -54,8 +54,8 @@ def cpp_methods
           "#{object_to_class.call(object)}##{method}"
         end
 
-      # mrb_define_class_method(mrb, Font_class, "initialize"
       elsif line =~ /^\s*mrb_define_class_method.*, (.*), "(.*)"/
+        # mrb_define_class_method(mrb, Font_class, "initialize"
         object, method = $~[1..2]
         if object == "mrb->kernel_module"
           method
@@ -82,6 +82,24 @@ def cpp_methods
         else
           "#{object_to_class.call(object)}.#{method}"
         end
+
+      elsif line =~ /^\s*mrb_attr_reader_define.*, (.*), (.*)\)/
+        # mrb_attr_reader_define(mrb, Circle, x);
+        object, method = $~[1..2]
+        "#{object_to_class.call(object)}##{method}"
+
+      elsif line =~ /^\s*mrb_attr_writer_define.*, (.*), (.*)\)/
+        # mrb_attr_writer_define(mrb, Circle, x);
+        object, method = $~[1..2]
+        "#{object_to_class.call(object)}##{method}="
+
+      elsif line =~ /^\s*mrb_attr_accessor_defines.*, (.*), (.*)\)/
+        # mrb_attr_accessor_defines(mrb, Circle, x);
+        object, method = $~[1..2]
+        [
+          "#{object_to_class.call(object)}##{method}",
+          "#{object_to_class.call(object)}##{method}="
+        ]
       end
     }.compact
   }
@@ -95,11 +113,20 @@ def documented_methods
       klasses = []
       klass = nil
 
-      File.read(file).each_line.to_a.map { |line|
+      File.read(file).each_line.to_a.flat_map { |line|
         if line =~ /^\s*(class|module)\s*(.*)/
           klasses << $~[2].chomp
           klass = klasses.join("::")
           nil # we don't want to just return the klass
+
+        elsif line =~ /^\s*attr_reader\s*(.*)/
+          $~[1].split(", ").map { |arg| "#{klass}##{arg.delete(':')}" }
+
+        elsif line =~ /^\s*attr_writer\s*(.*)/
+          $~[1].split(", ").map { |arg| "#{klass}##{arg.delete(':')}=" }
+
+        elsif line =~ /^\s*attr_accessor\s*(.*)/
+          $~[1].split(", ").map { |arg| arg.delete(":")}.flat_map { |arg| ["#{klass}##{arg}=", "#{klass}##{arg}"] }
 
         elsif line =~ /^\s*def\s*(.*)/
           method = $~[1].split("(").first

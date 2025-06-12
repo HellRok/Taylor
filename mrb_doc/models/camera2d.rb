@@ -1,4 +1,7 @@
 class Camera2D
+  # @return [Float]
+  attr_writer :rotation, :zoom
+
   # Creates a new instance of {Camera2D}.
   #
   # @example Basic usage
@@ -20,16 +23,6 @@ class Camera2D
     # mrb_Camera2D_initialize
     # src/mruby_integration/models/camera2d.cpp
     Camera2D.new
-  end
-
-  def rotation=(rotate)
-    # mrb_Camera2D_set_rotation
-    # src/mruby_integration/models/camera2d.cpp
-  end
-
-  def zoom=(zoom)
-    # mrb_Camera2D_set_zoom
-    # src/mruby_integration/models/camera2d.cpp
   end
 
   # Draws the world through the lens of the {Camera2D}.

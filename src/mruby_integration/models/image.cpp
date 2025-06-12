@@ -596,16 +596,7 @@ mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_value return_array = mrb_ary_new(mrb);
 
   for (int i = 0; i < size; i++) {
-    mrb_value obj = mrb_obj_value(
-      Data_Wrap_Struct(mrb, Colour_class, &Colour_type, &colours[i]));
-    setup_Colour(mrb,
-                 obj,
-                 &colours[i],
-                 colours[i].r,
-                 colours[i].g,
-                 colours[i].b,
-                 colours[i].a);
-    mrb_ary_push(mrb, return_array, obj);
+    mrb_ary_push(mrb, return_array, mrb_Color_value(mrb, &colours[i]));
     add_owned_object(&colours[i]);
   }
 

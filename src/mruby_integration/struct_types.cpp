@@ -48,76 +48,36 @@ free_klass(mrb_state* mrb, void* p, std::string klass)
   }
 };
 
-void
-free_camera2d(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Camera2D");
-};
-void
-free_colour(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Color");
-};
-void
-free_font(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Font");
-};
-void
-free_image(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Image");
-};
-void
-free_monitor(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Monitor");
-};
-void
-free_music(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Music");
-};
-void
-free_rectangle(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Rectangle");
-};
-void
-free_shader(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Shader");
-};
-void
-free_sound(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Sound");
-};
-void
-free_render_texture(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "RenderTexture");
-};
-void
-free_texture2d(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Texture2D");
-};
-void
-free_vector(mrb_state* mrb, void* p)
-{
-  free_klass(mrb, p, "Vector");
-};
+#define define_class_free(name, klass)                                         \
+  void free_##name(mrb_state* mrb, void* p)                                    \
+  {                                                                            \
+    free_klass(mrb, p, klass);                                                 \
+  };
+
+define_class_free(camera2d, "Camera2D");
+define_class_free(circle, "Circle");
+define_class_free(colour, "Color");
+define_class_free(font, "Font");
+define_class_free(image, "Image");
+define_class_free(monitor, "Monitor");
+define_class_free(music, "Music");
+define_class_free(rectangle, "Rectangle");
+define_class_free(render_texture, "RenderTexture");
+define_class_free(shader, "Shader");
+define_class_free(sound, "Sound");
+define_class_free(texture2d, "Texture2D");
+define_class_free(vector, "Vector");
 
 mrb_data_type Camera2D_type = { "Camera2D", free_camera2d };
-mrb_data_type Colour_type = { "Color", free_colour };
+mrb_data_type Circle_type = { "Circle", free_circle };
+mrb_data_type Color_type = { "Colour", free_colour };
 mrb_data_type Font_type = { "Font", free_font };
 mrb_data_type Image_type = { "Image", free_image };
 mrb_data_type Monitor_type = { "Monitor", free_monitor };
 mrb_data_type Music_type = { "Music", free_music };
 mrb_data_type Rectangle_type = { "Rectangle", free_rectangle };
+mrb_data_type RenderTexture_type = { "RenderTexture", free_render_texture };
 mrb_data_type Shader_type = { "Shader", free_shader };
 mrb_data_type Sound_type = { "Sound", free_sound };
-mrb_data_type RenderTexture_type = { "RenderTexture", free_render_texture };
 mrb_data_type Texture2D_type = { "Texture2D", free_texture2d };
 mrb_data_type Vector2_type = { "Vector2", free_vector };

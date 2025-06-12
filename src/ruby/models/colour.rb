@@ -1,9 +1,6 @@
 # The {Colour} class is used for setting the colour of basic primitives ({Circle},
 # {Rectangle}, etc) but also for setting transparency on {Texture2D} objects.
 class Colour
-  # @return [Integer]
-  attr_reader :red, :green, :blue, :alpha
-
   # A short form way to create new {Colour} objects.
   #
   # @example Basic usage
@@ -87,13 +84,13 @@ class Colour
   # Returns a string representation of the {Colour} that's useful for debugging.
   #
   # @example Basic usage
-  #   puts Colour::PURPLE.inspect # => #<Vector2:0x102bd20 x:6.0 y:8.0>
+  #   puts Colour::PURPLE.inspect # => #<Colour:0x102bd20 x:6.0 y:8.0>
   #
-  #   p Colour::PURPLE # => #<Vector2:0x102bd20 x:6.0 y:8.0>
+  #   p Colour::PURPLE # => #<Colour:0x102bd20 x:6.0 y:8.0>
   #
   # @return [String]
   def inspect
-    "#<Vector2:0x#{object_id.to_s(16)} red:#{red} blue:#{blue} green:#{green} alpha:#{alpha}>"
+    "#<Colour:0x#{object_id.to_s(16)} red:#{red} blue:#{blue} green:#{green} alpha:#{alpha}>"
   end
 
   # @!group Colours

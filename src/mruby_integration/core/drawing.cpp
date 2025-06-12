@@ -1,6 +1,7 @@
 #include "mruby.h"
 #include "raylib.h"
 
+#include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 #include "ruby/core/drawing.hpp"
@@ -9,7 +10,7 @@ auto
 mrb_clear_background(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Color* colour;
-  mrb_get_args(mrb, "d", &colour, &Colour_type);
+  mrb_get_args(mrb, "d", &colour, &Color_type);
 
   ClearBackground(*colour);
   return mrb_nil_value();

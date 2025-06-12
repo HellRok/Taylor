@@ -9,7 +9,7 @@ mrb_draw_rectangle(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_int x, y, width, height;
   Color* colour;
 
-  mrb_get_args(mrb, "iiiid", &x, &y, &width, &height, &colour, &Colour_type);
+  mrb_get_args(mrb, "iiiid", &x, &y, &width, &height, &colour, &Color_type);
 
   DrawRectangle(x, y, width, height, *colour);
   return mrb_nil_value();
@@ -21,7 +21,7 @@ mrb_draw_rectangle_rec(mrb_state* mrb, mrb_value) -> mrb_value
   Rectangle* rectangle;
   Color* colour;
 
-  mrb_get_args(mrb, "dd", &rectangle, &Rectangle_type, &colour, &Colour_type);
+  mrb_get_args(mrb, "dd", &rectangle, &Rectangle_type, &colour, &Color_type);
 
   DrawRectangleRec(*rectangle, *colour);
   return mrb_nil_value();
@@ -43,7 +43,7 @@ mrb_draw_rectangle_pro(mrb_state* mrb, mrb_value) -> mrb_value
                &Vector2_type,
                &rotation,
                &colour,
-               &Colour_type);
+               &Color_type);
 
   DrawRectanglePro(*rectangle, *origin, rotation, *colour);
   return mrb_nil_value();
@@ -62,9 +62,9 @@ mrb_draw_rectangle_gradient_v(mrb_state* mrb, mrb_value) -> mrb_value
                &width,
                &height,
                &colour1,
-               &Colour_type,
+               &Color_type,
                &colour2,
-               &Colour_type);
+               &Color_type);
 
   DrawRectangleGradientV(x, y, width, height, *colour1, *colour2);
   return mrb_nil_value();
@@ -83,9 +83,9 @@ mrb_draw_rectangle_gradient_h(mrb_state* mrb, mrb_value) -> mrb_value
                &width,
                &height,
                &colour1,
-               &Colour_type,
+               &Color_type,
                &colour2,
-               &Colour_type);
+               &Color_type);
 
   DrawRectangleGradientH(x, y, width, height, *colour1, *colour2);
   return mrb_nil_value();
@@ -102,13 +102,13 @@ mrb_draw_rectangle_gradient_ex(mrb_state* mrb, mrb_value) -> mrb_value
                &rectangle,
                &Rectangle_type,
                &colour1,
-               &Colour_type,
+               &Color_type,
                &colour2,
-               &Colour_type,
+               &Color_type,
                &colour3,
-               &Colour_type,
+               &Color_type,
                &colour4,
-               &Colour_type);
+               &Color_type);
 
   DrawRectangleGradientEx(*rectangle, *colour1, *colour2, *colour3, *colour4);
   return mrb_nil_value();
@@ -120,7 +120,7 @@ mrb_draw_rectangle_lines(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_int x, y, width, height;
   Color* colour;
 
-  mrb_get_args(mrb, "iiiid", &x, &y, &width, &height, &colour, &Colour_type);
+  mrb_get_args(mrb, "iiiid", &x, &y, &width, &height, &colour, &Color_type);
 
   DrawRectangleLines(x, y, width, height, *colour);
   return mrb_nil_value();
@@ -134,7 +134,7 @@ mrb_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value) -> mrb_value
   Color* colour;
 
   mrb_get_args(
-    mrb, "did", &rectangle, &Rectangle_type, &thickness, &colour, &Colour_type);
+    mrb, "did", &rectangle, &Rectangle_type, &thickness, &colour, &Color_type);
 
   DrawRectangleLinesEx(*rectangle, thickness, *colour);
   return mrb_nil_value();
@@ -155,7 +155,7 @@ mrb_draw_rectangle_rounded(mrb_state* mrb, mrb_value) -> mrb_value
                &radius,
                &segments,
                &colour,
-               &Colour_type);
+               &Color_type);
 
   DrawRectangleRounded(*rectangle, radius, segments, *colour);
   return mrb_nil_value();
@@ -177,7 +177,7 @@ mrb_draw_rectangle_rounded_lines(mrb_state* mrb, mrb_value) -> mrb_value
                &segments,
                &thickness,
                &colour,
-               &Colour_type);
+               &Color_type);
 
   DrawRectangleRoundedLines(*rectangle, radius, segments, thickness, *colour);
   return mrb_nil_value();

@@ -9,7 +9,7 @@ mrb_draw_pixel(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_int x, y;
   Color* colour;
 
-  mrb_get_args(mrb, "iid", &x, &y, &colour, &Colour_type);
+  mrb_get_args(mrb, "iid", &x, &y, &colour, &Color_type);
 
   DrawPixel(x, y, *colour);
   return mrb_nil_value();
@@ -21,7 +21,7 @@ mrb_draw_pixel_v(mrb_state* mrb, mrb_value) -> mrb_value
   Vector2* vector;
   Color* colour;
 
-  mrb_get_args(mrb, "dd", &vector, &Vector2_type, &colour, &Colour_type);
+  mrb_get_args(mrb, "dd", &vector, &Vector2_type, &colour, &Color_type);
 
   DrawPixelV(*vector, *colour);
   return mrb_nil_value();

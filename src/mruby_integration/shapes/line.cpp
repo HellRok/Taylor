@@ -11,7 +11,7 @@ mrb_draw_line(mrb_state* mrb, mrb_value) -> mrb_value
   Color* colour;
 
   mrb_get_args(
-    mrb, "iiiid", &start_x, &start_y, &end_x, &end_y, &colour, &Colour_type);
+    mrb, "iiiid", &start_x, &start_y, &end_x, &end_y, &colour, &Color_type);
 
   DrawLine(start_x, start_y, end_x, end_y, *colour);
   return mrb_nil_value();
@@ -30,7 +30,7 @@ mrb_draw_line_v(mrb_state* mrb, mrb_value) -> mrb_value
                &end,
                &Vector2_type,
                &colour,
-               &Colour_type);
+               &Color_type);
 
   DrawLineV(*start, *end, *colour);
   return mrb_nil_value();
@@ -51,7 +51,7 @@ mrb_draw_line_ex(mrb_state* mrb, mrb_value) -> mrb_value
                &Vector2_type,
                &thickness,
                &colour,
-               &Colour_type);
+               &Color_type);
 
   DrawLineEx(*start, *end, thickness, *colour);
   return mrb_nil_value();
@@ -72,7 +72,7 @@ mrb_draw_line_bezier(mrb_state* mrb, mrb_value) -> mrb_value
                &Vector2_type,
                &thickness,
                &colour,
-               &Colour_type);
+               &Color_type);
 
   DrawLineBezier(*start, *end, thickness, *colour);
   return mrb_nil_value();
@@ -95,7 +95,7 @@ mrb_draw_line_bezier_quad(mrb_state* mrb, mrb_value) -> mrb_value
                &Vector2_type,
                &thickness,
                &colour,
-               &Colour_type);
+               &Color_type);
 
   DrawLineBezierQuad(*start, *end, *control, thickness, *colour);
   return mrb_nil_value();
@@ -107,7 +107,7 @@ mrb_draw_line_strip(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_value vectors;
   Color* colour;
 
-  mrb_get_args(mrb, "Ad", &vectors, &colour, &Colour_type);
+  mrb_get_args(mrb, "Ad", &vectors, &colour, &Color_type);
 
   mrb_int array_length = RARRAY_LEN(vectors);
 

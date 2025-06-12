@@ -278,6 +278,8 @@
 - Added Monitor#refresh_rate
 - Removed get_monitor_refresh_rate
 - Added Monitor#name
+- Added Circle#initialize
+- Cleaned up some missing documentation
 
 ## v0.3.14.1
 

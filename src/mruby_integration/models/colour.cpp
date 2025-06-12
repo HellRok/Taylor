@@ -5,30 +5,29 @@
 #include <cstdlib>
 
 #include "mruby_integration/helpers.hpp"
+#include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 #include "ruby/models/colour.hpp"
 
 struct RClass* Colour_class;
 
-void
-setup_Colour(mrb_state* mrb,
-             mrb_value object,
-             Color* colour,
-             int red,
-             int green,
-             int blue,
-             int alpha)
+// This is named to match the C struct for macros
+auto
+mrb_Color_value(mrb_state* mrb, Color* colour) -> mrb_value
 {
-  ivar_attr_int(mrb, object, colour->r, red);
-  ivar_attr_int(mrb, object, colour->g, green);
-  ivar_attr_int(mrb, object, colour->b, blue);
-  ivar_attr_int(mrb, object, colour->a, alpha);
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Colour_class, &Color_type, colour));
+
+  return obj;
 }
 
 auto
 mrb_Colour_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
+  Color* colour;
+  mrb_self_ptr(mrb, self, Color, colour);
+
   // def initialize(
   //   red: 0,
   //   blue: 0,
@@ -45,62 +44,34 @@ mrb_Colour_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, ":", &kwargs);
 
-  float red = 0;
+  colour->r = 0;
   if (!mrb_undef_p(kw_values[0])) {
-    red = mrb_as_int(mrb, kw_values[0]);
+    colour->r = mrb_as_int(mrb, kw_values[0]);
   }
 
-  float green = 0;
+  colour->g = 0;
   if (!mrb_undef_p(kw_values[1])) {
-    green = mrb_as_int(mrb, kw_values[1]);
+    colour->g = mrb_as_int(mrb, kw_values[1]);
   }
 
-  float blue = 0;
+  colour->b = 0;
   if (!mrb_undef_p(kw_values[2])) {
-    blue = mrb_as_int(mrb, kw_values[2]);
+    colour->b = mrb_as_int(mrb, kw_values[2]);
   }
 
-  float alpha = 255;
+  colour->a = 255;
   if (!mrb_undef_p(kw_values[3])) {
-    alpha = mrb_as_int(mrb, kw_values[3]);
+    colour->a = mrb_as_int(mrb, kw_values[3]);
   }
 
-  Color* colour = static_cast<struct Color*> DATA_PTR(self);
-  if (colour) {
-    mrb_free(mrb, colour);
-  }
-  mrb_data_init(self, nullptr, &Colour_type);
-  colour = static_cast<Color*>(malloc(sizeof(Color)));
-
-  setup_Colour(mrb, self, colour, red, green, blue, alpha);
-
-  mrb_data_init(self, colour, &Colour_type);
+  mrb_data_init(self, colour, &Color_type);
   return self;
 }
 
-auto
-mrb_Colour_set_red(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Colour_type, Color, r, red);
-}
-
-auto
-mrb_Colour_set_green(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Colour_type, Color, g, green);
-}
-
-auto
-mrb_Colour_set_blue(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Colour_type, Color, b, blue);
-}
-
-auto
-mrb_Colour_set_alpha(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_int(mrb, self, Colour_type, Color, a, alpha);
-}
+mrb_attr_accessor_with_klasses(mrb, self, int, i, Colour, Color, r);
+mrb_attr_accessor_with_klasses(mrb, self, int, i, Colour, Color, g);
+mrb_attr_accessor_with_klasses(mrb, self, int, i, Colour, Color, b);
+mrb_attr_accessor_with_klasses(mrb, self, int, i, Colour, Color, a);
 
 auto
 mrb_Colour_fade(mrb_state* mrb, mrb_value self) -> mrb_value
@@ -114,24 +85,13 @@ mrb_Colour_fade(mrb_state* mrb, mrb_value self) -> mrb_value
 
   Color* colour;
 
-  Data_Get_Struct(mrb, self, &Colour_type, colour);
+  Data_Get_Struct(mrb, self, &Color_type, colour);
   mrb_assert(colour != nullptr);
 
   auto* return_colour = static_cast<Color*>(malloc(sizeof(Color)));
   *return_colour = Fade(*colour, alpha);
 
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Colour_class, &Colour_type, return_colour));
-
-  setup_Colour(mrb,
-               obj,
-               return_colour,
-               return_colour->r,
-               return_colour->g,
-               return_colour->b,
-               return_colour->a);
-
-  return obj;
+  return mrb_Color_value(mrb, return_colour);
 }
 
 void
@@ -141,14 +101,18 @@ append_models_Colour(mrb_state* mrb)
   MRB_SET_INSTANCE_TT(Colour_class, MRB_TT_DATA);
   mrb_define_method(
     mrb, Colour_class, "initialize", mrb_Colour_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "red", mrb_Colour_r, MRB_ARGS_NONE());
   mrb_define_method(
-    mrb, Colour_class, "red=", mrb_Colour_set_red, MRB_ARGS_REQ(1));
+    mrb, Colour_class, "red=", mrb_Colour_set_r, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "green", mrb_Colour_g, MRB_ARGS_NONE());
   mrb_define_method(
-    mrb, Colour_class, "green=", mrb_Colour_set_green, MRB_ARGS_REQ(1));
+    mrb, Colour_class, "green=", mrb_Colour_set_g, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "blue", mrb_Colour_b, MRB_ARGS_NONE());
   mrb_define_method(
-    mrb, Colour_class, "blue=", mrb_Colour_set_blue, MRB_ARGS_REQ(1));
+    mrb, Colour_class, "blue=", mrb_Colour_set_b, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "alpha", mrb_Colour_a, MRB_ARGS_NONE());
   mrb_define_method(
-    mrb, Colour_class, "alpha=", mrb_Colour_set_alpha, MRB_ARGS_REQ(1));
+    mrb, Colour_class, "alpha=", mrb_Colour_set_a, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Colour_class, "fade", mrb_Colour_fade, MRB_ARGS_REQ(1));
 

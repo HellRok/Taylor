@@ -10,7 +10,7 @@ mrb_draw_circle(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_float radius;
   Color* colour;
 
-  mrb_get_args(mrb, "iifd", &x, &y, &radius, &colour, &Colour_type);
+  mrb_get_args(mrb, "iifd", &x, &y, &radius, &colour, &Color_type);
 
   DrawCircle(x, y, radius, *colour);
   return mrb_nil_value();
@@ -24,7 +24,7 @@ mrb_draw_circle_v(mrb_state* mrb, mrb_value) -> mrb_value
   Color* colour;
 
   mrb_get_args(
-    mrb, "dfd", &vector, &Vector2_type, &radius, &colour, &Colour_type);
+    mrb, "dfd", &vector, &Vector2_type, &radius, &colour, &Color_type);
 
   DrawCircleV(*vector, radius, *colour);
   return mrb_nil_value();
@@ -47,7 +47,7 @@ mrb_draw_circle_sector(mrb_state* mrb, mrb_value) -> mrb_value
                &end_angle,
                &segments,
                &colour,
-               &Colour_type);
+               &Color_type);
 
   DrawCircleSector(*vector, radius, start_angle, end_angle, segments, *colour);
   return mrb_nil_value();
@@ -70,7 +70,7 @@ mrb_draw_circle_sector_lines(mrb_state* mrb, mrb_value) -> mrb_value
                &end_angle,
                &segments,
                &colour,
-               &Colour_type);
+               &Color_type);
 
   DrawCircleSectorLines(
     *vector, radius, start_angle, end_angle, segments, *colour);
@@ -90,9 +90,9 @@ mrb_draw_circle_gradient(mrb_state* mrb, mrb_value) -> mrb_value
                &y,
                &radius,
                &colour1,
-               &Colour_type,
+               &Color_type,
                &colour2,
-               &Colour_type);
+               &Color_type);
 
   DrawCircleGradient(x, y, radius, *colour1, *colour2);
   return mrb_nil_value();
@@ -105,7 +105,7 @@ mrb_draw_circle_lines(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_float radius;
   Color* colour;
 
-  mrb_get_args(mrb, "iifd", &x, &y, &radius, &colour, &Colour_type);
+  mrb_get_args(mrb, "iifd", &x, &y, &radius, &colour, &Color_type);
 
   DrawCircleLines(x, y, radius, *colour);
   return mrb_nil_value();

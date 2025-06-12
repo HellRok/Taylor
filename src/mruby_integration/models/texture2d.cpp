@@ -6,6 +6,7 @@
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
+#include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 #include "ruby/models/texture2d.hpp"

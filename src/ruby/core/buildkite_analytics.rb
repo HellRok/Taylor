@@ -1,8 +1,14 @@
+# Monkey patching {MTest} so we can have analytics
 module MTest
+  # Monkey patching {MTest::Unit}
   class Unit
+    # An extension of {MTest::Unit::TestCase} that tracks analytics for build
+    # systems.
     class TestCaseWithAnalytics < MTest::Unit::TestCase
+      # @return [String]
       attr_accessor :result
 
+      # Monkey patched from {MTest}
       def run runner
         @start_time = Time.now
         @result = ""
@@ -27,6 +33,7 @@ module MTest
         @result
       end
 
+      # Tries its best to get the file location
       def location
         return "Could not find file" unless File.exist?(file_name)
 
@@ -35,6 +42,7 @@ module MTest
         }
       end
 
+      # Tries its best to get the file name
       def file_name
         best_guess = self.class.to_s.split("::").map(&:downcase)
         second_guess = best_guess.reject { |name| name == "test" }
@@ -50,6 +58,7 @@ module MTest
         end
       end
 
+      # Monkey patched from {MTest}
       def teardown
         $buildkite_test_analytics ||= []
 
@@ -74,6 +83,7 @@ module MTest
   end
 end
 
+# Upload the analytics to Buildkite
 def upload_buildkite_test_analytics
   return unless ENV["BUILDKITE_TEST_ANALYTICS_KEY"]
   puts
@@ -112,6 +122,7 @@ def upload_buildkite_test_analytics
   puts "Done!"
 end
 
+# Save the analytics to a file
 def persist_buildkite_test_analytics
   output = File.open("test-analytics.json", "w")
   output.write($buildkite_test_analytics.to_json)
