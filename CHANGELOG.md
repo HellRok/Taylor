@@ -280,6 +280,7 @@
 - Added Monitor#name
 - Added Circle#initialize
 - Cleaned up some missing documentation
+- Added Circle#to_h
 
 ## v0.3.14.1
 

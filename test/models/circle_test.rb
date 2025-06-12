@@ -62,19 +62,42 @@ class Test
         assert_nil circle.gradient
       end
 
-      # def test_to_h
-      #   circle = Circle.new(1, 2, 3, 4)
+      def test_to_h
+        circle = Circle.new(
+          x: 4, y: 5, radius: 6,
+          colour: Colour[7, 8, 9, 10],
+          outline: Colour[11, 12, 13, 14], thickness: 15,
+          gradient: Colour[16, 17, 18, 19]
+        )
 
-      #   assert_equal(
-      #     {
-      #       x: 1,
-      #       y: 2,
-      #       width: 3,
-      #       height: 4
-      #     },
-      #     circle.to_h
-      #   )
-      # end
+        assert_equal(
+          {
+            x: 4,
+            y: 5,
+            radius: 6,
+            colour: {
+              red: 7,
+              green: 8,
+              blue: 9,
+              alpha: 10
+            },
+            outline: {
+              red: 11,
+              green: 12,
+              blue: 13,
+              alpha: 14
+            },
+            thickness: 15,
+            gradient: {
+              red: 16,
+              green: 17,
+              blue: 18,
+              alpha: 19
+            }
+          },
+          circle.to_h
+        )
+      end
 
       # def test_draw_circle
       #  Circle[1, 2, 3, 4].draw(origin: Vector2[5, 6], rotation: 7, colour: Colour[8, 9, 10, 11])

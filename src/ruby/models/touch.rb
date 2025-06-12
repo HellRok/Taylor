@@ -14,7 +14,7 @@ class Touch
     position_for(index)
   end
 
-  # Returns all the current {Touch} positions as an {Array} of {Vector2}.
+  # Returns all the current {Touch} positions as an Array of {Vector2}.
   #
   # @example Basic usage
   #   Touch.positions.each do |position|

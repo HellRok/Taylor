@@ -41,7 +41,7 @@ class Monitor
 
   # Do not use this method directly, instead use {Monitor.[]}
   #
-  # @params id [Integer]
+  # @param id [Integer]
   # @return [Monitor]
   def initialize(id:)
     # mrb_Monitor_count

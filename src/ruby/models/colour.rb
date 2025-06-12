@@ -63,17 +63,17 @@ class Colour
   # @example Basic usage
   #   faded_blue = Colour[0, 255, 0, 196]
   #   p faded_blue
-  #   # => #<Vector2:0x5649cc302660 red:0 blue:0 green:255 alpha:196>
+  #   # => #<Colour:0x5649cc302660 red:0 blue:0 green:255 alpha:196>
   #
   #   faded_blue.fade!(0.75)
   #   p faded_blue
-  #   # => #<Vector2:0x5649cc302660 red:0 blue:0 green:255 alpha:191>
+  #   # => #<Colour:0x5649cc302660 red:0 blue:0 green:255 alpha:191>
   #
   # @param alpha [Float] A value between 0.0 and 1.0.
   # @return [Colour]
   # @raise [ArgumentError] If the alpha is out of bounds.
-  def fade!(val)
-    fade(val).tap { |colour|
+  def fade!(alpha)
+    fade(alpha).tap { |colour|
       self.red = colour.red
       self.green = colour.green
       self.blue = colour.blue

@@ -14,7 +14,7 @@ module Taylor
     # @return [String]
     def self.to_s = "#{arch}-#{os}"
 
-    # Used for simple comparisons against {String} or matching constants.
+    # Used for simple comparisons against String or matching constants.
     #
     # @example Basic usage
     #   exit 1 unless Taylor::Platform == "amd64-linux"
