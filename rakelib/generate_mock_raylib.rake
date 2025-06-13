@@ -63,6 +63,7 @@ task "raylib:mock" do
     "DrawTexturePro" => {},
     "DrawTriangle" => {},
     "DrawTriangleLines" => {},
+    "DrawPolyLinesEx" => {},
     "EnableCursor" => {},
     "EndBlendMode" => {},
     "EndDrawing" => {},

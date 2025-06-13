@@ -68,6 +68,8 @@ module MTest
     # @return [true]
     def assert_called(calls)
       assert_equal calls, Taylor::Raylib.calls
+    ensure
+      Taylor::Raylib.reset_calls
     end
 
     # Checks if no calls were made to Raylib

@@ -22,6 +22,15 @@ mrb_Color_value(mrb_state* mrb, Color* colour) -> mrb_value
   return obj;
 }
 
+void
+Color_init(Color* colour)
+{
+  colour->r = 0;
+  colour->g = 0;
+  colour->b = 0;
+  colour->a = 0;
+}
+
 auto
 mrb_Colour_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {

@@ -9,7 +9,7 @@ auto
 mrb_Color_value(mrb_state*, Color*) -> mrb_value;
 
 void
-set_Colour_ivars(mrb_state*, mrb_value, Color*);
+Color_init(Color*);
 
 void
 append_models_Colour(mrb_state*);

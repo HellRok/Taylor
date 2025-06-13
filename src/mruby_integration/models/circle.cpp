@@ -13,8 +13,8 @@ struct RClass* Circle_class;
 
 struct Circle
 {
-  float x;
-  float y;
+  int x;
+  int y;
   float radius;
   Color* colour;
   Color* outline;
@@ -22,11 +22,21 @@ struct Circle
   Color* gradient;
 };
 
+void
+Circle_init(Circle* circle)
+{
+  circle->x = 0;
+  circle->y = 0;
+  circle->radius = 0;
+  circle->thickness = 0;
+}
+
 auto
 mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Circle* circle;
   mrb_self_ptr(mrb, self, Circle, circle);
+  Circle_init(circle);
 
   // Circle.new(
   //   x:,
@@ -51,17 +61,21 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   circle->x = 0;
   if (!mrb_undef_p(kw_values[0])) {
-    circle->x = mrb_as_float(mrb, kw_values[0]);
+    circle->x = mrb_as_int(mrb, kw_values[0]);
   }
 
   circle->y = 0.0;
   if (!mrb_undef_p(kw_values[1])) {
-    circle->y = mrb_as_float(mrb, kw_values[1]);
+    circle->y = mrb_as_int(mrb, kw_values[1]);
   }
 
   circle->radius = 0.0;
   if (!mrb_undef_p(kw_values[2])) {
     circle->radius = mrb_as_float(mrb, kw_values[2]);
+  }
+
+  if (circle->radius <= 0) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Radius must be greater than 0");
   }
 
   if (!mrb_undef_p(kw_values[3])) {
@@ -71,6 +85,8 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
                self,
                mrb_intern_cstr(mrb, "@colour"),
                mrb_Color_value(mrb, circle->colour));
+  } else {
+    circle->colour = nullptr;
   }
 
   if (!mrb_undef_p(kw_values[4])) {
@@ -80,6 +96,8 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
                self,
                mrb_intern_cstr(mrb, "@outline"),
                mrb_Color_value(mrb, circle->outline));
+  } else {
+    circle->outline = nullptr;
   }
 
   circle->thickness = 1.0;
@@ -94,6 +112,8 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
                self,
                mrb_intern_cstr(mrb, "@gradient"),
                mrb_Color_value(mrb, circle->gradient));
+  } else {
+    circle->gradient = nullptr;
   }
 
   add_parent(circle, "Circle");
@@ -102,14 +122,57 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-mrb_attr_accessor(mrb, self, float, f, Circle, x);
-mrb_attr_accessor(mrb, self, float, f, Circle, y);
-mrb_attr_accessor(mrb, self, float, f, Circle, radius);
+mrb_attr_accessor(mrb, self, int, i, Circle, x);
+mrb_attr_accessor(mrb, self, int, i, Circle, y);
 mrb_attr_accessor(mrb, self, float, f, Circle, thickness);
+
+mrb_attr_reader(mrb, self, float, Circle, radius);
+auto
+mrb_Circle_set_radius(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Circle, circle);
+  mrb_float value;
+  mrb_get_args(mrb, "f", &value);
+
+  if (value <= 0) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Radius must be greater than 0");
+  }
+
+  circle->radius = value;
+
+  return mrb_float_value(mrb, circle->radius);
+}
 
 mrb_attr_writer_struct(mrb, self, Circle, colour, Color);
 mrb_attr_writer_struct(mrb, self, Circle, outline, Color);
 mrb_attr_writer_struct(mrb, self, Circle, gradient, Color);
+
+auto
+mrb_Circle_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Circle, circle);
+
+  if (circle->gradient == nullptr) {
+    DrawCircle(circle->x, circle->y, circle->radius, *circle->colour);
+  } else {
+    DrawCircleGradient(
+      circle->x, circle->y, circle->radius, *circle->colour, *circle->gradient);
+  }
+
+  if (circle->outline != nullptr) {
+    // There's no way to draw a circle outline with differing thickness in
+    // Raylib, this does it pretty well but I think it might be expensive.
+    DrawPolyLinesEx(
+      Vector2{ static_cast<float>(circle->x), static_cast<float>(circle->y) },
+      60,
+      circle->radius,
+      0,
+      circle->thickness,
+      *circle->outline);
+  }
+
+  return mrb_nil_value();
+}
 
 void
 append_models_Circle(mrb_state* mrb)
@@ -128,6 +191,8 @@ append_models_Circle(mrb_state* mrb)
     mrb, Circle_class, "outline=", mrb_Circle_set_outline, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Circle_class, "gradient=", mrb_Circle_set_gradient, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Circle_class, "draw", mrb_Circle_draw, MRB_ARGS_NONE());
 
   load_ruby_models_circle(mrb);
 }

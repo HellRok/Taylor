@@ -281,6 +281,13 @@
 - Added Circle#initialize
 - Cleaned up some missing documentation
 - Added Circle#to_h
+- Added Circle#draw
+- Removed draw_circle
+- Removed draw_circle_v
+- Removed draw_circle_sector
+- Removed draw_circle_sector_lines
+- Removed draw_circle_gradient
+- Removed draw_circle_lines
 
 ## v0.3.14.1
 

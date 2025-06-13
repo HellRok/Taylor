@@ -27,6 +27,12 @@ class Test
         assert_equal Colour[13, 14, 15, 16], circle.gradient
       end
 
+      def test_initialize_with_invalid_radius
+        assert_raise_with_message(ArgumentError, "Radius must be greater than 0") {
+          Circle.new(x: 0, y: 0, radius: 0, colour: Colour[0, 0, 0, 0])
+        }
+      end
+
       # def test_brackets
       #   circle = Circle[1, 2, 3, 4]
 
@@ -60,6 +66,13 @@ class Test
 
         assert_nil circle.outline
         assert_nil circle.gradient
+      end
+
+      def test_assignment_with_invalid_radius
+        circle = Circle.new(x: 0, y: 0, radius: 1, colour: Colour[0, 0, 0, 0])
+        assert_raise_with_message(ArgumentError, "Radius must be greater than 0") {
+          circle.radius = 0
+        }
       end
 
       def test_to_h
@@ -99,55 +112,70 @@ class Test
         )
       end
 
-      # def test_draw_circle
-      #  Circle[1, 2, 3, 4].draw(origin: Vector2[5, 6], rotation: 7, colour: Colour[8, 9, 10, 11])
+      def test_draw_circle
+        Circle.new(x: 1, y: 2, radius: 3, colour: Colour[4, 5, 6, 7]).draw
 
-      #  assert_called [
-      #    "(DrawCirclePro) { rec: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } origin: { x: 5.000000 y: 6.000000 } rotation: 7.000000 color: { r: 8 g: 9 b: 10 a: 11 } }"
-      #  ]
-      # end
+        assert_called [
+          "(DrawCircle) { centerX: 1 centerY: 2 radius: 3.000000 color: { r: 4 g: 5 b: 6 a: 7 } }"
+        ]
+      end
 
-      # def test_draw_circle_with_outline_not_rounded
-      #  Circle[2, 3, 4, 5].draw(thickness: 6, outline: true, colour: Colour[7, 8, 9, 10])
+      def test_draw_circle_with_outline
+        Circle.new(x: 2, y: 3, radius: 4, colour: Colour[5, 6, 7, 8], outline: Colour[9, 10, 11, 12], thickness: 13).draw
 
-      #  assert_called [
-      #    "(DrawCircleLinesEx) { rec: { x: 2.000000 y: 3.000000 width: 4.000000 height: 5.000000 } lineThick: 6.000000 color: { r: 7 g: 8 b: 9 a: 10 } }"
-      #  ]
-      # end
+        assert_called [
+          "(DrawCircle) { centerX: 2 centerY: 3 radius: 4.000000 color: { r: 5 g: 6 b: 7 a: 8 } }",
+          "(DrawPolyLinesEx) { center: { x: 2.000000 y: 3.000000 } sides: 60 radius: 4.000000 rotation: 0.000000 lineThick: 13.000000 color: { r: 9 g: 10 b: 11 a: 12 } }"
+        ]
+      end
 
-      # def test_draw_circle_no_outline_but_rounded
-      #  Circle[3, 4, 5, 6].draw(rounded: true, radius: 0.5, segments: 7, colour: Colour[8, 9, 10, 11])
+      def test_draw_circle_with_gradient
+        Circle.new(x: 3, y: 4, radius: 5, colour: Colour[6, 7, 8, 9], gradient: Colour[10, 11, 12, 13]).draw
 
-      #  assert_called [
-      #    "(DrawCircleRounded) { rec: { x: 3.000000 y: 4.000000 width: 5.000000 height: 6.000000 } roundness: 0.500000 segments: 7 color: { r: 8 g: 9 b: 10 a: 11 } }"
-      #  ]
-      # end
+        assert_called [
+          "(DrawCircleGradient) { centerX: 3 centerY: 4 radius: 5.000000 color1: { r: 6 g: 7 b: 8 a: 9 } color2: { r: 10 g: 11 b: 12 a: 13 } }"
+        ]
+      end
 
-      # def test_draw_circle_with_outline_and_rounded
-      #  Circle[4, 5, 6, 7].draw(
-      #    rounded: true, radius: 0.85, segments: 8, outline: true, thickness: 9, colour: Colour[10, 11, 12, 13]
-      #  )
+      def test_draw_circle_with_outline_and_gradient
+        Circle.new(x: 4, y: 5, radius: 6, colour: Colour[7, 8, 9, 10], outline: Colour[11, 12, 13, 14], thickness: 15, gradient: Colour[16, 17, 18, 19]).draw
 
-      #  assert_called [
-      #    "(DrawCircleRoundedLines) { rec: { x: 4.000000 y: 5.000000 width: 6.000000 height: 7.000000 } roundness: 0.850000 segments: 8 lineThick: 9.000000 color: { r: 10 g: 11 b: 12 a: 13 } }"
-      #  ]
-      # end
+        assert_called [
+          "(DrawCircleGradient) { centerX: 4 centerY: 5 radius: 6.000000 color1: { r: 7 g: 8 b: 9 a: 10 } color2: { r: 16 g: 17 b: 18 a: 19 } }",
+          "(DrawPolyLinesEx) { center: { x: 4.000000 y: 5.000000 } sides: 60 radius: 6.000000 rotation: 0.000000 lineThick: 15.000000 color: { r: 11 g: 12 b: 13 a: 14 } }"
+        ]
+      end
 
-      # def test_draw_circle_raises_when_radius_below_zero
-      #  assert_raise_with_message(ArgumentError, "Radius must be within (0.0..1.0)") {
-      #    Circle.new(2, 2, 6, 6).draw(rounded: true, radius: -0.1)
-      #  }
+      def test_draw_with_toggling
+        circle = Circle.new(x: 1, y: 2, radius: 3, colour: Colour[4, 5, 6, 7])
 
-      #  assert_no_calls
-      # end
+        circle.draw
 
-      # def test_draw_circle_raises_when_radius_above_one
-      #  assert_raise_with_message(ArgumentError, "Radius must be within (0.0..1.0)") {
-      #    Circle.new(2, 2, 6, 6).draw(rounded: true, radius: 1.1)
-      #  }
+        assert_called [
+          "(DrawCircle) { centerX: 1 centerY: 2 radius: 3.000000 color: { r: 4 g: 5 b: 6 a: 7 } }"
+        ]
 
-      #  assert_no_calls
-      # end
+        circle.outline = Colour[5, 6, 7, 8]
+        circle.draw
+
+        assert_called [
+          "(DrawCircle) { centerX: 1 centerY: 2 radius: 3.000000 color: { r: 4 g: 5 b: 6 a: 7 } }",
+          "(DrawPolyLinesEx) { center: { x: 1.000000 y: 2.000000 } sides: 60 radius: 3.000000 rotation: 0.000000 lineThick: 1.000000 color: { r: 5 g: 6 b: 7 a: 8 } }"
+        ]
+
+        circle.outline = nil
+        circle.gradient = Colour[6, 7, 8, 9]
+        circle.draw
+        assert_called [
+          "(DrawCircleGradient) { centerX: 1 centerY: 2 radius: 3.000000 color1: { r: 4 g: 5 b: 6 a: 7 } color2: { r: 6 g: 7 b: 8 a: 9 } }"
+        ]
+
+        circle.gradient = nil
+        circle.draw
+        assert_called [
+          "(DrawCircle) { centerX: 1 centerY: 2 radius: 3.000000 color: { r: 4 g: 5 b: 6 a: 7 } }"
+        ]
+      end
     end
   end
 end
