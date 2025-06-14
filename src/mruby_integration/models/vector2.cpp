@@ -37,6 +37,18 @@ mrb_Vector2_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 mrb_attr_accessor(mrb, self, float, f, Vector2, x);
 mrb_attr_accessor(mrb, self, float, f, Vector2, y);
 
+auto
+mrb_Vector2_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Vector2, vector);
+  Color* colour;
+
+  mrb_get_args(mrb, "d", &colour, &Color_type);
+
+  DrawPixelV(*vector, *colour);
+  return mrb_nil_value();
+}
+
 void
 append_models_Vector2(mrb_state* mrb)
 {
@@ -46,6 +58,8 @@ append_models_Vector2(mrb_state* mrb)
     mrb, Vector2_class, "initialize", mrb_Vector2_initialize, MRB_ARGS_REQ(4));
   mrb_attr_accessor_defines(mrb, Vector2, x);
   mrb_attr_accessor_defines(mrb, Vector2, y);
+  mrb_define_method(
+    mrb, Vector2_class, "draw", mrb_Vector2_draw, MRB_ARGS_REQ(1));
 
   load_ruby_models_vector2(mrb);
 }

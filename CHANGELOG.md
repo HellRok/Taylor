@@ -297,6 +297,9 @@
 - Removed draw_line_bezier
 - Removed draw_line_bezier_quad
 - Removed draw_line_strip
+- Added Vector2#draw
+- Removed draw_pixel
+- Removed draw_pixel_v
 
 ## v0.3.14.1
 

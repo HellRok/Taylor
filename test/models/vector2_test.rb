@@ -95,6 +95,14 @@ class Test
 
         assert_equal "#<Vector2:0x#{vector.object_id.to_s(16)} x:3.0 y:4.0>", vector.inspect
       end
+
+      def test_draw
+        Vector2[4, 5].draw(Colour[6, 7, 8, 9])
+
+        assert_called [
+          "(DrawPixelV) { position: { x: 4.000000 y: 5.000000 } color: { r: 6 g: 7 b: 8 a: 9 } }"
+        ]
+      end
     end
   end
 end
