@@ -16,6 +16,7 @@ extern mrb_data_type Circle_type;
 extern mrb_data_type Color_type;
 extern mrb_data_type Font_type;
 extern mrb_data_type Image_type;
+extern mrb_data_type Line_type;
 extern mrb_data_type Monitor_type;
 extern mrb_data_type Music_type;
 extern mrb_data_type Rectangle_type;

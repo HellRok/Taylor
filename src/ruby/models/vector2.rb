@@ -11,9 +11,6 @@
 #   puts player_position.x # => 7.0333...
 #   puts player_position.y # => 8.0333...
 class Vector2
-  # @return [Float]
-  attr_reader :x, :y
-
   alias_method :width, :x
   alias_method :height, :y
 

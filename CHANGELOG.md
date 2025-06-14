@@ -289,6 +289,7 @@
 - Removed draw_circle_gradient
 - Removed draw_circle_lines
 - Added Circle.[]
+- Added Line#initialize
 
 ## v0.3.14.1
 

@@ -6,6 +6,7 @@
 #include "mruby_integration/models/font.hpp"
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/key.hpp"
+#include "mruby_integration/models/line.hpp"
 #include "mruby_integration/models/monitor.hpp"
 #include "mruby_integration/models/mouse.hpp"
 #include "mruby_integration/models/music.hpp"
@@ -29,6 +30,7 @@ append_models(mrb_state* mrb)
   append_models_Font(mrb);
   append_models_Image(mrb);
   append_models_Key(mrb);
+  append_models_Line(mrb);
   append_models_Monitor(mrb);
   append_models_Mouse(mrb);
   append_models_Music(mrb);

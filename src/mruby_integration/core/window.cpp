@@ -21,12 +21,7 @@ mrb_get_window_scale_dpi(mrb_state* mrb, mrb_value) -> mrb_value
   auto* scale = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *scale = GetWindowScaleDPI();
 
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, scale));
-
-  setup_Vector2(mrb, obj, scale, scale->x, scale->y);
-
-  return obj;
+  return mrb_Vector2_value(mrb, scale);
 }
 
 void

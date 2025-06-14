@@ -231,12 +231,7 @@ mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
   auto* text_size = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *text_size = MeasureTextEx(*font, text, size, spacing);
 
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, text_size));
-
-  setup_Vector2(mrb, obj, text_size, text_size->x, text_size->y);
-
-  return obj;
+  return mrb_Vector2_value(mrb, text_size);
 }
 
 auto

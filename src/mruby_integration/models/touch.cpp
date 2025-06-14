@@ -19,12 +19,7 @@ mrb_Touch_position_for(mrb_state* mrb, mrb_value) -> mrb_value
   auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *position = GetTouchPosition(index);
 
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
-
-  setup_Vector2(mrb, obj, position, position->x, position->y);
-
-  return obj;
+  return mrb_Vector2_value(mrb, position);
 }
 
 void

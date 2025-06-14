@@ -121,12 +121,8 @@ mrb_Camera2D_as_in_viewport(mrb_state* mrb, mrb_value self) -> mrb_value
 
   auto* return_vector = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *return_vector = GetWorldToScreen2D(*vector, *camera);
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, return_vector));
 
-  setup_Vector2(mrb, obj, return_vector, return_vector->x, return_vector->y);
-
-  return obj;
+  return mrb_Vector2_value(mrb, return_vector);
 }
 
 auto
@@ -141,12 +137,8 @@ mrb_Camera2D_as_in_world(mrb_state* mrb, mrb_value self) -> mrb_value
 
   auto* return_vector = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *return_vector = GetScreenToWorld2D(*vector, *camera);
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, return_vector));
 
-  setup_Vector2(mrb, obj, return_vector, return_vector->x, return_vector->y);
-
-  return obj;
+  return mrb_Vector2_value(mrb, return_vector);
 }
 
 void

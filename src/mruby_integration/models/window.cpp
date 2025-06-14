@@ -249,12 +249,7 @@ mrb_Window_position(mrb_state* mrb, mrb_value) -> mrb_value
   auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *position = GetWindowPosition();
 
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
-
-  setup_Vector2(mrb, obj, position, position->x, position->y);
-
-  return obj;
+  return mrb_Vector2_value(mrb, position);
 }
 
 auto
@@ -293,10 +288,7 @@ mrb_Window_set_minimum_resolution(mrb_state* mrb, mrb_value) -> mrb_value
   auto* minimum_resolution = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   mrb_get_args(mrb, "d", &minimum_resolution, &Vector2_type);
 
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, minimum_resolution));
-  setup_Vector2(
-    mrb, obj, minimum_resolution, minimum_resolution->x, minimum_resolution->y);
+  mrb_value obj = mrb_Vector2_value(mrb, minimum_resolution);
 
   mrb_mod_cv_set(
     mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_resolution"), obj);

@@ -52,12 +52,7 @@ mrb_Mouse_position(mrb_state* mrb, mrb_value) -> mrb_value
   auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *position = GetMousePosition();
 
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, position));
-
-  setup_Vector2(mrb, obj, position, position->x, position->y);
-
-  return obj;
+  return mrb_Vector2_value(mrb, position);
 }
 
 auto
@@ -99,12 +94,7 @@ mrb_Mouse_wheel_moved(mrb_state* mrb, mrb_value) -> mrb_value
   auto* delta = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *delta = GetMouseWheelMoveV();
 
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Vector2_class, &Vector2_type, delta));
-
-  setup_Vector2(mrb, obj, delta, delta->x, delta->y);
-
-  return obj;
+  return mrb_Vector2_value(mrb, delta);
 }
 
 void

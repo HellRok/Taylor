@@ -5,8 +5,8 @@
 
 extern RClass* Vector2_class;
 
-void
-setup_Vector2(mrb_state*, mrb_value, Vector2*, float, float);
+auto
+mrb_Vector2_value(mrb_state*, Vector2*) -> mrb_value;
 
 void
 append_models_Vector2(mrb_state*);
