@@ -33,6 +33,12 @@ class Test
         }
       end
 
+      def test_initialize_with_invalid_thickness
+        assert_raise_with_message(ArgumentError, "Thickness must be greater than 0") {
+          Circle.new(x: 0, y: 0, radius: 1, colour: Colour[0, 0, 0, 0], thickness: 0)
+        }
+      end
+
       def test_brackets
         circle = Circle[1, 2, 3, Colour::GREEN]
 
@@ -72,6 +78,13 @@ class Test
         circle = Circle.new(x: 0, y: 0, radius: 1, colour: Colour[0, 0, 0, 0])
         assert_raise_with_message(ArgumentError, "Radius must be greater than 0") {
           circle.radius = 0
+        }
+      end
+
+      def test_assignment_with_invalid_thickness
+        circle = Circle.new(x: 0, y: 0, radius: 1, colour: Colour[0, 0, 0, 0], thickness: 1)
+        assert_raise_with_message(ArgumentError, "Thickness must be greater than 0") {
+          circle.thickness = 0
         }
       end
 

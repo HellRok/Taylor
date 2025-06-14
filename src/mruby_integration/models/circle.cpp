@@ -105,6 +105,10 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     circle->thickness = mrb_as_float(mrb, kw_values[5]);
   }
 
+  if (circle->thickness <= 0) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Thickness must be greater than 0");
+  }
+
   if (!mrb_undef_p(kw_values[6])) {
     circle->gradient = static_cast<struct Color*> DATA_PTR(kw_values[6]);
     add_owned_object(circle->gradient);
@@ -124,7 +128,6 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
 mrb_attr_accessor(mrb, self, int, i, Circle, x);
 mrb_attr_accessor(mrb, self, int, i, Circle, y);
-mrb_attr_accessor(mrb, self, float, f, Circle, thickness);
 
 mrb_attr_reader(mrb, self, float, Circle, radius);
 auto
@@ -141,6 +144,23 @@ mrb_Circle_set_radius(mrb_state* mrb, mrb_value self) -> mrb_value
   circle->radius = value;
 
   return mrb_float_value(mrb, circle->radius);
+}
+
+mrb_attr_reader(mrb, self, float, Circle, thickness);
+auto
+mrb_Circle_set_thickness(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Circle, circle);
+  mrb_float value;
+  mrb_get_args(mrb, "f", &value);
+
+  if (value <= 0) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Thickness must be greater than 0");
+  }
+
+  circle->thickness = value;
+
+  return mrb_float_value(mrb, circle->thickness);
 }
 
 mrb_attr_writer_struct(mrb, self, Circle, colour, Color);
