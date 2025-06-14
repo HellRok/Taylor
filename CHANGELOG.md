@@ -288,6 +288,7 @@
 - Removed draw_circle_sector_lines
 - Removed draw_circle_gradient
 - Removed draw_circle_lines
+- Added Circle.[]
 
 ## v0.3.14.1
 

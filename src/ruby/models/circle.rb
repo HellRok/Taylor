@@ -3,6 +3,20 @@ class Circle
   # @return [Colour]
   attr_reader :colour, :outline, :gradient
 
+  # A short form way to create new {Circle} objects.
+  #
+  # @example Basic usage
+  #   circle = Circle[120, 200, 50, Colour::GREEN]
+  #
+  # @param x [Float]
+  # @param y [Float]
+  # @param radius [Float]
+  # @param colour [Colour]
+  # @return [Circle]
+  def self.[](x, y, radius, colour = Colour::BLACK)
+    new(x: x, y: y, radius: radius, colour: colour)
+  end
+
   # Return the {Circle} represented as a Hash
   #
   # @example Basic usage

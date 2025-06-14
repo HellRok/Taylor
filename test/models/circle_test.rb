@@ -33,15 +33,15 @@ class Test
         }
       end
 
-      # def test_brackets
-      #   circle = Circle[1, 2, 3, 4]
+      def test_brackets
+        circle = Circle[1, 2, 3, Colour::GREEN]
 
-      #   assert_kind_of Circle, circle
-      #   assert_equal 1, circle.x
-      #   assert_equal 2, circle.y
-      #   assert_equal 3, circle.width
-      #   assert_equal 4, circle.height
-      # end
+        assert_kind_of Circle, circle
+        assert_equal 1, circle.x
+        assert_equal 2, circle.y
+        assert_equal 3, circle.radius
+        assert_equal Colour::GREEN, circle.colour
+      end
 
       def test_assignment
         circle = Circle.new(x: 3, y: 4, radius: 5, colour: Colour[6, 7, 8, 9], outline: Colour[10, 11, 12, 13], thickness: 14, gradient: Colour[14, 15, 16, 17])
