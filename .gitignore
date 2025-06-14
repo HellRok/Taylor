@@ -21,3 +21,6 @@ test/test-analytics.json
 gem/*.gem
 
 .DS_Store
+
+.cache
+compile_commands.json

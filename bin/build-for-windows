@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -u
+
+source bin/lib/helpers.sh
+
+build_command="windows:build"
+if [[ ${1:-} == "--release" ]]; then
+  build_command="windows:release:build"
+fi
+
+build_docker_image_for "windows"
+compile_taylor_through_docker_for "windows" $build_command

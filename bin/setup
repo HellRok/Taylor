@@ -6,3 +6,5 @@ log() {
 
 log "Installing dependencies"
 bundle check > /dev/null 2>&1 || bundle install
+
+bin/bear

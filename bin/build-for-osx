@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -u
+
+source bin/lib/helpers.sh
+
+build_command="osx/apple:build osx/intel:build"
+if [[ ${1:-} == "--release" ]]; then
+  build_command="osx/apple:release:build osx/intel:release:build"
+fi
+
+build_docker_image_for "osx"
+compile_taylor_through_docker_for "osx" "osx/apple:build osx/intel:build"

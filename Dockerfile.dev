@@ -52,7 +52,7 @@ ENV PATH="/home/me/.asdf/shims:/home/me/.asdf/bin:$PATH"
 RUN <<SETUP
 apt-get update --quiet --yes
 
-BASE_DEPS="curl git clang-format clang-tidy"
+BASE_DEPS="curl git clang-format clang-tidy bear"
 RUBY_DEPS="ruby-build libffi-dev libyaml-dev"
 LINUX_BUILD_DEPS="build-essential "
 WINDOWS_BUILD_DEPS="mingw-w64"

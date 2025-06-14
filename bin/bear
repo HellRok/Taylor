@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -u
+
+source bin/lib/helpers.sh
+
+start "Generating compile_commands.json"
+job_output=$(bear -- bundle exec rake clean linux:build 2>&1)
+result $?

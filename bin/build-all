@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -u
+
+source bin/lib/helpers.sh
+
+start "Building Linux for debug"
+job_output=$(./bin/build-for-linux 2>&1)
+result $?
+
+start "Building Linux for release"
+job_output=$(./bin/build-for-linux --release 2>&1)
+result $?
+
+start "Building Windows for debug"
+job_output=$(./bin/build-for-windows 2>&1)
+result $?
+
+start "Building Windows for release"
+job_output=$(./bin/build-for-windows --release 2>&1)
+result $?
+
+start "Building OSX for debug"
+job_output=$(./bin/build-for-osx 2>&1)
+result $?
+
+start "Building OSX for release"
+job_output=$(./bin/build-for-osx --release 2>&1)
+result $?

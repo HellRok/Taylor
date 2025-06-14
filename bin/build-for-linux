@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -u
+
+source bin/lib/helpers.sh
+
+build_command="linux:build"
+if [[ ${1:-} == "--release" ]]; then
+  build_command="linux:release:build"
+fi
+
+build_docker_image_for "linux"
+compile_taylor_through_docker_for "linux" $build_command

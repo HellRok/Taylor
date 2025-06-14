@@ -17,10 +17,6 @@ class OSXAppleBuilder < Builder
     EOS
     @includes << "-I /opt/osxcross/target/SDK/MacOSX11.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
   end
-
-  def name
-    "#{@options["name"]}-apple"
-  end
 end
 
 builder = OSXAppleBuilder.new

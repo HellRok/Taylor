@@ -17,10 +17,6 @@ class OSXIntelBuilder < Builder
     EOS
     @includes << "-I /opt/osxcross/target/SDK/MacOSX11.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers"
   end
-
-  def name
-    "#{@options["name"]}-intel"
-  end
 end
 
 builder = OSXIntelBuilder.new
