@@ -120,6 +120,15 @@ mrb_attr_writer_struct(mrb, self, Line, start, Vector2);
 mrb_attr_writer_struct(mrb, self, Line, end, Vector2);
 mrb_attr_writer_struct(mrb, self, Line, colour, Color);
 
+auto
+mrb_Line_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Line, line);
+
+  DrawLineEx(*line->start, *line->end, line->thickness, *line->colour);
+
+  return mrb_nil_value();
+}
 void
 append_models_Line(mrb_state* mrb)
 {
@@ -133,6 +142,7 @@ append_models_Line(mrb_state* mrb)
   mrb_define_method(
     mrb, Line_class, "colour=", mrb_Line_set_colour, MRB_ARGS_REQ(1));
   mrb_attr_accessor_defines(mrb, Line, thickness);
+  mrb_define_method(mrb, Line_class, "draw", mrb_Line_draw, MRB_ARGS_NONE());
 
   load_ruby_models_line(mrb);
 }

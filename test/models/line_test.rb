@@ -98,13 +98,13 @@ class Test
       #   )
       # end
 
-      # def test_draw_line
-      #   Line.new(x: 1, y: 2, radius: 3, colour: Colour[4, 5, 6, 7]).draw
+      def test_draw_line
+        Line.new(start: Vector2[1, 2], end: Vector2[3, 4], colour: Colour[5, 6, 7, 8], thickness: 9).draw
 
-      #   assert_called [
-      #     "(DrawLine) { centerX: 1 centerY: 2 radius: 3.000000 color: { r: 4 g: 5 b: 6 a: 7 } }"
-      #   ]
-      # end
+        assert_called [
+          "(DrawLineEx) { startPos: { x: 1.000000 y: 2.000000 } endPos: { x: 3.000000 y: 4.000000 } thick: 9.000000 color: { r: 5 g: 6 b: 7 a: 8 } }"
+        ]
+      end
     end
   end
 end

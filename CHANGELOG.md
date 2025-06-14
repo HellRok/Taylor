@@ -290,6 +290,13 @@
 - Removed draw_circle_lines
 - Added Circle.[]
 - Added Line#initialize
+- Added Line#draw
+- Removed draw_line
+- Removed draw_line_v
+- Removed draw_line_ex
+- Removed draw_line_bezier
+- Removed draw_line_bezier_quad
+- Removed draw_line_strip
 
 ## v0.3.14.1
 

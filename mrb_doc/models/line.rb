@@ -23,4 +23,17 @@ class Line
     # src/mruby_integration/models/line.cpp
     Line.new
   end
+
+  # Draws the {Line}.
+  #
+  # @example Basic usage
+  #   line = Line.new(start: Vector2[100, 100], end: Vector2[200, 200], thickness: 5, colour:Colour::RED)
+  #   line.draw
+  #
+  # @return [nil]
+  def draw
+    # mrb_Line_draw
+    # src/mruby_integration/models/line.cpp
+    nil
+  end
 end
