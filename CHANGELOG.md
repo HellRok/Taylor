@@ -300,6 +300,7 @@
 - Added Vector2#draw
 - Removed draw_pixel
 - Removed draw_pixel_v
+- Refactor Rectangle#initialize
 
 ## v0.3.14.1
 

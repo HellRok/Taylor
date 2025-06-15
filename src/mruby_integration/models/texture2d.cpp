@@ -6,7 +6,7 @@
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
-#include "mruby_integration/models/colour.hpp"
+#include "mruby_integration/models/rectangle.hpp"
 #include "mruby_integration/struct_types.hpp"
 
 #include "ruby/models/texture2d.hpp"
@@ -145,7 +145,7 @@ mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
                                         static_cast<float>(texture->height) };
     source = &default_rectangle;
   } else {
-    source = static_cast<struct Rectangle*> DATA_PTR(kw_values[0]);
+    source = static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
   }
 
   Vector2* position;
@@ -162,7 +162,8 @@ mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
       Rectangle{ position->x, position->y, source->width, source->height };
     destination = &default_destination;
   } else {
-    destination = static_cast<struct Rectangle*> DATA_PTR(kw_values[2]);
+    destination =
+      static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
   }
 
   Vector2* origin;

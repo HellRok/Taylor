@@ -116,9 +116,9 @@ mrb_Line_set_thickness(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_float_value(mrb, line->thickness);
 }
 
-mrb_attr_writer_struct(mrb, self, Line, start, Vector2);
-mrb_attr_writer_struct(mrb, self, Line, end, Vector2);
-mrb_attr_writer_struct(mrb, self, Line, colour, Color);
+mrb_attr_writer_struct(mrb, self, Line, Line, start, Vector2);
+mrb_attr_writer_struct(mrb, self, Line, Line, end, Vector2);
+mrb_attr_writer_struct(mrb, self, Line, Line, colour, Color);
 
 auto
 mrb_Line_draw(mrb_state* mrb, mrb_value self) -> mrb_value

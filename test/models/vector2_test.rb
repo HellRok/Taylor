@@ -26,7 +26,7 @@ class Test
       def test_equals_another_type
         vector = Vector2[3, 4]
 
-        assert_false vector == Rectangle[3, 4, 5, 6]
+        assert_false vector == "Hello"
       end
 
       def test_assignment

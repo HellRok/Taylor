@@ -159,39 +159,50 @@
   Data_Get_Struct(mrb, self, &klass##_type, data);                             \
   mrb_assert(data != nullptr);
 
-#define mrb_attr_reader_with_klasses(                                          \
-  mrb, self, type, ruby_klass, cpp_klass, attr)                                \
-  auto mrb_##ruby_klass##_##attr(mrb_state* mrb, mrb_value self)->mrb_value    \
+#define mrb_attr_reader_with_klasses_and_attrs(                                \
+  mrb, self, type, ruby_klass, cpp_klass, ruby_attr, cpp_attr)                 \
+  auto mrb_##ruby_klass##_##ruby_attr(mrb_state* mrb, mrb_value self)          \
+    ->mrb_value                                                                \
   {                                                                            \
     mrb_get_self(mrb, self, cpp_klass, data);                                  \
                                                                                \
-    return mrb_##type##_value(mrb, data->attr);                                \
+    return mrb_##type##_value(mrb, data->cpp_attr);                            \
   }
+
+#define mrb_attr_reader_with_klasses(                                          \
+  mrb, self, type, ruby_klass, cpp_klass, attr)                                \
+  mrb_attr_reader_with_klasses_and_attrs(                                      \
+    mrb, self, type, ruby_klass, cpp_klass, attr, attr);
 
 #define mrb_attr_reader(mrb, self, type, klass, attr)                          \
   mrb_attr_reader_with_klasses(mrb, self, type, klass, klass, attr);
 
-#define mrb_attr_writer_with_klasses(                                          \
-  mrb, self, type, mrb_arg, ruby_klass, cpp_klass, attr)                       \
-  auto mrb_##ruby_klass##_set_##attr(mrb_state* mrb, mrb_value self)           \
+#define mrb_attr_writer_with_klasses_and_attrs(                                \
+  mrb, self, type, mrb_arg, ruby_klass, cpp_klass, ruby_attr, cpp_attr)        \
+  auto mrb_##ruby_klass##_set_##ruby_attr(mrb_state* mrb, mrb_value self)      \
     ->mrb_value                                                                \
   {                                                                            \
     mrb_get_self(mrb, self, cpp_klass, data);                                  \
-    mrb_##type attr;                                                           \
-    mrb_get_args(mrb, #mrb_arg, &attr);                                        \
+    mrb_##type ruby_attr;                                                      \
+    mrb_get_args(mrb, #mrb_arg, &ruby_attr);                                   \
                                                                                \
-    data->attr = attr;                                                         \
+    data->cpp_attr = ruby_attr;                                                \
                                                                                \
-    return mrb_##type##_value(mrb, data->attr);                                \
+    return mrb_##type##_value(mrb, data->cpp_attr);                            \
   }
+
+#define mrb_attr_writer_with_klasses(                                          \
+  mrb, self, type, mrb_arg, ruby_klass, cpp_klass, attr)                       \
+  mrb_attr_writer_with_klasses_and_attrs(                                      \
+    mrb, self, type, mrb_arg, ruby_klass, cpp_klass, attr, attr);
 
 #define mrb_attr_writer(mrb, self, type, mrb_arg, klass, attr)                 \
   mrb_attr_writer_with_klasses(mrb, self, type, mrb_arg, klass, klass, attr);
 
-#define mrb_attr_writer_struct(mrb, self, type, attr, klass)                   \
-  auto mrb_##type##_set_##attr(mrb_state* mrb, mrb_value self)->mrb_value      \
+#define mrb_attr_writer_struct(mrb, self, ruby_type, cpp_type, attr, klass)    \
+  auto mrb_##ruby_type##_set_##attr(mrb_state* mrb, mrb_value self)->mrb_value \
   {                                                                            \
-    mrb_get_self(mrb, self, type, data);                                       \
+    mrb_get_self(mrb, self, cpp_type, data);                                   \
     klass* value;                                                              \
                                                                                \
     mrb_get_args(mrb, "d!", &value, &klass##_type);                            \
@@ -210,6 +221,13 @@
                                                                                \
     return mrb_nil_value();                                                    \
   }
+
+#define mrb_attr_accessor_with_klasses_and_attrs(                              \
+  mrb, self, type, mrb_arg, ruby_klass, cpp_klass, ruby_attr, cpp_attr)        \
+  mrb_attr_reader_with_klasses_and_attrs(                                      \
+    mrb, self, type, ruby_klass, cpp_klass, ruby_attr, cpp_attr);              \
+  mrb_attr_writer_with_klasses_and_attrs(                                      \
+    mrb, self, type, mrb_arg, ruby_klass, cpp_klass, ruby_attr, cpp_attr);
 
 #define mrb_attr_accessor_with_klasses(                                        \
   mrb, self, type, mrb_arg, ruby_klass, cpp_klass, attr)                       \

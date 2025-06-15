@@ -4,8 +4,6 @@
 #include "mruby/data.h"
 #include <string>
 
-#include "mruby_integration/models.hpp"
-
 void
 add_parent(void*, std::string);
 void
@@ -20,6 +18,7 @@ extern mrb_data_type Line_type;
 extern mrb_data_type Monitor_type;
 extern mrb_data_type Music_type;
 extern mrb_data_type Rectangle_type;
+extern mrb_data_type Rektangle_type;
 extern mrb_data_type Shader_type;
 extern mrb_data_type Sound_type;
 extern mrb_data_type RenderTexture_type;

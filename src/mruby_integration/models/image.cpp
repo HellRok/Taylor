@@ -9,6 +9,7 @@
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/colour.hpp"
+#include "mruby_integration/models/rectangle.hpp"
 #include "mruby_integration/models/texture2d.hpp"
 #include "mruby_integration/struct_types.hpp"
 
@@ -161,7 +162,7 @@ mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
     };
     source = &default_source;
   } else {
-    source = static_cast<struct Rectangle*> DATA_PTR(kw_values[0]);
+    source = static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
   }
 
   auto* result = static_cast<Image*>(malloc(sizeof(Image)));
@@ -263,7 +264,7 @@ mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
     };
     source = &default_source;
   } else {
-    source = static_cast<struct Rectangle*> DATA_PTR(kw_values[0]);
+    source = static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
   }
 
   ImageCrop(image, *source);
@@ -555,7 +556,7 @@ mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
     };
     source = &default_source;
   } else {
-    source = static_cast<struct Rectangle*> DATA_PTR(kw_values[1]);
+    source = static_cast<struct Rektangle*> DATA_PTR(kw_values[1])->rectangle;
   }
 
   Rectangle* destination;
@@ -565,7 +566,8 @@ mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
     };
     destination = &default_destination;
   } else {
-    destination = static_cast<struct Rectangle*> DATA_PTR(kw_values[2]);
+    destination =
+      static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
   }
 
   Color* colour;

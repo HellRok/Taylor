@@ -94,7 +94,7 @@ class Test
         image = Image.generate(width: 5, height: 6)
         Taylor::Raylib.reset_calls
 
-        image.copy(source: Rectangle.new(1, 2, 3, 4))
+        image.copy(source: Rectangle[1, 2, 3, 4])
         assert_called [
           "(ImageFromImage) { image: { width: 5 height: 6 mipmaps: 7 format: 8 } rec: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } }"
         ]
@@ -156,7 +156,7 @@ class Test
         image = Image.generate(width: 9, height: 10)
         Taylor::Raylib.reset_calls
 
-        image.crop!(source: Rectangle.new(0, 0, 2, 3))
+        image.crop!(source: Rectangle[0, 0, 2, 3])
 
         assert_called [
           "(ImageCrop) { image: { width: 9 height: 10 mipmaps: 11 format: 12 } crop: { x: 0.000000 y: 0.000000 width: 2.000000 height: 3.000000 } }"

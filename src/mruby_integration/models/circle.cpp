@@ -163,9 +163,9 @@ mrb_Circle_set_thickness(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_float_value(mrb, circle->thickness);
 }
 
-mrb_attr_writer_struct(mrb, self, Circle, colour, Color);
-mrb_attr_writer_struct(mrb, self, Circle, outline, Color);
-mrb_attr_writer_struct(mrb, self, Circle, gradient, Color);
+mrb_attr_writer_struct(mrb, self, Circle, Circle, colour, Color);
+mrb_attr_writer_struct(mrb, self, Circle, Circle, outline, Color);
+mrb_attr_writer_struct(mrb, self, Circle, Circle, gradient, Color);
 
 auto
 mrb_Circle_draw(mrb_state* mrb, mrb_value self) -> mrb_value
