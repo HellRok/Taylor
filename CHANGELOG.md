@@ -312,6 +312,7 @@
 - Removed mrb_draw_rectangle_lines_ex
 - Removed mrb_draw_rectangle_rounded
 - Removed mrb_draw_rectangle_rounded_lines
+- Removed check_collision_point_rec
 
 ## v0.3.14.1
 

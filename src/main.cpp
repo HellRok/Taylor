@@ -12,7 +12,6 @@
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/models.hpp"
 #include "mruby_integration/shaders.hpp"
-#include "mruby_integration/shapes.hpp"
 #include "mruby_integration/text.hpp"
 #include "platform_specific/web.hpp"
 #include "taylor.hpp"
@@ -39,7 +38,6 @@ main(int argc, char** argv) -> int
   append_core(mrb);
   append_models(mrb);
   append_shaders(mrb);
-  append_shapes(mrb);
   append_text(mrb);
 
   append_taylor(mrb);

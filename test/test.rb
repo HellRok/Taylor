@@ -3,8 +3,6 @@ require "mtest_extensions"
 
 require "base"
 
-require "fixtures/web"
-
 require "core/drawing_test"
 require "core_test"
 require "models/audio_test"
@@ -27,7 +25,6 @@ require "models/sound_test"
 require "models/texture2d_test"
 require "models/vector2_test"
 require "models/window_test"
-# require "shapes/collision_test"
 require "taylor_test"
 require "taylor/platform_test"
 require "web_test"
