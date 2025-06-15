@@ -213,6 +213,34 @@ mrb_Rectangle_set_segments(mrb_state* mrb, mrb_value self) -> mrb_value
 mrb_attr_writer_struct(mrb, self, Rectangle, Rektangle, colour, Color);
 mrb_attr_writer_struct(mrb, self, Rectangle, Rektangle, outline, Color);
 
+auto
+mrb_Rectangle_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Rektangle, rectangle);
+
+  if (rectangle->roundness == 0) {
+    DrawRectangleRec(*rectangle->rectangle, *rectangle->colour);
+    if (rectangle->outline != nullptr) {
+      DrawRectangleLinesEx(
+        *rectangle->rectangle, rectangle->thickness, *rectangle->outline);
+    }
+  } else {
+    DrawRectangleRounded(*rectangle->rectangle,
+                         rectangle->roundness,
+                         rectangle->segments,
+                         *rectangle->colour);
+    if (rectangle->outline != nullptr) {
+      DrawRectangleRoundedLines(*rectangle->rectangle,
+                                rectangle->roundness,
+                                rectangle->segments,
+                                rectangle->thickness,
+                                *rectangle->outline);
+    }
+  }
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Rectangle(mrb_state* mrb)
 {
@@ -232,6 +260,8 @@ append_models_Rectangle(mrb_state* mrb)
   mrb_attr_accessor_defines(mrb, Rectangle, thickness);
   mrb_attr_accessor_defines(mrb, Rectangle, roundness);
   mrb_attr_accessor_defines(mrb, Rectangle, segments);
+  mrb_define_method(
+    mrb, Rectangle_class, "draw", mrb_Rectangle_draw, MRB_ARGS_NONE());
 
   load_ruby_models_rectangle(mrb);
 }

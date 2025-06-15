@@ -300,7 +300,18 @@
 - Added Vector2#draw
 - Removed draw_pixel
 - Removed draw_pixel_v
-- Refactor Rectangle#initialize
+- Refactored Rectangle#initialize
+- Refactored Rectangle#draw
+- Removed mrb_draw_rectangle
+- Removed mrb_draw_rectangle_rec
+- Removed mrb_draw_rectangle_pro
+- Removed mrb_draw_rectangle_gradient_v
+- Removed mrb_draw_rectangle_gradient_h
+- Removed mrb_draw_rectangle_gradient_ex
+- Removed mrb_draw_rectangle_lines
+- Removed mrb_draw_rectangle_lines_ex
+- Removed mrb_draw_rectangle_rounded
+- Removed mrb_draw_rectangle_rounded_lines
 
 ## v0.3.14.1
 

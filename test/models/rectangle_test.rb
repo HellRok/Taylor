@@ -150,55 +150,39 @@ class Test
         )
       end
 
-      # def test_draw_rectangle
-      #  Rectangle[1, 2, 3, 4].draw(origin: Vector2[5, 6], rotation: 7, colour: Colour[8, 9, 10, 11])
+      def test_draw_rectangle
+        Rectangle.new(x: 4, y: 5, width: 6, height: 7, colour: Colour[8, 9, 10, 11]).draw
 
-      #  assert_called [
-      #    "(DrawRectanglePro) { rec: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } origin: { x: 5.000000 y: 6.000000 } rotation: 7.000000 color: { r: 8 g: 9 b: 10 a: 11 } }"
-      #  ]
-      # end
+        assert_called [
+          "(DrawRectangleRec) { rec: { x: 4.000000 y: 5.000000 width: 6.000000 height: 7.000000 } color: { r: 8 g: 9 b: 10 a: 11 } }"
+        ]
+      end
 
-      # def test_draw_rectangle_with_outline_not_rounded
-      #  Rectangle[2, 3, 4, 5].draw(thickness: 6, outline: true, colour: Colour[7, 8, 9, 10])
+      def test_draw_rectangle_with_outline_not_rounded
+        Rectangle.new(x: 5, y: 6, width: 7, height: 8, colour: Colour[9, 10, 11, 12], outline: Colour[13, 14, 15, 16], thickness: 17).draw
 
-      #  assert_called [
-      #    "(DrawRectangleLinesEx) { rec: { x: 2.000000 y: 3.000000 width: 4.000000 height: 5.000000 } lineThick: 6.000000 color: { r: 7 g: 8 b: 9 a: 10 } }"
-      #  ]
-      # end
+        assert_called [
+          "(DrawRectangleRec) { rec: { x: 5.000000 y: 6.000000 width: 7.000000 height: 8.000000 } color: { r: 9 g: 10 b: 11 a: 12 } }",
+          "(DrawRectangleLinesEx) { rec: { x: 5.000000 y: 6.000000 width: 7.000000 height: 8.000000 } lineThick: 17.000000 color: { r: 13 g: 14 b: 15 a: 16 } }"
+        ]
+      end
 
-      # def test_draw_rectangle_no_outline_but_rounded
-      #  Rectangle[3, 4, 5, 6].draw(rounded: true, radius: 0.5, segments: 7, colour: Colour[8, 9, 10, 11])
+      def test_draw_rectangle_no_outline_but_rounded
+        Rectangle.new(x: 6, y: 7, width: 8, height: 9, colour: Colour[10, 11, 12, 13], roundness: 0.14, segments: 15).draw
 
-      #  assert_called [
-      #    "(DrawRectangleRounded) { rec: { x: 3.000000 y: 4.000000 width: 5.000000 height: 6.000000 } roundness: 0.500000 segments: 7 color: { r: 8 g: 9 b: 10 a: 11 } }"
-      #  ]
-      # end
+        assert_called [
+          "(DrawRectangleRounded) { rec: { x: 6.000000 y: 7.000000 width: 8.000000 height: 9.000000 } roundness: 0.140000 segments: 15 color: { r: 10 g: 11 b: 12 a: 13 } }"
+        ]
+      end
 
-      # def test_draw_rectangle_with_outline_and_rounded
-      #  Rectangle[4, 5, 6, 7].draw(
-      #    rounded: true, radius: 0.85, segments: 8, outline: true, thickness: 9, colour: Colour[10, 11, 12, 13]
-      #  )
+      def test_draw_rectangle_with_outline_and_rounded
+        Rectangle.new(x: 7, y: 8, width: 9, height: 10, colour: Colour[11, 12, 13, 14], outline: Colour[15, 16, 17, 18], thickness: 19, roundness: 0.20, segments: 21).draw
 
-      #  assert_called [
-      #    "(DrawRectangleRoundedLines) { rec: { x: 4.000000 y: 5.000000 width: 6.000000 height: 7.000000 } roundness: 0.850000 segments: 8 lineThick: 9.000000 color: { r: 10 g: 11 b: 12 a: 13 } }"
-      #  ]
-      # end
-
-      # def test_draw_rectangle_raises_when_radius_below_zero
-      #  assert_raise_with_message(ArgumentError, "Radius must be within (0.0..1.0)") {
-      #    Rectangle.new(2, 2, 6, 6).draw(rounded: true, radius: -0.1)
-      #  }
-
-      #  assert_no_calls
-      # end
-
-      # def test_draw_rectangle_raises_when_radius_above_one
-      #  assert_raise_with_message(ArgumentError, "Radius must be within (0.0..1.0)") {
-      #    Rectangle.new(2, 2, 6, 6).draw(rounded: true, radius: 1.1)
-      #  }
-
-      #  assert_no_calls
-      # end
+        assert_called [
+          "(DrawRectangleRounded) { rec: { x: 7.000000 y: 8.000000 width: 9.000000 height: 10.000000 } roundness: 0.200000 segments: 21 color: { r: 11 g: 12 b: 13 a: 14 } }",
+          "(DrawRectangleRoundedLines) { rec: { x: 7.000000 y: 8.000000 width: 9.000000 height: 10.000000 } roundness: 0.200000 segments: 21 lineThick: 19.000000 color: { r: 15 g: 16 b: 17 a: 18 } }"
+        ]
+      end
     end
   end
 end

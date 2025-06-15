@@ -88,7 +88,7 @@ class Test
 
         assert_called [
           "(BeginMode2D) { camera: { offset.x: 0.000000 offset.y: 0.000000 target.x: 0.000000 target.y: 0.000000 rotation: 0.000000 zoom: 1.000000 } }",
-          "(DrawRectanglePro) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } origin: { x: 0.000000 y: 0.000000 } rotation: 0.000000 color: { r: 230 g: 41 b: 55 a: 255 } }",
+          "(DrawRectangleRec) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } color: { r: 230 g: 41 b: 55 a: 255 } }",
           "(EndMode2D) { }"
         ]
 
@@ -103,7 +103,7 @@ class Test
 
         assert_called [
           "(BeginMode2D) { camera: { offset.x: -2.000000 offset.y: -3.000000 target.x: 0.000000 target.y: 0.000000 rotation: 0.000000 zoom: 1.000000 } }",
-          "(DrawRectanglePro) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } origin: { x: 0.000000 y: 0.000000 } rotation: 0.000000 color: { r: 230 g: 41 b: 55 a: 255 } }",
+          "(DrawRectangleRec) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } color: { r: 230 g: 41 b: 55 a: 255 } }",
           "(EndMode2D) { }"
         ]
       end
