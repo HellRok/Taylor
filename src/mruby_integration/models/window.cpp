@@ -355,6 +355,17 @@ mrb_Window_set_monitor(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Window_scale(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.scale")
+
+  auto* scale = static_cast<Vector2*>(malloc(sizeof(Vector2)));
+  *scale = GetWindowScaleDPI();
+
+  return mrb_Vector2_value(mrb, scale);
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -418,6 +429,8 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "to_image", mrb_Window_to_image, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "monitor=", mrb_Window_set_monitor, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "scale", mrb_Window_scale, MRB_ARGS_NONE());
 
   load_ruby_models_window(mrb);
 }

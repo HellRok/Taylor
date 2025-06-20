@@ -765,6 +765,32 @@ class Test
           "(IsWindowReady) { }"
         ]
       end
+
+      def test_scale
+        Taylor::Raylib.mock_call("GetWindowScaleDPI", Vector2.mock_return(x: 1, y: 2))
+
+        scale = Window.scale
+        assert_kind_of Vector2, scale
+        assert_equal 1, scale.x
+        assert_equal 2, scale.y
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(GetWindowScaleDPI) { }"
+        ]
+      end
+
+      def test_scale_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.scale") {
+          Window.scale
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
     end
   end
 end

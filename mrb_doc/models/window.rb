@@ -597,4 +597,24 @@ class Window
     # src/mruby_integration/models/window.cpp
     nil
   end
+
+  # Gets the scale of the {Window}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   p Window.scale
+  #   #=> Vector2[1, 1]
+  #
+  # @return [Vector2]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.scale
+    # mrb_Window_scale
+    # src/mruby_integration/models/window.cpp
+    Vector2.new(1, 1)
+  end
 end

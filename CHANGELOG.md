@@ -316,6 +316,8 @@
 - Added Window.monitor
 - Added Window.monitor=
 - Removed set_window_monitor
+- Added Window.scale
+- Removed get_window_scale_dpi
 
 ## v0.3.14.1
 
