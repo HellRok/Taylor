@@ -203,7 +203,7 @@
 - Removed window_resized?
 - Added Window.toggle_fullscreen
 - Removed toggle_fullscreen
-- Added Window.maxmimse
+- Added Window.maximise
 - Removed maximise_window
 - Added Window.minimise
 - Removed minimise_window
@@ -313,6 +313,9 @@
 - Removed mrb_draw_rectangle_rounded
 - Removed mrb_draw_rectangle_rounded_lines
 - Removed check_collision_point_rec
+- Added Window.monitor
+- Added Window.monitor=
+- Removed set_window_monitor
 
 ## v0.3.14.1
 

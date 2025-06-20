@@ -568,10 +568,33 @@ class Window
   #   # => #<Image:0x5594c40fce60>
   #
   # @return [Image]
-  # @raise [NotReadyError] Raised when passing an invalid opacity.
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.to_image
     # mrb_Window_to_image
     # src/mruby_integration/models/window.cpp
     Image.new
+  end
+
+  # Moves the {Window} to the passed in {Monitor}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.monitor = Monitor.all.last
+  #
+  # @todo For some reason, this currently seems to fullscreen the {Window} when
+  #   it moves it and doesn't update the result of {Window.monitor}.
+  #
+  # @param monitor [Monitor]
+  # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.monitor=(monitor)
+    # mrb_Window_set_monitor
+    # src/mruby_integration/models/window.cpp
+    nil
   end
 end

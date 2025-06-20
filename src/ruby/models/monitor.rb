@@ -1,9 +1,6 @@
 # This class is used for retrieving information about the monitors attached to
 # the computer.
 class Monitor
-  # @return [Integer]
-  attr_reader :id
-
   # Returns the requested {Monitor}.
   #
   # @example Basic usage

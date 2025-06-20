@@ -381,6 +381,26 @@ module Window
     @@opacity
   end
 
+  # Returns the {Monitor} that the {Window} is currently on.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.monitor.id
+  #   # => 0
+  #
+  # @return [Monitor]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.monitor
+    raise Window::NotReadyError, "You must call Window.open before Window.monitor" unless ready?
+
+    Monitor.current
+  end
+
   # This class holds all the constants for {Window} flags.
   class Flag
     # @!group Window flags

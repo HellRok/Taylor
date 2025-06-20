@@ -28,6 +28,7 @@ class Test
         monitor = Monitor.new(id: 1)
 
         assert_kind_of Monitor, monitor
+        assert_equal 1, monitor.id
 
         assert_no_calls
       end
@@ -36,6 +37,7 @@ class Test
         monitor = Monitor[0]
 
         assert_kind_of Monitor, monitor
+        assert_equal 0, monitor.id
 
         assert_called [
           "(IsWindowReady) { }",

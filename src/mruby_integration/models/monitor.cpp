@@ -4,6 +4,7 @@
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
+#include "mruby_integration/models/monitor.hpp"
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/models/window.hpp"
 #include "mruby_integration/struct_types.hpp"
@@ -12,15 +13,19 @@
 
 struct RClass* Monitor_class;
 
-struct Monitor
+auto
+mrb_Monitor_value(mrb_state* mrb, Monitor* monitor) -> mrb_value
 {
-  int id;
-};
+  mrb_value obj =
+    mrb_obj_value(Data_Wrap_Struct(mrb, Monitor_class, &Monitor_type, monitor));
+
+  return obj;
+}
 
 void
-setup_Monitor(mrb_state* mrb, mrb_value object, Monitor* monitor, int id)
+Monitor_init(Monitor* monitor, int id)
 {
-  ivar_attr_int(mrb, object, monitor->id, id);
+  monitor->id = id;
 }
 
 auto
@@ -54,11 +59,13 @@ mrb_Monitor_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_data_init(self, nullptr, &Monitor_type);
   monitor = static_cast<Monitor*>(malloc(sizeof(Monitor)));
 
-  setup_Monitor(mrb, self, monitor, id);
+  Monitor_init(monitor, id);
 
   mrb_data_init(self, monitor, &Monitor_type);
   return self;
 }
+
+mrb_attr_reader(mrb, self, int, Monitor, id);
 
 auto
 mrb_Monitor_current(mrb_state* mrb, mrb_value) -> mrb_value
@@ -69,8 +76,6 @@ mrb_Monitor_current(mrb_state* mrb, mrb_value) -> mrb_value
 
   mrb_value obj =
     mrb_obj_value(Data_Wrap_Struct(mrb, Monitor_class, &Monitor_type, monitor));
-
-  setup_Monitor(mrb, obj, monitor, monitor->id);
 
   return obj;
 }
@@ -157,6 +162,7 @@ append_models_Monitor(mrb_state* mrb)
 
   mrb_define_method(
     mrb, Monitor_class, "initialize", mrb_Monitor_initialize, MRB_ARGS_REQ(1));
+  mrb_attr_reader_define(mrb, Monitor, id);
   mrb_define_method(
     mrb, Monitor_class, "position", mrb_Monitor_position, MRB_ARGS_NONE());
   mrb_define_method(

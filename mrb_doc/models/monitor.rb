@@ -1,4 +1,7 @@
 class Monitor
+  # @return [Integer]
+  attr_reader :id
+
   # Returns how many monitors are attached to the computer.
   #
   # @example Basic usage

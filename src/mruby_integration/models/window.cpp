@@ -7,6 +7,7 @@
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/image.hpp"
+#include "mruby_integration/models/monitor.hpp"
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
 
@@ -342,6 +343,18 @@ mrb_Window_to_image(mrb_state* mrb, mrb_value) -> mrb_value
   return obj;
 }
 
+auto
+mrb_Window_set_monitor(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.monitor=")
+
+  Monitor* monitor;
+  mrb_get_args(mrb, "d", &monitor, &Monitor_type);
+  SetWindowMonitor(monitor->id);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -403,6 +416,8 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "opacity=", mrb_Window_set_opacity, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "to_image", mrb_Window_to_image, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "monitor=", mrb_Window_set_monitor, MRB_ARGS_REQ(1));
 
   load_ruby_models_window(mrb);
 }
