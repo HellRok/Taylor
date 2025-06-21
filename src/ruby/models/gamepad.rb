@@ -3,6 +3,23 @@ class Gamepad
   # If there are more gamepads detected than this, we assume an error.
   MAX_GAMEPADS = 10
 
+  # Returns the requested {Gamepad}.
+  #
+  # @example Basic usage
+  #   player_one = Gamepad[0]
+  #   puts player_one
+  #   # => #<Gamepad:0x55bb73db1ca0>
+  #
+  # @return [Gamepad]
+  # @raise [ArgumentError] If calling an unavailable gamepad index
+  def self.[](index)
+    count = Gamepad.all.count
+
+    raise ArgumentError, "Must be an integer in (0..#{count - 1})" if index < 0 || index >= count
+
+    new(index: index)
+  end
+
   # Returns all {Gamepad} attached to the computer.
   #
   # @example Basic usage

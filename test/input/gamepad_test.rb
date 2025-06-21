@@ -10,6 +10,55 @@ class Test
         assert_no_calls
       end
 
+      def test_brackets
+        Taylor::Raylib.mock_call("IsGamepadAvailable", "true")
+        Taylor::Raylib.mock_call("IsGamepadAvailable", "false")
+
+        gamepad = Gamepad[0]
+
+        assert_kind_of Gamepad, gamepad
+        assert_equal 0, gamepad.index
+
+        assert_called [
+          "(IsGamepadAvailable) { gamepad: 0 }",
+          "(IsGamepadAvailable) { gamepad: 1 }"
+        ]
+      end
+
+      def test_brackets_too_low
+        Taylor::Raylib.mock_call("IsGamepadAvailable", "true")
+        Taylor::Raylib.mock_call("IsGamepadAvailable", "true")
+        Taylor::Raylib.mock_call("IsGamepadAvailable", "false")
+
+        assert_raise_with_message(ArgumentError, "Must be an integer in (0..1)") {
+          Gamepad[-1]
+        }
+
+        assert_called [
+          "(IsGamepadAvailable) { gamepad: 0 }",
+          "(IsGamepadAvailable) { gamepad: 1 }",
+          "(IsGamepadAvailable) { gamepad: 2 }"
+        ]
+      end
+
+      def test_brackets_too_high
+        Taylor::Raylib.mock_call("IsGamepadAvailable", "true")
+        Taylor::Raylib.mock_call("IsGamepadAvailable", "true")
+        Taylor::Raylib.mock_call("IsGamepadAvailable", "true")
+        Taylor::Raylib.mock_call("IsGamepadAvailable", "false")
+
+        assert_raise_with_message(ArgumentError, "Must be an integer in (0..2)") {
+          Gamepad[3]
+        }
+
+        assert_called [
+          "(IsGamepadAvailable) { gamepad: 0 }",
+          "(IsGamepadAvailable) { gamepad: 1 }",
+          "(IsGamepadAvailable) { gamepad: 2 }",
+          "(IsGamepadAvailable) { gamepad: 3 }"
+        ]
+      end
+
       def test_all
         Taylor::Raylib.mock_call("IsGamepadAvailable", "true")
         Taylor::Raylib.mock_call("IsGamepadAvailable", "true")

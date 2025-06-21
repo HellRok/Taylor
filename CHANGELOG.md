@@ -320,6 +320,7 @@
 - Removed get_window_scale_dpi
 - Added Gamepad#available?
 - Removed gamepad_available?
+- Added Gamepad.[]
 
 ## v0.3.14.1
 
