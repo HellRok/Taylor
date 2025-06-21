@@ -52,13 +52,8 @@ mrb_Monitor_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     id = mrb_as_int(mrb, kw_values[0]);
   }
 
-  Monitor* monitor = static_cast<struct Monitor*> DATA_PTR(self);
-  if (monitor) {
-    mrb_free(mrb, monitor);
-  }
-  mrb_data_init(self, nullptr, &Monitor_type);
-  monitor = static_cast<Monitor*>(malloc(sizeof(Monitor)));
-
+  Monitor* monitor;
+  mrb_self_ptr(mrb, self, Monitor, monitor);
   Monitor_init(monitor, id);
 
   mrb_data_init(self, monitor, &Monitor_type);
@@ -85,10 +80,7 @@ mrb_Monitor_position(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#position");
 
-  Monitor* monitor;
-
-  Data_Get_Struct(mrb, self, &Monitor_type, monitor);
-  mrb_assert(monitor != nullptr);
+  mrb_get_self(mrb, self, Monitor, monitor);
 
   auto* position = static_cast<Vector2*>(malloc(sizeof(Vector2)));
   *position = GetMonitorPosition(monitor->id);
@@ -101,10 +93,7 @@ mrb_Monitor_width(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#width");
 
-  Monitor* monitor;
-
-  Data_Get_Struct(mrb, self, &Monitor_type, monitor);
-  mrb_assert(monitor != nullptr);
+  mrb_get_self(mrb, self, Monitor, monitor);
 
   return mrb_int_value(mrb, GetMonitorWidth(monitor->id));
 }
@@ -114,10 +103,7 @@ mrb_Monitor_height(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#height");
 
-  Monitor* monitor;
-
-  Data_Get_Struct(mrb, self, &Monitor_type, monitor);
-  mrb_assert(monitor != nullptr);
+  mrb_get_self(mrb, self, Monitor, monitor);
 
   return mrb_int_value(mrb, GetMonitorHeight(monitor->id));
 }
@@ -128,10 +114,7 @@ mrb_Monitor_refresh_rate(mrb_state* mrb, mrb_value self) -> mrb_value
   EXIT_UNLESS_WINDOW_READY(
     "You must call Window.open before Monitor#refresh_rate");
 
-  Monitor* monitor;
-
-  Data_Get_Struct(mrb, self, &Monitor_type, monitor);
-  mrb_assert(monitor != nullptr);
+  mrb_get_self(mrb, self, Monitor, monitor);
 
   return mrb_int_value(mrb, GetMonitorRefreshRate(monitor->id));
 }
@@ -141,10 +124,7 @@ mrb_Monitor_name(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#name");
 
-  Monitor* monitor;
-
-  Data_Get_Struct(mrb, self, &Monitor_type, monitor);
-  mrb_assert(monitor != nullptr);
+  mrb_get_self(mrb, self, Monitor, monitor);
 
   return mrb_str_new_cstr(mrb, GetMonitorName(monitor->id));
 }

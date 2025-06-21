@@ -47,7 +47,7 @@ class Monitor
   # @param id [Integer]
   # @return [Monitor]
   def initialize(id:)
-    # mrb_Monitor_count
+    # mrb_Monitor_initialize
     # src/mruby_integration/models/monitor.cpp
     Monitor[0]
   end

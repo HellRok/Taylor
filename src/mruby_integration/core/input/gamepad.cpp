@@ -1,17 +1,7 @@
 #include "mruby.h"
-#include "mruby/string.h"
 #include "raylib.h"
 
 #include "ruby/core/input/gamepad.hpp"
-
-auto
-mrb_gamepad_available(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int index;
-  mrb_get_args(mrb, "i", &index);
-
-  return mrb_bool_value(IsGamepadAvailable(index));
-}
 
 auto
 mrb_get_gamepad_name(mrb_state* mrb, mrb_value) -> mrb_value
@@ -95,11 +85,6 @@ mrb_set_gamepad_mappings(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_input_gamepad(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "gamepad_available?",
-                    mrb_gamepad_available,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "get_gamepad_name",

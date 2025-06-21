@@ -318,6 +318,8 @@
 - Removed set_window_monitor
 - Added Window.scale
 - Removed get_window_scale_dpi
+- Added Gamepad#available?
+- Removed gamepad_available?
 
 ## v0.3.14.1
 

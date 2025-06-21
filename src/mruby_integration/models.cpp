@@ -4,6 +4,7 @@
 #include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/models/cursor.hpp"
 #include "mruby_integration/models/font.hpp"
+#include "mruby_integration/models/gamepad.hpp"
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/key.hpp"
 #include "mruby_integration/models/line.hpp"
@@ -28,6 +29,7 @@ append_models(mrb_state* mrb)
   append_models_Colour(mrb);
   append_models_Cursor(mrb);
   append_models_Font(mrb);
+  append_models_Gamepad(mrb);
   append_models_Image(mrb);
   append_models_Key(mrb);
   append_models_Line(mrb);

@@ -1,12 +1,3 @@
-# Return whether or not the specified gamepad is available.
-# @param index [Integer]
-# @return [Bool]
-def gamepad_available?(index)
-  # mrb_gamepad_available
-  # src/mruby_integration/core/input/gamepad.cpp
-  true
-end
-
 # Returns the specified gamepad's name.
 # @param index [Integer]
 # @return [String]
