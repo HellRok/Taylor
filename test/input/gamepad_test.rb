@@ -114,6 +114,16 @@ class Test
           "(IsGamepadAvailable) { gamepad: 1 }"
         ]
       end
+
+      def test_name
+        Taylor::Raylib.mock_call("*GetGamepadName", "the gamepad name")
+
+        assert_equal "the gamepad name", Gamepad.new(index: 0).name
+
+        assert_called [
+          "(*GetGamepadName) { gamepad: 0 }"
+        ]
+      end
     end
   end
 end

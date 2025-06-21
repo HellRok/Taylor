@@ -60,6 +60,14 @@ mrb_Gamepad_available(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_bool_value(IsGamepadAvailable(gamepad->index));
 }
 
+auto
+mrb_Gamepad_name(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Gamepad, gamepad);
+
+  return mrb_str_new_cstr(mrb, GetGamepadName(gamepad->index));
+}
+
 void
 append_models_Gamepad(mrb_state* mrb)
 {
@@ -71,6 +79,8 @@ append_models_Gamepad(mrb_state* mrb)
   mrb_attr_reader_define(mrb, Gamepad, index);
   mrb_define_method(
     mrb, Gamepad_class, "available?", mrb_Gamepad_available, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Gamepad_class, "name", mrb_Gamepad_name, MRB_ARGS_NONE());
 
   load_ruby_models_gamepad(mrb);
 }

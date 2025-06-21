@@ -321,6 +321,8 @@
 - Added Gamepad#available?
 - Removed gamepad_available?
 - Added Gamepad.[]
+- Added Gamepad#name
+- Removed get_gamepad_name
 
 ## v0.3.14.1
 

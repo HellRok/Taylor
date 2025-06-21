@@ -32,4 +32,20 @@ class Gamepad
     # src/mruby_integration/models/gamepad.cpp
     true
   end
+
+  # Returns the name of the {Gamepad}
+  #
+  # @example Basic usage
+  #   player_one = Gamepad[0]
+  #   player_two = Gamepad[1]
+  #
+  #   puts player_one.name #=> "X-box controller"
+  #   puts player_two.name #=> "Gamecube controller"
+  #
+  # @return [String]
+  def name
+    # mrb_Gamepad_name
+    # src/mruby_integration/models/gamepad.cpp
+    true
+  end
 end

@@ -1,12 +1,3 @@
-# Returns the specified gamepad's name.
-# @param index [Integer]
-# @return [String]
-def get_gamepad_name(index)
-  # mrb_get_gamepad_name
-  # src/mruby_integration/core/input/gamepad.cpp
-  "Xbox Controller"
-end
-
 # Has the specified button been pressed on the specific gamepad?
 # @param index [Integer]
 # @param button [Integer]

@@ -4,16 +4,6 @@
 #include "ruby/core/input/gamepad.hpp"
 
 auto
-mrb_get_gamepad_name(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int index;
-  mrb_get_args(mrb, "i", &index);
-
-  const char* name = GetGamepadName(index);
-  return mrb_str_new_cstr(mrb, name);
-}
-
-auto
 mrb_gamepad_button_pressed(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index, button;
@@ -85,11 +75,6 @@ mrb_set_gamepad_mappings(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_input_gamepad(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_gamepad_name",
-                    mrb_get_gamepad_name,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "gamepad_button_pressed?",
