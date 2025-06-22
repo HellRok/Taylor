@@ -90,6 +90,17 @@ mrb_Gamepad_down(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_bool_value(IsGamepadButtonDown(gamepad->index, button));
 }
 
+auto
+mrb_Gamepad_released(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Gamepad, gamepad);
+
+  mrb_int button;
+  mrb_get_args(mrb, "i", &button);
+
+  return mrb_bool_value(IsGamepadButtonReleased(gamepad->index, button));
+}
+
 void
 append_models_Gamepad(mrb_state* mrb)
 {
@@ -107,6 +118,8 @@ append_models_Gamepad(mrb_state* mrb)
     mrb, Gamepad_class, "pressed?", mrb_Gamepad_pressed, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Gamepad_class, "down?", mrb_Gamepad_down, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Gamepad_class, "released?", mrb_Gamepad_released, MRB_ARGS_REQ(1));
 
   load_ruby_models_gamepad(mrb);
 }

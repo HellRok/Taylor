@@ -2,15 +2,6 @@
 #include "raylib.h"
 
 auto
-mrb_gamepad_button_released(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int index, button;
-  mrb_get_args(mrb, "ii", &index, &button);
-
-  return mrb_bool_value(IsGamepadButtonReleased(index, button));
-}
-
-auto
 mrb_gamepad_button_up(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index, button;
@@ -55,11 +46,6 @@ mrb_set_gamepad_mappings(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_input_gamepad(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "gamepad_button_released?",
-                    mrb_gamepad_button_released,
-                    MRB_ARGS_REQ(2));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "gamepad_button_up?",

@@ -327,6 +327,8 @@
 - Removed gamepad_button_pressed?
 - Added Gamepad#down?
 - Removed gamepad_button_down?
+- Added Gamepad#released?
+- Removed gamepad_button_released?
 
 ## v0.3.14.1
 

@@ -150,6 +150,19 @@ class Test
           "(IsGamepadButtonDown) { gamepad: 1 button: 17 }"
         ]
       end
+
+      def test_released?
+        Taylor::Raylib.mock_call("IsGamepadButtonReleased", "true")
+        Taylor::Raylib.mock_call("IsGamepadButtonReleased", "false")
+
+        assert_true Gamepad.new(index: 0).released?(Gamepad::Trigger::RIGHT_2)
+        assert_false Gamepad.new(index: 1).released?(Gamepad::Button::LEFT)
+
+        assert_called [
+          "(IsGamepadButtonReleased) { gamepad: 0 button: 12 }",
+          "(IsGamepadButtonReleased) { gamepad: 1 button: 8 }"
+        ]
+      end
     end
   end
 end

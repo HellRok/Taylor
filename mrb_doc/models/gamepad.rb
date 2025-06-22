@@ -54,12 +54,27 @@ class Gamepad
   # @example Basic usage
   #   gamepad = Gamepad[0]
   #
-  #   puts gamepad.button_pressed?(Gamepad::Button::LEFT) #=> true
-  #   puts gamepad.button_pressed?(Gamepad::Dpad::UP) #=> true
+  #   puts gamepad.pressed?(Gamepad::Button::LEFT) #=> true
+  #   puts gamepad.pressed?(Gamepad::Dpad::UP) #=> true
   #
   # @return [Boolean]
   def pressed?
     # mrb_Gamepad_pressed
+    # src/mruby_integration/models/gamepad.cpp
+    true
+  end
+
+  # Has the specified button on the {Gamepad} released since last frame?
+  #
+  # @example Basic usage
+  #   gamepad = Gamepad[0]
+  #
+  #   puts gamepad.released?(Gamepad::Button::UP) #=> true
+  #   puts gamepad.released?(Gamepad::Dpad::LEFT) #=> true
+  #
+  # @return [Boolean]
+  def released?
+    # mrb_Gamepad_released
     # src/mruby_integration/models/gamepad.cpp
     true
   end
@@ -69,8 +84,8 @@ class Gamepad
   # @example Basic usage
   #   gamepad = Gamepad[0]
   #
-  #   puts gamepad.button_down?(Gamepad::Trigger::LEFT_1) #=> true
-  #   puts gamepad.button_down?(Gamepad::Dpad::RIGHT) #=> true
+  #   puts gamepad.down?(Gamepad::Trigger::LEFT_1) #=> true
+  #   puts gamepad.down?(Gamepad::Dpad::RIGHT) #=> true
   #
   # @return [Boolean]
   def down?

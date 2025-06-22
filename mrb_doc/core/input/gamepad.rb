@@ -1,13 +1,3 @@
-# Has the specified button been released on the specific gamepad?
-# @param index [Integer]
-# @param button [Integer]
-# @return [Boolean]
-def gamepad_button_released?(index, button)
-  # mrb_gamepad_button_released
-  # src/mruby_integration/core/input/gamepad.cpp
-  false
-end
-
 # Is the specified button not being pressed on the specific gamepad?
 # @param index [Integer]
 # @param button [Integer]
