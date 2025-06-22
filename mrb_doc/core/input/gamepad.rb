@@ -1,13 +1,3 @@
-# Is the specified button not being pressed on the specific gamepad?
-# @param index [Integer]
-# @param button [Integer]
-# @return [Boolean]
-def gamepad_button_up?(index, button)
-  # mrb_gamepad_button_up
-  # src/mruby_integration/core/input/gamepad.cpp
-  true
-end
-
 # Returns the last pressed gamepad button.
 # @return [Integer]
 def get_gamepad_button_pressed
