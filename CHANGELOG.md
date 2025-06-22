@@ -325,6 +325,8 @@
 - Removed get_gamepad_name
 - Added Gamepad#pressed?
 - Removed gamepad_button_pressed?
+- Added Gamepad#down?
+- Removed gamepad_button_down?
 
 ## v0.3.14.1
 

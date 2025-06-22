@@ -1,13 +1,3 @@
-# Is the specified button down on the specific gamepad?
-# @param index [Integer]
-# @param button [Integer]
-# @return [Boolean]
-def gamepad_button_down?(index, button)
-  # mrb_gamepad_button_down
-  # src/mruby_integration/core/input/gamepad.cpp
-  true
-end
-
 # Has the specified button been released on the specific gamepad?
 # @param index [Integer]
 # @param button [Integer]

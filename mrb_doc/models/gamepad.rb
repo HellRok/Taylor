@@ -63,4 +63,19 @@ class Gamepad
     # src/mruby_integration/models/gamepad.cpp
     true
   end
+
+  # Is the specified button on the {Gamepad} being held down?
+  #
+  # @example Basic usage
+  #   gamepad = Gamepad[0]
+  #
+  #   puts gamepad.button_down?(Gamepad::Trigger::LEFT_1) #=> true
+  #   puts gamepad.button_down?(Gamepad::Dpad::RIGHT) #=> true
+  #
+  # @return [Boolean]
+  def down?
+    # mrb_Gamepad_down
+    # src/mruby_integration/models/gamepad.cpp
+    true
+  end
 end
