@@ -1,17 +1,6 @@
 #include "mruby.h"
 #include "raylib.h"
 
-#include "ruby/core/input/gamepad.hpp"
-
-auto
-mrb_gamepad_button_pressed(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int index, button;
-  mrb_get_args(mrb, "ii", &index, &button);
-
-  return mrb_bool_value(IsGamepadButtonPressed(index, button));
-}
-
 auto
 mrb_gamepad_button_down(mrb_state* mrb, mrb_value) -> mrb_value
 {
@@ -77,11 +66,6 @@ append_core_input_gamepad(mrb_state* mrb)
 {
   mrb_define_method(mrb,
                     mrb->kernel_module,
-                    "gamepad_button_pressed?",
-                    mrb_gamepad_button_pressed,
-                    MRB_ARGS_REQ(2));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
                     "gamepad_button_down?",
                     mrb_gamepad_button_down,
                     MRB_ARGS_REQ(2));
@@ -115,6 +99,4 @@ append_core_input_gamepad(mrb_state* mrb)
                     "set_gamepad_mappings",
                     mrb_set_gamepad_mappings,
                     MRB_ARGS_REQ(1));
-
-  load_ruby_core_input_gamepad(mrb);
 }

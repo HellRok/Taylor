@@ -57,4 +57,76 @@ class Gamepad
   # Thrown when we exceed {Gamepad::MAX_GAMEPADS}, you can just bump
   # {Gamepad::MAX_GAMEPADS} if you genuinely need more.
   class TooManyGamepadsError < StandardError; end
+
+  # The D-pad buttons
+  module Dpad
+    # The D-pad up button
+    UP = 1
+    # The D-pad right button
+    RIGHT = 2
+    # The D-pad down button
+    DOWN = 3
+    # The D-pad left button
+    LEFT = 4
+  end
+
+  # The regular buttons
+  module Button
+    # Unknown gamepad button.
+    UNKNOWN = 0
+    # Nintendo: X
+    # Xbox: Y
+    # PS: Triangle
+    UP = 5
+    # Nintendo: A
+    # Xbox: X
+    # PS: Square
+    RIGHT = 6
+    # Nintendo: B
+    # Xbox: A
+    # PS: Cross
+    DOWN = 7
+    # Nintendo: Y
+    # Xbox: B
+    # PS: Circle
+    LEFT = 8
+    # Select
+    MIDDLE_LEFT = 13
+    # Normally a home button
+    MIDDLE = 14
+    # Start
+    MIDDLE_RIGHT = 15
+    # Left Joystick pressed
+    LEFT_JOYSTICK = 16
+    # Right Joystick pressed
+    RIGHT_JOYSTICK = 17
+  end
+
+  # The triggers or shoulder buttons
+  module Trigger
+    # The front left trigger
+    LEFT_1 = 9
+    # The back left trigger
+    LEFT_2 = 10
+    # The front right trigger
+    RIGHT_1 = 11
+    # The back right trigger
+    RIGHT_2 = 12
+  end
+
+  # The Joystick axis and trigger pressures
+  module Axis
+    # The left joystick horizontal axis
+    LEFT_X = 0
+    # The left joystick vertical axis
+    LEFT_Y = 1
+    # The right joystick horizontal axis
+    RIGHT_X = 2
+    # The right joystick vertical axis
+    RIGHT_Y = 3
+    # The left trigger pressure level
+    LEFT_TRIGGER = 4
+    # The right trigger pressure level
+    RIGHT_TRIGGER = 5
+  end
 end

@@ -1,13 +1,3 @@
-# Has the specified button been pressed on the specific gamepad?
-# @param index [Integer]
-# @param button [Integer]
-# @return [Boolean]
-def gamepad_button_pressed?(index, button)
-  # mrb_gamepad_button_pressed
-  # src/mruby_integration/core/input/gamepad.cpp
-  true
-end
-
 # Is the specified button down on the specific gamepad?
 # @param index [Integer]
 # @param button [Integer]

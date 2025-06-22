@@ -46,6 +46,21 @@ class Gamepad
   def name
     # mrb_Gamepad_name
     # src/mruby_integration/models/gamepad.cpp
+    "Gamecube controller"
+  end
+
+  # Has the specified button on the {Gamepad} pressed since last frame?
+  #
+  # @example Basic usage
+  #   gamepad = Gamepad[0]
+  #
+  #   puts gamepad.button_pressed?(Gamepad::Button::LEFT) #=> true
+  #   puts gamepad.button_pressed?(Gamepad::Dpad::UP) #=> true
+  #
+  # @return [Boolean]
+  def pressed?
+    # mrb_Gamepad_pressed
+    # src/mruby_integration/models/gamepad.cpp
     true
   end
 end

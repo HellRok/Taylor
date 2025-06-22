@@ -323,6 +323,8 @@
 - Added Gamepad.[]
 - Added Gamepad#name
 - Removed get_gamepad_name
+- Added Gamepad#pressed?
+- Removed gamepad_button_pressed?
 
 ## v0.3.14.1
 
