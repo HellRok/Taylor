@@ -124,4 +124,23 @@ class Gamepad
     # src/mruby_integration/models/gamepad.cpp
     6
   end
+
+  # Returns a float between -1.0 and 1.0 for how far this axis has moved, for a
+  # joystick this will be how far left/right or up/down it has been tilted with
+  # 0 being the centre.
+  #
+  # @example Basic usage
+  #   gamepad = Gamepad[0]
+  #
+  #   puts gamepad.axis(0) #=> 0.98
+  #   puts gamepad.axis(1) #=> -0.023
+  #
+  # @param axis [Integer]
+  # @return [Float] -1.0 to 1.0
+  # @raise [ArgumentError] If you try to access an axis that doesn't exist
+  def axis(index)
+    # mrb_Gamepad_axis
+    # src/mruby_integration/models/gamepad.cpp
+    0.98
+  end
 end

@@ -186,6 +186,42 @@ class Test
           "(GetGamepadAxisCount) { gamepad: 0 }"
         ]
       end
+
+      def test_axis
+        Taylor::Raylib.mock_call("GetGamepadAxisCount", "2")
+        Taylor::Raylib.mock_call("GetGamepadAxisMovement", "0.5")
+
+        assert_equal 0.5, Gamepad.new(index: 0).axis(1)
+
+        assert_called [
+          "(GetGamepadAxisCount) { gamepad: 0 }",
+          "(GetGamepadAxisMovement) { gamepad: 0 axis: 1 }"
+        ]
+      end
+
+      def test_axis_too_low
+        Taylor::Raylib.mock_call("GetGamepadAxisCount", "2")
+
+        assert_raise_with_message(ArgumentError, "Must be an integer in (0..1)") {
+          Gamepad.new(index: 0).axis(-1)
+        }
+
+        assert_called [
+          "(GetGamepadAxisCount) { gamepad: 0 }"
+        ]
+      end
+
+      def test_axis_too_high
+        Taylor::Raylib.mock_call("GetGamepadAxisCount", "3")
+
+        assert_raise_with_message(ArgumentError, "Must be an integer in (0..2)") {
+          Gamepad.new(index: 0).axis(3)
+        }
+
+        assert_called [
+          "(GetGamepadAxisCount) { gamepad: 0 }"
+        ]
+      end
     end
   end
 end

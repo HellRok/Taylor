@@ -1,6 +1,7 @@
 #include "mruby.h"
 #include "mruby/class.h"
 #include "raylib.h"
+#include <string>
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
@@ -120,6 +121,24 @@ mrb_Gamepad_axis_count(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_int_value(mrb, GetGamepadAxisCount(gamepad->index));
 }
 
+auto
+mrb_Gamepad_axis(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Gamepad, gamepad);
+
+  mrb_int axis;
+  mrb_get_args(mrb, "i", &axis);
+
+  int axis_count = GetGamepadAxisCount(gamepad->index);
+  if (axis < 0 || axis >= axis_count) {
+    std::string message =
+      "Must be an integer in (0.." + std::to_string(axis_count - 1) + ")";
+    mrb_raise(mrb, E_ARGUMENT_ERROR, message.c_str());
+  }
+
+  return mrb_float_value(mrb, GetGamepadAxisMovement(gamepad->index, axis));
+}
+
 void
 append_models_Gamepad(mrb_state* mrb)
 {
@@ -142,6 +161,8 @@ append_models_Gamepad(mrb_state* mrb)
   mrb_define_method(mrb, Gamepad_class, "up?", mrb_Gamepad_up, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Gamepad_class, "axis_count", mrb_Gamepad_axis_count, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Gamepad_class, "axis", mrb_Gamepad_axis, MRB_ARGS_REQ(1));
 
   load_ruby_models_gamepad(mrb);
 }
