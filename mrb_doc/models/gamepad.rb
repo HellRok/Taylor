@@ -108,4 +108,20 @@ class Gamepad
     # src/mruby_integration/models/gamepad.cpp
     true
   end
+
+  # How many axis are there on this {Gamepad}? There will be two per joystick
+  # (vertical and horizontal) and one for each shoulder button with pressure
+  # sensitivity.
+  #
+  # @example Basic usage
+  #   gamepad = Gamepad[0]
+  #
+  #   puts gamepad.axis_count #=> 6
+  #
+  # @return [Integer]
+  def axis_count
+    # mrb_Gamepad_axis_count
+    # src/mruby_integration/models/gamepad.cpp
+    6
+  end
 end

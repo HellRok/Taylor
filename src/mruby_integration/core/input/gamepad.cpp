@@ -2,21 +2,6 @@
 #include "raylib.h"
 
 auto
-mrb_get_gamepad_button_pressed(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  return mrb_int_value(mrb, GetGamepadButtonPressed());
-}
-
-auto
-mrb_get_gamepad_axis_count(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int index;
-  mrb_get_args(mrb, "i", &index);
-
-  return mrb_int_value(mrb, GetGamepadAxisCount(index));
-}
-
-auto
 mrb_get_gamepad_axis_movement(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index, axis;
@@ -37,16 +22,6 @@ mrb_set_gamepad_mappings(mrb_state* mrb, mrb_value) -> mrb_value
 void
 append_core_input_gamepad(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_gamepad_button_pressed",
-                    mrb_get_gamepad_button_pressed,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "get_gamepad_axis_count",
-                    mrb_get_gamepad_axis_count,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "get_gamepad_axis_movement",

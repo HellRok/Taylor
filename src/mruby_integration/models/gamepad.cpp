@@ -112,6 +112,14 @@ mrb_Gamepad_up(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_bool_value(IsGamepadButtonUp(gamepad->index, button));
 }
 
+auto
+mrb_Gamepad_axis_count(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Gamepad, gamepad);
+
+  return mrb_int_value(mrb, GetGamepadAxisCount(gamepad->index));
+}
+
 void
 append_models_Gamepad(mrb_state* mrb)
 {
@@ -132,6 +140,8 @@ append_models_Gamepad(mrb_state* mrb)
   mrb_define_method(
     mrb, Gamepad_class, "down?", mrb_Gamepad_down, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Gamepad_class, "up?", mrb_Gamepad_up, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Gamepad_class, "axis_count", mrb_Gamepad_axis_count, MRB_ARGS_NONE());
 
   load_ruby_models_gamepad(mrb);
 }

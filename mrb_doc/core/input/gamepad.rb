@@ -1,20 +1,3 @@
-# Returns the last pressed gamepad button.
-# @return [Integer]
-def get_gamepad_button_pressed
-  # mrb_get_gamepad_button_pressed
-  # src/mruby_integration/core/input/gamepad.cpp
-  0
-end
-
-# Returns the count of axis for the specified gamepad.
-# @param index [Integer]
-# @return [Integer]
-def get_gamepad_axis_count(index)
-  # mrb_get_gamepad_axis_count
-  # src/mruby_integration/core/input/gamepad.cpp
-  2
-end
-
 # Returns the movement of the specified axis for the specified gamepad.
 # @param index [Integer]
 # @param axis [Integer]

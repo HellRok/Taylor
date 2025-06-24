@@ -331,6 +331,9 @@
 - Removed gamepad_button_released?
 - Added Gamepad#up?
 - Removed gamepad_button_up?
+- Removed get_gamepad_button_pressed
+- Added Gamepad#axis_count
+- Removed get_gamepad_axis_count
 
 ## v0.3.14.1
 

@@ -176,6 +176,16 @@ class Test
           "(IsGamepadButtonUp) { gamepad: 1 button: 12 }"
         ]
       end
+
+      def test_axis_count
+        Taylor::Raylib.mock_call("GetGamepadAxisCount", "6")
+
+        assert_equal 6, Gamepad.new(index: 0).axis_count
+
+        assert_called [
+          "(GetGamepadAxisCount) { gamepad: 0 }"
+        ]
+      end
     end
   end
 end
