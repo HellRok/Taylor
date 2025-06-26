@@ -6,6 +6,7 @@ class Test
       Window.close # We need this to reset the cvars
       Taylor::Raylib.reset_calls
       Taylor::Raylib.clear_mocks
+      add_analytics
     end
   end
 end

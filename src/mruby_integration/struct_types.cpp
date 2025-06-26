@@ -1,6 +1,5 @@
 #include "mruby.h"
 #include "mruby/data.h"
-#include <cstdlib>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -28,9 +27,7 @@ add_parent(void* p, std::string klass)
 void
 add_owned_object(void* p)
 {
-  int current = owned_objects.size();
-  owned_objects.resize(current + 1);
-  owned_objects[current] = p;
+  owned_objects.push_back(p);
 }
 
 void
@@ -69,7 +66,7 @@ define_class_free(render_texture, "RenderTexture");
 define_class_free(shader, "Shader");
 define_class_free(sound, "Sound");
 define_class_free(texture2d, "Texture2D");
-define_class_free(vector, "Vector");
+define_class_free(vector2, "Vector2");
 
 mrb_data_type Camera2D_type = { "Camera2D", free_camera2d };
 mrb_data_type Circle_type = { "Circle", free_circle };
@@ -86,4 +83,4 @@ mrb_data_type RenderTexture_type = { "RenderTexture", free_render_texture };
 mrb_data_type Shader_type = { "Shader", free_shader };
 mrb_data_type Sound_type = { "Sound", free_sound };
 mrb_data_type Texture2D_type = { "Texture2D", free_texture2d };
-mrb_data_type Vector2_type = { "Vector2", free_vector };
+mrb_data_type Vector2_type = { "Vector2", free_vector2 };

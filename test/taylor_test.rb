@@ -1,5 +1,5 @@
 class Test
-  class Taylor_Test < MTest::Unit::TestCaseWithAnalytics
+  class Taylor_Test < Test::Base
     def test_released?
       if ENV["BUILDKITE_BUILD_ID"]
         assert_true Taylor.released?

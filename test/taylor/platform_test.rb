@@ -1,5 +1,5 @@
 class Test
-  class Taylor_Platform_Test < MTest::Unit::TestCaseWithAnalytics
+  class Taylor_Platform_Test < Test::Base
     def test_to_s
       assert_include [
         "arm64-android",

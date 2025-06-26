@@ -1,11 +1,9 @@
 #include "mruby.h"
 #include "mruby/class.h"
-#include "mruby/internal.h"
 #include "mruby/variable.h"
 #include "raylib.h"
 
 #include "mruby_integration/exceptions.hpp"
-#include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/monitor.hpp"
 #include "mruby_integration/models/vector2.hpp"
@@ -294,7 +292,7 @@ mrb_Window_set_minimum_resolution(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_mod_cv_set(
     mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_resolution"), obj);
 
-  add_owned_object(&obj);
+  add_owned_object(minimum_resolution);
 
   SetWindowMinSize(minimum_resolution->x, minimum_resolution->y);
   return mrb_nil_value();

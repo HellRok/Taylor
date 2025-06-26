@@ -58,8 +58,8 @@ module MTest
         end
       end
 
-      # Monkey patched from {MTest}
-      def teardown
+      # Adds the analytics for this test
+      def add_analytics
         $buildkite_test_analytics ||= []
 
         $buildkite_test_analytics << {

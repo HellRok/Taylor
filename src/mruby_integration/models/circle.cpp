@@ -13,8 +13,8 @@ struct RClass* Circle_class;
 
 struct Circle
 {
-  int x;
-  int y;
+  float x;
+  float y;
   float radius;
   Color* colour;
   Color* outline;
@@ -126,8 +126,8 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-mrb_attr_accessor(mrb, self, int, i, Circle, x);
-mrb_attr_accessor(mrb, self, int, i, Circle, y);
+mrb_attr_accessor(mrb, self, float, f, Circle, x);
+mrb_attr_accessor(mrb, self, float, f, Circle, y);
 
 mrb_attr_reader(mrb, self, float, Circle, radius);
 auto
