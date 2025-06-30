@@ -2,12 +2,13 @@
 
 #include "mruby.h"
 #include "raylib.h"
+#include <memory>
 
 extern RClass* Rectangle_class;
 
 struct Rektangle
 {
-  Rectangle* rectangle;
+  Rectangle rectangle;
   Color* colour;
   Color* outline;
   float thickness;

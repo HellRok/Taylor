@@ -2,12 +2,12 @@
 
 #include "mruby.h"
 #include "mruby/data.h"
-#include <string>
 
 void
-add_parent(void*, std::string);
+add_reference(void*);
+
 void
-add_owned_object(void*);
+append_module_ReferenceCounter(mrb_state*);
 
 extern mrb_data_type Camera2D_type;
 extern mrb_data_type Circle_type;

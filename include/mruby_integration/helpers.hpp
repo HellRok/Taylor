@@ -209,7 +209,7 @@
                                                                                \
     if (value) {                                                               \
       data->attr = value;                                                      \
-      add_owned_object(data->attr);                                            \
+      add_reference(data->attr);                                               \
       mrb_iv_set(mrb,                                                          \
                  self,                                                         \
                  mrb_intern_cstr(mrb, "@" #attr),                              \

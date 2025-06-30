@@ -80,7 +80,7 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   if (!mrb_undef_p(kw_values[3])) {
     circle->colour = static_cast<struct Color*> DATA_PTR(kw_values[3]);
-    add_owned_object(circle->colour);
+    add_reference(circle->colour);
     mrb_iv_set(mrb,
                self,
                mrb_intern_cstr(mrb, "@colour"),
@@ -91,7 +91,7 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   if (!mrb_undef_p(kw_values[4])) {
     circle->outline = static_cast<struct Color*> DATA_PTR(kw_values[4]);
-    add_owned_object(circle->outline);
+    add_reference(circle->outline);
     mrb_iv_set(mrb,
                self,
                mrb_intern_cstr(mrb, "@outline"),
@@ -111,7 +111,7 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   if (!mrb_undef_p(kw_values[6])) {
     circle->gradient = static_cast<struct Color*> DATA_PTR(kw_values[6]);
-    add_owned_object(circle->gradient);
+    add_reference(circle->gradient);
     mrb_iv_set(mrb,
                self,
                mrb_intern_cstr(mrb, "@gradient"),
@@ -119,8 +119,6 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   } else {
     circle->gradient = nullptr;
   }
-
-  add_parent(circle, "Circle");
 
   mrb_data_init(self, circle, &Circle_type);
   return self;

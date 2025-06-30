@@ -53,6 +53,32 @@ class Test
         assert_equal 1, camera.zoom
       end
 
+      def test_offset
+        offset = Vector2[0, 0]
+        camera = Camera2D.new(
+          offset: offset,
+          target: Vector2.new(0, 0),
+          rotation: 0,
+          zoom: 0
+        )
+
+        assert_equal offset, camera.offset
+        assert_not_equal offset.object_id, camera.offset.object_id
+      end
+
+      def test_target
+        target = Vector2[0, 0]
+        camera = Camera2D.new(
+          offset: Vector2.new(0, 0),
+          target: target,
+          rotation: 0,
+          zoom: 0
+        )
+
+        assert_equal target, camera.target
+        assert_not_equal target.object_id, camera.target.object_id
+      end
+
       def test_to_h
         camera = Camera2D.new(
           target: Vector2.new(1, 2),

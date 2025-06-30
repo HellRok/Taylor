@@ -15,12 +15,10 @@ struct RClass* Rectangle_class;
 void
 Rektangle_init(Rektangle* rectangle)
 {
-  rectangle->rectangle =
-    static_cast<struct Rectangle*>(malloc(sizeof(Rectangle)));
-  rectangle->rectangle->x = 0;
-  rectangle->rectangle->y = 0;
-  rectangle->rectangle->width = 0;
-  rectangle->rectangle->height = 0;
+  rectangle->rectangle.x = 0;
+  rectangle->rectangle.y = 0;
+  rectangle->rectangle.width = 0;
+  rectangle->rectangle.height = 0;
   rectangle->thickness = 1.0;
   rectangle->roundness = 0;
   rectangle->segments = 6;
@@ -58,24 +56,24 @@ mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_get_args(mrb, ":", &kwargs);
 
   if (!mrb_undef_p(kw_values[0])) {
-    rectangle->rectangle->x = mrb_as_float(mrb, kw_values[0]);
+    rectangle->rectangle.x = mrb_as_float(mrb, kw_values[0]);
   }
 
   if (!mrb_undef_p(kw_values[1])) {
-    rectangle->rectangle->y = mrb_as_float(mrb, kw_values[1]);
+    rectangle->rectangle.y = mrb_as_float(mrb, kw_values[1]);
   }
 
   if (!mrb_undef_p(kw_values[2])) {
-    rectangle->rectangle->width = mrb_as_float(mrb, kw_values[2]);
+    rectangle->rectangle.width = mrb_as_float(mrb, kw_values[2]);
   }
 
   if (!mrb_undef_p(kw_values[3])) {
-    rectangle->rectangle->height = mrb_as_float(mrb, kw_values[3]);
+    rectangle->rectangle.height = mrb_as_float(mrb, kw_values[3]);
   }
 
   if (!mrb_undef_p(kw_values[4])) {
     rectangle->colour = static_cast<struct Color*> DATA_PTR(kw_values[4]);
-    add_owned_object(rectangle->colour);
+    add_reference(rectangle->colour);
     mrb_iv_set(mrb,
                self,
                mrb_intern_cstr(mrb, "@colour"),
@@ -86,7 +84,7 @@ mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   if (!mrb_undef_p(kw_values[5])) {
     rectangle->outline = static_cast<struct Color*> DATA_PTR(kw_values[5]);
-    add_owned_object(rectangle->outline);
+    add_reference(rectangle->outline);
     mrb_iv_set(mrb,
                self,
                mrb_intern_cstr(mrb, "@outline"),
@@ -119,9 +117,6 @@ mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     mrb_raise(mrb, E_ARGUMENT_ERROR, "Segments must be greater than 0");
   }
 
-  add_parent(rectangle, "Rektangle");
-  add_owned_object(rectangle->rectangle);
-
   mrb_data_init(self, rectangle, &Rektangle_type);
   return self;
 }
@@ -133,7 +128,7 @@ mrb_attr_accessor_with_klasses_and_attrs(mrb,
                                          Rectangle,
                                          Rektangle,
                                          x,
-                                         rectangle->x);
+                                         rectangle.x);
 mrb_attr_accessor_with_klasses_and_attrs(mrb,
                                          self,
                                          float,
@@ -141,7 +136,7 @@ mrb_attr_accessor_with_klasses_and_attrs(mrb,
                                          Rectangle,
                                          Rektangle,
                                          y,
-                                         rectangle->y);
+                                         rectangle.y);
 mrb_attr_accessor_with_klasses_and_attrs(mrb,
                                          self,
                                          float,
@@ -149,7 +144,7 @@ mrb_attr_accessor_with_klasses_and_attrs(mrb,
                                          Rectangle,
                                          Rektangle,
                                          width,
-                                         rectangle->width);
+                                         rectangle.width);
 mrb_attr_accessor_with_klasses_and_attrs(mrb,
                                          self,
                                          float,
@@ -157,7 +152,7 @@ mrb_attr_accessor_with_klasses_and_attrs(mrb,
                                          Rectangle,
                                          Rektangle,
                                          height,
-                                         rectangle->height);
+                                         rectangle.height);
 
 mrb_attr_reader_with_klasses(mrb, self, float, Rectangle, Rektangle, thickness);
 auto
@@ -219,18 +214,18 @@ mrb_Rectangle_draw(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_get_self(mrb, self, Rektangle, rectangle);
 
   if (rectangle->roundness == 0) {
-    DrawRectangleRec(*rectangle->rectangle, *rectangle->colour);
+    DrawRectangleRec(rectangle->rectangle, *rectangle->colour);
     if (rectangle->outline != nullptr) {
       DrawRectangleLinesEx(
-        *rectangle->rectangle, rectangle->thickness, *rectangle->outline);
+        rectangle->rectangle, rectangle->thickness, *rectangle->outline);
     }
   } else {
-    DrawRectangleRounded(*rectangle->rectangle,
+    DrawRectangleRounded(rectangle->rectangle,
                          rectangle->roundness,
                          rectangle->segments,
                          *rectangle->colour);
     if (rectangle->outline != nullptr) {
-      DrawRectangleRoundedLines(*rectangle->rectangle,
+      DrawRectangleRoundedLines(rectangle->rectangle,
                                 rectangle->roundness,
                                 rectangle->segments,
                                 rectangle->thickness,

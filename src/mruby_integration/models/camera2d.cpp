@@ -1,7 +1,6 @@
 #include "mruby.h"
 #include "mruby/class.h"
 #include "mruby/data.h"
-#include "mruby/variable.h"
 #include "raylib.h"
 #include <cstdlib>
 
@@ -16,12 +15,8 @@ struct RClass* Camera2D_class;
 auto
 mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Camera2D* camera = static_cast<struct Camera2D*> DATA_PTR(self);
-  if (camera) {
-    mrb_free(mrb, camera);
-  }
-  mrb_data_init(self, nullptr, &Camera2D_type);
-  camera = static_cast<Camera2D*>(malloc(sizeof(Camera2D)));
+  Camera2D* camera;
+  mrb_self_ptr(mrb, self, Camera2D, camera);
 
   // def initialize(
   //   target: Vector2[0, 0],
@@ -29,73 +24,62 @@ mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   //   rotation: 0,
   //   zoom: 1
   // )
-  mrb_int kw_num = 4;
-  mrb_int kw_required = 0;
-  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "target"),
-                         mrb_intern_lit(mrb, "offset"),
-                         mrb_intern_lit(mrb, "rotation"),
-                         mrb_intern_lit(mrb, "zoom") };
+  const mrb_int kw_num = 4;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "target"),
+                               mrb_intern_lit(mrb, "offset"),
+                               mrb_intern_lit(mrb, "rotation"),
+                               mrb_intern_lit(mrb, "zoom") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, ":", &kwargs);
 
-  Vector2* target;
   if (mrb_undef_p(kw_values[0])) {
     auto default_target = Vector2{ 0, 0 };
-    target = &default_target;
+    camera->target = default_target;
   } else {
-    target = static_cast<struct Vector2*> DATA_PTR(kw_values[0]);
+    camera->target = *static_cast<struct Vector2*> DATA_PTR(kw_values[0]);
   }
 
-  Vector2* offset;
   if (mrb_undef_p(kw_values[1])) {
     auto default_offset = Vector2{ 0, 0 };
-    offset = &default_offset;
+    camera->offset = default_offset;
   } else {
-    offset = static_cast<struct Vector2*> DATA_PTR(kw_values[1]);
+    camera->offset = *static_cast<struct Vector2*> DATA_PTR(kw_values[1]);
   }
 
-  float rotation = 0;
+  camera->rotation = 0;
   if (!mrb_undef_p(kw_values[2])) {
-    rotation = mrb_as_float(mrb, kw_values[2]);
+    camera->rotation = mrb_as_float(mrb, kw_values[2]);
   }
 
-  float zoom = 1.0;
+  camera->zoom = 1.0;
   if (!mrb_undef_p(kw_values[3])) {
-    zoom = mrb_as_float(mrb, kw_values[3]);
+    camera->zoom = mrb_as_float(mrb, kw_values[3]);
   }
 
-  ivar_attr_vector2(mrb, self, camera->target, target);
-  ivar_attr_vector2(mrb, self, camera->offset, offset);
-  ivar_attr_float(mrb, self, camera->rotation, rotation);
-  ivar_attr_float(mrb, self, camera->zoom, zoom);
-
-  add_parent(camera, "Camera2D");
-  add_owned_object(&camera->offset);
-  add_owned_object(&camera->target);
+  add_reference(&camera->offset);
+  mrb_iv_set(mrb,
+             self,
+             mrb_intern_cstr(mrb, "@offset"),
+             mrb_Vector2_value(mrb, &camera->offset));
+  add_reference(&camera->target);
+  mrb_iv_set(mrb,
+             self,
+             mrb_intern_cstr(mrb, "@target"),
+             mrb_Vector2_value(mrb, &camera->target));
 
   mrb_data_init(self, camera, &Camera2D_type);
   return self;
 }
 
-auto
-mrb_Camera2D_set_rotation(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_float(mrb, self, Camera2D_type, Camera2D, rotation, rotation);
-}
-
-auto
-mrb_Camera2D_set_zoom(mrb_state* mrb, mrb_value self) -> mrb_value
-{
-  attr_setter_float(mrb, self, Camera2D_type, Camera2D, zoom, zoom);
-}
+mrb_attr_accessor(mrb, self, float, f, Camera2D, rotation);
+mrb_attr_accessor(mrb, self, float, f, Camera2D, zoom);
 
 auto
 mrb_Camera2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Camera2D* camera;
-  Data_Get_Struct(mrb, self, &Camera2D_type, camera);
-  mrb_assert(camera != nullptr);
+  mrb_get_self(mrb, self, Camera2D, camera);
 
   mrb_value block;
   mrb_get_args(mrb, "&!", &block);
@@ -112,9 +96,7 @@ mrb_Camera2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Camera2D_as_in_viewport(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Camera2D* camera;
-  Data_Get_Struct(mrb, self, &Camera2D_type, camera);
-  mrb_assert(camera != nullptr);
+  mrb_get_self(mrb, self, Camera2D, camera);
 
   Vector2* vector;
   mrb_get_args(mrb, "d", &vector, &Vector2_type);
@@ -128,9 +110,7 @@ mrb_Camera2D_as_in_viewport(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Camera2D_as_in_world(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Camera2D* camera;
-  Data_Get_Struct(mrb, self, &Camera2D_type, camera);
-  mrb_assert(camera != nullptr);
+  mrb_get_self(mrb, self, Camera2D, camera);
 
   Vector2* vector;
   mrb_get_args(mrb, "d", &vector, &Vector2_type);
@@ -151,13 +131,8 @@ append_models_Camera2D(mrb_state* mrb)
                     "initialize",
                     mrb_Camera2D_initialize,
                     MRB_ARGS_REQ(4));
-  mrb_define_method(mrb,
-                    Camera2D_class,
-                    "rotation=",
-                    mrb_Camera2D_set_rotation,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Camera2D_class, "zoom=", mrb_Camera2D_set_zoom, MRB_ARGS_REQ(1));
+  mrb_attr_accessor_defines(mrb, Camera2D, rotation);
+  mrb_attr_accessor_defines(mrb, Camera2D, zoom);
   mrb_define_method(
     mrb, Camera2D_class, "draw", mrb_Camera2D_draw, MRB_ARGS_BLOCK());
   mrb_define_method(mrb,

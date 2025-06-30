@@ -162,7 +162,7 @@ mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
     };
     source = &default_source;
   } else {
-    source = static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
+    source = &static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
   }
 
   auto* result = static_cast<Image*>(malloc(sizeof(Image)));
@@ -264,7 +264,7 @@ mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
     };
     source = &default_source;
   } else {
-    source = static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
+    source = &static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
   }
 
   ImageCrop(image, *source);
@@ -556,7 +556,7 @@ mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
     };
     source = &default_source;
   } else {
-    source = static_cast<struct Rektangle*> DATA_PTR(kw_values[1])->rectangle;
+    source = &static_cast<struct Rektangle*> DATA_PTR(kw_values[1])->rectangle;
   }
 
   Rectangle* destination;
@@ -567,7 +567,7 @@ mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
     destination = &default_destination;
   } else {
     destination =
-      static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
+      &static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
   }
 
   Color* colour;
@@ -599,7 +599,7 @@ mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 
   for (int i = 0; i < size; i++) {
     mrb_ary_push(mrb, return_array, mrb_Color_value(mrb, &colours[i]));
-    add_owned_object(&colours[i]);
+    add_reference(&colours[i]);
   }
 
   return return_array;

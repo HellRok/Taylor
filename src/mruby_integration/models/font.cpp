@@ -81,8 +81,7 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
              font->glyphPadding,
              &font->texture);
 
-  add_parent(font, "Font");
-  add_owned_object(&font->texture);
+  add_reference(&font->texture);
 
   mrb_data_init(self, font, &Font_type);
   return self;
@@ -105,8 +104,7 @@ mrb_Font_default(mrb_state* mrb, mrb_value) -> mrb_value
              font->glyphPadding,
              &font->texture);
 
-  add_parent(font, "Font");
-  add_owned_object(&font->texture);
+  add_reference(&font->texture);
 
   return obj;
 }

@@ -145,7 +145,7 @@ mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
                                         static_cast<float>(texture->height) };
     source = &default_rectangle;
   } else {
-    source = static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
+    source = &static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
   }
 
   Vector2* position;
@@ -163,7 +163,7 @@ mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
     destination = &default_destination;
   } else {
     destination =
-      static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
+      &static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
   }
 
   Vector2* origin;

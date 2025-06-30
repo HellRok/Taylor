@@ -336,6 +336,9 @@
 - Removed get_gamepad_axis_count
 - Added Gamepad#axis
 - Removed get_gamepad_axis_movement
+- Simplify the memory management
+- Remove a memory leak
+- Add tests for reference counting
 
 ## v0.3.14.1
 

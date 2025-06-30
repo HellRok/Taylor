@@ -37,8 +37,7 @@ mrb_RenderTexture_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   ivar_attr_texture2d(mrb, self, render_texture->texture, texture);
 
-  add_parent(render_texture, "RenderTexture");
-  add_owned_object(&render_texture->texture);
+  add_reference(&render_texture->texture);
 
   mrb_data_init(self, render_texture, &RenderTexture_type);
   return self;

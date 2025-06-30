@@ -1,7 +1,5 @@
 #include "version.hpp"
 
-#include "raylib.h"
-
 #include "mruby.h"
 #include "mruby/class.h"
 #include "mruby/compile.h"
@@ -12,6 +10,7 @@
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/models.hpp"
 #include "mruby_integration/shaders.hpp"
+#include "mruby_integration/struct_types.hpp"
 #include "mruby_integration/text.hpp"
 #include "platform_specific/web.hpp"
 #include "taylor.hpp"
@@ -39,6 +38,7 @@ main(int argc, char** argv) -> int
   append_models(mrb);
   append_shaders(mrb);
   append_text(mrb);
+  append_module_ReferenceCounter(mrb);
 
   append_taylor(mrb);
 

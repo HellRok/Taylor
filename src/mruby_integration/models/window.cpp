@@ -292,7 +292,7 @@ mrb_Window_set_minimum_resolution(mrb_state* mrb, mrb_value) -> mrb_value
   mrb_mod_cv_set(
     mrb, Window_class, mrb_intern_cstr(mrb, "@@minimum_resolution"), obj);
 
-  add_owned_object(minimum_resolution);
+  add_reference(minimum_resolution);
 
   SetWindowMinSize(minimum_resolution->x, minimum_resolution->y);
   return mrb_nil_value();

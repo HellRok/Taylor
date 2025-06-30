@@ -1,6 +1,6 @@
 class Camera2D
   # @return [Float]
-  attr_writer :rotation, :zoom
+  attr_accessor :rotation, :zoom
 
   # Creates a new instance of {Camera2D}.
   #

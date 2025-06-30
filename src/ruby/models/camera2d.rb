@@ -2,27 +2,41 @@
 #
 # TODO: A full code example
 class Camera2D
+  # @note If you access the instance variable `@offset` directly and assign it
+  #   to a different variable, it will be corrupted when Ruby cleans up the
+  #   memory of the parent {Camera2D} object.
+  #
+  # Returns {Camera2D#offset}.
+  #
   # @return [Vector2]
-  attr_reader :offset, :target
+  def offset = @offset # standard:disable Style/TrivialAccessors
 
-  # @return [Float]
-  attr_reader :rotation, :zoom
-
-  # Update the x and y values of the offset to match the passed in [Vector2].
+  # Update the {Vector2#x} and {Vector2#y} values of the offset to match the
+  # passed in {Vector2}.
   # @param other [Vector2]
   # @return [Vector2]
   def offset=(other)
-    offset.x = other.x
-    offset.y = other.y
+    @offset.x = other.x
+    @offset.y = other.y
     offset
   end
 
-  # Update the x and y values of the target to match the passed in [Vector2].
+  # @note If you access the instance variable `@target` directly and assign it
+  #   to a different variable, it will be corrupted when Ruby cleans up the
+  #   memory of the parent {Camera2D} object.
+  #
+  # Returns {Camera2D#target}.
+  #
+  # @return [Vector2]
+  def target = @target # standard:disable Style/TrivialAccessors
+
+  # Update the {Vector2#x} and {Vector2#y} values of the target to match the
+  # passed in {Vector2}.
   # @param other [Vector2]
   # @return [Vector2]
   def target=(other)
-    target.x = other.x
-    target.y = other.y
+    @target.x = other.x
+    @target.y = other.y
     target
   end
 
@@ -30,8 +44,8 @@ class Camera2D
   # @return [Hash]
   def to_h
     {
-      offset: offset.to_h,
-      target: target.to_h,
+      offset: @offset.to_h,
+      target: @target.to_h,
       rotation: rotation,
       zoom: zoom
     }

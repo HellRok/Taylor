@@ -53,7 +53,7 @@ mrb_Line_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   if (!mrb_undef_p(kw_values[0])) {
     line->start = static_cast<struct Vector2*> DATA_PTR(kw_values[0]);
-    add_owned_object(line->start);
+    add_reference(line->start);
     mrb_iv_set(mrb,
                self,
                mrb_intern_cstr(mrb, "@start"),
@@ -64,7 +64,7 @@ mrb_Line_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   if (!mrb_undef_p(kw_values[1])) {
     line->end = static_cast<struct Vector2*> DATA_PTR(kw_values[1]);
-    add_owned_object(line->end);
+    add_reference(line->end);
     mrb_iv_set(mrb,
                self,
                mrb_intern_cstr(mrb, "@end"),
@@ -75,7 +75,7 @@ mrb_Line_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   if (!mrb_undef_p(kw_values[2])) {
     line->colour = static_cast<struct Color*> DATA_PTR(kw_values[2]);
-    add_owned_object(line->colour);
+    add_reference(line->colour);
     mrb_iv_set(mrb,
                self,
                mrb_intern_cstr(mrb, "@colour"),
@@ -92,8 +92,6 @@ mrb_Line_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   if (line->thickness <= 0) {
     mrb_raise(mrb, E_ARGUMENT_ERROR, "Thickness must be greater than 0");
   }
-
-  add_parent(line, "Line");
 
   mrb_data_init(self, line, &Line_type);
   return self;

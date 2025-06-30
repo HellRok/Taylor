@@ -135,7 +135,7 @@ class Gamepad
   #   puts gamepad.axis(0) #=> 0.98
   #   puts gamepad.axis(1) #=> -0.023
   #
-  # @param axis [Integer]
+  # @param index [Integer]
   # @return [Float] -1.0 to 1.0
   # @raise [ArgumentError] If you try to access an axis that doesn't exist
   def axis(index)

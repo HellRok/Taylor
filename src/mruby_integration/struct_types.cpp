@@ -1,86 +1,87 @@
 #include "mruby.h"
 #include "mruby/data.h"
-#include <string>
 #include <unordered_map>
-#include <vector>
 
-std::unordered_map<void*, std::string> parent_types;
-std::vector<void*> owned_objects{};
+struct RClass* ReferenceCounter_class;
+std::unordered_map<void*, int> references{};
 
 auto
-is_owned(void* p) -> int
+reference_count(void* p) -> int
 {
-  for (unsigned int i = 0; i < owned_objects.size(); i++) {
-    if (p == owned_objects[i]) {
-      return static_cast<int>(i);
-    }
+  if (references.count(p) == 0) {
+    return 0;
+  } else {
+    return references[p];
   }
-  return -1;
 }
 
 void
-add_parent(void* p, std::string klass)
+add_reference(void* p)
 {
-  parent_types[p] = klass;
+  references[p]++;
 }
 
-void
-add_owned_object(void* p)
-{
-  owned_objects.push_back(p);
-}
+int last_size = 0;
 
 void
-free_klass(mrb_state* mrb, void* p, std::string klass)
+free_klass(mrb_state* mrb, void* p)
 {
-  int index = is_owned(p);
-
-  if (parent_types[p] == klass) {
-    mrb_free(mrb, p);
-    parent_types.erase(p);
-  } else if (index >= 0) {
-    owned_objects.erase(owned_objects.begin() + index);
+  if (reference_count(p) > 0) {
+    int count = --references[p];
+    if (count == 0) {
+      references.erase(p);
+    }
   } else {
     mrb_free(mrb, p);
   }
 };
 
-#define define_class_free(name, klass)                                         \
-  void free_##name(mrb_state* mrb, void* p)                                    \
-  {                                                                            \
-    free_klass(mrb, p, klass);                                                 \
-  };
+#define add_type(object) mrb_data_type object##_type = { #object, free_klass };
 
-define_class_free(camera2d, "Camera2D");
-define_class_free(circle, "Circle");
-define_class_free(colour, "Color");
-define_class_free(font, "Font");
-define_class_free(gamepad, "Gamepad");
-define_class_free(image, "Image");
-define_class_free(line, "Line");
-define_class_free(monitor, "Monitor");
-define_class_free(music, "Music");
-define_class_free(rectangle, "Rectangle");
-define_class_free(rektangle, "Rektangle");
-define_class_free(render_texture, "RenderTexture");
-define_class_free(shader, "Shader");
-define_class_free(sound, "Sound");
-define_class_free(texture2d, "Texture2D");
-define_class_free(vector2, "Vector2");
+add_type(Camera2D);
+add_type(Circle);
+add_type(Color);
+add_type(Font);
+add_type(Gamepad);
+add_type(Image);
+add_type(Line);
+add_type(Monitor);
+add_type(Music);
+add_type(Rectangle);
+add_type(Rektangle);
+add_type(RenderTexture);
+add_type(Shader);
+add_type(Sound);
+add_type(Texture2D);
+add_type(Vector2);
 
-mrb_data_type Camera2D_type = { "Camera2D", free_camera2d };
-mrb_data_type Circle_type = { "Circle", free_circle };
-mrb_data_type Color_type = { "Colour", free_colour };
-mrb_data_type Font_type = { "Font", free_font };
-mrb_data_type Gamepad_type = { "Gamepad", free_gamepad };
-mrb_data_type Image_type = { "Image", free_image };
-mrb_data_type Line_type = { "Line", free_line };
-mrb_data_type Monitor_type = { "Monitor", free_monitor };
-mrb_data_type Music_type = { "Music", free_music };
-mrb_data_type Rectangle_type = { "Rectangle", free_rectangle };
-mrb_data_type Rektangle_type = { "Rektangle", free_rektangle };
-mrb_data_type RenderTexture_type = { "RenderTexture", free_render_texture };
-mrb_data_type Shader_type = { "Shader", free_shader };
-mrb_data_type Sound_type = { "Sound", free_sound };
-mrb_data_type Texture2D_type = { "Texture2D", free_texture2d };
-mrb_data_type Vector2_type = { "Vector2", free_vector2 };
+auto
+mrb_ReferenceCounter_reference_count(mrb_state* mrb, mrb_value self)
+  -> mrb_value
+{
+  void* instance = DATA_PTR(self);
+  return mrb_int_value(mrb, reference_count(instance));
+}
+
+auto
+mrb_ReferenceCounter_tracked_objects_count(mrb_state* mrb, mrb_value)
+  -> mrb_value
+{
+  return mrb_int_value(mrb, references.size());
+}
+
+void
+append_module_ReferenceCounter(mrb_state* mrb)
+{
+  ReferenceCounter_class = mrb_define_module(mrb, "ReferenceCounter");
+  mrb_define_class_method(mrb,
+                          ReferenceCounter_class,
+                          "tracked_objects_count",
+                          mrb_ReferenceCounter_tracked_objects_count,
+                          MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    ReferenceCounter_class,
+                    "reference_count",
+                    mrb_ReferenceCounter_reference_count,
+                    MRB_ARGS_NONE());
+}
