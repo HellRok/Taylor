@@ -339,6 +339,8 @@
 - Simplify the memory management
 - Remove a memory leak
 - Add tests for reference counting
+- Added Gamepad.add_mappings
+- Removed set_gamepad_mappings
 
 ## v0.3.14.1
 

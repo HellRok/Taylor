@@ -28,6 +28,15 @@ Gamepad_init(Gamepad* gamepad, int index)
 }
 
 auto
+mrb_Gamepad_add_mappings(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  char* mappings;
+  mrb_get_args(mrb, "z", &mappings);
+
+  return mrb_bool_value(SetGamepadMappings(mappings));
+}
+
+auto
 mrb_Gamepad_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   // def initialize(index:)
@@ -144,6 +153,12 @@ append_models_Gamepad(mrb_state* mrb)
 {
   Gamepad_class = mrb_define_class(mrb, "Gamepad", mrb->object_class);
   MRB_SET_INSTANCE_TT(Gamepad_class, MRB_TT_DATA);
+
+  mrb_define_class_method(mrb,
+                          Gamepad_class,
+                          "add_mappings",
+                          mrb_Gamepad_add_mappings,
+                          MRB_ARGS_REQ(1));
 
   mrb_define_method(
     mrb, Gamepad_class, "initialize", mrb_Gamepad_initialize, MRB_ARGS_REQ(1));

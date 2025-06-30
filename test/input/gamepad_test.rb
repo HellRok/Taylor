@@ -222,6 +222,19 @@ class Test
           "(GetGamepadAxisCount) { gamepad: 0 }"
         ]
       end
+
+      def test_add_mappings
+        Taylor::Raylib.mock_call("SetGamepadMappings", "1")
+        Taylor::Raylib.mock_call("SetGamepadMappings", "0")
+
+        assert_true Gamepad.add_mappings("mappings-1")
+        assert_false Gamepad.add_mappings("mappings-2")
+
+        assert_called [
+          "(SetGamepadMappings) { mappings: 'mappings-1' }",
+          "(SetGamepadMappings) { mappings: 'mappings-2' }"
+        ]
+      end
     end
   end
 end

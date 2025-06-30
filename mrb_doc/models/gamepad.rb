@@ -2,6 +2,29 @@ class Gamepad
   # return [Integer]
   attr_reader :index
 
+  # Pass in either one mapping or many separated by new lines. They'll need to
+  # adhere to the instructions on the [glfw Input
+  # Guide](https://www.glfw.org/docs/latest/input_guide.html#gamepad_mapping).
+  #
+  # @example Basic usage
+  #   Gamepad.add_mappings("my-mapping")
+  #
+  # @example Adding many mappings
+  #   Gamepad.add_mappings(<<-MAPPINGS)
+  #     mapping-1
+  #     mapping-2
+  #     mapping-3
+  #     mapping-3
+  #   MAPPINGS
+  #
+  # @param mappings [String]
+  # @return [Boolean]
+  def self.add_mappings(mappings)
+    # mrb_Gamepad_add_mappings
+    # src/mruby_integration/models/gamepad.cpp
+    true
+  end
+
   # Do not use this method directly, instead use {Gamepad.[]} or {Gamepad.all}
   #
   # @param index [Integer]
