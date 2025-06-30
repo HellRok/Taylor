@@ -13,9 +13,6 @@
   "load_paths": [
     "./"
   ],
-  "copy_paths": [
-    "./assets"
-  ],
   "web": {
     "shell_path": "shell.html"
   },
