@@ -344,6 +344,8 @@
 - Added Gesture.enable=
 - Removed set_gestures_enabled
 - chown the build artefacts on export
+- Added Gesture.detected
+- Removed get_gesture_detected
 
 ## v0.3.14.1
 

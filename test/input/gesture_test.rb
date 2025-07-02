@@ -8,6 +8,19 @@ class Test
           "(SetGesturesEnabled) { flags: 5 }"
         ]
       end
+
+      def test_detected
+        Taylor::Raylib.mock_call("GetGestureDetected", Gesture::SWIPE_RIGHT.to_s)
+        Taylor::Raylib.mock_call("GetGestureDetected", Gesture::SWIPE_LEFT.to_s)
+
+        assert_equal Gesture::SWIPE_RIGHT, Gesture.detected
+        assert_equal Gesture::SWIPE_LEFT, Gesture.detected
+
+        assert_called [
+          "(GetGestureDetected) { }",
+          "(GetGestureDetected) { }"
+        ]
+      end
     end
   end
 end

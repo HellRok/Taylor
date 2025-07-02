@@ -17,6 +17,12 @@ mrb_Gesture_set_enabled(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Gesture_detected(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  return mrb_int_value(mrb, GetGestureDetected());
+}
+
 void
 append_models_Gesture(mrb_state* mrb)
 {
@@ -25,6 +31,8 @@ append_models_Gesture(mrb_state* mrb)
 
   mrb_define_class_method(
     mrb, Gesture_class, "enabled=", mrb_Gesture_set_enabled, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Gesture_class, "detected", mrb_Gesture_detected, MRB_ARGS_NONE());
 
   load_ruby_models_gesture(mrb);
 }
