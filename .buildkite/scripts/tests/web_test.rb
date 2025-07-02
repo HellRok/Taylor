@@ -66,28 +66,12 @@ def upload_analytics(analytics)
 end
 
 start_time = Time.now
-analytics = nil
+taylor_logs = ""
 
-exit_code = nil
-
-while exit_code.nil?
-  sleep 0.1
+until taylor_logs.include?("EXIT CODE:")
+  sleep 0.5
 
   taylor_logs = driver.find_element(:css, "#logs").text
-
-  taylor_logs.each_line { |log|
-    if log.include?("ANALYTICS:")
-      analytics = JSON.parse(log.split(":", 2).last)
-      upload_analytics(analytics)
-    else
-      puts log.chomp
-    end
-
-    if log.include?("EXIT CODE:")
-      _, code = log.split("EXIT CODE: ")
-      exit_code = code.to_i
-    end
-  }
 
   # Give the tests 10 seconds to run (which should be ample)
   if Time.now - start_time > 10
@@ -95,9 +79,20 @@ while exit_code.nil?
     puts "Taylor Logs"
     puts "-----------"
     puts taylor_logs
-    exit_code = 1
+    exit 1
   end
 end
 
 driver.quit
-exit exit_code
+
+taylor_logs.each_line { |log|
+  if log.include?("ANALYTICS:")
+    upload_analytics(JSON.parse(log.split(":", 2).last))
+
+  elsif log.include?("EXIT CODE:")
+    exit log.split("EXIT CODE: ").last.to_i
+
+  else
+    puts log
+  end
+}
