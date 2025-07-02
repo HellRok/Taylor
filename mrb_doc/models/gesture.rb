@@ -55,4 +55,16 @@ class Gesture
     # src/mruby_integration/models/gestures.cpp
     1.54
   end
+
+  # How far has the {Gesture} been dragged
+  #
+  # @example Basic usage
+  #   puts Gesture.dragged #=> Vector2[1.34, -2.44]
+  #
+  # @return [Vector2]
+  def self.dragged
+    # mrb_Gesture_dragged
+    # src/mruby_integration/models/gestures.cpp
+    Vector2[1.34, -2.44]
+  end
 end

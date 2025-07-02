@@ -47,6 +47,19 @@ class Test
           "(GetGestureHoldDuration) { }"
         ]
       end
+
+      def test_dragged
+        Taylor::Raylib.mock_call("GetGestureDragVector", Vector2.mock_return(x: 1, y: 2))
+        Taylor::Raylib.mock_call("GetGestureDragVector", Vector2.mock_return(x: 3, y: 4))
+
+        assert_equal Vector2[1, 2], Gesture.dragged
+        assert_equal Vector2[3, 4], Gesture.dragged
+
+        assert_called [
+          "(GetGestureDragVector) { }",
+          "(GetGestureDragVector) { }"
+        ]
+      end
     end
   end
 end

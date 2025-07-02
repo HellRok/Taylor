@@ -348,6 +348,7 @@
 - Removed get_gesture_detected
 - Added Gesture.detected?
 - Added Gesture.duration
+- Added Gesture.dragged
 
 ## v0.3.14.1
 
