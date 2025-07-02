@@ -34,6 +34,19 @@ class Test
           "(IsGestureDetected) { gesture: 256 }"
         ]
       end
+
+      def test_duration
+        Taylor::Raylib.mock_call("GetGestureHoldDuration", "0.25")
+        Taylor::Raylib.mock_call("GetGestureHoldDuration", "2.00")
+
+        assert_equal 0.25, Gesture.duration
+        assert_equal 2.00, Gesture.duration
+
+        assert_called [
+          "(GetGestureHoldDuration) { }",
+          "(GetGestureHoldDuration) { }"
+        ]
+      end
     end
   end
 end

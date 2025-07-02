@@ -32,6 +32,12 @@ mrb_Gesture_detected_question(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_bool_value(IsGestureDetected(gesture));
 }
 
+auto
+mrb_Gesture_duration(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  return mrb_float_value(mrb, GetGestureHoldDuration());
+}
+
 void
 append_models_Gesture(mrb_state* mrb)
 {
@@ -47,6 +53,8 @@ append_models_Gesture(mrb_state* mrb)
                           "detected?",
                           mrb_Gesture_detected_question,
                           MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Gesture_class, "duration", mrb_Gesture_duration, MRB_ARGS_NONE());
 
   load_ruby_models_gesture(mrb);
 }

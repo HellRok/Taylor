@@ -43,4 +43,16 @@ class Gesture
     # src/mruby_integration/models/gestures.cpp
     Gesture::TAP
   end
+
+  # How long has the current {Gesture} been happening for.
+  #
+  # @example Basic usage
+  #   puts Gesture.duration #=> 1.54
+  #
+  # @return [Float]
+  def self.duration
+    # mrb_Gesture_duration
+    # src/mruby_integration/models/gestures.cpp
+    1.54
+  end
 end
