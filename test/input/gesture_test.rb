@@ -73,6 +73,32 @@ class Test
           "(GetGestureDragAngle) { }"
         ]
       end
+
+      def test_pinched
+        Taylor::Raylib.mock_call("GetGesturePinchVector", Vector2.mock_return(x: 2, y: 3))
+        Taylor::Raylib.mock_call("GetGesturePinchVector", Vector2.mock_return(x: 4, y: 5))
+
+        assert_equal Vector2[2, 3], Gesture.pinched
+        assert_equal Vector2[4, 5], Gesture.pinched
+
+        assert_called [
+          "(GetGesturePinchVector) { }",
+          "(GetGesturePinchVector) { }"
+        ]
+      end
+
+      def test_pinch_angle
+        Taylor::Raylib.mock_call("GetGesturePinchAngle", "72.0")
+        Taylor::Raylib.mock_call("GetGesturePinchAngle", "304.75")
+
+        assert_equal 72.0, Gesture.pinch_angle
+        assert_equal 304.75, Gesture.pinch_angle
+
+        assert_called [
+          "(GetGesturePinchAngle) { }",
+          "(GetGesturePinchAngle) { }"
+        ]
+      end
     end
   end
 end

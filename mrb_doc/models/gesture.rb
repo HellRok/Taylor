@@ -44,7 +44,7 @@ class Gesture
     Gesture::TAP
   end
 
-  # How long has the current {Gesture} been happening for.
+  # Returns how long has the current {Gesture} been happening for.
   #
   # @example Basic usage
   #   puts Gesture.duration #=> 1.54
@@ -56,7 +56,7 @@ class Gesture
     1.54
   end
 
-  # How far has the {Gesture} been dragged
+  # Returns how far has the {Gesture} been dragged
   #
   # @example Basic usage
   #   puts Gesture.dragged #=> Vector2[1.34, -2.44]
@@ -68,7 +68,7 @@ class Gesture
     Vector2[1.34, -2.44]
   end
 
-  # What's the angle of the {Gesture} drag
+  # Returns the angle of the {Gesture} drag
   #
   # This will return `0` when being dragged exactly right
   #
@@ -78,6 +78,32 @@ class Gesture
   # @return [Vector2]
   def self.drag_angle
     # mrb_Gesture_drag_angle
+    # src/mruby_integration/models/gestures.cpp
+    178.23
+  end
+
+  # Returns the distance between the two pinch points
+  #
+  # @example Basic usage
+  #   puts Gesture.pinched #=> Vector2[1.34, -2.44]
+  #
+  # @return [Vector2]
+  def self.pinched
+    # mrb_Gesture_pinched
+    # src/mruby_integration/models/gestures.cpp
+    Vector2[1.34, -2.44]
+  end
+
+  # What's the angle of the {Gesture} pinch
+  #
+  # This will return `0` when the pinch is perfectly horizontal
+  #
+  # @example Basic usage
+  #   puts Gesture.pinch_angle #=> 178.23
+  #
+  # @return [Vector2]
+  def self.pinch_angle
+    # mrb_Gesture_pinch_angle
     # src/mruby_integration/models/gestures.cpp
     178.23
   end

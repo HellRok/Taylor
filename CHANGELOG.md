@@ -350,6 +350,8 @@
 - Added Gesture.duration
 - Added Gesture.dragged
 - Added Gesture.drag_angle
+- Added Gesture.pinched
+- Added Gesture.pinch_angle
 
 ## v0.3.14.1
 
