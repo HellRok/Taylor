@@ -35,7 +35,7 @@ require "web_test"
 result = MTest::Unit.new.run.positive?
 
 if Taylor::Platform.browser?
-  puts "ANALYTICS: #{$buildkite_test_analytics.to_json}"
+  # puts "ANALYTICS: #{$buildkite_test_analytics.to_json}"
   puts "EXIT CODE: #{result ? 1 : 0}"
   cancel_main_loop
   set_main_loop "noop"
