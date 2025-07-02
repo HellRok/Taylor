@@ -21,6 +21,19 @@ class Test
           "(GetGestureDetected) { }"
         ]
       end
+
+      def test_detected?
+        Taylor::Raylib.mock_call("IsGestureDetected", "true")
+        Taylor::Raylib.mock_call("IsGestureDetected", "false")
+
+        assert_true Gesture.detected? Gesture::TAP
+        assert_false Gesture.detected? Gesture::PINCH_IN
+
+        assert_called [
+          "(IsGestureDetected) { gesture: 1 }",
+          "(IsGestureDetected) { gesture: 256 }"
+        ]
+      end
     end
   end
 end

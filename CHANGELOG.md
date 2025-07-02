@@ -346,6 +346,7 @@
 - chown the build artefacts on export
 - Added Gesture.detected
 - Removed get_gesture_detected
+- Added Gesture.detected?
 
 ## v0.3.14.1
 

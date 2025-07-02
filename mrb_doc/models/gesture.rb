@@ -28,4 +28,19 @@ class Gesture
     # src/mruby_integration/models/gestures.cpp
     Gesture::NONE
   end
+
+  # Is this {Gesture} currently detected?
+  #
+  # @example Basic usage
+  #   player.x += 1 if Gesture.detected? Gesture::SWIPE_RIGHT
+  #   player.x -= 1 if Gesture.detected? Gesture::SWIPE_LEFT
+  #   player.y += 1 if Gesture.detected? Gesture::SWIPE_UP
+  #   player.y -= 1 if Gesture.detected? Gesture::SWIPE_DOWN
+  #
+  # @return [Integer]
+  def self.detected?
+    # mrb_Gesture_detected_question
+    # src/mruby_integration/models/gestures.cpp
+    Gesture::TAP
+  end
 end
