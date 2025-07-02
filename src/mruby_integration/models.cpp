@@ -3,6 +3,7 @@
 #include "mruby_integration/models/circle.hpp"
 #include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/models/cursor.hpp"
+#include "mruby_integration/models/dropped_files.hpp"
 #include "mruby_integration/models/font.hpp"
 #include "mruby_integration/models/gamepad.hpp"
 #include "mruby_integration/models/gesture.hpp"
@@ -29,6 +30,7 @@ append_models(mrb_state* mrb)
   append_models_Circle(mrb);
   append_models_Colour(mrb);
   append_models_Cursor(mrb);
+  append_models_DroppedFiles(mrb);
   append_models_Font(mrb);
   append_models_Gamepad(mrb);
   append_models_Gesture(mrb);

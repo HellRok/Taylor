@@ -428,13 +428,10 @@ task "raylib:mock" do
           %(  return mocked_const_char_call_for("#{method_name}");\n)
 
         elsif method_name == "*LoadImageColors"
-          # This is trigger a `-Wreturn-local-addr` issue, but I can't see
-          # how Raylib would do it without doing that? So I'm just going to
-          # accept it for now.
           <<~CPP
-            Color result;
-            mocked_call_for_LoadImageColors(&result);
-            return &result;
+            auto* result = static_cast<Color*>(malloc(sizeof(Color)));
+            mocked_call_for_LoadImageColors(result);
+            return result;
           CPP
 
         else

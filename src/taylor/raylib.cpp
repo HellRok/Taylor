@@ -7,10 +7,8 @@
 
 #include "mruby.h"
 #include "mruby/array.h"
-#include "mruby/compile.h"
 
 #include "raylib.h"
-#include "taylor.hpp"
 
 std::vector<std::string> raylib_method_calls;
 std::unordered_map<std::string, std::deque<std::string>>
@@ -145,9 +143,23 @@ mocked_call_for(std::string, Color* result) -> void
 }
 
 auto
-mocked_call_for(std::string, FilePathList* result) -> void
+mocked_call_for(std::string method, FilePathList* result) -> void
 {
-  *result = FilePathList{ 0, 0 };
+  const unsigned int capacity = 8;
+  auto** paths = static_cast<char**>(malloc(sizeof(char*) * capacity));
+  *result = FilePathList{ capacity, 0, paths };
+
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
+    std::string temp;
+    std::stringstream stream(mock.value);
+
+    while (stream.good()) {
+      stream >> temp;
+      paths[result->count] = strdup(temp.c_str());
+      result->count++;
+    }
+  }
 }
 
 auto

@@ -352,6 +352,10 @@
 - Added Gesture.drag_angle
 - Added Gesture.pinched
 - Added Gesture.pinch_angle
+- Added DroppedFiles.any?
+- Removed dropped_files?
+- Added DroppedFiles.all
+- Removed get_dropped_files
 
 ## v0.3.14.1
 
