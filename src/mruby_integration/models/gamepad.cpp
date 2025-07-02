@@ -3,7 +3,6 @@
 #include "raylib.h"
 #include <string>
 
-#include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/gamepad.hpp"
 #include "mruby_integration/struct_types.hpp"

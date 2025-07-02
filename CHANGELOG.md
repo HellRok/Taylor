@@ -341,6 +341,8 @@
 - Add tests for reference counting
 - Added Gamepad.add_mappings
 - Removed set_gamepad_mappings
+- Added Gesture.enable=
+- Removed set_gestures_enabled
 
 ## v0.3.14.1
 
