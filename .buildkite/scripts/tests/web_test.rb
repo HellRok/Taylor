@@ -89,9 +89,9 @@ while exit_code.nil?
     end
   }
 
-  # Give the tests 1 minute to run (which should be ample)
-  if Time.now - start_time > 60
-    puts "TIMED OUT AFTER 1 MINUTE"
+  # Give the tests 10 seconds to run (which should be ample)
+  if Time.now - start_time > 10
+    puts "TIMED OUT AFTER 10 SECONDS"
     puts "Taylor Logs"
     puts "-----------"
     puts taylor_logs

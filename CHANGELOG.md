@@ -343,6 +343,7 @@
 - Removed set_gamepad_mappings
 - Added Gesture.enable=
 - Removed set_gestures_enabled
+- chown the build artefacts on export
 
 ## v0.3.14.1
 

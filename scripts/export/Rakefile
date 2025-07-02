@@ -213,7 +213,7 @@ namespace :compress do
 
   task :move do
     sh "mv /app/game/exports/**/*.zip /app/game/exports/"
-    sh "chown ${USER_ID}:${GROUP_ID} /app/game/exports/*.zip"
+    FileUtils.chown_R(ENV["USER_ID"], ENV["GROUP_ID"], "/app/game/exports/")
     sh "rm -rf \"/app/game/exports/#{export_target.split("/").first}\""
   end
 
@@ -276,4 +276,8 @@ namespace :compress do
     Dir.chdir("/app/game/exports/web")
     sh "zip -r \"#{options["name"]}-web-#{options["version"]}.zip\" *"
   end
+end
+
+task :cleanup do
+  FileUtils.chown_R(ENV["USER_ID"], ENV["GROUP_ID"], "/app/taylor/build/")
 end

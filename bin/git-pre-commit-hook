@@ -3,8 +3,8 @@ set -euo pipefail
 
 source bin/lib/helpers.sh
 
-export RUBY_FILES=$(git diff --cached --name-only --diff-filter MRA *.{rb,rake})
-export XPP_FILES=$(git diff --cached --name-only --diff-filter MRA *.{cpp,hpp})
+export RUBY_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{rb,rake})
+export XPP_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{cpp,hpp})
 
 log "Checking documentation"
 job_output=$(bin/test-documentation)

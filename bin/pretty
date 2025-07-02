@@ -3,14 +3,17 @@ set -u
 
 source bin/lib/helpers.sh
 
+export RUBY_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{rb,rake})
+export XPP_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{cpp,hpp})
+
 start "Formatting Ruby"
-job_output=$(./bin/fix-formatting-ruby 2>&1)
+job_output=$(./bin/fix-formatting-ruby ${RUBY_FILES} 2>&1)
 result $?
 
 start "Formatting CPP"
-job_output=$(./bin/fix-formatting-cpp 2>&1)
+job_output=$(./bin/fix-formatting-cpp ${XPP_FILES} 2>&1)
 result $?
 
 start "Linting CPP"
-job_output=$(./bin/fix-linting-cpp 2>&1)
+job_output=$(./bin/fix-linting-cpp ${XPP_FILES} 2>&1)
 result $?

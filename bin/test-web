@@ -25,4 +25,5 @@ barf_if_failed $?
 log "Running tests for Web"
 pushd exports &> /dev/null
 unzip taylor-test-suite-web-v0.0.1.zip &> /dev/null
-../../.buildkite/scripts/tests/web_test.rb
+job_output=$(../../.buildkite/scripts/tests/web_test.rb 2>&1)
+barf_if_failed $?
