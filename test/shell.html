@@ -18,7 +18,8 @@
         })(),
         printErr: function(text) {
           if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-          console.error(text);
+          const logs = document.getElementById('logs');
+          logs.textContent = logs.textContent + "\n" + text;
         },
         canvas: (function() {
           return document.getElementById('canvas');
