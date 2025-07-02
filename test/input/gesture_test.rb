@@ -60,6 +60,19 @@ class Test
           "(GetGestureDragVector) { }"
         ]
       end
+
+      def test_drag_angle
+        Taylor::Raylib.mock_call("GetGestureDragAngle", "90.0")
+        Taylor::Raylib.mock_call("GetGestureDragAngle", "128.5")
+
+        assert_equal 90.0, Gesture.drag_angle
+        assert_equal 128.5, Gesture.drag_angle
+
+        assert_called [
+          "(GetGestureDragAngle) { }",
+          "(GetGestureDragAngle) { }"
+        ]
+      end
     end
   end
 end

@@ -49,6 +49,12 @@ mrb_Gesture_dragged(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_Vector2_value(mrb, return_vector);
 }
 
+auto
+mrb_Gesture_drag_angle(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  return mrb_float_value(mrb, GetGestureDragAngle());
+}
+
 void
 append_models_Gesture(mrb_state* mrb)
 {
@@ -68,6 +74,8 @@ append_models_Gesture(mrb_state* mrb)
     mrb, Gesture_class, "duration", mrb_Gesture_duration, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Gesture_class, "dragged", mrb_Gesture_dragged, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Gesture_class, "drag_angle", mrb_Gesture_drag_angle, MRB_ARGS_NONE());
 
   load_ruby_models_gesture(mrb);
 }

@@ -67,4 +67,18 @@ class Gesture
     # src/mruby_integration/models/gestures.cpp
     Vector2[1.34, -2.44]
   end
+
+  # What's the angle of the {Gesture} drag
+  #
+  # This will return `0` when being dragged exactly right
+  #
+  # @example Basic usage
+  #   puts Gesture.drag_angle #=> 178.23
+  #
+  # @return [Vector2]
+  def self.drag_angle
+    # mrb_Gesture_drag_angle
+    # src/mruby_integration/models/gestures.cpp
+    178.23
+  end
 end

@@ -349,6 +349,7 @@
 - Added Gesture.detected?
 - Added Gesture.duration
 - Added Gesture.dragged
+- Added Gesture.drag_angle
 
 ## v0.3.14.1
 
