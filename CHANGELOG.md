@@ -356,6 +356,12 @@
 - Removed dropped_files?
 - Added DroppedFiles.all
 - Removed get_dropped_files
+- Refactor Shader#initialize
+- Removed load_shader
+- Refactor Shader#unload
+- Removed unload_shader
+- Refactor Shader#ready?
+- Removed shader_ready?
 
 ## v0.3.14.1
 

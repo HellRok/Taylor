@@ -29,43 +29,6 @@ mrb_load_shader_from_string(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_load_shader(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  char *vertex_shader_path, *fragment_shader_path;
-  mrb_get_args(mrb, "z!z!", &vertex_shader_path, &fragment_shader_path);
-
-  auto* shader = static_cast<Shader*>(malloc(sizeof(Shader)));
-  *shader = LoadShader(vertex_shader_path, fragment_shader_path);
-
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Shader_class, &Shader_type, shader));
-
-  setup_Shader(mrb, obj, shader, shader->id);
-
-  return obj;
-}
-
-auto
-mrb_unload_shader(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Shader* shader;
-  mrb_get_args(mrb, "d", &shader, &Shader_type);
-
-  UnloadShader(*shader);
-
-  return mrb_nil_value();
-}
-
-auto
-mrb_shader_ready(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Shader* shader;
-  mrb_get_args(mrb, "d", &shader, &Shader_type);
-
-  return mrb_bool_value(IsShaderReady(*shader));
-}
-
-auto
 mrb_get_shader_location(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Shader* shader;
@@ -212,18 +175,6 @@ append_shaders(mrb_state* mrb)
                     "load_shader_from_string",
                     mrb_load_shader_from_string,
                     MRB_ARGS_REQ(2));
-  mrb_define_method(
-    mrb, mrb->kernel_module, "load_shader", mrb_load_shader, MRB_ARGS_REQ(2));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "unload_shader",
-                    mrb_unload_shader,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "shader_ready?",
-                    mrb_shader_ready,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "get_shader_location",

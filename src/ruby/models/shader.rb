@@ -1,8 +1,5 @@
 # The Shader class is for doing operations on the GPU.
 class Shader
-  # @return [Integer]
-  attr_reader :id
-
   # Loads a Shader from either paths or code, but not both at once.
   # @param vertex_shader_path [String]
   # @param fragment_shader_path [String]
@@ -26,12 +23,6 @@ class Shader
     end
   end
 
-  # Unloads the Shader from memory.
-  # @return [nil]
-  def unload
-    unload_shader(self)
-  end
-
   # Instead of rendering straight to the screen, render through this Shader first.
   # @yield The block that calls your rendering logic.
   # @return [nil]
@@ -39,12 +30,6 @@ class Shader
     begin_shader_mode(self)
     block.call
     end_shader_mode
-  end
-
-  # Is the Shader ready to be used?
-  # @return [Boolean]
-  def ready?
-    shader_ready?(self)
   end
 
   # Returns the location of uniform variable, will return nil if not found.
@@ -225,4 +210,7 @@ class Shader
 
     # @!endgroup
   end
+
+  # Used for alerting the user if the {Shader} was not found at the specified path.
+  class NotFoundError < StandardError; end
 end
