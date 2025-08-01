@@ -362,6 +362,15 @@
 - Removed unload_shader
 - Refactor Shader#ready?
 - Removed shader_ready?
+- Added Shader.load_code
+- Removed load_shaders_from_string
+- Added Shader#location_of
+- Removed Shader#get_uniform_location
+- Removed #get_shader_location
+- Added Shader#set
+- Removed Shader#set_value
+- Removed Shader#set_values
+- Removed set_shader_values
 
 ## v0.3.14.1
 

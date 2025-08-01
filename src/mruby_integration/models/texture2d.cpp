@@ -177,7 +177,7 @@ mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 
   float rotation = 0;
   if (!mrb_undef_p(kw_values[4])) {
-    rotation = mrb_as_int(mrb, kw_values[4]);
+    rotation = mrb_as_float(mrb, kw_values[4]);
   }
 
   Color* colour;
