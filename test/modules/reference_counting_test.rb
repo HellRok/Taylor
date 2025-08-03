@@ -98,7 +98,7 @@ class Test
     def test_RenderTexture_reference_count
       GC.start
 
-      render_texture = RenderTexture.new(100, 100)
+      render_texture = RenderTexture.new(width: 100, height: 100)
 
       assert_equal 0, render_texture.reference_count
       assert_equal 1, ReferenceCounter.tracked_objects_count

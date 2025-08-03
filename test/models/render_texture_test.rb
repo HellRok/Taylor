@@ -6,7 +6,7 @@ class Test
           "LoadRenderTexture",
           RenderTexture.mock_return(width: 1, height: 2)
         )
-        render_texture = RenderTexture.new(1, 2)
+        render_texture = RenderTexture.new(width: 1, height: 2)
 
         assert_kind_of RenderTexture, render_texture
         assert_equal 1, render_texture.width
@@ -24,22 +24,25 @@ class Test
           "LoadRenderTexture",
           RenderTexture.mock_return(width: 2, height: 3)
         )
-        render_texture = RenderTexture.new(2, 3)
+        render_texture = RenderTexture.new(width: 2, height: 3)
 
         assert_equal(
           {
             width: 2,
-            height: 3,
-            texture: {
-              id: render_texture.texture.id,
-              width: 2,
-              height: 3,
-              mipmaps: 0,
-              format: 0
-            }
+            height: 3
           },
           render_texture.to_h
         )
+      end
+
+      def test_texture
+        Taylor::Raylib.mock_call(
+          "LoadRenderTexture",
+          RenderTexture.mock_return(width: 3, height: 4)
+        )
+        render_texture = RenderTexture.new(width: 3, height: 4)
+
+        assert_kind_of Texture2D, render_texture.texture
       end
     end
   end

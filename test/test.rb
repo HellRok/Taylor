@@ -3,7 +3,6 @@ require "mtest_extensions"
 
 require "base"
 
-require "core/drawing_test"
 require "core_test"
 require "input/gamepad_test"
 require "input/gesture_test"

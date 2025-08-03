@@ -31,6 +31,24 @@ setup_Texture2D(mrb_state* mrb,
 }
 
 auto
+mrb_Texture2D_value(mrb_state* mrb, Texture2D* texture) -> mrb_value
+{
+  mrb_value obj = mrb_obj_value(
+    Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
+
+  setup_Texture2D(mrb,
+                  obj,
+                  texture,
+                  texture->id,
+                  texture->width,
+                  texture->height,
+                  texture->mipmaps,
+                  texture->format);
+
+  return obj;
+}
+
+auto
 mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* path;

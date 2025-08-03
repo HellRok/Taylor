@@ -1,16 +1,16 @@
 # The RenderTexture class is used to draw things to a texture.
 class RenderTexture
+  # @note If you access the instance variable `@texture` directly and assign it
+  #   to a different variable, it will be corrupted when Ruby cleans up the
+  #   memory of the parent {RenderTexture} object.
+  #
   # @return [Texture2D]
-  attr_reader :texture
-
-  # @return [Integer]
-  attr_reader :width, :height
+  def texture = @texture # standard:disable Style/TrivialAccessors
 
   # Return the object represented by a Hash.
   # @return [Hash]
   def to_h
     {
-      texture: texture.to_h,
       width: width,
       height: height
     }
