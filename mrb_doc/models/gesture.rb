@@ -4,7 +4,7 @@ class Gesture
   # @example Basic usage
   #   Gesture.enabled = Gesture::TAP | Gesture::SWIPE_UP
   #
-  # @param flags [Integer]
+  # @param gestures [Integer]
   # @return [nil]
   def self.enabled=(gestures)
     # mrb_Gesture_set_enabled

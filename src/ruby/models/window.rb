@@ -1,6 +1,29 @@
 # This class is used for managing your {Window} and retrieving any information
 # about it.
 module Window
+  # Draw to the {Window}, you need to wrap all your draw calls in this if you
+  # want them to work!
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #     # Drawing code here
+  #   end
+  #
+  # @yield The block that calls your rendering logic.
+  # @return [nil]
+  def self.draw(&block)
+    begin_drawing
+    block.call
+  ensure
+    end_drawing
+  end
+
   # Gets the title of the {Window}.
   #
   # @example Basic usage

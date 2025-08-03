@@ -1,3 +1,5 @@
+# {DroppedFiles} helps you deal with files that the player has dragged and
+# dropped into the Taylor game window.
 class DroppedFiles
   # Have there been files dropped that haven't been dealt with?
   #

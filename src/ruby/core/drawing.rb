@@ -5,16 +5,6 @@ def clear(colour: Colour::RAYWHITE)
   clear_background(colour)
 end
 
-# Allows you to call rendering functions within the block.
-# @yield The block that calls your rendering logic.
-# @return [nil]
-def drawing(&block)
-  begin_drawing
-  block.call
-ensure
-  end_drawing
-end
-
 # Allows you to call rendering functions within the block but limits the output.
 # to within the bounds of `section`.
 # @yield The block that calls your rendering logic.

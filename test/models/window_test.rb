@@ -107,6 +107,52 @@ class Test
         ]
       end
 
+      def test_draw
+        Window.draw do
+          clear(colour: Colour[1, 0, 0, 0])
+        end
+
+        assert_called [
+          "(BeginDrawing) { }",
+          "(ClearBackground) { color: { r: 1 g: 0 b: 0 a: 0 } }",
+          "(EndDrawing) { }"
+        ]
+      end
+
+      def test_draw_with_error
+        begin
+          Window.draw do
+            clear(colour: Colour[2, 0, 0, 0])
+            raise StandardError, "Oops!"
+            clear(colour: Colour[3, 0, 0, 0]) # standard:disable Lint/UnreachableCode
+          end
+        rescue => error
+          assert_equal "Oops!", error.message
+        end
+
+        assert_called [
+          "(BeginDrawing) { }",
+          "(ClearBackground) { color: { r: 2 g: 0 b: 0 a: 0 } }",
+          "(EndDrawing) { }"
+        ]
+      end
+
+      def test_begin_drawing
+        Window.begin_drawing
+
+        assert_called [
+          "(BeginDrawing) { }"
+        ]
+      end
+
+      def test_end_drawing
+        Window.end_drawing
+
+        assert_called [
+          "(EndDrawing) { }"
+        ]
+      end
+
       def test_width
         # Yes, this is the right method, for some reason it's called 'Screen' here?
         Taylor::Raylib.mock_call("GetScreenWidth", "2")

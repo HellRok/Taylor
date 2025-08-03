@@ -7,22 +7,6 @@ def clear_background(colour)
   nil
 end
 
-# Starts drawing to the screen.
-# @return [nil]
-def begin_drawing
-  # mrb_begin_drawing
-  # src/mruby_integration/core/drawing.cpp
-  nil
-end
-
-# Ends drawing to the screen.
-# @return [nil]
-def end_drawing
-  # mrb_end_drawing
-  # src/mruby_integration/core/drawing.cpp
-  nil
-end
-
 # Starts drawing to the {RenderTexture}.
 # @param texture [RenderTexture]
 # @return [nil]

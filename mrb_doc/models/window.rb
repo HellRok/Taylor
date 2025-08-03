@@ -69,6 +69,54 @@ class Window
     true
   end
 
+  # Start drawing to the {Window}, you need to wrap all your draw calls in this
+  # if you want them to work!
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.begin_drawing
+  #   begin
+  #     # Drawing code here
+  #   ensure
+  #     Window.end_drawing
+  #   end
+  #
+  # @return [nil]
+  def self.begin_drawing
+    # mrb_Window_begin_drawing
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
+
+  # End drawing to the {Window}, you need to wrap all your draw calls in this
+  # if you want them to work!
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.begin_drawing
+  #   begin
+  #     # Drawing code here
+  #   ensure
+  #     Window.end_drawing
+  #   end
+  #
+  # @return [nil]
+  def self.end_drawing
+    # mrb_Window_end_drawing
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
+
   # Gets the width of the {Window}.
   #
   # @example Basic usage

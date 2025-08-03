@@ -371,6 +371,12 @@
 - Removed Shader#set_value
 - Removed Shader#set_values
 - Removed set_shader_values
+- Added Window.begin_drawing
+- Removed #begin_drawing
+- Added Window.end_drawing
+- Removed #end_drawing
+- Added Window.draw
+- Removed #drawing
 
 ## v0.3.14.1
 

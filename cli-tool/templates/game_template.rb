@@ -19,7 +19,7 @@ def game_template
 
       # Your update logic goes here
 
-      drawing do
+      Window.draw do
         # Your drawing logic goes here
 
         clear
