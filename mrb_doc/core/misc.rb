@@ -1,4 +1,4 @@
-# You'll want to call this function after you've called {end_drawing} or you'll
+# You'll want to call this function after you've called {Window.end_drawing} or you'll
 # find that you don't get everything that you think you've drawn.
 # @param filename [String] The filename to save to. The extension will dictate how it is saved.
 # @return [nil]

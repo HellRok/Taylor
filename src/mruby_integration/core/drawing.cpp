@@ -6,16 +6,6 @@
 #include "ruby/core/drawing.hpp"
 
 auto
-mrb_clear_background(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Color* colour;
-  mrb_get_args(mrb, "d", &colour, &Color_type);
-
-  ClearBackground(*colour);
-  return mrb_nil_value();
-}
-
-auto
 mrb_begin_texture_mode(mrb_state* mrb, mrb_value) -> mrb_value
 {
   RenderTexture* texture;
@@ -86,11 +76,6 @@ mrb_end_blend_mode(mrb_state*, mrb_value) -> mrb_value
 void
 append_core_drawing(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "clear_background",
-                    mrb_clear_background,
-                    MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "begin_texture_mode",

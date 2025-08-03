@@ -377,6 +377,9 @@
 - Removed #end_drawing
 - Added Window.draw
 - Removed #drawing
+- Added Window.clear
+- Removed #clear
+- Removed #clear_background
 
 ## v0.3.14.1
 

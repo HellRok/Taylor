@@ -1,12 +1,3 @@
-# Clears the screen with the specified colour.
-# @param colour [Colour]
-# @return [nil]
-def clear_background(colour)
-  # mrb_clear_background
-  # src/mruby_integration/core/drawing.cpp
-  nil
-end
-
 # Starts drawing to the {RenderTexture}.
 # @param texture [RenderTexture]
 # @return [nil]

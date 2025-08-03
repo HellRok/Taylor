@@ -1,16 +1,6 @@
 class Test
   class Core
     class Drawing_Test < Test::Base
-      def test_clear
-        clear
-        assert_called ["(ClearBackground) { color: { r: 245 g: 245 b: 245 a: 255 } }"]
-      end
-
-      def test_clear_with_colour
-        clear(colour: Colour::GREEN)
-        assert_called ["(ClearBackground) { color: { r: 0 g: 228 b: 48 a: 255 } }"]
-      end
-
       # def test_drawing
       #  skip_unless_display_present
 

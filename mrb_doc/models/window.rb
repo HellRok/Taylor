@@ -665,4 +665,28 @@ class Window
     # src/mruby_integration/models/window.cpp
     Vector2.new(1, 1)
   end
+
+  # Clear the screen completely with either the {Colour} passed in or with
+  # {Colour::BLACK}.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #     Window.clear
+  #
+  #     # Drawing everything over the fresh frame
+  #   end
+  #
+  # @param colour [Colour]
+  # @return [nil]
+  def self.clear(colour: Colour::BLACK)
+    # mrb_Window_clear
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
 end

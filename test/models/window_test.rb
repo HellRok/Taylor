@@ -109,11 +109,12 @@ class Test
 
       def test_draw
         Window.draw do
-          clear(colour: Colour[1, 0, 0, 0])
+          Window.clear(colour: Colour[1, 0, 0, 0])
         end
 
         assert_called [
           "(BeginDrawing) { }",
+          "(IsWindowReady) { }",
           "(ClearBackground) { color: { r: 1 g: 0 b: 0 a: 0 } }",
           "(EndDrawing) { }"
         ]
@@ -122,9 +123,9 @@ class Test
       def test_draw_with_error
         begin
           Window.draw do
-            clear(colour: Colour[2, 0, 0, 0])
+            Window.clear(colour: Colour[2, 0, 0, 0])
             raise StandardError, "Oops!"
-            clear(colour: Colour[3, 0, 0, 0]) # standard:disable Lint/UnreachableCode
+            Window.clear(colour: Colour[3, 0, 0, 0]) # standard:disable Lint/UnreachableCode
           end
         rescue => error
           assert_equal "Oops!", error.message
@@ -132,6 +133,7 @@ class Test
 
         assert_called [
           "(BeginDrawing) { }",
+          "(IsWindowReady) { }",
           "(ClearBackground) { color: { r: 2 g: 0 b: 0 a: 0 } }",
           "(EndDrawing) { }"
         ]
@@ -831,6 +833,36 @@ class Test
 
         assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.scale") {
           Window.scale
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_clear
+        Window.clear
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(ClearBackground) { color: { r: 0 g: 0 b: 0 a: 255 } }"
+        ]
+      end
+
+      def test_clear_with_colour
+        Window.clear(colour: Colour[4, 0, 0, 0])
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(ClearBackground) { color: { r: 4 g: 0 b: 0 a: 0 } }"
+        ]
+      end
+
+      def test_clear_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.clear") {
+          Window.clear
         }
 
         assert_called [

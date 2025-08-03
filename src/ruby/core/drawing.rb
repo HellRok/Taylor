@@ -1,10 +1,3 @@
-# Clear the screen with the specified colour.
-# @param colour [Colour]
-# @return [nil]
-def clear(colour: Colour::RAYWHITE)
-  clear_background(colour)
-end
-
 # Allows you to call rendering functions within the block but limits the output.
 # to within the bounds of `section`.
 # @yield The block that calls your rendering logic.

@@ -378,6 +378,31 @@ mrb_Window_scale(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_Vector2_value(mrb, scale);
 }
 
+auto
+mrb_Window_clear(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.clear")
+
+  // def self.clear(colour: Colour::BLACK)
+  const mrb_int kw_num = 1;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "colour") };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  Color* colour;
+  if (mrb_undef_p(kw_values[0])) {
+    auto default_colour = BLACK;
+    colour = &default_colour;
+  } else {
+    colour = static_cast<struct Color*> DATA_PTR(kw_values[0]);
+  }
+
+  ClearBackground(*colour);
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -450,6 +475,8 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "monitor=", mrb_Window_set_monitor, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "scale", mrb_Window_scale, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "clear", mrb_Window_clear, MRB_ARGS_REQ(1));
 
   load_ruby_models_window(mrb);
 }
