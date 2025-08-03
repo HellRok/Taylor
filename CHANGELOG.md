@@ -387,6 +387,12 @@
 - Added Rectangle#scissor
 - Removed #end_scissor_mode
 - Refactor RenderTexture#initialize
+- Added RenderTexture#begin_drawing
+- Removed #begin_texture_mode
+- Added RenderTexture#end_drawing
+- Removed #end_texture_mode
+- Added RenderTexture#draw
+- Removed RenderTexture#drawing
 
 ## v0.3.14.1
 

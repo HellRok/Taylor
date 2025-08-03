@@ -1,20 +1,3 @@
-# Starts drawing to the {RenderTexture}.
-# @param texture [RenderTexture]
-# @return [nil]
-def begin_texture_mode(texture)
-  # mrb_begin_texture_mode
-  # src/mruby_integration/core/drawing.cpp
-  nil
-end
-
-# Stops drawing to the {RenderTexture}.
-# @return [nil]
-def end_texture_mode
-  # mrb_end_texture_mode
-  # src/mruby_integration/core/drawing.cpp
-  nil
-end
-
 # All draw calls within will be drawn through the {Shader}.
 # @param shader [Shader]
 # @return [nil]

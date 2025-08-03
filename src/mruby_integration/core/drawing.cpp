@@ -6,23 +6,6 @@
 #include "ruby/core/drawing.hpp"
 
 auto
-mrb_begin_texture_mode(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  RenderTexture* texture;
-  mrb_get_args(mrb, "d", &texture, &RenderTexture_type);
-
-  BeginTextureMode(*texture);
-  return mrb_nil_value();
-}
-
-auto
-mrb_end_texture_mode(mrb_state*, mrb_value) -> mrb_value
-{
-  EndTextureMode();
-  return mrb_nil_value();
-}
-
-auto
 mrb_begin_shader_mode(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Shader* shader;
@@ -59,16 +42,6 @@ mrb_end_blend_mode(mrb_state*, mrb_value) -> mrb_value
 void
 append_core_drawing(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "begin_texture_mode",
-                    mrb_begin_texture_mode,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "end_texture_mode",
-                    mrb_end_texture_mode,
-                    MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "begin_shader_mode",

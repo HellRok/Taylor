@@ -16,14 +16,21 @@ class RenderTexture
     }
   end
 
-  # Instead of rending to the screen, render to this RenderTexture.
-  # @yield The block that calls your rendering logic.
+  # Start drawing to the {RenderTexture#texture}, so instead of going to the screen, they'll render to the {Texture2D}.
+  #
+  # @example Basic usage
+  #   texture = RenderTexture.new(width: 640, height: 480)
+  #
+  #   texture.draw
+  #     # Drawing code here
+  #   end
+  #
   # @return [nil]
-  def drawing(&block)
-    begin_texture_mode(self)
+  def draw(&block)
+    begin_drawing
     block.call
   ensure
-    end_texture_mode
+    end_drawing
   end
 
   # A method used to generate the mock data for Raylib.

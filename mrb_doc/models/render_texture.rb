@@ -25,6 +25,45 @@ class RenderTexture
   #
   # @return [nil]
   def unload
+    # mrb_RenderTexture_unload
+    # src/mruby_integration/models/render_texture.cpp
+    nil
+  end
+
+  # Start drawing to the {RenderTexture#texture}, so instead of going to the screen, they'll render to the {Texture2D}.
+  #
+  # @example Basic usage
+  #   texture = RenderTexture.new(width: 640, height: 480)
+  #
+  #   texture.begin_drawing
+  #   begin
+  #     # Drawing code here
+  #   ensure
+  #     texture.end_drawing
+  #   end
+  #
+  # @return [nil]
+  def begin_drawing
+    # mrb_RenderTexture_begin_drawing
+    # src/mruby_integration/models/render_texture.cpp
+    nil
+  end
+
+  # Stops drawing to the {RenderTexture#texture}.
+  #
+  # @example Basic usage
+  #   texture = RenderTexture.new(width: 640, height: 480)
+  #
+  #   texture.begin_drawing
+  #   begin
+  #     # Drawing code here
+  #   ensure
+  #     texture.end_drawing
+  #   end
+  #
+  # @return [nil]
+  def end_drawing
+    # mrb_RenderTexture_end_drawing
     # src/mruby_integration/models/render_texture.cpp
     nil
   end

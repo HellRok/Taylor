@@ -68,12 +68,26 @@ mrb_attr_reader_with_klasses_and_attrs(mrb,
 auto
 mrb_RenderTexture_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  RenderTexture* texture;
-  Data_Get_Struct(mrb, self, &RenderTexture_type, texture);
-  mrb_assert(texture != nullptr);
+  mrb_get_self(mrb, self, RenderTexture, texture);
 
   UnloadRenderTexture(*texture);
 
+  return mrb_nil_value();
+}
+
+auto
+mrb_RenderTexture_begin_drawing(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, RenderTexture, texture);
+
+  BeginTextureMode(*texture);
+  return mrb_nil_value();
+}
+
+auto
+mrb_RenderTexture_end_drawing(mrb_state*, mrb_value) -> mrb_value
+{
+  EndTextureMode();
   return mrb_nil_value();
 }
 
@@ -94,6 +108,16 @@ append_models_RenderTexture(mrb_state* mrb)
                     RenderTexture_class,
                     "unload",
                     mrb_RenderTexture_unload,
+                    MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    RenderTexture_class,
+                    "begin_drawing",
+                    mrb_RenderTexture_begin_drawing,
+                    MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    RenderTexture_class,
+                    "end_drawing",
+                    mrb_RenderTexture_end_drawing,
                     MRB_ARGS_NONE());
 
   load_ruby_models_render_texture(mrb);
