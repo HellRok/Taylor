@@ -183,6 +183,54 @@ class Test
           "(DrawRectangleRoundedLines) { rec: { x: 7.000000 y: 8.000000 width: 9.000000 height: 10.000000 } roundness: 0.200000 segments: 21 lineThick: 19.000000 color: { r: 15 g: 16 b: 17 a: 18 } }"
         ]
       end
+
+      def test_scissor
+        Rectangle.new(x: 11, y: 12, width: 13, height: 14.4, colour: Colour::GREEN).scissor do
+          Window.clear(colour: Colour[1, 0, 0, 0])
+        end
+
+        assert_called [
+          "(BeginScissorMode) { x: 11 y: 12 width: 13 height: 14 }",
+          "(IsWindowReady) { }",
+          "(ClearBackground) { color: { r: 1 g: 0 b: 0 a: 0 } }",
+          "(EndScissorMode) { }"
+        ]
+      end
+
+      def test_scissor_with_error
+        begin
+          Rectangle.new(x: 12, y: 13, width: 14, height: 15, colour: Colour::GREEN).scissor do
+            Window.clear(colour: Colour[2, 0, 0, 0])
+            raise StandardError, "Oops!"
+            Window.clear(colour: Colour[3, 0, 0, 0]) # standard:disable Lint/UnreachableCode
+          end
+        rescue => error
+          assert_equal "Oops!", error.message
+        end
+
+        assert_called [
+          "(BeginScissorMode) { x: 12 y: 13 width: 14 height: 15 }",
+          "(IsWindowReady) { }",
+          "(ClearBackground) { color: { r: 2 g: 0 b: 0 a: 0 } }",
+          "(EndScissorMode) { }"
+        ]
+      end
+
+      def test_begin_scissoring
+        Rectangle.new(x: 13.3, y: 14.4, width: 15.5, height: 16.6, colour: Colour::GREEN).begin_scissoring
+
+        assert_called [
+          "(BeginScissorMode) { x: 13 y: 14 width: 15 height: 16 }"
+        ]
+      end
+
+      def test_end_scissoring
+        Rectangle[0, 0, 0, 0].end_scissoring
+
+        assert_called [
+          "(EndScissorMode) { }"
+        ]
+      end
     end
   end
 end

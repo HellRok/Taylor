@@ -32,26 +32,6 @@ def end_shader_mode
   nil
 end
 
-# In scissor mode only draw calls within the defined area will actually be drawn.
-# @param x [Integer]
-# @param y [Integer]
-# @param width [Integer]
-# @param height [Integer]
-# @return [nil]
-def begin_scissor_mode(x, y, width, height)
-  # mrb_begin_scissor_mode
-  # src/mruby_integration/core/drawing.cpp
-  nil
-end
-
-# End scissor mode.
-# @return [nil]
-def end_scissor_mode
-  # mrb_end_scissor_mode
-  # src/mruby_integration/core/drawing.cpp
-  nil
-end
-
 # All draw calls within will be drawn using the specified blend mode.
 # @param mode [Integer]
 # @return [nil]

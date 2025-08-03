@@ -236,6 +236,24 @@ mrb_Rectangle_draw(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Rectangle_begin_scissoring(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Rektangle, rectangle);
+  BeginScissorMode(static_cast<int>(rectangle->rectangle.x),
+                   static_cast<int>(rectangle->rectangle.y),
+                   static_cast<int>(rectangle->rectangle.width),
+                   static_cast<int>(rectangle->rectangle.height));
+  return mrb_nil_value();
+}
+
+auto
+mrb_Rectangle_end_scissoring(mrb_state*, mrb_value) -> mrb_value
+{
+  EndScissorMode();
+  return mrb_nil_value();
+}
+
 void
 append_models_Rectangle(mrb_state* mrb)
 {
@@ -257,6 +275,16 @@ append_models_Rectangle(mrb_state* mrb)
   mrb_attr_accessor_defines(mrb, Rectangle, segments);
   mrb_define_method(
     mrb, Rectangle_class, "draw", mrb_Rectangle_draw, MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    Rectangle_class,
+                    "begin_scissoring",
+                    mrb_Rectangle_begin_scissoring,
+                    MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    Rectangle_class,
+                    "end_scissoring",
+                    mrb_Rectangle_end_scissoring,
+                    MRB_ARGS_NONE());
 
   load_ruby_models_rectangle(mrb);
 }

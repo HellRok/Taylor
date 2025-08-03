@@ -63,4 +63,21 @@ class Rectangle
       segments: segments
     }
   end
+
+  # Scissors within the {Rectangle}, only drawing that happens within the
+  # bounds of the {Rectangle} will actually be drawn to the screen.
+  #
+  # @example Basic usage
+  #   portal = Rectangle.new(x: 100, y: 100, width: 50, height: 75, colour: Colour::BLUE)
+  #   portal.scissor do
+  #     # Drawing code here
+  #   end
+  #
+  # @return [nil]
+  def scissor(&block)
+    begin_scissoring
+    block.call
+  ensure
+    end_scissoring
+  end
 end

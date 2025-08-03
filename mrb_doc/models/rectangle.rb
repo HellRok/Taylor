@@ -56,4 +56,41 @@ class Rectangle
     # src/mruby_integration/models/rectangle.cpp
     nil
   end
+
+  # Start scissoring within the {Rectangle}, only drawing that happens within
+  # the bounds of the {Rectangle} will actually be drawn to the screen.
+  #
+  # @example Basic usage
+  #   portal = Rectangle.new(x: 100, y: 100, width: 50, height: 75, colour: Colour::BLUE)
+  #   portal.begin_scissoring
+  #   begin
+  #     # Drawing code here
+  #   ensure
+  #     portal.end_scissoring
+  #   end
+  #
+  # @return [nil]
+  def begin_scissoring
+    # mrb_Rectangle_begin_scissoring
+    # src/mruby_integration/models/rectangle.cpp
+    nil
+  end
+
+  # Ends scissoring within the {Rectangle}.
+  #
+  # @example Basic usage
+  #   portal = Rectangle.new(x: 100, y: 100, width: 50, height: 75, colour: Colour::BLUE)
+  #   portal.begin_scissoring
+  #   begin
+  #     # Drawing code here
+  #   ensure
+  #     portal.end_scissoring
+  #   end
+  #
+  # @return [nil]
+  def end_scissoring
+    # mrb_Rectangle_end_scissoring
+    # src/mruby_integration/models/rectangle.cpp
+    nil
+  end
 end

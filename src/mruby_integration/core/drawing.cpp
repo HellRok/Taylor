@@ -40,23 +40,6 @@ mrb_end_shader_mode(mrb_state*, mrb_value) -> mrb_value
 }
 
 auto
-mrb_begin_scissor_mode(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  mrb_int x, y, width, height;
-  mrb_get_args(mrb, "iiii", &x, &y, &width, &height);
-
-  BeginScissorMode(x, y, width, height);
-  return mrb_nil_value();
-}
-
-auto
-mrb_end_scissor_mode(mrb_state*, mrb_value) -> mrb_value
-{
-  EndScissorMode();
-  return mrb_nil_value();
-}
-
-auto
 mrb_begin_blend_mode(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int blend_mode;
@@ -95,16 +78,6 @@ append_core_drawing(mrb_state* mrb)
                     mrb->kernel_module,
                     "end_shader_mode",
                     mrb_end_shader_mode,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "begin_scissor_mode",
-                    mrb_begin_scissor_mode,
-                    MRB_ARGS_REQ(4));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "end_scissor_mode",
-                    mrb_end_scissor_mode,
                     MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,

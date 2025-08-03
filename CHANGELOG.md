@@ -380,6 +380,12 @@
 - Added Window.clear
 - Removed #clear
 - Removed #clear_background
+- Added Rectangle#begin_scissoring
+- Removed #begin_scissor_mode
+- Added Rectangle#end_scissoring
+- Removed #end_scissor_mode
+- Added Rectangle#scissor
+- Removed #end_scissor_mode
 
 ## v0.3.14.1
 
