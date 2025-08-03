@@ -23,13 +23,21 @@ class Shader
     end
   end
 
-  # Instead of rendering straight to the screen, render through this Shader first.
-  # @yield The block that calls your rendering logic.
+  # Apply the {Shader} to everything drawn in the block.
+  #
+  # @example Basic usage
+  #   shader = Shader.new(fragment: "./my/cool/shader.fs")
+  #
+  #   shader.draw
+  #     # Drawing code here
+  #   end
+  #
   # @return [nil]
   def draw(&block)
-    begin_shader_mode(self)
+    begin_drawing
     block.call
-    end_shader_mode
+  ensure
+    end_drawing
   end
 
   # A method used to generate the mock data for Raylib.

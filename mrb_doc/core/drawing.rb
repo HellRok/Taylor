@@ -1,20 +1,3 @@
-# All draw calls within will be drawn through the {Shader}.
-# @param shader [Shader]
-# @return [nil]
-def begin_shader_mode(shader)
-  # mrb_begin_shader_mode
-  # src/mruby_integration/core/drawing.cpp
-  nil
-end
-
-# Stops drawing through the {Shader}.
-# @return [nil]
-def end_shader_mode
-  # mrb_end_shader_mode
-  # src/mruby_integration/core/drawing.cpp
-  nil
-end
-
 # All draw calls within will be drawn using the specified blend mode.
 # @param mode [Integer]
 # @return [nil]

@@ -516,6 +516,69 @@ class Test
 
         assert_no_calls
       end
+
+      def test_draw
+        Taylor::Raylib.mock_call("LoadShader", Shader.mock_return(id: 14))
+        shader = Shader.new(fragment: "fragment shader path")
+        Taylor::Raylib.reset_calls
+
+        shader.draw do
+          Window.clear(colour: Colour[1, 0, 0, 0])
+        end
+
+        assert_called [
+          "(BeginShaderMode) { shader: { id: 14 } }",
+          "(IsWindowReady) { }",
+          "(ClearBackground) { color: { r: 1 g: 0 b: 0 a: 0 } }",
+          "(EndShaderMode) { }"
+        ]
+      end
+
+      def test_draw_with_error
+        Taylor::Raylib.mock_call("LoadShader", Shader.mock_return(id: 15))
+        shader = Shader.new(fragment: "fragment shader path")
+        Taylor::Raylib.reset_calls
+
+        begin
+          shader.draw do
+            Window.clear(colour: Colour[2, 0, 0, 0])
+            raise StandardError, "Oops!"
+            Window.clear(colour: Colour[3, 0, 0, 0]) # standard:disable Lint/UnreachableCode
+          end
+        rescue => error
+          assert_equal "Oops!", error.message
+        end
+
+        assert_called [
+          "(BeginShaderMode) { shader: { id: 15 } }",
+          "(IsWindowReady) { }",
+          "(ClearBackground) { color: { r: 2 g: 0 b: 0 a: 0 } }",
+          "(EndShaderMode) { }"
+        ]
+      end
+
+      def test_begin_drawing
+        Taylor::Raylib.mock_call("LoadShader", Shader.mock_return(id: 16))
+        shader = Shader.new(fragment: "fragment shader path")
+        Taylor::Raylib.reset_calls
+
+        shader.begin_drawing
+
+        assert_called [
+          "(BeginShaderMode) { shader: { id: 16 } }"
+        ]
+      end
+
+      def test_end_drawing
+        shader = Shader.new(fragment: "fragment shader path")
+        Taylor::Raylib.reset_calls
+
+        shader.end_drawing
+
+        assert_called [
+          "(EndShaderMode) { }"
+        ]
+      end
     end
   end
 end

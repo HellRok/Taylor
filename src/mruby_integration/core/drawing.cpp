@@ -1,26 +1,7 @@
 #include "mruby.h"
 #include "raylib.h"
 
-#include "mruby_integration/struct_types.hpp"
-
 #include "ruby/core/drawing.hpp"
-
-auto
-mrb_begin_shader_mode(mrb_state* mrb, mrb_value) -> mrb_value
-{
-  Shader* shader;
-  mrb_get_args(mrb, "d", &shader, &Shader_type);
-
-  BeginShaderMode(*shader);
-  return mrb_nil_value();
-}
-
-auto
-mrb_end_shader_mode(mrb_state*, mrb_value) -> mrb_value
-{
-  EndShaderMode();
-  return mrb_nil_value();
-}
 
 auto
 mrb_begin_blend_mode(mrb_state* mrb, mrb_value) -> mrb_value
@@ -42,16 +23,6 @@ mrb_end_blend_mode(mrb_state*, mrb_value) -> mrb_value
 void
 append_core_drawing(mrb_state* mrb)
 {
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "begin_shader_mode",
-                    mrb_begin_shader_mode,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    mrb->kernel_module,
-                    "end_shader_mode",
-                    mrb_end_shader_mode,
-                    MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     mrb->kernel_module,
                     "begin_blend_mode",

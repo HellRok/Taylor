@@ -354,6 +354,22 @@ mrb_Shader_set(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Shader_begin_drawing(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Shader, shader);
+
+  BeginShaderMode(*shader);
+  return mrb_nil_value();
+}
+
+auto
+mrb_Shader_end_drawing(mrb_state*, mrb_value) -> mrb_value
+{
+  EndShaderMode();
+  return mrb_nil_value();
+}
+
 void
 append_models_Shader(mrb_state* mrb)
 {
@@ -371,6 +387,13 @@ append_models_Shader(mrb_state* mrb)
   mrb_define_method(
     mrb, Shader_class, "location_of", mrb_Shader_location_of, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Shader_class, "set", mrb_Shader_set, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb,
+                    Shader_class,
+                    "begin_drawing",
+                    mrb_Shader_begin_drawing,
+                    MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Shader_class, "end_drawing", mrb_Shader_end_drawing, MRB_ARGS_NONE());
 
   load_ruby_models_shader(mrb);
 }

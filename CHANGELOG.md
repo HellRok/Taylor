@@ -393,6 +393,10 @@
 - Removed #end_texture_mode
 - Added RenderTexture#draw
 - Removed RenderTexture#drawing
+- Added Shader#begin_drawing
+- Removed #begin_shader_mode
+- Added Shader#end_drawing
+- Removed #end_shader_mode
 
 ## v0.3.14.1
 

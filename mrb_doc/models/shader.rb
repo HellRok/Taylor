@@ -180,4 +180,42 @@ class Shader
     # src/mruby_integration/shaders.cpp
     nil
   end
+
+  # Apply the {Shader} to everything drawn until {Shader#end_drawing} is called.
+  #
+  # @example Basic usage
+  #   shader = Shader.new(fragment: "./my/cool/shader.fs")
+  #
+  #   shader.begin_drawing
+  #   begin
+  #     # Drawing code here
+  #   ensure
+  #     shader.end_drawing
+  #   end
+  #
+  # @return [nil]
+  def begin_drawing
+    # mrb_Shader_begin_drawing
+    # src/mruby_integration/models/shader.cpp
+    nil
+  end
+
+  # Apply the {Shader} to everything drawn from calling {Shader#begin_drawing}.
+  #
+  # @example Basic usage
+  #   shader = Shader.new(fragment: "./my/cool/shader.fs")
+  #
+  #   shader.begin_drawing
+  #   begin
+  #     # Drawing code here
+  #   ensure
+  #     shader.end_drawing
+  #   end
+  #
+  # @return [nil]
+  def end_drawing
+    # mrb_Shader_end_drawing
+    # src/mruby_integration/models/shader.cpp
+    nil
+  end
 end
