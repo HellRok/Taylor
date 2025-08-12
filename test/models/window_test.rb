@@ -869,6 +869,27 @@ class Test
           "(IsWindowReady) { }"
         ]
       end
+
+      def test_screenshot
+        Window.screenshot("screenshot.png")
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(TakeScreenshot) { fileName: 'screenshot.png' }"
+        ]
+      end
+
+      def test_screenshot_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.screenshot") {
+          Window.screenshot("screenshot.png")
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
     end
   end
 end

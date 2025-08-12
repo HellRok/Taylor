@@ -403,6 +403,18 @@ mrb_Window_clear(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Window_screenshot(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.screenshot")
+
+  char* filename;
+  mrb_get_args(mrb, "z", &filename);
+  TakeScreenshot(filename);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -477,6 +489,8 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "scale", mrb_Window_scale, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "clear", mrb_Window_clear, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "screenshot", mrb_Window_screenshot, MRB_ARGS_REQ(1));
 
   load_ruby_models_window(mrb);
 }

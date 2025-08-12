@@ -1,13 +1,3 @@
-# You'll want to call this function after you've called {Window.end_drawing} or you'll
-# find that you don't get everything that you think you've drawn.
-# @param filename [String] The filename to save to. The extension will dictate how it is saved.
-# @return [nil]
-def take_screenshot(filename)
-  # mrb_take_screenshot
-  # src/mruby_integration/core/misc.cpp
-  nil
-end
-
 # Enable specific config flags.
 # @example Passing multiple flags
 #   set_config_flags(FLAG_WINDOW_TOPMOST | FLAG_WINDOW_RESIZABLE)

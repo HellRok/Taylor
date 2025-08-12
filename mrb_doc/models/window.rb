@@ -689,4 +689,34 @@ class Window
     # src/mruby_integration/models/window.cpp
     nil
   end
+
+  # Takes a screenshot of the {Window} and saves it to disk.
+  #
+  # @note You'll want to call this function after you've finished drawing to
+  #   the {Window} by either {Window.end_drawing} or after the end of the
+  #   {Window.draw} block. If you don't you'll find that you don't get everything
+  #   that you think you've drawn.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #     # Drawing things
+  #   end
+  #
+  #   Window.screenshot("./screenshots/my_cool_screenshot.png")
+  #
+  #
+  # @param filename [String] The filename to save to. The extension will dictate how it is saved.
+  # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.screenshot(filename)
+    # mrb_Window_screenshot
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
 end

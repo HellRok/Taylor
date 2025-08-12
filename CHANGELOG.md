@@ -397,6 +397,8 @@
 - Removed #begin_shader_mode
 - Added Shader#end_drawing
 - Removed #end_shader_mode
+- Added Window.screenshot
+- Removed #take_screenshot
 
 ## v0.3.14.1
 
