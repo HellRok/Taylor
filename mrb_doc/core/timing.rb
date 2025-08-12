@@ -1,12 +1,3 @@
-# Set the framerate you wish to target (usually 60, 120, or 144).
-# @param target [Integer]
-# @return [nil]
-def set_target_fps(target)
-  # mrb_set_target_fps
-  # src/mruby_integration/core/timing.cpp
-  nil
-end
-
 # Returns the current framerate as an integer.
 # @return [Integer]
 def get_fps

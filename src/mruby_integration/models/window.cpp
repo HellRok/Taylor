@@ -415,6 +415,17 @@ mrb_Window_screenshot(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Window_set_target_frame_rate(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_int frame_rate;
+  mrb_get_args(mrb, "i", &frame_rate);
+
+  SetTargetFPS(frame_rate);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -491,6 +502,11 @@ append_models_Window(mrb_state* mrb)
     mrb, Window_class, "clear", mrb_Window_clear, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "screenshot", mrb_Window_screenshot, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb,
+                          Window_class,
+                          "target_frame_rate=",
+                          mrb_Window_set_target_frame_rate,
+                          MRB_ARGS_REQ(1));
 
   load_ruby_models_window(mrb);
 }

@@ -399,6 +399,8 @@
 - Removed #end_shader_mode
 - Added Window.screenshot
 - Removed #take_screenshot
+- Added Window.target_frame_rate=
+- Removed #set_target_fps
 
 ## v0.3.14.1
 

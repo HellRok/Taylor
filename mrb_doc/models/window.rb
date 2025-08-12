@@ -719,4 +719,28 @@ class Window
     # src/mruby_integration/models/window.cpp
     nil
   end
+
+  # Set the frame rate you wish to target (usually 60, 120, or 144).
+  #
+  # @example Basic usage
+  #   Window.target_frame_rate = 60
+  #
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #     # Drawing things
+  #   end
+  #
+  #
+  # @param target [Integer]
+  # @return [nil]
+  def self.target_frame_rate=(frame_rate)
+    # mrb_Window_set_target_frame_rate
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
 end

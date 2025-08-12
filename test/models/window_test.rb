@@ -890,6 +890,14 @@ class Test
           "(IsWindowReady) { }"
         ]
       end
+
+      def test_target_frame_rate=
+        Window.target_frame_rate = 60
+
+        assert_called [
+          "(SetTargetFPS) { fps: 60 }"
+        ]
+      end
     end
   end
 end
