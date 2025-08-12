@@ -124,7 +124,29 @@ end
 
 # Save the analytics to a file
 def persist_buildkite_test_analytics
+  json = $buildkite_test_analytics.to_json
+  $DEBUG = true
+
   output = File.open("test-analytics.json", "w")
-  output.write($buildkite_test_analytics.to_json)
+  output.write(json)
+rescue NoMethodError => e
+  puts "Failed to generate analytics JSON..."
+  puts "Error: #{e.message}"
+
+  # Try again but we don't care about failing the job
+  begin
+    $buildkite_test_analytics.to_json
+  rescue
+    nil
+  end
+ensure
   output.close
+end
+
+# Doing this to try and debug _what_ object is being weird and not responding to #==
+class Object
+  def ==(other)
+    p self if $DEBUG
+    super
+  end
 end
