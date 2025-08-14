@@ -124,7 +124,16 @@ end
 
 # Save the analytics to a file
 def persist_buildkite_test_analytics
-  output = File.open("test-analytics.json", "w")
-  output.write($buildkite_test_analytics.to_json)
-  output.close
+  analytics_json = $buildkite_test_analytics.to_json
+
+  if Taylor::Platform.browser?
+    puts "ANALYTICS: #{analytics_json}"
+  else
+    output = File.open("test-analytics.json", "w")
+    output.write(analytics_json)
+    output.close
+  end
+rescue NoMethodError => error
+  puts "Failed to generate JSON, continuing without failing the job"
+  puts "Error: #{error.message}"
 end
