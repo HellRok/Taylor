@@ -768,4 +768,33 @@ class Window
     # src/mruby_integration/models/window.cpp
     60
   end
+
+  # Gets the amount of seconds the last frame took to render. Returns 0 if you
+  # call it before {Window.open}.
+  #
+  # @example Basic usage
+  #   Window.target_frame_rate = 60
+  #
+  #   puts Window.frame_time
+  #   #=> 0
+  #
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #      # draw stuff
+  #   end
+  #
+  #   puts Window.frame_time
+  #   #=> 0.0164
+  #
+  # @return [Float]
+  def self.frame_time
+    # mrb_Window_frame_time
+    # src/mruby_integration/models/window.cpp
+    0.0164
+  end
 end

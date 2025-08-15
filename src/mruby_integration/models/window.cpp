@@ -432,6 +432,12 @@ mrb_Window_frame_rate(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_int_value(mrb, GetFPS());
 }
 
+auto
+mrb_Window_frame_time(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  return mrb_float_value(mrb, GetFrameTime());
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -515,6 +521,8 @@ append_models_Window(mrb_state* mrb)
                           MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "frame_rate", mrb_Window_frame_rate, MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Window_class, "frame_time", mrb_Window_frame_time, MRB_ARGS_NONE());
 
   load_ruby_models_window(mrb);
 }

@@ -403,6 +403,8 @@
 - Removed #set_target_fps
 - Added Window.frame_rate
 - Removed #get_fps
+- Added Window.frame_time
+- Removed #get_frame_time
 
 ## v0.3.14.1
 

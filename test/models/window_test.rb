@@ -911,6 +911,19 @@ class Test
           "(GetFPS) { }"
         ]
       end
+
+      def test_frame_time
+        Taylor::Raylib.mock_call("GetFrameTime", "0.5")
+        Taylor::Raylib.mock_call("GetFrameTime", "1.0")
+
+        assert_equal 0.5, Window.frame_time
+        assert_equal 1.0, Window.frame_time
+
+        assert_called [
+          "(GetFrameTime) { }",
+          "(GetFrameTime) { }"
+        ]
+      end
     end
   end
 end
