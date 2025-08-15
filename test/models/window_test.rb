@@ -898,6 +898,19 @@ class Test
           "(SetTargetFPS) { fps: 60 }"
         ]
       end
+
+      def test_frame_rate
+        Taylor::Raylib.mock_call("GetFPS", "120")
+        Taylor::Raylib.mock_call("GetFPS", "119")
+
+        assert_equal 120, Window.frame_rate
+        assert_equal 119, Window.frame_rate
+
+        assert_called [
+          "(GetFPS) { }",
+          "(GetFPS) { }"
+        ]
+      end
     end
   end
 end

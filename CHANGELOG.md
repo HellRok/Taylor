@@ -401,6 +401,8 @@
 - Removed #take_screenshot
 - Added Window.target_frame_rate=
 - Removed #set_target_fps
+- Added Window.frame_rate
+- Removed #get_fps
 
 ## v0.3.14.1
 

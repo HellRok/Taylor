@@ -743,4 +743,29 @@ class Window
     # src/mruby_integration/models/window.cpp
     nil
   end
+
+  # Gets the frame rate of the {Window}. Returns 0 if you call it before
+  # {Window.open}.
+  #
+  # @example Basic usage
+  #   Window.target_frame_rate = 60
+  #
+  #   puts Window.frame_rate
+  #   #=> 0
+  #
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   puts Window.frame_rate
+  #   #=> 60
+  #
+  # @return [Integer]
+  def self.frame_rate
+    # mrb_Window_frame_rate
+    # src/mruby_integration/models/window.cpp
+    60
+  end
 end

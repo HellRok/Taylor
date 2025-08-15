@@ -426,6 +426,12 @@ mrb_Window_set_target_frame_rate(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
+auto
+mrb_Window_frame_rate(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  return mrb_int_value(mrb, GetFPS());
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -507,6 +513,8 @@ append_models_Window(mrb_state* mrb)
                           "target_frame_rate=",
                           mrb_Window_set_target_frame_rate,
                           MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Window_class, "frame_rate", mrb_Window_frame_rate, MRB_ARGS_NONE());
 
   load_ruby_models_window(mrb);
 }
