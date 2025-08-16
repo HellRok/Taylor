@@ -40,8 +40,8 @@ persist_buildkite_test_analytics
 
 if Taylor::Platform.browser?
   puts "EXIT CODE: #{result ? 1 : 0}"
-  cancel_main_loop
-  set_main_loop "noop"
+  Browser.cancel_main_loop
+  Browser.main_loop = "noop"
 else
 
   exit! 1 if result
