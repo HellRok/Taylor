@@ -797,4 +797,33 @@ class Window
     # src/mruby_integration/models/window.cpp
     0.0164
   end
+
+  # Gets the amount of seconds since calling {Window.open}. Returns 0 if you
+  # call it before {Window.open}.
+  #
+  # @example Basic usage
+  #   Window.target_frame_rate = 60
+  #
+  #   puts Window.seconds_open
+  #   #=> 0
+  #
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #      # draw stuff
+  #   end
+  #
+  #   puts Window.seconds_open
+  #   #=> 10.34
+  #
+  # @return [Float]
+  def self.seconds_open
+    # mrb_Window_seconds_open
+    # src/mruby_integration/models/window.cpp
+    10.34
+  end
 end

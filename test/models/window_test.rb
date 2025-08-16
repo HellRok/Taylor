@@ -924,6 +924,19 @@ class Test
           "(GetFrameTime) { }"
         ]
       end
+
+      def test_seconds_open
+        Taylor::Raylib.mock_call("GetTime", "1.5")
+        Taylor::Raylib.mock_call("GetTime", "128.0")
+
+        assert_equal 1.5, Window.seconds_open
+        assert_equal 128.0, Window.seconds_open
+
+        assert_called [
+          "(GetTime) { }",
+          "(GetTime) { }"
+        ]
+      end
     end
   end
 end
