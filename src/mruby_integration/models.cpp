@@ -2,6 +2,7 @@
 #include "mruby_integration/models/browser.hpp"
 #include "mruby_integration/models/camera2d.hpp"
 #include "mruby_integration/models/circle.hpp"
+#include "mruby_integration/models/clipboard.hpp"
 #include "mruby_integration/models/colour.hpp"
 #include "mruby_integration/models/cursor.hpp"
 #include "mruby_integration/models/dropped_files.hpp"
@@ -31,6 +32,7 @@ append_models(mrb_state* mrb)
   append_models_Browser(mrb);
   append_models_Camera2D(mrb);
   append_models_Circle(mrb);
+  append_models_Clipboard(mrb);
   append_models_Colour(mrb);
   append_models_Cursor(mrb);
   append_models_DroppedFiles(mrb);

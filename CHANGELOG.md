@@ -415,6 +415,8 @@
 - Removed #set_trace_log_level
 - Added Browser.open
 - Removed #open_url
+- Added Clipboard.text=
+- Removed #set_clipboard_text
 
 ## v0.3.14.1
 
