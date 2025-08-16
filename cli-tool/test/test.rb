@@ -25,6 +25,6 @@ require "test/commands/version_test"
 require "test/overrides"
 
 result = MTest::Unit.new.run.positive?
-persist_buildkite_test_analytics
+MTest.persist_buildkite_test_analytics
 
 real_exit_bang.call(1) if result
