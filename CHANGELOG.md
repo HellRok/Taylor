@@ -417,6 +417,8 @@
 - Removed #open_url
 - Added Clipboard.text=
 - Removed #set_clipboard_text
+- Added Clipboard.text
+- Removed #get_clipboard_text
 
 ## v0.3.14.1
 

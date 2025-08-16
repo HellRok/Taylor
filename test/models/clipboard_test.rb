@@ -10,6 +10,14 @@ class Test
           "(SetClipboardText) { text: 'Good bye :(' }"
         ]
       end
+
+      def test_text
+        Clipboard.text
+
+        assert_called [
+          "(*GetClipboardText) { }"
+        ]
+      end
     end
   end
 end
