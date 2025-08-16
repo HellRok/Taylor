@@ -19,6 +19,7 @@ require "models/dropped_files"
 require "models/font_test"
 require "models/image_test"
 require "models/line_test"
+require "models/local_storage_test"
 require "models/logging_test"
 require "models/monitor_test"
 require "models/music_test"
@@ -32,7 +33,6 @@ require "models/window_test"
 require "modules/reference_counting_test"
 require "taylor/platform_test"
 require "taylor_test"
-require "web_test"
 
 result = MTest::Unit.new.run.positive?
 

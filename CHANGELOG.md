@@ -420,6 +420,10 @@
 - Added Clipboard.text
 - Removed #get_clipboard_text
 - Added Line#to_h
+- Added Browser.main_loop=
+- Removed #set_main_loop
+- Added Browser.cancel_main_loop
+- Removed #cancel_main_loop
 
 ## v0.3.14.1
 

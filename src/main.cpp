@@ -12,7 +12,6 @@
 #include "mruby_integration/struct_types.hpp"
 #include "platform_specific/web.hpp"
 #include "taylor.hpp"
-#include "web.hpp"
 #include "workarounds/mingw.hpp"
 
 #ifdef EXPORT
@@ -38,7 +37,6 @@ main(int argc, char** argv) -> int
 
   append_taylor(mrb);
 
-  append_web(mrb);
   append_platform_specific_web(mrb);
 
 #ifdef _WIN32
