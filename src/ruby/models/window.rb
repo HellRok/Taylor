@@ -494,6 +494,7 @@ module Window
     # @!endgroup
   end
 
+  # This module holds all the constants for {Window.blend} modes.
   module Blend
     # @!group Blend modes
 
