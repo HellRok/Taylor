@@ -10,7 +10,6 @@
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/models.hpp"
 #include "mruby_integration/struct_types.hpp"
-#include "mruby_integration/text.hpp"
 #include "platform_specific/web.hpp"
 #include "taylor.hpp"
 #include "web.hpp"
@@ -35,7 +34,6 @@ main(int argc, char** argv) -> int
 
   append_core(mrb);
   append_models(mrb);
-  append_text(mrb);
   append_module_ReferenceCounter(mrb);
 
   append_taylor(mrb);

@@ -826,4 +826,29 @@ class Window
     # src/mruby_integration/models/window.cpp
     10.34
   end
+
+  # Draws the frame rate to the {Window}.
+  #
+  # @example Basic usage
+  #   Window.target_frame_rate = 60
+  #
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #      Window.draw_frame_rate
+  #   end
+  #
+  # @param x [Integer]
+  # @param y [Integer]
+  # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
+  def self.draw_frame_rate(x: 10, y: 10)
+    # mrb_Window_draw_frame_rate
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
 end

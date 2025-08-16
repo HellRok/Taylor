@@ -937,6 +937,39 @@ class Test
           "(GetTime) { }"
         ]
       end
+
+      def test_draw_frame_rate
+        Window.draw_frame_rate
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(DrawFPS) { posX: 10 posY: 10 }"
+        ]
+      end
+
+      def test_draw_frame_rate_with_arguments
+        Window.draw_frame_rate(x: 10, y: 20)
+        Window.draw_frame_rate(x: 20, y: 30)
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(DrawFPS) { posX: 10 posY: 20 }",
+          "(IsWindowReady) { }",
+          "(DrawFPS) { posX: 20 posY: 30 }"
+        ]
+      end
+
+      def test_draw_frame_rate_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.draw_frame_rate") {
+          Window.draw_frame_rate
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
+        ]
+      end
     end
   end
 end

@@ -444,6 +444,36 @@ mrb_Window_seconds_open(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_float_value(mrb, GetTime());
 }
 
+auto
+mrb_Window_draw_frame_rate(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  EXIT_UNLESS_WINDOW_READY(
+    "You must call Window.open before Window.draw_frame_rate")
+
+  // def self.draw_frame_rate(x: 10, y: 10)
+  const mrb_int kw_num = 2;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "x"),
+                               mrb_intern_lit(mrb, "y") };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  int x = 10;
+  if (!mrb_undef_p(kw_values[0])) {
+    x = mrb_as_int(mrb, kw_values[0]);
+  }
+
+  int y = 10;
+  if (!mrb_undef_p(kw_values[1])) {
+    y = mrb_as_int(mrb, kw_values[1]);
+  }
+
+  DrawFPS(x, y);
+
+  return mrb_nil_value();
+}
+
 void
 append_models_Window(mrb_state* mrb)
 {
@@ -534,6 +564,11 @@ append_models_Window(mrb_state* mrb)
                           "seconds_open",
                           mrb_Window_seconds_open,
                           MRB_ARGS_NONE());
+  mrb_define_class_method(mrb,
+                          Window_class,
+                          "draw_frame_rate",
+                          mrb_Window_draw_frame_rate,
+                          MRB_ARGS_REQ(1));
 
   load_ruby_models_window(mrb);
 }

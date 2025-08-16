@@ -407,6 +407,8 @@
 - Removed #get_frame_time
 - Added Window.seconds_open
 - Removed #get_time
+- Added Window.draw_frame_rate
+- Removed #draw_fps
 
 ## v0.3.14.1
 
