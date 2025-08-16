@@ -424,6 +424,8 @@
 - Removed #set_main_loop
 - Added Browser.cancel_main_loop
 - Removed #cancel_main_loop
+- Added Browser.attribute_from_element
+- Removed #get_attribute_from_element
 
 ## v0.3.14.1
 

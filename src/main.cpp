@@ -10,7 +10,6 @@
 #include "mruby_integration/core.hpp"
 #include "mruby_integration/models.hpp"
 #include "mruby_integration/struct_types.hpp"
-#include "platform_specific/web.hpp"
 #include "taylor.hpp"
 #include "workarounds/mingw.hpp"
 
@@ -36,8 +35,6 @@ main(int argc, char** argv) -> int
   append_module_ReferenceCounter(mrb);
 
   append_taylor(mrb);
-
-  append_platform_specific_web(mrb);
 
 #ifdef _WIN32
   workarounds_mingw_msg_dontwait(mrb);

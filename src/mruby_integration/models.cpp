@@ -12,6 +12,7 @@
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/key.hpp"
 #include "mruby_integration/models/line.hpp"
+#include "mruby_integration/models/local_storage.hpp"
 #include "mruby_integration/models/logging.hpp"
 #include "mruby_integration/models/monitor.hpp"
 #include "mruby_integration/models/mouse.hpp"
@@ -42,6 +43,7 @@ append_models(mrb_state* mrb)
   append_models_Image(mrb);
   append_models_Key(mrb);
   append_models_Line(mrb);
+  append_models_LocalStorage(mrb);
   append_models_Logging(mrb);
   append_models_Monitor(mrb);
   append_models_Mouse(mrb);

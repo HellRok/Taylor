@@ -20,10 +20,22 @@ class Test
           assert_true Browser.methods.include?(:main_loop=)
         end
 
+        def test_attribute_from_element
+          assert_equal "data-thing", Browser.attribute_from_element("#test-attribute-from-element", "data-thing")
+          assert_equal "class", Browser.attribute_from_element("#test-attribute-from-element", "classList")
+          assert_equal "", Browser.attribute_from_element("#test-attribute-from-element", "non-existant")
+        end
+
       else
         def test_set_main_loop
           assert_raise(Taylor::Platform::MethodCalledOnInvalidPlatformError) {
             Browser.main_loop = "method_name"
+          }
+        end
+
+        def test_attribute_from_element
+          assert_raise(Taylor::Platform::MethodCalledOnInvalidPlatformError) {
+            Browser.attribute_from_element("#test-attribute-from-element", "data-thing")
           }
         end
       end
