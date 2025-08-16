@@ -197,6 +197,7 @@
 - Added Window.clear_flag
 - Removed clear_window_state
 - Added Window.config=
+- Removed #set_config_flags
 - Added Window.exit_key=
 - Removed set_exit_key
 - Added Window.resized?

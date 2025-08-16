@@ -156,6 +156,7 @@ mrb_Window_flag_question(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mrb_Window_flags_equal(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.flags=")
   mrb_int flag;
   mrb_get_args(mrb, "i", &flag);
 
@@ -166,6 +167,14 @@ mrb_Window_flags_equal(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mrb_Window_config_equals(mrb_state* mrb, mrb_value) -> mrb_value
 {
+  if (IsWindowReady()) {
+    raise_error(mrb,
+                Window_class,
+                "AlreadyOpenError",
+                "You must call Window.open after Window.config=");
+    return mrb_nil_value();
+  }
+
   mrb_int flag;
   mrb_get_args(mrb, "i", &flag);
 

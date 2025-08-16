@@ -271,15 +271,43 @@ class Test
         Window.flags = Window::Flag::FULLSCREEN
 
         assert_called [
+          "(IsWindowReady) { }",
           "(SetWindowState) { flags: 2 }"
         ]
       end
 
-      def test_config=
-        Window.config = Window::Flag::RESIZABLE
+      def test_flags_equals_without_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.flags=") {
+          Window.flags = Window::Flag::FULLSCREEN
+        }
 
         assert_called [
-          "(SetConfigFlags) { flags: 4 }"
+          "(IsWindowReady) { }"
+        ]
+      end
+
+      def test_config=
+        Taylor::Raylib.mock_call("IsWindowReady", "false")
+
+        Window.config = Window::Flag::MSAA_4X_HINT
+
+        assert_called [
+          "(IsWindowReady) { }",
+          "(SetConfigFlags) { flags: 32 }"
+        ]
+      end
+
+      def test_config_equals_with_window_ready
+        Taylor::Raylib.mock_call("IsWindowReady", "true")
+
+        assert_raise_with_message(Window::AlreadyOpenError, "You must call Window.open after Window.config=") {
+          Window.config = Window::Flag::MSAA_4X_HINT
+        }
+
+        assert_called [
+          "(IsWindowReady) { }"
         ]
       end
 

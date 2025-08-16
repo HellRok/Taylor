@@ -469,6 +469,7 @@ module Window
   # first opening it.
   class NotReadyError < StandardError; end
 
-  # Used for alerting the user they're trying to open a second {Window}.
+  # Used for alerting the user they're trying to do something which must be
+  # done before {Window.open}.
   class AlreadyOpenError < StandardError; end
 end
