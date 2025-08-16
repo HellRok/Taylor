@@ -419,6 +419,7 @@
 - Removed #set_clipboard_text
 - Added Clipboard.text
 - Removed #get_clipboard_text
+- Added Line#to_h
 
 ## v0.3.14.1
 

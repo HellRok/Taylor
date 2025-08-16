@@ -27,16 +27,6 @@ class Test
         }
       end
 
-      # def test_brackets
-      #   line = Line[1, 2, 3, Colour::GREEN]
-
-      #   assert_kind_of Line, line
-      #   assert_equal 1, line.x
-      #   assert_equal 2, line.y
-      #   assert_equal 3, line.radius
-      #   assert_equal Colour::GREEN, line.colour
-      # end
-
       def test_assignment
         line = Line.new(start: Vector2[0, 0], end: Vector2[0, 0], colour: Colour[0, 0, 0, 0], thickness: 1)
         line.start.x = 2
@@ -61,42 +51,30 @@ class Test
         }
       end
 
-      # def test_to_h
-      #   line = Line.new(
-      #     x: 4, y: 5, radius: 6,
-      #     colour: Colour[7, 8, 9, 10],
-      #     outline: Colour[11, 12, 13, 14], thickness: 15,
-      #     gradient: Colour[16, 17, 18, 19]
-      #   )
+      def test_to_h
+        line = Line.new(start: Vector2[1, 2], end: Vector2[3, 4], colour: Colour[5, 6, 7, 8], thickness: 9)
 
-      #   assert_equal(
-      #     {
-      #       x: 4,
-      #       y: 5,
-      #       radius: 6,
-      #       colour: {
-      #         red: 7,
-      #         green: 8,
-      #         blue: 9,
-      #         alpha: 10
-      #       },
-      #       outline: {
-      #         red: 11,
-      #         green: 12,
-      #         blue: 13,
-      #         alpha: 14
-      #       },
-      #       thickness: 15,
-      #       gradient: {
-      #         red: 16,
-      #         green: 17,
-      #         blue: 18,
-      #         alpha: 19
-      #       }
-      #     },
-      #     line.to_h
-      #   )
-      # end
+        assert_equal(
+          {
+            start: {
+              x: 1,
+              y: 2
+            },
+            end: {
+              x: 3,
+              y: 4
+            },
+            colour: {
+              red: 5,
+              green: 6,
+              blue: 7,
+              alpha: 8
+            },
+            thickness: 9
+          },
+          line.to_h
+        )
+      end
 
       def test_draw_line
         Line.new(start: Vector2[1, 2], end: Vector2[3, 4], colour: Colour[5, 6, 7, 8], thickness: 9).draw
