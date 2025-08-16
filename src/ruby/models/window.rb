@@ -24,6 +24,35 @@ module Window
     end_drawing
   end
 
+  # Blends the draw calls inside the block.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #     # Drawing code here
+  #     Window.blend(Window::Blend::ADDITIVE) do
+  #       # Blended drawing code her
+  #     end
+  #   end
+  #
+  # @param blend_mode [Integer] What blend mode to use, valid options are:
+  #   {Window::Blend::ALPHA}, {Window::Blend::ADDITIVE},
+  #   {Window::Blend::MULTIPLIED}, {Window::Blend::ADD_COLORS},
+  #   {Window::Blend::SUBTRACT_COLORS}, or {Window::Blend::ALPHA_PREMULTIPLY}
+  # @yield The block that calls your rendering logic.
+  # @return [nil]
+  def self.blend(blend_mode, &block)
+    begin_blending(blend_mode)
+    block.call
+  ensure
+    end_blending
+  end
+
   # Gets the title of the {Window}.
   #
   # @example Basic usage
@@ -424,8 +453,8 @@ module Window
     Monitor.current
   end
 
-  # This class holds all the constants for {Window} flags.
-  class Flag
+  # This module holds all the constants for {Window} flags.
+  module Flag
     # @!group Window flags
 
     # Set to try enabling [V-Sync](https://en.wikipedia.org/wiki/Screen_tearing#Vertical_synchronization) on GPU.
@@ -461,6 +490,25 @@ module Window
     # @note Must be set with {Window.config=} before calling {Window.open}
     # Set to support HighDPI.
     HIGH_DPI = 0x00002000
+
+    # @!endgroup
+  end
+
+  module Blend
+    # @!group Blend modes
+
+    # Blend textures considering alpha.
+    ALPHA = 0
+    # Blend textures adding colors.
+    ADDITIVE = 1
+    # Blend textures multiplying colors.
+    MULTIPLIED = 2
+    # Blend textures adding colors (alternative).
+    ADD_COLORS = 3
+    # Blend textures subtracting colors (alternative).
+    SUBTRACT_COLORS = 4
+    # Blend premultiplied textures considering alpha.
+    ALPHA_PREMULTIPLY = 5
 
     # @!endgroup
   end

@@ -426,6 +426,11 @@
 - Removed #cancel_main_loop
 - Added Browser.attribute_from_element
 - Removed #get_attribute_from_element
+- Added Window.blend
+- Added Window.begin_blending
+- Removed #begin_blend_mode
+- Added Window.end_blending
+- Removed #end_blend_mode
 
 ## v0.3.14.1
 

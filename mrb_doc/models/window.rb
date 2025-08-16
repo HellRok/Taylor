@@ -117,6 +117,62 @@ class Window
     nil
   end
 
+  # Blends the draw calls inside the block.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #     # Drawing code here
+  #     Window.begin_blending(Window::Blend::ALPHA)
+  #     begin
+  #         # Blended drawing code her
+  #     ensure
+  #       Window.end_blending
+  #     end
+  #   end
+  #
+  # @param blend_mode [Integer] What blend mode to use, valid options are:
+  #   {Window::Blend::ALPHA}, {Window::Blend::ADDITIVE},
+  #   {Window::Blend::MULTIPLIED}, {Window::Blend::ADD_COLORS},
+  #   {Window::Blend::SUBTRACT_COLORS}, or {Window::Blend::ALPHA_PREMULTIPLY}
+  # @return [nil]
+  def self.begin_blending(blend_mode)
+    # mrb_Window_begin_blending
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
+
+  # End blending.
+  #
+  # @example Basic usage
+  #   Window.open(
+  #     width: 1920,
+  #     height: 1080,
+  #     title: "My super cool game!"
+  #   )
+  #
+  #   Window.draw do
+  #     # Drawing code here
+  #     Window.begin_blending(Window::Blend::ALPHA)
+  #     begin
+  #         # Blended drawing code her
+  #     ensure
+  #       Window.end_blending
+  #     end
+  #   end
+  #
+  # @return [nil]
+  def self.end_blending
+    # mrb_Window_end_drawing
+    # src/mruby_integration/models/window.cpp
+    nil
+  end
+
   # Gets the width of the {Window}.
   #
   # @example Basic usage

@@ -104,6 +104,27 @@ mrb_Window_end_drawing(mrb_state*, mrb_value) -> mrb_value
 }
 
 auto
+mrb_Window_begin_blending(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  mrb_int blend_mode;
+  mrb_get_args(mrb, "i", &blend_mode);
+
+  if (blend_mode < 0 || blend_mode > 5) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Blend mode must be within (0..5)");
+  }
+
+  BeginBlendMode(blend_mode);
+  return mrb_nil_value();
+}
+
+auto
+mrb_Window_end_blending(mrb_state*, mrb_value) -> mrb_value
+{
+  EndBlendMode();
+  return mrb_nil_value();
+}
+
+auto
 mrb_Window_width(mrb_state* mrb, mrb_value) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Window.width")
@@ -500,6 +521,16 @@ append_models_Window(mrb_state* mrb)
                           MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "end_drawing", mrb_Window_end_drawing, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb,
+                          Window_class,
+                          "begin_blending",
+                          mrb_Window_begin_blending,
+                          MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb,
+                          Window_class,
+                          "end_blending",
+                          mrb_Window_end_blending,
+                          MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Window_class, "width", mrb_Window_width, MRB_ARGS_NONE());
   mrb_define_class_method(

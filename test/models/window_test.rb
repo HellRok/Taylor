@@ -155,6 +155,66 @@ class Test
         ]
       end
 
+      def test_blend
+        Window.blend(Window::Blend::ALPHA) do
+          Window.clear(colour: Colour[1, 0, 0, 0])
+        end
+
+        assert_called [
+          "(BeginBlendMode) { mode: 0 }",
+          "(IsWindowReady) { }",
+          "(ClearBackground) { color: { r: 1 g: 0 b: 0 a: 0 } }",
+          "(EndBlendMode) { }"
+        ]
+      end
+
+      def test_blend_with_error
+        begin
+          Window.blend(Window::Blend::MULTIPLIED) do
+            Window.clear(colour: Colour[2, 0, 0, 0])
+            raise StandardError, "Oops!"
+            Window.clear(colour: Colour[3, 0, 0, 0]) # standard:disable Lint/UnreachableCode
+          end
+        rescue => error
+          assert_equal "Oops!", error.message
+        end
+
+        assert_called [
+          "(BeginBlendMode) { mode: 2 }",
+          "(IsWindowReady) { }",
+          "(ClearBackground) { color: { r: 2 g: 0 b: 0 a: 0 } }",
+          "(EndBlendMode) { }"
+        ]
+      end
+
+      def test_begin_blending
+        Window.begin_blending(Window::Blend::ADDITIVE)
+
+        assert_called [
+          "(BeginBlendMode) { mode: 1 }"
+        ]
+      end
+
+      def test_begin_blending_with_invalid_mode
+        assert_raise_with_message(ArgumentError, "Blend mode must be within (0..5)") {
+          Window.begin_blending(-1)
+        }
+
+        assert_raise_with_message(ArgumentError, "Blend mode must be within (0..5)") {
+          Window.begin_blending(6)
+        }
+
+        assert_no_calls
+      end
+
+      def test_end_blending
+        Window.end_blending
+
+        assert_called [
+          "(EndBlendMode) { }"
+        ]
+      end
+
       def test_width
         # Yes, this is the right method, for some reason it's called 'Screen' here?
         Taylor::Raylib.mock_call("GetScreenWidth", "2")
