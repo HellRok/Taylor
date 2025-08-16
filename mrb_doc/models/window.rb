@@ -736,7 +736,7 @@ class Window
   #   end
   #
   #
-  # @param target [Integer]
+  # @param frame_rate [Integer]
   # @return [nil]
   def self.target_frame_rate=(frame_rate)
     # mrb_Window_set_target_frame_rate

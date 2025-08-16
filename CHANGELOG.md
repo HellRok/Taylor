@@ -409,6 +409,9 @@
 - Removed #get_time
 - Added Window.draw_frame_rate
 - Removed #draw_fps
+- Added Logging.level=
+- Added Logging.log
+- Removed #set_trace_log_level
 
 ## v0.3.14.1
 

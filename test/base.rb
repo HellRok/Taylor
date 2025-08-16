@@ -3,6 +3,7 @@ class Test
     def teardown
       assert_true Taylor::Raylib.all_mocks_used?, "No mocks were left behind"
     ensure
+      Logging.level = Logging::ALL # Reset the cvars
       Window.close # We need this to reset the cvars
       Taylor::Raylib.reset_calls
       Taylor::Raylib.clear_mocks

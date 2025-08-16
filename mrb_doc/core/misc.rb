@@ -9,15 +9,6 @@ def set_config_flags(flags)
   nil
 end
 
-# Sets the logging level.
-# @param level [Integer] A value between 0 and 5.
-# @return [nil]
-def set_trace_log_level(level)
-  # mrb_set_trace_log_level
-  # src/mruby_integration/core/misc.cpp
-  nil
-end
-
 # Opens the URL in the user's browser.
 # @param url [String]
 # @return [nil]

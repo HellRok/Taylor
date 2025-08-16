@@ -215,6 +215,7 @@ task "raylib:mock" do
     "StopSound" => {},
     "TakeScreenshot" => {},
     "ToggleFullscreen" => {},
+    "TraceLog" => {},
     "UnloadDroppedFiles" => {},
     "UnloadFont" => {},
     "UnloadImage" => {},
