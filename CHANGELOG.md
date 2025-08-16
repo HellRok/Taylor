@@ -413,6 +413,8 @@
 - Added Logging.level=
 - Added Logging.log
 - Removed #set_trace_log_level
+- Added Browser.open
+- Removed #open_url
 
 ## v0.3.14.1
 

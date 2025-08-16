@@ -1,23 +1,3 @@
-# Enable specific config flags.
-# @example Passing multiple flags
-#   set_config_flags(FLAG_WINDOW_TOPMOST | FLAG_WINDOW_RESIZABLE)
-# @param flags [Integer]
-# @return [nil]
-def set_config_flags(flags)
-  # mrb_set_config_flags
-  # src/mruby_integration/core/misc.cpp
-  nil
-end
-
-# Opens the URL in the user's browser.
-# @param url [String]
-# @return [nil]
-def open_url(url)
-  # mrb_open_url
-  # src/mruby_integration/core/misc.cpp
-  nil
-end
-
 # Sets the clipboard value.
 # @param text [String]
 # @return [nil]
