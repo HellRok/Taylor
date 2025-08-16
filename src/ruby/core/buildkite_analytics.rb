@@ -81,59 +81,20 @@ module MTest
       end
     end
   end
-end
 
-# Upload the analytics to Buildkite
-def upload_buildkite_test_analytics
-  return unless ENV["BUILDKITE_TEST_ANALYTICS_KEY"]
-  puts
-  puts "Found a Buildkite test analytics key, let's upload our results!"
-  puts "..."
+  # Save the analytics to a file
+  def self.persist_buildkite_test_analytics
+    analytics_json = $buildkite_test_analytics.to_json
 
-  client = SimpleHttp.new("https", "analytics-api.buildkite.com", 443)
-  response = client.request(
-    "POST",
-    "/v1/uploads",
-    {
-      "Authorization" => "Token token=\"#{ENV["BUILDKITE_TEST_ANALYTICS_KEY"]}\"",
-      "Content-Type" => "application/json",
-      "Body" => {
-        format: "json",
-        run_env: {
-          "CI" => "buildkite",
-          "key" => ENV["BUILDKITE_BUILD_ID"],
-          "number" => ENV["BUILDKITE_BUILD_NUMBER"],
-          "job_id" => ENV["BUILDKITE_JOB_ID"],
-          "branch" => ENV["BUILDKITE_BRANCH"],
-          "commit_sha" => ENV["BUILDKITE_COMMIT"],
-          "message" => ENV["BUILDKITE_MESSAGE"],
-          "url" => ENV["BUILDKITE_BUILD_URL"]
-        },
-        data: $buildkite_test_analytics
-      }.to_json
-    }
-  )
-
-  response_data = JSON.parse(response.body)
-  puts "ID: #{response_data["id"]}"
-  puts "Run ID: #{response_data["run_id"]}"
-  puts "Queued: #{response_data["queued"]}"
-
-  puts "Done!"
-end
-
-# Save the analytics to a file
-def persist_buildkite_test_analytics
-  analytics_json = $buildkite_test_analytics.to_json
-
-  if Taylor::Platform.browser?
-    puts "ANALYTICS: #{analytics_json}"
-  else
-    output = File.open("test-analytics.json", "w")
-    output.write(analytics_json)
-    output.close
+    if Taylor::Platform.browser?
+      puts "ANALYTICS: #{analytics_json}"
+    else
+      output = File.open("test-analytics.json", "w")
+      output.write(analytics_json)
+      output.close
+    end
+  rescue NoMethodError => error
+    puts "Failed to generate JSON, continuing without failing the job"
+    puts "Error: #{error.message}"
   end
-rescue NoMethodError => error
-  puts "Failed to generate JSON, continuing without failing the job"
-  puts "Error: #{error.message}"
 end

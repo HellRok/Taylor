@@ -36,7 +36,7 @@ require "taylor_test"
 
 result = MTest::Unit.new.run.positive?
 
-persist_buildkite_test_analytics
+MTest.persist_buildkite_test_analytics
 
 if Taylor::Platform.browser?
   puts "EXIT CODE: #{result ? 1 : 0}"
