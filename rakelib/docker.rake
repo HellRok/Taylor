@@ -2,7 +2,7 @@ def build_docker(file, path: ".", tags: [], export: false, pull: true)
   tag_flags = tags.map { |tag| "--tag #{tag}" }.join(" ")
 
   if export
-    sh "docker buildx build --output ./ #{path} --file #{file} #{tag_flags}"
+    sh "docker build --output ./ #{path} --file #{file} #{tag_flags}"
   else
     sh "docker build #{path} --file #{file} #{pull ? "--pull" : ""}  #{tag_flags}"
   end

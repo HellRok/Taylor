@@ -11,8 +11,9 @@
   struct RClass *c;       \
   struct RBasic *gcnext;  \
   enum mrb_vtype tt:8;    \
-  uint32_t color:3;       \
-  uint32_t flags:21
+  unsigned int gc_color:3; \
+  unsigned int frozen:1;  \
+  uint32_t flags:20
 
 #define MRB_FLAG_TEST(obj, flag) ((obj)->flags & (flag))
 
@@ -21,11 +22,8 @@ struct RBasic {
 };
 #define mrb_basic_ptr(v) ((struct RBasic*)(mrb_ptr(v)))
 
-#define MRB_FL_OBJ_IS_FROZEN (1 << 20)
-#define MRB_FROZEN_P(o) ((o)->flags & MRB_FL_OBJ_IS_FROZEN)
-#define MRB_SET_FROZEN_FLAG(o) ((o)->flags |= MRB_FL_OBJ_IS_FROZEN)
-#define MRB_UNSET_FROZEN_FLAG(o) ((o)->flags &= ~MRB_FL_OBJ_IS_FROZEN)
-#define mrb_frozen_p(o) MRB_FROZEN_P(o)
+#define MRB_OBJ_IS_FROZEN 1
+#define mrb_frozen_p(o) ((o)->frozen)
 
 struct RObject {
   MRB_OBJECT_HEADER;

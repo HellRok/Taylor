@@ -33,6 +33,7 @@ end
 
 def write_cpp_file(hpp_file, cpp_file, ruby_code)
   write_if_changed_or_new(cpp_file, <<~CPP)
+    #include "mruby.h"
     #include "mruby/compile.h"
 
     void load_#{hpp_file.ext.split("/").join("_")}(mrb_state *mrb) {

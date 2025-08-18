@@ -67,8 +67,8 @@ module Taylor
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help, :bool, default: false, short: :h)
-          opts.on(:input, :string, default: options.fetch("input", "game.rb"), short: :i)
+          opts.on(:help, :bool, false, short: :h)
+          opts.on(:input, :string, options.fetch("input", "game.rb"), short: :i)
         end
         parser.parse(argv)
 

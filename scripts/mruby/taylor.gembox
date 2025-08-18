@@ -8,14 +8,18 @@ MRuby::GemBox.new do |conf|
 
   conf.gem core: "mruby-exit"
   conf.gem core: "mruby-sleep"
-  conf.gem github: "iij/mruby-dir"
+
+  conf.gem github: "hellrok/mruby-polarssl"
+  conf.gem github: "hellrok/mruby-dir"
+
+  conf.gem github: "Asmod4n/mruby-uri-parser"
   conf.gem github: "iij/mruby-env"
   conf.gem github: "iij/mruby-iijson"
   conf.gem github: "iij/mruby-mtest"
-  conf.gem github: "hellrok/mruby-regexp-pcre"
-  conf.gem github: "hellrok/mruby-tiny-opt-parser"
-  conf.gem github: "Asmod4n/mruby-uri-parser"
+  conf.gem github: "iij/mruby-regexp-pcre"
+  conf.gem github: "katzer/mruby-tiny-opt-parser"
   conf.gem github: "matsumotory/mruby-simplehttp"
   conf.gem github: "mattn/mruby-base64"
+
   conf.gem github: "mattn/mruby-require"
 end

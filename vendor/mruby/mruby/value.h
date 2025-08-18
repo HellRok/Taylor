@@ -10,7 +10,7 @@
 #include "common.h"
 
 /*
- * MRuby Value definition functions and macros.
+ * mruby Value definition functions and macros.
  */
 MRB_BEGIN_DECL
 
@@ -125,7 +125,7 @@ MRB_API int mrb_msvc_snprintf(char *s, size_t n, const char *format, ...);
 #  define isinf(n) (!_finite(n) && !_isnan(n))
 #  define signbit(n) (_copysign(1.0, (n)) < 0.0)
 static const unsigned int IEEE754_INFINITY_BITS_SINGLE = 0x7F800000;
-#  define INFINITY (*(float *)&IEEE754_INFINITY_BITS_SINGLE)
+#  define INFINITY (*(float*)&IEEE754_INFINITY_BITS_SINGLE)
 #  define NAN ((float)(INFINITY - INFINITY))
 # endif
 #endif
@@ -143,23 +143,24 @@ static const unsigned int IEEE754_INFINITY_BITS_SINGLE = 0x7F800000;
   f(MRB_TT_OBJECT,      struct RObject,     "Object") \
   f(MRB_TT_CLASS,       struct RClass,      "Class") \
   f(MRB_TT_MODULE,      struct RClass,      "Module") \
-  f(MRB_TT_ICLASS,      struct RClass,      "iClass") \
   f(MRB_TT_SCLASS,      struct RClass,      "SClass") \
+  f(MRB_TT_HASH,        struct RHash,       "Hash") \
+  f(MRB_TT_CDATA,       struct RData,       "C data") \
+  f(MRB_TT_EXCEPTION,   struct RException,  "Exception") \
+  f(MRB_TT_ICLASS,      struct RClass,      "iClass") \
   f(MRB_TT_PROC,        struct RProc,       "Proc") \
   f(MRB_TT_ARRAY,       struct RArray,      "Array") \
-  f(MRB_TT_HASH,        struct RHash,       "Hash") \
   f(MRB_TT_STRING,      struct RString,     "String") \
   f(MRB_TT_RANGE,       struct RRange,      "Range") \
-  f(MRB_TT_EXCEPTION,   struct RException,  "Exception") \
   f(MRB_TT_ENV,         struct REnv,        "env") \
-  f(MRB_TT_CDATA,       struct RData,       "C data") \
   f(MRB_TT_FIBER,       struct RFiber,      "Fiber") \
   f(MRB_TT_STRUCT,      struct RArray,      "Struct") \
   f(MRB_TT_ISTRUCT,     struct RIStruct,    "istruct") \
   f(MRB_TT_BREAK,       struct RBreak,      "break") \
   f(MRB_TT_COMPLEX,     struct RComplex,    "Complex") \
   f(MRB_TT_RATIONAL,    struct RRational,   "Rational") \
-  f(MRB_TT_BIGINT,      struct RBigint,     "Integer")
+  f(MRB_TT_BIGINT,      struct RBigint,     "Integer") \
+  f(MRB_TT_BACKTRACE,   struct RBacktrace,  "backtrace")
 
 enum mrb_vtype {
 #define MRB_VTYPE_DEFINE(tt, type, name) tt,
@@ -186,7 +187,7 @@ MRB_VTYPE_FOREACH(MRB_VTYPE_TYPEDEF)
 
 /**
  * @abstract
- * MRuby value boxing.
+ * mruby value boxing.
  *
  * Actual implementation depends on configured boxing type.
  *
@@ -320,7 +321,8 @@ struct RCptr {
  * Takes a float and boxes it into an mrb_value
  */
 #ifndef MRB_NO_FLOAT
-MRB_INLINE mrb_value mrb_float_value(struct mrb_state *mrb, mrb_float f)
+MRB_INLINE mrb_value
+mrb_float_value(struct mrb_state *mrb, mrb_float f)
 {
   mrb_value v;
   (void) mrb;
@@ -341,14 +343,16 @@ mrb_cptr_value(struct mrb_state *mrb, void *p)
 /**
  * Returns an integer in Ruby.
  */
-MRB_INLINE mrb_value mrb_int_value(struct mrb_state *mrb, mrb_int i)
+MRB_INLINE mrb_value
+mrb_int_value(struct mrb_state *mrb, mrb_int i)
 {
   mrb_value v;
   SET_INT_VALUE(mrb, v, i);
   return v;
 }
 
-MRB_INLINE mrb_value mrb_fixnum_value(mrb_int i)
+MRB_INLINE mrb_value
+mrb_fixnum_value(mrb_int i)
 {
   mrb_value v;
   SET_FIXNUM_VALUE(v, i);
@@ -377,7 +381,8 @@ mrb_obj_value(void *p)
  * @return
  *      nil mrb_value object reference.
  */
-MRB_INLINE mrb_value mrb_nil_value(void)
+MRB_INLINE mrb_value
+mrb_nil_value(void)
 {
   mrb_value v;
   SET_NIL_VALUE(v);
@@ -387,7 +392,8 @@ MRB_INLINE mrb_value mrb_nil_value(void)
 /**
  * Returns false in Ruby.
  */
-MRB_INLINE mrb_value mrb_false_value(void)
+MRB_INLINE mrb_value
+mrb_false_value(void)
 {
   mrb_value v;
   SET_FALSE_VALUE(v);
@@ -397,7 +403,8 @@ MRB_INLINE mrb_value mrb_false_value(void)
 /**
  * Returns true in Ruby.
  */
-MRB_INLINE mrb_value mrb_true_value(void)
+MRB_INLINE mrb_value
+mrb_true_value(void)
 {
   mrb_value v;
   SET_TRUE_VALUE(v);
@@ -445,10 +452,9 @@ mrb_ro_data_p(const char *p)
   struct mach_header *mhp;
 #endif
   mhp = _NSGetMachExecuteHeader();
-  unsigned long textsize, datasize;
+  unsigned long textsize;
   char *text = (char*)getsegmentdata(mhp, SEG_TEXT, &textsize);
-  char *data = (char*)getsegmentdata(mhp, SEG_DATA, &datasize);
-  return text + textsize < p && p < data + datasize;
+  return text <= p && p < text + textsize;
 }
 #endif  /* Linux or macOS */
 #endif  /* MRB_NO_DEFAULT_RO_DATA_P */

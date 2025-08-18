@@ -44,10 +44,10 @@ module Taylor
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help, :bool, default: false, short: :h)
-          opts.on("dry-run", :bool, default: false, short: :r)
-          opts.on("export-directory", :string, default: options.fetch("export_directory", "./exports"), short: :d)
-          opts.on("export-targets", :string, default: options.fetch("export_targets", "linux,windows,osx/intel,osx/apple,web"), short: :t)
+          opts.on(:help, :bool, false, short: :h)
+          opts.on("dry-run", :bool, false, short: :r)
+          opts.on("export-directory", :string, options.fetch("export_directory", "./exports"), short: :d)
+          opts.on("export-targets", :string, options.fetch("export_targets", "linux,windows,osx/intel,osx/apple,web"), short: :t)
           opts.on("build-cache", :string, short: :b)
         end
         parser.parse(argv)

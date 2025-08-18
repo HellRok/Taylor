@@ -38,10 +38,10 @@ module Taylor
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help, :bool, default: false, short: :h)
-          opts.on(:stdout, :bool, default: false, short: :s)
-          opts.on(:input, :string, default: options.fetch("input", "game.rb"), short: :i)
-          opts.on("load-paths", :string, default: options.fetch("load_paths", "./,./vendor"), short: :l)
+          opts.on(:help, :bool, false, short: :h)
+          opts.on(:stdout, :bool, false, short: :s)
+          opts.on(:input, :string, options.fetch("input", "game.rb"), short: :i)
+          opts.on("load-paths", :string, options.fetch("load_paths", "./,./vendor"), short: :l)
         end
         parser.parse(argv)
 

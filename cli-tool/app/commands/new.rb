@@ -50,14 +50,14 @@ module Taylor
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
-          opts.on(:help, :bool, default: false, short: :h)
-          opts.on(:name, :string, default: options.fetch("name", "taylor_game"), short: :n)
-          opts.on(:version, :string, default: options.fetch("version", "v0.0.1"), short: :v)
-          opts.on(:input, :string, default: options.fetch("input", "game.rb"), short: :i)
-          opts.on(:"export-directory", :string, default: options.fetch("export_directory", "./exports"), short: :d)
-          opts.on(:"export-targets", :string, default: options.fetch("export_targets", "linux,windows,osx/apple,osx/intel,web"), short: :t)
-          opts.on(:"load-paths", :string, default: options.fetch("load_paths", "./,./vendor"), short: :l)
-          opts.on(:"copy-paths", :string, default: options.fetch("copy_paths", "./assets"), short: :c)
+          opts.on(:help, :bool, false, short: :h)
+          opts.on(:name, :string, options.fetch("name", "taylor_game"), short: :n)
+          opts.on(:version, :string, options.fetch("version", "v0.0.1"), short: :v)
+          opts.on(:input, :string, options.fetch("input", "game.rb"), short: :i)
+          opts.on(:"export-directory", :string, options.fetch("export_directory", "./exports"), short: :d)
+          opts.on(:"export-targets", :string, options.fetch("export_targets", "linux,windows,osx/apple,osx/intel,web"), short: :t)
+          opts.on(:"load-paths", :string, options.fetch("load_paths", "./,./vendor"), short: :l)
+          opts.on(:"copy-paths", :string, options.fetch("copy_paths", "./assets"), short: :c)
         end
         parser.parse(argv)
 

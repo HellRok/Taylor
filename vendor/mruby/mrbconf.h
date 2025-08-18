@@ -18,7 +18,7 @@
 #endif
 
 #if defined(MRB_32BIT) && defined(MRB_64BIT)
-#error Cannot build for 32 and 64 bit architecture at the same time
+#error Cannot build for 32 and 64-bit architecture at the same time
 #endif
 
 /* configuration options: */
@@ -48,16 +48,6 @@
 //#define MRB_METHOD_CACHE_SIZE (1<<8)
 //#define MRB_USE_INLINE_METHOD_CACHE
 
-/* add -DMRB_USE_METHOD_T_STRUCT on machines that use higher bits of function pointers */
-/* no MRB_USE_METHOD_T_STRUCT requires highest 2 bits of function pointers to be zero */
-#ifndef MRB_USE_METHOD_T_STRUCT
-  // can't use highest 2 bits of function pointers at least on 32bit
-  // Windows and 32bit Linux.
-# ifdef MRB_32BIT
-#   define MRB_USE_METHOD_T_STRUCT
-# endif
-#endif
-
 /* define on big endian machines; used by MRB_NAN_BOXING, etc. */
 #ifndef MRB_ENDIAN_BIG
 # if (defined(BYTE_ORDER) && defined(BIG_ENDIAN) && BYTE_ORDER == BIG_ENDIAN) || \
@@ -83,21 +73,21 @@
 /* if defined mruby allocates Float objects in the heap to keep full precision if needed */
 //#define MRB_WORDBOX_NO_FLOAT_TRUNCATE
 
-/* add -DMRB_INT32 to use 32bit integer for mrb_int; conflict with MRB_INT64;
+/* add -DMRB_INT32 to use 32-bit integer for mrb_int; conflict with MRB_INT64;
    Default for 32-bit CPU mode. */
 //#define MRB_INT32
 
-/* add -DMRB_INT64 to use 64bit integer for mrb_int; conflict with MRB_INT32;
+/* add -DMRB_INT64 to use 64-bit integer for mrb_int; conflict with MRB_INT32;
    Default for 64-bit CPU mode (unless using MRB_NAN_BOXING). */
 //#define MRB_INT64
 
 /* if no specific integer type is chosen */
 #if !defined(MRB_INT32) && !defined(MRB_INT64)
 # if defined(MRB_64BIT) && !defined(MRB_NAN_BOXING)
-/* Use 64bit integers on 64bit architecture (without MRB_NAN_BOXING) */
+/* Use 64-bit integers on 64-bit architecture (without MRB_NAN_BOXING) */
 #  define MRB_INT64
 # else
-/* Otherwise use 32bit integers */
+/* Otherwise use 32-bit integers */
 #  define MRB_INT32
 # endif
 #endif
@@ -170,14 +160,11 @@
 //#define MRB_USE_ALL_SYMBOLS /* Symbol.all_symbols */
 
 /* obsolete configurations */
-#ifdef MRB_METHOD_T_STRUCT
-# define MRB_USE_METHOD_T_STRUCT
-#endif
 #if defined(DISABLE_STDIO) || defined(MRB_DISABLE_STDIO)
 # define MRB_NO_STDIO
 #endif
-#ifdef MRB_DISABLE_DIRECT_THREADING
-# define MRB_NO_DIRECT_THREADING
+#if defined(MRB_DISABLE_DIRECT_THREADING) || defined(MRB_NO_DIRECT_THREADING)
+# define MRB_USE_VM_SWITCH_DISPATCH
 #endif
 #if defined(ENABLE_DEBUG) || defined(MRB_ENABLE_DEBUG_HOOK)
 # define MRB_USE_DEBUG_HOOK

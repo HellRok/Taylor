@@ -80,7 +80,7 @@ enum mrb_special_consts {
 /*
  * mrb_value representation:
  *
- * 64bit word with inline float:
+ * 64-bit word with inline float:
  *   nil   : ...0000 0000 (all bits are 0)
  *   false : ...0000 0100 (mrb_fixnum(v) != 0)
  *   true  : ...0000 1100
@@ -90,7 +90,7 @@ enum mrb_special_consts {
  *   float : ...FFFF FF10 (51 bit significands; require MRB_64BIT)
  *   object: ...PPPP P000
  *
- * 32bit word with inline float:
+ * 32-bit word with inline float:
  *   nil   : ...0000 0000 (all bits are 0)
  *   false : ...0000 0100 (mrb_fixnum(v) != 0)
  *   true  : ...0000 1100
@@ -227,5 +227,18 @@ mrb_type(mrb_value o)
          mrb_float_p(o)  ? MRB_TT_FLOAT :
          mrb_val_union(o).bp->tt;
 }
+
+MRB_INLINE enum mrb_vtype
+mrb_unboxed_type(mrb_value o)
+{
+  if (mrb_nil_p(o)) {
+    return MRB_TT_FALSE;
+  } else if ((o.w & WORDBOX_IMMEDIATE_MASK) == 0) {
+    return mrb_val_union(o).bp->tt;
+  } else {
+    return MRB_TT_FALSE;
+  }
+}
+
 
 #endif  /* MRUBY_BOXING_WORD_H */
