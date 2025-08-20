@@ -6,9 +6,10 @@ source bin/lib/helpers.sh
 XPP_FILES=${@:-$(git ls-files --no-deleted *.{cpp,hpp})}
 
 function lint_check() {
+  file=$1
   clang-tidy \
     --warnings-as-errors=* \
-    ${XPP_FILES} \
+    ${file} \
     -- -std=c++17 \
     -I ./include/ \
     -I ./vendor/ \
@@ -16,6 +17,8 @@ function lint_check() {
     -I ./vendor/mruby/
 }
 
-log "Checking CPP and HPP files for linting errors"
-job_output=$(lint_check 2>&1)
-barf_if_failed $?
+for file in ${XPP_FILES}; do
+  log "Checking ${file} files for linting errors"
+  job_output=$(lint_check ${file} 2>&1)
+  barf_if_failed $?
+done

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "mruby.h"
 #include "mruby/variable.h"
 
 #define attr_reader_int(mrb, self, klass_type, klass, attr)                    \
