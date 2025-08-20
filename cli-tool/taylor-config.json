@@ -12,5 +12,10 @@
   "load_paths": [
     "./"
   ],
-  "copy_paths": []
+  "copy_paths": [],
+  "debugging": {
+    "mruby": {
+      "debug_symbols": true
+    }
+  }
 }

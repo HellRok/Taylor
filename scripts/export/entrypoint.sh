@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-set -euxo pipefail
+set -euo pipefail
 
-rake transpile build rename compress cleanup
+rake export

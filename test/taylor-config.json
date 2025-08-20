@@ -17,5 +17,12 @@
   "web": {
     "shell_path": "shell.html"
   },
-  "mock_raylib": true
+  "debugging": {
+    "raylib": {
+      "mock_implementation": true
+    },
+    "mruby": {
+      "debug_symbols": true
+    }
+  }
 }

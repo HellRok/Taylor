@@ -103,6 +103,6 @@ class Builder
   end
 
   def mock_raylib?
-    @options.fetch("mock_raylib", false) || ENV.key?("MOCK_RAYLIB")
+    @options.dig("debugging", "raylib", "mock_implementation") || ENV.key?("MOCK_RAYLIB")
   end
 end

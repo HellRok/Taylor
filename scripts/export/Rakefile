@@ -24,14 +24,18 @@ options = {
   ],
   "copy_paths" => [
     "./assets"
-  ]
+  ],
+  "debugging" => {
+    "raylib" => {
+      "mock_implementation" => false,
+    },
+    "mruby" => {
+      "debug_symbols" => false,
+    }
+  }
 }
 
 export_target = ENV.fetch("EXPORT", "linux")
-
-if File.exist?("../../include/version.hpp")
-  VERSION = File.read("../../include/version.hpp").each_line.to_a.last.split('"')[1]
-end
 
 if File.exist?("/app/game/taylor-config.json")
   options.merge!(
@@ -50,9 +54,10 @@ end
 
 task transpile: :squash
 task :transpile do
-  sh "mrbc -Bgame -o /app/taylor/include/game.h /app/taylor/output.rb"
+  sh "mrbc #{'-g' if options.dig("debugging", "mruby", "debug_symbols")} -Bgame -o /app/taylor/include/game.h /app/taylor/output.rb"
 end
 
+task build: :transpile
 task build: "build:setup"
 task build: "build:android" if export_target == "android"
 task build: "build:linux:x64" if export_target == "linux"
@@ -101,6 +106,7 @@ namespace :build do
   end
 end
 
+task rename: :build
 task rename: "rename:setup"
 task rename: "rename:android" if export_target == "android"
 task rename: "rename:linux:x64" if export_target == "linux"
@@ -195,6 +201,7 @@ namespace :rename do
   end
 end
 
+task compress: :rename
 task compress: "compress:setup"
 task compress: "compress:android" if export_target == "android"
 task compress: "compress:linux:x64" if export_target == "linux"
@@ -278,6 +285,9 @@ namespace :compress do
   end
 end
 
+task cleanup: :compress
 task :cleanup do
   FileUtils.chown_R(ENV["USER_ID"], ENV["GROUP_ID"], "/app/taylor/build/")
 end
+
+task export: :cleanup

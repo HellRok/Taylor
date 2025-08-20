@@ -35,11 +35,7 @@ module MTest
 
       # Tries its best to get the file location
       def location
-        return "Could not find file" unless File.exist?(file_name)
-
-        File.read(file_name).each_line.with_index { |line, index|
-          return "#{file_name}:#{index + 1}" if line =~ /^\s*def\s*#{__name__}(.*)/
-        }
+        self.class.new.method(__name__.to_sym).source_location&.join(":")
       end
 
       # Tries its best to get the file name

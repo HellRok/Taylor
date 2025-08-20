@@ -431,6 +431,7 @@
 - Removed #begin_blend_mode
 - Added Window.end_blending
 - Removed #end_blend_mode
+- Use mruby-pure-regexp instead of pcre-regex
 
 ## v0.3.14.1
 

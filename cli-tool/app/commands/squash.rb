@@ -86,7 +86,6 @@ module Taylor
 
       def find_file(file_name)
         file_name = "#{file_name}.rb" unless file_name[-3..] == ".rb"
-        file_name = file_name.gsub(/[.]+\/+/, "")
 
         options[:"load-paths"].each { |dir|
           file = File.join(dir, file_name)
@@ -98,6 +97,9 @@ module Taylor
       end
 
       def required_file_from(line)
+        # Mruby regex is sloooow, let's not do this unless we have reason to
+        # believe it could needed.
+        return unless line.include?("require")
         lib = REQUIRE_REGEX.match(line)
         lib[1] if lib && !lib[1].include?('#{')
       end

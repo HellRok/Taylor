@@ -160,6 +160,42 @@ but I've had issues with that recently causing memory to bloat out to 8GB on
 page load and then come back down, so I've decided to set it to `64` by default,
 but this may change in the future to be a bit higher depending on actual use.
 
+## Debugging
+
+### Raylib
+
+#### Mock Implementation
+
+```json
+"debugging": {
+  "raylib": {
+    "mock_implementation": false
+  }
+}
+```
+
+This will compile Taylor with a mock implementation of Raylib instead. This is
+used in the Taylor test suite so it can run headless and be a lot less flakey.
+
+You can look in `src/taylor/raylib.cpp` to see what this enables.
+
+### MRuby
+
+#### Debug Symbols
+
+```json
+"debugging": {
+  "mruby": {
+    "debug_symbols": false
+  }
+}
+```
+
+This will compile your game with debug information. So when you get a stack
+trace it'll contain classes, methods, file, and line number information. You may
+want this if you'd like better error logs from players, but it may leak
+implementation details you'd rather keep private.
+
 ## Putting It All Together
 
 A file with every option set would end up looking like this:
@@ -187,6 +223,14 @@ A file with every option set would end up looking like this:
   "web": {
     "shell_path": "shell.html",
     "total_memory": 64
+  },
+  "debugging": {
+    "raylib": {
+      "mock_implementation": false
+    },
+    "mruby": {
+      "debug_symbols": false
+    }
   }
 }
 ```
