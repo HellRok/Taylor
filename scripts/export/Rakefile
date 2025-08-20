@@ -27,10 +27,10 @@ options = {
   ],
   "debugging" => {
     "raylib" => {
-      "mock_implementation" => false,
+      "mock_implementation" => false
     },
     "mruby" => {
-      "debug_symbols" => false,
+      "debug_symbols" => false
     }
   }
 }
@@ -54,7 +54,7 @@ end
 
 task transpile: :squash
 task :transpile do
-  sh "mrbc #{'-g' if options.dig("debugging", "mruby", "debug_symbols")} -Bgame -o /app/taylor/include/game.h /app/taylor/output.rb"
+  sh "mrbc #{"-g" if options.dig("debugging", "mruby", "debug_symbols")} -Bgame -o /app/taylor/include/game.h /app/taylor/output.rb"
 end
 
 task build: :transpile
