@@ -64,6 +64,8 @@ steps:
   - wait
 
   - label: 'CLI Tool Tests'
+    artifact_paths:
+      - ./cli-tool/test-analytics.json
     commands:
       - buildkite-agent artifact download taylor /usr/bin/
       - chmod +x /usr/bin/taylor
@@ -81,20 +83,21 @@ steps:
 
   - label: 'Taylor Tests - Linux'
     artifact_paths:
-      - /tmp/buildkite/taylor-test-suite/linux/test-analytics.json
+      - tmp/test-analytics.json
     commands:
       - .buildkite/scripts/tests/test_suite_linux.sh
-      - .buildkite/scripts/tests/upload_test_analytics.sh /tmp/buildkite/taylor-test-suite/linux/test-analytics.json
+      - .buildkite/scripts/tests/upload_test_analytics.sh ./tmp/test-analytics.json
 
   - label: 'Taylor Tests - Windows'
     artifact_paths:
-      - /tmp/buildkite/taylor-test-suite/windows/test-analytics.json
+      - tmp/test-analytics.json
     commands:
       - .buildkite/scripts/tests/test_suite_windows.sh
-      - .buildkite/scripts/tests/upload_test_analytics.sh /tmp/buildkite/taylor-test-suite/windows/test-analytics.json
+      - .buildkite/scripts/tests/upload_test_analytics.sh ./tmp/test-analytics.json
 
   - label: 'Taylor Tests - Web'
     artifact_paths:
-      - /tmp/buildkite/taylor-test-suite/web/test-analytics.json
+      - tmp/test-analytics.json
     commands:
       - .buildkite/scripts/tests/test_suite_web.sh
+      - .buildkite/scripts/tests/upload_test_analytics.sh ./tmp/test-analytics.json

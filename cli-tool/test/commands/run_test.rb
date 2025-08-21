@@ -1,6 +1,6 @@
 class Test
   class Commands
-    class Run_Test < MTest::Unit::TestCaseWithAnalytics
+    class Run_Test < Test::Base
       def test_help
         export_command = Taylor::Commands::Run.new("./cli.rb", ["--help"], {})
         assert_include export_command.puts_data, TAYLOR_VERSION

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if ! [[ -v BUILDKITE_TEST_ANALYTICS_KEY ]]; then
-  echo "I'm guessing you've hit "Retry" since I don't have the test analytics key!"
+  echo "I'm guessing you've hit \"Retry\" since I don't have the test analytics key!"
   exit 0
 fi
 
