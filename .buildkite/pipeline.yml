@@ -3,7 +3,6 @@ steps:
     commands:
       - gem install bundler
       - bundle install
-      - bundle exec standardrb
       - bin/test-formatting-ruby
 
   - label: 'CPP Checks'

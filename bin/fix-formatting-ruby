@@ -3,7 +3,7 @@ set -u
 
 source bin/lib/helpers.sh
 
-RUBY_FILES=${@:-$(git ls-files --no-deleted *.{rb,rake})}
+RUBY_FILES=${@:-$(git ls-files --no-deleted $(find . -name "Rakefile") *.{rb,rake})}
 
 log "Formatting Ruby files"
 job_output=$(bundle exec standardrb --fix-unsafely ${RUBY_FILES})
