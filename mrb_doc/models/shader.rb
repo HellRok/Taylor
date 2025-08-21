@@ -63,16 +63,16 @@ class Shader
     nil
   end
 
-  # Is the Shader ready to be used?
+  # Is the Shader valid?
   #
   # @example Basic usage
   #   shader = Shader.new(fragment: "assets/fragment_shader_#{GLSL_VERSION}.fs")
-  #   puts shader.ready? #=> true
+  #   puts shader.valid? #=> true
   #   shader.unload
   #
   # @return [Boolean]
-  def ready?
-    # mrb_Shader_ready
+  def valid?
+    # mrb_Shader_valid
     # src/mruby_integration/models/shader.cpp
     true
   end

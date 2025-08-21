@@ -14,11 +14,12 @@ class Test
       end
 
       def test_volume
-        skip "Waiting on Raylib 5.0"
-
         Audio.volume
 
-        assert_called ["(GetMasterVolume) { }"]
+        assert_called [
+          "(IsAudioDeviceReady) { }",
+          "(GetMasterVolume) { }"
+        ]
       end
 
       def test_volume_equals_errors_too_low
@@ -38,12 +39,9 @@ class Test
       end
 
       def test_volume_before_open
-        skip "Waiting on Raylib 5.0"
-        skip_unless_audio_enabled
-
         Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
 
-        assert_raise_with_message(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume.") {
+        assert_raise_with_message(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume") {
           Audio.volume
         }
 
@@ -53,7 +51,7 @@ class Test
       def test_set_volume_before_open
         Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
 
-        assert_raise_with_message(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume=.") {
+        assert_raise_with_message(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume=") {
           Audio.volume = 50
         }
 

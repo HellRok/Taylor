@@ -1,11 +1,15 @@
 diff --git a/src/Makefile b/src/Makefile
-index 5d7086d8..cef43584 100644
+index 7dde52fb..666fe315 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -259,6 +259,23 @@ CC = gcc
+@@ -270,10 +270,22 @@ CC = gcc
  AR = ar
  
- ifeq ($(PLATFORM),PLATFORM_DESKTOP)
+ ifeq ($(TARGET_PLATFORM),PLATFORM_DESKTOP_GLFW)
+-    ifeq ($(PLATFORM_OS),OSX)
+-        # OSX default compiler
+-        CC = clang
+-        GLFW_OSX = -x objective-c
 +    ifeq ($(CROSS),MINGW)
 +        CC = x86_64-w64-mingw32-gcc
 +        AR = x86_64-w64-mingw32-ar
@@ -22,38 +26,41 @@ index 5d7086d8..cef43584 100644
 +      AR = arm64-apple-darwin20.4-ar
 +      CFLAGS = -compatibility_version $(RAYLIB_API_VERSION) -current_version $(RAYLIB_VERSION) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
 +      GLFW_OSX = -x objective-c
-+    endif
-     ifeq ($(PLATFORM_OS),OSX)
-         # OSX default compiler
-         CC = clang
+     endif
+     ifeq ($(PLATFORM_OS),BSD)
+         # FreeBSD, OpenBSD, NetBSD, DragonFly default compiler
 diff --git a/src/config.h b/src/config.h
-index fbc7a5b4..61c40d7a 100644
+index e3749c56..b271a525 100644
 --- a/src/config.h
 +++ b/src/config.h
-@@ -141,16 +141,16 @@
+@@ -165,14 +165,14 @@
  //------------------------------------------------------------------------------------
- // Module: rtextures - Configuration Flags
- //------------------------------------------------------------------------------------
--// Select the desired fileformats to be supported for image data loading
--#define SUPPORT_FILEFORMAT_PNG          1
--//#define SUPPORT_FILEFORMAT_BMP          1
--//#define SUPPORT_FILEFORMAT_TGA          1
--//#define SUPPORT_FILEFORMAT_JPG          1
--#define SUPPORT_FILEFORMAT_GIF          1
--#define SUPPORT_FILEFORMAT_QOI          1
--//#define SUPPORT_FILEFORMAT_PSD          1
--#define SUPPORT_FILEFORMAT_DDS          1
--#define SUPPORT_FILEFORMAT_HDR          1
-+// Selecte desired fileformats to be supported for image data loading
-+#define SUPPORT_FILEFORMAT_PNG      1
+ // Selecte desired fileformats to be supported for image data loading
+ #define SUPPORT_FILEFORMAT_PNG      1
+-//#define SUPPORT_FILEFORMAT_BMP      1
 +#define SUPPORT_FILEFORMAT_BMP      1
-+//#define SUPPORT_FILEFORMAT_TGA      1
+ //#define SUPPORT_FILEFORMAT_TGA      1
+-//#define SUPPORT_FILEFORMAT_JPG      1
 +#define SUPPORT_FILEFORMAT_JPG      1
-+#define SUPPORT_FILEFORMAT_GIF      1
-+#define SUPPORT_FILEFORMAT_QOI      1
-+//#define SUPPORT_FILEFORMAT_PSD      1
-+#define SUPPORT_FILEFORMAT_DDS      1
+ #define SUPPORT_FILEFORMAT_GIF      1
+ #define SUPPORT_FILEFORMAT_QOI      1
+ //#define SUPPORT_FILEFORMAT_PSD      1
+ #define SUPPORT_FILEFORMAT_DDS      1
+-//#define SUPPORT_FILEFORMAT_HDR      1
 +#define SUPPORT_FILEFORMAT_HDR      1
  //#define SUPPORT_FILEFORMAT_PIC          1
- //#define SUPPORT_FILEFORMAT_PNM          1
- //#define SUPPORT_FILEFORMAT_KTX          1
+ //#define SUPPORT_FILEFORMAT_KTX      1
+ //#define SUPPORT_FILEFORMAT_ASTC     1
+diff --git a/src/raylib.h b/src/raylib.h
+index a26b8ce6..798d7bd0 100644
+--- a/src/raylib.h
++++ b/src/raylib.h
+@@ -1360,7 +1360,7 @@ RLAPI void ImageAlphaPremultiply(Image *image);
+ RLAPI void ImageBlurGaussian(Image *image, int blurSize);                                                // Apply Gaussian blur using a box blur approximation
+ RLAPI void ImageKernelConvolution(Image *image, const float *kernel, int kernelSize);                    // Apply custom square convolution kernel to image
+ RLAPI void ImageResize(Image *image, int newWidth, int newHeight);                                       // Resize image (Bicubic scaling algorithm)
+-RLAPI void ImageResizeNN(Image *image, int newWidth,int newHeight);                                      // Resize image (Nearest-Neighbor scaling algorithm)
++RLAPI void ImageResizeNN(Image *image, int newWidth, int newHeight);                                     // Resize image (Nearest-Neighbor scaling algorithm)
+ RLAPI void ImageResizeCanvas(Image *image, int newWidth, int newHeight, int offsetX, int offsetY, Color fill); // Resize canvas and fill with color
+ RLAPI void ImageMipmaps(Image *image);                                                                   // Compute all mipmap levels for a provided image
+ RLAPI void ImageDither(Image *image, int rBpp, int gBpp, int bBpp, int aBpp);                            // Dither image data to 16bpp or lower (Floyd-Steinberg dithering)

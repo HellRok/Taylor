@@ -146,7 +146,7 @@ class Test
         Circle.new(x: 3, y: 4, radius: 5, colour: Colour[6, 7, 8, 9], gradient: Colour[10, 11, 12, 13]).draw
 
         assert_called [
-          "(DrawCircleGradient) { centerX: 3 centerY: 4 radius: 5.000000 color1: { r: 6 g: 7 b: 8 a: 9 } color2: { r: 10 g: 11 b: 12 a: 13 } }"
+          "(DrawCircleGradient) { centerX: 3 centerY: 4 radius: 5.000000 inner: { r: 6 g: 7 b: 8 a: 9 } outer: { r: 10 g: 11 b: 12 a: 13 } }"
         ]
       end
 
@@ -154,7 +154,7 @@ class Test
         Circle.new(x: 4, y: 5, radius: 6, colour: Colour[7, 8, 9, 10], outline: Colour[11, 12, 13, 14], thickness: 15, gradient: Colour[16, 17, 18, 19]).draw
 
         assert_called [
-          "(DrawCircleGradient) { centerX: 4 centerY: 5 radius: 6.000000 color1: { r: 7 g: 8 b: 9 a: 10 } color2: { r: 16 g: 17 b: 18 a: 19 } }",
+          "(DrawCircleGradient) { centerX: 4 centerY: 5 radius: 6.000000 inner: { r: 7 g: 8 b: 9 a: 10 } outer: { r: 16 g: 17 b: 18 a: 19 } }",
           "(DrawPolyLinesEx) { center: { x: 4.000000 y: 5.000000 } sides: 60 radius: 6.000000 rotation: 0.000000 lineThick: 15.000000 color: { r: 11 g: 12 b: 13 a: 14 } }"
         ]
       end
@@ -180,7 +180,7 @@ class Test
         circle.gradient = Colour[6, 7, 8, 9]
         circle.draw
         assert_called [
-          "(DrawCircleGradient) { centerX: 1 centerY: 2 radius: 3.000000 color1: { r: 4 g: 5 b: 6 a: 7 } color2: { r: 6 g: 7 b: 8 a: 9 } }"
+          "(DrawCircleGradient) { centerX: 1 centerY: 2 radius: 3.000000 inner: { r: 4 g: 5 b: 6 a: 7 } outer: { r: 6 g: 7 b: 8 a: 9 } }"
         ]
 
         circle.gradient = nil

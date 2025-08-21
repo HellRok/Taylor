@@ -225,7 +225,7 @@ Key::KP_EQUAL = 336
 # Android back.
 Key::BACK = 4
 # Android menu.
-Key::MENU = 82
+Key::MENU = 5
 # Android volume up.
 Key::VOLUME_UP = 24
 # Android volume down.

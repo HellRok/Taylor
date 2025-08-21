@@ -225,11 +225,11 @@ mrb_Rectangle_draw(mrb_state* mrb, mrb_value self) -> mrb_value
                          rectangle->segments,
                          *rectangle->colour);
     if (rectangle->outline != nullptr) {
-      DrawRectangleRoundedLines(rectangle->rectangle,
-                                rectangle->roundness,
-                                rectangle->segments,
-                                rectangle->thickness,
-                                *rectangle->outline);
+      DrawRectangleRoundedLinesEx(rectangle->rectangle,
+                                  rectangle->roundness,
+                                  rectangle->segments,
+                                  rectangle->thickness,
+                                  *rectangle->outline);
     }
   }
 

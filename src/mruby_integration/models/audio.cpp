@@ -35,7 +35,7 @@ mrb_Audio_set_volume(mrb_state* mrb, mrb_value) -> mrb_value
     raise_error(mrb,
                 Audio_class,
                 "NotOpenError",
-                "You must use Audio.open before calling Audio.volume=.");
+                "You must use Audio.open before calling Audio.volume=");
   }
 
   mrb_float volume;
@@ -49,13 +49,17 @@ mrb_Audio_set_volume(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
-/* Re-enable this once upgraded to Raylib 5.0
- *auto
- *mrb_Audio_volume(mrb_state* mrb, mrb_value) -> mrb_value
- *{
- *  return mrb_float_value(GetMasterVolume());
- *}
- */
+auto
+mrb_Audio_volume(mrb_state* mrb, mrb_value) -> mrb_value
+{
+  if (!IsAudioDeviceReady()) {
+    raise_error(mrb,
+                Audio_class,
+                "NotOpenError",
+                "You must use Audio.open before calling Audio.volume");
+  }
+  return mrb_float_value(mrb, GetMasterVolume());
+}
 
 void
 append_models_Audio(mrb_state* mrb)
@@ -70,12 +74,8 @@ append_models_Audio(mrb_state* mrb)
     mrb, Audio_class, "ready?", mrb_Audio_ready, MRB_ARGS_NONE());
   mrb_define_class_method(
     mrb, Audio_class, "volume=", mrb_Audio_set_volume, MRB_ARGS_REQ(1));
-  /* mrb_define_class_method(mrb,
-   *                Audio_class,
-   *                "volume",
-   *                mrb_Audio_volume,
-   *                MRB_ARGS_NONE());
-   */
+  mrb_define_class_method(
+    mrb, Audio_class, "volume", mrb_Audio_volume, MRB_ARGS_NONE());
 
   load_ruby_models_audio(mrb);
 }

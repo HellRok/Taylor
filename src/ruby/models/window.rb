@@ -466,8 +466,14 @@ module Window
     # Set to try enabling interlaced video format (for V3D).
     INTERLACED_HINT = 0x00010000
 
+    # @note Must be used with {Window::Flag::UNDECORATED}
+    # Set to support mouse passthrough
+    MOUSE_PASSTHROUGH = 0x00004000
+
     # Set to run program in fullscreen.
     FULLSCREEN = 0x00000002
+    # Set to run in borderless windowed mode
+    BORDERLESS_WINDOWED_MODE = 0x00008000
     # Set to allow resizable window.
     RESIZABLE = 0x00000004
     # Set to disable window decoration (frame and buttons).

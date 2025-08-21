@@ -124,11 +124,11 @@ mrb_Shader_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
-mrb_Shader_ready(mrb_state* mrb, mrb_value self) -> mrb_value
+mrb_Shader_valid(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Shader, shader);
 
-  return mrb_bool_value(IsShaderReady(*shader));
+  return mrb_bool_value(IsShaderValid(*shader));
 }
 
 auto
@@ -383,7 +383,7 @@ append_models_Shader(mrb_state* mrb)
   mrb_define_method(
     mrb, Shader_class, "unload", mrb_Shader_unload, MRB_ARGS_NONE());
   mrb_define_method(
-    mrb, Shader_class, "ready?", mrb_Shader_ready, MRB_ARGS_NONE());
+    mrb, Shader_class, "valid?", mrb_Shader_valid, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Shader_class, "location_of", mrb_Shader_location_of, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Shader_class, "set", mrb_Shader_set, MRB_ARGS_REQ(1));

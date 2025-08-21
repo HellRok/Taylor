@@ -8,7 +8,7 @@ class Test
 
         assert_called [
           "(FileExists) { fileName: './assets/tiny.ttf' }",
-          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 32 fontChars: 0x0 glyphCount: 95 }"
+          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 32 codepoints: 0x0 codepointCount: 95 }"
         ]
 
         assert_kind_of Font, font
@@ -24,7 +24,7 @@ class Test
 
         assert_called [
           "(FileExists) { fileName: './assets/tiny.ttf' }",
-          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 6 fontChars: 0x0 glyphCount: 100 }"
+          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 6 codepoints: 0x0 codepointCount: 100 }"
         ]
 
         assert_kind_of Font, font
@@ -81,20 +81,20 @@ class Test
         assert_equal(4, font.to_h[:glyph_padding])
       end
 
-      def test_ready?
+      def test_valid?
         Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 4, glyph_count: 5, glyph_padding: 6))
         font = Font.new("./assets/tiny.ttf")
         Taylor::Raylib.reset_calls
 
-        Taylor::Raylib.mock_call("IsFontReady", "true")
-        Taylor::Raylib.mock_call("IsFontReady", "false")
+        Taylor::Raylib.mock_call("IsFontValid", "true")
+        Taylor::Raylib.mock_call("IsFontValid", "false")
 
-        assert_true font.ready?
-        assert_false font.ready?
+        assert_true font.valid?
+        assert_false font.valid?
 
         assert_called [
-          "(IsFontReady) { font: { baseSize: 4 glyphCount: 5 glyphPadding: 6 } }",
-          "(IsFontReady) { font: { baseSize: 4 glyphCount: 5 glyphPadding: 6 } }"
+          "(IsFontValid) { font: { baseSize: 4 glyphCount: 5 glyphPadding: 6 } }",
+          "(IsFontValid) { font: { baseSize: 4 glyphCount: 5 glyphPadding: 6 } }"
         ]
       end
 

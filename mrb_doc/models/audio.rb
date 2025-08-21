@@ -46,6 +46,23 @@ class Audio
     true
   end
 
+  # Gets the master volume for all {Music} and {Sound}.
+  #
+  # @example Basic usage
+  #   Audio.open
+  #   Audio.volume = 50
+  #   puts Audio.volume
+  #   #=> 50
+  #   Audio.close
+  #
+  # @return [nil]
+  # @raise [Audio::NotOpenError] Raised when trying to set the volume before opening the {Audio} system.
+  def self.volume
+    # mrb_Audio_volume
+    # src/mruby_integration/models/audio.cpp
+    nil
+  end
+
   # Sets the master volume for all {Music} and {Sound}.
   #
   # @example Basic usage

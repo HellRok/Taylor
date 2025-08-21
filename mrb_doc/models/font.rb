@@ -91,10 +91,10 @@ class Font
     nil
   end
 
-  # Checks if the font is loaded and ready to go.
+  # Checks if the font is loaded and valid.
   # @return [Boolean]
-  def ready?
-    # mrb_Font_ready
+  def valid?
+    # mrb_Font_valid
     # src/mruby_integration/models/font.cpp
     true
   end

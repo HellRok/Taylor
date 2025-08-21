@@ -100,19 +100,19 @@ class Test
         ]
       end
 
-      def test_shader_ready
+      def test_shader_valid
         Taylor::Raylib.mock_call("LoadShader", Shader.mock_return(id: 1))
-        Taylor::Raylib.mock_call("IsShaderReady", "true")
-        Taylor::Raylib.mock_call("IsShaderReady", "false")
+        Taylor::Raylib.mock_call("IsShaderValid", "true")
+        Taylor::Raylib.mock_call("IsShaderValid", "false")
         shader = Shader.new
         Taylor::Raylib.reset_calls
 
-        assert_true shader.ready?
-        assert_false shader.ready?
+        assert_true shader.valid?
+        assert_false shader.valid?
 
         assert_called [
-          "(IsShaderReady) { shader: { id: 1 } }",
-          "(IsShaderReady) { shader: { id: 1 } }"
+          "(IsShaderValid) { shader: { id: 1 } }",
+          "(IsShaderValid) { shader: { id: 1 } }"
         ]
       end
 

@@ -431,7 +431,12 @@
 - Removed #begin_blend_mode
 - Added Window.end_blending
 - Removed #end_blend_mode
+- Update mruby to 3.4.0
 - Use mruby-pure-regexp instead of pcre-regex
+- Upgrade Raylib to 5.5
+- Renamed Shader#ready? to Shader#valid?
+- Renamed Font#ready? to Font#valid?
+- Added Audio.volume
 
 ## v0.3.14.1
 

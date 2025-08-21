@@ -180,7 +180,7 @@ class Test
 
         assert_called [
           "(DrawRectangleRounded) { rec: { x: 7.000000 y: 8.000000 width: 9.000000 height: 10.000000 } roundness: 0.200000 segments: 21 color: { r: 11 g: 12 b: 13 a: 14 } }",
-          "(DrawRectangleRoundedLines) { rec: { x: 7.000000 y: 8.000000 width: 9.000000 height: 10.000000 } roundness: 0.200000 segments: 21 lineThick: 19.000000 color: { r: 15 g: 16 b: 17 a: 18 } }"
+          "(DrawRectangleRoundedLinesEx) { rec: { x: 7.000000 y: 8.000000 width: 9.000000 height: 10.000000 } roundness: 0.200000 segments: 21 lineThick: 19.000000 color: { r: 15 g: 16 b: 17 a: 18 } }"
         ]
       end
 

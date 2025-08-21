@@ -123,14 +123,14 @@ mrb_Font_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
-mrb_Font_ready(mrb_state* mrb, mrb_value self) -> mrb_value
+mrb_Font_valid(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Font* font;
 
   Data_Get_Struct(mrb, self, &Font_type, font);
   mrb_assert(font != nullptr);
 
-  return mrb_bool_value(IsFontReady(*font));
+  return mrb_bool_value(IsFontValid(*font));
 }
 
 auto
@@ -299,7 +299,7 @@ append_models_Font(mrb_state* mrb)
     mrb, Font_class, "initialize", mrb_Font_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Font_class, "unload", mrb_Font_unload, MRB_ARGS_NONE());
-  mrb_define_method(mrb, Font_class, "ready?", mrb_Font_ready, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Font_class, "valid?", mrb_Font_valid, MRB_ARGS_NONE());
   mrb_define_method(mrb, Font_class, "draw", mrb_Font_draw, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Font_class, "measure", mrb_Font_measure, MRB_ARGS_REQ(1));
