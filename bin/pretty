@@ -3,7 +3,7 @@ set -u
 
 source bin/lib/helpers.sh
 
-export RUBY_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{rb,rake})
+export RUBY_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA $(find . -name "Rakefile") *.{rb,rake})
 export XPP_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{cpp,hpp})
 
 start "Formatting Ruby"
