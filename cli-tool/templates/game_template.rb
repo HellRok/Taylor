@@ -10,7 +10,7 @@ def game_template
     Audio.open
 
     # Get the current monitor frame rate and set our target framerate to match.
-    Window.target_fps = get_monitor_refresh_rate(get_current_monitor)
+    Window.target_frame_rate = Monitor.current.refresh_rate
 
     # Define your main method
     def main
@@ -22,7 +22,7 @@ def game_template
       Window.draw do
         # Your drawing logic goes here
 
-        clear
+        Window.clear(colour: Colour::RAYWHITE)
         Font.default.draw(
           "Welcome to your first Taylor application!",
           x: 190, y: 200, size: 20, spacing: 2, colour: Colour::DARKGRAY

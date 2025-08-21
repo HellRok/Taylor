@@ -437,6 +437,7 @@
 - Renamed Shader#ready? to Shader#valid?
 - Renamed Font#ready? to Font#valid?
 - Added Audio.volume
+- Update the game template
 
 ## v0.3.14.1
 
