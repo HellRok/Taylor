@@ -1,6 +1,6 @@
 class Test
   class Commands
-    class Squash_Test < MTest::Unit::TestCaseWithAnalytics
+    class Squash_Test < Test::Base
       def test_help
         squash_command = Taylor::Commands::Squash.new(["--help"], {})
         assert_include squash_command.puts_data, TAYLOR_VERSION

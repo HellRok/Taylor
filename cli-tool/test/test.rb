@@ -2,9 +2,6 @@
 # (which is what happened and why I noticed!)
 real_exit_bang = method(:exit!).to_proc
 
-puts "WD: #{Dir.getwd}"
-puts "$PATH: [#{$:.join(", ")}]"
-
 # We use load here to forcefully re-require the commands that are unloaded by
 # Taylor::Commands::Run automatically
 load "templates/game_template.rb"
@@ -14,6 +11,7 @@ load "app/commands/run.rb"
 load "app/commands/squash.rb"
 load "app/commands/version.rb"
 
+require "test/base"
 require "test/helpers"
 require "test/monkey_patches"
 

@@ -1,6 +1,6 @@
 class Test
   class Commands
-    class New_Test < MTest::Unit::TestCaseWithAnalytics
+    class New_Test < Test::Base
       def test_help
         new_command = Taylor::Commands::New.new(["--help"], {})
         assert_include new_command.puts_data, TAYLOR_VERSION

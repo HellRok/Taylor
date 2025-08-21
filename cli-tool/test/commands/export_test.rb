@@ -1,6 +1,6 @@
 class Test
   class Commands
-    class Export_Test < MTest::Unit::TestCaseWithAnalytics
+    class Export_Test < Test::Base
       def test_help
         export_command = Taylor::Commands::Export.new(["--help"], {})
         assert_include export_command.puts_data, TAYLOR_VERSION
