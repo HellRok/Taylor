@@ -2,14 +2,14 @@ class Test
   class Models
     class Rectangle_Test < Test::Base
       def test_initialize
-        rectangle = Rectangle.new(x: 1, y: 2, width: 3, height: 4, colour: Colour[5, 6, 7, 8])
+        rectangle = Rectangle.new(x: 1, y: 2, width: 3, height: 4)
 
         assert_kind_of Rectangle, rectangle
         assert_equal 1, rectangle.x
         assert_equal 2, rectangle.y
         assert_equal 3, rectangle.width
         assert_equal 4, rectangle.height
-        assert_equal Colour[5, 6, 7, 8], rectangle.colour
+        assert_equal Colour::BLACK, rectangle.colour
       end
 
       def test_initialize_with_arguments

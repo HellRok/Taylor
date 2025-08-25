@@ -24,7 +24,7 @@ class Rectangle
   # @param segments [Integer] Must be greater than 0
   # @return [Rectangle]
   # @raise [ArgumentError]
-  def initialize(x:, y:, width:, height:, colour:, outline: nil, thickness: 1, roundness: 0, segments: 4)
+  def initialize(x:, y:, width:, height:, colour: Colour::BLACK, outline: nil, thickness: 1, roundness: 0, segments: 4)
     # mrb_Rectangle_initialize
     # src/mruby_integration/models/rectangle.cpp
     Rectangle.new

@@ -36,14 +36,14 @@ mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   //   y:,
   //   width:,
   //   height:,
-  //   colour:,
+  //   colour: Colour::BLACK,
   //   outline: nil,
   //   thickness: 1,
   //   roundness: 0,
   //   segments: 6
   // )
   const mrb_int kw_num = 9;
-  const mrb_int kw_required = 5;
+  const mrb_int kw_required = 4;
   const mrb_sym kw_names[] = {
     mrb_intern_lit(mrb, "x"),         mrb_intern_lit(mrb, "y"),
     mrb_intern_lit(mrb, "width"),     mrb_intern_lit(mrb, "height"),
@@ -73,14 +73,15 @@ mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   if (!mrb_undef_p(kw_values[4])) {
     rectangle->colour = static_cast<struct Color*> DATA_PTR(kw_values[4]);
-    add_reference(rectangle->colour);
-    mrb_iv_set(mrb,
-               self,
-               mrb_intern_cstr(mrb, "@colour"),
-               mrb_Color_value(mrb, rectangle->colour));
   } else {
-    rectangle->colour = nullptr;
+    auto default_colour = BLACK;
+    rectangle->colour = &default_colour;
   }
+  add_reference(rectangle->colour);
+  mrb_iv_set(mrb,
+             self,
+             mrb_intern_cstr(mrb, "@colour"),
+             mrb_Color_value(mrb, rectangle->colour));
 
   if (!mrb_undef_p(kw_values[5])) {
     rectangle->outline = static_cast<struct Color*> DATA_PTR(kw_values[5]);
