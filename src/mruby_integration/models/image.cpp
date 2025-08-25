@@ -42,12 +42,9 @@ mrb_Image_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     raise_not_found_error(mrb, Image_class, path);
   }
 
-  Image* image = static_cast<Image*> DATA_PTR(self);
-  if (image) {
-    mrb_free(mrb, image);
-  }
-  mrb_data_init(self, nullptr, &Image_type);
-  image = static_cast<Image*>(malloc(sizeof(Image)));
+  Image* image;
+  mrb_self_ptr(mrb, self, Image, image);
+
   *image = LoadImage(path);
 
   setup_Image(mrb,
@@ -65,10 +62,7 @@ mrb_Image_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   UnloadImage(*image);
 
@@ -76,12 +70,17 @@ mrb_Image_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Image_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Image, image);
+
+  return mrb_bool_value(IsImageValid(*image));
+}
+
+auto
 mrb_Image_export(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   char* path;
   mrb_get_args(mrb, "z", &path);
@@ -142,15 +141,12 @@ mrb_Image_generate(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   // def copy(source: Rectangle[0, 0, width, height])
-  mrb_int kw_num = 1;
-  mrb_int kw_required = 0;
-  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "source") };
+  const mrb_int kw_num = 1;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "source") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, ":", &kwargs);
@@ -185,15 +181,12 @@ mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_resize_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   // def resize!(width:, height:, sizing: :nearest_neighbour)
-  mrb_int kw_num = 3;
-  mrb_int kw_required = 2;
-  mrb_sym kw_names[] = {
+  const mrb_int kw_num = 3;
+  const mrb_int kw_required = 2;
+  const mrb_sym kw_names[] = {
     mrb_intern_lit(mrb, "width"),
     mrb_intern_lit(mrb, "height"),
     mrb_intern_lit(mrb, "scaler"),
@@ -242,15 +235,12 @@ mrb_Image_resize_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   // def crop!(source:)
-  mrb_int kw_num = 1;
-  mrb_int kw_required = 1;
-  mrb_sym kw_names[] = {
+  const mrb_int kw_num = 1;
+  const mrb_int kw_required = 1;
+  const mrb_sym kw_names[] = {
     mrb_intern_lit(mrb, "source"),
   };
   mrb_value kw_values[kw_num];
@@ -284,10 +274,8 @@ mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_alpha_mask_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image *image, *alpha_mask;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
+  Image* alpha_mask;
 
   mrb_get_args(mrb, "d", &alpha_mask, &Image_type);
 
@@ -299,10 +287,7 @@ mrb_Image_alpha_mask_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_flip_vertically_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   ImageFlipVertical(image);
 
@@ -312,10 +297,7 @@ mrb_Image_flip_vertically_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_flip_horizontally_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   ImageFlipHorizontal(image);
 
@@ -325,10 +307,7 @@ mrb_Image_flip_horizontally_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_rotate_clockwise_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   ImageRotateCW(image);
 
@@ -339,10 +318,7 @@ auto
 mrb_Image_rotate_counter_clockwise_bang(mrb_state* mrb, mrb_value self)
   -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   ImageRotateCCW(image);
 
@@ -352,10 +328,7 @@ mrb_Image_rotate_counter_clockwise_bang(mrb_state* mrb, mrb_value self)
 auto
 mrb_Image_premultiply_alpha_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   ImageAlphaPremultiply(image);
 
@@ -365,10 +338,7 @@ mrb_Image_premultiply_alpha_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_generate_mipmaps_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   ImageMipmaps(image);
 
@@ -383,15 +353,12 @@ mrb_Image_generate_mipmaps_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_tint_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   // def tint!(colour:)
-  mrb_int kw_num = 1;
-  mrb_int kw_required = 1;
-  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "colour") };
+  const mrb_int kw_num = 1;
+  const mrb_int kw_required = 1;
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "colour") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, ":", &kwargs);
@@ -412,10 +379,7 @@ mrb_Image_tint_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_invert_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   ImageColorInvert(image);
 
@@ -425,10 +389,7 @@ mrb_Image_invert_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_greyscale_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   ImageColorGrayscale(image);
 
@@ -438,10 +399,7 @@ mrb_Image_greyscale_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_contrast_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   mrb_float contrast;
   mrb_get_args(mrb, "f", &contrast);
@@ -458,10 +416,7 @@ mrb_Image_contrast_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_brightness_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   mrb_float brightness;
   mrb_get_args(mrb, "f", &brightness);
@@ -478,15 +433,12 @@ mrb_Image_brightness_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_replace_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   // def replace!(from: Colour::VIOLET, to: Colour::BLANK)
-  mrb_int kw_num = 2;
-  mrb_int kw_required = 0;
-  mrb_sym kw_names[] = {
+  const mrb_int kw_num = 2;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = {
     mrb_intern_lit(mrb, "from"),
     mrb_intern_lit(mrb, "to"),
   };
@@ -518,20 +470,17 @@ mrb_Image_replace_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
+  mrb_get_self(mrb, self, Image, image)
 
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
-
-  // def draw!(
-  //   image:,
-  //   source: Rectangle[0, 0, image.width, image.height],
-  //   destination: Rectangle[0, 0, image.width, image.height],
-  //   colour: Colour::WHITE
-  // )
-  mrb_int kw_num = 4;
-  mrb_int kw_required = 1;
-  mrb_sym kw_names[] = {
+    // def draw!(
+    //   image:,
+    //   source: Rectangle[0, 0, image.width, image.height],
+    //   destination: Rectangle[0, 0, image.width, image.height],
+    //   colour: Colour::WHITE
+    // )
+    const mrb_int kw_num = 4;
+  const mrb_int kw_required = 1;
+  const mrb_sym kw_names[] = {
     mrb_intern_lit(mrb, "image"),
     mrb_intern_lit(mrb, "source"),
     mrb_intern_lit(mrb, "destination"),
@@ -586,10 +535,7 @@ mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   Color* colours = LoadImageColors(*image);
 
@@ -608,10 +554,7 @@ mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Image_to_texture(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Image* image;
-
-  Data_Get_Struct(mrb, self, &Image_type, image);
-  mrb_assert(image != nullptr);
+  mrb_get_self(mrb, self, Image, image);
 
   auto* texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
   *texture = LoadTextureFromImage(*image);
@@ -642,6 +585,8 @@ append_models_Image(mrb_state* mrb)
     mrb, Image_class, "initialize", mrb_Image_initialize, MRB_ARGS_REQ(5));
   mrb_define_method(
     mrb, Image_class, "unload", mrb_Image_unload, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Image_class, "valid?", mrb_Image_valid, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Image_class, "export", mrb_Image_export, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Image_class, "copy", mrb_Image_copy, MRB_ARGS_REQ(1));

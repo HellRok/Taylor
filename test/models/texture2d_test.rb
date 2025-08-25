@@ -49,6 +49,25 @@ class Test
         ]
       end
 
+      def test_valid?
+        Taylor::Raylib.mock_call(
+          "LoadTexture",
+          Texture2D.mock_return(id: 0, width: 1, height: 2, mipmaps: 3, format: 4)
+        )
+        Taylor::Raylib.mock_call("IsTextureValid", "false")
+        Taylor::Raylib.mock_call("IsTextureValid", "true")
+        texture = Texture2D.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        assert_false texture.valid?
+        assert_true texture.valid?
+
+        assert_called [
+          "(IsTextureValid) { texture: { id: 0 width: 1 height: 2 mipmaps: 3 format: 4 } }",
+          "(IsTextureValid) { texture: { id: 0 width: 1 height: 2 mipmaps: 3 format: 4 } }"
+        ]
+      end
+
       def test_to_h
         Taylor::Raylib.mock_call(
           "LoadTexture",

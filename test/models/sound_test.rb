@@ -198,6 +198,22 @@ class Test
           "(SetSoundPitch) { sound: { frameCount: 11 } pitch: 0.200000 }"
         ]
       end
+
+      def test_valid?
+        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 12))
+        Taylor::Raylib.mock_call("IsSoundValid", "false")
+        Taylor::Raylib.mock_call("IsSoundValid", "true")
+        sound = Sound.new("./assets/test.wav")
+        Taylor::Raylib.reset_calls
+
+        assert_false sound.valid?
+        assert_true sound.valid?
+
+        assert_called [
+          "(IsSoundValid) { sound: { frameCount: 12 } }",
+          "(IsSoundValid) { sound: { frameCount: 12 } }"
+        ]
+      end
     end
   end
 end

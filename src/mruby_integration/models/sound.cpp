@@ -18,10 +18,10 @@ mrb_Sound_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   char* path;
 
   // Sound.new("./assets/beep.ogg", volume: 1, pitch: 1)
-  mrb_int kw_num = 2;
-  mrb_int kw_required = 0;
-  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "volume"),
-                         mrb_intern_lit(mrb, "pitch") };
+  const mrb_int kw_num = 2;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "volume"),
+                               mrb_intern_lit(mrb, "pitch") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, "z:", &path, &kwargs);
@@ -43,13 +43,8 @@ mrb_Sound_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     pitch = mrb_as_float(mrb, kw_values[1]);
   }
 
-  Sound* sound = static_cast<struct Sound*> DATA_PTR(self);
-  if (sound) {
-    mrb_free(mrb, sound);
-  }
-  mrb_data_init(self, nullptr, &Sound_type);
-  sound = static_cast<Sound*>(malloc(sizeof(Sound)));
-
+  Sound* sound;
+  mrb_self_ptr(mrb, self, Sound, sound);
   *sound = LoadSound(path);
 
   SetSoundVolume(*sound, volume);
@@ -67,10 +62,7 @@ mrb_Sound_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Sound_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Sound* sound;
-
-  Data_Get_Struct(mrb, self, &Sound_type, sound);
-  mrb_assert(sound != nullptr);
+  mrb_get_self(mrb, self, Sound, sound);
 
   UnloadSound(*sound);
 
@@ -78,12 +70,17 @@ mrb_Sound_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Sound_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Sound, sound);
+
+  return mrb_bool_value(IsSoundValid(*sound));
+}
+
+auto
 mrb_Sound_frame_count(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Sound* sound;
-
-  Data_Get_Struct(mrb, self, &Sound_type, sound);
-  mrb_assert(sound != nullptr);
+  mrb_get_self(mrb, self, Sound, sound);
 
   return mrb_float_value(mrb, sound->frameCount);
 }
@@ -91,10 +88,7 @@ mrb_Sound_frame_count(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Sound_play(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Sound* sound;
-
-  Data_Get_Struct(mrb, self, &Sound_type, sound);
-  mrb_assert(sound != nullptr);
+  mrb_get_self(mrb, self, Sound, sound);
 
   PlaySound(*sound);
 
@@ -104,10 +98,7 @@ mrb_Sound_play(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Sound_stop(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Sound* sound;
-
-  Data_Get_Struct(mrb, self, &Sound_type, sound);
-  mrb_assert(sound != nullptr);
+  mrb_get_self(mrb, self, Sound, sound);
 
   StopSound(*sound);
 
@@ -117,10 +108,7 @@ mrb_Sound_stop(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Sound_pause(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Sound* sound;
-
-  Data_Get_Struct(mrb, self, &Sound_type, sound);
-  mrb_assert(sound != nullptr);
+  mrb_get_self(mrb, self, Sound, sound);
 
   PauseSound(*sound);
 
@@ -130,10 +118,7 @@ mrb_Sound_pause(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Sound_resume(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Sound* sound;
-
-  Data_Get_Struct(mrb, self, &Sound_type, sound);
-  mrb_assert(sound != nullptr);
+  mrb_get_self(mrb, self, Sound, sound);
 
   ResumeSound(*sound);
 
@@ -143,10 +128,7 @@ mrb_Sound_resume(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Sound_playing(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Sound* sound;
-
-  Data_Get_Struct(mrb, self, &Sound_type, sound);
-  mrb_assert(sound != nullptr);
+  mrb_get_self(mrb, self, Sound, sound);
 
   return mrb_bool_value(IsSoundPlaying(*sound));
 }
@@ -154,10 +136,7 @@ mrb_Sound_playing(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Sound_set_volume(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Sound* sound;
-
-  Data_Get_Struct(mrb, self, &Sound_type, sound);
-  mrb_assert(sound != nullptr);
+  mrb_get_self(mrb, self, Sound, sound);
 
   mrb_float volume;
   mrb_get_args(mrb, "f", &volume);
@@ -176,10 +155,7 @@ mrb_Sound_set_volume(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Sound_set_pitch(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Sound* sound;
-
-  Data_Get_Struct(mrb, self, &Sound_type, sound);
-  mrb_assert(sound != nullptr);
+  mrb_get_self(mrb, self, Sound, sound);
 
   mrb_float pitch;
   mrb_get_args(mrb, "f", &pitch);
@@ -200,6 +176,8 @@ append_models_Sound(mrb_state* mrb)
     mrb, Sound_class, "initialize", mrb_Sound_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Sound_class, "unload", mrb_Sound_unload, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Sound_class, "valid?", mrb_Sound_valid, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Sound_class, "frame_count", mrb_Sound_frame_count, MRB_ARGS_NONE());
   mrb_define_method(mrb, Sound_class, "play", mrb_Sound_play, MRB_ARGS_NONE());

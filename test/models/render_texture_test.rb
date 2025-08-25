@@ -19,6 +19,25 @@ class Test
         ]
       end
 
+      def test_valid?
+        Taylor::Raylib.mock_call(
+          "LoadRenderTexture",
+          RenderTexture.mock_return(width: 2, height: 3)
+        )
+        Taylor::Raylib.mock_call("IsRenderTextureValid", "false")
+        Taylor::Raylib.mock_call("IsRenderTextureValid", "true")
+        render_texture = RenderTexture.new(width: 2, height: 3)
+        Taylor::Raylib.reset_calls
+
+        assert_false render_texture.valid?
+        assert_true render_texture.valid?
+
+        assert_called [
+          "(IsRenderTextureValid) { target: { id: 0 texture.width: 2 texture.height: 3 texture.mipmaps: 0 texture.format: 0 depth.width: 2 depth.height: 3 depth.mipmaps: 0 depth.format: 0 } }",
+          "(IsRenderTextureValid) { target: { id: 0 texture.width: 2 texture.height: 3 texture.mipmaps: 0 texture.format: 0 depth.width: 2 depth.height: 3 depth.mipmaps: 0 depth.format: 0 } }"
+        ]
+      end
+
       def test_to_h
         Taylor::Raylib.mock_call(
           "LoadRenderTexture",

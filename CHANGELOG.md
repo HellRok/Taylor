@@ -438,6 +438,11 @@
 - Renamed Font#ready? to Font#valid?
 - Added Audio.volume
 - Update the game template
+- Added Image#valid?
+- Added Texture2D#valid?
+- Added RenderTexture#valid?
+- Added Sound#valid?
+- Added Music#valid?
 
 ## v0.3.14.1
 

@@ -36,8 +36,8 @@ mrb_RenderTexture_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     height = mrb_as_int(mrb, kw_values[1]);
   }
 
-  auto* render_texture =
-    static_cast<RenderTexture*>(malloc(sizeof(RenderTexture)));
+  RenderTexture* render_texture;
+  mrb_self_ptr(mrb, self, RenderTexture, render_texture);
   *render_texture = LoadRenderTexture(width, height);
 
   add_reference(&render_texture->texture);
@@ -76,6 +76,14 @@ mrb_RenderTexture_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_RenderTexture_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, RenderTexture, texture);
+
+  return mrb_bool_value(IsRenderTextureValid(*texture));
+}
+
+auto
 mrb_RenderTexture_begin_drawing(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, RenderTexture, texture);
@@ -108,6 +116,11 @@ append_models_RenderTexture(mrb_state* mrb)
                     RenderTexture_class,
                     "unload",
                     mrb_RenderTexture_unload,
+                    MRB_ARGS_NONE());
+  mrb_define_method(mrb,
+                    RenderTexture_class,
+                    "valid?",
+                    mrb_RenderTexture_valid,
                     MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     RenderTexture_class,

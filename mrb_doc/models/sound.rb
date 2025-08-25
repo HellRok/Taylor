@@ -34,6 +34,20 @@ class Sound
     nil
   end
 
+  # Is the {Sound} loaded and valid?
+  #
+  # @example Basic usage
+  #   beep = Sound.new("./assets/beep.wav")
+  #   raise "Bad sound!" unless beep.valid?
+  #   beep.unload
+  #
+  # @return [Boolean]
+  def valid?
+    # mrb_Sound_valid
+    # src/mruby_integration/models/sound.cpp
+    true
+  end
+
   # Returns the frame_count for the {Sound}.
   #
   # @example Basic usage

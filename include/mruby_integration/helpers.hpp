@@ -147,7 +147,7 @@
 
 #define mrb_self_ptr(mrb, self, klass, instance)                               \
   {                                                                            \
-    instance = static_cast<struct klass*> DATA_PTR(self);                      \
+    instance = static_cast<klass*> DATA_PTR(self);                             \
     if (instance) {                                                            \
       mrb_free(mrb, instance);                                                 \
     }                                                                          \

@@ -272,6 +272,26 @@ class Test
           "(SetMusicPitch) { music: { frameCount: 14 looping: 1 ctxType: 15 } pitch: 1.500000 }"
         ]
       end
+
+      def test_valid?
+        Taylor::Raylib.mock_call(
+          "LoadMusicStream",
+          Music.mock_return(sample_rate: 12, sample_size: 13, channels: 14, frame_count: 15, looping: true, ctx_type: 16)
+        )
+        Taylor::Raylib.mock_call("IsMusicValid", "false")
+        Taylor::Raylib.mock_call("IsMusicValid", "true")
+
+        music = Music.new("./assets/test.ogg")
+        Taylor::Raylib.reset_calls
+
+        assert_false music.valid?
+        assert_true music.valid?
+
+        assert_called [
+          "(IsMusicValid) { music: { frameCount: 15 looping: 1 ctxType: 16 } }",
+          "(IsMusicValid) { music: { frameCount: 15 looping: 1 ctxType: 16 } }"
+        ]
+      end
     end
   end
 end

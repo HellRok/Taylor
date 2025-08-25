@@ -36,6 +36,20 @@ class Music
     nil
   end
 
+  # Is the {Music} loaded and valid?
+  #
+  # @example Basic usage
+  #   music = Music.new("./assets/music.ogg")
+  #   raise "Bad music!" unless music.valid?
+  #   music.unload
+  #
+  # @return [Boolean]
+  def valid?
+    # mrb_Music_valid
+    # src/mruby_integration/models/music.cpp
+    true
+  end
+
   # Sets the `looping` of the {Music} object.
   #
   # @example Basic usage

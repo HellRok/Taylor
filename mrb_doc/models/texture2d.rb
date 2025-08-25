@@ -27,6 +27,20 @@ class Texture2D
     nil
   end
 
+  # Checks if the {Texture2D} was successfully loaded onto the GPU and is valid.
+  #
+  # @example Basic usage
+  #   texture = Texture2D.new("/assets/image.png")
+  #   raise "Bad image!" unless texture.valid?
+  #   texture.unload
+  #
+  # @return [Boolean]
+  def valid?
+    # mrb_Texture_valid
+    # src/mruby_integration/models/texture.cpp
+    true
+  end
+
   # Sets the filtering for the {Texture2D}.
   #
   # @example Basic usage

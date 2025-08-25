@@ -31,11 +31,11 @@ mrb_Music_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   char* path;
 
   // Music.new("./assets/test.ogg", looping: true, volume: 1, pitch: 1)
-  mrb_int kw_num = 3;
-  mrb_int kw_required = 0;
-  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "looping"),
-                         mrb_intern_lit(mrb, "volume"),
-                         mrb_intern_lit(mrb, "pitch") };
+  const mrb_int kw_num = 3;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "looping"),
+                               mrb_intern_lit(mrb, "volume"),
+                               mrb_intern_lit(mrb, "pitch") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, "z:", &path, &kwargs);
@@ -62,12 +62,8 @@ mrb_Music_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     pitch = mrb_as_float(mrb, kw_values[2]);
   }
 
-  Music* music = static_cast<struct Music*> DATA_PTR(self);
-  if (music) {
-    mrb_free(mrb, music);
-  }
-  mrb_data_init(self, nullptr, &Music_type);
-  music = static_cast<Music*>(malloc(sizeof(Music)));
+  Music* music;
+  mrb_self_ptr(mrb, self, Music, music);
 
   *music = LoadMusicStream(path);
 
@@ -88,10 +84,7 @@ mrb_Music_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   UnloadMusicStream(*music);
 
@@ -99,12 +92,17 @@ mrb_Music_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
+mrb_Music_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Music, music);
+
+  return mrb_bool_value(IsMusicValid(*music));
+}
+
+auto
 mrb_Music_get_looping(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   return mrb_bool_value(music->looping);
 }
@@ -118,10 +116,7 @@ mrb_Music_set_looping(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_play(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   if (!IsAudioDeviceReady()) {
     raise_error(mrb,
@@ -138,10 +133,7 @@ mrb_Music_play(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_playing(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   return mrb_bool_value(IsMusicStreamPlaying(*music));
 }
@@ -149,10 +141,7 @@ mrb_Music_playing(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_stop(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   StopMusicStream(*music);
 
@@ -162,10 +151,7 @@ mrb_Music_stop(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_played(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   return mrb_float_value(mrb, GetMusicTimePlayed(*music));
 }
@@ -173,10 +159,7 @@ mrb_Music_played(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_update(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   UpdateMusicStream(*music);
 
@@ -186,10 +169,7 @@ mrb_Music_update(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_pause(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   PauseMusicStream(*music);
 
@@ -199,10 +179,7 @@ mrb_Music_pause(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_resume(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   ResumeMusicStream(*music);
 
@@ -212,10 +189,7 @@ mrb_Music_resume(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_length(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   return mrb_float_value(mrb, GetMusicTimeLength(*music));
 }
@@ -223,10 +197,7 @@ mrb_Music_length(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_set_volume(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   mrb_float volume;
   mrb_get_args(mrb, "f", &volume);
@@ -245,10 +216,7 @@ mrb_Music_set_volume(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Music_set_pitch(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Music* music;
-
-  Data_Get_Struct(mrb, self, &Music_type, music);
-  mrb_assert(music != nullptr);
+  mrb_get_self(mrb, self, Music, music);
 
   mrb_float pitch;
   mrb_get_args(mrb, "f", &pitch);
@@ -269,6 +237,8 @@ append_models_Music(mrb_state* mrb)
     mrb, Music_class, "initialize", mrb_Music_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Music_class, "unload", mrb_Music_unload, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Music_class, "valid?", mrb_Music_valid, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Music_class, "looping", mrb_Music_get_looping, MRB_ARGS_NONE());
   mrb_define_method(

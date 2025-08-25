@@ -34,6 +34,22 @@ class Test
         ]
       end
 
+      def test_valid?
+        Taylor::Raylib.mock_call("LoadImage", Image.mock_return(width: 3, height: 4, mipmaps: 5, format: 6))
+        Taylor::Raylib.mock_call("IsImageValid", "false")
+        Taylor::Raylib.mock_call("IsImageValid", "true")
+        image = Image.new("./assets/test.png")
+        Taylor::Raylib.reset_calls
+
+        assert_false image.valid?
+        assert_true image.valid?
+
+        assert_called [
+          "(IsImageValid) { image: { width: 3 height: 4 mipmaps: 5 format: 6 } }",
+          "(IsImageValid) { image: { width: 3 height: 4 mipmaps: 5 format: 6 } }"
+        ]
+      end
+
       def test_to_h
         Taylor::Raylib.mock_call("LoadImage", Image.mock_return(width: 1, height: 2, mipmaps: 3, format: 4))
 

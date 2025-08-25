@@ -44,6 +44,20 @@ class Image
     nil
   end
 
+  # Checks if the {Image} was successfully loaded and is valid.
+  #
+  # @example Basic usage
+  #   image = Image.new("/assets/image.png")
+  #   raise "Bad image!" unless image.valid?
+  #   image.unload
+  #
+  # @return [Boolean]
+  def valid?
+    # mrb_Image_valid
+    # src/mruby_integration/models/image.cpp
+    true
+  end
+
   # Exports an {Image} to a file.
   #
   # @example Basic usage

@@ -58,12 +58,8 @@ mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     raise_not_found_error(mrb, Texture2D_class, path);
   }
 
-  auto* texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
-  if (texture) {
-    mrb_free(mrb, texture);
-  }
-  mrb_data_init(self, nullptr, &Texture2D_type);
-  texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
+  Texture2D* texture;
+  mrb_self_ptr(mrb, self, Texture2D, texture);
 
   *texture = LoadTexture(path);
 
@@ -83,13 +79,19 @@ mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Texture2D_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Texture2D* texture;
-  Data_Get_Struct(mrb, self, &Texture2D_type, texture);
-  mrb_assert(texture != nullptr);
+  mrb_get_self(mrb, self, Texture2D, texture);
 
   UnloadTexture(*texture);
 
   return mrb_nil_value();
+}
+
+auto
+mrb_Texture2D_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Texture2D, texture);
+
+  return mrb_bool_value(IsTextureValid(*texture));
 }
 
 auto
@@ -107,9 +109,7 @@ mrb_Texture2D_filter_equals(mrb_state* mrb, mrb_value self) -> mrb_value
               "or Texture2D::ANISOTROPIC_16X");
   }
 
-  Texture2D* texture;
-  Data_Get_Struct(mrb, self, &Texture2D_type, texture);
-  mrb_assert(texture != nullptr);
+  mrb_get_self(mrb, self, Texture2D, texture);
 
   SetTextureFilter(*texture, filter);
 
@@ -119,9 +119,7 @@ mrb_Texture2D_filter_equals(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Texture2D_generate_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Texture2D* texture;
-  Data_Get_Struct(mrb, self, &Texture2D_type, texture);
-  mrb_assert(texture != nullptr);
+  mrb_get_self(mrb, self, Texture2D, texture);
 
   GenTextureMipmaps(texture);
 
@@ -131,17 +129,15 @@ mrb_Texture2D_generate_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
 auto
 mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  Texture2D* texture;
-  Data_Get_Struct(mrb, self, &Texture2D_type, texture);
-  mrb_assert(texture != nullptr);
+  mrb_get_self(mrb, self, Texture2D, texture);
 
   // def draw(source: Rectangle[0, 0, width, height], position: nil,
   // destination: nil, origin: Vector2[width / 2.0, height / 2.0], rotation: 0,
   // colour: Colour::WHITE)
 
-  mrb_int kw_num = 6;
-  mrb_int kw_required = 0;
-  mrb_sym kw_names[] = {
+  const mrb_int kw_num = 6;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = {
     mrb_intern_lit(mrb, "source"),      mrb_intern_lit(mrb, "position"),
     mrb_intern_lit(mrb, "destination"), mrb_intern_lit(mrb, "origin"),
     mrb_intern_lit(mrb, "rotation"),    mrb_intern_lit(mrb, "colour")
@@ -223,6 +219,8 @@ append_models_Texture2D(mrb_state* mrb)
                     MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Texture2D_class, "unload", mrb_Texture2D_unload, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Texture2D_class, "valid?", mrb_Texture2D_valid, MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     Texture2D_class,
                     "filter=",

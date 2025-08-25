@@ -30,6 +30,20 @@ class RenderTexture
     nil
   end
 
+  # Checks if the {RenderTexture} was successfully loaded onto the GPU and is valid.
+  #
+  # @example Basic usage
+  #   texture = RenderTexture2D.new(width: 640, height: 480)
+  #   raise "Bad image!" unless texture.valid?
+  #   texture.unload
+  #
+  # @return [Boolean]
+  def valid?
+    # mrb_RenderTexture_valid
+    # src/mruby_integration/models/render_texture.cpp
+    true
+  end
+
   # Start drawing to the {RenderTexture#texture}, so instead of going to the screen, they'll render to the {Texture2D}.
   #
   # @example Basic usage
