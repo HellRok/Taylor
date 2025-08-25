@@ -74,8 +74,11 @@ mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   if (!mrb_undef_p(kw_values[4])) {
     rectangle->colour = static_cast<struct Color*> DATA_PTR(kw_values[4]);
   } else {
-    auto default_colour = BLACK;
-    rectangle->colour = &default_colour;
+    rectangle->colour = static_cast<Color*>(malloc(sizeof(Color)));
+    rectangle->colour->r = 0;
+    rectangle->colour->g = 0;
+    rectangle->colour->b = 0;
+    rectangle->colour->a = 255;
   }
   add_reference(rectangle->colour);
   mrb_iv_set(mrb,
