@@ -37,7 +37,7 @@ mrb_Browser_set_main_loop(mrb_state* mrb, mrb_value self)
   main_loop_mrb = mrb;
   main_loop_self = self;
 
-  emscripten_set_main_loop(real_main_loop, 0, 1);
+  emscripten_set_main_loop(real_main_loop, 0, true);
 
   return mrb_nil_value();
 }

@@ -36,7 +36,8 @@ class WebBuilder < Builder
     @options.fetch("copy_paths", []).each { |path|
       @static_links << "--preload-file #{File.join("/", "app", "game", path)}@#{path}"
     }
-    @static_links << "-s EXPORTED_RUNTIME_METHODS=['UTF8ToString','stringToUTF8','lengthBytesUTF8']"
+    @static_links << "-s EXPORT_ALL"
+    @static_links << "-s EXPORTED_RUNTIME_METHODS=UTF8ToString,stringToUTF8,lengthBytesUTF8,HEAPF32"
   end
 
   def name

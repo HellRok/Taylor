@@ -443,6 +443,7 @@
 - Added RenderTexture#valid?
 - Added Sound#valid?
 - Added Music#valid?
+- Updated Emscripten to 4.0.13
 
 ## v0.3.14.1
 

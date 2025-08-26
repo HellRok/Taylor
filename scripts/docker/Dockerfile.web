@@ -30,5 +30,5 @@ RUN \
 
 RUN  git clone https://github.com/juj/emsdk.git /app/emsdk &&\
   cd /app/emsdk &&\
-  ./emsdk install 3.1.8 &&\
-  ./emsdk activate 3.1.8
+  ./emsdk install 4.0.13 &&\
+  ./emsdk activate 4.0.13
