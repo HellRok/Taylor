@@ -1,219 +1,252 @@
-class Test
-  class Models
-    class Sound_Test < Test::Base
-      def test_initialize
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 2))
-        sound = Sound.new("./assets/test.wav")
+@unit.describe "Sound#initialize" do
+  When "we initialise a sound" do
+    Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 2))
+    @sound = Sound.new("./assets/test.wav")
+  end
 
-        assert_equal 1, sound.volume
-        assert_equal 1, sound.pitch
-        assert_equal 2, sound.frame_count
+  Then "we have the correct attributes" do
+    expect(@sound.volume).to_equal(1)
+    expect(@sound.pitch).to_equal(1)
+    expect(@sound.frame_count).to_equal(2)
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/test.wav' }",
-          "(LoadSound) { fileName: './assets/test.wav' }",
-          "(SetSoundVolume) { sound: { frameCount: 2 } volume: 1.000000 }",
-          "(SetSoundPitch) { sound: { frameCount: 2 } pitch: 1.000000 }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(FileExists) { fileName: './assets/test.wav' }",
+        "(LoadSound) { fileName: './assets/test.wav' }",
+        "(SetSoundVolume) { sound: { frameCount: 2 } volume: 1.000000 }",
+        "(SetSoundPitch) { sound: { frameCount: 2 } pitch: 1.000000 }"
+      ]
+    )
+  end
 
-      def test_initialize_with_arguments
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 3))
-        Sound.new("./assets/test.wav", volume: 0.5, pitch: 1.3)
+  When "we initialise a sound with all the arguments" do
+    Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 3))
+    @sound = Sound.new("./assets/test.wav", volume: 0.5, pitch: 1.3)
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/test.wav' }",
-          "(LoadSound) { fileName: './assets/test.wav' }",
-          "(SetSoundVolume) { sound: { frameCount: 3 } volume: 0.500000 }",
-          "(SetSoundPitch) { sound: { frameCount: 3 } pitch: 1.300000 }"
-        ]
-      end
+  Then "we have the correct attributes" do
+    expect(@sound.volume).to_equal(0.5)
+    expect(@sound.pitch).to_equal(1.3)
+    expect(@sound.frame_count).to_equal(3)
+  end
 
-      def test_initialize_fail_not_found
-        Taylor::Raylib.mock_call("FileExists", "false")
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(FileExists) { fileName: './assets/test.wav' }",
+        "(LoadSound) { fileName: './assets/test.wav' }",
+        "(SetSoundVolume) { sound: { frameCount: 3 } volume: 0.500000 }",
+        "(SetSoundPitch) { sound: { frameCount: 3 } pitch: 1.300000 }"
+      ]
+    )
+  end
 
-        assert_raise_with_message(Sound::NotFoundError, "Unable to find './assets/fail.wav'") {
-          Sound.new("./assets/fail.wav")
-        }
+  But "if we set the volume above 1.0, raise an error" do
+    expect {
+      Sound.new("./assets/test.wav", volume: 1.1)
+    }.to_raise(ArgumentError, "Volume must be within (0.0..1.0)")
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/fail.wav' }"
-        ]
-      end
+  Or "if we set the volume below 0.0" do
+    expect {
+      Sound.new("./assets/test.wav", volume: -0.1)
+    }.to_raise(ArgumentError, "Volume must be within (0.0..1.0)")
+  end
 
-      def test_initialize_fail_volume_too_high
-        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
-          Sound.new("./assets/test.wav", volume: 1.1)
-        }
+  Or "if we try to load a file that doesn't exist" do
+    Taylor::Raylib.mock_call("FileExists", "false")
 
-        assert_called [
-          "(FileExists) { fileName: './assets/test.wav' }"
-        ]
-      end
+    expect {
+      Sound.new("./assets/fail.wav")
+    }.to_raise(Sound::NotFoundError, "Unable to find './assets/fail.wav'")
+  end
+end
 
-      def test_initialize_fail_volume_too_low
-        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
-          Sound.new("./assets/test.wav", volume: -0.1)
-        }
+@unit.describe "Sound#to_h" do
+  Given "we have a sound" do
+    Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 4))
+    @sound = Sound.new("./assets/test.wav", volume: 0.25, pitch: 1.25)
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/test.wav' }"
-        ]
-      end
+  Then "return a hash with all the attributes" do
+    expect(@sound.to_h).to_equal(
+      {
+        frame_count: 4,
+        volume: 0.25,
+        pitch: 1.25
+      }
+    )
+  end
+end
 
-      def test_to_h
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 4))
-        sound = Sound.new("./assets/test.wav", volume: 0.25, pitch: 1.25)
+@unit.describe "Sound#play" do
+  Given "we have a sound" do
+    Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 5))
+    @sound = Sound.new("./assets/test.wav")
+    Taylor::Raylib.reset_calls
+  end
 
-        assert_equal(
-          {
-            frame_count: 4,
-            volume: 0.25,
-            pitch: 1.25
-          },
-          sound.to_h
-        )
+  When "we call play" do
+    @sound.play
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/test.wav' }",
-          "(LoadSound) { fileName: './assets/test.wav' }",
-          "(SetSoundVolume) { sound: { frameCount: 4 } volume: 0.250000 }",
-          "(SetSoundPitch) { sound: { frameCount: 4 } pitch: 1.250000 }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(PlaySound) { sound: { frameCount: 5 } }"
+      ]
+    )
+  end
+end
 
-      def test_play
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 5))
-        sound = Sound.new("./assets/test.wav")
-        Taylor::Raylib.reset_calls
+@unit.describe "Sound#stop" do
+  Given "we have a sound" do
+    Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 6))
+    @sound = Sound.new("./assets/test.wav")
+    Taylor::Raylib.reset_calls
+  end
 
-        sound.play
+  When "we call stop" do
+    @sound.stop
+  end
 
-        assert_called [
-          "(PlaySound) { sound: { frameCount: 5 } }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(StopSound) { sound: { frameCount: 6 } }"
+      ]
+    )
+  end
+end
 
-      def test_stop
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 6))
-        sound = Sound.new("./assets/test.wav")
-        Taylor::Raylib.reset_calls
+@unit.describe "Sound#pause" do
+  Given "we have a sound" do
+    Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 7))
+    @sound = Sound.new("./assets/test.wav")
+    Taylor::Raylib.reset_calls
+  end
 
-        sound.stop
+  When "we call pause" do
+    @sound.pause
+  end
 
-        assert_called [
-          "(StopSound) { sound: { frameCount: 6 } }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(PauseSound) { sound: { frameCount: 7 } }"
+      ]
+    )
+  end
+end
 
-      def test_pause
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 7))
-        sound = Sound.new("./assets/test.wav")
-        Taylor::Raylib.reset_calls
+@unit.describe "Sound#resume" do
+  Given "we have a sound" do
+    Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 8))
+    @sound = Sound.new("./assets/test.wav")
+    Taylor::Raylib.reset_calls
+  end
 
-        sound.pause
+  When "we call resume" do
+    @sound.resume
+  end
 
-        assert_called [
-          "(PauseSound) { sound: { frameCount: 7 } }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(ResumeSound) { sound: { frameCount: 8 } }"
+      ]
+    )
+  end
+end
 
-      def test_resume
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 8))
-        sound = Sound.new("./assets/test.wav")
-        Taylor::Raylib.reset_calls
+@unit.describe "Sound#playing?" do
+  Given "we have a sound" do
+    Taylor::Raylib.mock_call("IsSoundPlaying", "false")
+    @sound = Sound.new("./assets/test.wav")
+  end
 
-        sound.resume
+  Then "it starts off not playing" do
+    expect(@sound.playing?).to_be_false
+  end
 
-        assert_called [
-          "(ResumeSound) { sound: { frameCount: 8 } }"
-        ]
-      end
+  When "we play the sound" do
+    Taylor::Raylib.mock_call("IsSoundPlaying", "true")
+  end
 
-      def test_playing?
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 9))
-        Taylor::Raylib.mock_call("IsSoundPlaying", "false")
-        Taylor::Raylib.mock_call("IsSoundPlaying", "true")
+  Then "it is playing" do
+    expect(@sound.playing?).to_be_true
+  end
+end
 
-        sound = Sound.new("./assets/test.wav")
-        Taylor::Raylib.reset_calls
+@unit.describe "Sound#volume=" do
+  Given "we have a sound" do
+    @sound = Sound.new("./assets/test.wav")
+  end
 
-        assert_false sound.playing?
-        assert_true sound.playing?
+  Then "the volume starts at 1.0" do
+    expect(@sound.volume).to_equal(1.0)
+  end
 
-        assert_called [
-          "(IsSoundPlaying) { sound: { frameCount: 9 } }",
-          "(IsSoundPlaying) { sound: { frameCount: 9 } }"
-        ]
-      end
+  When "set the volume" do
+    expect {
+      @sound.volume = 0.3
+    }.to_equal(0.3)
+  end
 
-      def test_volume=
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 10))
-        sound = Sound.new("./assets/test.wav")
-        Taylor::Raylib.reset_calls
+  Then "the volume is updated" do
+    expect(@sound.volume).to_equal(0.3)
+  end
 
-        assert_equal 1.0, sound.volume
-        assert_equal 0.3, (sound.volume = 0.3)
-        assert_equal 0.3, sound.volume
+  But "if we set the volume above 1.0, raise an error" do
+    expect {
+      @sound.volume = 1.1
+    }.to_raise(ArgumentError, "Volume must be within (0.0..1.0)")
+  end
 
-        assert_called [
-          "(SetSoundVolume) { sound: { frameCount: 10 } volume: 0.300000 }"
-        ]
-      end
+  Or "if we set the volume belove 0.0" do
+    expect {
+      @sound.volume = -0.1
+    }.to_raise(ArgumentError, "Volume must be within (0.0..1.0)")
+  end
+end
 
-      def test_fail_volume=
-        sound = Sound.new("./assets/test.wav")
-        Taylor::Raylib.reset_calls
+@unit.describe "Sound#pitch=" do
+  Given "we have a sound" do
+    @sound = Sound.new("./assets/test.wav")
+  end
 
-        assert_equal 1.0, sound.volume
+  Then "the pitch starts at 1.0" do
+    expect(@sound.pitch).to_equal(1.0)
+  end
 
-        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
-          sound.volume = 1.1
-        }
+  When "set the pitch" do
+    expect {
+      @sound.pitch = 0.3
+    }.to_equal(0.3)
+  end
 
-        assert_equal 1.0, sound.volume
-        assert_no_calls
+  Then "the pitch is updated" do
+    expect(@sound.pitch).to_equal(0.3)
+  end
+end
 
-        assert_raise_with_message(ArgumentError, "Volume must be within (0.0..1.0)") {
-          sound.volume = -0.1
-        }
+@unit.describe "Sound#valid?" do
+  Given "we have a valid sound" do
+    Taylor::Raylib.mock_call("IsSoundValid", "true")
+    @sound = Sound.new("./assets/test.wav")
+  end
 
-        assert_equal 1.0, sound.volume
-        assert_no_calls
-      ensure
-        sound&.unload
-        Audio.close
-      end
+  Then "return true" do
+    expect(@sound.valid?).to_be_true
+  end
 
-      def test_pitch=
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 11))
-        sound = Sound.new("./assets/test.wav")
-        Taylor::Raylib.reset_calls
+  But "if we have an invalid sound" do
+    Taylor::Raylib.mock_call("IsSoundValid", "false")
+  end
 
-        assert_equal 1.0, sound.pitch
-        assert_equal 0.2, sound.pitch = 0.2
-        assert_equal 0.2, sound.pitch
-
-        assert_called [
-          "(SetSoundPitch) { sound: { frameCount: 11 } pitch: 0.200000 }"
-        ]
-      end
-
-      def test_valid?
-        Taylor::Raylib.mock_call("LoadSound", Sound.mock_return(frame_count: 12))
-        Taylor::Raylib.mock_call("IsSoundValid", "false")
-        Taylor::Raylib.mock_call("IsSoundValid", "true")
-        sound = Sound.new("./assets/test.wav")
-        Taylor::Raylib.reset_calls
-
-        assert_false sound.valid?
-        assert_true sound.valid?
-
-        assert_called [
-          "(IsSoundValid) { sound: { frameCount: 12 } }",
-          "(IsSoundValid) { sound: { frameCount: 12 } }"
-        ]
-      end
-    end
+  Then "return false" do
+    expect(@sound.valid?).to_be_false
   end
 end

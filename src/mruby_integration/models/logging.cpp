@@ -29,7 +29,7 @@ mrb_Logging_set_level(mrb_state* mrb, mrb_value) -> mrb_value
 auto
 mrb_Logging_log(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  // def self.log(level: Logging::TRACE, message:)
+  // def self.log(level: Logging::INFO, message:)
   const mrb_int kw_num = 2;
   const mrb_int kw_required = 1;
   const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "message"),
@@ -48,7 +48,7 @@ mrb_Logging_log(mrb_state* mrb, mrb_value) -> mrb_value
     message = mrb_sym_name(mrb, sym);
   }
 
-  int level = 1;
+  int level = 3;
   if (!mrb_undef_p(kw_values[1])) {
     level = mrb_as_int(mrb, kw_values[1]);
   }
@@ -56,11 +56,6 @@ mrb_Logging_log(mrb_state* mrb, mrb_value) -> mrb_value
   if (level < 0 || level > 7) {
     mrb_raise(mrb, E_ARGUMENT_ERROR, "Logging level must be within (0..7)");
   }
-
-  mrb_mod_cv_set(mrb,
-                 Logging_class,
-                 mrb_intern_cstr(mrb, "@@level"),
-                 mrb_int_value(mrb, level));
 
   TraceLog(level, message);
   return mrb_nil_value();

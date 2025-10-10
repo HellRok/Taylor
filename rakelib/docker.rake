@@ -1,4 +1,6 @@
 def build_docker(file, path: ".", tags: [], export: false, pull: true)
+  pull = false if ENV["NO_DOCKER_PULL"] == "true"
+
   tag_flags = tags.map { |tag| "--tag #{tag}" }.join(" ")
 
   if export

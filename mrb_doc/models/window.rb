@@ -719,7 +719,7 @@ class Window
   def self.scale
     # mrb_Window_scale
     # src/mruby_integration/models/window.cpp
-    Vector2.new(1, 1)
+    Vector2.new(x: 1, y: 1)
   end
 
   # Clear the screen completely with either the {Colour} passed in or with

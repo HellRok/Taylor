@@ -114,7 +114,7 @@ class Texture2D
   #
   #
   # @param source [Rectangle] If not defined it defaults to the full image
-  # @param position [Vector2] If not defined it defaults to source x and y
+  # @param position [Vector2] If not defined it defaults to Vector2[0, 0]
   # @param destination [Rectangle] If not defined it defaults to position x and y with source width and height
   # @param origin [Vector2] Defaults to the middle of the `destination`
   # @param rotation [Integer] In degrees

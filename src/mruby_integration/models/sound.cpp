@@ -2,7 +2,6 @@
 #include "mruby/class.h"
 #include "mruby/data.h"
 #include "raylib.h"
-#include <cstdlib>
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"

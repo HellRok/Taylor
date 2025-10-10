@@ -1,32 +1,40 @@
-class Test
-  class Models
-    class DroppedFiles_Test < Test::Base
-      def test_any?
-        Taylor::Raylib.mock_call("IsFileDropped", "true")
-        Taylor::Raylib.mock_call("IsFileDropped", "false")
+@unit.describe "DroppedFiles.any?" do
+  Given "files have been dropped" do
+    Taylor::Raylib.mock_call("IsFileDropped", "true")
+  end
 
-        assert_true DroppedFiles.any?
-        assert_false DroppedFiles.any?
+  Then "return true" do
+    expect(DroppedFiles.any?).to_be_true
+  end
 
-        assert_called [
-          "(IsFileDropped) { }",
-          "(IsFileDropped) { }"
-        ]
-      end
+  Given "no files have been dropped" do
+    Taylor::Raylib.mock_call("IsFileDropped", "false")
+  end
 
-      def test_all
-        Taylor::Raylib.mock_call("LoadDroppedFiles", "file1 path/file2 more/path/file3")
+  Then "return false" do
+    expect(DroppedFiles.any?).to_be_false
+  end
+end
 
-        assert_equal ["file1", "path/file2", "more/path/file3"], DroppedFiles.all
-        assert_equal [], DroppedFiles.all
+@unit.describe "DroppedFiles.all" do
+  Given "files have been dropped" do
+    Taylor::Raylib.mock_call("LoadDroppedFiles", "file1 path/file2 more/path/file3")
+  end
 
-        assert_called [
-          "(LoadDroppedFiles) { }",
-          "(UnloadDroppedFiles) { files: { capacity: 8 count: 3 } }",
-          "(LoadDroppedFiles) { }",
-          "(UnloadDroppedFiles) { files: { capacity: 8 count: 0 } }"
-        ]
-      end
-    end
+  Then "return true" do
+    expect(DroppedFiles.all).to_equal(
+      [
+        "file1",
+        "path/file2",
+        "more/path/file3"
+      ]
+    )
+  end
+
+  Given "no files have been dropped" do
+  end
+
+  Then "return false" do
+    expect(DroppedFiles.all).to_be_empty
   end
 end

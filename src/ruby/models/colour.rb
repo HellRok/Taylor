@@ -93,6 +93,23 @@ class Colour
     "#<Colour:0x#{object_id.to_s(16)} red:#{red} blue:#{blue} green:#{green} alpha:#{alpha}>"
   end
 
+  # A method used to generate the mock data for Raylib.
+  #
+  # @example Basic usage
+  #   Taylor::Raylib.mock_call(
+  #     "Fade",
+  #     Colour.mock_return(red: 1, blue: 2, green: 3, alpha: 4)
+  #   )
+  #
+  # @param red [Integer] A value between 0 and 255.
+  # @param blue [Integer] A value between 0 and 255.
+  # @param green [Integer] A value between 0 and 255.
+  # @param alpha [Integer] A value between 0 and 255.
+  # @return [String]
+  def self.mock_return(red: 0, green: 0, blue: 0, alpha: 255)
+    [red, green, blue, alpha].map(&:to_s).join(" ")
+  end
+
   # @!group Colours
 
   # A nice lightgray colour.

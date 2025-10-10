@@ -26,7 +26,7 @@ class Vector2
   # @param y [Float]
   # @return [Vector2]
   def self.[](x, y)
-    new(x, y)
+    new(x: x, y: y)
   end
 
   # The equality operator is used for checking if two {Vector2} objects share
@@ -46,7 +46,8 @@ class Vector2
       y == other.y
   end
 
-  # The addition operator is used for adding up two {Vector2} objects.
+  # The addition operator is used for adding up two {Vector2} objects or a
+  # {Vector2} and a Numeric.
   #
   # @example Basic usage
   #   vector_1 = Vector2[1, 2]
@@ -57,16 +58,34 @@ class Vector2
   #   puts vector_both.x # => 4
   #   puts vector_both.y # => 6
   #
-  # @param other [Vector2]
+  #   bigger_vector = vector_1 + 5
+  #
+  #   puts bigger_vector.x # => 6
+  #   puts bigger_vector.y # => 7
+  #
+  # @param other [Vector2,Numeric]
   # @return [Vector2]
   def +(other)
-    Vector2.new(
-      x + other.x,
-      y + other.y
-    )
+    case other
+    when Vector2
+      Vector2.new(
+        x: x + other.x,
+        y: y + other.y
+      )
+
+    when Numeric
+      Vector2.new(
+        x: x + other,
+        y: y + other
+      )
+
+    else
+      raise ArgumentError, "can only add Numeric and Vector2"
+    end
   end
 
-  # The subtraction operator is used for subtracting two {Vector2} objects.
+  # The addition operator is used for subtracting two {Vector2} objects or a
+  # {Vector2} and a Numeric.
   #
   # @example Basic usage
   #   vector_1 = Vector2[3, 4]
@@ -77,13 +96,30 @@ class Vector2
   #   puts vector_both.x # => 1
   #   puts vector_both.y # => 3
   #
-  # @param other [Vector2]
+  #   smaller_vector = vector_1 - 1
+  #
+  #   puts smaller_vector.x # => 2
+  #   puts smaller_vector.y # => 3
+  #
+  # @param other [Vector2,Numeric]
   # @return [Vector2]
   def -(other)
-    Vector2.new(
-      x - other.x,
-      y - other.y
-    )
+    case other
+    when Vector2
+      Vector2.new(
+        x: x - other.x,
+        y: y - other.y
+      )
+
+    when Numeric
+      Vector2.new(
+        x: x - other,
+        y: y - other
+      )
+
+    else
+      raise ArgumentError, "can only subtract Numeric and Vector2"
+    end
   end
 
   alias_method :difference, :-
@@ -101,8 +137,8 @@ class Vector2
   # @return [Vector2]
   def *(other)
     Vector2.new(
-      x * other,
-      y * other
+      x: x * other,
+      y: y * other
     )
   end
 
@@ -121,8 +157,8 @@ class Vector2
   # @return [Vector2]
   def /(other)
     Vector2.new(
-      x / other,
-      y / other
+      x: x / other,
+      y: y / other
     )
   end
 
@@ -188,5 +224,5 @@ class Vector2
   end
 
   # A Vector2 setup at 0, 0.
-  ZERO = Vector2.new(0, 0)
+  ZERO = Vector2.new(x: 0, y: 0)
 end

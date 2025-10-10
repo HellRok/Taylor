@@ -25,10 +25,23 @@ mrb_Vector2_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   Vector2* vector;
   mrb_self_ptr(mrb, self, Vector2, vector);
 
-  mrb_float x, y;
-  mrb_get_args(mrb, "ff", &x, &y);
-  vector->x = x;
-  vector->y = y;
+  const mrb_int kw_num = 2;
+  const mrb_int kw_required = 2;
+  const mrb_sym kw_names[] = {
+    mrb_intern_lit(mrb, "x"),
+    mrb_intern_lit(mrb, "y"),
+  };
+  mrb_value kw_values[kw_num];
+  mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
+  mrb_get_args(mrb, ":", &kwargs);
+
+  if (!mrb_undef_p(kw_values[0])) {
+    vector->x = mrb_as_float(mrb, kw_values[0]);
+  }
+
+  if (!mrb_undef_p(kw_values[1])) {
+    vector->y = mrb_as_float(mrb, kw_values[1]);
+  }
 
   mrb_data_init(self, vector, &Vector2_type);
   return self;

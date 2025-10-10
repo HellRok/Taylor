@@ -2,7 +2,6 @@
 #include "mruby/class.h"
 #include "mruby/data.h"
 #include "raylib.h"
-#include <cstdlib>
 
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
@@ -72,6 +71,11 @@ mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
                   texture->mipmaps,
                   texture->format);
 
+  mrb_iv_set(mrb,
+             self,
+             mrb_intern_cstr(mrb, "@filter"),
+             mrb_int_value(mrb, TEXTURE_FILTER_POINT));
+
   mrb_data_init(self, texture, &Texture2D_type);
   return self;
 }
@@ -95,7 +99,7 @@ mrb_Texture2D_valid(mrb_state* mrb, mrb_value self) -> mrb_value
 }
 
 auto
-mrb_Texture2D_filter_equals(mrb_state* mrb, mrb_value self) -> mrb_value
+mrb_Texture2D_set_filter(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int filter;
   mrb_get_args(mrb, "i", &filter);
@@ -112,6 +116,8 @@ mrb_Texture2D_filter_equals(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_get_self(mrb, self, Texture2D, texture);
 
   SetTextureFilter(*texture, filter);
+  mrb_iv_set(
+    mrb, self, mrb_intern_cstr(mrb, "@filter"), mrb_int_value(mrb, filter));
 
   return mrb_nil_value();
 }
@@ -164,7 +170,7 @@ mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 
   Vector2* position;
   if (mrb_undef_p(kw_values[1])) {
-    auto default_position = Vector2{ source->x, source->y };
+    auto default_position = Vector2{ 0, 0 };
     position = &default_position;
   } else {
     position = static_cast<struct Vector2*> DATA_PTR(kw_values[1]);
@@ -221,11 +227,8 @@ append_models_Texture2D(mrb_state* mrb)
     mrb, Texture2D_class, "unload", mrb_Texture2D_unload, MRB_ARGS_NONE());
   mrb_define_method(
     mrb, Texture2D_class, "valid?", mrb_Texture2D_valid, MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    Texture2D_class,
-                    "filter=",
-                    mrb_Texture2D_filter_equals,
-                    MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Texture2D_class, "filter=", mrb_Texture2D_set_filter, MRB_ARGS_REQ(1));
   mrb_define_method(mrb,
                     Texture2D_class,
                     "generate_mipmaps",

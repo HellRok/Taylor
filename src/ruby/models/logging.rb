@@ -1,6 +1,6 @@
 # Used for handling logging
 module Logging
-  @@level = 0
+  @@level = 3
 
   # @return [Integer]
   def self.level = @@level

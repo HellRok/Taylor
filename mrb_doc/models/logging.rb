@@ -33,7 +33,7 @@ module Logging
   # @param message [String]
   # @return [nil]
   # @raise [ArgumentError] Raised when passed an invalid level.
-  def self.log(message:, level: Logging::TRACE)
+  def self.log(message:, level: Logging::INFO)
     # mrb_Logging_log
     # src/mruby_integration/models/logging.cpp
     nil

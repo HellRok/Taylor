@@ -2,158 +2,224 @@ class Object
   include ReferenceCounter
 end
 
-# standard:disable Lint/UselessAssignment
-class Test
-  class ReferenceCounter_Test < Test::Base
-    def test_core_count
-      GC.start
+@unit.describe "ReferenceCounter#count" do
+  Given "the garbage collector has just run" do
+    GC.start
+  end
 
-      string = "hello"
+  When "we create a string" do
+    @string = "hello"
+  end
 
-      assert_equal 0, string.reference_count
-      assert_equal 0, ReferenceCounter.tracked_objects_count
-    end
+  Then "no counts are required" do
+    expect(@string.reference_count).to_equal(0)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+    @string = nil
+  end
 
-    def test_reference_count_for_many_assignments
-      GC.start
+  When "we assign a circle with a colour" do
+    @colour = Colour[1, 1, 1, 1]
+    @circle = Circle.new(x: 1, y: 1, radius: 1, colour: @colour)
+  end
 
-      colour = Colour[1, 1, 1, 1]
-      circle = Circle.new(x: 1, y: 1, radius: 1, colour: colour)
+  Then "we track the colour" do
+    expect(@circle.reference_count).to_equal(0)
+    expect(@colour.reference_count).to_equal(1)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(1)
+  end
 
-      assert_equal 0, circle.reference_count
-      assert_equal 1, colour.reference_count
-      assert_equal 1, ReferenceCounter.tracked_objects_count
+  When "we remove the circle" do
+    @circle = nil
+    GC.start
+  end
 
-      circle = nil
-      GC.start
+  Then "there are no more references" do
+    expect(@colour.reference_count).to_equal(0)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+  end
 
-      assert_equal 0, colour.reference_count
-      assert_equal 0, ReferenceCounter.tracked_objects_count
+  When "we assign the colour to many circles" do
+    @circles = 10.times.map {
+      Circle.new(x: 1, y: 1, radius: 1, colour: @colour)
+    }
+  end
 
-      circles = 10.times.map { Circle.new(x: 1, y: 1, radius: 1, colour: colour) }
+  Then "the colour references are tracked" do
+    expect(@colour.reference_count).to_equal(10)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(1)
+  end
 
-      assert_equal 10, colour.reference_count
-      assert_equal 1, ReferenceCounter.tracked_objects_count
+  When "we remove all the circles" do
+    @circles = nil
+    GC.start
+  end
 
-      circles = nil
-      GC.start
+  Then "there are no more references" do
+    expect(@colour.reference_count).to_equal(0)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+  end
 
-      assert_equal 0, colour.reference_count
-      assert_equal 0, ReferenceCounter.tracked_objects_count
-    end
-
-    def test_Circle_reference_count
-      GC.start
-
-      circle = Circle.new(
-        x: 1, y: 1, radius: 1, colour: Colour[1, 1, 1, 1],
-        outline: Colour[1, 1, 1, 1], thickness: 1
-      )
-
-      assert_equal 0, circle.reference_count
-      assert_equal 1, circle.colour.reference_count
-      assert_equal 1, circle.outline.reference_count
-      assert_equal 2, ReferenceCounter.tracked_objects_count
-
-      circle = nil
-      GC.start
-
-      assert_equal 0, ReferenceCounter.tracked_objects_count
-    end
-
-    def test_Rectangle_reference_count
-      GC.start
-
-      rectangle = Rectangle.new(
-        x: 2, y: 3, width: 4, height: 5, colour: Colour[6, 7, 8, 9],
-        outline: Colour[10, 11, 12, 13], thickness: 14,
-        roundness: 0.5, segments: 15
-      )
-
-      assert_equal 0, rectangle.reference_count
-      assert_equal 1, rectangle.colour.reference_count
-      assert_equal 1, rectangle.outline.reference_count
-      assert_equal 2, ReferenceCounter.tracked_objects_count
-
-      rectangle = nil
-      GC.start
-
-      assert_equal 0, ReferenceCounter.tracked_objects_count
-    end
-
-    def test_Font_reference_count
-      GC.start
-
-      font = Font.new("./assets/tiny.ttf")
-
-      assert_equal 0, font.reference_count
-      assert_equal 1, ReferenceCounter.tracked_objects_count
-
-      font = nil
-      GC.start
-
-      assert_equal 0, ReferenceCounter.tracked_objects_count
-    end
-
-    def test_RenderTexture_reference_count
-      GC.start
-
-      render_texture = RenderTexture.new(width: 100, height: 100)
-
-      assert_equal 0, render_texture.reference_count
-      assert_equal 1, ReferenceCounter.tracked_objects_count
-
-      render_texture = nil
-      GC.start
-
-      assert_equal 0, ReferenceCounter.tracked_objects_count
-    end
-
-    def test_Line_reference_count
-      GC.start
-
-      line = Line.new(start: Vector2[1, 1], end: Vector2[1, 1], colour: Colour[1, 1, 1, 1])
-
-      assert_equal 0, line.reference_count
-      assert_equal 1, line.start.reference_count
-      assert_equal 1, line.end.reference_count
-      assert_equal 1, line.colour.reference_count
-      assert_equal 3, ReferenceCounter.tracked_objects_count
-
-      line = nil
-      GC.start
-
-      assert_equal 0, ReferenceCounter.tracked_objects_count
-    end
-
-    def test_Camera2D_reference_count
-      GC.start
-
-      camera = Camera2D.new(
-        target: Vector2.new(1, 1),
-        offset: Vector2.new(1, 1),
-        rotation: 1,
-        zoom: 1
-      )
-
-      assert_equal 1, camera.offset.reference_count
-      assert_equal 1, camera.target.reference_count
-      assert_equal 2, ReferenceCounter.tracked_objects_count
-
-      camera = nil
-      GC.start
-
-      assert_equal 0, ReferenceCounter.tracked_objects_count
-    end
-
-    def test_Window_reference_count
-      GC.start
-
-      Window.minimum_resolution = Vector2[1, 1]
-
-      assert_equal 1, Window.minimum_resolution.reference_count
-      assert_equal 1, ReferenceCounter.tracked_objects_count
-    end
+  Then "clean up" do
+    @colour = nil
   end
 end
-# standard:enable Lint/UselessAssignment
+
+@unit.describe "ReferenceCounter Circle" do
+  Given "we have a circle" do
+    @circle = Circle.new(
+      x: 1, y: 1, radius: 1, colour: Colour[1, 1, 1, 1],
+      outline: Colour[1, 1, 1, 1], thickness: 1
+    )
+  end
+
+  Then "we track the references" do
+    expect(@circle.reference_count).to_equal(0)
+    expect(@circle.colour.reference_count).to_equal(1)
+    expect(@circle.outline.reference_count).to_equal(1)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(2)
+  end
+
+  When "we clean up the circle" do
+    @circle = nil
+    GC.start
+  end
+
+  Then "there are no more tracked objects" do
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+  end
+end
+
+@unit.describe "ReferenceCounter Rectangle" do
+  Given "we have a rectangle" do
+    @rectangle = Rectangle.new(
+      x: 2, y: 3, width: 4, height: 5, colour: Colour[6, 7, 8, 9],
+      outline: Colour[10, 11, 12, 13], thickness: 14,
+      roundness: 0.5, segments: 15
+    )
+  end
+
+  Then "we track the references" do
+    expect(@rectangle.reference_count).to_equal(0)
+    expect(@rectangle.colour.reference_count).to_equal(1)
+    expect(@rectangle.outline.reference_count).to_equal(1)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(2)
+  end
+
+  When "we clean up the rectangle" do
+    @rectangle = nil
+    GC.start
+  end
+
+  Then "there are no more tracked objects" do
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+  end
+end
+
+@unit.describe "ReferenceCounter Font" do
+  Given "we have a font" do
+    @font = Font.new("./assets/tiny.ttf")
+  end
+
+  Then "we track the references" do
+    expect(@font.reference_count).to_equal(0)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(1)
+  end
+
+  When "we clean up the font" do
+    @font = nil
+    GC.start
+  end
+
+  Then "there are no more tracked objects" do
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+  end
+end
+
+@unit.describe "ReferenceCounter RenderTexture" do
+  Given "we have a render_texture" do
+    @render_texture = RenderTexture.new(width: 100, height: 100)
+  end
+
+  Then "we track the references" do
+    expect(@render_texture.reference_count).to_equal(0)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(1)
+  end
+
+  When "we clean up the render_texture" do
+    @render_texture = nil
+    GC.start
+  end
+
+  Then "there are no more tracked objects" do
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+  end
+end
+
+@unit.describe "ReferenceCounter Line" do
+  Given "we have a line" do
+    @line = Line.new(start: Vector2[1, 1], end: Vector2[1, 1], colour: Colour[1, 1, 1, 1])
+  end
+
+  Then "we track the references" do
+    expect(@line.reference_count).to_equal(0)
+    expect(@line.start.reference_count).to_equal(1)
+    expect(@line.end.reference_count).to_equal(1)
+    expect(@line.colour.reference_count).to_equal(1)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(3)
+  end
+
+  When "we clean up the line" do
+    @line = nil
+    GC.start
+  end
+
+  Then "there are no more tracked objects" do
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+  end
+end
+
+@unit.describe "ReferenceCounter Camera2D" do
+  Given "we have a camera" do
+    @camera = Camera2D.new(
+      target: Vector2.new(x: 1, y: 1),
+      offset: Vector2.new(x: 1, y: 1),
+      rotation: 1,
+      zoom: 1
+    )
+  end
+
+  Then "we track the references" do
+    expect(@camera.offset.reference_count).to_equal(1)
+    expect(@camera.target.reference_count).to_equal(1)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(2)
+  end
+
+  When "we clean up the camera" do
+    @camera = nil
+    GC.start
+  end
+
+  Then "there are no more tracked objects" do
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+  end
+end
+
+@unit.describe "ReferenceCounter Window" do
+  Given "we have a window" do
+    Window.minimum_resolution = Vector2[1, 1]
+  end
+
+  Then "we track the references" do
+    expect(Window.minimum_resolution.reference_count).to_equal(1)
+    expect(ReferenceCounter.tracked_objects_count).to_equal(1)
+  end
+
+  When "we clean up" do
+    Window.close
+    GC.start
+  end
+
+  Then "there are no more tracked objects" do
+    expect(ReferenceCounter.tracked_objects_count).to_equal(0)
+  end
+end

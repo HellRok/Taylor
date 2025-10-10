@@ -7,7 +7,6 @@
 #include "mruby/irep.h"
 
 #include "argv.hpp"
-#include "mruby_integration/core.hpp"
 #include "mruby_integration/models.hpp"
 #include "mruby_integration/struct_types.hpp"
 #include "taylor.hpp"
@@ -30,7 +29,6 @@ main(int argc, char** argv) -> int
     mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
   populate_argv(mrb, argc, argv);
 
-  append_core(mrb);
   append_models(mrb);
   append_module_ReferenceCounter(mrb);
 

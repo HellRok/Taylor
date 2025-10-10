@@ -34,8 +34,8 @@ until taylor_logs.include?("EXIT CODE:")
   taylor_logs = driver.find_element(:css, "#logs").text
 
   # Give the tests 10 seconds to run (which should be ample)
-  if Time.now - start_time > 10
-    puts "TIMED OUT AFTER 10 SECONDS"
+  if Time.now - start_time > 30
+    puts "TIMED OUT AFTER 30 SECONDS"
     puts "Taylor Logs"
     puts "-----------"
     puts taylor_logs

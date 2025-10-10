@@ -1,7 +1,7 @@
 # The Texture2D class is most often used for drawing sprites.
 class Texture2D
   # @return [Integer]
-  attr_reader :id, :width, :height, :mipmaps, :format
+  attr_reader :id, :width, :height, :mipmaps, :format, :filter
 
   # Return the object represented by a Hash.
   # @return [Hash]

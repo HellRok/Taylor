@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 IGNORED_FILES = [
-  "./src/mruby_integration/buildkite_analytics.cpp",
   "./src/mruby_integration/models/local_storage.cpp",
   "./src/taylor/raylib.cpp"
 ]

@@ -1,104 +1,106 @@
-class Test
-  class Input
-    class Gesture_Test < Test::Base
-      def test_enabled=
-        Gesture.enabled = Gesture::TAP | Gesture::HOLD
+@unit.describe "Gesture.enabled=" do
+  When "we set the gestures" do
+    Gesture.enabled = Gesture::TAP | Gesture::HOLD
+  end
 
-        assert_called [
-          "(SetGesturesEnabled) { flags: 5 }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(SetGesturesEnabled) { flags: 5 }"
+      ]
+    )
+  end
+end
 
-      def test_detected
-        Taylor::Raylib.mock_call("GetGestureDetected", Gesture::SWIPE_RIGHT.to_s)
-        Taylor::Raylib.mock_call("GetGestureDetected", Gesture::SWIPE_LEFT.to_s)
+@unit.describe "Gesture.detected" do
+  Given "a player has done gestures" do
+    Taylor::Raylib.mock_call("GetGestureDetected", Gesture::SWIPE_RIGHT.to_s)
+    Taylor::Raylib.mock_call("GetGestureDetected", Gesture::SWIPE_LEFT.to_s)
+  end
 
-        assert_equal Gesture::SWIPE_RIGHT, Gesture.detected
-        assert_equal Gesture::SWIPE_LEFT, Gesture.detected
+  Then "we get the gestures" do
+    expect(Gesture.detected).to_equal(Gesture::SWIPE_RIGHT)
+    expect(Gesture.detected).to_equal(Gesture::SWIPE_LEFT)
+  end
+end
 
-        assert_called [
-          "(GetGestureDetected) { }",
-          "(GetGestureDetected) { }"
-        ]
-      end
+@unit.describe "Gesture.detected?" do
+  Given "a player has only tapped" do
+    Taylor::Raylib.mock_call("IsGestureDetected", "true")
+    Taylor::Raylib.mock_call("IsGestureDetected", "false")
+  end
 
-      def test_detected?
-        Taylor::Raylib.mock_call("IsGestureDetected", "true")
-        Taylor::Raylib.mock_call("IsGestureDetected", "false")
+  Then "we detect the gestures" do
+    expect(Gesture.detected?(Gesture::TAP)).to_be_true
+    expect(Gesture.detected?(Gesture::PINCH_IN)).to_be_false
+  end
 
-        assert_true Gesture.detected? Gesture::TAP
-        assert_false Gesture.detected? Gesture::PINCH_IN
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsGestureDetected) { gesture: 1 }",
+        "(IsGestureDetected) { gesture: 256 }"
+      ]
+    )
+  end
+end
 
-        assert_called [
-          "(IsGestureDetected) { gesture: 1 }",
-          "(IsGestureDetected) { gesture: 256 }"
-        ]
-      end
+@unit.describe "Gesture.duration" do
+  Given "a player has done gestures" do
+    Taylor::Raylib.mock_call("GetGestureHoldDuration", "0.25")
+    Taylor::Raylib.mock_call("GetGestureHoldDuration", "2.00")
+  end
 
-      def test_duration
-        Taylor::Raylib.mock_call("GetGestureHoldDuration", "0.25")
-        Taylor::Raylib.mock_call("GetGestureHoldDuration", "2.00")
+  Then "return the gesture durations" do
+    expect(Gesture.duration).to_equal(0.25)
+    expect(Gesture.duration).to_equal(2.00)
+  end
+end
 
-        assert_equal 0.25, Gesture.duration
-        assert_equal 2.00, Gesture.duration
+@unit.describe "Gesture.dragged" do
+  Given "a player has done gestures" do
+    Taylor::Raylib.mock_call("GetGestureDragVector", Vector2.mock_return(x: 1, y: 2))
+    Taylor::Raylib.mock_call("GetGestureDragVector", Vector2.mock_return(x: 3, y: 4))
+  end
 
-        assert_called [
-          "(GetGestureHoldDuration) { }",
-          "(GetGestureHoldDuration) { }"
-        ]
-      end
+  Then "return the gesture drag vectors" do
+    expect(Gesture.dragged).to_equal(Vector2[1, 2])
+    expect(Gesture.dragged).to_equal(Vector2[3, 4])
+  end
+end
 
-      def test_dragged
-        Taylor::Raylib.mock_call("GetGestureDragVector", Vector2.mock_return(x: 1, y: 2))
-        Taylor::Raylib.mock_call("GetGestureDragVector", Vector2.mock_return(x: 3, y: 4))
+@unit.describe "Gesture.drag_angle" do
+  Given "a player has done gestures" do
+    Taylor::Raylib.mock_call("GetGestureDragAngle", "90.0")
+    Taylor::Raylib.mock_call("GetGestureDragAngle", "128.5")
+  end
 
-        assert_equal Vector2[1, 2], Gesture.dragged
-        assert_equal Vector2[3, 4], Gesture.dragged
+  Then "return the gesture drag vectors" do
+    expect(Gesture.drag_angle).to_equal(90.0)
+    expect(Gesture.drag_angle).to_equal(128.5)
+  end
+end
 
-        assert_called [
-          "(GetGestureDragVector) { }",
-          "(GetGestureDragVector) { }"
-        ]
-      end
+@unit.describe "Gesture.pinched" do
+  Given "a player has done gestures" do
+    Taylor::Raylib.mock_call("GetGesturePinchVector", Vector2.mock_return(x: 2, y: 3))
+    Taylor::Raylib.mock_call("GetGesturePinchVector", Vector2.mock_return(x: 4, y: 5))
+  end
 
-      def test_drag_angle
-        Taylor::Raylib.mock_call("GetGestureDragAngle", "90.0")
-        Taylor::Raylib.mock_call("GetGestureDragAngle", "128.5")
+  Then "return the gesture drag vectors" do
+    expect(Gesture.pinched).to_equal(Vector2[2, 3])
+    expect(Gesture.pinched).to_equal(Vector2[4, 5])
+  end
+end
 
-        assert_equal 90.0, Gesture.drag_angle
-        assert_equal 128.5, Gesture.drag_angle
+@unit.describe "Gesture.pinch_angle" do
+  Given "a player has done gestures" do
+    Taylor::Raylib.mock_call("GetGesturePinchAngle", "72.0")
+    Taylor::Raylib.mock_call("GetGesturePinchAngle", "304.75")
+  end
 
-        assert_called [
-          "(GetGestureDragAngle) { }",
-          "(GetGestureDragAngle) { }"
-        ]
-      end
-
-      def test_pinched
-        Taylor::Raylib.mock_call("GetGesturePinchVector", Vector2.mock_return(x: 2, y: 3))
-        Taylor::Raylib.mock_call("GetGesturePinchVector", Vector2.mock_return(x: 4, y: 5))
-
-        assert_equal Vector2[2, 3], Gesture.pinched
-        assert_equal Vector2[4, 5], Gesture.pinched
-
-        assert_called [
-          "(GetGesturePinchVector) { }",
-          "(GetGesturePinchVector) { }"
-        ]
-      end
-
-      def test_pinch_angle
-        Taylor::Raylib.mock_call("GetGesturePinchAngle", "72.0")
-        Taylor::Raylib.mock_call("GetGesturePinchAngle", "304.75")
-
-        assert_equal 72.0, Gesture.pinch_angle
-        assert_equal 304.75, Gesture.pinch_angle
-
-        assert_called [
-          "(GetGesturePinchAngle) { }",
-          "(GetGesturePinchAngle) { }"
-        ]
-      end
-    end
+  Then "return the gesture drag vectors" do
+    expect(Gesture.pinch_angle).to_equal(72.0)
+    expect(Gesture.pinch_angle).to_equal(304.75)
   end
 end

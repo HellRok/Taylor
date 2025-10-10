@@ -1,62 +1,74 @@
-class Test
-  class Models
-    class Logging_Test < Test::Base
-      def test_level=
-        assert_equal Logging::ALL, Logging.level
+@unit.describe "Logging.log" do
+  When "called without a level" do
+    Logging.log(message: "Hello!")
+  end
 
-        Logging.level = Logging::TRACE
-        assert_equal Logging::TRACE, Logging.level
+  Then "Raylib is called with Logging::INFO" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(TraceLog) { logLevel: 3 text: 'Hello!' }"
+      ]
+    )
+  end
 
-        Logging.level = Logging::WARNING
-        assert_equal Logging::WARNING, Logging.level
+  When "called with a level" do
+    Logging.log(level: Logging::FATAL, message: "Oops :(")
+  end
 
-        assert_called [
-          "(SetTraceLogLevel) { logLevel: 1 }",
-          "(SetTraceLogLevel) { logLevel: 4 }"
-        ]
-      end
+  Then "Raylib is called with the level" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(TraceLog) { logLevel: 6 text: 'Oops :(' }"
+      ]
+    )
+  end
 
-      def test_level_equals_with_bad_values
-        Logging.level = Logging::TRACE
-        assert_equal Logging::TRACE, Logging.level
+  But "raises an error if called with a negative level" do
+    expect {
+      Logging.log(level: -1, message: "!")
+    }.to_raise(ArgumentError, "Logging level must be within (0..7)")
+  end
 
-        assert_raise_with_message(ArgumentError, "Logging level must be within (0..7)") {
-          Logging.level = -1
-        }
-        assert_equal Logging::TRACE, Logging.level
+  Or "with a level greater than 7" do
+    expect {
+      Logging.log(level: 8, message: "!")
+    }.to_raise(ArgumentError, "Logging level must be within (0..7)")
+  end
+end
 
-        assert_raise_with_message(ArgumentError, "Logging level must be within (0..7)") {
-          Logging.level = 8
-        }
+@unit.describe "Logging.level=" do
+  When "no level has been set" do
+  end
 
-        assert_equal Logging::TRACE, Logging.level
+  Then "it defaults to Logging::INFO" do
+    expect(Logging.level).to_equal(Logging::INFO)
+  end
 
-        assert_called [
-          "(SetTraceLogLevel) { logLevel: 1 }"
-        ]
-      end
+  When "set to a value" do
+    Logging.level = Logging::WARNING
+  end
 
-      def test_log
-        Logging.log(message: "Hello!")
-        Logging.log(level: Logging::FATAL, message: "Oops :(")
+  Then "it is set to that value" do
+    expect(Logging.level).to_equal(Logging::WARNING)
+  end
 
-        assert_called [
-          "(TraceLog) { logLevel: 1 text: 'Hello!' }",
-          "(TraceLog) { logLevel: 6 text: 'Oops :(' }"
-        ]
-      end
+  And "Raylib is called with the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(SetTraceLogLevel) { logLevel: 4 }"
+      ]
+    )
+  end
 
-      def test_log_with_bad_values
-        assert_raise_with_message(ArgumentError, "Logging level must be within (0..7)") {
-          Logging.log(level: -1, message: "!")
-        }
+  But "raises an error if called with a negative level" do
+    expect {
+      Logging.level = -1
+    }.to_raise(ArgumentError, "Logging level must be within (0..7)")
+  end
 
-        assert_raise_with_message(ArgumentError, "Logging level must be within (0..7)") {
-          Logging.log(level: 8, message: "!")
-        }
-
-        assert_no_calls
-      end
-    end
+  Or "with a level greater than 7" do
+    expect {
+      Logging.level = 8
+    }.to_raise(ArgumentError, "Logging level must be within (0..7)")
   end
 end

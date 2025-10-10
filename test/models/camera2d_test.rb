@@ -1,160 +1,245 @@
-class Test
-  class Models
-    class Camera2D_Test < Test::Base
-      def test_initialize
-        camera = Camera2D.new(
-          target: Vector2.new(1, 2),
-          offset: Vector2.new(3, 4),
-          rotation: 5,
-          zoom: 6
-        )
+@unit.describe "Camera2D#initialize" do
+  Given "we initialize a camera" do
+    @camera = Camera2D.new(
+      target: Vector2.new(x: 1, y: 2),
+      offset: Vector2.new(x: 3, y: 4),
+      rotation: 5,
+      zoom: 6
+    )
+  end
 
-        assert_kind_of Camera2D, camera
-        assert_equal 1, camera.target.x
-        assert_equal 2, camera.target.y
-        assert_equal 3, camera.offset.x
-        assert_equal 4, camera.offset.y
-        assert_equal 5, camera.rotation
-        assert_equal 6, camera.zoom
-      end
+  Then "it's setup correctly" do
+    expect(@camera).to_be_a(Camera2D)
+    expect(@camera.target.x).to_equal(1)
+    expect(@camera.target.y).to_equal(2)
+    expect(@camera.offset.x).to_equal(3)
+    expect(@camera.offset.y).to_equal(4)
+    expect(@camera.rotation).to_equal(5)
+    expect(@camera.zoom).to_equal(6)
+  end
 
-      def test_initialize_with_defaults
-        camera = Camera2D.new
+  Given "we don't specify anything" do
+    @camera = Camera2D.new
+  end
 
-        assert_kind_of Camera2D, camera
-        assert_equal 0, camera.offset.x
-        assert_equal 0, camera.offset.y
-        assert_equal 0, camera.target.x
-        assert_equal 0, camera.target.y
-        assert_equal 0, camera.rotation
-        assert_equal 1, camera.zoom
-      end
+  Then "it's setup correctly" do
+    expect(@camera).to_be_a(Camera2D)
+    expect(@camera.offset.x).to_equal(0)
+    expect(@camera.offset.y).to_equal(0)
+    expect(@camera.target.x).to_equal(0)
+    expect(@camera.target.y).to_equal(0)
+    expect(@camera.rotation).to_equal(0)
+    expect(@camera.zoom).to_equal(1)
+  end
 
-      def test_assignment
-        camera = Camera2D.new(
-          offset: Vector2.new(0, 0),
-          target: Vector2.new(0, 0),
-          rotation: 0,
-          zoom: 0
-        )
+  When "we set all the attributes" do
+    @camera.target.x = 7
+    @camera.target.y = 6
+    @camera.offset.x = 5
+    @camera.offset.y = 4
+    @camera.rotation = 3
+    @camera.zoom = 2
+  end
 
-        camera.target.x = 6
-        camera.target.y = 5
-        camera.offset.x = 4
-        camera.offset.y = 3
-        camera.rotation = 2
-        camera.zoom = 1
+  Then "they're persisted" do
+    expect(@camera.target.x).to_equal(7)
+    expect(@camera.target.y).to_equal(6)
+    expect(@camera.offset.x).to_equal(5)
+    expect(@camera.offset.y).to_equal(4)
+    expect(@camera.rotation).to_equal(3)
+    expect(@camera.zoom).to_equal(2)
+  end
 
-        assert_equal 6, camera.target.x
-        assert_equal 5, camera.target.y
-        assert_equal 4, camera.offset.x
-        assert_equal 3, camera.offset.y
-        assert_equal 2, camera.rotation
-        assert_equal 1, camera.zoom
-      end
+  Then "clean up" do
+    @camera = nil
+  end
+end
 
-      def test_offset
-        offset = Vector2[0, 0]
-        camera = Camera2D.new(
-          offset: offset,
-          target: Vector2.new(0, 0),
-          rotation: 0,
-          zoom: 0
-        )
+@unit.describe "Camera2D#offset" do
+  Given "we have a camera and a vector" do
+    @offset = Vector2[0, 0]
+    @camera = Camera2D.new(
+      offset: @offset,
+      target: Vector2.new(x: 0, y: 0),
+      rotation: 0,
+      zoom: 0
+    )
+  end
 
-        assert_equal offset, camera.offset
-        assert_not_equal offset.object_id, camera.offset.object_id
-      end
+  Then "they are equal" do
+    expect(@camera.offset).to_equal(@offset)
+  end
 
-      def test_target
-        target = Vector2[0, 0]
-        camera = Camera2D.new(
-          offset: Vector2.new(0, 0),
-          target: target,
-          rotation: 0,
-          zoom: 0
-        )
+  But "they are not the same object" do
+    expect(@camera.offset.object_id).not_to_equal(@offset.object_id)
+  end
 
-        assert_equal target, camera.target
-        assert_not_equal target.object_id, camera.target.object_id
-      end
+  Then "clean up" do
+    @camera = nil
+  end
+end
 
-      def test_to_h
-        camera = Camera2D.new(
-          target: Vector2.new(1, 2),
-          offset: Vector2.new(3, 4),
-          rotation: 5,
-          zoom: 6
-        )
+@unit.describe "Camera2D#target" do
+  Given "we have a camera and a vector" do
+    @target = Vector2[0, 0]
+    @camera = Camera2D.new(
+      offset: Vector2.new(x: 0, y: 0),
+      target: @target,
+      rotation: 0,
+      zoom: 0
+    )
+  end
 
-        assert_equal(
-          {
-            target: {
-              x: 1,
-              y: 2
-            },
-            offset: {
-              x: 3,
-              y: 4
-            },
-            rotation: 5,
-            zoom: 6
-          },
-          camera.to_h
-        )
-      end
+  Then "they are equal" do
+    expect(@camera.target).to_equal(@target)
+  end
 
-      def test_draw
-        rectangle = Rectangle[2, 2, 6, 6, Colour::RED]
-        camera = Camera2D.new
+  But "they are not the same object" do
+    expect(@camera.target.object_id).not_to_equal(@target.object_id)
+  end
 
-        camera.draw do
-          rectangle.draw
-        end
+  Then "clean up" do
+    @camera = nil
+  end
+end
 
-        assert_called [
-          "(BeginMode2D) { camera: { offset.x: 0.000000 offset.y: 0.000000 target.x: 0.000000 target.y: 0.000000 rotation: 0.000000 zoom: 1.000000 } }",
-          "(DrawRectangleRec) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } color: { r: 230 g: 41 b: 55 a: 255 } }",
-          "(EndMode2D) { }"
-        ]
+@unit.describe "Camera2D#to_h" do
+  Given "we initialize a camera" do
+    @camera = Camera2D.new(
+      target: Vector2.new(x: 1, y: 2),
+      offset: Vector2.new(x: 3, y: 4),
+      rotation: 5,
+      zoom: 6
+    )
+  end
 
-        Taylor::Raylib.reset_calls
+  Then "we get a hash of it's attributes" do
+    expect(@camera.to_h).to_equal(
+      {
+        target: {
+          x: 1,
+          y: 2
+        },
+        offset: {
+          x: 3,
+          y: 4
+        },
+        rotation: 5,
+        zoom: 6
+      }
+    )
+  end
 
-        camera.offset.x = -2
-        camera.offset.y = -3
+  Then "clean up" do
+    @camera = nil
+  end
+end
 
-        camera.draw do
-          rectangle.draw
-        end
+@unit.describe "Camera2D#draw" do
+  When "we draw the camera with content" do
+    @rectangle = Rectangle[2, 2, 6, 6, Colour::RED]
+    @camera = Camera2D.new
 
-        assert_called [
-          "(BeginMode2D) { camera: { offset.x: -2.000000 offset.y: -3.000000 target.x: 0.000000 target.y: 0.000000 rotation: 0.000000 zoom: 1.000000 } }",
-          "(DrawRectangleRec) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } color: { r: 230 g: 41 b: 55 a: 255 } }",
-          "(EndMode2D) { }"
-        ]
-      end
-
-      def test_as_in_viewport
-        camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
-        vector = Vector2[3, 3]
-
-        camera.as_in_viewport(vector)
-
-        assert_called [
-          "(GetWorldToScreen2D) { position: { x: 3.000000 y: 3.000000 } camera: { offset.x: 3.000000 offset.y: 2.000000 target.x: 2.000000 target.y: 1.000000 rotation: 0.000000 zoom: 1.000000 } }"
-        ]
-      end
-
-      def test_as_in_world
-        camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
-        vector = Vector2[4, 4]
-
-        camera.as_in_world(vector)
-
-        assert_called [
-          "(GetScreenToWorld2D) { position: { x: 4.000000 y: 4.000000 } camera: { offset.x: 3.000000 offset.y: 2.000000 target.x: 2.000000 target.y: 1.000000 rotation: 0.000000 zoom: 1.000000 } }"
-        ]
-      end
+    @camera.draw do
+      @rectangle.draw
     end
+  end
+
+  Then "Raylib is called with the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(BeginMode2D) { camera: { offset.x: 0.000000 offset.y: 0.000000 target.x: 0.000000 target.y: 0.000000 rotation: 0.000000 zoom: 1.000000 } }",
+        "(DrawRectangleRec) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } color: { r: 230 g: 41 b: 55 a: 255 } }",
+        "(EndMode2D) { }"
+      ]
+    )
+    Taylor::Raylib.reset_calls
+  end
+
+  When "we offset the camera" do
+    @camera.offset.x = -2
+    @camera.offset.y = -3
+  end
+
+  And "draw again" do
+    @camera.draw do
+      @rectangle.draw
+    end
+  end
+
+  Then "Raylib is called with the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(BeginMode2D) { camera: { offset.x: -2.000000 offset.y: -3.000000 target.x: 0.000000 target.y: 0.000000 rotation: 0.000000 zoom: 1.000000 } }",
+        "(DrawRectangleRec) { rec: { x: 2.000000 y: 2.000000 width: 6.000000 height: 6.000000 } color: { r: 230 g: 41 b: 55 a: 255 } }",
+        "(EndMode2D) { }"
+      ]
+    )
+    Taylor::Raylib.reset_calls
+  end
+
+  Then "clean up" do
+    @camera = nil
+    @rectangle = nil
+  end
+end
+
+@unit.describe "Camera2D#as_in_viewport" do
+  Given "Raylib expects the method" do
+    Taylor::Raylib.mock_call("GetWorldToScreen2D", Vector2.mock_return(x: 2, y: 4))
+  end
+
+  When "we view the vector through the camera" do
+    camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
+    vector = Vector2[3, 3]
+
+    @result = camera.as_in_viewport(vector)
+  end
+
+  Then "it returns the vector as though viewed through the camera" do
+    expect(@result).to_equal(Vector2[2, 4])
+  end
+
+  And "Raylib is called with the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(GetWorldToScreen2D) { position: { x: 3.000000 y: 3.000000 } camera: { offset.x: 3.000000 offset.y: 2.000000 target.x: 2.000000 target.y: 1.000000 rotation: 0.000000 zoom: 1.000000 } }"
+      ]
+    )
+    Taylor::Raylib.reset_calls
+  end
+
+  Then "clean up" do
+    @camera = nil
+  end
+end
+
+@unit.describe "Camera2D#as_in_world" do
+  Given "Raylib expects the method" do
+    Taylor::Raylib.mock_call("GetScreenToWorld2D", Vector2.mock_return(x: 2, y: 4))
+  end
+
+  When "we view the vector through the camera" do
+    camera = Camera2D.new(target: Vector2[2, 1], offset: Vector2[3, 2])
+    vector = Vector2[4, 4]
+
+    @result = camera.as_in_world(vector)
+  end
+
+  Then "it returns the vector as though viewed through the camera" do
+    expect(@result).to_equal(Vector2[2, 4])
+  end
+
+  And "Raylib is called with the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(GetScreenToWorld2D) { position: { x: 4.000000 y: 4.000000 } camera: { offset.x: 3.000000 offset.y: 2.000000 target.x: 2.000000 target.y: 1.000000 rotation: 0.000000 zoom: 1.000000 } }"
+      ]
+    )
+    Taylor::Raylib.reset_calls
+  end
+
+  Then "clean up" do
+    @camera = nil
   end
 end

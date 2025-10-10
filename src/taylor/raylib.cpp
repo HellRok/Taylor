@@ -67,6 +67,8 @@ mrb_Taylor_Raylib_calls(mrb_state* mrb, mrb_value) -> mrb_value
       mrb, result, mrb_str_new_cstr(mrb, raylib_method_call.c_str()));
   }
 
+  raylib_method_calls.clear();
+
   return result;
 }
 
@@ -137,9 +139,24 @@ mocked_call_for(std::string method, int* result) -> void
 }
 
 auto
-mocked_call_for(std::string, Color* result) -> void
+mocked_call_for(std::string method, Color* result) -> void
 {
   *result = Color{ 0, 0, 0, 0 };
+
+  mock_result mock = next_mock_for(method);
+  if (mock.found) {
+    std::string temp;
+    std::stringstream stream(mock.value);
+
+    stream >> temp;
+    result->r = std::stoi(temp);
+    stream >> temp;
+    result->g = std::stoi(temp);
+    stream >> temp;
+    result->b = std::stoi(temp);
+    stream >> temp;
+    result->a = std::stoi(temp);
+  }
 }
 
 auto
@@ -369,9 +386,28 @@ mrb_Taylor_Raylib_mock_call(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 auto
-mrb_Taylor_Raylib_all_mocks_used(mrb_state*, mrb_value) -> mrb_value
+mrb_Taylor_Raylib_mocks(mrb_state* mrb, mrb_value) -> mrb_value
 {
-  return mrb_bool_value(raylib_method_call_mock_returns.empty());
+  mrb_value result;
+  result = mrb_ary_new_capa(mrb, raylib_method_call_mock_returns.size());
+
+  for (auto& raylib_method_call_mock_return : raylib_method_call_mock_returns) {
+    auto method = raylib_method_call_mock_return.first;
+    auto& mocks_for_method = raylib_method_call_mock_returns[method];
+
+    for (auto& mock_method_return : mocks_for_method) {
+      std::string mock = "(";
+
+      mock.append(method);
+      mock.append(") { ");
+      mock.append(mock_method_return);
+      mock.append(" }");
+
+      mrb_ary_push(mrb, result, mrb_str_new_cstr(mrb, mock.c_str()));
+    }
+  }
+
+  return result;
 }
 
 auto
@@ -409,11 +445,8 @@ append_taylor_raylib(mrb_state* mrb, RClass* Taylor_module)
                           "mock_call",
                           mrb_Taylor_Raylib_mock_call,
                           MRB_ARGS_REQ(2));
-  mrb_define_class_method(mrb,
-                          Raylib_module,
-                          "all_mocks_used?",
-                          mrb_Taylor_Raylib_all_mocks_used,
-                          MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Raylib_module, "mocks", mrb_Taylor_Raylib_mocks, MRB_ARGS_NONE());
   mrb_define_class_method(mrb,
                           Raylib_module,
                           "clear_mocks",

@@ -1,24 +1,41 @@
-class Test
-  class LocalStorage_Test < Test::Base
-    if Taylor::Platform.browser?
-      def test_LocalStorage
-        assert_equal LocalStorage.get_item("test"), ""
+if Taylor::Platform.browser?
+  @unit.describe "LocalStorage" do
+    Given "we have nothing set" do
+    end
+
+    Then "return an empty string" do
+      expect(LocalStorage.get_item("test")).to_equal("")
+    end
+
+    When "we set the item" do
+      LocalStorage.set_item("test", "value")
+    end
+
+    Then "return the value" do
+      expect(LocalStorage.get_item("test")).to_equal("value")
+    end
+  end
+
+else
+  @unit.describe "LocalStorage.get" do
+    When "called from an unsupported platform" do
+    end
+
+    Then "raise an error" do
+      expect {
+        LocalStorage.get_item("test")
+      }.to_raise(Taylor::Platform::MethodCalledOnInvalidPlatformError)
+    end
+  end
+
+  @unit.describe "LocalStorage.set" do
+    When "called from an unsupported platform" do
+    end
+
+    Then "raise an error" do
+      expect {
         LocalStorage.set_item("test", "value")
-        assert_equal LocalStorage.get_item("test"), "value"
-      end
-
-    else
-      def test_LocalStorage_get_item
-        assert_raise(Taylor::Platform::MethodCalledOnInvalidPlatformError) {
-          LocalStorage.get_item("test")
-        }
-      end
-
-      def test_LocalStorage_set_item
-        assert_raise(Taylor::Platform::MethodCalledOnInvalidPlatformError) {
-          LocalStorage.set_item("test", "value")
-        }
-      end
+      }.to_raise(Taylor::Platform::MethodCalledOnInvalidPlatformError)
     end
   end
 end

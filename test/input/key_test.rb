@@ -1,81 +1,123 @@
-class Test
-  class Models
-    class Key_Test < Test::Base
-      def test_pressed?
-        Key.pressed?(Key::A)
+@unit.describe "Key.pressed?" do
+  Given "a key has been pressed" do
+    Taylor::Raylib.mock_call("IsKeyPressed", "true")
+    Taylor::Raylib.mock_call("IsKeyPressed", "false")
+  end
 
-        assert_called [
-          "(IsKeyPressed) { key: 65 }"
-        ]
-      end
+  Then "return true" do
+    expect(Key.pressed?(Key::A)).to_be_true
+    expect(Key.pressed?(Key::B)).to_be_false
+  end
 
-      def test_down?
-        Key.down?(Key::B)
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsKeyPressed) { key: 65 }",
+        "(IsKeyPressed) { key: 66 }"
+      ]
+    )
+  end
+end
 
-        assert_called [
-          "(IsKeyDown) { key: 66 }"
-        ]
-      end
+@unit.describe "Key.down?" do
+  Given "a key is down" do
+    Taylor::Raylib.mock_call("IsKeyDown", "true")
+    Taylor::Raylib.mock_call("IsKeyDown", "false")
+  end
 
-      def test_released?
-        Key.released?(Key::C)
+  Then "return true" do
+    expect(Key.down?(Key::B)).to_be_true
+    expect(Key.down?(Key::C)).to_be_false
+  end
 
-        assert_called [
-          "(IsKeyReleased) { key: 67 }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsKeyDown) { key: 66 }",
+        "(IsKeyDown) { key: 67 }"
+      ]
+    )
+  end
+end
 
-      def test_up?
-        Key.up?(Key::D)
+@unit.describe "Key.released?" do
+  Given "a key is released" do
+    Taylor::Raylib.mock_call("IsKeyReleased", "true")
+    Taylor::Raylib.mock_call("IsKeyReleased", "false")
+  end
 
-        assert_called [
-          "(IsKeyUp) { key: 68 }"
-        ]
-      end
+  Then "return true" do
+    expect(Key.released?(Key::C)).to_be_true
+    expect(Key.released?(Key::D)).to_be_false
+  end
 
-      def test_pressed
-        Taylor::Raylib.mock_call("GetKeyPressed", "0")
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsKeyReleased) { key: 67 }",
+        "(IsKeyReleased) { key: 68 }"
+      ]
+    )
+  end
+end
 
-        assert_equal nil, Key.pressed, "No frame has happened and no key has been pressed"
+@unit.describe "Key.up?" do
+  Given "a key is up" do
+    Taylor::Raylib.mock_call("IsKeyUp", "true")
+    Taylor::Raylib.mock_call("IsKeyUp", "false")
+  end
 
-        assert_called [
-          "(GetKeyPressed) { }"
-        ]
+  Then "return true" do
+    expect(Key.up?(Key::D)).to_be_true
+    expect(Key.up?(Key::E)).to_be_false
+  end
 
-        Taylor::Raylib.reset_calls
-        Taylor::Raylib.mock_call("GetKeyPressed", "65")
-        Taylor::Raylib.mock_call("GetKeyPressed", "66")
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsKeyUp) { key: 68 }",
+        "(IsKeyUp) { key: 69 }"
+      ]
+    )
+  end
+end
 
-        assert_equal Key.pressed, Key::A, "A was the first pressed key"
-        assert_equal Key.pressed, Key::B, "B was the second pressed key"
+@unit.describe "Key.pressed" do
+  Given "no key has been pressed" do
+    Taylor::Raylib.mock_call("GetKeyPressed", "0")
+  end
 
-        assert_called [
-          "(GetKeyPressed) { }",
-          "(GetKeyPressed) { }"
-        ]
-      end
+  Then "return nil" do
+    expect(Key.pressed).to_be_nil
+  end
 
-      def test_pressed_character
-        Taylor::Raylib.mock_call("GetCharPressed", "0")
+  Given "a key has been pressed" do
+    Taylor::Raylib.mock_call("GetKeyPressed", "65")
+    Taylor::Raylib.mock_call("GetKeyPressed", "66")
+  end
 
-        assert_equal nil, Key.pressed_character, "No frame has happened and no key has been pressed"
+  Then "return the pressed keys one at a time" do
+    expect(Key.pressed).to_equal(Key::A)
+    expect(Key.pressed).to_equal(Key::B)
+  end
+end
 
-        assert_called [
-          "(GetCharPressed) { }"
-        ]
+@unit.describe "Key.pressed_character" do
+  Given "no key has been pressed" do
+    Taylor::Raylib.mock_call("GetCharPressed", "0")
+  end
 
-        Taylor::Raylib.reset_calls
-        Taylor::Raylib.mock_call("GetCharPressed", "97")
-        Taylor::Raylib.mock_call("GetCharPressed", "66")
+  Then "return nil" do
+    expect(Key.pressed_character).to_be_nil
+  end
 
-        assert_equal "a", Key.pressed_character, "a was the first pressed key"
-        assert_equal "B", Key.pressed_character, "B was the second pressed key"
+  Given "a key has been pressed" do
+    Taylor::Raylib.mock_call("GetCharPressed", "97")
+    Taylor::Raylib.mock_call("GetCharPressed", "66")
+  end
 
-        assert_called [
-          "(GetCharPressed) { }",
-          "(GetCharPressed) { }"
-        ]
-      end
-    end
+  Then "return the pressed characters one at a time" do
+    expect(Key.pressed_character).to_equal("a")
+    expect(Key.pressed_character).to_equal("B")
   end
 end

@@ -1,23 +1,29 @@
-class Test
-  class Models
-    class Clipboard_Test < Test::Base
-      def test_text=
-        Clipboard.text = "Hello!"
-        Clipboard.text = "Good bye :("
+@unit.describe "Clipboard.text" do
+  When "we call it" do
+    Clipboard.text
+  end
 
-        assert_called [
-          "(SetClipboardText) { text: 'Hello!' }",
-          "(SetClipboardText) { text: 'Good bye :(' }"
-        ]
-      end
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(*GetClipboardText) { }"
+      ]
+    )
+  end
+end
 
-      def test_text
-        Clipboard.text
+@unit.describe "Clipboard.text=" do
+  When "we call it" do
+    Clipboard.text = "Hello!"
+    Clipboard.text = "Good bye :("
+  end
 
-        assert_called [
-          "(*GetClipboardText) { }"
-        ]
-      end
-    end
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(SetClipboardText) { text: 'Hello!' }",
+        "(SetClipboardText) { text: 'Good bye :(' }"
+      ]
+    )
   end
 end

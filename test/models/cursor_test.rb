@@ -1,82 +1,156 @@
-class Test
-  class Models
-    class Cursor_Test < Test::Base
-      def test_show
-        Cursor.show
-        assert_called ["(ShowCursor) { }"]
-      end
+@unit.describe "Cursor.show" do
+  Given "we have called show" do
+    Cursor.show
+  end
 
-      def test_hide
-        Cursor.hide
-        assert_called ["(HideCursor) { }"]
-      end
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(ShowCursor) { }"
+      ]
+    )
+  end
+end
 
-      def test_hidden?
-        Cursor.hidden?
-        assert_called ["(IsCursorHidden) { }"]
-      end
+@unit.describe "Cursor.hide" do
+  Given "we have called hide" do
+    Cursor.hide
+  end
 
-      def test_enable
-        Cursor.enable
-        assert_called ["(EnableCursor) { }"]
-      end
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(HideCursor) { }"
+      ]
+    )
+  end
+end
 
-      def test_disable
-        Cursor.disable
-        assert_called ["(DisableCursor) { }"]
-      end
+@unit.describe "Cursor.hidden?" do
+  Given "the cursor is hidden" do
+    Taylor::Raylib.mock_call("IsCursorHidden", "true")
+  end
 
-      def test_disabled?
-        Cursor.disable
-        assert_true Cursor.disabled?
-        Cursor.enable
-        assert_false Cursor.disabled?
-      end
+  Then "return true" do
+    expect(Cursor.hidden?).to_be_true
+  end
 
-      def test_on_screen?
-        Cursor.on_screen?
-        assert_called ["(IsCursorOnScreen) { }"]
-      end
+  Given "the cursor is not hidden" do
+    Taylor::Raylib.mock_call("IsCursorHidden", "false")
+  end
 
-      def test_icon=
-        assert_equal Cursor::DEFAULT, Cursor.icon
+  Then "return false" do
+    expect(Cursor.hidden?).to_be_false
+  end
+end
 
-        Cursor.icon = Cursor::CROSSHAIR
-        assert_equal Cursor::CROSSHAIR, Cursor.icon
-        assert_called ["(SetMouseCursor) { cursor: 3 }"]
-      ensure
-        Cursor.icon = Cursor::DEFAULT
-      end
+@unit.describe "Cursor.enable" do
+  Given "we have called enable" do
+    Cursor.enable
+  end
 
-      def test_icon_equals_too_low
-        assert_equal Cursor::DEFAULT, Cursor.icon
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(EnableCursor) { }"
+      ]
+    )
+  end
+end
 
-        begin
-          Cursor.icon = -1
-        rescue ArgumentError => e
-          assert_equal "Must be within (0..10)", e.message
-          assert_called []
-        end
+@unit.describe "Cursor.disable" do
+  Given "we have called disable" do
+    Cursor.disable
+  end
 
-        assert_equal Cursor::DEFAULT, Cursor.icon
-      ensure
-        Cursor.icon = Cursor::DEFAULT
-      end
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DisableCursor) { }"
+      ]
+    )
+  end
+end
 
-      def test_icon_equals_too_high
-        assert_equal Cursor::DEFAULT, Cursor.icon
+@unit.describe "Cursor.disabled?" do
+  Given "the cursor is disabled" do
+    Cursor.disable
+  end
 
-        begin
-          Cursor.icon = 11
-        rescue ArgumentError => e
-          assert_equal "Must be within (0..10)", e.message
-          assert_called []
-        end
+  Then "return true" do
+    expect(Cursor.disabled?).to_be_true
+  end
 
-        assert_equal Cursor::DEFAULT, Cursor.icon
-      ensure
-        Cursor.icon = Cursor::DEFAULT
-      end
-    end
+  Given "the cursor is not disabled" do
+    Cursor.enable
+  end
+
+  Then "return false" do
+    expect(Cursor.disabled?).to_be_false
+  end
+end
+
+@unit.describe "Cursor.on_screen?" do
+  Given "the cursor is on_screen" do
+    Taylor::Raylib.mock_call("IsCursorOnScreen", "true")
+  end
+
+  Then "return true" do
+    expect(Cursor.on_screen?).to_be_true
+  end
+
+  Given "the cursor is not on_screen" do
+    Taylor::Raylib.mock_call("IsCursorOnScreen", "false")
+  end
+
+  Then "return false" do
+    expect(Cursor.on_screen?).to_be_false
+  end
+end
+
+@unit.describe "Cursor.icon" do
+  Given "the cursor has not been set" do
+  end
+
+  Then "return the default cursor" do
+    expect(Cursor.icon).to_equal(Cursor::DEFAULT)
+  end
+
+  Given "the cursor has been set" do
+    Cursor.icon = Cursor::CROSSHAIR
+  end
+
+  Then "return the set cursor" do
+    expect(Cursor.icon).to_equal(Cursor::CROSSHAIR)
+  end
+end
+
+@unit.describe "Cursor.icon=" do
+  When "we set the cursor" do
+    Cursor.icon = Cursor::IBEAM
+  end
+
+  Then "the cursor is set" do
+    expect(Cursor.icon).to_equal(Cursor::IBEAM)
+  end
+
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(SetMouseCursor) { cursor: 2 }"
+      ]
+    )
+  end
+
+  But "if called with a negative number it raises" do
+    expect {
+      Cursor.icon = -1
+    }.to_raise(ArgumentError, "Must be within (0..10)")
+  end
+
+  Or "if called with a larger number it raises" do
+    expect {
+      Cursor.icon = 11
+    }.to_raise(ArgumentError, "Must be within (0..10)")
   end
 end

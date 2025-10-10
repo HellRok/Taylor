@@ -1,84 +1,82 @@
-class Test
-  class Taylor_Platform_Test < Test::Base
-    def test_to_s
-      assert_include [
-        "arm64-android",
-        "wasm32-browser",
-        "amd64-linux",
-        "amd64-osx",
-        "arm64-osx",
-        "amd64-windows"
-      ], Taylor::Platform.to_s
-    end
+@unit.describe "Taylor::Platform.to_s" do
+  expect(Taylor::Platform.to_s).to_be_in([
+    "arm64-android",
+    "wasm32-browser",
+    "amd64-linux",
+    "amd64-osx",
+    "arm64-osx",
+    "amd64-windows"
+  ])
+end
 
-    def test_os
-      assert_include [
-        :android, :browser, :linux, :osx, :windows
-      ], Taylor::Platform.os
-    end
+@unit.describe "Taylor::Platform.os" do
+  expect(Taylor::Platform.os).to_be_in([
+    :android, :browser, :linux, :osx, :windows
+  ])
+end
 
-    def test_arch
-      assert_include [:amd64, :arm64, :wasm32], Taylor::Platform.arch
-    end
+@unit.describe "Taylor::Platform.arch" do
+  expect(Taylor::Platform.arch).to_be_in([
+    :amd64, :arm64, :wasm32
+  ])
+end
 
-    def test_platform_checks
-      if Taylor::Platform == "arm64-android"
-        assert_equal :android, Taylor::Platform.os
-        assert_equal :arm64, Taylor::Platform.arch
-        assert_true Taylor::Platform.android?
-        assert_false Taylor::Platform.browser?
-        assert_false Taylor::Platform.linux?
-        assert_false Taylor::Platform.osx?
-        assert_false Taylor::Platform.windows?
+@unit.describe "Taylor::Platform platform checks" do
+  if Taylor::Platform == "arm64-android"
+    expect(Taylor::Platform.os).to_equal(:android)
+    expect(Taylor::Platform.arch).to_equal(:arm64)
+    expect(Taylor::Platform.android?).to_be_true
+    expect(Taylor::Platform.browser?).to_be_false
+    expect(Taylor::Platform.linux?).to_be_false
+    expect(Taylor::Platform.osx?).to_be_false
+    expect(Taylor::Platform.windows?).to_be_false
 
-      elsif Taylor::Platform == "wasm32-browser"
-        assert_equal :browser, Taylor::Platform.os
-        assert_equal :wasm32, Taylor::Platform.arch
-        assert_false Taylor::Platform.android?
-        assert_true Taylor::Platform.browser?
-        assert_false Taylor::Platform.linux?
-        assert_false Taylor::Platform.osx?
-        assert_false Taylor::Platform.windows?
+  elsif Taylor::Platform == "wasm32-browser"
+    expect(Taylor::Platform.os).to_equal(:browser)
+    expect(Taylor::Platform.arch).to_equal(:wasm32)
+    expect(Taylor::Platform.android?).to_be_false
+    expect(Taylor::Platform.browser?).to_be_true
+    expect(Taylor::Platform.linux?).to_be_false
+    expect(Taylor::Platform.osx?).to_be_false
+    expect(Taylor::Platform.windows?).to_be_false
 
-      elsif Taylor::Platform == "amd64-linux"
-        assert_equal :linux, Taylor::Platform.os
-        assert_equal :amd64, Taylor::Platform.arch
-        assert_false Taylor::Platform.android?
-        assert_false Taylor::Platform.browser?
-        assert_true Taylor::Platform.linux?
-        assert_false Taylor::Platform.osx?
-        assert_false Taylor::Platform.windows?
+  elsif Taylor::Platform == "amd64-linux"
+    expect(Taylor::Platform.os).to_equal(:linux)
+    expect(Taylor::Platform.arch).to_equal(:amd64)
+    expect(Taylor::Platform.android?).to_be_false
+    expect(Taylor::Platform.browser?).to_be_false
+    expect(Taylor::Platform.linux?).to_be_true
+    expect(Taylor::Platform.osx?).to_be_false
+    expect(Taylor::Platform.windows?).to_be_false
 
-      elsif Taylor::Platform == "amd64-osx"
-        assert_equal :osx, Taylor::Platform.os
-        assert_equal :amd64, Taylor::Platform.arch
-        assert_false Taylor::Platform.android?
-        assert_false Taylor::Platform.browser?
-        assert_false Taylor::Platform.linux?
-        assert_true Taylor::Platform.osx?
-        assert_false Taylor::Platform.windows?
+  elsif Taylor::Platform == "amd64-osx"
+    expect(Taylor::Platform.os).to_equal(:osx)
+    expect(Taylor::Platform.arch).to_equal(:amd64)
+    expect(Taylor::Platform.android?).to_be_false
+    expect(Taylor::Platform.browser?).to_be_false
+    expect(Taylor::Platform.linux?).to_be_false
+    expect(Taylor::Platform.osx?).to_be_true
+    expect(Taylor::Platform.windows?).to_be_false
 
-      elsif Taylor::Platform == "arm64-osx"
-        assert_equal :osx, Taylor::Platform.os
-        assert_equal :arm64, Taylor::Platform.arch
-        assert_false Taylor::Platform.android?
-        assert_false Taylor::Platform.browser?
-        assert_false Taylor::Platform.linux?
-        assert_true Taylor::Platform.osx?
-        assert_false Taylor::Platform.windows?
+  elsif Taylor::Platform == "arm64-osx"
+    expect(Taylor::Platform.os).to_equal(:osx)
+    expect(Taylor::Platform.arch).to_equal(:arm64)
+    expect(Taylor::Platform.android?).to_be_false
+    expect(Taylor::Platform.browser?).to_be_false
+    expect(Taylor::Platform.linux?).to_be_false
+    expect(Taylor::Platform.osx?).to_be_true
+    expect(Taylor::Platform.windows?).to_be_false
 
-      elsif Taylor::Platform == "amd64-windows"
-        assert_equal :windows, Taylor::Platform.os
-        assert_equal :amd64, Taylor::Platform.arch
-        assert_false Taylor::Platform.android?
-        assert_false Taylor::Platform.browser?
-        assert_false Taylor::Platform.linux?
-        assert_false Taylor::Platform.osx?
-        assert_true Taylor::Platform.windows?
+  elsif Taylor::Platform == "amd64-windows"
+    expect(Taylor::Platform.os).to_equal(:windows)
+    expect(Taylor::Platform.arch).to_equal(:amd64)
+    expect(Taylor::Platform.android?).to_be_false
+    expect(Taylor::Platform.browser?).to_be_false
+    expect(Taylor::Platform.linux?).to_be_false
+    expect(Taylor::Platform.osx?).to_be_false
+    expect(Taylor::Platform.windows?).to_be_true
 
-      else
-        flunk "No platform checks for '#{Taylor::Platform}'"
-      end
-    end
+  else
+    raise StandardError, "No platform checks for '#{Taylor::Platform}'"
   end
 end

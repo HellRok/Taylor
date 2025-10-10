@@ -1,270 +1,292 @@
-class Test
-  class Models
-    class Texture2D_Test < Test::Base
-      def test_initialize
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 1, width: 2, height: 3, mipmaps: 4, format: 5)
-        )
+@unit.describe "Texture2D#initialize" do
+  When "we initialize a texture" do
+    Taylor::Raylib.mock_call(
+      "LoadTexture",
+      Texture2D.mock_return(id: 1, width: 2, height: 3, mipmaps: 4, format: 5)
+    )
 
-        texture = Texture2D.new("./assets/test.png")
+    @texture = Texture2D.new("./assets/test.png")
+  end
 
-        assert_kind_of Texture2D, texture
-        assert_equal 1, texture.id
-        assert_equal 2, texture.width
-        assert_equal 3, texture.height
-        assert_equal 4, texture.mipmaps
-        assert_equal 5, texture.format
+  Then "it has the correct attributes" do
+    expect(@texture).to_be_a(Texture2D)
+    expect(@texture.id).to_equal(1)
+    expect(@texture.width).to_equal(2)
+    expect(@texture.height).to_equal(3)
+    expect(@texture.mipmaps).to_equal(4)
+    expect(@texture.format).to_equal(5)
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/test.png' }",
-          "(LoadTexture) { fileName: './assets/test.png' }"
-        ]
-      end
+  But "if we load a file that doesn't exist, raise an error" do
+    Taylor::Raylib.mock_call("FileExists", "false")
 
-      def test_initialize_fail
-        Taylor::Raylib.mock_call("FileExists", "false")
+    expect {
+      Texture2D.new("./assets/fail.png")
+    }.to_raise(Texture2D::NotFoundError, "Unable to find './assets/fail.png'")
+  end
+end
 
-        assert_raise_with_message(Texture2D::NotFoundError, "Unable to find './assets/fail.png'") {
-          Texture2D.new("./assets/fail.png")
-        }
+@unit.describe "Texture2D#unload" do
+  Given "we have a texture" do
+    Taylor::Raylib.mock_call(
+      "LoadTexture",
+      Texture2D.mock_return(id: 2, width: 3, height: 4, mipmaps: 5, format: 6)
+    )
+    @texture = Texture2D.new("./assets/test.png")
+    Taylor::Raylib.reset_calls
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/fail.png' }"
-        ]
-      end
+  When "we call unload" do
+    @texture.unload
+  end
 
-      def test_unload
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 2, width: 3, height: 4, mipmaps: 5, format: 6)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(UnloadTexture) { texture: { id: 2 width: 3 height: 4 mipmaps: 5 format: 6 } }"
+      ]
+    )
+  end
+end
 
-        texture.unload
+@unit.describe "Texture2D#valid?" do
+  When "we have a valid texture" do
+    Taylor::Raylib.mock_call("IsTextureValid", "true")
+    @texture = Texture2D.new("./assets/test.png")
+  end
 
-        assert_called [
-          "(UnloadTexture) { texture: { id: 2 width: 3 height: 4 mipmaps: 5 format: 6 } }"
-        ]
-      end
+  Then "return true" do
+    expect(@texture.valid?).to_be_true
+  end
 
-      def test_valid?
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 0, width: 1, height: 2, mipmaps: 3, format: 4)
-        )
-        Taylor::Raylib.mock_call("IsTextureValid", "false")
-        Taylor::Raylib.mock_call("IsTextureValid", "true")
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
+  But "we have an invalid texture" do
+    Taylor::Raylib.mock_call("IsTextureValid", "false")
+  end
 
-        assert_false texture.valid?
-        assert_true texture.valid?
+  Then "return false" do
+    expect(@texture.valid?).to_be_false
+  end
+end
 
-        assert_called [
-          "(IsTextureValid) { texture: { id: 0 width: 1 height: 2 mipmaps: 3 format: 4 } }",
-          "(IsTextureValid) { texture: { id: 0 width: 1 height: 2 mipmaps: 3 format: 4 } }"
-        ]
-      end
+@unit.describe "Texture2D#to_h" do
+  Given "we have a texture" do
+    Taylor::Raylib.mock_call(
+      "LoadTexture",
+      Texture2D.mock_return(id: 3, width: 4, height: 5, mipmaps: 6, format: 7)
+    )
+    @texture = Texture2D.new("./assets/test.png")
+  end
 
-      def test_to_h
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 3, width: 4, height: 5, mipmaps: 6, format: 7)
-        )
-        texture = Texture2D.new("./assets/test.png")
+  Then "return a hash with the correct attributes" do
+    expect(@texture.to_h).to_equal(
+      {
+        id: 3,
+        width: 4,
+        height: 5,
+        mipmaps: 6,
+        format: 7
+      }
+    )
+  end
+end
 
-        assert_equal(
-          {
-            id: 3,
-            width: 4,
-            height: 5,
-            mipmaps: 6,
-            format: 7
-          },
-          texture.to_h
-        )
-      end
+@unit.describe "Texture2D#filter=" do
+  Given "we have a texture" do
+    Taylor::Raylib.mock_call(
+      "LoadTexture",
+      Texture2D.mock_return(id: 3, width: 4, height: 5, mipmaps: 6, format: 7)
+    )
+    @texture = Texture2D.new("./assets/test.png")
+    Taylor::Raylib.reset_calls
+  end
 
-      def test_filter=
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 3, width: 4, height: 5, mipmaps: 6, format: 7)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
+  Then "the filter attribute defaults to NO_FILTER" do
+    expect(@texture.filter).to_equal(Texture2D::NO_FILTER)
+  end
 
-        texture.filter = Texture2D::BILINEAR
+  When "we set the filter" do
+    expect {
+      @texture.filter = Texture2D::BILINEAR
+    }.to_equal(Texture2D::BILINEAR)
+  end
 
-        assert_called [
-          "(SetTextureFilter) { texture: { id: 3 width: 4 height: 5 mipmaps: 6 format: 7 } filter: 1 }"
-        ]
-      end
+  Then "the filter attribute is updated " do
+    expect(@texture.filter).to_equal(Texture2D::BILINEAR)
+  end
 
-      def test_filter_equal_too_low
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(SetTextureFilter) { texture: { id: 3 width: 4 height: 5 mipmaps: 6 format: 7 } filter: 1 }"
+      ]
+    )
+  end
 
-        assert_raise_with_message(
-          ArgumentError,
-          "Filter must be one of: Texture2D::NO_FILTER, " \
-            "Texture2D::BILINEAR, Texture2D::TRILINEAR, " \
-            "Texture2D::ANISOTROPIC_4X, Texture2D::ANISOTROPIC_8X, " \
-            "or Texture2D::ANISOTROPIC_16X"
-        ) {
-          texture.filter = -1
-        }
+  But "when set too low, raise an error" do
+    expect {
+      @texture.filter = -1
+    }.to_raise(
+      ArgumentError,
+      "Filter must be one of: Texture2D::NO_FILTER, " \
+      "Texture2D::BILINEAR, Texture2D::TRILINEAR, " \
+      "Texture2D::ANISOTROPIC_4X, Texture2D::ANISOTROPIC_8X, " \
+      "or Texture2D::ANISOTROPIC_16X"
+    )
+  end
 
-        assert_no_calls
-      end
+  Or "when set too high" do
+    expect {
+      @texture.filter = 6
+    }.to_raise(
+      ArgumentError,
+      "Filter must be one of: Texture2D::NO_FILTER, " \
+      "Texture2D::BILINEAR, Texture2D::TRILINEAR, " \
+      "Texture2D::ANISOTROPIC_4X, Texture2D::ANISOTROPIC_8X, " \
+      "or Texture2D::ANISOTROPIC_16X"
+    )
+  end
+end
 
-      def test_filter_equal_too_high
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
+@unit.describe "Texture2D#generate_mipmaps" do
+  Given "we have a texture" do
+    Taylor::Raylib.mock_call(
+      "LoadTexture",
+      Texture2D.mock_return(id: 4, width: 5, height: 6, mipmaps: 7, format: 8)
+    )
+    @texture = Texture2D.new("./assets/test.png")
+    Taylor::Raylib.reset_calls
+  end
 
-        assert_raise_with_message(
-          ArgumentError,
-          "Filter must be one of: Texture2D::NO_FILTER, " \
-            "Texture2D::BILINEAR, Texture2D::TRILINEAR, " \
-            "Texture2D::ANISOTROPIC_4X, Texture2D::ANISOTROPIC_8X, " \
-            "or Texture2D::ANISOTROPIC_16X"
-        ) {
-          texture.filter = 6
-        }
+  When "we call generate_mipmaps" do
+    @texture.generate_mipmaps
+  end
 
-        assert_no_calls
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(GenTextureMipmaps) { texture: { id: 4 width: 5 height: 6 mipmaps: 7 format: 8 } }"
+      ]
+    )
+  end
+end
 
-      def test_generate_mipmaps
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 4, width: 5, height: 6, mipmaps: 7, format: 8)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
+@unit.describe "#Texture2D#draw" do
+  Given "we have a texture" do
+    Taylor::Raylib.mock_call(
+      "LoadTexture",
+      Texture2D.mock_return(id: 5, width: 6, height: 7, mipmaps: 8, format: 9)
+    )
+    @texture = Texture2D.new("./assets/test.png")
+    Taylor::Raylib.reset_calls
+  end
 
-        texture.generate_mipmaps
+  When "we call draw with no arguments" do
+    @texture.draw
+  end
 
-        assert_called [
-          "(GenTextureMipmaps) { texture: { id: 4 width: 5 height: 6 mipmaps: 7 format: 8 } }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DrawTexturePro) { " \
+          "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
+          "source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
+          "dest: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
+          "origin: { x: 3.000000 y: 3.500000 } " \
+          "rotation: 0.000000 " \
+          "tint: { r: 255 g: 255 b: 255 a: 255 } " \
+        "}"
+      ]
+    )
+  end
 
-      def test_draw
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 5, width: 6, height: 7, mipmaps: 8, format: 9)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
+  When "we call draw with the simple arguments" do
+    @texture.draw(
+      origin: Vector2[11, 12],
+      rotation: 13,
+      colour: Colour[14, 15, 16, 17]
+    )
+  end
 
-        texture.draw
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DrawTexturePro) { " \
+          "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
+          "source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
+          "dest: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
+          "origin: { x: 11.000000 y: 12.000000 } " \
+          "rotation: 13.000000 " \
+          "tint: { r: 14 g: 15 b: 16 a: 17 } " \
+        "}"
+      ]
+    )
+  end
 
-        assert_called [
-          "(DrawTexturePro) { " \
-            "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
-            "source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
-            "dest: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
-            "origin: { x: 3.000000 y: 3.500000 } " \
-            "rotation: 0.000000 " \
-            "tint: { r: 255 g: 255 b: 255 a: 255 } " \
-          "}"
-        ]
-      end
+  When "called with source but no destination/position" do
+    @texture.draw(
+      source: Rectangle[10, 11, 12, 13]
+    )
+  end
 
-      def test_draw_with_args
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 6, width: 7, height: 8, mipmaps: 9, format: 10)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
+  Then "it uses the source width and height for the destination and origin" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DrawTexturePro) { " \
+          "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
+          "source: { x: 10.000000 y: 11.000000 width: 12.000000 height: 13.000000 } " \
+          "dest: { x: 0.000000 y: 0.000000 width: 12.000000 height: 13.000000 } " \
+          "origin: { x: 6.000000 y: 6.500000 } " \
+          "rotation: 0.000000 " \
+          "tint: { r: 255 g: 255 b: 255 a: 255 } " \
+        "}"
+      ]
+    )
+  end
 
-        texture.draw(
-          source: Rectangle[11, 12, 13, 14],
-          destination: Rectangle[15, 16, 17, 18],
-          origin: Vector2[19, 20],
-          rotation: 21,
-          colour: Colour[22, 23, 24, 25]
-        )
+  When "called with position" do
+    @texture.draw(position: Vector2[10, 11])
+  end
 
-        assert_called [
-          "(DrawTexturePro) { " \
-            "texture: { id: 6 width: 7 height: 8 mipmaps: 9 format: 10 } " \
-            "source: { x: 11.000000 y: 12.000000 width: 13.000000 height: 14.000000 } " \
-            "dest: { x: 15.000000 y: 16.000000 width: 17.000000 height: 18.000000 } " \
-            "origin: { x: 19.000000 y: 20.000000 } " \
-            "rotation: 21.000000 " \
-            "tint: { r: 22 g: 23 b: 24 a: 25 } " \
-          "}"
-        ]
-      end
+  Then "it uses the position in the destination" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DrawTexturePro) { " \
+          "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
+          "source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
+          "dest: { x: 10.000000 y: 11.000000 width: 6.000000 height: 7.000000 } " \
+          "origin: { x: 3.000000 y: 3.500000 } " \
+          "rotation: 0.000000 " \
+          "tint: { r: 255 g: 255 b: 255 a: 255 } " \
+        "}"
+      ]
+    )
+  end
 
-      def test_draw_with_position
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 7, width: 8, height: 9, mipmaps: 10, format: 11)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
+  When "called with destination" do
+    @texture.draw(destination: Rectangle[10, 11, 12, 13])
+  end
 
-        texture.draw(position: Vector2[1, 2])
+  Then "it uses the destination" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DrawTexturePro) { " \
+          "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
+          "source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
+          "dest: { x: 10.000000 y: 11.000000 width: 12.000000 height: 13.000000 } " \
+          "origin: { x: 6.000000 y: 6.500000 } " \
+          "rotation: 0.000000 " \
+          "tint: { r: 255 g: 255 b: 255 a: 255 } " \
+        "}"
+      ]
+    )
+  end
 
-        assert_called [
-          "(DrawTexturePro) { " \
-            "texture: { id: 7 width: 8 height: 9 mipmaps: 10 format: 11 } " \
-            "source: { x: 0.000000 y: 0.000000 width: 8.000000 height: 9.000000 } " \
-            "dest: { x: 1.000000 y: 2.000000 width: 8.000000 height: 9.000000 } " \
-            "origin: { x: 4.000000 y: 4.500000 } " \
-            "rotation: 0.000000 " \
-            "tint: { r: 255 g: 255 b: 255 a: 255 } " \
-          "}"
-        ]
-      end
-
-      def test_draw_with_position_and_destination
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 8, width: 9, height: 10, mipmaps: 11, format: 12)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
-
-        assert_raise_with_message(ArgumentError, "Can't specify both position and destination") {
-          texture.draw(
-            position: Vector2[2, 3],
-            destination: Rectangle[4, 5, 6, 7]
-          )
-        }
-
-        assert_no_calls
-      end
-
-      def test_draw_with_source_but_no_destination
-        Taylor::Raylib.mock_call(
-          "LoadTexture",
-          Texture2D.mock_return(id: 8, width: 9, height: 10, mipmaps: 11, format: 12)
-        )
-        texture = Texture2D.new("./assets/test.png")
-        Taylor::Raylib.reset_calls
-
-        texture.draw(
-          source: Rectangle[1, 2, 3, 4]
-        )
-
-        # it uses source to populate destination
-        assert_called [
-          "(DrawTexturePro) { " \
-            "texture: { id: 8 width: 9 height: 10 mipmaps: 11 format: 12 } " \
-            "source: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } " \
-            "dest: { x: 1.000000 y: 2.000000 width: 3.000000 height: 4.000000 } " \
-            "origin: { x: 1.500000 y: 2.000000 } " \
-            "rotation: 0.000000 " \
-            "tint: { r: 255 g: 255 b: 255 a: 255 } " \
-          "}"
-        ]
-      end
-    end
+  But "when called with both position and destination, raises an error" do
+    expect {
+      @texture.draw(
+        position: Vector2[2, 3],
+        destination: Rectangle[4, 5, 6, 7]
+      )
+    }.to_raise(ArgumentError, "Can't specify both position and destination")
   end
 end

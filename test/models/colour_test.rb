@@ -1,146 +1,183 @@
-class Test
-  class Models
-    class Colour_Test < Test::Base
-      def test_initialize
-        colour = Colour.new
+@unit.describe "Colour#initialize" do
+  When "we make a colour" do
+    @colour = Colour.new
+  end
 
-        assert_kind_of Colour, colour
-        assert_equal 0, colour.red
-        assert_equal 0, colour.green
-        assert_equal 0, colour.blue
-        assert_equal 255, colour.alpha
-      end
+  Then "it has the correct values" do
+    expect(@colour).to_be_a(Colour)
+    expect(@colour.red).to_equal(0)
+    expect(@colour.green).to_equal(0)
+    expect(@colour.blue).to_equal(0)
+    expect(@colour.alpha).to_equal(255)
+  end
 
-      def test_initialize_with_values
-        colour = Colour.new(red: 1, green: 2, blue: 3, alpha: 4)
+  When "we make a colour with all the arguments" do
+    @colour = Colour.new(red: 1, green: 2, blue: 3, alpha: 4)
+  end
 
-        assert_kind_of Colour, colour
-        assert_equal 1, colour.red
-        assert_equal 2, colour.green
-        assert_equal 3, colour.blue
-        assert_equal 4, colour.alpha
-      end
+  Then "it has the correct values" do
+    expect(@colour).to_be_a(Colour)
+    expect(@colour.red).to_equal(1)
+    expect(@colour.green).to_equal(2)
+    expect(@colour.blue).to_equal(3)
+    expect(@colour.alpha).to_equal(4)
+  end
 
-      def test_brackets
-        colour = Colour[]
+  When "assigned new values" do
+    @colour.red = 4
+    @colour.green = 3
+    @colour.blue = 2
+    @colour.alpha = 1
+  end
 
-        assert_kind_of Colour, colour
-        assert_equal 0, colour.red
-        assert_equal 0, colour.green
-        assert_equal 0, colour.blue
-        assert_equal 255, colour.alpha
+  Then "they are updated" do
+    expect(@colour.red).to_equal(4)
+    expect(@colour.green).to_equal(3)
+    expect(@colour.blue).to_equal(2)
+    expect(@colour.alpha).to_equal(1)
+  end
+end
 
-        colour = Colour[1, 2, 3, 4]
+@unit.describe "Colour.[]" do
+  When "we make a colour" do
+    @colour = Colour[]
+  end
 
-        assert_kind_of Colour, colour
-        assert_equal 1, colour.red
-        assert_equal 2, colour.green
-        assert_equal 3, colour.blue
-        assert_equal 4, colour.alpha
-      end
+  Then "it has the correct values" do
+    expect(@colour).to_be_a(Colour)
+    expect(@colour.red).to_equal(0)
+    expect(@colour.green).to_equal(0)
+    expect(@colour.blue).to_equal(0)
+    expect(@colour.alpha).to_equal(255)
+  end
 
-      def test_equal
-        colour = Colour.new(red: 245, green: 245, blue: 245, alpha: 255)
+  When "we make a colour with all the arguments" do
+    @colour = Colour[1, 2, 3, 4]
+  end
 
-        assert_true colour == Colour::RAYWHITE
-      end
+  Then "it has the correct values" do
+    expect(@colour).to_be_a(Colour)
+    expect(@colour.red).to_equal(1)
+    expect(@colour.green).to_equal(2)
+    expect(@colour.blue).to_equal(3)
+    expect(@colour.alpha).to_equal(4)
+  end
+end
 
-      def test_equal_another_type
-        colour = Colour.new(red: 245, green: 245, blue: 245, alpha: 255)
+@unit.describe "Colour#==" do
+  Given "we have a colour that matches Colour::RAYWHITE" do
+    @colour = Colour.new(red: 245, green: 245, blue: 245, alpha: 255)
+  end
 
-        assert_false colour == Vector2[1, 2]
-      end
+  Then "return true based on value comparison" do
+    expect(@colour == Colour::RAYWHITE).to_be_true
+  end
 
-      def test_assignment
-        colour = Colour.new(red: 0, green: 0, blue: 0, alpha: 0)
-        colour.red = 4
-        colour.green = 3
-        colour.blue = 2
-        colour.alpha = 1
+  But "return false if compared to a different value" do
+    expect(@colour == Colour::GREEN).to_be_false
+  end
 
-        assert_equal 4, colour.red
-        assert_equal 3, colour.green
-        assert_equal 2, colour.blue
-        assert_equal 1, colour.alpha
-      end
+  And "return false if compared to a different class" do
+    expect(@colour == Vector2[0, 0]).to_be_false
+  end
+end
 
-      def test_to_h
-        colour = Colour.new(red: 1, green: 2, blue: 3, alpha: 4)
+@unit.describe "Colour#to_h" do
+  Given "we have a colour" do
+    @colour = Colour.new(red: 3, green: 4, blue: 5, alpha: 6)
+  end
 
-        assert_equal(
-          {
-            red: 1,
-            green: 2,
-            blue: 3,
-            alpha: 4
-          },
-          colour.to_h
-        )
-      end
+  Then "return a hash with all the values" do
+    expect(@colour.to_h).to_equal(
+      {
+        red: 3,
+        green: 4,
+        blue: 5,
+        alpha: 6
+      }
+    )
+  end
+end
 
-      def test_fade
-        colour = Colour.new(red: 2, green: 3, blue: 4, alpha: 5)
+@unit.describe "Colour#fade" do
+  Given "we have a colour" do
+    Taylor::Raylib.mock_call("Fade", Colour.mock_return(red: 255, green: 255, blue: 255, alpha: 127))
+    @colour = Colour.new(red: 255, green: 255, blue: 255, alpha: 255)
+  end
 
-        result = colour.fade(0.1)
+  When "we fade the colour" do
+    @faded_colour = @colour.fade(0.5)
+  end
 
-        assert_not_equal result, colour
+  Then "we have updated our values" do
+    expect(@faded_colour.red).to_equal(255)
+    expect(@faded_colour.green).to_equal(255)
+    expect(@faded_colour.blue).to_equal(255)
+    expect(@faded_colour.alpha).to_equal(127)
+  end
 
-        assert_called [
-          "(Fade) { color: { r: 2 g: 3 b: 4 a: 5 } alpha: 0.100000 }"
-        ]
-      end
+  And "we have not updated our original values" do
+    expect(@colour.red).to_equal(255)
+    expect(@colour.green).to_equal(255)
+    expect(@colour.blue).to_equal(255)
+    expect(@colour.alpha).to_equal(255)
+  end
 
-      def test_fade_too_low
-        colour = Colour.new(red: 3, green: 4, blue: 5, alpha: 6)
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(Fade) { color: { r: 255 g: 255 b: 255 a: 255 } alpha: 0.500000 }"
+      ]
+    )
+  end
 
-        assert_raise_with_message(ArgumentError, "Alpha must be within (0.0..1.0)") {
-          colour.fade(-0.1)
-        }
+  But "when called with a negative fade" do
+    expect {
+      @colour.fade(-0.1)
+    }.to_raise(ArgumentError, "Alpha must be within (0.0..1.0)")
+  end
 
-        assert_no_calls
-      end
+  Or "when called with a fade above 1" do
+    expect {
+      @colour.fade(1.1)
+    }.to_raise(ArgumentError, "Alpha must be within (0.0..1.0)")
+  end
+end
 
-      def test_fade_too_high
-        colour = Colour.new(red: 4, green: 5, blue: 6, alpha: 7)
+@unit.describe "Colour#fade!" do
+  Given "we have a colour" do
+    Taylor::Raylib.mock_call("Fade", Colour.mock_return(red: 255, green: 255, blue: 255, alpha: 127))
+    @colour = Colour.new(red: 255, green: 255, blue: 255, alpha: 255)
+  end
 
-        assert_raise_with_message(ArgumentError, "Alpha must be within (0.0..1.0)") {
-          colour.fade(1.1)
-        }
+  When "we fade! the colour" do
+    @colour.fade!(0.5)
+  end
 
-        assert_no_calls
-      end
+  Then "we have updated our values" do
+    expect(@colour.red).to_equal(255)
+    expect(@colour.green).to_equal(255)
+    expect(@colour.blue).to_equal(255)
+    expect(@colour.alpha).to_equal(127)
+  end
 
-      def test_fade!
-        colour = Colour.new(red: 2, green: 3, blue: 4, alpha: 5)
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(Fade) { color: { r: 255 g: 255 b: 255 a: 255 } alpha: 0.500000 }"
+      ]
+    )
+  end
 
-        result = colour.fade!(0.1)
+  But "when called with a negative fade" do
+    expect {
+      @colour.fade!(-0.1)
+    }.to_raise(ArgumentError, "Alpha must be within (0.0..1.0)")
+  end
 
-        assert_equal result, colour
-
-        assert_called [
-          "(Fade) { color: { r: 2 g: 3 b: 4 a: 5 } alpha: 0.100000 }"
-        ]
-      end
-
-      def test_fade_bang_too_low
-        colour = Colour.new(red: 3, green: 4, blue: 5, alpha: 6)
-
-        assert_raise_with_message(ArgumentError, "Alpha must be within (0.0..1.0)") {
-          colour.fade!(-0.1)
-        }
-
-        assert_no_calls
-      end
-
-      def test_fade_bang_too_high
-        colour = Colour.new(red: 4, green: 5, blue: 6, alpha: 7)
-
-        assert_raise_with_message(ArgumentError, "Alpha must be within (0.0..1.0)") {
-          colour.fade!(1.1)
-        }
-
-        assert_no_calls
-      end
-    end
+  Or "when called with a fade above 1" do
+    expect {
+      @colour.fade!(1.1)
+    }.to_raise(ArgumentError, "Alpha must be within (0.0..1.0)")
   end
 end

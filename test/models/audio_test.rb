@@ -1,62 +1,105 @@
-class Test
-  class Models
-    class Audio_Test < Test::Base
-      def test_open
-        Audio.open
+@unit.describe "Audio.open" do
+  When "we call open" do
+    Audio.open
+  end
 
-        assert_called ["(InitAudioDevice) { }"]
-      end
+  Then "Raylib was called with the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(InitAudioDevice) { }"
+      ]
+    )
+  end
+end
 
-      def test_ready?
-        Audio.ready?
+@unit.describe "Audio.ready?" do
+  When "we call ready?" do
+    Audio.ready?
+  end
 
-        assert_called ["(IsAudioDeviceReady) { }"]
-      end
+  Then "Raylib was called with the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsAudioDeviceReady) { }"
+      ]
+    )
+  end
+end
 
-      def test_volume
-        Audio.volume
+@unit.describe "Audio.volume" do
+  Given "the volume has been set" do
+    Taylor::Raylib.mock_call("GetMasterVolume", "70")
+  end
 
-        assert_called [
-          "(IsAudioDeviceReady) { }",
-          "(GetMasterVolume) { }"
-        ]
-      end
+  Then "we get the volume" do
+    expect(Audio.volume).to_equal(70)
+  end
 
-      def test_volume_equals_errors_too_low
-        assert_raise_with_message(ArgumentError, "Must be within (0..100)") {
-          Audio.volume = -1
-        }
+  And "Raylib was called with the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsAudioDeviceReady) { }",
+        "(GetMasterVolume) { }"
+      ]
+    )
+  end
 
-        assert_called ["(IsAudioDeviceReady) { }"]
-      end
+  But "raises an error when called with a negative value" do
+    expect {
+      Audio.volume = -1
+    }.to_raise(ArgumentError, "Must be within (0..100)")
+  end
 
-      def test_volume_equals_errors_too_high
-        assert_raise_with_message(ArgumentError, "Must be within (0..100)") {
-          Audio.volume = 101
-        }
+  And "raises an error when called with a value over 100" do
+    expect {
+      Audio.volume = 101
+    }.to_raise(ArgumentError, "Must be within (0..100)")
+  end
 
-        assert_called ["(IsAudioDeviceReady) { }"]
-      end
+  Given "Audio isn't ready" do
+    Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
+  end
 
-      def test_volume_before_open
-        Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
+  Then "raise an error" do
+    expect {
+      Audio.volume
+    }.to_raise(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume")
+  end
+end
 
-        assert_raise_with_message(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume") {
-          Audio.volume
-        }
+@unit.describe "Audio.volume=" do
+  When "we set the volume" do
+    Audio.volume = 70
+  end
 
-        assert_called ["(IsAudioDeviceReady) { }"]
-      end
+  Then "Raylib was called with the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsAudioDeviceReady) { }",
+        "(SetMasterVolume) { volume: 0.700000 }"
+      ]
+    )
+  end
 
-      def test_set_volume_before_open
-        Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
+  But "raises an error when called with a negative value" do
+    expect {
+      Audio.volume = -1
+    }.to_raise(ArgumentError, "Must be within (0..100)")
+  end
 
-        assert_raise_with_message(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume=") {
-          Audio.volume = 50
-        }
+  And "raises an error when called with a value over 100" do
+    expect {
+      Audio.volume = 101
+    }.to_raise(ArgumentError, "Must be within (0..100)")
+  end
 
-        assert_called ["(IsAudioDeviceReady) { }"]
-      end
-    end
+  Given "Audio isn't ready" do
+    Taylor::Raylib.mock_call("IsAudioDeviceReady", "false")
+  end
+
+  Then "raise an error" do
+    expect {
+      Audio.volume = 50
+    }.to_raise(Audio::NotOpenError, "You must use Audio.open before calling Audio.volume=")
   end
 end

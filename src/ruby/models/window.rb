@@ -17,7 +17,9 @@ module Window
   #
   # @yield The block that calls your rendering logic.
   # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.draw(&block)
+    raise Window::NotReadyError, "You must call Window.open before Window.draw" unless Window.ready?
     begin_drawing
     block.call
   ensure
@@ -46,7 +48,9 @@ module Window
   #   {Window::Blend::SUBTRACT_COLORS}, or {Window::Blend::ALPHA_PREMULTIPLY}
   # @yield The block that calls your rendering logic.
   # @return [nil]
+  # @raise [Window::NotReadyError] If called before opening the Window
   def self.blend(blend_mode, &block)
+    raise Window::NotReadyError, "You must call Window.open before Window.blend" unless Window.ready?
     begin_blending(blend_mode)
     block.call
   ensure

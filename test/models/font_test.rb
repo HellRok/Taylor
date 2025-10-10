@@ -1,225 +1,466 @@
-class Test
-  class Models
-    class Font_Test < Test::Base
-      def test_initialize
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 32, glyph_count: 95, glyph_padding: 4))
+@unit.describe "Font#initialize" do
+  Given "we have a font to load" do
+    Taylor::Raylib.mock_call("FileExists", "true")
+    Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 32, glyph_count: 95, glyph_padding: 4))
+  end
 
-        font = Font.new("./assets/tiny.ttf")
+  When "we load the font" do
+    @font = Font.new("./assets/tiny.ttf")
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/tiny.ttf' }",
-          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 32 codepoints: 0x0 codepointCount: 95 }"
-        ]
+  Then "it has the correct attributes" do
+    expect(@font).to_be_a(Font)
+    expect(@font.size).to_equal(32)
+    expect(@font.glyph_count).to_equal(95)
+    expect(@font.glyph_padding).to_equal(4)
+  end
 
-        assert_kind_of Font, font
-        assert_equal 32, font.size
-        assert_equal 95, font.glyph_count
-        assert_equal 4, font.glyph_padding
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(FileExists) { fileName: './assets/tiny.ttf' }",
+        "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 32 codepoints: 0x0 codepointCount: 95 }"
+      ]
+    )
+  end
 
-      def test_initialize_with_args
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 6, glyph_count: 100, glyph_padding: 4))
+  Given "we have a font to load" do
+    Taylor::Raylib.mock_call("FileExists", "true")
+    Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 6, glyph_count: 100, glyph_padding: 4))
+  end
 
-        font = Font.new("./assets/tiny.ttf", size: 6, glyph_count: 100)
+  When "we load the font with arguments" do
+    @font = Font.new("./assets/tiny.ttf", size: 6, glyph_count: 100)
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/tiny.ttf' }",
-          "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 6 codepoints: 0x0 codepointCount: 100 }"
-        ]
+  Then "it has the correct attributes" do
+    expect(@font).to_be_a(Font)
+    expect(@font.size).to_equal(6)
+    expect(@font.glyph_count).to_equal(100)
+    expect(@font.glyph_padding).to_equal(4)
+  end
 
-        assert_kind_of Font, font
-        assert_equal 6, font.size
-        assert_equal 100, font.glyph_count
-        assert_equal 4, font.glyph_padding
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(FileExists) { fileName: './assets/tiny.ttf' }",
+        "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 6 codepoints: 0x0 codepointCount: 100 }"
+      ]
+    )
+  end
 
-      def test_initialize_fail
-        Taylor::Raylib.mock_call("FileExists", "false")
+  Given "we have no font to load" do
+    Taylor::Raylib.mock_call("FileExists", "false")
+  end
 
-        assert_raise_with_message(Font::NotFoundError, "Unable to find './assets/fail.ttf'") {
-          Font.new("./assets/fail.ttf")
+  Then "we raise an error" do
+    expect {
+      Font.new("./assets/fail.ttf")
+    }.to_raise(Font::NotFoundError, "Unable to find './assets/fail.ttf'")
+  end
+
+  Then "clean up" do
+    @font = nil
+  end
+end
+
+@unit.describe "Font#unload" do
+  Given "we have a font loaded" do
+    Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 1, glyph_count: 2, glyph_padding: 3))
+    @font = Font.new("./assets/tiny.ttf")
+    Taylor::Raylib.reset_calls
+  end
+
+  When "we unload the font" do
+    @font.unload
+  end
+
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(UnloadFont) { font: { baseSize: 1 glyphCount: 2 glyphPadding: 3 } }"
+      ]
+    )
+  end
+
+  Then "clean up" do
+    @font = nil
+  end
+end
+
+@unit.describe "Font#default" do
+  When "we use the default font" do
+    Taylor::Raylib.mock_call("GetFontDefault", Font.mock_return(size: 10, glyph_count: 224, glyph_padding: 0))
+    @font = Font.default
+  end
+
+  Then "it has the correct attributes" do
+    expect(@font).to_be_a(Font)
+    expect(@font.size).to_equal(10)
+    expect(@font.glyph_count).to_equal(224)
+    expect(@font.glyph_padding).to_equal(0)
+  end
+
+  Then "clean up" do
+    @font = nil
+  end
+end
+
+@unit.describe "Font#to_h" do
+  Given "we load a font" do
+    Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 32, glyph_count: 95, glyph_padding: 4))
+    @font = Font.new("./assets/tiny.ttf")
+  end
+
+  Then "we return a hash with all the attributes" do
+    expect(@font.to_h).to_equal(
+      {
+        size: 32,
+        glyph_count: 95,
+        glyph_padding: 4,
+        texture: {
+          id: 0.0,
+          width: 0.0,
+          height: 0.0,
+          mipmaps: 0.0,
+          format: 0.0
         }
+      }
+    )
+  end
 
-        assert_called [
-          "(FileExists) { fileName: './assets/fail.ttf' }"
-        ]
-      end
+  Then "clean up" do
+    @font = nil
+  end
+end
 
-      def test_unload
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 1, glyph_count: 2, glyph_padding: 3))
-        font = Font.new("./assets/tiny.ttf")
-        Taylor::Raylib.reset_calls
+@unit.describe "Font#valid?" do
+  Given "we have a valid font" do
+    Taylor::Raylib.mock_call("IsFontValid", "true")
+    Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 4, glyph_count: 5, glyph_padding: 6))
+    @font = Font.new("./assets/tiny.ttf")
+    Taylor::Raylib.reset_calls
+  end
 
-        font.unload
-        assert_called [
-          "(UnloadFont) { font: { baseSize: 1 glyphCount: 2 glyphPadding: 3 } }"
-        ]
-      end
+  Then "return true" do
+    expect(@font.valid?).to_be_true
+  end
 
-      def test_default
-        Taylor::Raylib.mock_call("GetFontDefault", Font.mock_return(size: 10, glyph_count: 224, glyph_padding: 0))
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsFontValid) { font: { baseSize: 4 glyphCount: 5 glyphPadding: 6 } }"
+      ]
+    )
+  end
 
-        font = Font.default
+  Given "we have an invalid font" do
+    Taylor::Raylib.mock_call("IsFontValid", "false")
+    Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 5, glyph_count: 6, glyph_padding: 7))
+    @font = Font.new("./assets/tiny.ttf")
+    Taylor::Raylib.reset_calls
+  end
 
-        assert_kind_of Font, font
-        assert_equal 10, font.size
-        assert_equal 224, font.glyph_count
-        assert_equal 0, font.glyph_padding
+  Then "return false" do
+    expect(@font.valid?).to_be_false
+  end
 
-        assert_called [
-          "(GetFontDefault) { }"
-        ]
-      end
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsFontValid) { font: { baseSize: 5 glyphCount: 6 glyphPadding: 7 } }"
+      ]
+    )
+  end
 
-      def test_to_h
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 32, glyph_count: 95, glyph_padding: 4))
+  Then "clean up" do
+    @font = nil
+  end
+end
 
-        font = Font.new("./assets/tiny.ttf")
+@unit.describe "Font#draw" do
+  Given "we have a font" do
+    Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 6, glyph_count: 7, glyph_padding: 8))
+    @font = Font.new("./assets/tiny.ttf")
+    Taylor::Raylib.reset_calls
+  end
 
-        assert_equal(32, font.to_h[:size])
-        assert_equal(95, font.to_h[:glyph_count])
-        assert_equal(4, font.to_h[:glyph_padding])
-      end
+  When "we draw it" do
+    @font.draw("text")
+  end
 
-      def test_valid?
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 4, glyph_count: 5, glyph_padding: 6))
-        font = Font.new("./assets/tiny.ttf")
-        Taylor::Raylib.reset_calls
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DrawTextEx) { " \
+          "font: { " \
+            "baseSize: 6 " \
+            "glyphCount: 7 " \
+            "glyphPadding: 8 " \
+          "} " \
+          "text: 'text' " \
+          "position: { " \
+            "x: 0.000000 " \
+            "y: 0.000000 " \
+          "} " \
+          "fontSize: 6.000000 " \
+          "spacing: 0.000000 " \
+          "tint: { " \
+            "r: 0 " \
+            "g: 0 " \
+            "b: 0 " \
+            "a: 255 " \
+          "} " \
+        "}"
+      ]
+    )
+  end
 
-        Taylor::Raylib.mock_call("IsFontValid", "true")
-        Taylor::Raylib.mock_call("IsFontValid", "false")
+  When "we draw it with extra arguments" do
+    @font.draw(
+      "x",
+      size: 12,
+      spacing: 13,
+      colour: Colour[1, 2, 3, 4]
+    )
+  end
 
-        assert_true font.valid?
-        assert_false font.valid?
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DrawTextEx) { " \
+          "font: { " \
+            "baseSize: 6 " \
+            "glyphCount: 7 " \
+            "glyphPadding: 8 " \
+          "} " \
+          "text: 'x' " \
+          "position: { " \
+            "x: 0.000000 " \
+            "y: 0.000000 " \
+          "} " \
+          "fontSize: 12.000000 " \
+          "spacing: 13.000000 " \
+          "tint: { " \
+            "r: 1 " \
+            "g: 2 " \
+            "b: 3 " \
+            "a: 4 " \
+          "} " \
+        "}"
+      ]
+    )
+  end
 
-        assert_called [
-          "(IsFontValid) { font: { baseSize: 4 glyphCount: 5 glyphPadding: 6 } }",
-          "(IsFontValid) { font: { baseSize: 4 glyphCount: 5 glyphPadding: 6 } }"
-        ]
-      end
+  When "we draw it with a vector position" do
+    @font.draw(
+      "q",
+      position: Vector2.new(x: 2, y: 3)
+    )
+  end
 
-      def test_draw
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 7, glyph_count: 8, glyph_padding: 9))
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DrawTextEx) { " \
+          "font: { " \
+            "baseSize: 6 " \
+            "glyphCount: 7 " \
+            "glyphPadding: 8 " \
+          "} " \
+          "text: 'q' " \
+          "position: { " \
+            "x: 2.000000 " \
+            "y: 3.000000 " \
+          "} " \
+          "fontSize: 6.000000 " \
+          "spacing: 0.000000 " \
+          "tint: { " \
+            "r: 0 " \
+            "g: 0 " \
+            "b: 0 " \
+            "a: 255 " \
+          "} " \
+        "}"
+      ]
+    )
+  end
 
-        font = Font.new("./assets/tiny.ttf")
-        Taylor::Raylib.reset_calls
+  When "we draw it with x and y for position" do
+    @font.draw(
+      "y",
+      x: 2, y: 1
+    )
+  end
 
-        font.draw("text")
-        assert_called [
-          "(DrawTextEx) { font: { baseSize: 7 glyphCount: 8 glyphPadding: 9 } text: 'text' position: { x: 0.000000 y: 0.000000 } fontSize: 7.000000 spacing: 0.000000 tint: { r: 0 g: 0 b: 0 a: 255 } }"
-        ]
-      end
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(DrawTextEx) { " \
+          "font: { " \
+            "baseSize: 6 " \
+            "glyphCount: 7 " \
+            "glyphPadding: 8 " \
+          "} " \
+          "text: 'y' " \
+          "position: { " \
+            "x: 2.000000 " \
+            "y: 1.000000 " \
+          "} " \
+          "fontSize: 6.000000 " \
+          "spacing: 0.000000 " \
+          "tint: { " \
+            "r: 0 " \
+            "g: 0 " \
+            "b: 0 " \
+            "a: 255 " \
+          "} " \
+        "}"
+      ]
+    )
+  end
 
-      def test_draw_with_args
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 6))
-        font = Font.new("./assets/tiny.ttf", size: 6)
-        Taylor::Raylib.reset_calls
+  Then "clean up" do
+    @font = nil
+  end
+end
 
-        font.draw(
-          "x",
-          size: 12,
-          spacing: 13,
-          colour: Colour[1, 2, 3, 4]
-        )
+@unit.describe "Font#measure" do
+  Given "we have a font loaded" do
+    Taylor::Raylib.mock_call("MeasureTextEx", "1 2")
+    Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 9))
+    @font = Font.new("./assets/tiny.ttf", size: 9)
+    Taylor::Raylib.reset_calls
+  end
 
-        assert_called [
-          "(DrawTextEx) { font: { baseSize: 6 glyphCount: 0 glyphPadding: 0 } text: 'x' position: { x: 0.000000 y: 0.000000 } fontSize: 12.000000 spacing: 13.000000 tint: { r: 1 g: 2 b: 3 a: 4 } }"
-        ]
-      end
+  Then "we can measure the font" do
+    expect(@font.measure("xx")).to_equal(Vector2[1, 2])
+  end
 
-      def test_draw_with_vector
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 8))
-        font = Font.new("./assets/tiny.ttf", size: 8)
-        Taylor::Raylib.reset_calls
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(MeasureTextEx) { " \
+          "font: { " \
+            "baseSize: 9 " \
+            "glyphCount: 0 " \
+            "glyphPadding: 0 " \
+          "} " \
+          "text: 'xx' " \
+          "fontSize: 9.000000 " \
+          "spacing: 0.000000 " \
+        "}"
+      ]
+    )
+  end
 
-        font.draw(
-          "q",
-          position: Vector2.new(2, 3)
-        )
+  When "measured with extra arguments" do
+    Taylor::Raylib.mock_call("MeasureTextEx", "2 3")
+    expect(@font.measure("qq", size: 11, spacing: 12)).to_equal(Vector2[2, 3])
+  end
 
-        assert_called [
-          "(DrawTextEx) { font: { baseSize: 8 glyphCount: 0 glyphPadding: 0 } text: 'q' position: { x: 2.000000 y: 3.000000 } fontSize: 8.000000 spacing: 0.000000 tint: { r: 0 g: 0 b: 0 a: 255 } }"
-        ]
-      end
+  Then "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(MeasureTextEx) { " \
+          "font: { " \
+            "baseSize: 9 " \
+            "glyphCount: 0 " \
+            "glyphPadding: 0 " \
+          "} " \
+          "text: 'qq' " \
+          "fontSize: 11.000000 " \
+          "spacing: 12.000000 " \
+        "}"
+      ]
+    )
+  end
 
-      def test_draw_with_x_and_y
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 9))
-        font = Font.new("./assets/tiny.ttf", size: 9)
-        Taylor::Raylib.reset_calls
+  Then "clean up" do
+    @font = nil
+  end
+end
 
-        font.draw(
-          "y",
-          x: 2, y: 1
-        )
+@unit.describe "Font#to_image" do
+  Given "we have a font" do
+    Taylor::Raylib.mock_call("ImageTextEx", Image.mock_return(width: 1, height: 2, mipmaps: 3, format: 4))
+    Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 11))
+    @font = Font.new("./assets/tiny.ttf", size: 11)
+    Taylor::Raylib.reset_calls
+  end
 
-        assert_called [
-          "(DrawTextEx) { font: { baseSize: 9 glyphCount: 0 glyphPadding: 0 } text: 'y' position: { x: 2.000000 y: 1.000000 } fontSize: 9.000000 spacing: 0.000000 tint: { r: 0 g: 0 b: 0 a: 255 } }"
-        ]
-      end
+  When "we call to_image " do
+    @image = @font.to_image("xx")
+  end
 
-      def test_measure
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 9))
-        font = Font.new("./assets/tiny.ttf", size: 9)
-        Taylor::Raylib.reset_calls
-        Taylor::Raylib.mock_call("MeasureTextEx", "1 2")
+  Then "the image has the correct attributes" do
+    expect(@image).to_be_a(Image)
+    expect(@image.width).to_equal(1)
+    expect(@image.height).to_equal(2)
+    expect(@image.mipmaps).to_equal(3)
+    expect(@image.format).to_equal(4)
+  end
 
-        assert_equal Vector2[1, 2], font.measure("xx")
+  And "Raylib was receives the correct methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(ImageTextEx) { " \
+          "font: { " \
+            "baseSize: 11 " \
+            "glyphCount: 0 " \
+            "glyphPadding: 0 " \
+          "} " \
+          "text: 'xx' " \
+          "fontSize: 11.000000 " \
+          "spacing: 0.000000 " \
+          "tint: { " \
+            "r: 0 " \
+            "g: 0 " \
+            "b: 0 " \
+            "a: 255 " \
+          "} " \
+        "}"
+      ]
+    )
+  end
 
-        assert_called [
-          "(MeasureTextEx) { font: { baseSize: 9 glyphCount: 0 glyphPadding: 0 } text: 'xx' fontSize: 9.000000 spacing: 0.000000 }"
-        ]
-      end
+  When "called with arguments" do
+    Taylor::Raylib.mock_call("ImageTextEx", Image.mock_return(width: 2, height: 3, mipmaps: 4, format: 5))
+    @image = @font.to_image("x", size: 13, spacing: 14, colour: Colour[2, 3, 4, 5])
+  end
 
-      def test_measure_with_args
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 10))
-        font = Font.new("./assets/tiny.ttf", size: 10)
-        Taylor::Raylib.reset_calls
-        Taylor::Raylib.mock_call("MeasureTextEx", "2 3")
+  Then "the image has the correct arguments" do
+    expect(@image).to_be_a(Image)
+    expect(@image.width).to_equal(2)
+    expect(@image.height).to_equal(3)
+    expect(@image.mipmaps).to_equal(4)
+    expect(@image.format).to_equal(5)
+  end
 
-        assert_equal Vector2[2, 3], font.measure("qq", size: 11, spacing: 12)
+  And "Raylib was receives the correct methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(ImageTextEx) { " \
+          "font: { " \
+            "baseSize: 11 " \
+            "glyphCount: 0 " \
+            "glyphPadding: 0 " \
+          "} " \
+          "text: 'x' " \
+          "fontSize: 13.000000 " \
+          "spacing: 14.000000 " \
+          "tint: { " \
+            "r: 2 " \
+            "g: 3 " \
+            "b: 4 " \
+            "a: 5 " \
+          "} " \
+        "}"
+      ]
+    )
+  end
 
-        assert_called [
-          "(MeasureTextEx) { font: { baseSize: 10 glyphCount: 0 glyphPadding: 0 } text: 'qq' fontSize: 11.000000 spacing: 12.000000 }"
-        ]
-      end
-
-      def test_to_image
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 11))
-        font = Font.new("./assets/tiny.ttf", size: 11)
-        Taylor::Raylib.reset_calls
-        Taylor::Raylib.mock_call("ImageTextEx", Image.mock_return(width: 1, height: 2, mipmaps: 3, format: 4))
-
-        image = font.to_image("xx")
-
-        assert_kind_of Image, image
-        assert_equal 1, image.width
-        assert_equal 2, image.height
-        assert_equal 3, image.mipmaps
-        assert_equal 4, image.format
-
-        assert_called [
-          "(ImageTextEx) { font: { baseSize: 11 glyphCount: 0 glyphPadding: 0 } text: 'xx' fontSize: 11.000000 spacing: 0.000000 tint: { r: 0 g: 0 b: 0 a: 255 } }"
-        ]
-      end
-
-      def test_to_image_with_args
-        Taylor::Raylib.mock_call("LoadFontEx", Font.mock_return(size: 12))
-        font = Font.new("./assets/tiny.ttf", size: 12)
-        Taylor::Raylib.reset_calls
-        Taylor::Raylib.mock_call("ImageTextEx", Image.mock_return(width: 2, height: 3, mipmaps: 4, format: 5))
-
-        image = font.to_image("x", size: 13, spacing: 14, colour: Colour[2, 3, 4, 5])
-
-        assert_kind_of Image, image
-        assert_equal 2, image.width
-        assert_equal 3, image.height
-        assert_equal 4, image.mipmaps
-        assert_equal 5, image.format
-
-        assert_called [
-          "(ImageTextEx) { font: { baseSize: 12 glyphCount: 0 glyphPadding: 0 } text: 'x' fontSize: 13.000000 spacing: 14.000000 tint: { r: 2 g: 3 b: 4 a: 5 } }"
-        ]
-      end
-    end
+  Then "clean up" do
+    @font = nil
   end
 end
