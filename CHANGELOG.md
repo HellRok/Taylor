@@ -445,6 +445,7 @@
 - Added Music#valid?
 - Updated Emscripten to 4.0.13
 - Switch to neospec
+- Font spacing now defaults to 2 instead of 0
 
 ## v0.3.14.1
 

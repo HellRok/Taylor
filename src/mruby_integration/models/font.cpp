@@ -138,11 +138,11 @@ mrb_Font_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* text;
 
-  // def draw(text, size: self.size, spacing: 0, x: 0, y: 0, position:
+  // def draw(text, size: self.size, spacing: 2, x: 0, y: 0, position:
   // Vector2[x, y], colour: Colour::BLACK)
-  mrb_int kw_num = 6;
-  mrb_int kw_required = 0;
-  mrb_sym kw_names[] = {
+  const mrb_int kw_num = 6;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = {
     mrb_intern_lit(mrb, "size"),     mrb_intern_lit(mrb, "spacing"),
     mrb_intern_lit(mrb, "x"),        mrb_intern_lit(mrb, "y"),
     mrb_intern_lit(mrb, "position"), mrb_intern_lit(mrb, "colour")
@@ -160,7 +160,7 @@ mrb_Font_draw(mrb_state* mrb, mrb_value self) -> mrb_value
     size = mrb_as_float(mrb, kw_values[0]);
   }
 
-  float spacing = 0;
+  float spacing = 2;
   if (!mrb_undef_p(kw_values[1])) {
     spacing = mrb_as_float(mrb, kw_values[1]);
   }
@@ -201,7 +201,7 @@ mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* text;
 
-  // def measure(text, size: self.size, spacing: 0)
+  // def measure(text, size: self.size, spacing: 2)
   mrb_int kw_num = 2;
   mrb_int kw_required = 0;
   mrb_sym kw_names[] = {
@@ -221,7 +221,7 @@ mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
     size = mrb_as_float(mrb, kw_values[0]);
   }
 
-  float spacing = 0;
+  float spacing = 2;
   if (!mrb_undef_p(kw_values[1])) {
     spacing = mrb_as_float(mrb, kw_values[1]);
   }
@@ -237,7 +237,7 @@ mrb_Font_to_image(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* text;
 
-  // def to_image(text, size: self.size, spacing: 0, colour: Colour::BLACK)
+  // def to_image(text, size: self.size, spacing: 2, colour: Colour::BLACK)
   mrb_int kw_num = 3;
   mrb_int kw_required = 0;
   mrb_sym kw_names[] = {
@@ -258,7 +258,7 @@ mrb_Font_to_image(mrb_state* mrb, mrb_value self) -> mrb_value
     size = mrb_as_float(mrb, kw_values[0]);
   }
 
-  float spacing = 0;
+  float spacing = 2;
   if (!mrb_undef_p(kw_values[1])) {
     spacing = mrb_as_float(mrb, kw_values[1]);
   }

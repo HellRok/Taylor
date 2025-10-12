@@ -25,7 +25,7 @@ def game_template
         Window.clear(colour: Colour::RAYWHITE)
         Font.default.draw(
           "Welcome to your first Taylor application!",
-          x: 190, y: 200, size: 20, spacing: 2, colour: Colour::DARKGRAY
+          x: 190, y: 200, size: 20, colour: Colour::DARKGRAY
         )
       end
     end

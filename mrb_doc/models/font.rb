@@ -50,7 +50,7 @@ class Font
   # @param position [Vector2]
   # @param colour [Colour]
   # @return [nil]
-  def draw(text, size: self.size, spacing: 0, x: 0, y: 0, position: Vector2[x, y], colour: Colour::BLACK)
+  def draw(text, size: self.size, spacing: 2, x: 0, y: 0, position: Vector2[x, y], colour: Colour::BLACK)
     # mrb_Font_draw
     # src/mruby_integration/models/font.cpp
     nil
@@ -72,7 +72,7 @@ class Font
   # @param size [Float]
   # @param spacing [Float] How much spacing to have between letters.
   # @return [Vector2]
-  def measure(text, size: self.size, spacing: 0)
+  def measure(text, size: self.size, spacing: 2)
     # mrb_Font_measure
     # src/mruby_integration/models/font.cpp
     Vector2[33, 16]
@@ -116,7 +116,7 @@ class Font
   # @param spacing [Integer]
   # @param colour [Colour]
   # @return [Image]
-  def to_image(text, size: 32, spacing: 0, colour: BLACK)
+  def to_image(text, size: 32, spacing: 2, colour: BLACK)
     # mrb_Font_to_image
     # src/mruby_integration/models/font.cpp
     Image.new
