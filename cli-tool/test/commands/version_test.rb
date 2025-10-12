@@ -1,10 +1,9 @@
-class Test
-  class Commands
-    class Version_Test < Test::Base
-      def test_call
-        version_command = Taylor::Commands::Version.new
-        assert_equal "Taylor #{TAYLOR_VERSION}", version_command.puts_data
-      end
-    end
+@unit.describe "Version" do
+  When "we call `taylor --version`" do
+    @version_command = Taylor::Commands::Version.new
+  end
+
+  Then "we output the current version" do
+    expect(@version_command.puts_data).to_equal("Taylor #{TAYLOR_VERSION}")
   end
 end

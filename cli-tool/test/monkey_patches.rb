@@ -25,10 +25,27 @@ module RequireGrabber
   end
 end
 
-module Taylor
-  def self.remove_const(const)
-    $removed_const = const
+module ExitTrapper
+  attr_accessor :exit_status
+
+  def exit!(status) = @exit_status = status
+end
+
+module ConstantRemovalGrabber
+  @@removed_constants = []
+  def removed_constants = @@removed_constants
+
+  def removed_constants=(val)
+    @@removed_constants = val
   end
+
+  def remove_const(const)
+    @@removed_constants << const
+  end
+end
+
+module Taylor
+  extend ConstantRemovalGrabber
 
   module Commands
     class Export
@@ -43,6 +60,7 @@ module Taylor
     class Run
       include PutsGrabber
       include RequireGrabber
+      include ExitTrapper
     end
 
     class Squash

@@ -26,15 +26,15 @@ module Taylor
 
 
           Options:
-            -h, --help\t\t\tDisplays this message
-            -n, --name name\t\t\tWhat to name your new game (defaults to taylor_game)
-            -v, --version version\t\tWhat version is your game (defaults to v0.0.1)
+            -h, --help\t\t\t\tDisplays this message
+            -n, --name name\t\t\tWhat to name your new game (defaults to Taylor Game)
+            -v, --version version\t\t\tWhat version is your game (defaults to v0.0.1)
             -i, --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
             -d, --export-directory directory\tWhat directory do you want your exports (defaults to ./exports)
-            -t, --export-targets targets\tWhat exports do you want (defaults to linux,windows,osx/apple,osx/intel,web)
-            -l, --load-paths directories\tWhat directories do you want in your load path (defaults to ./,./vendor)
-            -c, --copy-paths directories\tWhat directories do you want copied into your exports (defaults to ./assets)
-            folder\t\t\tThe folder to create the new game in (defaults to the name value)
+            -t, --export-targets targets\t\tWhat exports do you want (defaults to linux,windows,osx/apple,osx/intel,web)
+            -l, --load-paths directories\t\tWhat directories do you want in your load path (defaults to ./,./vendor)
+            -c, --copy-paths directories\t\tWhat directories do you want copied into your exports (defaults to ./assets)
+            folder\t\t\t\tThe folder to create the new game in (defaults to the taylor_game)
         STR
       end
 
@@ -51,7 +51,7 @@ module Taylor
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
-          opts.on(:name, :string, options.fetch("name", "taylor_game"), short: :n)
+          opts.on(:name, :string, options["name"], short: :n)
           opts.on(:version, :string, options.fetch("version", "v0.0.1"), short: :v)
           opts.on(:input, :string, options.fetch("input", "game.rb"), short: :i)
           opts.on(:"export-directory", :string, options.fetch("export_directory", "./exports"), short: :d)
@@ -62,7 +62,17 @@ module Taylor
         parser.parse(argv)
 
         @options = parser.opts
-        @options[:folder] = parser.tail.first || @options[:name]
+        if parser.tail.first.nil? && @options[:name].nil?
+          @options[:folder] = "taylor_game"
+          @options[:name] = "Taylor Game"
+
+        elsif parser.tail.first && @options[:name].nil?
+          @options[:folder] = parser.tail.first
+          @options[:name] = File.basename(parser.tail.first)
+
+        else
+          @options[:folder] = parser.tail.first || simplify(@options[:name])
+        end
         @options[:"load-paths"] = @options[:"load-paths"].split(",") unless @options[:"load-paths"].is_a?(Array)
         @options[:"copy-paths"] = @options[:"copy-paths"].split(",") unless @options[:"copy-paths"].is_a?(Array)
         @options[:"export-targets"] = @options[:"export-targets"].split(",") unless @options[:"export-targets"].is_a?(Array)
@@ -116,6 +126,10 @@ module Taylor
         }
 
         output.chomp
+      end
+
+      def simplify(name)
+        name.downcase.tr(" ", "_")
       end
     end
   end

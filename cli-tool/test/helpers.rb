@@ -1,18 +1,20 @@
-def delete_project(path, input: "game.rb")
-  File.delete(File.join(path, input))
-  File.delete(File.join(path, "taylor-config.json"))
-  File.delete(File.join(path, "assets", ".keep"))
-  Dir.rmdir(File.join(path, "assets"))
-  File.delete(File.join(path, "vendor", ".keep"))
-  Dir.rmdir(File.join(path, "vendor"))
-  Dir.rmdir(path)
+def delete_project(path)
+  delete_dir(path)
 end
 
-$exited = false
-def exit(status)
-  $exited = true
-end
+def delete_dir(dir)
+  Dir.entries(dir).each do |file|
+    next if (file == ".") || (file == "..")
+    full_path = File.join(dir, file)
 
-def exit!(status)
-  $exited = true
+    if Dir.exist?(full_path)
+      delete_dir(full_path)
+    elsif File.exist?(full_path)
+      File.delete(full_path)
+    else
+      raise "Could not find '#{full_path}'"
+    end
+  end
+
+  Dir.rmdir(dir)
 end

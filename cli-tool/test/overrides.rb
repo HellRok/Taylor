@@ -1,7 +1,5 @@
-class Test
-  class Overrides_Test < MTest::Unit::TestCaseWithAnalytics
-    def test_released?
-      assert_false Taylor.released?
-    end
+@unit.describe "Taylor.released?" do
+  When "we check released? return false" do
+    expect(Taylor.released?).to_be_false
   end
 end

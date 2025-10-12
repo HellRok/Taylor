@@ -38,7 +38,7 @@ module Taylor
           Options:
             -h, --help\t\t\tShow this message
             -v, --version\t\t\tDisplay the version and exit
-            -i, --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
+            -i, --input input\t\tWhat is the name of the entrypoint file (defaults to game.rb)
 
           Actions:
             new\t\tCreate a new Taylor game
