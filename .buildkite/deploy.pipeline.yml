@@ -12,7 +12,6 @@ steps:
       - bundle exec rake linux:release:build
       - mv ./dist/linux/release/taylor /usr/bin/
       - bundle exec rake clean
-      - rm /tmp/buildkite/cli-tool/exports/*
       - .buildkite/scripts/deploy/build_docker_images.sh
       - .buildkite/scripts/deploy/build_taylor_cli.sh
       - .buildkite/scripts/deploy/generate_release_body.rb > release-body.md

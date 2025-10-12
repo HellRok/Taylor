@@ -266,14 +266,12 @@ namespace :compress do
       task :intel do
         Dir.chdir("/app/game/exports/osx")
         options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
-        sh "mv taylor-intel taylor"
         sh "zip -r \"#{options["name"]}-osx-intel-#{options["version"]}.zip\" taylor"
       end
 
       task :apple do
         Dir.chdir("/app/game/exports/osx")
         options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
-        sh "mv taylor-apple taylor"
         sh "zip -r \"#{options["name"]}-osx-apple-#{options["version"]}.zip\" taylor"
       end
     end
