@@ -1,4 +1,6 @@
-unless Taylor.released?
+# We use this to check if we've been released or not, it's a bit of a hack but
+# it work since released? is forced to false here.
+unless __FILE__ == "/app/taylor/output.rb"
   original_dir = Dir.getwd
   Dir.chdir(File.expand_path(File.dirname(ARGV.shift)))
   $:.unshift Dir.getwd
@@ -14,7 +16,7 @@ require "app/commands/run"
 require "app/commands/squash"
 require "app/commands/version"
 
-unless Taylor.released?
+unless __FILE__ == "/app/taylor/output.rb"
   $:.shift
   Dir.chdir(original_dir)
 end
