@@ -7,16 +7,12 @@
 </h1>
 <h4 align="center">Made for Games</h4>
 
-> [!CAUTION]
-> Taylor is currently going through a major refactor, see
-> https://github.com/HellRok/Taylor/issues/35 for the current progress.
-
 ![GitHub Release](https://img.shields.io/github/v/release/HellRok/Taylor)
 [![Build status](https://badge.buildkite.com/0cb81ca8e3b8f43a2998bc15f90323a2eb8429669e819b7697.svg)](https://buildkite.com/oequacki/taylor)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/HellRok/Taylor/total?label=total%20downloads)
 ![GitHub License](https://img.shields.io/github/license/HellRok/Taylor)
 
-[Website](https://www.taylormadetech.dev) | [Cheat Sheet](https://www.taylormadetech.dev/documentation/tutorials/cheat_sheet/) | [Documentation](https://www.taylormadetech.dev/documentation/taylor/latest/) | [Try it Out Online](https://www.taylormadetech.dev/playground/)
+[Website](https://taylormadetech.dev) | [Cheat Sheet](https://taylormadetech.dev/documentation/tutorials/cheat_sheet/) | [Documentation](https://taylormadetech.dev/documentation/taylor/latest/) | [Try it Out Online](https://playground.taylormadetech.dev/)
 
 ## What's This?
 
@@ -32,7 +28,7 @@ website](https://www.taylormadetech.dev/documentation/tutorials/getting_started/
 
 ## Examples
 
-If you'd like to see some examples, check them out on the [online playground!](https://www.taylormadetech.dev/playground/)
+If you'd like to see some examples, check them out on the [online playground!](https://playground.taylormadetech.dev/)
 
 ## Compile Yourself!
 
