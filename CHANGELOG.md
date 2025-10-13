@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Bump Ruby to 3.4.6 and update gems
+
 ## v0.4.0
 
 - Build the docker images one at a time to not thrash the disk
