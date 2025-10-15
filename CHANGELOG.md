@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Bump Ruby to 3.4.6 and update gems
+- Add buildkite analytics again
 
 ## v0.4.0
 

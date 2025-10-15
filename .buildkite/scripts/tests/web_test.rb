@@ -22,7 +22,7 @@ driver = Selenium::WebDriver.for(:firefox, options: options)
 driver.get("http://localhost:9999")
 
 def persist_analytics(analytics)
-  File.write("test-analytics.json", analytics)
+  File.write("test-analytics.json", analytics.to_json)
 end
 
 start_time = Time.now

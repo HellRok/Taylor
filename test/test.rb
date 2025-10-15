@@ -21,7 +21,10 @@ end
 
 neospec = Neospec.new(
   logger: Neospec::Logger::Basic.new,
-  reporters: [Neospec::Report::Basic],
+  reporters: [
+    Neospec::Report::Basic,
+    Neospec::Report::BuildkiteAnalytics
+  ],
   suites: [@unit]
 )
 
@@ -59,6 +62,7 @@ require "taylor_test"
 
 if Taylor::Platform.browser?
   success = neospec.run
+  puts "ANALYTICS: #{File.read("test-analytics.json")}"
   puts "EXIT CODE: #{success ? 0 : 1}"
   Browser.cancel_main_loop
   Browser.main_loop = "noop"

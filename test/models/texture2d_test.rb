@@ -170,7 +170,7 @@ end
   end
 end
 
-@unit.describe "#Texture2D#draw" do
+@unit.describe "Texture2D#draw" do
   Given "we have a texture" do
     Taylor::Raylib.mock_call(
       "LoadTexture",
