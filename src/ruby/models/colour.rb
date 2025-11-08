@@ -63,11 +63,11 @@ class Colour
   # @example Basic usage
   #   faded_blue = Colour[0, 255, 0, 196]
   #   p faded_blue
-  #   # => #<Colour:0x5649cc302660 red:0 blue:0 green:255 alpha:196>
+  #   # => #<Colour:0x5649cc302660 red:0 blue:255 green:0 alpha:196>
   #
   #   faded_blue.fade!(0.75)
   #   p faded_blue
-  #   # => #<Colour:0x5649cc302660 red:0 blue:0 green:255 alpha:191>
+  #   # => #<Colour:0x5649cc302660 red:0 blue:255 green:0 alpha:191>
   #
   # @param alpha [Float] A value between 0.0 and 1.0.
   # @return [Colour]
@@ -78,6 +78,29 @@ class Colour
       self.green = colour.green
       self.blue = colour.blue
       self.alpha = colour.alpha
+    }
+  end
+
+  # Tints the {Colour} with the passed in {Colour}.
+  #
+  # @example Basic usage
+  #   grey = Colour[128, 128, 128, 255]
+  #   p grey
+  #   # => #<Colour:0xb78270 red:128 blue:128 green:128 alpha:255>
+  #
+  #
+  #   grey.tint!(Colour::GREEN)
+  #   p grey
+  #   # => #<Colour:0xb78270 red:0 blue:24 green:114 alpha:255>
+  #
+  # @param colour [Colour]
+  # @return [Colour]
+  def tint!(colour)
+    tint(colour).tap { |result|
+      self.red = result.red
+      self.green = result.green
+      self.blue = result.blue
+      self.alpha = result.alpha
     }
   end
 

@@ -36,4 +36,24 @@ class Colour
     # src/mruby_integration/models/colour.cpp
     Colour[1, 2, 3, 4]
   end
+
+  # Returns a tinted version of {Colour} with the passed in {Colour}.
+  #
+  # @example Basic usage
+  #   grey = Colour[128, 128, 128, 255]
+  #   p grey
+  #   # => #<Colour:0xb78270 red:128 blue:128 green:128 alpha:255>
+  #
+  #   blue_grey = grey.tint(Colour::BLUE)
+  #   p blue_grey
+  #   # => #<Colour:0x20638fd0 red:0 blue:120 green:60 alpha:255>
+  #
+  # @param colour [Colour]
+  # @return [Colour]
+  # @raise [ArgumentError] If the alpha is out of bounds.
+  def tint(colour)
+    # mrb_Colour_set_fade
+    # src/mruby_integration/models/colour.cpp
+    Colour[1, 2, 3, 4]
+  end
 end

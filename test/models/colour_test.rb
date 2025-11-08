@@ -181,3 +181,63 @@ end
     }.to_raise(ArgumentError, "Alpha must be within (0.0..1.0)")
   end
 end
+
+@unit.describe "Colour#tint" do
+  Given "we have a colour" do
+    Taylor::Raylib.mock_call("ColorTint", Colour.mock_return(red: 9, green: 10, blue: 11, alpha: 12))
+    @colour = Colour.new(red: 1, green: 2, blue: 3, alpha: 4)
+  end
+
+  When "we tint the colour" do
+    @result = @colour.tint(Colour[5, 6, 7, 8])
+    p @result.to_h
+  end
+
+  Then "our new colour is the restult of the tint" do
+    expect(@result.red).to_equal(9)
+    expect(@result.green).to_equal(10)
+    expect(@result.blue).to_equal(11)
+    expect(@result.alpha).to_equal(12)
+  end
+
+  And "we have not updated our original values" do
+    expect(@colour.red).to_equal(1)
+    expect(@colour.green).to_equal(2)
+    expect(@colour.blue).to_equal(3)
+    expect(@colour.alpha).to_equal(4)
+  end
+
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(ColorTint) { color: { r: 1 g: 2 b: 3 a: 4 } tint: { r: 5 g: 6 b: 7 a: 8 } }"
+      ]
+    )
+  end
+end
+
+@unit.describe "Colour#tint!" do
+  Given "we have a colour" do
+    Taylor::Raylib.mock_call("ColorTint", Colour.mock_return(red: 9, green: 10, blue: 11, alpha: 12))
+    @colour = Colour.new(red: 1, green: 2, blue: 3, alpha: 4)
+  end
+
+  When "we tint~ the colour" do
+    @colour.tint!(Colour[5, 6, 7, 8])
+  end
+
+  Then "we have updated our values" do
+    expect(@colour.red).to_equal(9)
+    expect(@colour.green).to_equal(10)
+    expect(@colour.blue).to_equal(11)
+    expect(@colour.alpha).to_equal(12)
+  end
+
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(ColorTint) { color: { r: 1 g: 2 b: 3 a: 4 } tint: { r: 5 g: 6 b: 7 a: 8 } }"
+      ]
+    )
+  end
+end
