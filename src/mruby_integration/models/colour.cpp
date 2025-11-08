@@ -43,12 +43,12 @@ mrb_Colour_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   //   green: 0,
   //   alpha: 255
   // )
-  mrb_int kw_num = 4;
-  mrb_int kw_required = 0;
-  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "red"),
-                         mrb_intern_lit(mrb, "green"),
-                         mrb_intern_lit(mrb, "blue"),
-                         mrb_intern_lit(mrb, "alpha") };
+  const mrb_int kw_num = 4;
+  const mrb_int kw_required = 0;
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "red"),
+                               mrb_intern_lit(mrb, "green"),
+                               mrb_intern_lit(mrb, "blue"),
+                               mrb_intern_lit(mrb, "alpha") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, ":", &kwargs);
@@ -85,6 +85,8 @@ mrb_attr_accessor_with_klasses(mrb, self, int, i, Colour, Color, a);
 auto
 mrb_Colour_fade(mrb_state* mrb, mrb_value self) -> mrb_value
 {
+  mrb_get_self(mrb, self, Color, colour);
+
   mrb_float alpha;
   mrb_get_args(mrb, "f", &alpha);
 
@@ -92,13 +94,22 @@ mrb_Colour_fade(mrb_state* mrb, mrb_value self) -> mrb_value
     mrb_raise(mrb, E_ARGUMENT_ERROR, "Alpha must be within (0.0..1.0)");
   }
 
-  Color* colour;
-
-  Data_Get_Struct(mrb, self, &Color_type, colour);
-  mrb_assert(colour != nullptr);
-
   auto* return_colour = static_cast<Color*>(malloc(sizeof(Color)));
   *return_colour = Fade(*colour, alpha);
+
+  return mrb_Color_value(mrb, return_colour);
+}
+
+auto
+mrb_Colour_tint(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Color, colour);
+
+  Color* tint;
+  mrb_get_args(mrb, "d", &tint, &Color_type);
+
+  auto* return_colour = static_cast<Color*>(malloc(sizeof(Color)));
+  *return_colour = ColorTint(*colour, *tint);
 
   return mrb_Color_value(mrb, return_colour);
 }
@@ -124,6 +135,8 @@ append_models_Colour(mrb_state* mrb)
     mrb, Colour_class, "alpha=", mrb_Colour_set_a, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Colour_class, "fade", mrb_Colour_fade, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Colour_class, "tint", mrb_Colour_tint, MRB_ARGS_REQ(1));
 
   load_ruby_models_colour(mrb);
 }

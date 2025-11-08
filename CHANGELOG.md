@@ -4,6 +4,7 @@
 
 - Bump Ruby to 3.4.6 and update gems
 - Add buildkite analytics again
+- Add Colour#tint and Colour#tint!
 
 ## v0.4.0
 
