@@ -5,6 +5,7 @@
 - Bump Ruby to 3.4.6 and update gems
 - Add buildkite analytics again
 - Add Colour#tint and Colour#tint!
+- Add Colour#brightness and Colour#brightness!
 
 ## v0.4.0
 

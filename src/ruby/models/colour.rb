@@ -104,6 +104,33 @@ class Colour
     }
   end
 
+  # Brightens the {Colour} by the passed in percent.
+  #
+  # @example Basic usage
+  #   red = Colour::RED
+  #   p red
+  #   # => #<Colour:0x55b398928100 red:230 blue:55 green:41 alpha:255>
+  #
+  #   red.brightness!(0.5)
+  #   p red
+  #   # => #<Colour:0x5612f03b0100 red:242 blue:155 green:148 alpha:255>
+  #
+  #   red.brightness!(-0.5)
+  #   p red
+  #   # => #<Colour:0x555a65a95100 red:121 blue:77 green:74 alpha:255>
+  #
+  # @param percent [Float] A value between -1.0 and 1.0.
+  # @return [Colour]
+  # @raise [ArgumentError] If the percent is out of bounds.
+  def brightness!(percent)
+    brightness(percent).tap { |colour|
+      self.red = colour.red
+      self.green = colour.green
+      self.blue = colour.blue
+      self.alpha = colour.alpha
+    }
+  end
+
   # Returns a string representation of the {Colour} that's useful for debugging.
   #
   # @example Basic usage

@@ -32,7 +32,7 @@ class Colour
   # @return [Colour]
   # @raise [ArgumentError] If the alpha is out of bounds.
   def fade(alpha)
-    # mrb_Colour_set_alpha
+    # mrb_Colour_alpha
     # src/mruby_integration/models/colour.cpp
     Colour[1, 2, 3, 4]
   end
@@ -52,7 +52,28 @@ class Colour
   # @return [Colour]
   # @raise [ArgumentError] If the alpha is out of bounds.
   def tint(colour)
-    # mrb_Colour_set_fade
+    # mrb_Colour_tint
+    # src/mruby_integration/models/colour.cpp
+    Colour[1, 2, 3, 4]
+  end
+
+  # Returns a {Colour} brightened by the passed in percent.
+  #
+  # @example Basic usage
+  #   red = Colour::RED
+  #   # => #<Colour:0x55b398928100 red:230 blue:55 green:41 alpha:255>
+  #
+  #   p red.brightness(0.5)
+  #   # => #<Colour:0x5557726209e0 red:242 blue:155 green:148 alpha:255>
+  #
+  #   p red.brightness(-0.5)
+  #   # => #<Colour:0x555772620770 red:115 blue:27 green:20 alpha:255>
+  #
+  # @param percent [Float] A value between -1.0 and 1.0.
+  # @return [Colour]
+  # @raise [ArgumentError] If the percent is out of bounds.
+  def brightness(percent)
+    # mrb_Colour_brightness
     # src/mruby_integration/models/colour.cpp
     Colour[1, 2, 3, 4]
   end

@@ -113,6 +113,23 @@ mrb_Colour_tint(mrb_state* mrb, mrb_value self) -> mrb_value
 
   return mrb_Color_value(mrb, return_colour);
 }
+auto
+mrb_Colour_brightness(mrb_state* mrb, mrb_value self) -> mrb_value
+{
+  mrb_get_self(mrb, self, Color, colour);
+
+  mrb_float brightness;
+  mrb_get_args(mrb, "f", &brightness);
+
+  if (brightness < -1 || brightness > 1) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Brightness must be within (0.0..1.0)");
+  }
+
+  auto* return_colour = static_cast<Color*>(malloc(sizeof(Color)));
+  *return_colour = ColorBrightness(*colour, brightness);
+
+  return mrb_Color_value(mrb, return_colour);
+}
 
 void
 append_models_Colour(mrb_state* mrb)
@@ -137,6 +154,8 @@ append_models_Colour(mrb_state* mrb)
     mrb, Colour_class, "fade", mrb_Colour_fade, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Colour_class, "tint", mrb_Colour_tint, MRB_ARGS_REQ(1));
+  mrb_define_method(
+    mrb, Colour_class, "brightness", mrb_Colour_brightness, MRB_ARGS_REQ(1));
 
   load_ruby_models_colour(mrb);
 }
