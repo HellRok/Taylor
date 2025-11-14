@@ -8,6 +8,7 @@
 - Add Colour#brightness and Colour#brightness!
 - Fix documentation for Window
 - Documentation check now requires all files
+- Added a pull request template
 
 ## v0.4.0
 
