@@ -1,4 +1,4 @@
-# This class is used for managing your {Window} and retrieving any information
+# This modules is used for managing your {Window} and retrieving any information
 # about it.
 module Window
   # Draw to the {Window}, you need to wrap all your draw calls in this if you

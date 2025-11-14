@@ -6,6 +6,7 @@
 - Add buildkite analytics again
 - Add Colour#tint and Colour#tint!
 - Add Colour#brightness and Colour#brightness!
+- Fix documentation for Window
 
 ## v0.4.0
 
