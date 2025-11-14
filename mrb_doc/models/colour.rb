@@ -76,4 +76,26 @@ class Colour
     # src/mruby_integration/models/colour.cpp
     Colour[1, 2, 3, 4]
   end
+
+  # Returns a {Colour} contrasted by the passed in percent.
+  #
+  # @example Basic usage
+  #   red = Colour::RED
+  #   p red
+  #   # => #<Colour:0x1cf6c580 red:230 blue:55 green:41 alpha:255>
+  #
+  #   p red.contrast(0.5)
+  #   # => #<Colour:0x1cfc3b70 red:255 blue:0 green:0 alpha:255>
+  #
+  #   p red.contrast(-0.5)
+  #   # => #<Colour:0x1cfc3900 red:153 blue:109 green:105 alpha:255>
+  #
+  # @param percent [Float] A value between -1.0 and 1.0.
+  # @return [Colour]
+  # @raise [ArgumentError] If the percent is out of bounds.
+  def contrast(percent)
+    # mrb_Colour_contrast
+    # src/mruby_integration/models/colour.cpp
+    Colour[1, 2, 3, 4]
+  end
 end
