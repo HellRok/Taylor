@@ -17,7 +17,6 @@ class Sound
   def initialize(path, volume: 1.0, pitch: 1.0)
     # mrb_Sound_initialize
     # src/mruby_integration/models/sound.cpp
-    Sound.new
   end
 
   # Unloads the {Sound} from memory.

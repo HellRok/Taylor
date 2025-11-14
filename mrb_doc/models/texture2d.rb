@@ -11,7 +11,6 @@ class Texture2D
   def initialize(path)
     # mrb_Texture2D_initialize
     # src/mruby_integration/models/texture2d.cpp
-    Texture2D.new
   end
 
   # Unloads the {Texture2D} from memory.

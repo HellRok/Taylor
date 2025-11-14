@@ -27,7 +27,6 @@ class Circle
   def initialize(x:, y:, radius:, colour:, outline: nil, thickness: 1, gradient: nil)
     # mrb_Circle_initialize
     # src/mruby_integration/models/circle.cpp
-    Circle.new
   end
 
   # Draws the {Circle}.

@@ -13,7 +13,6 @@ class RenderTexture
   def initialize(width:, height:)
     # mrb_RenderTexture_initialize
     # src/mruby_integration/models/render_texture.cpp
-    RenderTexture.new
   end
 
   # Unloads the {RenderTexture} from memory.

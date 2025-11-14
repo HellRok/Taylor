@@ -49,7 +49,6 @@ class Monitor
   def initialize(id:)
     # mrb_Monitor_initialize
     # src/mruby_integration/models/monitor.cpp
-    Monitor[0]
   end
 
   # Returns the position of the {Monitor} as a {Vector2}.

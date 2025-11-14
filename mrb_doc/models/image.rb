@@ -28,7 +28,6 @@ class Image
   def initialize(path)
     # mrb_Image_initialize
     # src/mruby_integration/models/image.cpp
-    Image.new
   end
 
   # Unloads the {Image} from memory.

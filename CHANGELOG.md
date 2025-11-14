@@ -7,6 +7,7 @@
 - Add Colour#tint and Colour#tint!
 - Add Colour#brightness and Colour#brightness!
 - Fix documentation for Window
+- Documentation check now requires all files
 
 ## v0.4.0
 

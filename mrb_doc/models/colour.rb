@@ -12,10 +12,9 @@ class Colour
   # @param green [Integer] A value between 0 and 255.
   # @param alpha [Integer] A value between 0 and 255.
   # @return [Colour]
-  def initialize(red, green, blue, alpha)
+  def initialize(red: 0, green: 0, blue: 0, alpha: 255)
     # mrb_Colour_initialize
     # src/mruby_integration/models/colour.cpp
-    Colour.new
   end
 
   # Returns a new {Colour} which is a faded version of the original.
