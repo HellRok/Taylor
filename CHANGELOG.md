@@ -9,6 +9,7 @@
 - Fix documentation for Window
 - Documentation check now requires all files
 - Added a pull request template
+- Fix browser test speed
 
 ## v0.4.0
 
