@@ -13,7 +13,6 @@ class Vector2
   def initialize(x:, y:)
     # mrb_Vector2_initialize
     # src/mruby_integration/models/vector2.cpp
-    Vector2.new
   end
 
   # Sets the corresponding pixel to the passed in {Colour}.

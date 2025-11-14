@@ -21,7 +21,6 @@ class Line
   def initialize(start:, end:, colour:, thickness: 1.0)
     # mrb_Line_initialize
     # src/mruby_integration/models/line.cpp
-    Line.new
   end
 
   # Draws the {Line}.

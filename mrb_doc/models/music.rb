@@ -17,7 +17,6 @@ class Music
   def initialize(path, looping: true, volume: 1.0, pitch: 1.0)
     # mrb_Music_initialize
     # src/mruby_integration/models/music.cpp
-    Music.new
   end
 
   # Unloads the {Music} from memory.

@@ -47,7 +47,6 @@ class Shader
   def initialize(fragment:, vertex:)
     # mrb_Shader_initialize
     # src/mruby_integration/models/shader.cpp
-    Shader.new
   end
 
   # Unloads the Shader from memory.

@@ -27,7 +27,6 @@ class Rectangle
   def initialize(x:, y:, width:, height:, colour: Colour::BLACK, outline: nil, thickness: 1, roundness: 0, segments: 4)
     # mrb_Rectangle_initialize
     # src/mruby_integration/models/rectangle.cpp
-    Rectangle.new
   end
 
   # Draws the {Rectangle}.

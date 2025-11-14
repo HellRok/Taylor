@@ -22,7 +22,6 @@ class Camera2D
   def initialize(target: Vector2[0, 0], offset: Vector2[0, 0], rotation: 0, zoom: 1)
     # mrb_Camera2D_initialize
     # src/mruby_integration/models/camera2d.cpp
-    Camera2D.new
   end
 
   # Draws the world through the lens of the {Camera2D}.

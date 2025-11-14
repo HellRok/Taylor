@@ -27,7 +27,6 @@ class Font
   def initialize(path, size: 32, glyph_count: 95)
     # mrb_Font_initialize
     # src/mruby_integration/models/font.cpp
-    Font.new
   end
 
   # Draw the text to the screen using the loaded {Font}.

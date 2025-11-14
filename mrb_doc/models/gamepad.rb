@@ -32,7 +32,6 @@ class Gamepad
   def initialize(index:)
     # mrb_Gamepad_initialize
     # src/mruby_integration/models/gamepad.cpp
-    Gamepad[0]
   end
 
   # Used for checking if the {Gamepad} at this index is still available for use.
