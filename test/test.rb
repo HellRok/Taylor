@@ -61,6 +61,8 @@ require "taylor/platform_test"
 require "taylor_test"
 
 if Taylor::Platform.browser?
+  neospec.logger = Neospec::Logger::Symbols.new
+  neospec.suites << @browser
   success = neospec.run
   puts "ANALYTICS: #{File.read("test-analytics.json")}"
   puts "EXIT CODE: #{success ? 0 : 1}"
