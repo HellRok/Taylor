@@ -131,6 +131,33 @@ class Colour
     }
   end
 
+  # Contrasts the {Colour} by the passed in percent.
+  #
+  # @example Basic usage
+  #   red = Colour::RED
+  #   p red
+  #   # => #<Colour:0x1603f580 red:230 blue:55 green:41 alpha:255>
+  #
+  #   red.contrast!(0.5)
+  #   p red
+  #   # => #<Colour:0x1603f580 red:255 blue:0 green:0 alpha:255>
+  #
+  #   red.contrast!(-0.5)
+  #   p red
+  #   # => #<Colour:0x1603f580 red:159 blue:95 green:95 alpha:255>
+  #
+  # @param percent [Float] A value between -1.0 and 1.0.
+  # @return [Colour]
+  # @raise [ArgumentError] If the percent is out of bounds.
+  def contrast!(percent)
+    contrast(percent).tap { |colour|
+      self.red = colour.red
+      self.green = colour.green
+      self.blue = colour.blue
+      self.alpha = colour.alpha
+    }
+  end
+
   # Returns a string representation of the {Colour} that's useful for debugging.
   #
   # @example Basic usage

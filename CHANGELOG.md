@@ -10,6 +10,7 @@
 - Documentation check now requires all files
 - Added a pull request template
 - Fix browser test speed
+- Added Colour#contrast and Colour#contrast!
 
 ## v0.4.0
 

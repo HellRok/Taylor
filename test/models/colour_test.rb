@@ -273,16 +273,16 @@ end
     )
   end
 
-  But "when called with a brigtness below -1.0" do
+  But "when called with a brightness below -1.0" do
     expect {
       @colour.brightness(-1.1)
-    }.to_raise(ArgumentError, "Brightness must be within (0.0..1.0)")
+    }.to_raise(ArgumentError, "Brightness must be within (-1.0..1.0)")
   end
 
   Or "when called with a brightness above 1" do
     expect {
       @colour.brightness(1.1)
-    }.to_raise(ArgumentError, "Brightness must be within (0.0..1.0)")
+    }.to_raise(ArgumentError, "Brightness must be within (-1.0..1.0)")
   end
 end
 
@@ -311,15 +311,98 @@ end
     )
   end
 
-  But "when called with a brigtness below -1.0" do
+  But "when called with a brightness below -1.0" do
     expect {
       @colour.brightness!(-1.1)
-    }.to_raise(ArgumentError, "Brightness must be within (0.0..1.0)")
+    }.to_raise(ArgumentError, "Brightness must be within (-1.0..1.0)")
   end
 
   Or "when called with a brightness above 1" do
     expect {
       @colour.brightness!(1.1)
-    }.to_raise(ArgumentError, "Brightness must be within (0.0..1.0)")
+    }.to_raise(ArgumentError, "Brightness must be within (-1.0..1.0)")
+  end
+end
+
+@unit.describe "Colour#contrast" do
+  Given "we have a colour" do
+    Taylor::Raylib.mock_call("ColorContrast", Colour.mock_return(red: 9, green: 10, blue: 11, alpha: 12))
+    @colour = Colour.new(red: 1, green: 2, blue: 3, alpha: 4)
+  end
+
+  When "we contrast the colour" do
+    @result = @colour.contrast(0.5)
+  end
+
+  Then "our new colour is the result of the contrast" do
+    expect(@result.red).to_equal(9)
+    expect(@result.green).to_equal(10)
+    expect(@result.blue).to_equal(11)
+    expect(@result.alpha).to_equal(12)
+  end
+
+  And "we have not updated our original values" do
+    expect(@colour.red).to_equal(1)
+    expect(@colour.green).to_equal(2)
+    expect(@colour.blue).to_equal(3)
+    expect(@colour.alpha).to_equal(4)
+  end
+
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(ColorContrast) { color: { r: 1 g: 2 b: 3 a: 4 } contrast: 0.500000 }"
+      ]
+    )
+  end
+
+  But "when called with a contrast below -1.0" do
+    expect {
+      @colour.contrast(-1.1)
+    }.to_raise(ArgumentError, "Contrast must be within (-1.0..1.0)")
+  end
+
+  Or "when called with a contrast above 1" do
+    expect {
+      @colour.contrast(1.1)
+    }.to_raise(ArgumentError, "Contrast must be within (-1.0..1.0)")
+  end
+end
+
+@unit.describe "Colour#contrast!" do
+  Given "we have a colour" do
+    Taylor::Raylib.mock_call("ColorContrast", Colour.mock_return(red: 9, green: 10, blue: 11, alpha: 12))
+    @colour = Colour.new(red: 1, green: 2, blue: 3, alpha: 4)
+  end
+
+  When "we contrast the colour" do
+    @colour.contrast!(0.3)
+  end
+
+  Then "we have updated our values" do
+    expect(@colour.red).to_equal(9)
+    expect(@colour.green).to_equal(10)
+    expect(@colour.blue).to_equal(11)
+    expect(@colour.alpha).to_equal(12)
+  end
+
+  And "Raylib receives the expected methods" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(ColorContrast) { color: { r: 1 g: 2 b: 3 a: 4 } contrast: 0.300000 }"
+      ]
+    )
+  end
+
+  But "when called with a contrast below -1.0" do
+    expect {
+      @colour.contrast!(-1.1)
+    }.to_raise(ArgumentError, "Contrast must be within (-1.0..1.0)")
+  end
+
+  Or "when called with a contrast above 1" do
+    expect {
+      @colour.contrast!(1.1)
+    }.to_raise(ArgumentError, "Contrast must be within (-1.0..1.0)")
   end
 end

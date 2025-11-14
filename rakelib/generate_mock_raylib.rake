@@ -28,6 +28,7 @@ task "raylib:mock" do
     "ClearWindowState" => {},
     "CloseAudioDevice" => {},
     "CloseWindow" => {},
+    "ColorContrast" => {return: true},
     "ColorBrightness" => {return: true},
     "ColorTint" => {return: true},
     "DisableCursor" => {},
