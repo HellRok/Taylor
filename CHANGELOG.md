@@ -13,6 +13,8 @@
 - Added Colour#contrast and Colour#contrast!
 - Added Rectangle#overlaps?
 - Added Vector2#overlaps?
+- Circle#colour now defaults to Colour::BLACK
+- Added Circle#overlaps?
 
 ## v0.4.0
 

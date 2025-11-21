@@ -1,6 +1,6 @@
 @unit.describe "Circle#initialize" do
   When "we initialize a circle" do
-    @circle = Circle.new(x: 1, y: 2, radius: 3, colour: Colour[4, 5, 6, 7])
+    @circle = Circle.new(x: 1, y: 2, radius: 3)
   end
 
   Then "it has the expected attributes" do
@@ -8,7 +8,7 @@
     expect(@circle.x).to_equal(1)
     expect(@circle.y).to_equal(2)
     expect(@circle.radius).to_equal(3)
-    expect(@circle.colour).to_equal(Colour[4, 5, 6, 7])
+    expect(@circle.colour).to_equal(Colour::BLACK)
     expect(@circle.outline).to_be_nil
     expect(@circle.thickness).to_equal(1)
     expect(@circle.gradient).to_be_nil
@@ -323,5 +323,81 @@ end
         "}"
       ]
     )
+  end
+end
+
+@unit.describe "Circle#overlaps?" do
+  Given "we have a circle and a vector" do
+    @circle = Circle.new(x: 3, y: 4, radius: 3)
+    @vector = Vector2.new(x: 0, y: 0)
+  end
+
+  Then "it's outside so we return false" do
+    expect(@circle.overlaps?(@vector)).to_be_false
+  end
+
+  When "the vector is inside the circle" do
+    @vector.x = 3
+    @vector.y = 4
+  end
+
+  Then "it's inside so we return true" do
+    expect(@circle.overlaps?(@vector)).to_be_true
+  end
+
+  When "the vector is on the top edge" do
+    @vector.x = 3
+    @vector.y = 1
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@circle.overlaps?(@vector)).to_be_true
+  end
+
+  When "the vector is on the bottom edge" do
+    @vector.x = 3
+    @vector.y = 7
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@circle.overlaps?(@vector)).to_be_true
+  end
+
+  When "the vector is on the left edge" do
+    @vector.x = 0
+    @vector.y = 4
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@circle.overlaps?(@vector)).to_be_true
+  end
+
+  When "the vector is on the right edge" do
+    @vector.x = 6
+    @vector.y = 4
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@circle.overlaps?(@vector)).to_be_true
+  end
+
+  When "the vector is further out than the circle" do
+    @vector.x = 10
+    @vector.y = 10
+  end
+
+  Then "it's not inside so we return false" do
+    expect(@circle.overlaps?(@vector)).to_be_false
+  end
+
+  When "passed in anything other than a vector raise an error" do
+    expect {
+      @circle.overlaps?("string")
+    }.to_raise(ArgumentError, "Must pass in a Vector2")
+  end
+
+  And "cleanup" do
+    @circle = nil
+    @vector = nil
   end
 end

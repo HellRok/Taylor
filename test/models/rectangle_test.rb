@@ -430,24 +430,6 @@ end
   end
 
   When "the vector is on the top edge" do
-    @vector.x = 3
-    @vector.y = 6
-  end
-
-  Then "it's considered inside so we return true" do
-    expect(@rectangle.overlaps?(@vector)).to_be_true
-  end
-
-  When "the vector is on the bottom edge" do
-    @vector.x = 5
-    @vector.y = 6
-  end
-
-  Then "it's considered inside so we return true" do
-    expect(@rectangle.overlaps?(@vector)).to_be_true
-  end
-
-  When "the vector is on the left edge" do
     @vector.x = 4
     @vector.y = 4
   end
@@ -459,6 +441,24 @@ end
   When "the vector is on the bottom edge" do
     @vector.x = 4
     @vector.y = 7
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@rectangle.overlaps?(@vector)).to_be_true
+  end
+
+  When "the vector is on the left edge" do
+    @vector.x = 3
+    @vector.y = 6
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@rectangle.overlaps?(@vector)).to_be_true
+  end
+
+  When "the vector is on the right edge" do
+    @vector.x = 5
+    @vector.y = 6
   end
 
   Then "it's considered inside so we return true" do
