@@ -194,6 +194,43 @@ class Vector2
     }
   end
 
+  # Returns `true` if the {Vector2} is contained inside this {Rectangle} or is
+  # on the border of.
+  #
+  # @example Basic usage
+  #   position = Vector2.new(x: 5, y: 5)
+  #   hitbox = Rectangle.new(x: 10, y: 10, width: 10, height: 10)
+  #
+  #   puts position.overlaps?(hitbox)
+  #   # => false
+  #
+  #   # The position changes to inside the rectangle...
+  #   position = Vector2.new(x: 15, y: 15)
+  #
+  #   puts position.overlaps?(hitbox)
+  #   # => true
+  #
+  #   # The position changes to the corner of the rectangle...
+  #   position = Vector2.new(x: 10, y: 10)
+  #
+  #   puts position.overlaps?(hitbox)
+  #   # => true
+  #
+  #   # The position changes to far outside rectangle...
+  #   position = Vector2.new(x: 100, y: 100)
+  #
+  #   puts position.overlaps?(hitbox)
+  #   # => false
+  #
+  # @param other [Object#overlaps?]
+  # @return [Boolean]
+  # @raise [ArgumentError] If passed anything other than a Vector2
+  def overlaps?(other)
+    raise ArgumentError, "Must respond to #overlaps?" unless other.respond_to?(:overlaps?)
+
+    other.overlaps?(self)
+  end
+
   # Returns a string representation of the {Vector2} that's useful for debugging.
   #
   # @example Basic usage
