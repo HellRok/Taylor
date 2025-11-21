@@ -232,3 +232,79 @@ end
     )
   end
 end
+
+@unit.describe "Vector2#overlaps?" do
+  Given "we have a rectangle and a vector" do
+    @vector = Vector2.new(x: 0, y: 0)
+    @rectangle = Rectangle.new(x: 3, y: 4, width: 2, height: 3)
+  end
+
+  Then "it's outside so we return false" do
+    expect(@vector.overlaps?(@rectangle)).to_be_false
+  end
+
+  When "the vector is inside the rectangle" do
+    @vector.x = 4
+    @vector.y = 6
+  end
+
+  Then "it's inside so we return true" do
+    expect(@vector.overlaps?(@rectangle)).to_be_true
+  end
+
+  When "the vector is on the top edge" do
+    @vector.x = 3
+    @vector.y = 6
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@vector.overlaps?(@rectangle)).to_be_true
+  end
+
+  When "the vector is on the bottom edge" do
+    @vector.x = 5
+    @vector.y = 6
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@vector.overlaps?(@rectangle)).to_be_true
+  end
+
+  When "the vector is on the left edge" do
+    @vector.x = 4
+    @vector.y = 4
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@vector.overlaps?(@rectangle)).to_be_true
+  end
+
+  When "the vector is on the bottom edge" do
+    @vector.x = 4
+    @vector.y = 7
+  end
+
+  Then "it's considered inside so we return true" do
+    expect(@vector.overlaps?(@rectangle)).to_be_true
+  end
+
+  When "the vector is further out than the rectangle" do
+    @vector.x = 10
+    @vector.y = 10
+  end
+
+  Then "it's not inside so we return false" do
+    expect(@vector.overlaps?(@rectangle)).to_be_false
+  end
+
+  When "passed in something that doesn't respond to #overlaps? we raise an error" do
+    expect {
+      @vector.overlaps?("string")
+    }.to_raise(ArgumentError, "Must respond to #overlaps?")
+  end
+
+  And "cleanup" do
+    @rectangle = nil
+    @vector = nil
+  end
+end
