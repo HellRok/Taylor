@@ -80,4 +80,41 @@ class Rectangle
   ensure
     end_scissoring
   end
+
+  # Returns `true` if the {Vector2} is contained inside this {Rectangle} or is
+  # on the border of.
+  #
+  # @example Basic usage
+  #   hitbox = Rectangle.new(x: 10, y: 10, width: 10, height: 10)
+  #   position = Vector2.new(x: 5, y: 5)
+  #
+  #   puts hitbox.overlaps?(position)
+  #   # => false
+  #
+  #   # The position changes to inside the rectangle...
+  #   position = Vector2.new(x: 15, y: 15)
+  #
+  #   puts hitbox.overlaps?(position)
+  #   # => true
+  #
+  #   # The position changes to the corner of the rectangle...
+  #   position = Vector2.new(x: 10, y: 10)
+  #
+  #   puts hitbox.overlaps?(position)
+  #   # => true
+  #
+  #   # The position changes to far outside rectangle...
+  #   position = Vector2.new(x: 100, y: 100)
+  #
+  #   puts hitbox.overlaps?(position)
+  #   # => false
+  #
+  # @param other [Vector2]
+  # @return [Boolean]
+  # @raise [ArgumentError] If passed anything other than a Vector2
+  def overlaps?(other)
+    raise ArgumentError, "Must pass in a Vector2" unless other.is_a?(Vector2)
+
+    other.x.between?(x, x + width) && other.y.between?(y, y + height)
+  end
 end

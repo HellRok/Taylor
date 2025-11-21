@@ -11,6 +11,7 @@
 - Added a pull request template
 - Fix browser test speed
 - Added Colour#contrast and Colour#contrast!
+- Added Rectangle#includes?
 
 ## v0.4.0
 
