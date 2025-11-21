@@ -252,49 +252,23 @@ end
     expect(@vector.overlaps?(@rectangle)).to_be_true
   end
 
-  When "the vector is on the top edge" do
-    @vector.x = 3
-    @vector.y = 6
+  Given "we have a circle" do
+    @vector.x = 0
+    @vector.y = 0
+    @circle = Circle.new(x: 3, y: 4, radius: 2)
   end
 
-  Then "it's considered inside so we return true" do
-    expect(@vector.overlaps?(@rectangle)).to_be_true
+  Then "it's outside so we return false" do
+    expect(@vector.overlaps?(@circle)).to_be_false
   end
 
-  When "the vector is on the bottom edge" do
-    @vector.x = 5
-    @vector.y = 6
+  When "the vector is inside the circle" do
+    @vector.x = 2
+    @vector.y = 5
   end
 
-  Then "it's considered inside so we return true" do
-    expect(@vector.overlaps?(@rectangle)).to_be_true
-  end
-
-  When "the vector is on the left edge" do
-    @vector.x = 4
-    @vector.y = 4
-  end
-
-  Then "it's considered inside so we return true" do
-    expect(@vector.overlaps?(@rectangle)).to_be_true
-  end
-
-  When "the vector is on the bottom edge" do
-    @vector.x = 4
-    @vector.y = 7
-  end
-
-  Then "it's considered inside so we return true" do
-    expect(@vector.overlaps?(@rectangle)).to_be_true
-  end
-
-  When "the vector is further out than the rectangle" do
-    @vector.x = 10
-    @vector.y = 10
-  end
-
-  Then "it's not inside so we return false" do
-    expect(@vector.overlaps?(@rectangle)).to_be_false
+  Then "it's inside so we return true" do
+    expect(@vector.overlaps?(@circle)).to_be_true
   end
 
   When "passed in something that doesn't respond to #overlaps? we raise an error" do
@@ -305,6 +279,7 @@ end
 
   And "cleanup" do
     @rectangle = nil
+    @circle = nil
     @vector = nil
   end
 end

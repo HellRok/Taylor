@@ -24,7 +24,7 @@ class Circle
   # @param thickness [Float]
   # @param gradient [Colour]
   # @return [Circle]
-  def initialize(x:, y:, radius:, colour:, outline: nil, thickness: 1, gradient: nil)
+  def initialize(x:, y:, radius:, colour: Colour::BLACK, outline: nil, thickness: 1, gradient: nil)
     # mrb_Circle_initialize
     # src/mruby_integration/models/circle.cpp
   end

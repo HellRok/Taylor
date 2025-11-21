@@ -42,13 +42,13 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   //   x:,
   //   y:,
   //   radius:,
-  //   colour:,
+  //   colour: Colour::BLACK,
   //   outline: nil,
   //   thickness: 1,
   //   gradient: nil
   // )
   mrb_int kw_num = 7;
-  mrb_int kw_required = 4;
+  mrb_int kw_required = 3;
   mrb_sym kw_names[] = {
     mrb_intern_lit(mrb, "x"),       mrb_intern_lit(mrb, "y"),
     mrb_intern_lit(mrb, "radius"),  mrb_intern_lit(mrb, "colour"),
@@ -80,14 +80,18 @@ mrb_Circle_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   if (!mrb_undef_p(kw_values[3])) {
     circle->colour = static_cast<struct Color*> DATA_PTR(kw_values[3]);
-    add_reference(circle->colour);
-    mrb_iv_set(mrb,
-               self,
-               mrb_intern_cstr(mrb, "@colour"),
-               mrb_Color_value(mrb, circle->colour));
   } else {
-    circle->colour = nullptr;
+    circle->colour = static_cast<Color*>(malloc(sizeof(Color)));
+    circle->colour->r = 0;
+    circle->colour->g = 0;
+    circle->colour->b = 0;
+    circle->colour->a = 255;
   }
+  add_reference(circle->colour);
+  mrb_iv_set(mrb,
+             self,
+             mrb_intern_cstr(mrb, "@colour"),
+             mrb_Color_value(mrb, circle->colour));
 
   if (!mrb_undef_p(kw_values[4])) {
     circle->outline = static_cast<struct Color*> DATA_PTR(kw_values[4]);
