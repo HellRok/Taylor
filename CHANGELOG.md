@@ -15,6 +15,7 @@
 - Added Vector2#overlaps?
 - Circle#colour now defaults to Colour::BLACK
 - Added Circle#overlaps?
+- Fix typo in the game template
 
 ## v0.4.0
 

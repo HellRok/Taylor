@@ -9,7 +9,7 @@ def game_template
     # Setup audio so we can play sounds
     Audio.open
 
-    # Get the current monitor frame rate and set our target framerate to match.
+    # Get the current monitor frame rate and set our target frame rate to match.
     Window.target_frame_rate = Monitor.current.refresh_rate
 
     # Define your main method
