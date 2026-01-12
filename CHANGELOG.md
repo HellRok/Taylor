@@ -16,6 +16,7 @@
 - Circle#colour now defaults to Colour::BLACK
 - Added Circle#overlaps?
 - Fix typo in the game template
+- Rectangle#overlaps? now works with Rectangle using AABB
 
 ## v0.4.0
 
