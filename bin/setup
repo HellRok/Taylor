@@ -7,4 +7,8 @@ log() {
 log "Installing dependencies"
 bundle check > /dev/null 2>&1 || bundle install
 
+log "Running bear"
 bin/bear
+
+log "Setting up git hooks"
+git config core.hooksPath ./.git-hooks

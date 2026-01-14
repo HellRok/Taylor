@@ -17,6 +17,7 @@
 - Added Circle#overlaps?
 - Fix typo in the game template
 - Rectangle#overlaps? now works with Rectangle using AABB
+- Switch to LocalCI
 
 ## v0.4.0
 

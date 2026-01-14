@@ -163,7 +163,7 @@
 #define mrb_attr_reader_with_klasses_and_attrs(                                \
   mrb, self, type, ruby_klass, cpp_klass, ruby_attr, cpp_attr)                 \
   auto mrb_##ruby_klass##_##ruby_attr(mrb_state* mrb, mrb_value self)          \
-    ->mrb_value                                                                \
+    -> mrb_value                                                               \
   {                                                                            \
     mrb_get_self(mrb, self, cpp_klass, data);                                  \
                                                                                \
@@ -181,7 +181,7 @@
 #define mrb_attr_writer_with_klasses_and_attrs(                                \
   mrb, self, type, mrb_arg, ruby_klass, cpp_klass, ruby_attr, cpp_attr)        \
   auto mrb_##ruby_klass##_set_##ruby_attr(mrb_state* mrb, mrb_value self)      \
-    ->mrb_value                                                                \
+    -> mrb_value                                                               \
   {                                                                            \
     mrb_get_self(mrb, self, cpp_klass, data);                                  \
     mrb_##type ruby_attr;                                                      \
@@ -201,7 +201,8 @@
   mrb_attr_writer_with_klasses(mrb, self, type, mrb_arg, klass, klass, attr);
 
 #define mrb_attr_writer_struct(mrb, self, ruby_type, cpp_type, attr, klass)    \
-  auto mrb_##ruby_type##_set_##attr(mrb_state* mrb, mrb_value self)->mrb_value \
+  auto mrb_##ruby_type##_set_##attr(mrb_state* mrb, mrb_value self)            \
+    -> mrb_value                                                               \
   {                                                                            \
     mrb_get_self(mrb, self, cpp_type, data);                                   \
     klass* value;                                                              \

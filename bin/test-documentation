@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
 # Load all the files to make sure they're valid Ruby
-Dir.glob("./mrb_doc/**/*.rb") { require it }
-Dir.glob("./src/ruby/**/*.rb") { require it }
+Dir.glob("./mrb_doc/**/*.rb") { |file| require file }
+Dir.glob("./src/ruby/**/*.rb") { |file| require file }
 
 IGNORED_FILES = [
   "./src/mruby_integration/models/local_storage.cpp",
