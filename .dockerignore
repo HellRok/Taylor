@@ -8,3 +8,5 @@ dump
 mrb_doc
 test
 .buildkite
+
+rakelib/ci.rake

@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
-set -u
-
-source bin/lib/helpers.sh
+set -euo pipefail
 
 RUBY_FILES=${@:-$(git ls-files --no-deleted $(find . -name "Rakefile") *.{rb,rake})}
 
-log "Formatting Ruby files"
-job_output=$(bundle exec standardrb --fix-unsafely ${RUBY_FILES})
-barf_if_failed $?
+bundle exec standardrb --fix-unsafely ${RUBY_FILES}

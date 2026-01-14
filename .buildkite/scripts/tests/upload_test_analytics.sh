@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if ! [[ -v BUILDKITE_TEST_ANALYTICS_KEY ]]; then
+FILE=$1
+TEST_ANALYTICS_KEY=$2
+
+if [[ -z "${TEST_ANALYTICS_KEY+x}" ]]; then
   echo "I'm guessing you've hit \"Retry\" since I don't have the test analytics key!"
   exit 0
 fi
 
 if [[ -f $1 ]]; then
-  echo "Analytics file found, upload '$1'"
+  echo "Analytics file found, upload '$FILE'"
   curl \
     -X POST \
-    -H "Authorization: Token token=\"$BUILDKITE_TEST_ANALYTICS_KEY\"" \
-    -F "data=@$1" \
+    -H "Authorization: Token token=\"$TEST_ANALYTICS_KEY\"" \
+    -F "data=@$FILE" \
     -F "format=json" \
     -F "run_env[CI]=buildkite" \
     -F "run_env[key]=$BUILDKITE_BUILD_ID" \
