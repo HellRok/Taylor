@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-FILE=$1
-TEST_ANALYTICS_KEY=$2
-
-if [[ -z "${TEST_ANALYTICS_KEY+x}" ]]; then
+if [[ -z "${2+x}" ]]; then
   echo "I'm guessing you've hit \"Retry\" since I don't have the test analytics key!"
   exit 0
 fi
 
-if [[ -f $1 ]]; then
+FILE=$1
+TEST_ANALYTICS_KEY=$2
+
+if [[ -f $FILE ]]; then
   echo "Analytics file found, upload '$FILE'"
   curl \
     -X POST \

@@ -18,6 +18,7 @@
 - Fix typo in the game template
 - Rectangle#overlaps? now works with Rectangle using AABB
 - Switch to LocalCI
+- Uploading test analytics doesn't explode without a key set
 
 ## v0.4.0
 
