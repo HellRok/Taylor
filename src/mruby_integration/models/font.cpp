@@ -17,14 +17,13 @@
 
 struct RClass* Font_class;
 
-void
-setup_Font(mrb_state* mrb,
-           mrb_value object,
-           Font* font,
-           int size,
-           int glyph_count,
-           int glyph_padding,
-           Texture2D* texture)
+void setup_Font(mrb_state* mrb,
+                mrb_value object,
+                Font* font,
+                int size,
+                int glyph_count,
+                int glyph_padding,
+                Texture2D* texture)
 { //, Rectangle **rectangles) {
   ivar_attr_int(mrb, object, font->baseSize, size);
   ivar_attr_int(mrb, object, font->glyphCount, glyph_count);
@@ -34,16 +33,14 @@ setup_Font(mrb_state* mrb,
   //  CharInfo *chars;        // Characters info data
 }
 
-auto
-mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* path;
 
   // def initialize(path, size: 32, glyph_count: 95)
   mrb_int kw_num = 2;
   mrb_int kw_required = 0;
-  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "size"),
-                         mrb_intern_lit(mrb, "glyph_count") };
+  mrb_sym kw_names[] = { mrb_intern_lit(mrb, "size"), mrb_intern_lit(mrb, "glyph_count") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, "z:", &path, &kwargs);
@@ -73,13 +70,7 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   *font = LoadFontEx(path, size, font_chars, glyph_count);
 
-  setup_Font(mrb,
-             self,
-             font,
-             font->baseSize,
-             font->glyphCount,
-             font->glyphPadding,
-             &font->texture);
+  setup_Font(mrb, self, font, font->baseSize, font->glyphCount, font->glyphPadding, &font->texture);
 
   add_reference(&font->texture);
 
@@ -87,30 +78,21 @@ mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Font_default(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Font_default(mrb_state* mrb, mrb_value) -> mrb_value
 {
   Font* font = static_cast<Font*>(malloc(sizeof(Font)));
   *font = GetFontDefault();
 
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Font_class, &Font_type, font));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Font_class, &Font_type, font));
 
-  setup_Font(mrb,
-             obj,
-             font,
-             font->baseSize,
-             font->glyphCount,
-             font->glyphPadding,
-             &font->texture);
+  setup_Font(mrb, obj, font, font->baseSize, font->glyphCount, font->glyphPadding, &font->texture);
 
   add_reference(&font->texture);
 
   return obj;
 }
 
-auto
-mrb_Font_unload(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Font_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Font* font;
 
@@ -122,8 +104,7 @@ mrb_Font_unload(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Font_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Font_valid(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Font* font;
 
@@ -133,8 +114,7 @@ mrb_Font_valid(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_bool_value(IsFontValid(*font));
 }
 
-auto
-mrb_Font_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Font_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* text;
 
@@ -142,11 +122,9 @@ mrb_Font_draw(mrb_state* mrb, mrb_value self) -> mrb_value
   // Vector2[x, y], colour: Colour::BLACK)
   const mrb_int kw_num = 6;
   const mrb_int kw_required = 0;
-  const mrb_sym kw_names[] = {
-    mrb_intern_lit(mrb, "size"),     mrb_intern_lit(mrb, "spacing"),
-    mrb_intern_lit(mrb, "x"),        mrb_intern_lit(mrb, "y"),
-    mrb_intern_lit(mrb, "position"), mrb_intern_lit(mrb, "colour")
-  };
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "size"),     mrb_intern_lit(mrb, "spacing"),
+                               mrb_intern_lit(mrb, "x"),        mrb_intern_lit(mrb, "y"),
+                               mrb_intern_lit(mrb, "position"), mrb_intern_lit(mrb, "colour") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, "z:", &text, &kwargs);
@@ -196,8 +174,7 @@ mrb_Font_draw(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* text;
 
@@ -232,8 +209,7 @@ mrb_Font_measure(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_Vector2_value(mrb, text_size);
 }
 
-auto
-mrb_Font_to_image(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Font_to_image(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* text;
 
@@ -274,37 +250,24 @@ mrb_Font_to_image(mrb_state* mrb, mrb_value self) -> mrb_value
   auto* result = static_cast<Image*>(malloc(sizeof(Image)));
   *result = ImageTextEx(*font, text, size, spacing, *colour);
 
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
 
-  setup_Image(mrb,
-              obj,
-              result,
-              result->width,
-              result->height,
-              result->mipmaps,
-              result->format);
+  setup_Image(mrb, obj, result, result->width, result->height, result->mipmaps, result->format);
 
   return obj;
 }
 
-void
-append_models_Font(mrb_state* mrb)
+void append_models_Font(mrb_state* mrb)
 {
   Font_class = mrb_define_class(mrb, "Font", mrb->object_class);
   MRB_SET_INSTANCE_TT(Font_class, MRB_TT_DATA);
-  mrb_define_class_method(
-    mrb, Font_class, "default", mrb_Font_default, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Font_class, "initialize", mrb_Font_initialize, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Font_class, "unload", mrb_Font_unload, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, Font_class, "default", mrb_Font_default, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Font_class, "initialize", mrb_Font_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Font_class, "unload", mrb_Font_unload, MRB_ARGS_NONE());
   mrb_define_method(mrb, Font_class, "valid?", mrb_Font_valid, MRB_ARGS_NONE());
   mrb_define_method(mrb, Font_class, "draw", mrb_Font_draw, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Font_class, "measure", mrb_Font_measure, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Font_class, "to_image", mrb_Font_to_image, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Font_class, "measure", mrb_Font_measure, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Font_class, "to_image", mrb_Font_to_image, MRB_ARGS_REQ(1));
 
   load_ruby_models_font(mrb);
 }

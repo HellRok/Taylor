@@ -7,8 +7,7 @@
 #include <wincon.h>
 #include <windef.h>
 
-void
-workarounds_mingw_attach_console()
+void workarounds_mingw_attach_console()
 {
   // This allows us to write to a cmd.exe or powershell if we were run from
   // one, but otherwise don't open another window.
@@ -19,8 +18,7 @@ workarounds_mingw_attach_console()
   }
 }
 
-void
-workarounds_mingw_msg_dontwait(mrb_state* mrb)
+void workarounds_mingw_msg_dontwait(mrb_state* mrb)
 {
   // We don't have this populated on windows, so let's just whack it in at 0.
   // This gets the webserver properly responding to requests on my machine.

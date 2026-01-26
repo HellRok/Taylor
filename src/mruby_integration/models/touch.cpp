@@ -10,8 +10,7 @@
 
 struct RClass* Touch_class;
 
-auto
-mrb_Touch_position_for(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Touch_position_for(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int index;
   mrb_get_args(mrb, "i", &index);
@@ -22,8 +21,7 @@ mrb_Touch_position_for(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_Vector2_value(mrb, position);
 }
 
-void
-append_models_Touch(mrb_state* mrb)
+void append_models_Touch(mrb_state* mrb)
 {
   Touch_class = mrb_define_class(mrb, "Touch", mrb->object_class);
   MRB_SET_INSTANCE_TT(Touch_class, MRB_TT_DATA);

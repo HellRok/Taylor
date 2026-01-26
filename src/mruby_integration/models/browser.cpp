@@ -9,8 +9,7 @@
 
 struct RClass* Browser_class;
 
-auto
-mrb_Browser_open(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Browser_open(mrb_state* mrb, mrb_value) -> mrb_value
 {
   const char* url;
   mrb_get_args(mrb, "z", &url);
@@ -24,14 +23,12 @@ mrb_state* main_loop_mrb{};
 mrb_value main_loop_self{};
 char* main_loop_method{};
 
-void
-real_main_loop()
+void real_main_loop()
 {
   mrb_funcall(main_loop_mrb, main_loop_self, main_loop_method, 0);
 }
 
-mrb_value
-mrb_Browser_set_main_loop(mrb_state* mrb, mrb_value self)
+mrb_value mrb_Browser_set_main_loop(mrb_state* mrb, mrb_value self)
 {
   mrb_get_args(mrb, "z", &main_loop_method);
   main_loop_mrb = mrb;
@@ -42,8 +39,7 @@ mrb_Browser_set_main_loop(mrb_state* mrb, mrb_value self)
   return mrb_nil_value();
 }
 
-mrb_value
-mrb_Browser_cancel_main_loop(mrb_state*, mrb_value)
+mrb_value mrb_Browser_cancel_main_loop(mrb_state*, mrb_value)
 {
   emscripten_cancel_main_loop();
 
@@ -77,35 +73,25 @@ EM_JS(char*,
         // clang-format on
       });
 
-mrb_value
-mrb_Browser_attribute_from_element(mrb_state* mrb, mrb_value)
+mrb_value mrb_Browser_attribute_from_element(mrb_state* mrb, mrb_value)
 {
   char *selector, *attribute;
   mrb_get_args(mrb, "zz", &selector, &attribute);
 
-  return mrb_str_new_cstr(mrb,
-                          js_get_attribute_from_element(selector, attribute));
+  return mrb_str_new_cstr(mrb, js_get_attribute_from_element(selector, attribute));
 }
 #endif
 
-void
-append_models_Browser(mrb_state* mrb)
+void append_models_Browser(mrb_state* mrb)
 {
   Browser_class = mrb_define_module(mrb, "Browser");
-  mrb_define_class_method(
-    mrb, Browser_class, "open", mrb_Browser_open, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, Browser_class, "open", mrb_Browser_open, MRB_ARGS_REQ(1));
 
 #ifdef __EMSCRIPTEN__
-  mrb_define_class_method(mrb,
-                          Browser_class,
-                          "main_loop=",
-                          mrb_Browser_set_main_loop,
-                          MRB_ARGS_REQ(1));
-  mrb_define_class_method(mrb,
-                          Browser_class,
-                          "cancel_main_loop",
-                          mrb_Browser_cancel_main_loop,
-                          MRB_ARGS_NONE());
+  mrb_define_class_method(
+    mrb, Browser_class, "main_loop=", mrb_Browser_set_main_loop, MRB_ARGS_REQ(1));
+  mrb_define_class_method(
+    mrb, Browser_class, "cancel_main_loop", mrb_Browser_cancel_main_loop, MRB_ARGS_NONE());
   mrb_define_class_method(mrb,
                           Browser_class,
                           "attribute_from_element",

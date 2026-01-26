@@ -1,8 +1,7 @@
 #include "mruby.h"
 #include "mruby/array.h"
 
-void
-populate_argv(mrb_state* mrb, int argc, char** argv)
+void populate_argv(mrb_state* mrb, int argc, char** argv)
 {
   mrb_value ARGV;
   ARGV = mrb_ary_new_capa(mrb, argc);
