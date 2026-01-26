@@ -12,8 +12,7 @@
 
 struct RClass* RenderTexture_class;
 
-auto
-mrb_RenderTexture_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_RenderTexture_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   // RenderTexture.new(width:, height:)
   const mrb_int kw_num = 2;
@@ -65,8 +64,7 @@ mrb_attr_reader_with_klasses_and_attrs(mrb,
                                        height,
                                        texture.height);
 
-auto
-mrb_RenderTexture_unload(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_RenderTexture_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, RenderTexture, texture);
 
@@ -75,16 +73,14 @@ mrb_RenderTexture_unload(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_RenderTexture_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_RenderTexture_valid(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, RenderTexture, texture);
 
   return mrb_bool_value(IsRenderTextureValid(*texture));
 }
 
-auto
-mrb_RenderTexture_begin_drawing(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_RenderTexture_begin_drawing(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, RenderTexture, texture);
 
@@ -92,46 +88,26 @@ mrb_RenderTexture_begin_drawing(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_RenderTexture_end_drawing(mrb_state*, mrb_value) -> mrb_value
+auto mrb_RenderTexture_end_drawing(mrb_state*, mrb_value) -> mrb_value
 {
   EndTextureMode();
   return mrb_nil_value();
 }
 
-void
-append_models_RenderTexture(mrb_state* mrb)
+void append_models_RenderTexture(mrb_state* mrb)
 {
-  RenderTexture_class =
-    mrb_define_class(mrb, "RenderTexture", mrb->object_class);
+  RenderTexture_class = mrb_define_class(mrb, "RenderTexture", mrb->object_class);
   MRB_SET_INSTANCE_TT(RenderTexture_class, MRB_TT_DATA);
-  mrb_define_method(mrb,
-                    RenderTexture_class,
-                    "initialize",
-                    mrb_RenderTexture_initialize,
-                    MRB_ARGS_REQ(2));
+  mrb_define_method(
+    mrb, RenderTexture_class, "initialize", mrb_RenderTexture_initialize, MRB_ARGS_REQ(2));
   mrb_attr_reader_define(mrb, RenderTexture, width);
   mrb_attr_reader_define(mrb, RenderTexture, height);
-  mrb_define_method(mrb,
-                    RenderTexture_class,
-                    "unload",
-                    mrb_RenderTexture_unload,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    RenderTexture_class,
-                    "valid?",
-                    mrb_RenderTexture_valid,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    RenderTexture_class,
-                    "begin_drawing",
-                    mrb_RenderTexture_begin_drawing,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    RenderTexture_class,
-                    "end_drawing",
-                    mrb_RenderTexture_end_drawing,
-                    MRB_ARGS_NONE());
+  mrb_define_method(mrb, RenderTexture_class, "unload", mrb_RenderTexture_unload, MRB_ARGS_NONE());
+  mrb_define_method(mrb, RenderTexture_class, "valid?", mrb_RenderTexture_valid, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, RenderTexture_class, "begin_drawing", mrb_RenderTexture_begin_drawing, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, RenderTexture_class, "end_drawing", mrb_RenderTexture_end_drawing, MRB_ARGS_NONE());
 
   load_ruby_models_render_texture(mrb);
 }

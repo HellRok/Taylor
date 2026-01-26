@@ -12,15 +12,14 @@
 
 struct RClass* Texture2D_class;
 
-void
-setup_Texture2D(mrb_state* mrb,
-                mrb_value object,
-                Texture2D* texture,
-                int id,
-                int width,
-                int height,
-                int mipmaps,
-                int format)
+void setup_Texture2D(mrb_state* mrb,
+                     mrb_value object,
+                     Texture2D* texture,
+                     int id,
+                     int width,
+                     int height,
+                     int mipmaps,
+                     int format)
 {
   ivar_attr_int(mrb, object, texture->id, id);
   ivar_attr_int(mrb, object, texture->width, width);
@@ -29,11 +28,9 @@ setup_Texture2D(mrb_state* mrb,
   ivar_attr_int(mrb, object, texture->format, format);
 }
 
-auto
-mrb_Texture2D_value(mrb_state* mrb, Texture2D* texture) -> mrb_value
+auto mrb_Texture2D_value(mrb_state* mrb, Texture2D* texture) -> mrb_value
 {
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
 
   setup_Texture2D(mrb,
                   obj,
@@ -47,8 +44,7 @@ mrb_Texture2D_value(mrb_state* mrb, Texture2D* texture) -> mrb_value
   return obj;
 }
 
-auto
-mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* path;
   mrb_get_args(mrb, "z", &path);
@@ -71,17 +67,13 @@ mrb_Texture2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
                   texture->mipmaps,
                   texture->format);
 
-  mrb_iv_set(mrb,
-             self,
-             mrb_intern_cstr(mrb, "@filter"),
-             mrb_int_value(mrb, TEXTURE_FILTER_POINT));
+  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "@filter"), mrb_int_value(mrb, TEXTURE_FILTER_POINT));
 
   mrb_data_init(self, texture, &Texture2D_type);
   return self;
 }
 
-auto
-mrb_Texture2D_unload(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Texture2D_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Texture2D, texture);
 
@@ -90,16 +82,14 @@ mrb_Texture2D_unload(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Texture2D_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Texture2D_valid(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Texture2D, texture);
 
   return mrb_bool_value(IsTextureValid(*texture));
 }
 
-auto
-mrb_Texture2D_set_filter(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Texture2D_set_filter(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_int filter;
   mrb_get_args(mrb, "i", &filter);
@@ -116,14 +106,12 @@ mrb_Texture2D_set_filter(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_get_self(mrb, self, Texture2D, texture);
 
   SetTextureFilter(*texture, filter);
-  mrb_iv_set(
-    mrb, self, mrb_intern_cstr(mrb, "@filter"), mrb_int_value(mrb, filter));
+  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "@filter"), mrb_int_value(mrb, filter));
 
   return mrb_nil_value();
 }
 
-auto
-mrb_Texture2D_generate_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Texture2D_generate_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Texture2D, texture);
 
@@ -132,8 +120,7 @@ mrb_Texture2D_generate_mipmaps(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Texture2D, texture);
 
@@ -143,26 +130,21 @@ mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 
   const mrb_int kw_num = 6;
   const mrb_int kw_required = 0;
-  const mrb_sym kw_names[] = {
-    mrb_intern_lit(mrb, "source"),      mrb_intern_lit(mrb, "position"),
-    mrb_intern_lit(mrb, "destination"), mrb_intern_lit(mrb, "origin"),
-    mrb_intern_lit(mrb, "rotation"),    mrb_intern_lit(mrb, "colour")
-  };
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "source"),      mrb_intern_lit(mrb, "position"),
+                               mrb_intern_lit(mrb, "destination"), mrb_intern_lit(mrb, "origin"),
+                               mrb_intern_lit(mrb, "rotation"),    mrb_intern_lit(mrb, "colour") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, ":", &kwargs);
 
   if (!mrb_undef_p(kw_values[1]) && !mrb_undef_p(kw_values[2])) {
-    mrb_raise(
-      mrb, E_ARGUMENT_ERROR, "Can't specify both position and destination");
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Can't specify both position and destination");
   }
 
   Rectangle* source;
   if (mrb_undef_p(kw_values[0])) {
-    auto default_rectangle = Rectangle{ 0,
-                                        0,
-                                        static_cast<float>(texture->width),
-                                        static_cast<float>(texture->height) };
+    auto default_rectangle =
+      Rectangle{ 0, 0, static_cast<float>(texture->width), static_cast<float>(texture->height) };
     source = &default_rectangle;
   } else {
     source = &static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
@@ -178,18 +160,15 @@ mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 
   Rectangle* destination;
   if (mrb_undef_p(kw_values[2])) {
-    auto default_destination =
-      Rectangle{ position->x, position->y, source->width, source->height };
+    auto default_destination = Rectangle{ position->x, position->y, source->width, source->height };
     destination = &default_destination;
   } else {
-    destination =
-      &static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
+    destination = &static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
   }
 
   Vector2* origin;
   if (mrb_undef_p(kw_values[3])) {
-    auto default_origin =
-      Vector2{ (destination->width / 2.0f), (destination->height / 2.0f) };
+    auto default_origin = Vector2{ (destination->width / 2.0f), (destination->height / 2.0f) };
     origin = &default_origin;
   } else {
     origin = static_cast<struct Vector2*> DATA_PTR(kw_values[3]);
@@ -213,29 +192,17 @@ mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-void
-append_models_Texture2D(mrb_state* mrb)
+void append_models_Texture2D(mrb_state* mrb)
 {
   Texture2D_class = mrb_define_class(mrb, "Texture2D", mrb->object_class);
   MRB_SET_INSTANCE_TT(Texture2D_class, MRB_TT_DATA);
-  mrb_define_method(mrb,
-                    Texture2D_class,
-                    "initialize",
-                    mrb_Texture2D_initialize,
-                    MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Texture2D_class, "initialize", mrb_Texture2D_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Texture2D_class, "unload", mrb_Texture2D_unload, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Texture2D_class, "valid?", mrb_Texture2D_valid, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Texture2D_class, "filter=", mrb_Texture2D_set_filter, MRB_ARGS_REQ(1));
   mrb_define_method(
-    mrb, Texture2D_class, "unload", mrb_Texture2D_unload, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Texture2D_class, "valid?", mrb_Texture2D_valid, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Texture2D_class, "filter=", mrb_Texture2D_set_filter, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    Texture2D_class,
-                    "generate_mipmaps",
-                    mrb_Texture2D_generate_mipmaps,
-                    MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Texture2D_class, "draw", mrb_Texture2D_draw, MRB_ARGS_REQ(1));
+    mrb, Texture2D_class, "generate_mipmaps", mrb_Texture2D_generate_mipmaps, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Texture2D_class, "draw", mrb_Texture2D_draw, MRB_ARGS_REQ(1));
 
   load_ruby_models_texture2d(mrb);
 }

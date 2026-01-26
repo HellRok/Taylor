@@ -11,11 +11,9 @@
 #include "raylib.h"
 
 std::vector<std::string> raylib_method_calls;
-std::unordered_map<std::string, std::deque<std::string>>
-  raylib_method_call_mock_returns;
+std::unordered_map<std::string, std::deque<std::string>> raylib_method_call_mock_returns;
 
-auto
-append_call(std::string call) -> void
+auto append_call(std::string call) -> void
 {
   raylib_method_calls.push_back(call);
 }
@@ -26,8 +24,7 @@ struct mock_result
   bool found;
 };
 
-auto
-next_mock_for(std::string method) -> mock_result
+auto next_mock_for(std::string method) -> mock_result
 {
   mock_result result{ "", false };
 
@@ -46,8 +43,7 @@ next_mock_for(std::string method) -> mock_result
   return result;
 }
 
-auto
-mrb_Taylor_Raylib_mocked(mrb_state*, mrb_value) -> mrb_value
+auto mrb_Taylor_Raylib_mocked(mrb_state*, mrb_value) -> mrb_value
 {
 #ifdef MOCK_RAYLIB
   return mrb_true_value();
@@ -56,15 +52,13 @@ mrb_Taylor_Raylib_mocked(mrb_state*, mrb_value) -> mrb_value
 #endif
 }
 
-auto
-mrb_Taylor_Raylib_calls(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Taylor_Raylib_calls(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value result;
   result = mrb_ary_new_capa(mrb, raylib_method_calls.size());
 
   for (auto& raylib_method_call : raylib_method_calls) {
-    mrb_ary_push(
-      mrb, result, mrb_str_new_cstr(mrb, raylib_method_call.c_str()));
+    mrb_ary_push(mrb, result, mrb_str_new_cstr(mrb, raylib_method_call.c_str()));
   }
 
   raylib_method_calls.clear();
@@ -73,8 +67,7 @@ mrb_Taylor_Raylib_calls(mrb_state* mrb, mrb_value) -> mrb_value
 }
 
 #ifdef MOCK_RAYLIB
-auto
-mocked_const_char_call_for(std::string method) -> const char*
+auto mocked_const_char_call_for(std::string method) -> const char*
 {
   mock_result mock = next_mock_for(method);
 
@@ -89,13 +82,9 @@ mocked_const_char_call_for(std::string method) -> const char*
   return "default";
 }
 
-auto
-mocked_call_for_LoadImageColors(Color* result) -> void
-{
-}
+auto mocked_call_for_LoadImageColors(Color* result) -> void {}
 
-auto
-mocked_call_for(std::string method, bool* result) -> void
+auto mocked_call_for(std::string method, bool* result) -> void
 {
   *result = true;
 
@@ -105,8 +94,7 @@ mocked_call_for(std::string method, bool* result) -> void
   }
 }
 
-auto
-mocked_call_for(std::string method, double* result) -> void
+auto mocked_call_for(std::string method, double* result) -> void
 {
   *result = 1.0;
 
@@ -116,8 +104,7 @@ mocked_call_for(std::string method, double* result) -> void
   }
 }
 
-auto
-mocked_call_for(std::string method, float* result) -> void
+auto mocked_call_for(std::string method, float* result) -> void
 {
   *result = 1.0f;
 
@@ -127,8 +114,7 @@ mocked_call_for(std::string method, float* result) -> void
   }
 }
 
-auto
-mocked_call_for(std::string method, int* result) -> void
+auto mocked_call_for(std::string method, int* result) -> void
 {
   *result = 1;
 
@@ -138,8 +124,7 @@ mocked_call_for(std::string method, int* result) -> void
   }
 }
 
-auto
-mocked_call_for(std::string method, Color* result) -> void
+auto mocked_call_for(std::string method, Color* result) -> void
 {
   *result = Color{ 0, 0, 0, 0 };
 
@@ -159,8 +144,7 @@ mocked_call_for(std::string method, Color* result) -> void
   }
 }
 
-auto
-mocked_call_for(std::string method, FilePathList* result) -> void
+auto mocked_call_for(std::string method, FilePathList* result) -> void
 {
   const unsigned int capacity = 8;
   auto** paths = static_cast<char**>(malloc(sizeof(char*) * capacity));
@@ -179,8 +163,7 @@ mocked_call_for(std::string method, FilePathList* result) -> void
   }
 }
 
-auto
-mocked_call_for(std::string method, Font* result) -> void
+auto mocked_call_for(std::string method, Font* result) -> void
 {
   auto rectangle = Rectangle{ 0, 0, 0, 0 };
   auto glyph_info = GlyphInfo{};
@@ -201,12 +184,10 @@ mocked_call_for(std::string method, Font* result) -> void
     glyph_padding = std::stoi(temp);
   }
 
-  *result = Font{ size,        glyph_count, glyph_padding,
-                  Texture2D{}, &rectangle,  &glyph_info };
+  *result = Font{ size, glyph_count, glyph_padding, Texture2D{}, &rectangle, &glyph_info };
 }
 
-auto
-mocked_call_for(std::string method, Image* result) -> void
+auto mocked_call_for(std::string method, Image* result) -> void
 {
   // Gotta dereference something I guess?
   std::string data = "hello";
@@ -233,8 +214,7 @@ mocked_call_for(std::string method, Image* result) -> void
   *result = Image{ &data, width, height, mipmaps, format };
 }
 
-auto
-mocked_call_for(std::string method, Music* result) -> void
+auto mocked_call_for(std::string method, Music* result) -> void
 {
   unsigned int sample_rate = 0;
   unsigned int sample_size = 0;
@@ -270,8 +250,7 @@ mocked_call_for(std::string method, Music* result) -> void
   };
 }
 
-auto
-mocked_call_for(std::string method, RenderTexture* result) -> void
+auto mocked_call_for(std::string method, RenderTexture* result) -> void
 {
   int width = 0;
   int height = 0;
@@ -294,8 +273,7 @@ mocked_call_for(std::string method, RenderTexture* result) -> void
   };
 }
 
-auto
-mocked_call_for(std::string method, Shader* result) -> void
+auto mocked_call_for(std::string method, Shader* result) -> void
 {
   unsigned int id = 0;
 
@@ -307,8 +285,7 @@ mocked_call_for(std::string method, Shader* result) -> void
   *result = Shader{ id, 0 };
 }
 
-auto
-mocked_call_for(std::string method, Sound* result) -> void
+auto mocked_call_for(std::string method, Sound* result) -> void
 {
   unsigned int frame_count = 0;
 
@@ -320,8 +297,7 @@ mocked_call_for(std::string method, Sound* result) -> void
   *result = Sound{ AudioStream{}, frame_count };
 }
 
-auto
-mocked_call_for(std::string method, Texture* result) -> void
+auto mocked_call_for(std::string method, Texture* result) -> void
 {
   unsigned int id = 0;
   int width = 0;
@@ -349,8 +325,7 @@ mocked_call_for(std::string method, Texture* result) -> void
   *result = Texture{ id, width, height, mipmaps, format };
 }
 
-auto
-mocked_call_for(std::string method, Vector2* result) -> void
+auto mocked_call_for(std::string method, Vector2* result) -> void
 {
   float x = 0;
   float y = 0;
@@ -369,8 +344,7 @@ mocked_call_for(std::string method, Vector2* result) -> void
 }
 #endif // MOCK_RAYLIB
 
-auto
-mrb_Taylor_Raylib_mock_call(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Taylor_Raylib_mock_call(mrb_state* mrb, mrb_value) -> mrb_value
 {
   char* methodPtr;
   char* resultPtr;
@@ -385,8 +359,7 @@ mrb_Taylor_Raylib_mock_call(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Taylor_Raylib_mocks(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Taylor_Raylib_mocks(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_value result;
   result = mrb_ary_new_capa(mrb, raylib_method_call_mock_returns.size());
@@ -410,46 +383,30 @@ mrb_Taylor_Raylib_mocks(mrb_state* mrb, mrb_value) -> mrb_value
   return result;
 }
 
-auto
-mrb_Taylor_Raylib_reset_calls(mrb_state*, mrb_value) -> mrb_value
+auto mrb_Taylor_Raylib_reset_calls(mrb_state*, mrb_value) -> mrb_value
 {
   raylib_method_calls.clear();
 
   return mrb_nil_value();
 }
 
-auto
-mrb_Taylor_Raylib_clear_mocks(mrb_state*, mrb_value) -> mrb_value
+auto mrb_Taylor_Raylib_clear_mocks(mrb_state*, mrb_value) -> mrb_value
 {
   raylib_method_call_mock_returns.clear();
 
   return mrb_nil_value();
 }
 
-void
-append_taylor_raylib(mrb_state* mrb, RClass* Taylor_module)
+void append_taylor_raylib(mrb_state* mrb, RClass* Taylor_module)
 {
-  struct RClass* Raylib_module =
-    mrb_define_module_under(mrb, Taylor_module, "Raylib");
+  struct RClass* Raylib_module = mrb_define_module_under(mrb, Taylor_module, "Raylib");
+  mrb_define_class_method(mrb, Raylib_module, "mocked?", mrb_Taylor_Raylib_mocked, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, Raylib_module, "calls", mrb_Taylor_Raylib_calls, MRB_ARGS_NONE());
   mrb_define_class_method(
-    mrb, Raylib_module, "mocked?", mrb_Taylor_Raylib_mocked, MRB_ARGS_NONE());
+    mrb, Raylib_module, "reset_calls", mrb_Taylor_Raylib_reset_calls, MRB_ARGS_NONE());
   mrb_define_class_method(
-    mrb, Raylib_module, "calls", mrb_Taylor_Raylib_calls, MRB_ARGS_NONE());
-  mrb_define_class_method(mrb,
-                          Raylib_module,
-                          "reset_calls",
-                          mrb_Taylor_Raylib_reset_calls,
-                          MRB_ARGS_NONE());
-  mrb_define_class_method(mrb,
-                          Raylib_module,
-                          "mock_call",
-                          mrb_Taylor_Raylib_mock_call,
-                          MRB_ARGS_REQ(2));
+    mrb, Raylib_module, "mock_call", mrb_Taylor_Raylib_mock_call, MRB_ARGS_REQ(2));
+  mrb_define_class_method(mrb, Raylib_module, "mocks", mrb_Taylor_Raylib_mocks, MRB_ARGS_NONE());
   mrb_define_class_method(
-    mrb, Raylib_module, "mocks", mrb_Taylor_Raylib_mocks, MRB_ARGS_NONE());
-  mrb_define_class_method(mrb,
-                          Raylib_module,
-                          "clear_mocks",
-                          mrb_Taylor_Raylib_clear_mocks,
-                          MRB_ARGS_NONE());
+    mrb, Raylib_module, "clear_mocks", mrb_Taylor_Raylib_clear_mocks, MRB_ARGS_NONE());
 }

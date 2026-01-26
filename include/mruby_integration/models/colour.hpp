@@ -5,11 +5,8 @@
 
 extern RClass* Colour_class;
 
-auto
-mrb_Color_value(mrb_state*, Color*) -> mrb_value;
+auto mrb_Color_value(mrb_state*, Color*) -> mrb_value;
 
-void
-Color_init(Color*);
+void Color_init(Color*);
 
-void
-append_models_Colour(mrb_state*);
+void append_models_Colour(mrb_state*);

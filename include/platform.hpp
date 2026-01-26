@@ -1,5 +1,4 @@
 #pragma once
 #include "mruby.h"
 
-void
-append_platform(mrb_state*);
+void append_platform(mrb_state*);

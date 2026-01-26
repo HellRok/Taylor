@@ -7,8 +7,7 @@
 
 struct RClass* Logging_class;
 
-auto
-mrb_Logging_set_level(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Logging_set_level(mrb_state* mrb, mrb_value) -> mrb_value
 {
   mrb_int level;
   mrb_get_args(mrb, "i", &level);
@@ -17,23 +16,18 @@ mrb_Logging_set_level(mrb_state* mrb, mrb_value) -> mrb_value
     mrb_raise(mrb, E_ARGUMENT_ERROR, "Logging level must be within (0..7)");
   }
 
-  mrb_mod_cv_set(mrb,
-                 Logging_class,
-                 mrb_intern_cstr(mrb, "@@level"),
-                 mrb_int_value(mrb, level));
+  mrb_mod_cv_set(mrb, Logging_class, mrb_intern_cstr(mrb, "@@level"), mrb_int_value(mrb, level));
 
   SetTraceLogLevel(level);
   return mrb_nil_value();
 }
 
-auto
-mrb_Logging_log(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Logging_log(mrb_state* mrb, mrb_value) -> mrb_value
 {
   // def self.log(level: Logging::INFO, message:)
   const mrb_int kw_num = 2;
   const mrb_int kw_required = 1;
-  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "message"),
-                               mrb_intern_lit(mrb, "level") };
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "message"), mrb_intern_lit(mrb, "level") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, ":", &kwargs);
@@ -61,14 +55,11 @@ mrb_Logging_log(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
-void
-append_models_Logging(mrb_state* mrb)
+void append_models_Logging(mrb_state* mrb)
 {
   Logging_class = mrb_define_module(mrb, "Logging");
-  mrb_define_class_method(
-    mrb, Logging_class, "level=", mrb_Logging_set_level, MRB_ARGS_REQ(1));
-  mrb_define_class_method(
-    mrb, Logging_class, "log", mrb_Logging_log, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, Logging_class, "level=", mrb_Logging_set_level, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, Logging_class, "log", mrb_Logging_log, MRB_ARGS_REQ(1));
 
   load_ruby_models_logging(mrb);
 }
