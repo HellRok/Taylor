@@ -19,6 +19,7 @@
 - Rectangle#overlaps? now works with Rectangle using AABB
 - Switch to LocalCI
 - Uploading test analytics doesn't explode without a key set
+- `clang-format` update settings
 
 ## v0.4.0
 
