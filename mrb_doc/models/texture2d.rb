@@ -112,15 +112,22 @@ class Texture2D
   #   sheet.draw(source: player, position: Vector2[32, 32])
   #
   #
-  # @param source [Rectangle] If not defined it defaults to the full image
-  # @param position [Vector2] If not defined it defaults to Vector2[0, 0]
-  # @param destination [Rectangle] If not defined it defaults to position x and y with source width and height
-  # @param origin [Vector2] Defaults to the middle of the `destination`
+  # @param source [Rectangle]
+  # @param position [Vector2]
+  # @param destination [Rectangle]
+  # @param origin [Vector2]
   # @param rotation [Integer] In degrees
   # @param colour [Colour]
   # @return [nil]
   # @raise [ArgumentError] if both `position` and `destination` are passed in
-  def draw(source: Rectangle[0, 0, width, height], position: nil, destination: nil, origin: Vector2[destination.width / 2.0, destination.height / 2.0], rotation: 0, colour: Colour::WHITE)
+  def draw(
+    source: Rectangle[0, 0, width, height],
+    position: Vector2[0, 0],
+    destination: Rectangle[position.x, position.y, source.width, source.height],
+    origin: Vector2[0, 0],
+    rotation: 0,
+    colour: Colour::WHITE
+  )
     # mrb_Texture2D_draw
     # src/mruby_integration/models/texture2d.cpp
     nil
