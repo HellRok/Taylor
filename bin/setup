@@ -12,3 +12,6 @@ bin/bear
 
 log "Setting up git hooks"
 git config core.hooksPath ./.git-hooks
+
+log "Ignoring loud git commits"
+git config blame.ignoreRevsFile .git-blame-ignore-revs
