@@ -168,7 +168,7 @@ auto mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 
   Vector2* origin;
   if (mrb_undef_p(kw_values[3])) {
-    auto default_origin = Vector2{ (destination->width / 2.0f), (destination->height / 2.0f) };
+    auto default_origin = Vector2{ 0, 0 };
     origin = &default_origin;
   } else {
     origin = static_cast<struct Vector2*> DATA_PTR(kw_values[3]);

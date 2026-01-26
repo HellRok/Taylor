@@ -20,6 +20,7 @@
 - Switch to LocalCI
 - Uploading test analytics doesn't explode without a key set
 - `clang-format` update settings
+- Texture2D doesn't set the origin to the centre by default
 
 ## v0.4.0
 
