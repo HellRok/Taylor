@@ -410,7 +410,7 @@ end
   end
 end
 
-@unit.describe "Rectangle#overlaps?" do
+@unit.describe "Rectangle#overlaps? Vector2" do
   Given "we have a rectangle and a vector" do
     @rectangle = Rectangle.new(x: 3, y: 4, width: 2, height: 3)
     @vector = Vector2.new(x: 0, y: 0)
@@ -474,14 +474,170 @@ end
     expect(@rectangle.overlaps?(@vector)).to_be_false
   end
 
-  When "passed in anything other than a vector raise an error" do
-    expect {
-      @rectangle.overlaps?("string")
-    }.to_raise(ArgumentError, "Must pass in a Vector2")
+  And "cleanup" do
+    @rectangle = nil
+    @vector = nil
+  end
+end
+
+@unit.describe "Rectangle#overlaps? Rectangle" do
+  Given "we have two rectangles" do
+    @rectangle = Rectangle.new(x: 3, y: 4, width: 2, height: 3)
+    @other = Rectangle.new(x: 0, y: 0, width: 1, height: 1)
+  end
+
+  Then "it's outside so we return false" do
+    expect(@rectangle.overlaps?(@other)).to_be_false
+  end
+
+  When "it overlaps entirely" do
+    @other.width = 10
+    @other.height = 10
+  end
+
+  Then "it is considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_true
+  end
+
+  When "it is entirely contained" do
+    @other.x = 3
+    @other.y = 5
+    @other.width = 1
+    @other.height = 2
+  end
+
+  Then "it is considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_true
+  end
+
+  When "it partially overlaps" do
+    @other.x = 3
+    @other.y = 5
+    @other.width = 5
+    @other.height = 5
+  end
+
+  Then "it is considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_true
+  end
+
+  When "it is against the left edge" do
+    @other.x = 0
+    @other.y = 4
+    @other.width = 3
+    @other.height = 3
+  end
+
+  Then "it is not considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_false
+  end
+
+  When "it is over the left edge" do
+    @other.x = 0
+    @other.y = 4
+    @other.width = 4
+    @other.height = 3
+  end
+
+  Then "it is considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_true
+  end
+
+  When "it is against the right edge" do
+    @other.x = 5
+    @other.y = 4
+    @other.width = 3
+    @other.height = 3
+  end
+
+  Then "it is not considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_false
+  end
+
+  When "it is over the right edge" do
+    @other.x = 4
+    @other.y = 4
+    @other.width = 3
+    @other.height = 3
+  end
+
+  Then "it is considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_true
+  end
+
+  When "it is against the top edge" do
+    @other.x = 3
+    @other.y = 0
+    @other.width = 2
+    @other.height = 4
+  end
+
+  Then "it is not considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_false
+  end
+
+  When "it is over the top edge" do
+    @other.x = 3
+    @other.y = 0
+    @other.width = 2
+    @other.height = 5
+  end
+
+  Then "it is considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_true
+  end
+
+  When "it is against the bottom edge" do
+    @other.x = 3
+    @other.y = 7
+    @other.width = 2
+    @other.height = 4
+  end
+
+  Then "it is not considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_false
+  end
+
+  When "it is over the bottom edge" do
+    @other.x = 3
+    @other.y = 6
+    @other.width = 2
+    @other.height = 4
+  end
+
+  Then "it is considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_true
+  end
+
+  When "a corner is touching" do
+    @other.x = 0
+    @other.y = 0
+    @other.width = 4
+    @other.height = 5
+  end
+
+  Then "it is considered overlapping" do
+    expect(@rectangle.overlaps?(@other)).to_be_true
   end
 
   And "cleanup" do
     @rectangle = nil
-    @vector = nil
+    @other = nil
+  end
+end
+
+@unit.describe "Rectangle#overlaps? Error" do
+  Given "we have a rectangle" do
+    @rectangle = Rectangle.new(x: 3, y: 4, width: 2, height: 3)
+  end
+
+  When "passed in anything else" do
+    expect {
+      @rectangle.overlaps?("string")
+    }.to_raise(ArgumentError, "Must pass in a Vector2 or Rectangle")
+  end
+
+  And "cleanup" do
+    @rectangle = nil
   end
 end

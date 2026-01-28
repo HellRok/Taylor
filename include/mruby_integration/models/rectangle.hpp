@@ -16,5 +16,4 @@ struct Rektangle
   int segments;
 };
 
-void
-append_models_Rectangle(mrb_state*);
+void append_models_Rectangle(mrb_state*);

@@ -7,5 +7,4 @@ struct Gamepad
   int index;
 };
 
-void
-append_models_Gamepad(mrb_state*);
+void append_models_Gamepad(mrb_state*);

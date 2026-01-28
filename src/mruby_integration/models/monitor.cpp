@@ -13,31 +13,26 @@
 
 struct RClass* Monitor_class;
 
-auto
-mrb_Monitor_value(mrb_state* mrb, Monitor* monitor) -> mrb_value
+auto mrb_Monitor_value(mrb_state* mrb, Monitor* monitor) -> mrb_value
 {
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Monitor_class, &Monitor_type, monitor));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Monitor_class, &Monitor_type, monitor));
 
   return obj;
 }
 
-void
-Monitor_init(Monitor* monitor, int id)
+void Monitor_init(Monitor* monitor, int id)
 {
   monitor->id = id;
 }
 
-auto
-mrb_Monitor_count(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Monitor_count(mrb_state* mrb, mrb_value) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor.count");
 
   return mrb_int_value(mrb, GetMonitorCount());
 }
 
-auto
-mrb_Monitor_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Monitor_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   // def initialize(id:)
   mrb_int kw_num = 1;
@@ -62,21 +57,18 @@ mrb_Monitor_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
 mrb_attr_reader(mrb, self, int, Monitor, id);
 
-auto
-mrb_Monitor_current(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Monitor_current(mrb_state* mrb, mrb_value) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor.current");
   auto* monitor = static_cast<Monitor*>(malloc(sizeof(Monitor)));
   *monitor = Monitor{ GetCurrentMonitor() };
 
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Monitor_class, &Monitor_type, monitor));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Monitor_class, &Monitor_type, monitor));
 
   return obj;
 }
 
-auto
-mrb_Monitor_position(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Monitor_position(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#position");
 
@@ -88,8 +80,7 @@ mrb_Monitor_position(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_Vector2_value(mrb, position);
 }
 
-auto
-mrb_Monitor_width(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Monitor_width(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#width");
 
@@ -98,8 +89,7 @@ mrb_Monitor_width(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_int_value(mrb, GetMonitorWidth(monitor->id));
 }
 
-auto
-mrb_Monitor_height(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Monitor_height(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#height");
 
@@ -108,19 +98,16 @@ mrb_Monitor_height(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_int_value(mrb, GetMonitorHeight(monitor->id));
 }
 
-auto
-mrb_Monitor_refresh_rate(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Monitor_refresh_rate(mrb_state* mrb, mrb_value self) -> mrb_value
 {
-  EXIT_UNLESS_WINDOW_READY(
-    "You must call Window.open before Monitor#refresh_rate");
+  EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#refresh_rate");
 
   mrb_get_self(mrb, self, Monitor, monitor);
 
   return mrb_int_value(mrb, GetMonitorRefreshRate(monitor->id));
 }
 
-auto
-mrb_Monitor_name(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Monitor_name(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   EXIT_UNLESS_WINDOW_READY("You must call Window.open before Monitor#name");
 
@@ -129,33 +116,21 @@ mrb_Monitor_name(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_str_new_cstr(mrb, GetMonitorName(monitor->id));
 }
 
-void
-append_models_Monitor(mrb_state* mrb)
+void append_models_Monitor(mrb_state* mrb)
 {
   Monitor_class = mrb_define_class(mrb, "Monitor", mrb->object_class);
   MRB_SET_INSTANCE_TT(Monitor_class, MRB_TT_DATA);
 
-  mrb_define_class_method(
-    mrb, Monitor_class, "count", mrb_Monitor_count, MRB_ARGS_NONE());
-  mrb_define_class_method(
-    mrb, Monitor_class, "current", mrb_Monitor_current, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, Monitor_class, "count", mrb_Monitor_count, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, Monitor_class, "current", mrb_Monitor_current, MRB_ARGS_NONE());
 
-  mrb_define_method(
-    mrb, Monitor_class, "initialize", mrb_Monitor_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Monitor_class, "initialize", mrb_Monitor_initialize, MRB_ARGS_REQ(1));
   mrb_attr_reader_define(mrb, Monitor, id);
-  mrb_define_method(
-    mrb, Monitor_class, "position", mrb_Monitor_position, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Monitor_class, "width", mrb_Monitor_width, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Monitor_class, "height", mrb_Monitor_height, MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    Monitor_class,
-                    "refresh_rate",
-                    mrb_Monitor_refresh_rate,
-                    MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Monitor_class, "name", mrb_Monitor_name, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Monitor_class, "position", mrb_Monitor_position, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Monitor_class, "width", mrb_Monitor_width, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Monitor_class, "height", mrb_Monitor_height, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Monitor_class, "refresh_rate", mrb_Monitor_refresh_rate, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Monitor_class, "name", mrb_Monitor_name, MRB_ARGS_NONE());
 
   load_ruby_models_monitor(mrb);
 }

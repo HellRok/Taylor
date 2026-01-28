@@ -109,12 +109,43 @@ class Rectangle
   #   puts hitbox.overlaps?(position)
   #   # => false
   #
-  # @param other [Vector2]
+  # @example Basic Rectangle usage
+  #   wall = Rectangle.new(x: 10, y: 10, width: 10, height: 10)
+  #   player = Rectangle.new(x: 0, y: 0, width: 10, height: 10)
+  #
+  #   puts player.overlaps?(wall)
+  #   # => false
+  #
+  #   # The players moves to inside the rectangle...
+  #   player.x = 5
+  #   player.y = 5
+  #
+  #   puts player.overlaps?(wall)
+  #   # => true
+  #
+  #   # The player moves far away from the wall...
+  #   player.x = 100
+  #   player.y = 100
+  #
+  #   puts player.overlaps?(wall)
+  #   # => false
+  #
+  # @param other [Vector2,Rectangle]
   # @return [Boolean]
-  # @raise [ArgumentError] If passed anything other than a Vector2
+  # @raise [ArgumentError] If passed anything other than a Vector2 or Rectangle
   def overlaps?(other)
-    raise ArgumentError, "Must pass in a Vector2" unless other.is_a?(Vector2)
+    case other
+    when Vector2
+      other.x.between?(x, x + width) && other.y.between?(y, y + height)
 
-    other.x.between?(x, x + width) && other.y.between?(y, y + height)
+    when Rectangle
+      x < (other.x + other.width) &&
+        (x + width) > other.x &&
+        y < (other.y + other.height) &&
+        (y + height) > other.y
+
+    else
+      raise ArgumentError, "Must pass in a Vector2 or Rectangle" unless other.is_a?(Vector2)
+    end
   end
 end

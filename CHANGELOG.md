@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.4.1
 
 - Bump Ruby to 3.4.6 and update gems
 - Add buildkite analytics again
@@ -16,6 +16,11 @@
 - Circle#colour now defaults to Colour::BLACK
 - Added Circle#overlaps?
 - Fix typo in the game template
+- Rectangle#overlaps? now works with Rectangle using AABB
+- Switch to LocalCI
+- Uploading test analytics doesn't explode without a key set
+- `clang-format` update settings
+- Texture2D doesn't set the origin to the centre by default
 
 ## v0.4.0
 

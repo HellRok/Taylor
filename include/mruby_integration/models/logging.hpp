@@ -4,5 +4,4 @@
 
 extern RClass* Logging_class;
 
-void
-append_models_Logging(mrb_state*);
+void append_models_Logging(mrb_state*);

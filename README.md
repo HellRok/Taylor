@@ -39,22 +39,25 @@ If you'd like to see some examples, check them out on the [online playground!](h
 
 1. Install the build dependencies:  
     <details>
-      <summary>Fedora</summary>  
+      <summary>Fedora</summary>
       
       ```console
-      $ sudo dnf groupinstall "Development Tools" "Development Libraries"; sudo dnf install ruby
+      $ sudo dnf groupinstall "Development Tools" "Development Libraries"
+      $ sudo dnf install ruby mingw-gcc-c++ wine
       ``` 
     </details>
-    <details> 
+    <details>
       <summary>Ubuntu/Debian</summary>
       
       ```console
-      $ sudo apt-get install build-essential ruby
+      $ sudo apt-get install build-essential ruby g++-mingw-w64 wine
       ```
-    </details> 
-3. You should now be able to just run `rake` and wait a few seconds. Once the compilation finalises, the
-   binary will be located on `dist/linux/debug/taylor`. 
-4. **Optional**: if you want the nice command line interface, you'll need to run this script:  
+    </details>
+3. Run `bundle install` to install all the required dependencies
+4. You should now be able to just run `bundle exec rake` and wait a few seconds.
+   Once the compilation finalises, the binary will be located on
+   `dist/linux/debug/taylor`.
+5. **Optional**: if you want the nice command line interface, you'll need to run this script:  
     ```console
     $ ./dist/linux/debug/taylor ./cli-tool/cli.rb
     ```

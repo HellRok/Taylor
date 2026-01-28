@@ -16,8 +16,7 @@
 #include "game.h"
 #endif
 
-auto
-main(int argc, char** argv) -> int
+auto main(int argc, char** argv) -> int
 {
 #ifdef _WIN32
   workarounds_mingw_attach_console();
@@ -25,8 +24,7 @@ main(int argc, char** argv) -> int
 
   mrb_state* mrb = mrb_open();
 
-  mrb_define_const(
-    mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
+  mrb_define_const(mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));
   populate_argv(mrb, argc, argv);
 
   append_models(mrb);

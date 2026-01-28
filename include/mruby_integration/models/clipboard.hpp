@@ -4,5 +4,4 @@
 
 extern RClass* Clipboard_class;
 
-void
-append_models_Clipboard(mrb_state*);
+void append_models_Clipboard(mrb_state*);

@@ -17,14 +17,13 @@
 
 struct RClass* Image_class;
 
-void
-setup_Image(mrb_state* mrb,
-            mrb_value object,
-            Image* image,
-            int width,
-            int height,
-            int mipmaps,
-            int format)
+void setup_Image(mrb_state* mrb,
+                 mrb_value object,
+                 Image* image,
+                 int width,
+                 int height,
+                 int mipmaps,
+                 int format)
 {
   ivar_attr_int(mrb, object, image->width, width);
   ivar_attr_int(mrb, object, image->height, height);
@@ -32,8 +31,7 @@ setup_Image(mrb_state* mrb,
   ivar_attr_int(mrb, object, image->format, format);
 }
 
-auto
-mrb_Image_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   char* path;
   mrb_get_args(mrb, "z", &path);
@@ -47,20 +45,13 @@ mrb_Image_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 
   *image = LoadImage(path);
 
-  setup_Image(mrb,
-              self,
-              image,
-              image->width,
-              image->height,
-              image->mipmaps,
-              image->format);
+  setup_Image(mrb, self, image, image->width, image->height, image->mipmaps, image->format);
 
   mrb_data_init(self, image, &Image_type);
   return self;
 }
 
-auto
-mrb_Image_unload(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -69,16 +60,14 @@ mrb_Image_unload(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Image_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_valid(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
   return mrb_bool_value(IsImageValid(*image));
 }
 
-auto
-mrb_Image_export(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_export(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -90,8 +79,7 @@ mrb_Image_export(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Image_generate(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Image_generate(mrb_state* mrb, mrb_value) -> mrb_value
 {
   // def self.generate(width:, height:, colour: Colour::BLANK)
   mrb_int kw_num = 3;
@@ -124,22 +112,14 @@ mrb_Image_generate(mrb_state* mrb, mrb_value) -> mrb_value
   auto* image = static_cast<Image*>(malloc(sizeof(Image)));
   *image = GenImageColor(width, height, *colour);
 
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, image));
 
-  setup_Image(mrb,
-              obj,
-              image,
-              image->width,
-              image->height,
-              image->mipmaps,
-              image->format);
+  setup_Image(mrb, obj, image, image->width, image->height, image->mipmaps, image->format);
 
   return obj;
 }
 
-auto
-mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -153,9 +133,8 @@ mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
 
   Rectangle* source;
   if (mrb_undef_p(kw_values[0])) {
-    auto default_source = Rectangle{
-      0, 0, static_cast<float>(image->width), static_cast<float>(image->height)
-    };
+    auto default_source =
+      Rectangle{ 0, 0, static_cast<float>(image->width), static_cast<float>(image->height) };
     source = &default_source;
   } else {
     source = &static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
@@ -164,22 +143,14 @@ mrb_Image_copy(mrb_state* mrb, mrb_value self) -> mrb_value
   auto* result = static_cast<Image*>(malloc(sizeof(Image)));
   *result = ImageFromImage(*image, *source);
 
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Image_class, &Image_type, result));
 
-  setup_Image(mrb,
-              obj,
-              result,
-              result->width,
-              result->height,
-              result->mipmaps,
-              result->format);
+  setup_Image(mrb, obj, result, result->width, result->height, result->mipmaps, result->format);
 
   return obj;
 }
 
-auto
-mrb_Image_resize_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_resize_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -224,16 +195,13 @@ mrb_Image_resize_bang(mrb_state* mrb, mrb_value self) -> mrb_value
               ":nearest_neighbour");
   }
 
-  mrb_iv_set(
-    mrb, self, mrb_intern_cstr(mrb, "@width"), mrb_int_value(mrb, width));
-  mrb_iv_set(
-    mrb, self, mrb_intern_cstr(mrb, "@height"), mrb_int_value(mrb, height));
+  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "@width"), mrb_int_value(mrb, width));
+  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "@height"), mrb_int_value(mrb, height));
 
   return self;
 }
 
-auto
-mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -249,9 +217,8 @@ mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 
   Rectangle* source;
   if (mrb_undef_p(kw_values[0])) {
-    auto default_source = Rectangle{
-      0, 0, static_cast<float>(image->width), static_cast<float>(image->height)
-    };
+    auto default_source =
+      Rectangle{ 0, 0, static_cast<float>(image->width), static_cast<float>(image->height) };
     source = &default_source;
   } else {
     source = &static_cast<struct Rektangle*> DATA_PTR(kw_values[0])->rectangle;
@@ -259,20 +226,13 @@ mrb_Image_crop_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 
   ImageCrop(image, *source);
 
-  mrb_iv_set(mrb,
-             self,
-             mrb_intern_cstr(mrb, "@width"),
-             mrb_int_value(mrb, source->width));
-  mrb_iv_set(mrb,
-             self,
-             mrb_intern_cstr(mrb, "@height"),
-             mrb_int_value(mrb, source->height));
+  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "@width"), mrb_int_value(mrb, source->width));
+  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "@height"), mrb_int_value(mrb, source->height));
 
   return self;
 }
 
-auto
-mrb_Image_alpha_mask_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_alpha_mask_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
   Image* alpha_mask;
@@ -284,8 +244,7 @@ mrb_Image_alpha_mask_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_flip_vertically_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_flip_vertically_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -294,8 +253,7 @@ mrb_Image_flip_vertically_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_flip_horizontally_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_flip_horizontally_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -304,8 +262,7 @@ mrb_Image_flip_horizontally_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_rotate_clockwise_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_rotate_clockwise_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -314,9 +271,7 @@ mrb_Image_rotate_clockwise_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_rotate_counter_clockwise_bang(mrb_state* mrb, mrb_value self)
-  -> mrb_value
+auto mrb_Image_rotate_counter_clockwise_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -325,8 +280,7 @@ mrb_Image_rotate_counter_clockwise_bang(mrb_state* mrb, mrb_value self)
   return self;
 }
 
-auto
-mrb_Image_premultiply_alpha_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_premultiply_alpha_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -335,23 +289,18 @@ mrb_Image_premultiply_alpha_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_generate_mipmaps_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_generate_mipmaps_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
   ImageMipmaps(image);
 
-  mrb_iv_set(mrb,
-             self,
-             mrb_intern_cstr(mrb, "@mipmaps"),
-             mrb_int_value(mrb, image->mipmaps));
+  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "@mipmaps"), mrb_int_value(mrb, image->mipmaps));
 
   return self;
 }
 
-auto
-mrb_Image_tint_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_tint_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -376,8 +325,7 @@ mrb_Image_tint_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_invert_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_invert_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -386,8 +334,7 @@ mrb_Image_invert_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_greyscale_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_greyscale_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -396,8 +343,7 @@ mrb_Image_greyscale_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_contrast_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_contrast_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -413,8 +359,7 @@ mrb_Image_contrast_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_brightness_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_brightness_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -430,8 +375,7 @@ mrb_Image_brightness_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_replace_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_replace_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -467,8 +411,7 @@ mrb_Image_replace_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image)
 
@@ -500,9 +443,8 @@ mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 
   Rectangle* source;
   if (mrb_undef_p(kw_values[1])) {
-    auto default_source = Rectangle{
-      0, 0, static_cast<float>(image->width), static_cast<float>(image->height)
-    };
+    auto default_source =
+      Rectangle{ 0, 0, static_cast<float>(image->width), static_cast<float>(image->height) };
     source = &default_source;
   } else {
     source = &static_cast<struct Rektangle*> DATA_PTR(kw_values[1])->rectangle;
@@ -510,13 +452,11 @@ mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
 
   Rectangle* destination;
   if (mrb_undef_p(kw_values[2])) {
-    auto default_destination = Rectangle{
-      0, 0, static_cast<float>(image->width), static_cast<float>(image->height)
-    };
+    auto default_destination =
+      Rectangle{ 0, 0, static_cast<float>(image->width), static_cast<float>(image->height) };
     destination = &default_destination;
   } else {
-    destination =
-      &static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
+    destination = &static_cast<struct Rektangle*> DATA_PTR(kw_values[2])->rectangle;
   }
 
   Color* colour;
@@ -532,8 +472,7 @@ mrb_Image_draw_bang(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
@@ -551,16 +490,14 @@ mrb_Image_get_data(mrb_state* mrb, mrb_value self) -> mrb_value
   return return_array;
 }
 
-auto
-mrb_Image_to_texture(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Image_to_texture(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Image, image);
 
   auto* texture = static_cast<Texture2D*>(malloc(sizeof(Texture2D)));
   *texture = LoadTextureFromImage(*image);
 
-  mrb_value obj = mrb_obj_value(
-    Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Texture2D_class, &Texture2D_type, texture));
 
   setup_Texture2D(mrb,
                   obj,
@@ -574,82 +511,43 @@ mrb_Image_to_texture(mrb_state* mrb, mrb_value self) -> mrb_value
   return obj;
 }
 
-void
-append_models_Image(mrb_state* mrb)
+void append_models_Image(mrb_state* mrb)
 {
   Image_class = mrb_define_class(mrb, "Image", mrb->object_class);
   MRB_SET_INSTANCE_TT(Image_class, MRB_TT_DATA);
-  mrb_define_class_method(
-    mrb, Image_class, "generate", mrb_Image_generate, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Image_class, "initialize", mrb_Image_initialize, MRB_ARGS_REQ(5));
-  mrb_define_method(
-    mrb, Image_class, "unload", mrb_Image_unload, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Image_class, "valid?", mrb_Image_valid, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Image_class, "export", mrb_Image_export, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, Image_class, "generate", mrb_Image_generate, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "initialize", mrb_Image_initialize, MRB_ARGS_REQ(5));
+  mrb_define_method(mrb, Image_class, "unload", mrb_Image_unload, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Image_class, "valid?", mrb_Image_valid, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Image_class, "export", mrb_Image_export, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Image_class, "copy", mrb_Image_copy, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "resize!", mrb_Image_resize_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "crop!", mrb_Image_crop_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "alpha_mask!", mrb_Image_alpha_mask_bang, MRB_ARGS_REQ(1));
   mrb_define_method(
-    mrb, Image_class, "resize!", mrb_Image_resize_bang, MRB_ARGS_REQ(1));
+    mrb, Image_class, "flip_vertically!", mrb_Image_flip_vertically_bang, MRB_ARGS_NONE());
   mrb_define_method(
-    mrb, Image_class, "crop!", mrb_Image_crop_bang, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    Image_class,
-                    "alpha_mask!",
-                    mrb_Image_alpha_mask_bang,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    Image_class,
-                    "flip_vertically!",
-                    mrb_Image_flip_vertically_bang,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    Image_class,
-                    "flip_horizontally!",
-                    mrb_Image_flip_horizontally_bang,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    Image_class,
-                    "rotate_clockwise!",
-                    mrb_Image_rotate_clockwise_bang,
-                    MRB_ARGS_NONE());
+    mrb, Image_class, "flip_horizontally!", mrb_Image_flip_horizontally_bang, MRB_ARGS_NONE());
+  mrb_define_method(
+    mrb, Image_class, "rotate_clockwise!", mrb_Image_rotate_clockwise_bang, MRB_ARGS_NONE());
   mrb_define_method(mrb,
                     Image_class,
                     "rotate_counter_clockwise!",
                     mrb_Image_rotate_counter_clockwise_bang,
                     MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    Image_class,
-                    "premultiply_alpha!",
-                    mrb_Image_premultiply_alpha_bang,
-                    MRB_ARGS_NONE());
-  mrb_define_method(mrb,
-                    Image_class,
-                    "generate_mipmaps!",
-                    mrb_Image_generate_mipmaps_bang,
-                    MRB_ARGS_NONE());
   mrb_define_method(
-    mrb, Image_class, "tint!", mrb_Image_tint_bang, MRB_ARGS_REQ(1));
+    mrb, Image_class, "premultiply_alpha!", mrb_Image_premultiply_alpha_bang, MRB_ARGS_NONE());
   mrb_define_method(
-    mrb, Image_class, "invert!", mrb_Image_invert_bang, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Image_class, "greyscale!", mrb_Image_greyscale_bang, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Image_class, "contrast!", mrb_Image_contrast_bang, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    Image_class,
-                    "brightness!",
-                    mrb_Image_brightness_bang,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Image_class, "replace!", mrb_Image_replace_bang, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Image_class, "draw!", mrb_Image_draw_bang, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Image_class, "to_texture", mrb_Image_to_texture, MRB_ARGS_NONE());
+    mrb, Image_class, "generate_mipmaps!", mrb_Image_generate_mipmaps_bang, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Image_class, "tint!", mrb_Image_tint_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "invert!", mrb_Image_invert_bang, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Image_class, "greyscale!", mrb_Image_greyscale_bang, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Image_class, "contrast!", mrb_Image_contrast_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "brightness!", mrb_Image_brightness_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "replace!", mrb_Image_replace_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "draw!", mrb_Image_draw_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Image_class, "to_texture", mrb_Image_to_texture, MRB_ARGS_NONE());
 
   load_ruby_models_image(mrb);
 }
