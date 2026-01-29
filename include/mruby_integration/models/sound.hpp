@@ -5,5 +5,4 @@
 
 extern RClass* Sound_class;
 
-void
-append_models_Sound(mrb_state*);
+void append_models_Sound(mrb_state*);

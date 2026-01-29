@@ -3,7 +3,10 @@
 
 neospec = Neospec.new(
   logger: Neospec::Logger::Basic.new,
-  reporters: [Neospec::Report::Basic],
+  reporters: [
+    Neospec::Report::Basic,
+    Neospec::Report::BuildkiteAnalytics
+  ],
   suites: [@unit]
 )
 

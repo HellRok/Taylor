@@ -13,17 +13,14 @@
 struct RClass* Colour_class;
 
 // This is named to match the C struct for macros
-auto
-mrb_Color_value(mrb_state* mrb, Color* colour) -> mrb_value
+auto mrb_Color_value(mrb_state* mrb, Color* colour) -> mrb_value
 {
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Colour_class, &Color_type, colour));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Colour_class, &Color_type, colour));
 
   return obj;
 }
 
-void
-Color_init(Color* colour)
+void Color_init(Color* colour)
 {
   colour->r = 0;
   colour->g = 0;
@@ -31,8 +28,7 @@ Color_init(Color* colour)
   colour->a = 0;
 }
 
-auto
-mrb_Colour_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Colour_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Color* colour;
   mrb_self_ptr(mrb, self, Color, colour);
@@ -82,8 +78,7 @@ mrb_attr_accessor_with_klasses(mrb, self, int, i, Colour, Color, g);
 mrb_attr_accessor_with_klasses(mrb, self, int, i, Colour, Color, b);
 mrb_attr_accessor_with_klasses(mrb, self, int, i, Colour, Color, a);
 
-auto
-mrb_Colour_fade(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Colour_fade(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Color, colour);
 
@@ -100,8 +95,7 @@ mrb_Colour_fade(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_Color_value(mrb, return_colour);
 }
 
-auto
-mrb_Colour_tint(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Colour_tint(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Color, colour);
 
@@ -114,8 +108,7 @@ mrb_Colour_tint(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_Color_value(mrb, return_colour);
 }
 
-auto
-mrb_Colour_brightness(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Colour_brightness(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Color, colour);
 
@@ -132,8 +125,7 @@ mrb_Colour_brightness(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_Color_value(mrb, return_colour);
 }
 
-auto
-mrb_Colour_contrast(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Colour_contrast(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Color, colour);
 
@@ -150,33 +142,23 @@ mrb_Colour_contrast(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_Color_value(mrb, return_colour);
 }
 
-void
-append_models_Colour(mrb_state* mrb)
+void append_models_Colour(mrb_state* mrb)
 {
   Colour_class = mrb_define_class(mrb, "Colour", mrb->object_class);
   MRB_SET_INSTANCE_TT(Colour_class, MRB_TT_DATA);
-  mrb_define_method(
-    mrb, Colour_class, "initialize", mrb_Colour_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "initialize", mrb_Colour_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Colour_class, "red", mrb_Colour_r, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Colour_class, "red=", mrb_Colour_set_r, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "red=", mrb_Colour_set_r, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Colour_class, "green", mrb_Colour_g, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Colour_class, "green=", mrb_Colour_set_g, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "green=", mrb_Colour_set_g, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Colour_class, "blue", mrb_Colour_b, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Colour_class, "blue=", mrb_Colour_set_b, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "blue=", mrb_Colour_set_b, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Colour_class, "alpha", mrb_Colour_a, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Colour_class, "alpha=", mrb_Colour_set_a, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Colour_class, "fade", mrb_Colour_fade, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Colour_class, "tint", mrb_Colour_tint, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Colour_class, "brightness", mrb_Colour_brightness, MRB_ARGS_REQ(1));
-  mrb_define_method(
-    mrb, Colour_class, "contrast", mrb_Colour_contrast, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "alpha=", mrb_Colour_set_a, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "fade", mrb_Colour_fade, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "tint", mrb_Colour_tint, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "brightness", mrb_Colour_brightness, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Colour_class, "contrast", mrb_Colour_contrast, MRB_ARGS_REQ(1));
 
   load_ruby_models_colour(mrb);
 }

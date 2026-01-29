@@ -14,14 +14,12 @@
 
 struct RClass* Shader_class;
 
-void
-setup_Shader(mrb_state* mrb, mrb_value object, Shader* shader, int id)
+void setup_Shader(mrb_state* mrb, mrb_value object, Shader* shader, int id)
 {
   ivar_attr_int(mrb, object, shader->id, id);
 }
 
-auto
-mrb_Shader_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Shader_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Shader* shader;
   mrb_self_ptr(mrb, self, Shader, shader);
@@ -29,8 +27,7 @@ mrb_Shader_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   // def initialize(fragment:, vertex:)
   const mrb_int kw_num = 2;
   const mrb_int kw_required = 0;
-  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "fragment"),
-                               mrb_intern_lit(mrb, "vertex") };
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "fragment"), mrb_intern_lit(mrb, "vertex") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, ":", &kwargs);
@@ -76,14 +73,12 @@ mrb_Shader_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   return self;
 }
 
-auto
-mrb_Shader_load_code(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Shader_load_code(mrb_state* mrb, mrb_value) -> mrb_value
 {
   // def self.load_code(fragment: nil, vertex: nil)
   const mrb_int kw_num = 2;
   const mrb_int kw_required = 0;
-  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "fragment"),
-                               mrb_intern_lit(mrb, "vertex") };
+  const mrb_sym kw_names[] = { mrb_intern_lit(mrb, "fragment"), mrb_intern_lit(mrb, "vertex") };
   mrb_value kw_values[kw_num];
   mrb_kwargs kwargs = { kw_num, kw_required, kw_names, kw_values, nullptr };
   mrb_get_args(mrb, ":", &kwargs);
@@ -103,8 +98,7 @@ mrb_Shader_load_code(mrb_state* mrb, mrb_value) -> mrb_value
   auto* shader = static_cast<Shader*>(malloc(sizeof(Shader)));
   *shader = LoadShaderFromMemory(vertex_shader_code, fragment_shader_code);
 
-  mrb_value obj =
-    mrb_obj_value(Data_Wrap_Struct(mrb, Shader_class, &Shader_type, shader));
+  mrb_value obj = mrb_obj_value(Data_Wrap_Struct(mrb, Shader_class, &Shader_type, shader));
 
   setup_Shader(mrb, obj, shader, shader->id);
 
@@ -113,8 +107,7 @@ mrb_Shader_load_code(mrb_state* mrb, mrb_value) -> mrb_value
 
 mrb_attr_reader(mrb, self, int, Shader, id);
 
-auto
-mrb_Shader_unload(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Shader_unload(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Shader, shader);
 
@@ -123,16 +116,14 @@ mrb_Shader_unload(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Shader_valid(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Shader_valid(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Shader, shader);
 
   return mrb_bool_value(IsShaderValid(*shader));
 }
 
-auto
-mrb_Shader_location_of(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Shader_location_of(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Shader, shader);
 
@@ -148,8 +139,7 @@ mrb_Shader_location_of(mrb_state* mrb, mrb_value self) -> mrb_value
   }
 }
 
-auto
-mrb_Shader_set(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Shader_set(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Shader, shader);
 
@@ -165,11 +155,9 @@ mrb_Shader_set(mrb_state* mrb, mrb_value self) -> mrb_value
   mrb_get_args(mrb, ":", &kwargs);
 
   if (!mrb_undef_p(kw_values[0]) && !mrb_undef_p(kw_values[1])) {
-    mrb_raise(
-      mrb, E_ARGUMENT_ERROR, "Can't pass both 'location' and 'variable'");
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Can't pass both 'location' and 'variable'");
   } else if (mrb_undef_p(kw_values[0]) && mrb_undef_p(kw_values[1])) {
-    mrb_raise(
-      mrb, E_ARGUMENT_ERROR, "Must pass either 'location' or 'variable'");
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "Must pass either 'location' or 'variable'");
   }
 
   if (!mrb_undef_p(kw_values[2]) && !mrb_undef_p(kw_values[3])) {
@@ -207,9 +195,7 @@ mrb_Shader_set(mrb_state* mrb, mrb_value self) -> mrb_value
     if (mrb_obj_class(mrb, value) != mrb_class_get(mrb, "Array") &&
         mrb_obj_class(mrb, value) != mrb_class_get(mrb, "Integer") &&
         mrb_obj_class(mrb, value) != mrb_class_get(mrb, "Float")) {
-      mrb_raise(mrb,
-                E_ARGUMENT_ERROR,
-                "Value must be either an Integer, Float, or Array");
+      mrb_raise(mrb, E_ARGUMENT_ERROR, "Value must be either an Integer, Float, or Array");
     }
 
     mrb_ary_push(mrb, values, value);
@@ -232,8 +218,7 @@ mrb_Shader_set(mrb_state* mrb, mrb_value self) -> mrb_value
       c_values[i] = mrb_as_int(mrb, mrb_ary_entry(values, i));
     }
 
-    SetShaderValueV(
-      *shader, variable_location, c_values, SHADER_UNIFORM_INT, array_length);
+    SetShaderValueV(*shader, variable_location, c_values, SHADER_UNIFORM_INT, array_length);
 
     return mrb_nil_value();
 
@@ -243,15 +228,13 @@ mrb_Shader_set(mrb_state* mrb, mrb_value self) -> mrb_value
       c_values[i] = mrb_as_float(mrb, mrb_ary_entry(values, i));
     }
 
-    SetShaderValueV(
-      *shader, variable_location, c_values, SHADER_UNIFORM_FLOAT, array_length);
+    SetShaderValueV(*shader, variable_location, c_values, SHADER_UNIFORM_FLOAT, array_length);
 
     return mrb_nil_value();
   }
 
   int sub_array_length = RARRAY_LEN(mrb_ary_entry(values, 0));
-  RClass* sub_array_first_class =
-    mrb_obj_class(mrb, mrb_ary_entry(mrb_ary_entry(values, 0), 0));
+  RClass* sub_array_first_class = mrb_obj_class(mrb, mrb_ary_entry(mrb_ary_entry(values, 0), 0));
   int variable_type = -1;
 
   if (sub_array_length < 2) {
@@ -313,16 +296,14 @@ mrb_Shader_set(mrb_state* mrb, mrb_value self) -> mrb_value
       for (int j = 0; j < sub_array_length; j++) {
         mrb_value sub_value = mrb_ary_entry(sub_array, j);
         if (mrb_obj_class(mrb, sub_value) != mrb_class_get(mrb, "Float")) {
-          mrb_raise(
-            mrb, E_ARGUMENT_ERROR, "Must be all integers or all floats");
+          mrb_raise(mrb, E_ARGUMENT_ERROR, "Must be all integers or all floats");
         }
 
         c_values[i][j] = mrb_as_float(mrb, sub_value);
       }
     }
 
-    SetShaderValueV(
-      *shader, variable_location, c_values, variable_type, array_length);
+    SetShaderValueV(*shader, variable_location, c_values, variable_type, array_length);
 
   } else if (sub_array_first_class == mrb_class_get(mrb, "Integer")) {
     int c_values[array_length][sub_array_length];
@@ -339,23 +320,20 @@ mrb_Shader_set(mrb_state* mrb, mrb_value self) -> mrb_value
       for (int j = 0; j < sub_array_length; j++) {
         mrb_value sub_value = mrb_ary_entry(sub_array, j);
         if (mrb_obj_class(mrb, sub_value) != mrb_class_get(mrb, "Integer")) {
-          mrb_raise(
-            mrb, E_ARGUMENT_ERROR, "Must be all integers or all floats");
+          mrb_raise(mrb, E_ARGUMENT_ERROR, "Must be all integers or all floats");
         }
 
         c_values[i][j] = mrb_as_int(mrb, sub_value);
       }
     }
 
-    SetShaderValueV(
-      *shader, variable_location, c_values, variable_type, array_length);
+    SetShaderValueV(*shader, variable_location, c_values, variable_type, array_length);
   }
 
   return mrb_nil_value();
 }
 
-auto
-mrb_Shader_begin_drawing(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Shader_begin_drawing(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Shader, shader);
 
@@ -363,37 +341,25 @@ mrb_Shader_begin_drawing(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Shader_end_drawing(mrb_state*, mrb_value) -> mrb_value
+auto mrb_Shader_end_drawing(mrb_state*, mrb_value) -> mrb_value
 {
   EndShaderMode();
   return mrb_nil_value();
 }
 
-void
-append_models_Shader(mrb_state* mrb)
+void append_models_Shader(mrb_state* mrb)
 {
   Shader_class = mrb_define_class(mrb, "Shader", mrb->object_class);
   MRB_SET_INSTANCE_TT(Shader_class, MRB_TT_DATA);
-  mrb_define_method(
-    mrb, Shader_class, "initialize", mrb_Shader_initialize, MRB_ARGS_REQ(1));
-  mrb_define_class_method(
-    mrb, Shader_class, "load_code", mrb_Shader_load_code, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Shader_class, "initialize", mrb_Shader_initialize, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, Shader_class, "load_code", mrb_Shader_load_code, MRB_ARGS_REQ(1));
   mrb_attr_reader_define(mrb, Shader, id);
-  mrb_define_method(
-    mrb, Shader_class, "unload", mrb_Shader_unload, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Shader_class, "valid?", mrb_Shader_valid, MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Shader_class, "location_of", mrb_Shader_location_of, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Shader_class, "unload", mrb_Shader_unload, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Shader_class, "valid?", mrb_Shader_valid, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Shader_class, "location_of", mrb_Shader_location_of, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Shader_class, "set", mrb_Shader_set, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    Shader_class,
-                    "begin_drawing",
-                    mrb_Shader_begin_drawing,
-                    MRB_ARGS_NONE());
-  mrb_define_method(
-    mrb, Shader_class, "end_drawing", mrb_Shader_end_drawing, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Shader_class, "begin_drawing", mrb_Shader_begin_drawing, MRB_ARGS_NONE());
+  mrb_define_method(mrb, Shader_class, "end_drawing", mrb_Shader_end_drawing, MRB_ARGS_NONE());
 
   load_ruby_models_shader(mrb);
 }

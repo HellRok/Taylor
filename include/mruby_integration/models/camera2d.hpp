@@ -4,5 +4,4 @@
 
 extern RClass* Camera2D_class;
 
-void
-append_models_Camera2D(mrb_state*);
+void append_models_Camera2D(mrb_state*);

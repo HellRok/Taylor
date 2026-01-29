@@ -2,5 +2,4 @@
 
 #include "mruby.h"
 
-void
-append_taylor(mrb_state*);
+void append_taylor(mrb_state*);

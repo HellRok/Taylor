@@ -5,8 +5,7 @@
 struct RClass* ReferenceCounter_class;
 std::unordered_map<void*, int> references{};
 
-auto
-reference_count(void* p) -> int
+auto reference_count(void* p) -> int
 {
   if (references.count(p) == 0) {
     return 0;
@@ -15,16 +14,14 @@ reference_count(void* p) -> int
   }
 }
 
-void
-add_reference(void* p)
+void add_reference(void* p)
 {
   references[p]++;
 }
 
 int last_size = 0;
 
-void
-free_klass(mrb_state* mrb, void* p)
+void free_klass(mrb_state* mrb, void* p)
 {
   if (reference_count(p) > 0) {
     int count = --references[p];
@@ -55,23 +52,18 @@ add_type(Sound);
 add_type(Texture2D);
 add_type(Vector2);
 
-auto
-mrb_ReferenceCounter_reference_count(mrb_state* mrb, mrb_value self)
-  -> mrb_value
+auto mrb_ReferenceCounter_reference_count(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   void* instance = DATA_PTR(self);
   return mrb_int_value(mrb, reference_count(instance));
 }
 
-auto
-mrb_ReferenceCounter_tracked_objects_count(mrb_state* mrb, mrb_value)
-  -> mrb_value
+auto mrb_ReferenceCounter_tracked_objects_count(mrb_state* mrb, mrb_value) -> mrb_value
 {
   return mrb_int_value(mrb, references.size());
 }
 
-void
-append_module_ReferenceCounter(mrb_state* mrb)
+void append_module_ReferenceCounter(mrb_state* mrb)
 {
   ReferenceCounter_class = mrb_define_module(mrb, "ReferenceCounter");
   mrb_define_class_method(mrb,

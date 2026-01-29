@@ -191,7 +191,7 @@ end
           "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
           "source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
           "dest: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
-          "origin: { x: 3.000000 y: 3.500000 } " \
+          "origin: { x: 0.000000 y: 0.000000 } " \
           "rotation: 0.000000 " \
           "tint: { r: 255 g: 255 b: 255 a: 255 } " \
         "}"
@@ -235,7 +235,7 @@ end
           "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
           "source: { x: 10.000000 y: 11.000000 width: 12.000000 height: 13.000000 } " \
           "dest: { x: 0.000000 y: 0.000000 width: 12.000000 height: 13.000000 } " \
-          "origin: { x: 6.000000 y: 6.500000 } " \
+          "origin: { x: 0.000000 y: 0.000000 } " \
           "rotation: 0.000000 " \
           "tint: { r: 255 g: 255 b: 255 a: 255 } " \
         "}"
@@ -254,7 +254,7 @@ end
           "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
           "source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
           "dest: { x: 10.000000 y: 11.000000 width: 6.000000 height: 7.000000 } " \
-          "origin: { x: 3.000000 y: 3.500000 } " \
+          "origin: { x: 0.000000 y: 0.000000 } " \
           "rotation: 0.000000 " \
           "tint: { r: 255 g: 255 b: 255 a: 255 } " \
         "}"
@@ -273,7 +273,7 @@ end
           "texture: { id: 5 width: 6 height: 7 mipmaps: 8 format: 9 } " \
           "source: { x: 0.000000 y: 0.000000 width: 6.000000 height: 7.000000 } " \
           "dest: { x: 10.000000 y: 11.000000 width: 12.000000 height: 13.000000 } " \
-          "origin: { x: 6.000000 y: 6.500000 } " \
+          "origin: { x: 0.000000 y: 0.000000 } " \
           "rotation: 0.000000 " \
           "tint: { r: 255 g: 255 b: 255 a: 255 } " \
         "}"

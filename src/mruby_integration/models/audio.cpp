@@ -8,34 +8,28 @@
 
 struct RClass* Audio_class;
 
-auto
-mrb_Audio_open(mrb_state*, mrb_value) -> mrb_value
+auto mrb_Audio_open(mrb_state*, mrb_value) -> mrb_value
 {
   InitAudioDevice();
   return mrb_nil_value();
 }
 
-auto
-mrb_Audio_close(mrb_state*, mrb_value) -> mrb_value
+auto mrb_Audio_close(mrb_state*, mrb_value) -> mrb_value
 {
   CloseAudioDevice();
   return mrb_nil_value();
 }
 
-auto
-mrb_Audio_ready(mrb_state*, mrb_value) -> mrb_value
+auto mrb_Audio_ready(mrb_state*, mrb_value) -> mrb_value
 {
   return mrb_bool_value(IsAudioDeviceReady());
 }
 
-auto
-mrb_Audio_set_volume(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Audio_set_volume(mrb_state* mrb, mrb_value) -> mrb_value
 {
   if (!IsAudioDeviceReady()) {
-    raise_error(mrb,
-                Audio_class,
-                "NotOpenError",
-                "You must use Audio.open before calling Audio.volume=");
+    raise_error(
+      mrb, Audio_class, "NotOpenError", "You must use Audio.open before calling Audio.volume=");
   }
 
   mrb_float volume;
@@ -49,33 +43,24 @@ mrb_Audio_set_volume(mrb_state* mrb, mrb_value) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Audio_volume(mrb_state* mrb, mrb_value) -> mrb_value
+auto mrb_Audio_volume(mrb_state* mrb, mrb_value) -> mrb_value
 {
   if (!IsAudioDeviceReady()) {
-    raise_error(mrb,
-                Audio_class,
-                "NotOpenError",
-                "You must use Audio.open before calling Audio.volume");
+    raise_error(
+      mrb, Audio_class, "NotOpenError", "You must use Audio.open before calling Audio.volume");
   }
   return mrb_float_value(mrb, GetMasterVolume());
 }
 
-void
-append_models_Audio(mrb_state* mrb)
+void append_models_Audio(mrb_state* mrb)
 {
   Audio_class = mrb_define_class(mrb, "Audio", mrb->object_class);
   MRB_SET_INSTANCE_TT(Audio_class, MRB_TT_DATA);
-  mrb_define_class_method(
-    mrb, Audio_class, "open", mrb_Audio_open, MRB_ARGS_NONE());
-  mrb_define_class_method(
-    mrb, Audio_class, "close", mrb_Audio_close, MRB_ARGS_NONE());
-  mrb_define_class_method(
-    mrb, Audio_class, "ready?", mrb_Audio_ready, MRB_ARGS_NONE());
-  mrb_define_class_method(
-    mrb, Audio_class, "volume=", mrb_Audio_set_volume, MRB_ARGS_REQ(1));
-  mrb_define_class_method(
-    mrb, Audio_class, "volume", mrb_Audio_volume, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, Audio_class, "open", mrb_Audio_open, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, Audio_class, "close", mrb_Audio_close, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, Audio_class, "ready?", mrb_Audio_ready, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, Audio_class, "volume=", mrb_Audio_set_volume, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, Audio_class, "volume", mrb_Audio_volume, MRB_ARGS_NONE());
 
   load_ruby_models_audio(mrb);
 }

@@ -4,5 +4,4 @@
 
 extern struct RClass* Window_class;
 
-void
-append_models_Window(mrb_state*);
+void append_models_Window(mrb_state*);

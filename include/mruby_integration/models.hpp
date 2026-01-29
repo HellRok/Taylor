@@ -2,5 +2,4 @@
 
 #include "mruby.h"
 
-void
-append_models(mrb_state*);
+void append_models(mrb_state*);

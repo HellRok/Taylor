@@ -24,3 +24,5 @@ gem/*.gem
 
 .cache
 compile_commands.json
+
+logs

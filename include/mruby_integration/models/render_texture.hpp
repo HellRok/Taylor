@@ -5,5 +5,4 @@
 
 extern RClass* RenderTexture_class;
 
-void
-append_models_RenderTexture(mrb_state*);
+void append_models_RenderTexture(mrb_state*);

@@ -1,9 +1,9 @@
-FROM debian:12 AS asdf_install
+FROM debian:13 AS asdf_install
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
-ENV ASDF_VERSION=v0.16.4
+ENV ASDF_VERSION=v0.18.0
 ENV ASDF_PLATFORM=amd64
 ENV ASDF_URL=https://github.com/asdf-vm/asdf/releases/download/$ASDF_VERSION/asdf-$ASDF_VERSION-linux-$ASDF_PLATFORM.tar.gz
 ENV PATH="/home/me/.asdf/shims:/home/me/.asdf/bin:$PATH"
@@ -42,7 +42,7 @@ ASDF
 
 RUN asdf plugin add ruby && asdf install ruby
 
-FROM debian:12
+FROM debian:13
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -52,7 +52,8 @@ ENV PATH="/home/me/.asdf/shims:/home/me/.asdf/bin:$PATH"
 RUN <<SETUP
 apt-get update --quiet --yes
 
-BASE_DEPS="curl git clang-format clang-tidy bear"
+BASE_DEPS="curl git bear"
+LLVM_DEPS="lsb-release gnupg"
 RUBY_DEPS="ruby-build libffi-dev libyaml-dev"
 LINUX_BUILD_DEPS="build-essential "
 WINDOWS_BUILD_DEPS="mingw-w64"
@@ -62,6 +63,7 @@ WEB_TEST_DEPS="firefox-esr"
 
 apt-get install --quiet --yes \
   ${BASE_DEPS} \
+  ${LLVM_DEPS} \
   ${RUBY_DEPS} \
   ${LINUX_BUILD_DEPS} \
   ${WINDOWS_BUILD_DEPS} \
@@ -70,13 +72,25 @@ apt-get install --quiet --yes \
   ${WEB_TEST_DEPS}
 SETUP
 
+RUN <<LLVM
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+./llvm.sh 21
+
+apt-get install --quiet --yes \
+  clang-format-21 \
+  clang-tidy-21
+
+ln -s $(which clang-format-21) /usr/local/bin/clang-format
+ln -s $(which clang-tidy-21) /usr/local/bin/clang-tidy
+LLVM
+
 WORKDIR /home/me/app
 
 # Setup the group and user to match your local system
 RUN <<LOGIN
 groupadd --gid ${GROUP_ID} mygroup
 useradd -ms /bin/bash me --uid ${USER_ID} --gid ${GROUP_ID} --password $(perl -e 'print crypt($ARGV[0], "password")' 'password') 
-adduser me audio
 adduser me sudo
 chown -R me /home/me
 LOGIN

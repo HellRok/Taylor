@@ -26,8 +26,7 @@
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/models/window.hpp"
 
-void
-append_models(mrb_state* mrb)
+void append_models(mrb_state* mrb)
 {
   append_models_Audio(mrb);
   append_models_Browser(mrb);

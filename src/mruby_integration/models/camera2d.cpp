@@ -12,8 +12,7 @@
 
 struct RClass* Camera2D_class;
 
-auto
-mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   Camera2D* camera;
   mrb_self_ptr(mrb, self, Camera2D, camera);
@@ -59,15 +58,9 @@ mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
   }
 
   add_reference(&camera->offset);
-  mrb_iv_set(mrb,
-             self,
-             mrb_intern_cstr(mrb, "@offset"),
-             mrb_Vector2_value(mrb, &camera->offset));
+  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "@offset"), mrb_Vector2_value(mrb, &camera->offset));
   add_reference(&camera->target);
-  mrb_iv_set(mrb,
-             self,
-             mrb_intern_cstr(mrb, "@target"),
-             mrb_Vector2_value(mrb, &camera->target));
+  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "@target"), mrb_Vector2_value(mrb, &camera->target));
 
   mrb_data_init(self, camera, &Camera2D_type);
   return self;
@@ -76,8 +69,7 @@ mrb_Camera2D_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
 mrb_attr_accessor(mrb, self, float, f, Camera2D, rotation);
 mrb_attr_accessor(mrb, self, float, f, Camera2D, zoom);
 
-auto
-mrb_Camera2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Camera2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Camera2D, camera);
 
@@ -93,8 +85,7 @@ mrb_Camera2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_nil_value();
 }
 
-auto
-mrb_Camera2D_as_in_viewport(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Camera2D_as_in_viewport(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Camera2D, camera);
 
@@ -107,8 +98,7 @@ mrb_Camera2D_as_in_viewport(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_Vector2_value(mrb, return_vector);
 }
 
-auto
-mrb_Camera2D_as_in_world(mrb_state* mrb, mrb_value self) -> mrb_value
+auto mrb_Camera2D_as_in_world(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Camera2D, camera);
 
@@ -121,30 +111,17 @@ mrb_Camera2D_as_in_world(mrb_state* mrb, mrb_value self) -> mrb_value
   return mrb_Vector2_value(mrb, return_vector);
 }
 
-void
-append_models_Camera2D(mrb_state* mrb)
+void append_models_Camera2D(mrb_state* mrb)
 {
   Camera2D_class = mrb_define_class(mrb, "Camera2D", mrb->object_class);
   MRB_SET_INSTANCE_TT(Camera2D_class, MRB_TT_DATA);
-  mrb_define_method(mrb,
-                    Camera2D_class,
-                    "initialize",
-                    mrb_Camera2D_initialize,
-                    MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, Camera2D_class, "initialize", mrb_Camera2D_initialize, MRB_ARGS_REQ(4));
   mrb_attr_accessor_defines(mrb, Camera2D, rotation);
   mrb_attr_accessor_defines(mrb, Camera2D, zoom);
+  mrb_define_method(mrb, Camera2D_class, "draw", mrb_Camera2D_draw, MRB_ARGS_BLOCK());
   mrb_define_method(
-    mrb, Camera2D_class, "draw", mrb_Camera2D_draw, MRB_ARGS_BLOCK());
-  mrb_define_method(mrb,
-                    Camera2D_class,
-                    "as_in_viewport",
-                    mrb_Camera2D_as_in_viewport,
-                    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb,
-                    Camera2D_class,
-                    "as_in_world",
-                    mrb_Camera2D_as_in_world,
-                    MRB_ARGS_REQ(1));
+    mrb, Camera2D_class, "as_in_viewport", mrb_Camera2D_as_in_viewport, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Camera2D_class, "as_in_world", mrb_Camera2D_as_in_world, MRB_ARGS_REQ(1));
 
   load_ruby_models_camera2d(mrb);
 }

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -eou pipefail
+
+dx/exec bundle exec rake ci

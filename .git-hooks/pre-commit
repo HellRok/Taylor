@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source bin/lib/helpers.sh
-
 export RUBY_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{rb,rake})
 export XPP_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{cpp,hpp})
 
-log "Checking documentation"
-job_output=$(bin/test-documentation)
-barf_if_failed $?
+export LOCAL_CI_STYLE=plain
+
+bundle exec rake ci:documentation
 
 if [[ -n $RUBY_FILES ]]; then
-  bin/test-formatting-ruby ${RUBY_FILES}
+  bundle exec rake ci:formatting:jobs:standard
 fi
 
 if [[ -n $XPP_FILES ]]; then
-  bin/test-formatting-cpp ${XPP_FILES}
-  bin/test-linting-cpp ${XPP_FILES}
+  bundle exec rake ci:formatting:jobs:clang_format
+  bundle exec rake ci:linting
 fi
