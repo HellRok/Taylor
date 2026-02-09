@@ -1,0 +1,6 @@
+include:
+- mrb_doc/**/*.rb
+- src/ruby/**/*.rb
+exclude:
+- test/**/*
+- vendor/**/*
