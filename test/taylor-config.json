@@ -1,7 +1,7 @@
 {
   "name": "taylor-test-suite",
   "version": "v0.0.1",
-  "input": "test.rb",
+  "entrypoint": "test.rb",
   "export_directory": "./exports",
   "export_targets": [
     "linux",

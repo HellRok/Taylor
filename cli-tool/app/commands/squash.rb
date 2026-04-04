@@ -31,7 +31,7 @@ module Taylor
           Options:
             -h, --help\t\t\tDisplays this message
             -s, --stdout\t\t\tPrint the squashed ruby to STDOUT
-            -i, --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
+            -e, --entrypoint entrypoint\tWhat is the name of the entrypoint file (defaults to game.rb)
             -l, --load-paths directories\tWhat are your load paths? (defaults to ./,./vendor)
         STR
       end
@@ -40,8 +40,8 @@ module Taylor
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
           opts.on(:stdout, :bool, false, short: :s)
-          opts.on(:input, :string, options.fetch("input", "game.rb"), short: :i)
-          opts.on("load-paths", :string, options.fetch("load_paths", "./,./vendor"), short: :l)
+          opts.on(:entrypoint, :string, options.entrypoint, short: :e)
+          opts.on("load-paths", :string, options.load_paths, short: :l)
         end
         parser.parse(argv)
 
@@ -53,7 +53,7 @@ module Taylor
         @processed_files = []
         @data = ""
 
-        process_file(@options[:input])
+        process_file(@options[:entrypoint])
 
         if @options[:stdout]
           puts @data

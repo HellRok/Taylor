@@ -1,6 +1,6 @@
 @unit.describe "Export --help" do
   Given "We have run `taylor export --help`" do
-    @export_command = Taylor::Commands::Export.new(["--help"], {})
+    @export_command = Taylor::Commands::Export.new(["--help"], Taylor::Config.new)
   end
 
   Then "we return useful information" do
@@ -24,7 +24,9 @@ end
   end
 
   Then "exporting creates an 'exports' directory" do
-    @export_command = Taylor::Commands::Export.new([], {})
+    config = Taylor::Config.new
+    config.export_targets = ["linux", "windows", "osx/apple", "osx/intel", "web"]
+    @export_command = Taylor::Commands::Export.new([], config)
     expect { Dir.exist?("./exports") }.to_be_true
   ensure
     Dir.rmdir("./exports")
@@ -61,7 +63,7 @@ end
   end
 
   And "a OSX Apple docker command is run" do
-    expect(@export_command.backtick_data[3]).to_equal(
+    expect(@export_command.backtick_data[2]).to_equal(
       [
         "docker run",
         "--mount type=bind,source=#{Dir.pwd},target=/app/game",
@@ -75,7 +77,7 @@ end
   end
 
   And "a OSX Intel docker command is run" do
-    expect(@export_command.backtick_data[2]).to_equal(
+    expect(@export_command.backtick_data[3]).to_equal(
       [
         "docker run",
         "--mount type=bind,source=#{Dir.pwd},target=/app/game",
@@ -107,9 +109,9 @@ end
     expect { File.exist?("taylor-config.json") }.to_be_false
   end
 
-  Then "exporting does raise an error " do
+  Then "exporting raises an error " do
     expect {
-      Taylor::Commands::Export.new([], {})
+      Taylor::Commands::Export.new([], Taylor::Config.new)
     }.to_raise(RuntimeError)
   ensure
     Dir.chdir(@original_path)
@@ -118,7 +120,9 @@ end
 
 @unit.describe "Export --dry-run" do
   When "called with --dry-run" do
-    @export_command = Taylor::Commands::Export.new(["--dry-run"], {})
+    config = Taylor::Config.new
+    config.export_targets = ["linux", "windows", "osx/apple", "osx/intel", "web"]
+    @export_command = Taylor::Commands::Export.new(["--dry-run"], config)
   end
 
   Then "no 'exports' directory is created" do
@@ -209,7 +213,10 @@ end
 
 @unit.describe "Export { export_directory }" do
   When "called with export_directory in the config" do
-    @export_command = Taylor::Commands::Export.new([], {"export_directory" => "releases_option"})
+    config = Taylor::Config.new
+    config.export_directory = "releases_option"
+
+    @export_command = Taylor::Commands::Export.new([], config)
   end
 
   Then "we create the directory, not 'exports'" do
@@ -230,7 +237,7 @@ end
 
 @unit.describe "Export --export-directory" do
   When "called with --export-directory" do
-    @export_command = Taylor::Commands::Export.new(["--export-directory", "releases_flag"], {})
+    @export_command = Taylor::Commands::Export.new(["--export-directory", "releases_flag"], Taylor::Config.new)
   end
 
   Then "we create the directory, not 'exports'" do
@@ -251,7 +258,9 @@ end
 
 @unit.describe "Export { export_targets }" do
   When "called with export_targets in the config" do
-    @export_command = Taylor::Commands::Export.new([], {"export_targets" => ["linux", "web"]})
+    config = Taylor::Config.new
+    config.export_targets = ["linux", "web"]
+    @export_command = Taylor::Commands::Export.new([], config)
   ensure
     Dir.rmdir("exports")
   end
@@ -289,7 +298,7 @@ end
 
 @unit.describe "Export --export-targets" do
   When "called with --export-targets" do
-    @export_command = Taylor::Commands::Export.new(["--export-targets", "linux,web"], {})
+    @export_command = Taylor::Commands::Export.new(["--export-targets", "linux,web"], Taylor::Config.new)
   ensure
     Dir.rmdir("exports")
   end
@@ -327,7 +336,7 @@ end
 
 @unit.describe "Export --build-cache" do
   When "called with --build-cache and --dry-run" do
-    @export_command = Taylor::Commands::Export.new(["--dry-run", "--build-cache", "build_cache"], {})
+    @export_command = Taylor::Commands::Export.new(["--dry-run", "--build-cache", "build_cache"], Taylor::Config.new)
   end
 
   Then "we don't create a directory or execute commands" do
@@ -336,7 +345,7 @@ end
   end
 
   When "called with --build-cache" do
-    @export_command = Taylor::Commands::Export.new(["--build-cache", "build_cache_flag"], {})
+    @export_command = Taylor::Commands::Export.new(["--build-cache", "build_cache_flag"], Taylor::Config.new)
   ensure
     Dir.rmdir("exports")
   end

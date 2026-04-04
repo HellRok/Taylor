@@ -1,16 +1,16 @@
 # The Config File
 
-The `taylor_config.json` file is the file where all the configuration for your
+The `taylor-config.json` file is the file where all the configuration for your
 Taylor game goes.
 
-A freshly created Taylor game will come with a `taylor_config.json` that looks
+A freshly created Taylor game will come with a `taylor-config.json` that looks
 like this:
 
 ```json
 {
   "name": "taylor_game",
   "version": "v0.0.1",
-  "input": "game.rb",
+  "entrypoint": "game.rb",
   "export_directory": "./exports",
   "export_targets": [
     "linux",
@@ -50,13 +50,12 @@ exported this for Linux.
 This field is never parsed anywhere and can be anything, but I suggest sticking
 to [semantic versioning](https://semver.org/) for your version numbers.
 
-## Input
+## Entrypoint
 
-`"input": "game.rb",`
+`"entrypoint": "game.rb",`
 
 This is the Ruby file that Taylor will run if you run `taylor` in this folder
-and it will be where the export process starts from. I expect this field to
-change in the future to `entrypoint`.
+and it will be where the export process starts from.
 
 ## Export Directory
 
@@ -126,7 +125,7 @@ into existence as Taylor evolves.
 
 ## Web
 
-This sections if for web export specific configuration.
+This sections is for web export specific configuration.
 
 ### Shell Path
 
@@ -156,8 +155,8 @@ and is a good jumping off point for your own custom shell.
 This sets the total memory that is allowed to be used by web export in
 megabytes. If this is set to `-1` it allows for
 (memory growth)[https://emscripten.org/docs/optimizing/Optimizing-Code.html?highlight=total%20memory#memory-growth]
-but I've had issues with that recently causing memory to bloat out to 8GB on
-page load and then come back down, so I've decided to set it to `64` by default,
+but I've had issues with that causing memory to bloat out to 8GB on page load
+and then come back down. So I've decided to set it to `64` megabytes by default,
 but this may change in the future to be a bit higher depending on actual use.
 
 ## Debugging
@@ -204,7 +203,7 @@ A file with every option set would end up looking like this:
 {
   "name": "taylor_game",
   "version": "v0.0.1",
-  "input": "game.rb",
+  "entrypoint": "game.rb",
   "export_directory": "./exports",
   "export_targets": [
     "linux",

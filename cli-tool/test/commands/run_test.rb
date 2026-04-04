@@ -1,6 +1,6 @@
 @unit.describe "Run --help" do
   Given "We have run `taylor --help`" do
-    @run_command = Taylor::Commands::Run.new("./cli.rb", ["--help"], {})
+    @run_command = Taylor::Commands::Run.new("./cli.rb", ["--help"], Taylor::Config.new)
   end
 
   Then "we return useful information" do
@@ -10,12 +10,12 @@
       "taylor\t\t\t# If the current folder is a taylor game, launch it"
     )
     expect(@run_command.puts_data).to_include("taylor ./game.rb")
-    expect(@run_command.puts_data).to_include("taylor --input ./game.rb")
+    expect(@run_command.puts_data).to_include("taylor --entrypoint ./game.rb")
     expect(@run_command.puts_data).to_include("taylor <action> [options]")
 
     expect(@run_command.puts_data).to_include("-h, --help")
     expect(@run_command.puts_data).to_include("-v, --version")
-    expect(@run_command.puts_data).to_include("-i, --input input")
+    expect(@run_command.puts_data).to_include("-e, --entrypoint entrypoint")
 
     expect(@run_command.puts_data).to_include(
       "new\t\tCreate a new Taylor game"
@@ -32,7 +32,7 @@ end
 @unit.describe "Run" do
   When "we call run" do
     Taylor.removed_constants = []
-    Taylor::Commands::Run.new("./cli.rb", [], {})
+    Taylor::Commands::Run.new("./cli.rb", [], Taylor::Config.new)
   end
 
   Then "remove the 'Command' constant" do
@@ -40,7 +40,7 @@ end
   end
 
   When "we pass a filename" do
-    @run_command = Taylor::Commands::Run.new("./test/test.rb", [], {})
+    @run_command = Taylor::Commands::Run.new("./test/test.rb", [], Taylor::Config.new)
   end
 
   Then "we require that file" do
@@ -48,7 +48,9 @@ end
   end
 
   When "we don't pass a filename" do
-    @run_command = Taylor::Commands::Run.new(nil, [], {"input" => "./cli.rb"})
+    config = Taylor::Config.new
+    config.entrypoint = "./cli.rb"
+    @run_command = Taylor::Commands::Run.new(nil, [], config)
   end
 
   Then "require the file in the options" do
@@ -56,10 +58,10 @@ end
   end
 
   When "we pass a file that doesn't exist" do
-    @run_command = Taylor::Commands::Run.new("./non_existant.rb", [], {})
+    @run_command = Taylor::Commands::Run.new("./non_existant.rb", [], Taylor::Config.new)
   end
 
-  Then "we exit " do
+  Then "we exit with an error" do
     expect(@run_command.exit_status).to_equal(1)
   end
 end

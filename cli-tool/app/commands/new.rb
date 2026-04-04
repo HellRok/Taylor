@@ -29,7 +29,7 @@ module Taylor
             -h, --help\t\t\t\tDisplays this message
             -n, --name name\t\t\tWhat to name your new game (defaults to Taylor Game)
             -v, --version version\t\t\tWhat version is your game (defaults to v0.0.1)
-            -i, --input input\t\t\tWhat is the name of the entrypoint file (defaults to game.rb)
+            -e, --entrypoint entripoynt\t\tWhat is the name of the entrypoint file (defaults to game.rb)
             -d, --export-directory directory\tWhat directory do you want your exports (defaults to ./exports)
             -t, --export-targets targets\t\tWhat exports do you want (defaults to linux,windows,osx/apple,osx/intel,web)
             -l, --load-paths directories\t\tWhat directories do you want in your load path (defaults to ./,./vendor)
@@ -51,20 +51,20 @@ module Taylor
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
-          opts.on(:name, :string, options["name"], short: :n)
-          opts.on(:version, :string, options.fetch("version", "v0.0.1"), short: :v)
-          opts.on(:input, :string, options.fetch("input", "game.rb"), short: :i)
-          opts.on(:"export-directory", :string, options.fetch("export_directory", "./exports"), short: :d)
-          opts.on(:"export-targets", :string, options.fetch("export_targets", "linux,windows,osx/apple,osx/intel,web"), short: :t)
-          opts.on(:"load-paths", :string, options.fetch("load_paths", "./,./vendor"), short: :l)
-          opts.on(:"copy-paths", :string, options.fetch("copy_paths", "./assets"), short: :c)
+          opts.on(:name, :string, nil, short: :n)
+          opts.on(:version, :string, options.version, short: :v)
+          opts.on(:entrypoint, :string, options.entrypoint, short: :e)
+          opts.on(:"export-directory", :string, options.export_directory, short: :d)
+          opts.on(:"export-targets", :string, options.export_targets, short: :t)
+          opts.on(:"load-paths", :string, options.load_paths, short: :l)
+          opts.on(:"copy-paths", :string, options.copy_paths, short: :c)
         end
         parser.parse(argv)
 
         @options = parser.opts
         if parser.tail.first.nil? && @options[:name].nil?
-          @options[:folder] = "taylor_game"
-          @options[:name] = "Taylor Game"
+          @options[:folder] = simplify(options.name)
+          @options[:name] = options.name
 
         elsif parser.tail.first && @options[:name].nil?
           @options[:folder] = parser.tail.first
@@ -94,7 +94,7 @@ module Taylor
           end
         }
 
-        game = File.open(path_for(options[:input]), "w")
+        game = File.open(path_for(options[:entrypoint]), "w")
         game.write(
           game_template
             .gsub("$NAME", options[:name])

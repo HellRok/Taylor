@@ -57,6 +57,8 @@ require "models/texture2d_test"
 require "models/vector2_test"
 require "models/window_test"
 require "modules/reference_counting_test"
+
+require "taylor/config_test"
 require "taylor/platform_test"
 require "taylor_test"
 

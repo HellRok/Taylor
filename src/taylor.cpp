@@ -1,5 +1,7 @@
 #include "mruby.h"
 
+#include "ruby/taylor/config.hpp"
+
 #include "taylor/platform.hpp"
 #include "taylor/raylib.hpp"
 
@@ -20,4 +22,6 @@ void append_taylor(mrb_state* mrb)
 
   append_taylor_platform(mrb, Taylor_module);
   append_taylor_raylib(mrb, Taylor_module);
+
+  load_ruby_taylor_config(mrb);
 }
