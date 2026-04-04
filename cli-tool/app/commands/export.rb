@@ -25,11 +25,11 @@ module Taylor
             taylor export [options]
 
           Options:
-            -h, --help\t\t\tDisplays this message
-            -r, --dry-run\t\t\tJust display the export command and don't run it
+            -h, --help\t\t\t\tDisplays this message
+            -r, --dry-run\t\t\t\tJust display the export command and don't run it
             -d, --export-directory directory\tWhat directory do you want your exports (defaults to ./exports)
-            -t, --export-targets targets\tWhat exports do you want (defaults to linux,windows,osx,web)
-            -b, --build-cache directory\tWhere do you want to store build cache (defaults to nil)
+            -t, --export-targets targets\t\tWhat exports do you want (defaults to linux,windows,osx,web)
+            -b, --build-cache directory\t\tWhere do you want to store build cache (defaults to nil)
         STR
       end
 
@@ -46,8 +46,8 @@ module Taylor
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
           opts.on("dry-run", :bool, false, short: :r)
-          opts.on("export-directory", :string, options.fetch("export_directory", "./exports"), short: :d)
-          opts.on("export-targets", :string, options.fetch("export_targets", "linux,windows,osx/intel,osx/apple,web"), short: :t)
+          opts.on("export-directory", :string, options.export_directory, short: :d)
+          opts.on("export-targets", :string, options.export_targets.join(","), short: :t)
           opts.on("build-cache", :string, short: :b)
         end
         parser.parse(argv)

@@ -1,5 +1,5 @@
 # We use this to check if we've been released or not, it's a bit of a hack but
-# it work since released? is forced to false here.
+# it work since `released?` is forced to false below.
 unless __FILE__ == "/app/taylor/output.rb"
   original_dir = Dir.getwd
   Dir.chdir(File.expand_path(File.dirname(ARGV.shift)))
@@ -23,11 +23,7 @@ end
 
 $:.unshift Dir.getwd
 
-options = if File.exist?("./taylor-config.json")
-  JSON.parse(File.read("./taylor-config.json"))
-else
-  {}
-end
+options = Taylor::Config.new
 
 command = ARGV[0]
 

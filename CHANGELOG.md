@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Lock the MRuby version used in the export docker image
+- Refactor `talyor-config.json` handling
 
 ## v0.4.1
 

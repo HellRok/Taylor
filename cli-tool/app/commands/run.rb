@@ -32,13 +32,13 @@ module Taylor
           Usage:
             taylor\t\t\t# If the current folder is a taylor game, launch it
             taylor ./game.rb\t\t# Launch ./game.rb
-            taylor --input ./game.rb\t# Launch ./game.rb
+            taylor --entrypoint ./game.rb\t# Launch ./game.rb
             taylor <action> [options]
 
           Options:
             -h, --help\t\t\tShow this message
             -v, --version\t\t\tDisplay the version and exit
-            -i, --input input\t\tWhat is the name of the entrypoint file (defaults to game.rb)
+            -e, --entrypoint entrypoint\tWhat is the name of the entrypoint file (defaults to game.rb)
 
           Actions:
             new\t\tCreate a new Taylor game
@@ -52,23 +52,22 @@ module Taylor
       def entrypoint
         if !@command.empty?
           if File.directory?(@command) && File.exist?(File.join(@command, "taylor-config.json"))
-            options = JSON.parse(File.read(File.join(@command, "taylor-config.json")))
-            setup_options(@argv, options)
             Dir.chdir(@command)
+            setup_options(@argv, Taylor::Config.new)
             $:.unshift "."
-            @options[:input]
+            @options[:entrypoint]
           else
             @command
           end
         else
-          @options[:input]
+          @options[:entrypoint]
         end
       end
 
       def setup_options(argv, options)
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
-          opts.on(:input, :string, options.fetch("input", "game.rb"), short: :i)
+          opts.on(:entrypoint, :string, options.entrypoint, short: :e)
         end
         parser.parse(argv)
 
@@ -76,7 +75,7 @@ module Taylor
       end
 
       def from_config
-        @options["input"]
+        @options["entrypoint"]
       end
 
       def unload_taylor_cli

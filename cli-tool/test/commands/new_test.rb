@@ -1,6 +1,6 @@
 @unit.describe "New --help" do
   Given "We have run `taylor new --help`" do
-    @new_command = Taylor::Commands::New.new(["--help"], {})
+    @new_command = Taylor::Commands::New.new(["--help"], Taylor::Config.new)
   end
 
   Then "we return useful information" do
@@ -9,7 +9,7 @@
     expect(@new_command.puts_data).to_include("-h, --help")
     expect(@new_command.puts_data).to_include("-n, --name")
     expect(@new_command.puts_data).to_include("-v, --version")
-    expect(@new_command.puts_data).to_include("-i, --input")
+    expect(@new_command.puts_data).to_include("-e, --entrypoint")
     expect(@new_command.puts_data).to_include("-d, --export-directory")
     expect(@new_command.puts_data).to_include("-t, --export-targets")
     expect(@new_command.puts_data).to_include("-l, --load-paths")
@@ -23,15 +23,21 @@
 end
 
 @unit.describe "New" do
+  Given "we have a clean environment" do
+    Dir.mkdir("new_command")
+    Dir.chdir("new_command")
+    expect(File.exist?("./taylor-config.json")).to_be_false
+  end
+
   When "we run `taylor new`" do
-    Taylor::Commands::New.new([], {})
+    Taylor::Commands::New.new([], Taylor::Config.new)
   end
 
   Then "we create the project" do
     data = JSON.parse(File.read("./taylor_game/taylor-config.json"))
     expect(data["name"]).to_equal("Taylor Game")
     expect(data["version"]).to_equal("v0.0.1")
-    expect(data["input"]).to_equal("game.rb")
+    expect(data["entrypoint"]).to_equal("game.rb")
     expect(File.exist?("./taylor_game/game.rb")).to_be_true
     expect(data["export-directory"]).to_equal("./exports")
     expect(data["export-targets"]).to_equal(["linux", "windows", "osx/apple", "osx/intel", "web"])
@@ -50,13 +56,13 @@ end
       [
         "--name", "Test Game",
         "--version", "final_v2_for_real",
-        "--input", "app.rb",
+        "--entrypoint", "app.rb",
         "--export-directory", "./releases",
         "--export-targets", "web,windows",
         "--load-paths", "./,./third_party",
         "--copy-paths", "./resources,./music"
       ],
-      {}
+      Taylor::Config.new
     )
   end
 
@@ -64,7 +70,7 @@ end
     data = JSON.parse(File.read("./test_game/taylor-config.json"))
     expect(data["name"]).to_equal("Test Game")
     expect(data["version"]).to_equal("final_v2_for_real")
-    expect(data["input"]).to_equal("app.rb")
+    expect(data["entrypoint"]).to_equal("app.rb")
     expect(File.exist?("./test_game/app.rb")).to_be_true
     expect(data["export-directory"]).to_equal("./releases")
     expect(data["export-targets"]).to_equal(["web", "windows"])
@@ -79,18 +85,28 @@ end
   ensure
     delete_project("./test_game")
   end
+ensure
+  Dir.chdir("..")
+  Dir.delete("new_command")
 end
 
 @unit.describe "New <folder>" do
-  Given "we call `taylor test/folder-name`" do
-    Taylor::Commands::New.new(["./test/folder-name"], {})
-    @data = File.read("./test/folder-name/game.rb").lines
+  Given "we have a clean environment" do
+    Dir.mkdir("new_command")
+    Dir.chdir("new_command")
+    Dir.mkdir("nested_test")
+    expect(File.exist?("./taylor-config.json")).to_be_false
+  end
+
+  And "we call `taylor nested_test/folder-name`" do
+    Taylor::Commands::New.new(["./nested_test/folder-name"], Taylor::Config.new)
+    @data = File.read("./nested_test/folder-name/game.rb").lines
   end
 
   Then "the directory is created" do
-    expect(Dir.exist?("./test/folder-name")).to_be_true
+    expect(Dir.exist?("./nested_test/folder-name")).to_be_true
   ensure
-    delete_project("./test/folder-name")
+    delete_project("./nested_test/folder-name")
   end
 
   And "the name is set to the final folder" do
@@ -100,7 +116,7 @@ end
   end
 
   When "we call with --name" do
-    Taylor::Commands::New.new(["--name", "Test Game"], {})
+    Taylor::Commands::New.new(["--name", "Test Game"], Taylor::Config.new)
     @data = File.read("./test_game/game.rb").lines
   end
 
@@ -117,21 +133,31 @@ end
   end
 
   When "if the directory already exists" do
-    expect(Dir.exist?("./test")).to_be_true
+    expect(Dir.exist?("./nested_test")).to_be_true
   end
 
   Then "raise an error" do
     expect {
-      Taylor::Commands::New.new(["./test"], {})
+      Taylor::Commands::New.new(["./nested_test"], Taylor::Config.new)
     }.to_raise(RuntimeError)
   end
+ensure
+  Dir.delete("nested_test")
+  Dir.chdir("..")
+  Dir.delete("new_command")
 end
 
 @unit.describe "New --load-paths" do
-  Given "we call `taylor --load-paths`" do
+  Given "we have a clean environment" do
+    Dir.mkdir("new_command")
+    Dir.chdir("new_command")
+    expect(File.exist?("./taylor-config.json")).to_be_false
+  end
+
+  And "we call `taylor --load-paths`" do
     Taylor::Commands::New.new(
       ["--load-paths", "./,./third_party,./black_box"],
-      {}
+      Taylor::Config.new
     )
     @data = File.read("./taylor_game/game.rb").lines
   end
@@ -147,34 +173,7 @@ end
     expect(@data[1]).to_equal("$: << './third_party'\n")
     expect(@data[2]).to_equal("$: << './black_box'\n")
   end
-end
-
-class Test
-  class Commands
-    class New_Test
-      def test_setup_game_structure_overrides
-        Taylor::Commands::New.new(
-          [
-            "--name", "./test/test_game_the_sequel",
-            "--load-paths", "./,./third_party,./black_box"
-          ],
-          {}
-        )
-        data = File.read("./test/test_game_the_sequel/game.rb").lines
-        assert_equal "$: << './third_party'\n", data[1]
-        assert_equal "$: << './black_box'\n", data[2]
-        assert_equal %(Window.open(width: 800, height: 480, title: "./test/test_game_the_sequel")\n), data[5]
-      ensure
-        File.delete(File.join("./test", "test_game_the_sequel", "game.rb"))
-        File.delete(File.join("./test", "test_game_the_sequel", "taylor-config.json"))
-        File.delete(File.join("./test", "test_game_the_sequel", "assets", ".keep"))
-        Dir.rmdir(File.join("./test", "test_game_the_sequel", "assets"))
-        File.delete(File.join("./test", "test_game_the_sequel", "third_party", ".keep"))
-        Dir.rmdir(File.join("./test", "test_game_the_sequel", "third_party"))
-        File.delete(File.join("./test", "test_game_the_sequel", "black_box", ".keep"))
-        Dir.rmdir(File.join("./test", "test_game_the_sequel", "black_box"))
-        Dir.rmdir(File.join("./test", "test_game_the_sequel"))
-      end
-    end
-  end
+ensure
+  Dir.chdir("..")
+  Dir.delete("new_command")
 end

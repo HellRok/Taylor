@@ -4,5 +4,5 @@ src/ruby/**/*.rb
 -
 CHANGELOG.md
 LICENSE
-taylor_config.json.md
+taylor-config.json.md
 mrb_doc/migrations/*

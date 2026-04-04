@@ -152,17 +152,36 @@ undocumented_methods = cpp_methods - documented_methods
 not_coded_methods = documented_methods - cpp_methods
 overlap = cpp_methods & documented_methods
 
-# puts "These methods are documented:"
-# overlap.sort.each { |method| puts "\t✓ #{method}" }
+puts "These methods are documented:"
+overlap.sort.each { |method| puts "\t✓ #{method}" }
 
 if undocumented_methods.any?
+  puts
   puts "Found these methods without documentation:"
   undocumented_methods.sort.each { |method| puts "\t✗ #{method}" }
 end
 
 if not_coded_methods.any?
+  puts
   puts "Found these documented methods without any correlating code:"
   not_coded_methods.sort.each { |method| puts "\t✗ #{method}" }
+end
+
+yard_undocumented = `bundle exec yard stats --list-undoc`
+unless yard_undocumented.include?("100.00% documented")
+  puts
+  puts "Yard found these undocumented objects:"
+  yard_undocumented.split("Undocumented Objects:\n\n").last.lines.each do |line|
+    if line == "\n"
+      puts
+    elsif line.start_with?("(")
+      puts "\t#{line}"
+    else
+      puts "\t\t✗ #{line}"
+    end
+  end
+
+  exit 1
 end
 
 if undocumented_methods.any? || not_coded_methods.any?
