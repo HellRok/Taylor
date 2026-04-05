@@ -38,7 +38,11 @@ auto main(int argc, char** argv) -> int
 
 #ifdef EXPORT
   mrb_load_string(mrb, "Dir.chdir(File.dirname(ARGV.shift))");
-  mrb_load_irep(mrb, game);
+  mrb_value status = mrb_load_irep(mrb, game);
+
+  if (mrb_undef_p(status)) {
+    exit(1);
+  }
 
 #else
   if (argc < 1) {

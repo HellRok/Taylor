@@ -2,7 +2,7 @@ require "json"
 require "fileutils"
 
 def taylor(args)
-  "taylor /app/taylor/cli-tool/cli.rb #{args}"
+  `taylor /app/taylor/cli-tool/cli.rb #{args}`
 end
 
 options = {
@@ -45,10 +45,8 @@ end
 
 task :squash do
   Dir.chdir("/app/game")
-  File.write(
-    "/app/taylor/output.rb",
-    `#{taylor("squash --stdout")}`
-  )
+  taylor "squash"
+  FileUtils.mv("output.rb", "/app/taylor/output.rb")
   Dir.chdir("/app/export")
 end
 

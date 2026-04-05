@@ -40,6 +40,11 @@ def write_cpp_file(hpp_file, cpp_file, ruby_code)
       mrb_load_string(mrb, R"RUBY(
         #{ruby_code}
       )RUBY");
+
+      if (mrb->exc) {
+        mrb_print_error(mrb);
+        exit(1);
+      }
     }
   CPP
 end
