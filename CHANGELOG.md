@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Lock the MRuby version used in the export docker image
+
 ## v0.4.1
 
 - Bump Ruby to 3.4.6 and update gems
