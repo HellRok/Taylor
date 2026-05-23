@@ -1,60 +1,14 @@
-FROM debian:13 AS asdf_install
-
-ARG USER_ID=1000
-ARG GROUP_ID=1000
-
-ENV ASDF_VERSION=v0.18.0
-ENV ASDF_PLATFORM=amd64
-ENV ASDF_URL=https://github.com/asdf-vm/asdf/releases/download/$ASDF_VERSION/asdf-$ASDF_VERSION-linux-$ASDF_PLATFORM.tar.gz
-ENV PATH="/home/me/.asdf/shims:/home/me/.asdf/bin:$PATH"
-
-WORKDIR /home/me/app
-
-COPY .tool-versions /home/me/.tool-versions
-
-RUN <<SETUP
-apt-get update --quiet --yes
-
-BASE_DEPS="wget curl git"
-RUBY_DEPS="ruby-build libffi-dev libyaml-dev"
-LINUX_BUILD_DEPS="build-essential "
-
-apt-get install --quiet --yes \
-  ${BASE_DEPS} \
-  ${RUBY_DEPS} \
-  ${LINUX_BUILD_DEPS}
-SETUP
-
-RUN <<LOGIN
-groupadd --gid ${GROUP_ID} mygroup
-useradd -ms /bin/bash me --uid ${USER_ID} --gid ${GROUP_ID}
-chown -R me /home/me
-LOGIN
-
-USER me
-
-RUN <<ASDF
-wget -O /home/me/asdf.tar.gz "${ASDF_URL}"
-tar xfv /home/me/asdf.tar.gz
-mkdir -p /home/me/.asdf/bin/
-mv asdf /home/me/.asdf/bin/asdf
-ASDF
-
-RUN asdf plugin add ruby && asdf install ruby
-
 FROM debian:13
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
-
-ENV PATH="/home/me/.asdf/shims:/home/me/.asdf/bin:$PATH"
 
 RUN <<SETUP
 apt-get update --quiet --yes
 
 BASE_DEPS="curl git bear"
 LLVM_DEPS="lsb-release gnupg"
-RUBY_DEPS="ruby-build libffi-dev libyaml-dev"
+RUBY_DEPS="ruby ruby-dev ruby-build libffi-dev libyaml-dev"
 LINUX_BUILD_DEPS="build-essential "
 WINDOWS_BUILD_DEPS="mingw-w64"
 TEST_DEPS="unzip wget"
@@ -91,21 +45,22 @@ WORKDIR /home/me/app
 RUN <<LOGIN
 groupadd --gid ${GROUP_ID} mygroup
 useradd -ms /bin/bash me --uid ${USER_ID} --gid ${GROUP_ID} --password $(perl -e 'print crypt($ARGV[0], "password")' 'password') 
-adduser me sudo
 chown -R me /home/me
 LOGIN
 
+ENV PATH="/home/me/.local/share/gem/ruby/3.3.0/bin:$PATH"
+
+RUN <<RUBY
+echo "gem: --user-install" >> /etc/gemrc
+RUBY
+
 USER me
 
-COPY --from=asdf_install /home/me/.asdf /home/me/.asdf
-COPY .tool-versions /home/me/.tool-versions
 
 RUN <<SETUP
-echo "export PATH=\"${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH\"" >> /home/me/.bashrc
-echo ". <(asdf completion bash)" >> /home/me/.bashrc
-
 gem install bundler
-bundle config set path vendor/bundle
+# If we don't do this $PATH hasn't updated to include the gem bin directory
+bash -c "bundle config set path vendor/bundle"
 SETUP
 
 CMD ["sleep", "infinity"]
