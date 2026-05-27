@@ -5,6 +5,7 @@
 - Lock the MRuby version used in the export docker image
 - Refactor `talyor-config.json` handling
 - Update the Dockerfile.dev for Debian 13
+- Fix OSX exports
 
 ## v0.4.1
 

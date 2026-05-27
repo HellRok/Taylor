@@ -91,11 +91,11 @@ namespace :build do
 
   namespace :osx do
     task :intel do
-      sh "EXPORT=1 rake osx/intel:release:build"
+      sh "EXPORT=1 rake --require pathname osx/intel:release:build"
     end
 
     task :apple do
-      sh "EXPORT=1 rake osx/apple:release:build"
+      sh "EXPORT=1 rake --require pathname osx/apple:release:build"
     end
   end
 
