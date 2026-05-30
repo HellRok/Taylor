@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Upgraded MRuby to 4.0.0
+
 ## v0.4.2
 
 - Lock the MRuby version used in the export docker image

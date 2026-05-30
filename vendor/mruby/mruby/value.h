@@ -94,11 +94,14 @@ struct mrb_state;
 # define MRB_PRIx PRIx32
 #endif
 
-#ifdef MRB_ENDIAN_BIG
-# define MRB_ENDIAN_LOHI(a,b) a b
-#else
-# define MRB_ENDIAN_LOHI(a,b) b a
-#endif
+#define MRB_FLAGS_MASK(shift, width)    (~(~0U << (width)) << (shift))
+#define MRB_FLAGS_GET(b, s, w)          (((b) >> (s)) & MRB_FLAGS_MASK(0, w))
+#define MRB_FLAGS_SET(b, s, w, n)       ((b) = MRB_FLAGS_ZERO(b, s, w) | MRB_FLAGS_MAKE(s, w, n))
+#define MRB_FLAGS_ZERO(b, s, w)         ((b) & ~MRB_FLAGS_MASK(s, w))
+#define MRB_FLAGS_MAKE(s, w, n)         (((n) & MRB_FLAGS_MASK(0, w)) << (s))
+#define MRB_FLAG_ON(b, s)               ((b) |= MRB_FLAGS_MASK(s, 1))
+#define MRB_FLAG_OFF(b, s)              ((b) &= ~MRB_FLAGS_MASK(s, 1))
+#define MRB_FLAG_CHECK(b, s)            (!!((b) & MRB_FLAGS_MASK(s, 1)))
 
 MRB_API mrb_bool mrb_read_int(const char *p, const char *e, char **endp, mrb_int *np);
 /* obsolete; do not use mrb_int_read() */
@@ -131,7 +134,7 @@ static const unsigned int IEEE754_INFINITY_BITS_SINGLE = 0x7F800000;
 #endif
 
 #define MRB_VTYPE_FOREACH(f) \
-    /* mrb_vtype */     /* c type */        /* ruby class */ \
+    /* mrb_vtype */     /* C type */        /* Ruby class */ \
   f(MRB_TT_FALSE,       void,               "false") \
   f(MRB_TT_TRUE,        void,               "true") \
   f(MRB_TT_SYMBOL,      void,               "Symbol") \
@@ -160,7 +163,8 @@ static const unsigned int IEEE754_INFINITY_BITS_SINGLE = 0x7F800000;
   f(MRB_TT_COMPLEX,     struct RComplex,    "Complex") \
   f(MRB_TT_RATIONAL,    struct RRational,   "Rational") \
   f(MRB_TT_BIGINT,      struct RBigint,     "Integer") \
-  f(MRB_TT_BACKTRACE,   struct RBacktrace,  "backtrace")
+  f(MRB_TT_BACKTRACE,   struct RBacktrace,  "backtrace") \
+  f(MRB_TT_SET,         struct RSet,        "Set")
 
 enum mrb_vtype {
 #define MRB_VTYPE_DEFINE(tt, type, name) tt,
@@ -312,7 +316,11 @@ struct RCptr {
 #endif
 #define mrb_test(o)   mrb_bool(o)
 #ifndef mrb_bigint_p
+#ifdef MRB_USE_BIGINT
 #define mrb_bigint_p(o) (mrb_type(o) == MRB_TT_BIGINT)
+#else
+#define mrb_bigint_p(o) FALSE
+#endif
 #endif
 
 /**

@@ -1,28 +1,15 @@
 MRuby::GemBox.new do |conf|
-  # These are the default libraries
-  conf.gembox "stdlib"
-  conf.gembox "stdlib-ext"
-  conf.gembox "stdlib-io"
-  conf.gembox "math"
-  conf.gembox "metaprog"
-
-  conf.gem core: "mruby-exit"
+  conf.gembox "full-core"
+  # full-core excludes sleep for some reason?
   conf.gem core: "mruby-sleep"
 
-  # This must come before mruby-simplehttp
-  conf.gem github: "hellrok/mruby-polarssl"
-
-  conf.gem github: "Asmod4n/mruby-uri-parser"
   conf.gem github: "ess/mruby-pure-regexp"
-  conf.gem github: "hellrok/mruby-dir"
-  conf.gem github: "iij/mruby-env"
+  conf.gem github: "hellrok/mruby-polarssl" # This must come before mruby-simplehttp
+  conf.gem github: "hellrok/neospec", branch: "gem-test"
   conf.gem github: "iij/mruby-iijson"
   conf.gem github: "katzer/mruby-tiny-opt-parser"
   conf.gem github: "matsumotory/mruby-simplehttp"
   conf.gem github: "mattn/mruby-base64"
 
-  # This must come after mruby-env
-  conf.gem github: "hellrok/neospec", branch: "main"
-
-  conf.gem github: "mattn/mruby-require"
+  conf.gem github: "hellrok/mruby-require"
 end

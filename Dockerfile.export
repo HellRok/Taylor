@@ -12,7 +12,7 @@ FROM taylor/build-linux AS build_base
 WORKDIR /app/export
 
 RUN \
-  git clone --branch 3.4.0 --depth 1 https://github.com/mruby/mruby.git /app/mruby &&\
+  git clone --branch 4.0.0 --depth 1 https://github.com/mruby/mruby.git /app/mruby &&\
   cd /app/mruby &&\
   rake
 
