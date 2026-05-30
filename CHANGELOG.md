@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Upgraded MRuby to 4.0.0
 
 ## v0.4.3
 
