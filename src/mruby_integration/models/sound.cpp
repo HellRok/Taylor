@@ -154,7 +154,7 @@ void append_models_Sound(mrb_state* mrb)
 {
   Sound_class = mrb_define_class(mrb, "Sound", mrb->object_class);
   MRB_SET_INSTANCE_TT(Sound_class, MRB_TT_DATA);
-  mrb_define_method(mrb, Sound_class, "initialize", mrb_Sound_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Sound_class, "initialize", mrb_Sound_initialize, MRB_ARGS_ARG(1, 1));
   mrb_define_method(mrb, Sound_class, "unload", mrb_Sound_unload, MRB_ARGS_NONE());
   mrb_define_method(mrb, Sound_class, "valid?", mrb_Sound_valid, MRB_ARGS_NONE());
   mrb_define_method(mrb, Sound_class, "frame_count", mrb_Sound_frame_count, MRB_ARGS_NONE());

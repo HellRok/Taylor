@@ -62,7 +62,7 @@ void append_models_Vector2(mrb_state* mrb)
 {
   Vector2_class = mrb_define_class(mrb, "Vector2", mrb->object_class);
   MRB_SET_INSTANCE_TT(Vector2_class, MRB_TT_DATA);
-  mrb_define_method(mrb, Vector2_class, "initialize", mrb_Vector2_initialize, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, Vector2_class, "initialize", mrb_Vector2_initialize, MRB_ARGS_REQ(1));
   mrb_attr_accessor_defines(mrb, Vector2, x);
   mrb_attr_accessor_defines(mrb, Vector2, y);
   mrb_define_method(mrb, Vector2_class, "draw", mrb_Vector2_draw, MRB_ARGS_REQ(1));

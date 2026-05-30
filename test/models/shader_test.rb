@@ -119,7 +119,8 @@ end
 @unit.describe "Shader#valid?" do
   When "we have an invalid shader" do
     Taylor::Raylib.mock_call("IsShaderValid", "false")
-    @shader = Shader.new
+    Taylor::Raylib.mock_call("LoadShaderFromMemory", Shader.mock_return(id: 5))
+    @shader = Shader.load_code(fragment: "fragment shader code", vertex: "vertex shader code")
   end
 
   Then "return false" do
@@ -137,7 +138,8 @@ end
 
 @unit.describe "Shader#location_of" do
   Given "we have a shader" do
-    @shader = Shader.new
+    Taylor::Raylib.mock_call("LoadShaderFromMemory", Shader.mock_return(id: 5))
+    @shader = Shader.load_code(fragment: "fragment shader code", vertex: "vertex shader code")
   end
 
   When "we call location_of with a variable that doesn't exist" do
