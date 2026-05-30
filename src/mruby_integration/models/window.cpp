@@ -436,7 +436,7 @@ auto mrb_Window_draw_frame_rate(mrb_state* mrb, mrb_value) -> mrb_value
 void append_models_Window(mrb_state* mrb)
 {
   Window_class = mrb_define_module(mrb, "Window");
-  mrb_define_class_method(mrb, Window_class, "open", mrb_Window_open, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, Window_class, "open", mrb_Window_open, MRB_ARGS_OPT(1));
   mrb_define_class_method(mrb, Window_class, "close", mrb_Window_close, MRB_ARGS_NONE());
   mrb_define_class_method(mrb, Window_class, "ready?", mrb_Window_ready, MRB_ARGS_NONE());
   mrb_define_class_method(

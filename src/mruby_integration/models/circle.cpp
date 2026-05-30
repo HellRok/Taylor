@@ -183,7 +183,7 @@ void append_models_Circle(mrb_state* mrb)
 {
   Circle_class = mrb_define_class(mrb, "Circle", mrb->object_class);
   MRB_SET_INSTANCE_TT(Circle_class, MRB_TT_DATA);
-  mrb_define_method(mrb, Circle_class, "initialize", mrb_Circle_initialize, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, Circle_class, "initialize", mrb_Circle_initialize, MRB_ARGS_REQ(1));
   mrb_attr_accessor_defines(mrb, Circle, x);
   mrb_attr_accessor_defines(mrb, Circle, y);
   mrb_attr_accessor_defines(mrb, Circle, radius);

@@ -210,7 +210,7 @@ void append_models_Music(mrb_state* mrb)
 {
   Music_class = mrb_define_class(mrb, "Music", mrb->object_class);
   MRB_SET_INSTANCE_TT(Music_class, MRB_TT_DATA);
-  mrb_define_method(mrb, Music_class, "initialize", mrb_Music_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Music_class, "initialize", mrb_Music_initialize, MRB_ARGS_ARG(1, 2));
   mrb_define_method(mrb, Music_class, "unload", mrb_Music_unload, MRB_ARGS_NONE());
   mrb_define_method(mrb, Music_class, "valid?", mrb_Music_valid, MRB_ARGS_NONE());
   mrb_define_method(mrb, Music_class, "looping", mrb_Music_get_looping, MRB_ARGS_NONE());

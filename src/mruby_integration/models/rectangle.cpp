@@ -230,7 +230,7 @@ void append_models_Rectangle(mrb_state* mrb)
 {
   Rectangle_class = mrb_define_class(mrb, "Rectangle", mrb->object_class);
   MRB_SET_INSTANCE_TT(Rectangle_class, MRB_TT_DATA);
-  mrb_define_method(mrb, Rectangle_class, "initialize", mrb_Rectangle_initialize, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, Rectangle_class, "initialize", mrb_Rectangle_initialize, MRB_ARGS_REQ(1));
   mrb_attr_accessor_defines(mrb, Rectangle, x);
   mrb_attr_accessor_defines(mrb, Rectangle, y);
   mrb_attr_accessor_defines(mrb, Rectangle, width);
