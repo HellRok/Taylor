@@ -516,11 +516,11 @@ void append_models_Image(mrb_state* mrb)
   Image_class = mrb_define_class(mrb, "Image", mrb->object_class);
   MRB_SET_INSTANCE_TT(Image_class, MRB_TT_DATA);
   mrb_define_class_method(mrb, Image_class, "generate", mrb_Image_generate, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, Image_class, "initialize", mrb_Image_initialize, MRB_ARGS_REQ(5));
+  mrb_define_method(mrb, Image_class, "initialize", mrb_Image_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Image_class, "unload", mrb_Image_unload, MRB_ARGS_NONE());
   mrb_define_method(mrb, Image_class, "valid?", mrb_Image_valid, MRB_ARGS_NONE());
   mrb_define_method(mrb, Image_class, "export", mrb_Image_export, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, Image_class, "copy", mrb_Image_copy, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "copy", mrb_Image_copy, MRB_ARGS_OPT(1));
   mrb_define_method(mrb, Image_class, "resize!", mrb_Image_resize_bang, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Image_class, "crop!", mrb_Image_crop_bang, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Image_class, "alpha_mask!", mrb_Image_alpha_mask_bang, MRB_ARGS_REQ(1));
@@ -544,7 +544,7 @@ void append_models_Image(mrb_state* mrb)
   mrb_define_method(mrb, Image_class, "greyscale!", mrb_Image_greyscale_bang, MRB_ARGS_NONE());
   mrb_define_method(mrb, Image_class, "contrast!", mrb_Image_contrast_bang, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Image_class, "brightness!", mrb_Image_brightness_bang, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, Image_class, "replace!", mrb_Image_replace_bang, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Image_class, "replace!", mrb_Image_replace_bang, MRB_ARGS_OPT(1));
   mrb_define_method(mrb, Image_class, "draw!", mrb_Image_draw_bang, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Image_class, "data", mrb_Image_get_data, MRB_ARGS_NONE());
   mrb_define_method(mrb, Image_class, "to_texture", mrb_Image_to_texture, MRB_ARGS_NONE());

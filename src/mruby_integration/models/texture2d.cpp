@@ -124,9 +124,14 @@ auto mrb_Texture2D_draw(mrb_state* mrb, mrb_value self) -> mrb_value
 {
   mrb_get_self(mrb, self, Texture2D, texture);
 
-  // def draw(source: Rectangle[0, 0, width, height], position: nil,
-  // destination: nil, origin: Vector2[width / 2.0, height / 2.0], rotation: 0,
-  // colour: Colour::WHITE)
+  // def draw(
+  //   source: Rectangle[0, 0, width, height],
+  //   position: nil,
+  //   destination: nil,
+  //   origin: Vector2[width / 2.0, height / 2.0],
+  //   rotation: 0,
+  //   colour: Colour::WHITE
+  // )
 
   const mrb_int kw_num = 6;
   const mrb_int kw_required = 0;
@@ -202,7 +207,7 @@ void append_models_Texture2D(mrb_state* mrb)
   mrb_define_method(mrb, Texture2D_class, "filter=", mrb_Texture2D_set_filter, MRB_ARGS_REQ(1));
   mrb_define_method(
     mrb, Texture2D_class, "generate_mipmaps", mrb_Texture2D_generate_mipmaps, MRB_ARGS_NONE());
-  mrb_define_method(mrb, Texture2D_class, "draw", mrb_Texture2D_draw, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Texture2D_class, "draw", mrb_Texture2D_draw, MRB_ARGS_OPT(1));
 
   load_ruby_models_texture2d(mrb);
 }

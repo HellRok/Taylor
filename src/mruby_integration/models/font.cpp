@@ -262,12 +262,12 @@ void append_models_Font(mrb_state* mrb)
   Font_class = mrb_define_class(mrb, "Font", mrb->object_class);
   MRB_SET_INSTANCE_TT(Font_class, MRB_TT_DATA);
   mrb_define_class_method(mrb, Font_class, "default", mrb_Font_default, MRB_ARGS_NONE());
-  mrb_define_method(mrb, Font_class, "initialize", mrb_Font_initialize, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Font_class, "initialize", mrb_Font_initialize, MRB_ARGS_ARG(1, 1));
   mrb_define_method(mrb, Font_class, "unload", mrb_Font_unload, MRB_ARGS_NONE());
   mrb_define_method(mrb, Font_class, "valid?", mrb_Font_valid, MRB_ARGS_NONE());
-  mrb_define_method(mrb, Font_class, "draw", mrb_Font_draw, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, Font_class, "measure", mrb_Font_measure, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, Font_class, "to_image", mrb_Font_to_image, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, Font_class, "draw", mrb_Font_draw, MRB_ARGS_ARG(1, 2));
+  mrb_define_method(mrb, Font_class, "measure", mrb_Font_measure, MRB_ARGS_ARG(1, 2));
+  mrb_define_method(mrb, Font_class, "to_image", mrb_Font_to_image, MRB_ARGS_ARG(1, 1));
 
   load_ruby_models_font(mrb);
 }
