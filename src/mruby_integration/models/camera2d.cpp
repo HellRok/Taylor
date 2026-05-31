@@ -115,7 +115,7 @@ void append_models_Camera2D(mrb_state* mrb)
 {
   Camera2D_class = mrb_define_class(mrb, "Camera2D", mrb->object_class);
   MRB_SET_INSTANCE_TT(Camera2D_class, MRB_TT_DATA);
-  mrb_define_method(mrb, Camera2D_class, "initialize", mrb_Camera2D_initialize, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, Camera2D_class, "initialize", mrb_Camera2D_initialize, MRB_ARGS_OPT(1));
   mrb_attr_accessor_defines(mrb, Camera2D, rotation);
   mrb_attr_accessor_defines(mrb, Camera2D, zoom);
   mrb_define_method(mrb, Camera2D_class, "draw", mrb_Camera2D_draw, MRB_ARGS_BLOCK());

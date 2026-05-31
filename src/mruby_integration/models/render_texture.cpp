@@ -99,7 +99,7 @@ void append_models_RenderTexture(mrb_state* mrb)
   RenderTexture_class = mrb_define_class(mrb, "RenderTexture", mrb->object_class);
   MRB_SET_INSTANCE_TT(RenderTexture_class, MRB_TT_DATA);
   mrb_define_method(
-    mrb, RenderTexture_class, "initialize", mrb_RenderTexture_initialize, MRB_ARGS_REQ(2));
+    mrb, RenderTexture_class, "initialize", mrb_RenderTexture_initialize, MRB_ARGS_REQ(1));
   mrb_attr_reader_define(mrb, RenderTexture, width);
   mrb_attr_reader_define(mrb, RenderTexture, height);
   mrb_define_method(mrb, RenderTexture_class, "unload", mrb_RenderTexture_unload, MRB_ARGS_NONE());

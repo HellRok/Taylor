@@ -118,7 +118,7 @@ void append_models_Line(mrb_state* mrb)
 {
   Line_class = mrb_define_class(mrb, "Line", mrb->object_class);
   MRB_SET_INSTANCE_TT(Line_class, MRB_TT_DATA);
-  mrb_define_method(mrb, Line_class, "initialize", mrb_Line_initialize, MRB_ARGS_REQ(4));
+  mrb_define_method(mrb, Line_class, "initialize", mrb_Line_initialize, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Line_class, "start=", mrb_Line_set_start, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Line_class, "end=", mrb_Line_set_end, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, Line_class, "colour=", mrb_Line_set_colour, MRB_ARGS_REQ(1));
