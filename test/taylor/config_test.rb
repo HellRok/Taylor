@@ -15,10 +15,10 @@
     expect(config.export_targets).to_equal(["linux", "windows", "osx/apple", "osx/intel", "web"])
     expect(config.load_paths).to_equal(["./", "./vendor"])
     expect(config.copy_paths).to_equal(["./assets"])
-    expect(config.web.shell_path).to_equal("./scripts/export/emscripten_shell.html")
+    expect(config.web.shell_path).to_be_nil
     expect(config.web.total_memory).to_equal(64)
-    expect(config.debugging.raylib.mock_implementation).to_be_false
-    expect(config.debugging.mruby.debug_symbols).to_be_false
+    expect(config.debugging.raylib.mock_implementation?).to_be_false
+    expect(config.debugging.mruby.debug_symbols?).to_be_false
   end
 
   But "When we have a taylor-config.json file" do
@@ -58,8 +58,8 @@
     expect(config.copy_paths).to_equal(["copy", "paths"])
     expect(config.web.shell_path).to_equal("shell_path")
     expect(config.web.total_memory).to_equal(128)
-    expect(config.debugging.raylib.mock_implementation).to_be_true
-    expect(config.debugging.mruby.debug_symbols).to_be_true
+    expect(config.debugging.raylib.mock_implementation?).to_be_true
+    expect(config.debugging.mruby.debug_symbols?).to_be_true
   end
 
   When "we override the options" do
@@ -88,8 +88,37 @@
     expect(@config.copy_paths).to_equal(["manual", "copy", "paths"])
     expect(@config.web.shell_path).to_equal("manual shell_path")
     expect(@config.web.total_memory).to_equal(256)
-    expect(@config.debugging.raylib.mock_implementation).to_be_false
-    expect(@config.debugging.mruby.debug_symbols).to_be_false
+    expect(@config.debugging.raylib.mock_implementation?).to_be_false
+    expect(@config.debugging.mruby.debug_symbols?).to_be_false
+  end
+
+  But "when we have the old keys" do
+    config = File.open("taylor-config.json", "w")
+    config.write({
+      "export-directory" => "export-directory",
+      "export-targets" => ["export-targets"],
+      "load-paths" => ["load-paths"],
+      "copy-paths" => ["copy-paths"]
+    }.to_json)
+    config.close
+  end
+
+  Then "we load the data" do
+    @config = Taylor::Config.new
+
+    expect(@config.export_directory).to_equal("export-directory")
+    expect(@config.export_targets).to_equal(["export-targets"])
+    expect(@config.load_paths).to_equal(["load-paths"])
+    expect(@config.copy_paths).to_equal(["copy-paths"])
+  end
+
+  But "we warn the user" do
+    calls = Taylor::Raylib.calls
+    expect(calls.size).to_equal(4)
+    expect(calls[0]).to_equal("(TraceLog) { logLevel: 4 text: 'Old key 'export-directory' used, please use 'export_directory'' }")
+    expect(calls[1]).to_equal("(TraceLog) { logLevel: 4 text: 'Old key 'export-targets' used, please use 'export_targets'' }")
+    expect(calls[2]).to_equal("(TraceLog) { logLevel: 4 text: 'Old key 'load-paths' used, please use 'load_paths'' }")
+    expect(calls[3]).to_equal("(TraceLog) { logLevel: 4 text: 'Old key 'copy-paths' used, please use 'copy_paths'' }")
   end
 ensure
   Dir.chdir("..")

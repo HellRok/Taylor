@@ -1,47 +1,17 @@
 require "json"
 require "fileutils"
+require_relative "/app/taylor/src/ruby/taylor/config"
 
 def taylor(args)
   `taylor /app/taylor/cli-tool/cli.rb #{args}`
 end
 
-options = {
-  "name" => "taylor_game",
-  "version" => "v0.0.1",
-  "input" => "game.rb",
-  "export_directory" => "./exports",
-  "export_targets" => [
-    "android",
-    "linux",
-    "windows",
-    "osx/intel",
-    "osx/apple",
-    "web"
-  ],
-  "load_paths" => [
-    "./",
-    "./vendor"
-  ],
-  "copy_paths" => [
-    "./assets"
-  ],
-  "debugging" => {
-    "raylib" => {
-      "mock_implementation" => false
-    },
-    "mruby" => {
-      "debug_symbols" => false
-    }
-  }
-}
+options = nil
+Dir.chdir("/app/game") do
+  options = Taylor::Config.new
+end
 
 export_target = ENV.fetch("EXPORT", "linux")
-
-if File.exist?("/app/game/taylor-config.json")
-  options.merge!(
-    JSON.parse(File.read("/app/game/taylor-config.json"))
-  )
-end
 
 task :squash do
   Dir.chdir("/app/game")
@@ -52,7 +22,7 @@ end
 
 task transpile: :squash
 task :transpile do
-  sh "mrbc #{"-g" if options.dig("debugging", "mruby", "debug_symbols")} -Bgame -o /app/taylor/include/game.h /app/taylor/output.rb"
+  sh "mrbc #{"-g" if options.debugging.mruby.debug_symbols?} -Bgame -o /app/taylor/include/game.h /app/taylor/output.rb"
 end
 
 task build: :transpile
@@ -151,7 +121,7 @@ namespace :rename do
       app_path = File.join(
         "/app/game/exports",
         "osx",
-        "#{options["name"]}-intel.app",
+        "#{options.name}-intel.app",
         "Contents",
         "MacOS"
       )
@@ -165,7 +135,7 @@ namespace :rename do
       app_path = File.join(
         "/app/game/exports",
         "osx",
-        "#{options["name"]}-apple.app",
+        "#{options.name}-apple.app",
         "Contents",
         "MacOS"
       )
@@ -194,7 +164,7 @@ namespace :rename do
     puts "Copying web build"
     FileUtils.mkdir_p "/app/game/exports/web"
     FileUtils.cp Dir.glob("/app/taylor/dist/web/release/*"), "/app/game/exports/web"
-    FileUtils.mv File.join("/app/game/exports/web/", "#{options["name"]}.html"),
+    FileUtils.mv File.join("/app/game/exports/web/", "#{options.name}.html"),
       "/app/game/exports/web/index.html"
   end
 end
@@ -224,60 +194,60 @@ namespace :compress do
 
   task :android do
     Dir.chdir("/app/game/exports/android")
-    sh "zip -r \"#{options["name"]}-android-#{options["version"]}.zip\" *"
+    sh "zip -r \"#{options.name}-android-#{options.version}.zip\" *"
   end
 
   namespace :linux do
     task :x64 do
       Dir.chdir("/app/game/exports/linux")
-      options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
-      sh "zip -r \"#{options["name"]}-linux-#{options["version"]}.zip\" *"
+      options.copy_paths.each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
+      sh "zip -r \"#{options.name}-linux-#{options.version}.zip\" *"
     end
   end
 
   task :windows do
     Dir.chdir("/app/game/exports/windows")
-    options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
-    sh "zip -r \"#{options["name"]}-windows-#{options["version"]}.zip\" *"
+    options.copy_paths.each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
+    sh "zip -r \"#{options.name}-windows-#{options.version}.zip\" *"
   end
 
   namespace :osx do
     task :intel do
       Dir.chdir("/app/game/exports/osx")
-      app_path = File.join(".", "#{options["name"]}-intel.app", "Contents", "MacOS")
+      app_path = File.join(".", "#{options.name}-intel.app", "Contents", "MacOS")
       FileUtils.mkdir_p(app_path)
       File.write(File.join(app_path, "..", "PkgInfo"), "APPL????APPL????")
-      options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), app_path) }
-      sh "zip -r \"#{options["name"]}-osx-intel-#{options["version"]}.zip\" *.app"
+      options.copy_paths.each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), app_path) }
+      sh "zip -r \"#{options.name}-osx-intel-#{options.version}.zip\" *.app"
     end
 
     task :apple do
       Dir.chdir("/app/game/exports/osx")
-      app_path = File.join(".", "#{options["name"]}-apple.app", "Contents", "MacOS")
+      app_path = File.join(".", "#{options.name}-apple.app", "Contents", "MacOS")
       FileUtils.mkdir_p(app_path)
       File.write(File.join(app_path, "..", "PkgInfo"), "APPL????APPL????")
-      options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), app_path) }
-      sh "zip -r \"#{options["name"]}-osx-apple-#{options["version"]}.zip\" *.app"
+      options.copy_paths.each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), app_path) }
+      sh "zip -r \"#{options.name}-osx-apple-#{options.version}.zip\" *.app"
     end
 
     namespace :no_app do
       task :intel do
         Dir.chdir("/app/game/exports/osx")
-        options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
-        sh "zip -r \"#{options["name"]}-osx-intel-#{options["version"]}.zip\" taylor"
+        options.copy_paths.each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
+        sh "zip -r \"#{options.name}-osx-intel-#{options.version}.zip\" taylor"
       end
 
       task :apple do
         Dir.chdir("/app/game/exports/osx")
-        options["copy_paths"].each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
-        sh "zip -r \"#{options["name"]}-osx-apple-#{options["version"]}.zip\" taylor"
+        options.copy_paths.each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), ".") }
+        sh "zip -r \"#{options.name}-osx-apple-#{options.version}.zip\" taylor"
       end
     end
   end
 
   task :web do
     Dir.chdir("/app/game/exports/web")
-    sh "zip -r \"#{options["name"]}-web-#{options["version"]}.zip\" *"
+    sh "zip -r \"#{options.name}-web-#{options.version}.zip\" *"
   end
 end
 

@@ -10,7 +10,7 @@ class WindowsBuilder < Builder
   end
 
   def name
-    "#{@options["name"]}.exe"
+    "#{@options.name}.exe"
   end
 end
 

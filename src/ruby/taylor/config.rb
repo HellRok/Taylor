@@ -66,6 +66,7 @@ module Taylor
     #
     # @return [String]
     def export_directory
+      @export_directory ||= old_key_check("export-directory")
       @export_directory ||= @config.fetch("export_directory", "./exports")
     end
 
@@ -77,10 +78,12 @@ module Taylor
     #
     # @return [Array<String>]
     def export_targets
+      @export_targets ||= old_key_check("export-targets")
       @export_targets ||= @config.fetch("export_targets", ["linux", "windows", "osx/apple", "osx/intel", "web"])
     end
 
-    # Returns the load paths of the Taylor game.
+    # Returns the load paths of the Taylor game. These are the paths that
+    # Taylor will look for `.rb` files when exporting the game.
     #
     # @example Basic usage
     #   puts Taylor::Config.new.load_paths
@@ -88,10 +91,12 @@ module Taylor
     #
     # @return [Array<String>]
     def load_paths
+      @load_paths ||= old_key_check("load-paths")
       @load_paths ||= @config.fetch("load_paths", ["./", "./vendor"])
     end
 
-    # Returns the copy paths of the Taylor game.
+    # Returns the copy paths of the Taylor game. These are things like assets
+    # that you want copied into the exported game.
     #
     # @example Basic usage
     #   puts Taylor::Config.new.copy_paths
@@ -99,7 +104,22 @@ module Taylor
     #
     # @return [Array<String>]
     def copy_paths
+      @copy_paths ||= old_key_check("copy-paths")
       @copy_paths ||= @config.fetch("copy_paths", ["./assets"])
+    end
+
+    private
+
+    def old_key_check(key)
+      if @config.has_key?(key)
+        if Object.const_defined?(:TAYLOR_VERSION)
+          Logging.log(
+            message: "Old key '#{key}' used, please use '#{key.tr("-", "_")}'",
+            level: Logging::WARNING
+          )
+        end
+        @config[key]
+      end
     end
 
     # The {Web} class is used for all the configuration about this Taylor game
@@ -121,9 +141,9 @@ module Taylor
       #   puts Taylor::Config.new.web.shell_path
       #   # => "./scripts/export/emscripten_shell.html"
       #
-      # @return [String]
+      # @return [String,nil]
       def shell_path
-        @shell_path ||= @config.fetch("shell_path", "./scripts/export/emscripten_shell.html")
+        @shell_path ||= @config.fetch("shell_path", nil)
       end
 
       # Returns the total allowed memory of the Taylor game web export.
@@ -168,7 +188,7 @@ module Taylor
         #   # => false
         #
         # @return [Boolean]
-        def mock_implementation
+        def mock_implementation?
           if instance_variable_defined? :@mock_implementation
             @mock_implementation
           else
@@ -196,7 +216,7 @@ module Taylor
         #   # => false
         #
         # @return [Boolean]
-        def debug_symbols
+        def debug_symbols?
           if instance_variable_defined? :@debug_symbols
             @debug_symbols
           else

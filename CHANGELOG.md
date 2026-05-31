@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Properly use Taylor::Config through the entire export process
+
 ## v0.4.2
 
 - Lock the MRuby version used in the export docker image
