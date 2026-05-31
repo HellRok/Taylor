@@ -60,6 +60,7 @@ class Builder
     @includes << "-I ./vendor/"
     @includes << "-I ./vendor/raylib/include/" unless mock_raylib?
     @includes << "-I ./vendor/mruby/"
+    @includes << "-I ./vendor/#{@platform}/include/"
   end
 
   def setup_static_links
