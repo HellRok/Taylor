@@ -52,7 +52,8 @@ flow "Linting" do
           "-I ./include/",
           "-I ./vendor/",
           "-I ./vendor/raylib/include/",
-          "-I ./vendor/mruby/"
+          "-I ./vendor/mruby/",
+          "-I ./vendor/linux/include/"
         ].join(" ")
       end
     end

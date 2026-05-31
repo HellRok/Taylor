@@ -60,7 +60,7 @@ void append_models_LocalStorage(mrb_state* mrb)
   mrb_define_class_method(
     mrb, LocalStorage_class, "set_item", mrb_local_storage_set_item, MRB_ARGS_REQ(2));
   mrb_define_class_method(
-    mrb, LocalStorage_class, "get_item", mrb_local_storage_get_item, MRB_ARGS_REQ(2));
+    mrb, LocalStorage_class, "get_item", mrb_local_storage_get_item, MRB_ARGS_REQ(1));
 #endif
 
 #ifndef __EMSCRIPTEN__
