@@ -39,12 +39,12 @@ end
     expect(data["version"]).to_equal("v0.0.1")
     expect(data["entrypoint"]).to_equal("game.rb")
     expect(File.exist?("./taylor_game/game.rb")).to_be_true
-    expect(data["export-directory"]).to_equal("./exports")
-    expect(data["export-targets"]).to_equal(["linux", "windows", "osx/apple", "osx/intel", "web"])
-    expect(data["load-paths"]).to_equal(["./", "./vendor"])
+    expect(data["export_directory"]).to_equal("./exports")
+    expect(data["export_targets"]).to_equal(["linux", "windows", "osx/apple", "osx/intel", "web"])
+    expect(data["load_paths"]).to_equal(["./", "./vendor"])
     expect(Dir.exist?("./taylor_game/vendor")).to_be_true
     expect(File.exist?("./taylor_game/vendor/.keep")).to_be_true
-    expect(data["copy-paths"]).to_equal(["./assets"])
+    expect(data["copy_paths"]).to_equal(["./assets"])
     expect(Dir.exist?("./taylor_game/assets")).to_be_true
     expect(File.exist?("./taylor_game/assets/.keep")).to_be_true
   ensure
@@ -72,12 +72,12 @@ end
     expect(data["version"]).to_equal("final_v2_for_real")
     expect(data["entrypoint"]).to_equal("app.rb")
     expect(File.exist?("./test_game/app.rb")).to_be_true
-    expect(data["export-directory"]).to_equal("./releases")
-    expect(data["export-targets"]).to_equal(["web", "windows"])
-    expect(data["load-paths"]).to_equal(["./", "./third_party"])
+    expect(data["export_directory"]).to_equal("./releases")
+    expect(data["export_targets"]).to_equal(["web", "windows"])
+    expect(data["load_paths"]).to_equal(["./", "./third_party"])
     expect(Dir.exist?("./test_game/third_party")).to_be_true
     expect(File.exist?("./test_game/third_party/.keep")).to_be_true
-    expect(data["copy-paths"]).to_equal(["./resources", "./music"])
+    expect(data["copy_paths"]).to_equal(["./resources", "./music"])
     expect(Dir.exist?("./test_game/resources")).to_be_true
     expect(File.exist?("./test_game/resources/.keep")).to_be_true
     expect(Dir.exist?("./test_game/music")).to_be_true

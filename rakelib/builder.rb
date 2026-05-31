@@ -1,4 +1,5 @@
 require_relative "builder/commands"
+require_relative "../src/ruby/taylor/config"
 
 class Builder
   def self.base
@@ -92,17 +93,17 @@ class Builder
   end
 
   def setup_options
-    @options ||= File.exist?("/app/game/taylor-config.json") ?
-      JSON.parse(File.read("/app/game/taylor-config.json")) : {
-        "name" => "taylor"
-      }
+    return @options if @options
+
+    Dir.chdir("/app/game") { @options = Taylor::Config.new } if ENV["EXPORT"]
+    @options ||= Taylor::Config.new
   end
 
   def name
-    @options["name"]
+    @options.name
   end
 
   def mock_raylib?
-    @options.dig("debugging", "raylib", "mock_implementation") || ENV.key?("MOCK_RAYLIB")
+    @options.debugging.raylib.mock_implementation? || ENV.key?("MOCK_RAYLIB")
   end
 end

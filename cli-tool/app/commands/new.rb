@@ -107,6 +107,7 @@ module Taylor
         config_options = options.dup
         config_options.delete(:help)
         config_options.delete(:folder)
+        config_options.transform_keys! { |key| key.to_s.tr("-", "_") }
 
         config = File.open(path_for("taylor-config.json"), "w")
         config.write(JSON.generate(config_options, {pretty_print: true, indent_width: 2}))

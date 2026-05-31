@@ -39,7 +39,7 @@ class AndroidBuilder < Builder
   end
 
   def apk_name(final: false)
-    "#{@options["name"]}#{"-unzipped" unless final}.apk"
+    "#{@options.name}#{"-unzipped" unless final}.apk"
   end
 end
 
