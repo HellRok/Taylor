@@ -49,24 +49,20 @@ auto mrb_Font_initialize(mrb_state* mrb, mrb_value self) -> mrb_value
     raise_not_found_error(mrb, Font_class, path);
   }
 
-  float size = 32;
+  int size = 32;
   if (!mrb_undef_p(kw_values[0])) {
-    size = mrb_as_float(mrb, kw_values[0]);
+    size = mrb_as_int(mrb, kw_values[0]);
   }
 
-  float glyph_count = 95;
+  int glyph_count = 95;
   if (!mrb_undef_p(kw_values[1])) {
-    glyph_count = mrb_as_float(mrb, kw_values[1]);
+    glyph_count = mrb_as_int(mrb, kw_values[1]);
   }
 
-  int* font_chars{ nullptr };
+  const int* font_chars{ nullptr };
 
-  Font* font = static_cast<Font*> DATA_PTR(self);
-  if (font) {
-    mrb_free(mrb, font);
-  }
-  mrb_data_init(self, nullptr, &Font_type);
-  font = static_cast<Font*>(malloc(sizeof(Font)));
+  Font* font;
+  mrb_self_ptr(mrb, self, Font, font);
 
   *font = LoadFontEx(path, size, font_chars, glyph_count);
 

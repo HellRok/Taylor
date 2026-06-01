@@ -19,7 +19,7 @@
     expect(Taylor::Raylib.calls).to_equal(
       [
         "(FileExists) { fileName: './assets/tiny.ttf' }",
-        "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 32 codepoints: 0x0 codepointCount: 95 }"
+        "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 32 codepointCount: 95 }"
       ]
     )
   end
@@ -44,7 +44,7 @@
     expect(Taylor::Raylib.calls).to_equal(
       [
         "(FileExists) { fileName: './assets/tiny.ttf' }",
-        "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 6 codepoints: 0x0 codepointCount: 100 }"
+        "(LoadFontEx) { fileName: './assets/tiny.ttf' fontSize: 6 codepointCount: 100 }"
       ]
     )
   end

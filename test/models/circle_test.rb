@@ -200,8 +200,7 @@ end
     expect(Taylor::Raylib.calls).to_equal(
       [
         "(DrawCircleGradient) { " \
-          "centerX: 3 " \
-          "centerY: 4 " \
+          "center: { x: 3.000000 y: 4.000000 } " \
           "radius: 5.000000 " \
           "inner: { r: 6 g: 7 b: 8 a: 9 } " \
           "outer: { r: 10 g: 11 b: 12 a: 13 } " \
@@ -227,8 +226,7 @@ end
     expect(Taylor::Raylib.calls).to_equal(
       [
         "(DrawCircleGradient) { " \
-          "centerX: 4 " \
-          "centerY: 5 " \
+          "center: { x: 4.000000 y: 5.000000 } " \
           "radius: 6.000000 " \
           "inner: { r: 7 g: 8 b: 9 a: 10 } " \
           "outer: { r: 16 g: 17 b: 18 a: 19 } " \
@@ -293,8 +291,7 @@ end
     expect(Taylor::Raylib.calls).to_equal(
       [
         "(DrawCircleGradient) { " \
-          "centerX: 1 " \
-          "centerY: 2 " \
+          "center: { x: 1.000000 y: 2.000000 } " \
           "radius: 3.000000 " \
           "inner: { r: 4 g: 5 b: 6 a: 7 } " \
           "outer: { r: 6 g: 7 b: 8 a: 9 } " \

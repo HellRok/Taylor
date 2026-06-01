@@ -7,6 +7,7 @@ RUN apt-get update -y && \
     locales \
     ruby \
     unzip \
+    libx11-dev \
     openjdk-11-jre \
     openjdk-11-jdk-headless \
     wget

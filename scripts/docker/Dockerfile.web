@@ -16,6 +16,7 @@ RUN \
     bzip2 \
     git \
     libatomic1 \
+    libx11-dev \
     ruby \
     python3 \
     xz-utils \

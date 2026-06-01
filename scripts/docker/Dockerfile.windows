@@ -13,6 +13,7 @@ RUN \
     ruby \
     mingw-w64 \
     \
+    libx11-dev \
     locales \
     zip && \
   apt-get clean -y && apt-get autoremove -y && \
