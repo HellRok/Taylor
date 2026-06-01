@@ -259,6 +259,19 @@ task "raylib:mock" do
 
       str
     }
+    to_pointer = lambda { |name|
+      <<~CPP
+        " #{name}: "
+        #ifdef __EMSCRIPTEN__
+          << "0x" << #{name}
+        #elifdef __clang__
+          << #{name}
+        #else
+          << "0x" << #{name}
+        #endif
+        ;
+      CPP
+    }
 
     source = []
     arguments.split(", ").each do |argument|
@@ -276,6 +289,15 @@ task "raylib:mock" do
             signature << " #{name}: '" << #{name} << "'";
           }
         CPP
+
+      when "const int"
+        # Clang and GCC format pointers differently, so let's just lean with
+        # what clang prefers because I feel it makes more sense.
+        source << if pointer
+          "if (#{name}) { #{append.call(to_pointer.call(name))} }"
+        else
+          append.call(%(" #{name}: " << #{name};))
+        end
 
       when "const void"
         source << append.call(%(" #{name}: ??? ";))
@@ -300,7 +322,6 @@ task "raylib:mock" do
 
       when "FilePathList"
         source << append.call(%(" #{name}: { ";))
-        source << call_on.call(name, "capacity", pointer)
         source << call_on.call(name, "count", pointer)
         source << append.call(%("}";))
 
@@ -376,17 +397,7 @@ task "raylib:mock" do
         # Clang and GCC format pointers differently, so let's just lean with
         # what clang prefers because I feel it makes more sense.
         source << if pointer
-          append.call(<<~CPP)
-            " #{name}: "
-            #ifdef __EMSCRIPTEN__
-              << "0x" << #{name}
-            #elifdef __clang__
-              << #{name}
-            #else
-              << "0x" << #{name}
-            #endif
-            ;
-          CPP
+          append.call(to_pointer(name))
         else
           append.call(%(" #{name}: " << #{name};))
         end

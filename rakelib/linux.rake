@@ -6,7 +6,7 @@ class LinuxBuilder < Builder
     @platform = "linux"
     @cxx = "g++"
     @cxxflags = "-std=c++17"
-    @ldflags = "-l dl -l pthread"
+    @ldflags = "-l dl -l pthread -l X11"
   end
 end
 

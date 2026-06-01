@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export platform="${1}"
+
+cd src
+make clean
+export CUSTOM_CFLAGS="-DSUPPORT_FILEFORMAT_BMP=1 -DSUPPORT_FILEFORMAT_JPG=1 -DSUPPORT_FILEFORMAT_HDR=1"
+
+case "${platform}" in
+  android)
+    make PLATFORM=PLATFORM_ANDROID
+    ;;
+  linux)
+    make PLATFORM=PLATFORM_DESKTOP
+    ;;
+  windows)
+    make PLATFORM=PLATFORM_DESKTOP PLATFORM_OS=WINDOWS CROSS=MINGW
+    ;;
+  osx-intel)
+    MACOSX_DEPLOYMENT_TARGET=11.3 make PLATFORM=PLATFORM_DESKTOP PLATFORM_OS=OSX CROSS=OSX_INTEL
+    ;;
+  osx-apple)
+    MACOSX_DEPLOYMENT_TARGET=11.3 make PLATFORM=PLATFORM_DESKTOP PLATFORM_OS=OSX CROSS=OSX_APPLE
+    ;;
+  web)
+    make PLATFORM=PLATFORM_WEB
+    mv /app/src/libraylib.web.a /app/src/libraylib.a
+    ;;
+  *)
+    echo "Error: Unknown platform specified: $platform" >&2
+    exit 1
+    ;;
+esac

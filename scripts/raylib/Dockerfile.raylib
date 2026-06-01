@@ -2,8 +2,8 @@ FROM taylor/build-linux AS raylib_base
 
 WORKDIR /app
 
-RUN git clone --branch 5.5 --depth 1 https://github.com/raysan5/raylib.git .
-COPY ./scripts/raylib/tweaks.patch /app/
+RUN git clone --branch 6.0 --depth 1 https://github.com/raysan5/raylib.git .
+COPY ./scripts/raylib/* /app/
 RUN git apply tweaks.patch
 
 FROM taylor/build-android AS raylib_android
@@ -11,41 +11,32 @@ WORKDIR /app
 COPY --from=raylib_base /app /app
 RUN apt-get install -y \
     make
-RUN cd src && \
-  make PLATFORM=PLATFORM_ANDROID
+RUN ./build-for android
 
 FROM taylor/build-linux AS raylib_linux
 WORKDIR /app
 COPY --from=raylib_base /app /app
-RUN cd src && \
-  make PLATFORM=PLATFORM_DESKTOP
+RUN ./build-for linux
 
 FROM taylor/build-windows AS raylib_mingw
 WORKDIR /app
 COPY --from=raylib_base /app /app
-RUN cd src && \
-  make PLATFORM=PLATFORM_DESKTOP PLATFORM_OS=WINDOWS CROSS=MINGW
+RUN ./build-for windows
 
 FROM taylor/build-osx AS raylib_osx_intel
 WORKDIR /app
 COPY --from=raylib_base /app /app
-RUN cd src && \
-  make clean && \
-  MACOSX_DEPLOYMENT_TARGET=11.3 make PLATFORM=PLATFORM_DESKTOP PLATFORM_OS=OSX CROSS=OSX_INTEL
+RUN ./build-for osx-intel
 
 FROM taylor/build-osx AS raylib_osx_apple
 WORKDIR /app
 COPY --from=raylib_base /app /app
-RUN cd src && \
-  make clean && \
-  MACOSX_DEPLOYMENT_TARGET=11.3 make PLATFORM=PLATFORM_DESKTOP PLATFORM_OS=OSX CROSS=OSX_APPLE
+RUN ./build-for osx-apple
 
 FROM taylor/build-web AS raylib_web
 WORKDIR /app
 COPY --from=raylib_base /app /app
-COPY ./scripts/mruby/emscripten.rb /app/build_config/
-RUN cd src && \
-  make PLATFORM=PLATFORM_WEB -B
+RUN ./build-for web
 
 FROM scratch AS export
 

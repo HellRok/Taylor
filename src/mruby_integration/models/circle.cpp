@@ -162,7 +162,10 @@ auto mrb_Circle_draw(mrb_state* mrb, mrb_value self) -> mrb_value
   if (circle->gradient == nullptr) {
     DrawCircle(circle->x, circle->y, circle->radius, *circle->colour);
   } else {
-    DrawCircleGradient(circle->x, circle->y, circle->radius, *circle->colour, *circle->gradient);
+    DrawCircleGradient(Vector2{ static_cast<float>(circle->x), static_cast<float>(circle->y) },
+                       circle->radius,
+                       *circle->colour,
+                       *circle->gradient);
   }
 
   if (circle->outline != nullptr) {

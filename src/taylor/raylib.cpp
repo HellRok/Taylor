@@ -148,7 +148,7 @@ auto mocked_call_for(std::string method, FilePathList* result) -> void
 {
   const unsigned int capacity = 8;
   auto** paths = static_cast<char**>(malloc(sizeof(char*) * capacity));
-  *result = FilePathList{ capacity, 0, paths };
+  *result = FilePathList{ 0, paths };
 
   mock_result mock = next_mock_for(method);
   if (mock.found) {
