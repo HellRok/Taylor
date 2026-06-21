@@ -10,7 +10,12 @@ module Taylor
         @argv = argv
         setup_options(@argv, options)
 
-        @command = command || ""
+        @command = case command
+        when "--entrypoint"
+          ""
+        else
+          command || ""
+        end
 
         if @options[:help] || entrypoint.empty?
           display_help
@@ -50,17 +55,17 @@ module Taylor
       private
 
       def entrypoint
-        if !@command.empty?
-          if File.directory?(@command) && File.exist?(File.join(@command, "taylor-config.json"))
-            Dir.chdir(@command)
-            setup_options(@argv, Taylor::Config.new)
-            $:.unshift "."
-            @options[:entrypoint]
-          else
-            @command
-          end
-        else
+        if @command.empty?
           @options[:entrypoint]
+
+        elsif File.directory?(@command) && File.exist?(File.join(@command, "taylor-config.json"))
+          Dir.chdir(@command)
+          setup_options(@argv, Taylor::Config.new)
+          $:.unshift "."
+          @options[:entrypoint]
+
+        else
+          @command
         end
       end
 
