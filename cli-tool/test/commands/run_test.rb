@@ -57,6 +57,14 @@ end
     expect(@run_command.require_list).to_equal(["./cli.rb"])
   end
 
+  When "we pass a file by entrypoint" do
+    @run_command = Taylor::Commands::Run.new("--entrypoint", ["--entrypoint", "test/test.rb"], Taylor::Config.new)
+  end
+
+  Then "require the file in the options" do
+    expect(@run_command.require_list).to_equal(["test/test.rb"])
+  end
+
   When "we pass a file that doesn't exist" do
     @run_command = Taylor::Commands::Run.new("./non_existant.rb", [], Taylor::Config.new)
   end
