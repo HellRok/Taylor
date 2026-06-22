@@ -2,6 +2,10 @@
 #include "mruby/class.h"
 #include "raylib.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/models/monitor.hpp"

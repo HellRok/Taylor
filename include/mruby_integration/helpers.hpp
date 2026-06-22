@@ -3,6 +3,10 @@
 #include "mruby.h"
 #include "mruby/variable.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #define attr_reader_int(mrb, self, klass_type, klass, attr)                                        \
   {                                                                                                \
     klass* data;                                                                                   \

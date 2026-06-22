@@ -3,6 +3,10 @@
 #include "mruby/data.h"
 #include "raylib.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #include "mruby_integration/models/vector2.hpp"
 #include "mruby_integration/struct_types.hpp"
 

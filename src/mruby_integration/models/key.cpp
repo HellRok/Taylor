@@ -4,6 +4,10 @@
 #include "raylib.h"
 #include <string>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/helpers.hpp"
 #include "mruby_integration/struct_types.hpp"

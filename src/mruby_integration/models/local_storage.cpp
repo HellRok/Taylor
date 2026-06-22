@@ -1,6 +1,10 @@
 #include "mruby.h"
 #include <mruby/class.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #include "ruby/models/local_storage.hpp"
 
 #ifdef __EMSCRIPTEN__

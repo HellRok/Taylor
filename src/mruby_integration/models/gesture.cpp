@@ -2,6 +2,10 @@
 #include "mruby/class.h"
 #include "raylib.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #include "mruby_integration/models/vector2.hpp"
 
 #include "ruby/models/gesture.hpp"

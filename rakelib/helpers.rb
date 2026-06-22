@@ -36,6 +36,10 @@ def write_cpp_file(hpp_file, cpp_file, ruby_code)
     #include "mruby.h"
     #include "mruby/compile.h"
 
+    #ifdef __EMSCRIPTEN__
+    #include <emscripten/emscripten.h>
+    #endif
+
     void load_#{hpp_file.ext.split("/").join("_")}(mrb_state *mrb) {
       mrb_load_string(mrb, R"RUBY(
         #{ruby_code}
