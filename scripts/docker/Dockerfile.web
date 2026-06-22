@@ -2,7 +2,7 @@ FROM debian:stable-slim
 
 WORKDIR /app
 
-ENV PATH="/app/emsdk:/app/emsdk/node/14.15.5_64bit/bin:/app/emsdk/upstream/emscripten:${PATH}"
+ENV PATH="/app/emsdk:/app/emsdk/node/22.16.0_64bit/bin:/app/emsdk/upstream/emscripten:${PATH}"
 
 # Libraries are in order
 # 1. Core
@@ -31,5 +31,5 @@ RUN \
 
 RUN  git clone https://github.com/juj/emsdk.git /app/emsdk &&\
   cd /app/emsdk &&\
-  ./emsdk install 5.0.7 &&\
-  ./emsdk activate 5.0.7
+  ./emsdk install 6.0.0 &&\
+  ./emsdk activate 6.0.0

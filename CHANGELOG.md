@@ -5,6 +5,7 @@
 - Upgraded MRuby to 4.0.0
 - Upgraded Raylib to 6.0
 - CLI now properly accepts the `--entrypoint` flag
+- Upgraded emscripten to 6.0.0
 
 ## v0.4.3
 
