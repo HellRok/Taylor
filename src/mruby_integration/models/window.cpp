@@ -3,6 +3,10 @@
 #include "mruby/variable.h"
 #include "raylib.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #include "mruby_integration/exceptions.hpp"
 #include "mruby_integration/models/image.hpp"
 #include "mruby_integration/models/monitor.hpp"

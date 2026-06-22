@@ -8,6 +8,10 @@
 #include "mruby.h"
 #include "mruby/array.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #include "raylib.h"
 
 std::vector<std::string> raylib_method_calls;

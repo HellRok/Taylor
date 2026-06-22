@@ -6,6 +6,10 @@
 #include "mruby/data.h"
 #include "mruby/irep.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 #include "argv.hpp"
 #include "mruby_integration/models.hpp"
 #include "mruby_integration/struct_types.hpp"
