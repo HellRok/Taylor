@@ -486,7 +486,7 @@ void append_models_Window(mrb_state* mrb)
   mrb_define_class_method(
     mrb, Window_class, "seconds_open", mrb_Window_seconds_open, MRB_ARGS_NONE());
   mrb_define_class_method(
-    mrb, Window_class, "draw_frame_rate", mrb_Window_draw_frame_rate, MRB_ARGS_REQ(1));
+    mrb, Window_class, "draw_frame_rate", mrb_Window_draw_frame_rate, MRB_ARGS_OPT(1));
 
   load_ruby_models_window(mrb);
 }
