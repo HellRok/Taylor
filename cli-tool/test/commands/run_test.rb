@@ -72,4 +72,32 @@ end
   Then "we exit with an error" do
     expect(@run_command.exit_status).to_equal(1)
   end
+
+  When "we pass specify arguments for the entrypoint via --" do
+    @run_command = Taylor::Commands::Run.new(
+      "--entrypoint",
+      ["--entrypoint", "test/test.rb", "--", "-a", "arg1", "arg2"],
+      Taylor::Config.new
+    )
+  end
+
+  Then "ARGV is manipulated for the entrypoint after we've parsed the run opts" do
+    expect(@run_command.require_list).to_equal(["test/test.rb"])
+    expect(ARGV).to_equal(["-a", "arg1", "arg2"])
+    expect(@run_command.options[:entrypoint]).to_equal("test/test.rb")
+  end
+
+  When "we pass specify arguments for the entrypoint via -- without any options for the command" do
+    @run_command = Taylor::Commands::Run.new(
+      "--",
+      ["--", "--entrypoint", "arg1", "-h"],
+      Taylor::Config.new
+    )
+  end
+
+  Then "ARGV is manipulated to contain all the args" do
+    expect(ARGV).to_equal(["--entrypoint", "arg1", "-h"])
+    expect(@run_command.options).to_equal(help: false, entrypoint: "cli.rb")
+    expect(@run_command.require_list).to_equal(["cli.rb"])
+  end
 end
