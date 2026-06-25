@@ -93,6 +93,18 @@ Docker images for that too, just run:
 $ bundle exec rake docker:build:{mruby,raylib}
 ```
 
+## Contributing
+
+### Running the test suite
+
+You need to have clang-format installed.
+You can install it on Debian-based systems with `apt install clang-format`
+
+You can run the test suite with `rake ci`.
+
+To build the project with `rake` you must also have libx11-dev installed.
+You can install it on Debian-based systems with `apt install libx11-dev`
+
 ## License
 
 Taylor is free and open-source, licensed under the [MIT license](https://github.com/HellRok/Taylor/blob/main/LICENSE).

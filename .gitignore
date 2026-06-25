@@ -26,3 +26,5 @@ gem/*.gem
 compile_commands.json
 
 logs
+
+/.idea
