@@ -1,6 +1,6 @@
 @unit.describe "Run --help" do
   Given "We have run `taylor --help`" do
-    @run_command = Taylor::Commands::Run.new("./cli.rb", ["--help"], Taylor::Config.new)
+    @run_command = Taylor::Commands::Run.new(["./cli.rb", "--help"], Taylor::Config.new)
   end
 
   Then "we return useful information" do
@@ -32,7 +32,7 @@ end
 @unit.describe "Run" do
   When "we call run" do
     Taylor.removed_constants = []
-    Taylor::Commands::Run.new("./cli.rb", [], Taylor::Config.new)
+    Taylor::Commands::Run.new("./cli.rb", Taylor::Config.new)
   end
 
   Then "remove the 'Command' constant" do
@@ -40,7 +40,7 @@ end
   end
 
   When "we pass a filename" do
-    @run_command = Taylor::Commands::Run.new("./test/test.rb", [], Taylor::Config.new)
+    @run_command = Taylor::Commands::Run.new("./test/test.rb", Taylor::Config.new)
   end
 
   Then "we require that file" do
@@ -50,7 +50,7 @@ end
   When "we don't pass a filename" do
     config = Taylor::Config.new
     config.entrypoint = "./cli.rb"
-    @run_command = Taylor::Commands::Run.new(nil, [], config)
+    @run_command = Taylor::Commands::Run.new([], config)
   end
 
   Then "require the file in the options" do
@@ -58,7 +58,7 @@ end
   end
 
   When "we pass a file by entrypoint" do
-    @run_command = Taylor::Commands::Run.new("--entrypoint", ["--entrypoint", "test/test.rb"], Taylor::Config.new)
+    @run_command = Taylor::Commands::Run.new(["--entrypoint", "test/test.rb"], Taylor::Config.new)
   end
 
   Then "require the file in the options" do
@@ -66,7 +66,7 @@ end
   end
 
   When "we pass a file that doesn't exist" do
-    @run_command = Taylor::Commands::Run.new("./non_existant.rb", [], Taylor::Config.new)
+    @run_command = Taylor::Commands::Run.new("./non_existant.rb", Taylor::Config.new)
   end
 
   Then "we exit with an error" do
@@ -75,7 +75,6 @@ end
 
   When "we pass specify arguments for the entrypoint via --" do
     @run_command = Taylor::Commands::Run.new(
-      "--entrypoint",
       ["--entrypoint", "test/test.rb", "--", "-a", "arg1", "arg2"],
       Taylor::Config.new
     )
@@ -88,11 +87,7 @@ end
   end
 
   When "we pass specify arguments for the entrypoint via -- without any options for the command" do
-    @run_command = Taylor::Commands::Run.new(
-      "--",
-      ["--", "--entrypoint", "arg1", "-h"],
-      Taylor::Config.new
-    )
+    @run_command = Taylor::Commands::Run.new(["--", "--entrypoint", "arg1", "-h"], Taylor::Config.new)
   end
 
   Then "ARGV is manipulated to contain all the args" do
