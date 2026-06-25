@@ -1,22 +1,19 @@
 module Taylor
   module Commands
     class Run
-      def self.call(command, argv, options)
-        new(command, argv, options)
+      def self.call(argv, options)
+        new(argv, options)
       end
 
       attr_accessor :options
 
-      def initialize(command, argv, options)
-        setup_argvs(argv)
-        setup_options(options)
+      def initialize(argv, taylor_config)
+        @argv = Array(argv)
+        @taylor_config = taylor_config
 
-        # better name for command might be something like "game_directory_or_entrypoint"
-        @command = if command.nil? || command.start_with?("--")
-          ""
-        else
-          command
-        end
+        setup_argvs
+        setup_entrypoint
+        setup_options
 
         if @options[:help] || entrypoint.empty?
           display_help
@@ -55,24 +52,31 @@ module Taylor
 
       private
 
-      def entrypoint
-        if @command.empty?
-          @options[:entrypoint]
+      def setup_entrypoint
+        first_arg = @argv_for_command[0]
 
-        elsif File.directory?(@command) && File.exist?(File.join(@command, "taylor-config.json"))
-          Dir.chdir(@command)
-          setup_options(@argv, Taylor::Config.new)
+        return unless first_arg
+        return if first_arg[0] == "-"
+
+        if File.directory?(first_arg)
+          return unless File.exist?(File.join(first_arg, "taylor-config.json"))
+
+          Dir.chdir(first_arg)
+          @argv_for_command.shift
+          @taylor_config = Taylor::Config.new
+
           $:.unshift "."
-          @options[:entrypoint]
-
         else
-          @command
+          @argv_for_command.shift
+          @entrypoint = first_arg
         end
       end
 
-      def setup_argvs(argv)
-        @argv = argv
+      def entrypoint
+        @options[:entrypoint]
+      end
 
+      def setup_argvs
         argument_separator_index = @argv.index("--")
 
         if argument_separator_index
@@ -83,18 +87,14 @@ module Taylor
         end
       end
 
-      def setup_options(options)
+      def setup_options
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
-          opts.on(:entrypoint, :string, options.entrypoint, short: :e)
+          opts.on(:entrypoint, :string, @entrypoint || @taylor_config.entrypoint, short: :e)
         end
         parser.parse(@argv_for_command)
 
         @options = parser.opts
-      end
-
-      def from_config
-        @options["entrypoint"]
       end
 
       def unload_taylor_cli
@@ -118,9 +118,6 @@ module Taylor
           @argv_for_entrypoint.each.with_index do |arg, index|
             ARGV[index] = arg
           end
-        else
-          # This is the behavior before supporting "--" so just preserving it for now.
-          ARGV.shift
         end
       end
     end
