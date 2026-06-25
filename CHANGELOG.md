@@ -6,6 +6,7 @@
 - Upgraded Raylib to 6.0
 - CLI now properly accepts the `--entrypoint` flag
 - Upgraded emscripten to 6.0.0
+- CLI now accepts '--' to distinguish taylor arguments from entrypoint arguments
 
 ## v0.4.3
 
