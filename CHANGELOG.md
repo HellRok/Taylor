@@ -7,6 +7,8 @@
 - CLI now properly accepts the `--entrypoint` flag
 - Upgraded emscripten to 6.0.0
 - CLI now accepts '--' to distinguish taylor arguments from entrypoint arguments
+- Fix up Window tests
+- Make the development Docker file a bit better
 
 ## v0.4.3
 

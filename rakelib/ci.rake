@@ -99,10 +99,12 @@ end
 
 flow "Export Test" do
   taylor_dir = Dir.pwd
-  tmp_dir = Dir.mktmpdir("taylor-")
+  tmp_dir = nil
 
   setup do
     job "Export Test Suite" do
+      run "mkdir -p /tmp/taylor-builds"
+      tmp_dir = Dir.mktmpdir("taylor-", "/tmp/taylor-builds")
       run "cp -r test #{tmp_dir}"
       run "bundle exec rake linux:release:build"
       run(

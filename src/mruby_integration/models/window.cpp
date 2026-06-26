@@ -477,7 +477,7 @@ void append_models_Window(mrb_state* mrb)
   mrb_define_class_method(mrb, Window_class, "to_image", mrb_Window_to_image, MRB_ARGS_NONE());
   mrb_define_class_method(mrb, Window_class, "monitor=", mrb_Window_set_monitor, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb, Window_class, "scale", mrb_Window_scale, MRB_ARGS_NONE());
-  mrb_define_class_method(mrb, Window_class, "clear", mrb_Window_clear, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, Window_class, "clear", mrb_Window_clear, MRB_ARGS_OPT(1));
   mrb_define_class_method(mrb, Window_class, "screenshot", mrb_Window_screenshot, MRB_ARGS_REQ(1));
   mrb_define_class_method(
     mrb, Window_class, "target_frame_rate=", mrb_Window_set_target_frame_rate, MRB_ARGS_REQ(1));
@@ -486,7 +486,7 @@ void append_models_Window(mrb_state* mrb)
   mrb_define_class_method(
     mrb, Window_class, "seconds_open", mrb_Window_seconds_open, MRB_ARGS_NONE());
   mrb_define_class_method(
-    mrb, Window_class, "draw_frame_rate", mrb_Window_draw_frame_rate, MRB_ARGS_REQ(1));
+    mrb, Window_class, "draw_frame_rate", mrb_Window_draw_frame_rate, MRB_ARGS_OPT(1));
 
   load_ruby_models_window(mrb);
 }
