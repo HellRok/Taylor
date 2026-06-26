@@ -2,6 +2,7 @@ FROM debian:13
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
+ARG DOCKER_ID=999
 
 RUN <<SETUP
 apt-get update --quiet --yes
@@ -9,11 +10,12 @@ apt-get update --quiet --yes
 BASE_DEPS="curl git bear"
 LLVM_DEPS="lsb-release gnupg"
 RUBY_DEPS="ruby ruby-dev ruby-build libffi-dev libyaml-dev"
-LINUX_BUILD_DEPS="build-essential "
+LINUX_BUILD_DEPS="build-essential libx11-dev"
 WINDOWS_BUILD_DEPS="mingw-w64"
 TEST_DEPS="unzip wget"
 WINDOWS_TEST_DEPS="wine"
 WEB_TEST_DEPS="firefox-esr"
+DOCKER_DEPS="apt-transport-https ca-certificates"
 
 apt-get install --quiet --yes \
   ${BASE_DEPS} \
@@ -23,7 +25,8 @@ apt-get install --quiet --yes \
   ${WINDOWS_BUILD_DEPS} \
   ${TEST_DEPS} \
   ${WINDOWS_TEST_DEPS} \
-  ${WEB_TEST_DEPS}
+  ${WEB_TEST_DEPS} \
+  ${DOCKER_DEPS}
 SETUP
 
 RUN <<LLVM
@@ -39,12 +42,34 @@ ln -s $(which clang-format-21) /usr/local/bin/clang-format
 ln -s $(which clang-tidy-21) /usr/local/bin/clang-tidy
 LLVM
 
+RUN <<DOCKER
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+
+tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/debian
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+apt-get update
+
+# Only install the CLI tool as we don't need the engine
+apt-get install --quiet --yes docker-ce-cli
+DOCKER
+
 WORKDIR /home/me/app
 
 # Setup the group and user to match your local system
 RUN <<LOGIN
 groupadd --gid ${GROUP_ID} mygroup
-useradd -ms /bin/bash me --uid ${USER_ID} --gid ${GROUP_ID} --password $(perl -e 'print crypt($ARGV[0], "password")' 'password') 
+groupadd docker
+useradd -ms /bin/bash me --uid ${USER_ID} --gid ${GROUP_ID} --password $(perl -e 'print crypt($ARGV[0], "password")' 'password')
+usermod -aG ${DOCKER_ID} me
 chown -R me /home/me
 LOGIN
 

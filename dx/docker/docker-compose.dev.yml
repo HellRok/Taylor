@@ -7,6 +7,12 @@ services:
       - type: "bind"
         source: "../../"
         target: "/home/me/app"
+      - type: "bind"
+        source: "//var/run/docker.sock"
+        target: "/var/run/docker.sock"
+      - type: "bind"
+        source: "/tmp/taylor-builds"
+        target: "/tmp/taylor-builds"
     devices:
       - /dev:/dev
     privileged: true

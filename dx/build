@@ -42,6 +42,7 @@ docker build \
   --platform "linux/amd64" \
   --build-arg USER_ID="${USER_ID}" \
   --build-arg GROUP_ID="${GROUP_ID}" \
+  --build-arg DOCKER_ID="${DOCKER_ID}" \
   --tag "${IMAGE}" \
   "${ROOT_DIR}"
 

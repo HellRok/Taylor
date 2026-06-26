@@ -3,4 +3,4 @@ steps:
     commands:
       - gem install bundler
       - bundle install
-      - TMPDIR=/tmp/buildkite/ bundle exec rake ci
+      - TMPDIR=/tmp/taylor-builds/ bundle exec rake ci

@@ -13,11 +13,15 @@ if [ "$(uname)" == 'Darwin' ]; then
   log "Using 1000:1000 since we're on OSX"
   export USER_ID=1000
   export GROUP_ID=1000
+  # This is terrible security but we're basically forced to do this thanks to Docker Desktop
+  export DOCKER_ID=0
 else
   # Used so the app runs as your user on Linux
   export USER_ID=$(id -u)
   export GROUP_ID=$(id -g)
-  log "Using ${USER_ID}:${GROUP_ID} since we're on Linux"
+  export DOCKER_ID=$(getent group docker | cut -d: -f3)
+
+  log "Using ${USER_ID}:${GROUP_ID} (docker:${DOCKER_ID}) since we're on Linux"
 fi
 
 check_for_docker() {

@@ -36,6 +36,7 @@ shift $((OPTIND -1))
 check_for_docker
 
 log "Starting dev environment"
+mkdir -p "/tmp/taylor-builds"
 docker compose \
   --ansi=never \
   --env-file "${SCRIPT_DIR}"/docker/docker-compose.env \

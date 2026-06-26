@@ -1040,217 +1040,344 @@ end
   end
 end
 
-class Test
-  class Models
-    class Window_Test
-      def test_monitor
-        Taylor::Raylib.mock_call("GetCurrentMonitor", "2")
+@unit.describe "Window.monitor" do
+  Given "we have a window setup" do
+    Taylor::Raylib.mock_call("GetCurrentMonitor", "2")
+  end
 
-        monitor = Window.monitor
+  When "we get the monitor" do
+    @monitor = Window.monitor
+  end
 
-        assert_kind_of Monitor, monitor
-        assert_equal 2, monitor.id
+  Then "it's the correct type and has the right id" do
+    expect(@monitor).to_be_a(Monitor)
+    expect(@monitor.id).to_equal(2)
+  end
 
-        assert_called [
-          "(IsWindowReady) { }",
-          "(IsWindowReady) { }",
-          "(GetCurrentMonitor) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }",
+        "(IsWindowReady) { }",
+        "(GetCurrentMonitor) { }"
+      ]
+    )
+  end
 
-      def test_monitor_without_window_ready
-        Taylor::Raylib.mock_call("IsWindowReady", "false")
+  But "when the window isn't ready" do
+    Taylor::Raylib.mock_call("IsWindowReady", "false")
+  end
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.monitor") {
-          Window.monitor
-        }
+  Then "raise an error" do
+    expect {
+      Window.monitor
+    }.to_raise(
+      Window::NotReadyError,
+      "You must call Window.open before Window.monitor"
+    )
+  end
 
-        assert_called [
-          "(IsWindowReady) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }"
+      ]
+    )
+  end
+end
 
-      def test_monitor=
-        Taylor::Raylib.mock_call("GetMonitorCount", "2")
-        monitor = Monitor.all.last
-        Taylor::Raylib.reset_calls
+@unit.describe "Window.monitor=" do
+  Given "we have a multiple monitors" do
+    Taylor::Raylib.mock_call("GetMonitorCount", "2")
+    @monitor = Monitor.all.last
+    Taylor::Raylib.reset_calls
+  end
 
-        Window.monitor = monitor
+  When "we set the monitor" do
+    Window.monitor = @monitor
+  end
 
-        assert_called [
-          "(IsWindowReady) { }",
-          "(SetWindowMonitor) { monitor: 1 }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }",
+        "(SetWindowMonitor) { monitor: 1 }"
+      ]
+    )
+  end
 
-      def test_monitor_equals_without_window_ready
-        Taylor::Raylib.mock_call("IsWindowReady", "false")
+  But "when the window isn't ready" do
+    Taylor::Raylib.mock_call("IsWindowReady", "false")
+  end
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.monitor=") {
-          Window.monitor = Monitor.new(id: 0)
-        }
+  Then "raise an error" do
+    expect {
+      Window.monitor = @monitor
+    }.to_raise(
+      Window::NotReadyError,
+      "You must call Window.open before Window.monitor="
+    )
+  end
 
-        assert_called [
-          "(IsWindowReady) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }"
+      ]
+    )
+  end
+end
 
-      def test_scale
-        Taylor::Raylib.mock_call("GetWindowScaleDPI", Vector2.mock_return(x: 1, y: 2))
+@unit.describe "Window.scale" do
+  Given "we have a window setup" do
+    Taylor::Raylib.mock_call("GetWindowScaleDPI", Vector2.mock_return(x: 1, y: 2))
+  end
 
-        scale = Window.scale
-        assert_kind_of Vector2, scale
-        assert_equal 1, scale.x
-        assert_equal 2, scale.y
+  Then "we can get the scale" do
+    scale = Window.scale
+    expect(scale).to_be_a(Vector2)
+    expect(scale.x).to_equal(1)
+    expect(scale.y).to_equal(2)
+  end
 
-        assert_called [
-          "(IsWindowReady) { }",
-          "(GetWindowScaleDPI) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }",
+        "(GetWindowScaleDPI) { }"
+      ]
+    )
+  end
 
-      def test_scale_without_window_ready
-        Taylor::Raylib.mock_call("IsWindowReady", "false")
+  But "when the window isn't ready" do
+    Taylor::Raylib.mock_call("IsWindowReady", "false")
+  end
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.scale") {
-          Window.scale
-        }
+  Then "raise an error" do
+    expect {
+      Window.scale
+    }.to_raise(
+      Window::NotReadyError,
+      "You must call Window.open before Window.scale"
+    )
+  end
 
-        assert_called [
-          "(IsWindowReady) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }"
+      ]
+    )
+  end
+end
 
-      def test_clear
-        Window.clear
+@unit.describe "Window.clear" do
+  When "we clear the window" do
+    Window.clear
+  end
 
-        assert_called [
-          "(IsWindowReady) { }",
-          "(ClearBackground) { color: { r: 0 g: 0 b: 0 a: 255 } }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }",
+        "(ClearBackground) { color: { r: 0 g: 0 b: 0 a: 255 } }"
+      ]
+    )
+  end
 
-      def test_clear_with_colour
-        Window.clear(colour: Colour[4, 0, 0, 0])
+  When "we clear the window with a colour" do
+    Window.clear(colour: Colour[4, 0, 0, 0])
+  end
 
-        assert_called [
-          "(IsWindowReady) { }",
-          "(ClearBackground) { color: { r: 4 g: 0 b: 0 a: 0 } }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }",
+        "(ClearBackground) { color: { r: 4 g: 0 b: 0 a: 0 } }"
+      ]
+    )
+  end
 
-      def test_clear_without_window_ready
-        Taylor::Raylib.mock_call("IsWindowReady", "false")
+  But "when the window isn't ready" do
+    Taylor::Raylib.mock_call("IsWindowReady", "false")
+  end
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.clear") {
-          Window.clear
-        }
+  Then "raise an error" do
+    expect {
+      Window.clear
+    }.to_raise(
+      Window::NotReadyError,
+      "You must call Window.open before Window.clear"
+    )
+  end
 
-        assert_called [
-          "(IsWindowReady) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }"
+      ]
+    )
+  end
+end
 
-      def test_screenshot
-        Window.screenshot("screenshot.png")
+@unit.describe "Window.screenshot" do
+  When "we take a screenshot" do
+    Window.screenshot("screenshot.png")
+  end
 
-        assert_called [
-          "(IsWindowReady) { }",
-          "(TakeScreenshot) { fileName: 'screenshot.png' }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }",
+        "(TakeScreenshot) { fileName: 'screenshot.png' }"
+      ]
+    )
+  end
 
-      def test_screenshot_without_window_ready
-        Taylor::Raylib.mock_call("IsWindowReady", "false")
+  But "when the window isn't ready" do
+    Taylor::Raylib.mock_call("IsWindowReady", "false")
+  end
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.screenshot") {
-          Window.screenshot("screenshot.png")
-        }
+  Then "raise an error" do
+    expect {
+      Window.screenshot("screenshot.png")
+    }.to_raise(
+      Window::NotReadyError,
+      "You must call Window.open before Window.screenshot"
+    )
+  end
 
-        assert_called [
-          "(IsWindowReady) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }"
+      ]
+    )
+  end
+end
 
-      def test_target_frame_rate=
-        Window.target_frame_rate = 60
+@unit.describe "Window.target_frame_rate=" do
+  When "we set the target frame rate" do
+    Window.target_frame_rate = 60
+  end
 
-        assert_called [
-          "(SetTargetFPS) { fps: 60 }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(SetTargetFPS) { fps: 60 }"
+      ]
+    )
+  end
+end
 
-      def test_frame_rate
-        Taylor::Raylib.mock_call("GetFPS", "120")
-        Taylor::Raylib.mock_call("GetFPS", "119")
+@unit.describe "Window.frame_rate" do
+  When "we have frame rates" do
+    Taylor::Raylib.mock_call("GetFPS", "120")
+    Taylor::Raylib.mock_call("GetFPS", "119")
+  end
 
-        assert_equal 120, Window.frame_rate
-        assert_equal 119, Window.frame_rate
+  Then "we get the frame rate" do
+    expect(Window.frame_rate).to_equal(120)
+    expect(Window.frame_rate).to_equal(119)
+  end
 
-        assert_called [
-          "(GetFPS) { }",
-          "(GetFPS) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(GetFPS) { }",
+        "(GetFPS) { }"
+      ]
+    )
+  end
+end
 
-      def test_frame_time
-        Taylor::Raylib.mock_call("GetFrameTime", "0.5")
-        Taylor::Raylib.mock_call("GetFrameTime", "1.0")
+@unit.describe "Window.frame_time" do
+  When "we have frame times" do
+    Taylor::Raylib.mock_call("GetFrameTime", "0.5")
+    Taylor::Raylib.mock_call("GetFrameTime", "1.0")
+  end
 
-        assert_equal 0.5, Window.frame_time
-        assert_equal 1.0, Window.frame_time
+  Then "we get the frame time" do
+    expect(Window.frame_time).to_equal(0.5)
+    expect(Window.frame_time).to_equal(1.0)
+  end
 
-        assert_called [
-          "(GetFrameTime) { }",
-          "(GetFrameTime) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(GetFrameTime) { }",
+        "(GetFrameTime) { }"
+      ]
+    )
+  end
+end
 
-      def test_seconds_open
-        Taylor::Raylib.mock_call("GetTime", "1.5")
-        Taylor::Raylib.mock_call("GetTime", "128.0")
+@unit.describe "Window.seconds_open" do
+  When "we have seconds open" do
+    Taylor::Raylib.mock_call("GetTime", "1.5")
+    Taylor::Raylib.mock_call("GetTime", "128.0")
+  end
 
-        assert_equal 1.5, Window.seconds_open
-        assert_equal 128.0, Window.seconds_open
+  Then "we get the seconds open" do
+    expect(Window.seconds_open).to_equal(1.5)
+    expect(Window.seconds_open).to_equal(128.0)
+  end
 
-        assert_called [
-          "(GetTime) { }",
-          "(GetTime) { }"
-        ]
-      end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(GetTime) { }",
+        "(GetTime) { }"
+      ]
+    )
+  end
+end
 
-      def test_draw_frame_rate
-        Window.draw_frame_rate
+@unit.describe "Window.draw_frame_rate" do
+  When "we draw the frame rate" do
+    Window.draw_frame_rate
+  end
 
-        assert_called [
-          "(IsWindowReady) { }",
-          "(DrawFPS) { posX: 10 posY: 10 }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }",
+        "(DrawFPS) { posX: 10 posY: 10 }"
+      ]
+    )
+  end
 
-      def test_draw_frame_rate_with_arguments
-        Window.draw_frame_rate(x: 10, y: 20)
-        Window.draw_frame_rate(x: 20, y: 30)
+  When "we draw the frame rate with arguments" do
+    Window.draw_frame_rate(x: 10, y: 20)
+  end
 
-        assert_called [
-          "(IsWindowReady) { }",
-          "(DrawFPS) { posX: 10 posY: 20 }",
-          "(IsWindowReady) { }",
-          "(DrawFPS) { posX: 20 posY: 30 }"
-        ]
-      end
+  Then "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }",
+        "(DrawFPS) { posX: 10 posY: 20 }"
+      ]
+    )
+  end
 
-      def test_draw_frame_rate_without_window_ready
-        Taylor::Raylib.mock_call("IsWindowReady", "false")
+  But "the window is not ready" do
+    Taylor::Raylib.mock_call("IsWindowReady", "false")
+  end
 
-        assert_raise_with_message(Window::NotReadyError, "You must call Window.open before Window.draw_frame_rate") {
-          Window.draw_frame_rate
-        }
+  Then "we raise an error" do
+    expect {
+      Window.draw_frame_rate
+    }.to_raise(
+      Window::NotReadyError,
+      "You must call Window.open before Window.draw_frame_rate"
+    )
+  end
 
-        assert_called [
-          "(IsWindowReady) { }"
-        ]
-      end
-    end
+  And "Raylib receives the expected calls" do
+    expect(Taylor::Raylib.calls).to_equal(
+      [
+        "(IsWindowReady) { }"
+      ]
+    )
   end
 end
