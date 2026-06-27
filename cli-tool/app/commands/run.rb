@@ -6,15 +6,16 @@ module Taylor
       end
 
       attr_accessor :options
-      def initialize(command, argv, options)
-        @argv = argv
-        setup_options(@argv, options)
 
-        @command = case command
-        when "--entrypoint"
+      def initialize(command, argv, options)
+        setup_argvs(argv)
+        setup_options(options)
+
+        # better name for command might be something like "game_directory_or_entrypoint"
+        @command = if command.nil? || command.start_with?("--")
           ""
         else
-          command || ""
+          command
         end
 
         if @options[:help] || entrypoint.empty?
@@ -69,12 +70,25 @@ module Taylor
         end
       end
 
-      def setup_options(argv, options)
+      def setup_argvs(argv)
+        @argv = argv
+
+        argument_separator_index = @argv.index("--")
+
+        if argument_separator_index
+          @argv_for_command = @argv[0...argument_separator_index]
+          @argv_for_entrypoint = @argv[(argument_separator_index + 1)..]
+        else
+          @argv_for_command = @argv
+        end
+      end
+
+      def setup_options(options)
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
           opts.on(:entrypoint, :string, options.entrypoint, short: :e)
         end
-        parser.parse(argv)
+        parser.parse(@argv_for_command)
 
         @options = parser.opts
       end
@@ -89,12 +103,24 @@ module Taylor
 
       def run_command
         if File.exist?(entrypoint)
-          ARGV.shift
-          require entrypoint
+          set_argv_for_entrypoint
 
+          require entrypoint
         else
           puts "Could not load \"#{entrypoint}\", are you sure it exists?"
           exit! 1
+        end
+      end
+
+      def set_argv_for_entrypoint
+        if @argv_for_entrypoint
+          ARGV.clear
+          @argv_for_entrypoint.each.with_index do |arg, index|
+            ARGV[index] = arg
+          end
+        else
+          # This is the behavior before supporting "--" so just preserving it for now.
+          ARGV.shift
         end
       end
     end
