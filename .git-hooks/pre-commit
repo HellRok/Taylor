@@ -4,15 +4,13 @@ set -euo pipefail
 export RUBY_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{rb,rake})
 export XPP_FILES=$(git diff origin/main --cached --name-only --diff-filter MRA *.{cpp,hpp})
 
-export LOCAL_CI_STYLE=plain
-
-bundle exec rake ci:documentation
+dx/exec -t bundle exec rake ci:documentation
 
 if [[ -n $RUBY_FILES ]]; then
-  bundle exec rake ci:formatting:jobs:standard
+  dx/exec -t bundle exec rake ci:formatting:jobs:standard
 fi
 
 if [[ -n $XPP_FILES ]]; then
-  bundle exec rake ci:formatting:jobs:clang_format
-  bundle exec rake ci:linting
+  dx/exec -t bundle exec rake ci:formatting:jobs:clang_format
+  dx/exec -t bundle exec rake ci:linting
 fi

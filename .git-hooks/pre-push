@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export LOCAL_CI_STYLE=plain
-
-bundle exec rake ci:testing
+dx/exec -t bundle exec rake ci:testing
