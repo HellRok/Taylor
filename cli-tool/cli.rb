@@ -37,7 +37,7 @@ when "export"
 when "squash"
   Taylor::Commands::Squash.call(ARGV[1..], options)
 
-when "--version"
+when "--version", "-v"
   Taylor::Commands::Version.call
 
 else
