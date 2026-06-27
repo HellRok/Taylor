@@ -19,7 +19,7 @@ function compile_taylor_through_docker_for() {
       --mount type=bind,src=./,dst=/app/taylor \
       --user ${USER_ID}:${GROUP_ID} \
       -it hellrok/taylor:${platform}-latest \
-      bash -c "unset EXPORT; cd /app/taylor; rake ${rake_command}" 2>&1
+      bash -c "unset EXPORT; cd /app/taylor; rake --require pathname ${rake_command}" 2>&1
     )
     result $?
   }
