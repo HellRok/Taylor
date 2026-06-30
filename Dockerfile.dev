@@ -67,9 +67,9 @@ WORKDIR /home/me/app
 # Setup the group and user to match your local system
 RUN <<LOGIN
 groupadd --gid ${GROUP_ID} mygroup
-groupadd docker
+groupadd --gid ${DOCKER_ID} docker
 useradd -ms /bin/bash me --uid ${USER_ID} --gid ${GROUP_ID} --password $(perl -e 'print crypt($ARGV[0], "password")' 'password')
-usermod -aG ${DOCKER_ID} me
+usermod -aG docker me
 chown -R me /home/me
 LOGIN
 
