@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.5.0
 
 - Upgraded MRuby to 4.0.0
 - Upgraded Raylib to 6.0
