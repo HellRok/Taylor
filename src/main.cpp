@@ -22,10 +22,6 @@
 
 auto main(int argc, char** argv) -> int
 {
-#ifdef _WIN32
-  workarounds_mingw_attach_console();
-#endif
-
   mrb_state* mrb = mrb_open();
 
   mrb_define_const(mrb, mrb->kernel_module, "TAYLOR_VERSION", mrb_str_new_cstr(mrb, VERSION));

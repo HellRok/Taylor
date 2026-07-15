@@ -19,6 +19,7 @@
     expect(config.web.total_memory).to_equal(64)
     expect(config.debugging.raylib.mock_implementation?).to_be_false
     expect(config.debugging.mruby.debug_symbols?).to_be_false
+    expect(config.debugging.windows.show_console?).to_be_false
   end
 
   But "When we have a taylor-config.json file" do
@@ -41,6 +42,9 @@
         },
         "mruby" => {
           "debug_symbols" => true
+        },
+        "windows" => {
+          "show_console" => true
         }
       }
     }.to_json)
@@ -60,6 +64,7 @@
     expect(config.web.total_memory).to_equal(128)
     expect(config.debugging.raylib.mock_implementation?).to_be_true
     expect(config.debugging.mruby.debug_symbols?).to_be_true
+    expect(config.debugging.windows.show_console?).to_be_true
   end
 
   When "we override the options" do
@@ -76,6 +81,7 @@
     @config.web.total_memory = 256
     @config.debugging.raylib.mock_implementation = false
     @config.debugging.mruby.debug_symbols = false
+    @config.debugging.windows.show_console = false
   end
 
   Then "we return the overridden configuration" do
@@ -90,6 +96,7 @@
     expect(@config.web.total_memory).to_equal(256)
     expect(@config.debugging.raylib.mock_implementation?).to_be_false
     expect(@config.debugging.mruby.debug_symbols?).to_be_false
+    expect(@config.debugging.windows.show_console?).to_be_false
   end
 
   But "when we have the old keys" do

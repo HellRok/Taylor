@@ -12,6 +12,7 @@
 - Make the development Docker file a bit better
 - Update development documentation
 - Refactor Command::Run to only take two arguments
+- Fix up console output on Windows
 
 ## v0.4.3
 

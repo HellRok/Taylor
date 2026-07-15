@@ -6,6 +6,7 @@ class WindowsBuilder < Builder
     @platform = "windows"
     @cxx = "x86_64-w64-mingw32-g++"
     @cxxflags = "-std=c++17 -no-pie -Wall -Wextra -mwindows -static-libstdc++"
+    @cxxflags += " -mconsole" if @options.debugging.windows.show_console?
     @ldflags = "-L ./vendor/windows/raylib/lib/ -static -lwsock32 -lws2_32 -lwinmm -l raylib -l pthread"
   end
 

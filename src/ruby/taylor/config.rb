@@ -162,11 +162,12 @@ module Taylor
     # game relating to exporting. It is a reflection of your
     # {file:taylor-config.json.md taylor-config.json}.
     class Debugging
-      attr_reader :raylib, :mruby
+      attr_reader :raylib, :mruby, :windows
 
       def initialize(config)
         @raylib = Raylib.new(config.fetch("raylib", {}))
         @mruby = MRuby.new(config.fetch("mruby", {}))
+        @windows = Windows.new(config.fetch("windows", {}))
       end
 
       # The {Raylib} class is used for all the configuration about this Taylor
@@ -197,7 +198,7 @@ module Taylor
         end
       end
 
-      # The {Raylib} class is used for all the configuration about this Taylor
+      # The {MRuby} class is used for all the configuration about this Taylor
       # game relating to exporting with MRuby. It is a reflection of your
       # {file:taylor-config.json.md taylor-config.json}.
       class MRuby
@@ -221,6 +222,35 @@ module Taylor
             @debug_symbols
           else
             @config.fetch("debug_symbols", false)
+          end
+        end
+      end
+
+      # The {Windows} class is used for all the configuration about this Taylor
+      # game relating to exporting for Window. It is a reflection of your
+      # {file:taylor-config.json.md taylor-config.json}.
+      class Windows
+        # @return [Boolean]
+        attr_writer :show_console
+
+        def initialize(config)
+          @config = config
+        end
+
+        # Returns whether or not to show a command prompt when running the
+        # game. If run from a PowerShell or command prompt it will instead
+        # attach to that process.
+        #
+        # @example Basic usage
+        #   puts Taylor::Config.new.windows.show_console
+        #   # => false
+        #
+        # @return [Boolean]
+        def show_console?
+          if instance_variable_defined? :@show_console
+            @show_console
+          else
+            @config.fetch("show_console", false)
           end
         end
       end
