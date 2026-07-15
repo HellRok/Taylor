@@ -195,6 +195,22 @@ trace it'll contain classes, methods, file, and line number information. You may
 want this if you'd like better error logs from players, but it may leak
 implementation details you'd rather keep private.
 
+### Windows
+
+#### Show Console
+
+```json
+"debugging": {
+  "windows": {
+    "show_console": false
+  }
+}
+```
+
+This will link your executable with the `-mconsole` flag so that a command
+prompt will open up if run by double-clicking but should attach to your
+PowerShell or command prompt instance if launched from one.
+
 ## Putting It All Together
 
 A file with every option set would end up looking like this:

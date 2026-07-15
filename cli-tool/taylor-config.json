@@ -16,6 +16,9 @@
   "debugging": {
     "mruby": {
       "debug_symbols": true
+    },
+    "windows": {
+      "show_console": true
     }
   }
 }

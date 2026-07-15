@@ -1,12 +1,17 @@
 Dockerfile*
+
 *.o
 .git
+.buildkite
+
 build
 dist
 doc
 dump
 mrb_doc
 test
-.buildkite
+cli-tool/exports
+cli-tool/test
 
 rakelib/ci.rake
+logs
