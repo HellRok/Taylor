@@ -13,4 +13,6 @@ Gem::Specification.new do |s|
   s.files = []
   s.homepage = "https://www.taylormadetech.dev"
   s.license = "MIT"
+
+  s.metadata["mailing_list_uri"] = "https://www.rubyforum.org/tag/taylor"
 end

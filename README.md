@@ -11,6 +11,7 @@
 [![Build status](https://badge.buildkite.com/0cb81ca8e3b8f43a2998bc15f90323a2eb8429669e819b7697.svg)](https://buildkite.com/oequacki/taylor)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/HellRok/Taylor/total?label=total%20downloads)
 ![GitHub License](https://img.shields.io/github/license/HellRok/Taylor)
+[![Ruby Users Forum](https://img.shields.io/discourse/topics?server=https%3A%2F%2Fwww.rubyforum.org&style=flat&logo=discourse&label=Ruby%20Users%20Forum)](https://www.rubyforum.org/tag/taylor)
 
 [Website](https://taylormadetech.dev) | [Cheat Sheet](https://taylormadetech.dev/documentation/tutorials/cheat_sheet/) | [Documentation](https://taylormadetech.dev/documentation/taylor/latest/) | [Try it Out Online](https://playground.taylormadetech.dev/)
 
@@ -35,6 +36,10 @@ If you'd like to see some examples, check them out on the [online playground!](h
 ### [Contributing](/documentation/contributing.md)
 
 ### [Local Development](/documentation/local_development.md)
+
+## Community
+
+Join us in the `PROJECT` category on the [Ruby Users Forum](https://www.rubyforum.org/tag/taylor).
 
 ## License
 
