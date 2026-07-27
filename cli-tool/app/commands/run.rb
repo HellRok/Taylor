@@ -53,10 +53,10 @@ module Taylor
       private
 
       def setup_entrypoint
-        first_arg = @argv_for_command[0]
+        return if @argv_for_command.empty?
 
-        return unless first_arg
-        return if first_arg[0] == "-"
+        first_arg = @argv_for_command.first
+        return if first_arg.start_with? "-"
 
         if File.directory?(first_arg)
           return unless File.exist?(File.join(first_arg, "taylor-config.json"))
@@ -66,6 +66,7 @@ module Taylor
           @taylor_config = Taylor::Config.new
 
           $:.unshift "."
+
         else
           @argv_for_command.shift
           @entrypoint = first_arg

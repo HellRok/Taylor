@@ -11,6 +11,7 @@
 - Fix up Window tests
 - Make the development Docker file a bit better
 - Update development documentation
+- Refactor Command::Run to only take two arguments
 
 ## v0.4.3
 
