@@ -1,5 +1,12 @@
 #include <filesystem>
 
+#ifdef __APPLE__
+// Thanks Apple...
+namespace std_fs = std::__fs::filesystem;
+#else
+namespace std_fs = std::filesystem;
+#endif
+
 #include "mruby.h"
 
 #include "ruby/taylor/config.hpp"
@@ -20,7 +27,7 @@ void append_taylor(mrb_state* mrb)
 {
   struct RClass* Taylor_module = mrb_define_module(mrb, "Taylor");
 
-  const std::filesystem::path working_directory = std::filesystem::current_path();
+  const std_fs::path working_directory = std_fs::current_path();
   // Convert from path -> string -> c_str because Windows returns wide chars
   // with path.c_str
   mrb_define_const(mrb,

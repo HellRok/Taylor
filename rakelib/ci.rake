@@ -109,6 +109,7 @@ begin
         tmp_dir = Dir.mktmpdir("taylor-", "/tmp/taylor-builds")
         run "cp -r test #{tmp_dir}"
         run "bundle exec rake linux:release:build"
+        run "rm -rf #{tmp_dir}/test/exports"
         run(
           "cd #{tmp_dir}/test && #{taylor_dir}/dist/linux/release/taylor",
           "#{taylor_dir}/cli-tool/cli.rb",
@@ -117,6 +118,14 @@ begin
           tmp_dir
         )
       end
+    end
+
+    job "Check exports" do
+      run "ls #{tmp_dir}/*-linux-*.zip"
+      run "ls #{tmp_dir}/*-windows-*.zip"
+      run "ls #{tmp_dir}/*-osx-apple-*.zip"
+      run "ls #{tmp_dir}/*-osx-intel-*.zip"
+      run "ls #{tmp_dir}/*-web-*.zip"
     end
 
     job "Linux" do
