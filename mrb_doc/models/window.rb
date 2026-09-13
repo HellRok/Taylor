@@ -1,4 +1,4 @@
-class Window
+module Window
   # Initialises the {Window} for rendering.
   #
   # @example Basic usage
