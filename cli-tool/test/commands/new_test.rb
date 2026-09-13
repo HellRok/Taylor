@@ -1,6 +1,6 @@
 @unit.describe "New --help" do
   Given "We have run `taylor new --help`" do
-    @new_command = Taylor::Commands::New.new(["--help"], Taylor::Config.new)
+    @new_command = Taylor::Commands::New.new(["--help"], Taylor::Config.new(file: ""))
   end
 
   Then "we return useful information" do
@@ -30,7 +30,7 @@ end
   end
 
   When "we run `taylor new`" do
-    Taylor::Commands::New.new([], Taylor::Config.new)
+    Taylor::Commands::New.new([], Taylor::Config.new(file: ""))
   end
 
   Then "we create the project" do
@@ -62,7 +62,7 @@ end
         "--load-paths", "./,./third_party",
         "--copy-paths", "./resources,./music"
       ],
-      Taylor::Config.new
+      Taylor::Config.new(file: "")
     )
   end
 
@@ -99,7 +99,7 @@ end
   end
 
   And "we call `taylor nested_test/folder-name`" do
-    Taylor::Commands::New.new(["./nested_test/folder-name"], Taylor::Config.new)
+    Taylor::Commands::New.new(["./nested_test/folder-name"], Taylor::Config.new(file: ""))
     @data = File.read("./nested_test/folder-name/game.rb").lines
   end
 
@@ -116,7 +116,7 @@ end
   end
 
   When "we call with --name" do
-    Taylor::Commands::New.new(["--name", "Test Game"], Taylor::Config.new)
+    Taylor::Commands::New.new(["--name", "Test Game"], Taylor::Config.new(file: ""))
     @data = File.read("./test_game/game.rb").lines
   end
 
@@ -138,7 +138,7 @@ end
 
   Then "raise an error" do
     expect {
-      Taylor::Commands::New.new(["./nested_test"], Taylor::Config.new)
+      Taylor::Commands::New.new(["./nested_test"], Taylor::Config.new(file: ""))
     }.to_raise(RuntimeError)
   end
 ensure
@@ -157,7 +157,7 @@ end
   And "we call `taylor --load-paths`" do
     Taylor::Commands::New.new(
       ["--load-paths", "./,./third_party,./black_box"],
-      Taylor::Config.new
+      Taylor::Config.new(file: "")
     )
     @data = File.read("./taylor_game/game.rb").lines
   end

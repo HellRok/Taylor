@@ -96,8 +96,8 @@ class Builder
   def setup_options
     return @options if @options
 
-    Dir.chdir("/app/game") { @options = Taylor::Config.new } if ENV["EXPORT"]
-    @options ||= Taylor::Config.new
+    @options = Taylor::Config.new(file: "/app/game/taylor-config.json") if ENV["EXPORT"]
+    @options ||= Taylor::Config.new(file: "./taylor-config.json")
   end
 
   def name

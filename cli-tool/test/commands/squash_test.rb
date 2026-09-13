@@ -1,6 +1,6 @@
 @unit.describe "Squash --help" do
   When "we call `taylor squash --help`" do
-    @squash_command = Taylor::Commands::Squash.new(["--help"], Taylor::Config.new)
+    @squash_command = Taylor::Commands::Squash.new(["--help"], Taylor::Config.new(file: ""))
   end
 
   Then "we get useful information" do
@@ -24,7 +24,7 @@ end
   end
 
   And "we have a project with some files" do
-    Taylor::Commands::New.new(["./test_game"], Taylor::Config.new)
+    Taylor::Commands::New.new(["./test_game"], Taylor::Config.new(file: ""))
     Dir.chdir "./test_game" do
       File.open("game.rb", "w") { |file| file.write "puts :game_content\nrequire 'other_file.rb'" }
       File.open("other_file.rb", "w") { |file| file.write "Other file content" }
@@ -33,7 +33,7 @@ end
 
   When "we call squash" do
     Dir.chdir "./test_game" do
-      Taylor::Commands::Squash.new([], Taylor::Config.new)
+      Taylor::Commands::Squash.new([], Taylor::Config.new(file: ""))
       @output = File.read("./output.rb")
     end
   end
@@ -58,7 +58,7 @@ end
   Then "raise an error" do
     Dir.chdir "./test_game" do
       expect {
-        Taylor::Commands::Squash.new([], Taylor::Config.new)
+        Taylor::Commands::Squash.new([], Taylor::Config.new(file: ""))
       }.to_raise(
         RuntimeError,
         "No matching file for doesnt_exist.rb"
@@ -69,7 +69,7 @@ end
   When "we call squash with a specific file" do
     Dir.chdir "./test_game" do
       File.open("beep.rb", "w") { |file| file.write "BEEP" }
-      @squash_command = Taylor::Commands::Squash.new(["--entrypoint", "beep.rb"], Taylor::Config.new)
+      @squash_command = Taylor::Commands::Squash.new(["--entrypoint", "beep.rb"], Taylor::Config.new(file: ""))
     end
   end
 
@@ -86,7 +86,7 @@ end
   When "we call squash with the entrypoint option" do
     Dir.chdir "./test_game" do
       File.open("boop.rb", "w") { |file| file.write "BOOP" }
-      config = Taylor::Config.new
+      config = Taylor::Config.new(file: "")
       config.entrypoint = "boop.rb"
       @squash_command = Taylor::Commands::Squash.new([], config)
     end
@@ -112,7 +112,7 @@ end
   And "we import it without 'vendor'" do
     Dir.chdir "./test_game" do
       File.open("game.rb", "w") { |file| file.write "require 'cool_plugin/other_file'" }
-      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new)
+      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new(file: ""))
     end
   end
 
@@ -138,7 +138,7 @@ end
   And "we import it without 'third-party'" do
     Dir.chdir "./test_game" do
       File.open("game.rb", "w") { |file| file.write "require 'another_file'" }
-      @squash_command = Taylor::Commands::Squash.new(["--load-paths", "./,./third-party"], Taylor::Config.new)
+      @squash_command = Taylor::Commands::Squash.new(["--load-paths", "./,./third-party"], Taylor::Config.new(file: ""))
     end
   end
 
@@ -162,7 +162,7 @@ end
           #require 'other_file'
         OUT
       }
-      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new)
+      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new(file: ""))
     end
   end
 
@@ -181,7 +181,7 @@ end
     Dir.chdir "./test_game" do
       File.open("game.rb", "w") { |file| file.write "require 'other_file'" }
       File.open("other_file.rb", "w") { |file| file.write "Other file content" }
-      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new)
+      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new(file: ""))
     end
   end
 
@@ -200,7 +200,7 @@ end
   When "the require is in a loop" do
     Dir.chdir "./test_game" do
       File.open("game.rb", "w") { |file| file.write "Dir.entries('mods').each { require File.join('mods', _1) }" }
-      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new)
+      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new(file: ""))
     end
   end
 
@@ -217,7 +217,7 @@ end
   When "the require is interpolated" do
     Dir.chdir "./test_game" do
       File.open("game.rb", "w") { |file| file.write "variable = 'test'\nrequire \"./vendor/\#{variable}\"" }
-      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new)
+      @squash_command = Taylor::Commands::Squash.new([], Taylor::Config.new(file: ""))
     end
   end
 

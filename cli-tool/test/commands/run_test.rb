@@ -1,6 +1,6 @@
 @unit.describe "Run --help" do
   Given "We have run `taylor --help`" do
-    @run_command = Taylor::Commands::Run.new(["./cli.rb", "--help"], Taylor::Config.new)
+    @run_command = Taylor::Commands::Run.new(["./cli.rb", "--help"], Taylor::Config.new(file: ""))
   end
 
   Then "we return useful information" do
@@ -32,7 +32,7 @@ end
 @unit.describe "Run" do
   When "we call run" do
     Taylor.removed_constants = []
-    Taylor::Commands::Run.new("./cli.rb", Taylor::Config.new)
+    Taylor::Commands::Run.new("./cli.rb", Taylor::Config.new(file: ""))
   end
 
   Then "remove the 'Command' constant" do
@@ -40,29 +40,32 @@ end
   end
 
   When "we pass a filename" do
-    @run_command = Taylor::Commands::Run.new("./test/test.rb", Taylor::Config.new)
+    @run_command = Taylor::Commands::Run.new("./test/test.rb", Taylor::Config.new(file: ""))
   end
 
   Then "we require that file" do
-    expect(@run_command.require_list).to_equal(["./test/test.rb"])
+    expect(@run_command.require_list.size).to_equal(1)
+    expect(@run_command.require_list.first.end_with?("/test/test.rb")).to_be_true
   end
 
   When "we don't pass a filename" do
-    config = Taylor::Config.new
+    config = Taylor::Config.new(file: "")
     config.entrypoint = "./cli.rb"
     @run_command = Taylor::Commands::Run.new([], config)
   end
 
   Then "require the file in the options" do
-    expect(@run_command.require_list).to_equal(["./cli.rb"])
+    expect(@run_command.require_list.size).to_equal(1)
+    expect(@run_command.require_list.first.end_with?("/cli.rb")).to_be_true
   end
 
   When "we pass a file by entrypoint" do
-    @run_command = Taylor::Commands::Run.new(["--entrypoint", "test/test.rb"], Taylor::Config.new)
+    @run_command = Taylor::Commands::Run.new(["--entrypoint", "test/test.rb"], Taylor::Config.new(file: ""))
   end
 
   Then "require the file in the options" do
-    expect(@run_command.require_list).to_equal(["test/test.rb"])
+    expect(@run_command.require_list.size).to_equal(1)
+    expect(@run_command.require_list.first.end_with?("test/test.rb")).to_be_true
   end
 
   When "we pass a file that doesn't exist" do
@@ -76,12 +79,13 @@ end
   When "we pass specify arguments for the entrypoint via --" do
     @run_command = Taylor::Commands::Run.new(
       ["--entrypoint", "test/test.rb", "--", "-a", "arg1", "arg2"],
-      Taylor::Config.new
+      Taylor::Config.new(file: "")
     )
   end
 
   Then "ARGV is manipulated for the entrypoint after we've parsed the run opts" do
-    expect(@run_command.require_list).to_equal(["test/test.rb"])
+    expect(@run_command.require_list.size).to_equal(1)
+    expect(@run_command.require_list.first.end_with?("test/test.rb")).to_be_true
     expect(ARGV).to_equal(["-a", "arg1", "arg2"])
     expect(@run_command.options[:entrypoint]).to_equal("test/test.rb")
   end
@@ -93,6 +97,7 @@ end
   Then "ARGV is manipulated to contain all the args" do
     expect(ARGV).to_equal(["--entrypoint", "arg1", "-h"])
     expect(@run_command.options).to_equal(help: false, entrypoint: "cli.rb")
-    expect(@run_command.require_list).to_equal(["cli.rb"])
+    expect(@run_command.require_list.size).to_equal(1)
+    expect(@run_command.require_list.first.end_with?("cli.rb")).to_be_true
   end
 end

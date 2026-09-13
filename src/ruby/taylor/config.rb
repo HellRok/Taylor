@@ -11,9 +11,21 @@ module Taylor
     # @return [Array<String>]
     attr_writer :export_targets, :load_paths, :copy_paths
 
-    def initialize
+    # Creates a new instance of {Taylor::Config}. If the file does it will return
+    # the default values.
+    #
+    # @example Basic usage
+    #   config = Taylor::Config.new
+    #
+    # @example Basic usage with a custom config
+    #   server_config = Taylor::Config.new(file: "server/config.json")
+    #
+    # @param file [String]
+    # @return [Taylor::Config]
+    def initialize(file: nil)
       @config = {}
-      @config = JSON.parse(File.read("./taylor-config.json")) if File.exist?("./taylor-config.json")
+      file ||= File.join(Taylor::WORKING_DIRECTORY, "taylor-config.json")
+      @config = JSON.parse(File.read(file)) if File.exist?(file)
 
       @web = Web.new(@config.fetch("web", {}))
       @debugging = Debugging.new(@config.fetch("debugging", {}))

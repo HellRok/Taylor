@@ -23,6 +23,7 @@ module Taylor
       end
 
       def call
+        setup_paths
         unload_taylor_cli
 
         run_command
@@ -58,14 +59,19 @@ module Taylor
         first_arg = @argv_for_command.first
         return if first_arg.start_with? "-"
 
-        if File.directory?(first_arg)
-          return unless File.exist?(File.join(first_arg, "taylor-config.json"))
+        absolute_path = File.absolute_path(
+          File.join(
+            Taylor::WORKING_DIRECTORY,
+            first_arg
+          )
+        )
 
-          Dir.chdir(first_arg)
+        if File.directory?(absolute_path)
+          config_file = File.join(absolute_path, "taylor-config.json")
+          return unless File.exist?(config_file)
+
           @argv_for_command.shift
-          @taylor_config = Taylor::Config.new
-
-          $:.unshift "."
+          @taylor_config = Taylor::Config.new(file: config_file)
 
         else
           @argv_for_command.shift
@@ -74,7 +80,10 @@ module Taylor
       end
 
       def entrypoint
-        @options[:entrypoint]
+        File.join(
+          Taylor::WORKING_DIRECTORY,
+          @options[:entrypoint]
+        )
       end
 
       def setup_argvs
@@ -96,6 +105,12 @@ module Taylor
         parser.parse(@argv_for_command)
 
         @options = parser.opts
+      end
+
+      def setup_paths
+        path = File.dirname(entrypoint)
+        Dir.chdir(path)
+        $:.unshift(path)
       end
 
       def unload_taylor_cli

@@ -7,7 +7,7 @@
   end
 
   Then "we return the default configuration" do
-    config = Taylor::Config.new
+    config = Taylor::Config.new(file: "")
     expect(config.name).to_equal("Taylor Game")
     expect(config.version).to_equal("v0.0.1")
     expect(config.entrypoint).to_equal("game.rb")
@@ -52,7 +52,7 @@
   end
 
   Then "we return the configuration" do
-    config = Taylor::Config.new
+    config = Taylor::Config.new(file: "./taylor-config.json")
     expect(config.name).to_equal("name")
     expect(config.version).to_equal("version")
     expect(config.entrypoint).to_equal("entrypoint")
@@ -111,7 +111,7 @@
   end
 
   Then "we load the data" do
-    @config = Taylor::Config.new
+    @config = Taylor::Config.new(file: "./taylor-config.json")
 
     expect(@config.export_directory).to_equal("export-directory")
     expect(@config.export_targets).to_equal(["export-targets"])
@@ -142,7 +142,7 @@ end
   end
 
   Then "we return the default configuration" do
-    config = Taylor::Config.new
+    config = Taylor::Config.new(file: "./taylor-config.json")
     expect(config.entrypoint).to_equal("game.rb")
   end
 
@@ -155,7 +155,7 @@ end
   end
 
   Then "we return the entrypoint" do
-    config = Taylor::Config.new
+    config = Taylor::Config.new(file: "./taylor-config.json")
     expect(config.entrypoint).to_equal("entrypoint")
   end
 
@@ -168,7 +168,7 @@ end
   end
 
   Then "we return the input" do
-    config = Taylor::Config.new
+    config = Taylor::Config.new(file: "./taylor-config.json")
     expect(config.entrypoint).to_equal("input")
   end
 
@@ -182,12 +182,12 @@ end
   end
 
   Then "we return the entrypoint" do
-    config = Taylor::Config.new
+    config = Taylor::Config.new(file: "./taylor-config.json")
     expect(config.entrypoint).to_equal("entrypoint")
   end
 
   When "we set the entrypoint" do
-    @config = Taylor::Config.new
+    @config = Taylor::Config.new(file: "./taylor-config.json")
     @config.entrypoint = "manual entrypoint"
   end
 

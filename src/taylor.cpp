@@ -1,3 +1,5 @@
+#include <filesystem>
+
 #include "mruby.h"
 
 #include "ruby/taylor/config.hpp"
@@ -17,6 +19,14 @@ auto mrb_taylor_released(mrb_state*, mrb_value) -> mrb_value
 void append_taylor(mrb_state* mrb)
 {
   struct RClass* Taylor_module = mrb_define_module(mrb, "Taylor");
+
+  const std::filesystem::path working_directory = std::filesystem::current_path();
+  // Convert from path -> string -> c_str because Windows returns wide chars
+  // with path.c_str
+  mrb_define_const(mrb,
+                   Taylor_module,
+                   "WORKING_DIRECTORY",
+                   mrb_str_new_cstr(mrb, working_directory.string().c_str()));
 
   mrb_define_class_method(mrb, Taylor_module, "released?", mrb_taylor_released, MRB_ARGS_NONE());
 
