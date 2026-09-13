@@ -6,10 +6,7 @@ def taylor(args)
   `taylor /app/taylor/cli-tool/cli.rb #{args}`
 end
 
-options = nil
-Dir.chdir("/app/game") do
-  options = Taylor::Config.new
-end
+options = Taylor::Config.new(file: "/app/game/taylor-config.json")
 
 export_target = ENV.fetch("EXPORT", "linux")
 

@@ -1,5 +1,5 @@
 module PutsGrabber
-  attr_accessor :puts_data
+  def puts_data = @puts_data || ""
 
   def puts(str)
     @puts_data ||= ""
@@ -8,7 +8,7 @@ module PutsGrabber
 end
 
 module BacktickGrabber
-  attr_accessor :backtick_data
+  def backtick_data = @backtick_data || []
 
   def `(str)
     @backtick_data ||= []
@@ -17,7 +17,7 @@ module BacktickGrabber
 end
 
 module RequireGrabber
-  attr_accessor :require_list
+  def require_list = @require_list || []
 
   def require(str)
     @require_list ||= []

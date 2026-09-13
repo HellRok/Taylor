@@ -13,6 +13,8 @@
 - Update development documentation
 - Refactor Command::Run to only take two arguments
 - Fix up console output on Windows
+- Taylor::Config now takes an optional `file` argument
+- The working directory is based on the file launched
 
 ## v0.4.3
 

@@ -71,6 +71,7 @@ begin
     end
 
     job "CLI Tests" do
+      run "rm -rf cli-tool/exports/*"
       run "cd cli-tool && ../dist/linux/release/taylor", "./cli.rb", "test/test.rb"
       run ".buildkite/scripts/tests/upload_test_analytics.sh cli-tool/test-analytics.json $CLI_TEST_ANALYTICS_KEY" if ci?
     end
