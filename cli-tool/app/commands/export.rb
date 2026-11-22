@@ -1,14 +1,14 @@
 module Taylor
   module Commands
     class Export
-      def self.call(argv, options)
-        new(argv, options)
+      def self.call(argv, config)
+        new(argv, config)
       end
 
       attr_accessor :options
 
-      def initialize(argv, options)
-        setup_options(argv, options)
+      def initialize(argv, config)
+        setup_options(argv, config)
 
         if @options[:help]
           display_help
@@ -42,12 +42,12 @@ module Taylor
 
       private
 
-      def setup_options(argv, options)
+      def setup_options(argv, config)
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
           opts.on("dry-run", :bool, false, short: :r)
-          opts.on("export-directory", :string, options.export_directory, short: :d)
-          opts.on("export-targets", :string, options.export_targets.join(","), short: :t)
+          opts.on("export-directory", :string, config.export_directory, short: :d)
+          opts.on("export-targets", :string, config.export_targets.join(","), short: :t)
           opts.on("build-cache", :string, short: :b)
         end
         parser.parse(argv)

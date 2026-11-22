@@ -1,3 +1,5 @@
+Taylor.setup
+
 @unit = Neospec::Suite.new(runner: Neospec::Runner::Basic.new)
 @browser = Neospec::Suite.new(runner: Neospec::Runner::Basic.new)
 
@@ -27,6 +29,8 @@ neospec = Neospec.new(
   ],
   suites: [@unit]
 )
+
+require "helpers"
 
 require "input/gamepad_test"
 require "input/gesture_test"
@@ -59,6 +63,7 @@ require "models/window_test"
 require "modules/reference_counting_test"
 
 require "taylor/config_test"
+require "taylor/config/finder_test"
 require "taylor/platform_test"
 require "taylor_test"
 

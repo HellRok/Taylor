@@ -1,9 +1,12 @@
 def game_template
   <<~STR
+    # Sets up the Taylor environment.
+    Taylor.setup
+
     # Add the path ./vendor so we can easily require third party libraries.
     $LOAD_PATHS
 
-    # Open up a window
+    # Open up a window.
     Window.open(width: 800, height: 480, title: "$NAME")
 
     # Setup audio so we can play sounds
@@ -12,15 +15,15 @@ def game_template
     # Get the current monitor frame rate and set our target frame rate to match.
     Window.target_frame_rate = Monitor.current.refresh_rate
 
-    # Define your main method
+    # Define your main method.
     def main
-      # Get the amount of time passed since the last frame was rendered
+      # Get the amount of time passed since the last frame was rendered.
       delta = Window.frame_time
 
-      # Your update logic goes here
+      # Your update logic goes here.
 
       Window.draw do
-        # Your drawing logic goes here
+        # Your drawing logic goes here.
 
         Window.clear(colour: Colour::RAYWHITE)
         Font.default.draw(
@@ -33,7 +36,7 @@ def game_template
     if Taylor::Platform.browser?
       Browser.main_loop = "main"
     else
-      # Detect window close button or ESC key
+      # Detect window close button or ESC key.
       main until Window.close?
     end
 

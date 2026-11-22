@@ -9,7 +9,9 @@ namespace std_fs = std::filesystem;
 
 #include "mruby.h"
 
+#include "ruby/taylor.hpp"
 #include "ruby/taylor/config.hpp"
+#include "ruby/taylor/config/finder.hpp"
 
 #include "taylor/platform.hpp"
 #include "taylor/raylib.hpp"
@@ -27,18 +29,12 @@ void append_taylor(mrb_state* mrb)
 {
   struct RClass* Taylor_module = mrb_define_module(mrb, "Taylor");
 
-  const std_fs::path working_directory = std_fs::current_path();
-  // Convert from path -> string -> c_str because Windows returns wide chars
-  // with path.c_str
-  mrb_define_const(mrb,
-                   Taylor_module,
-                   "WORKING_DIRECTORY",
-                   mrb_str_new_cstr(mrb, working_directory.string().c_str()));
-
   mrb_define_class_method(mrb, Taylor_module, "released?", mrb_taylor_released, MRB_ARGS_NONE());
 
   append_taylor_platform(mrb, Taylor_module);
   append_taylor_raylib(mrb, Taylor_module);
 
+  load_ruby_taylor(mrb);
   load_ruby_taylor_config(mrb);
+  load_ruby_taylor_config_finder(mrb);
 }

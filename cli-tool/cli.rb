@@ -16,30 +16,32 @@ require "app/commands/run"
 require "app/commands/squash"
 require "app/commands/version"
 
-unless __FILE__ == "/app/taylor/output.rb"
+if __FILE__ == "/app/taylor/output.rb"
+  # Ditch the `taylor` executable argument
+  ARGV.shift
+else
   $:.shift
   Dir.chdir(original_dir)
 end
 
-$:.unshift Dir.getwd
-
-options = Taylor::Config.new
+config = Taylor::Config::Finder.call(ARGV.first)
+$:.unshift config.game_dir
 
 command = ARGV[0]
 
 case command
 when "new"
-  Taylor::Commands::New.call(ARGV[1..], options)
+  Taylor::Commands::New.call(ARGV[1..], config)
 
 when "export"
-  Taylor::Commands::Export.call(ARGV[1..], options)
+  Taylor::Commands::Export.call(ARGV[1..], config)
 
 when "squash"
-  Taylor::Commands::Squash.call(ARGV[1..], options)
+  Taylor::Commands::Squash.call(ARGV[1..], config)
 
 when "--version", "-v"
   Taylor::Commands::Version.call
 
 else
-  Taylor::Commands::Run.call(ARGV, options)
+  Taylor::Commands::Run.call(ARGV, config)
 end

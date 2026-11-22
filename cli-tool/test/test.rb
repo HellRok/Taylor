@@ -1,3 +1,5 @@
+Taylor.setup
+
 @unit = Neospec::Suite.new(runner: Neospec::Runner::Basic.new)
 @browser = Neospec::Suite.new(runner: Neospec::Runner::Basic.new)
 

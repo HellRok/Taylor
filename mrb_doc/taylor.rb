@@ -1,8 +1,6 @@
-# The {Taylor} module is used for getting information about your game.
+# The {Taylor} module is used for name spacing some engine
+# code.
 module Taylor
-  # The directory the game launched from
-  WORKING_DIRECTORY = "/home/sean/my_cool_game"
-
   # Is this a release build of your game?
   #
   # @example Basic usage

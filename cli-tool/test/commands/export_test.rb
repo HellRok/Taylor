@@ -20,7 +20,6 @@ end
 
 @unit.describe "Export" do
   Given "we are in a directory with a taylor-config.json" do
-    Dir.chdir("..")
     expect { File.exist?("taylor-config.json") }.to_be_true
   end
 
@@ -117,15 +116,9 @@ end
   ensure
     Dir.chdir(@original_path)
   end
-ensure
-  Dir.chdir("test")
 end
 
 @unit.describe "Export --dry-run" do
-  Given "we are in a taylor project" do
-    Dir.chdir("..")
-  end
-
   When "called with --dry-run" do
     config = Taylor::Config.new
     config.export_targets = ["linux", "windows", "osx/apple", "osx/intel", "web"]
@@ -216,15 +209,9 @@ end
       ].join(" ")
     )
   end
-ensure
-  Dir.chdir("test")
 end
 
 @unit.describe "Export { export_directory }" do
-  Given "we are in a taylor project" do
-    Dir.chdir("..")
-  end
-
   When "called with export_directory in the config" do
     config = Taylor::Config.new
     config.export_directory = "releases_option"
@@ -246,15 +233,9 @@ end
       )
     end
   end
-ensure
-  Dir.chdir("test")
 end
 
 @unit.describe "Export --export-directory" do
-  Given "we are in a taylor project" do
-    Dir.chdir("..")
-  end
-
   When "called with --export-directory" do
     @export_command = Taylor::Commands::Export.new(["--export-directory", "releases_flag"], Taylor::Config.new)
   end
@@ -273,15 +254,9 @@ end
       )
     end
   end
-ensure
-  Dir.chdir("test")
 end
 
 @unit.describe "Export { export_targets }" do
-  Given "we are in a taylor project" do
-    Dir.chdir("..")
-  end
-
   When "called with export_targets in the config" do
     config = Taylor::Config.new
     config.export_targets = ["linux", "web"]
@@ -319,15 +294,9 @@ end
       ].join(" ")
     )
   end
-ensure
-  Dir.chdir("test")
 end
 
 @unit.describe "Export --export-targets" do
-  Given "we are in a taylor project" do
-    Dir.chdir("..")
-  end
-
   When "called with --export-targets" do
     @export_command = Taylor::Commands::Export.new(["--export-targets", "linux,web"], Taylor::Config.new)
   ensure
@@ -363,15 +332,9 @@ end
       ].join(" ")
     )
   end
-ensure
-  Dir.chdir("test")
 end
 
 @unit.describe "Export --build-cache" do
-  Given "we are in a taylor project" do
-    Dir.chdir("..")
-  end
-
   When "called with --build-cache and --dry-run" do
     @export_command = Taylor::Commands::Export.new(["--dry-run", "--build-cache", "build_cache"], Taylor::Config.new)
   end
@@ -400,6 +363,4 @@ end
       )
     end
   end
-ensure
-  Dir.chdir("test")
 end
