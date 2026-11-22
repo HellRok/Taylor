@@ -1,8 +1,8 @@
 module Taylor
   module Commands
     class Run
-      def self.call(argv, options)
-        new(argv, options)
+      def self.call(argv, config)
+        new(argv, config)
       end
 
       attr_accessor :options
@@ -23,7 +23,7 @@ module Taylor
       end
 
       def call
-        setup_paths
+        setup_load_path
         unload_taylor_cli
 
         run_command
@@ -59,19 +59,10 @@ module Taylor
         first_arg = @argv_for_command.first
         return if first_arg.start_with? "-"
 
-        absolute_path = File.absolute_path(
-          File.join(
-            Taylor::WORKING_DIRECTORY,
-            first_arg
-          )
-        )
+        absolute_path = File.absolute_path(first_arg)
 
         if File.directory?(absolute_path)
-          config_file = File.join(absolute_path, "taylor-config.json")
-          return unless File.exist?(config_file)
-
-          @argv_for_command.shift
-          @taylor_config = Taylor::Config.new(file: config_file)
+          @entrypoint ||= @taylor_config.absolute_entrypoint
 
         else
           @argv_for_command.shift
@@ -80,8 +71,7 @@ module Taylor
       end
 
       def entrypoint
-        File.join(
-          Taylor::WORKING_DIRECTORY,
+        @entrypoint ||= File.absolute_path(
           @options[:entrypoint]
         )
       end
@@ -100,17 +90,15 @@ module Taylor
       def setup_options
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
-          opts.on(:entrypoint, :string, @entrypoint || @taylor_config.entrypoint, short: :e)
+          opts.on(:entrypoint, :string, @entrypoint || @taylor_config.absolute_entrypoint, short: :e)
         end
         parser.parse(@argv_for_command)
 
         @options = parser.opts
       end
 
-      def setup_paths
-        path = File.dirname(entrypoint)
-        Dir.chdir(path)
-        $:.unshift(path)
+      def setup_load_path
+        $:.unshift(File.dirname(entrypoint))
       end
 
       def unload_taylor_cli
@@ -118,10 +106,10 @@ module Taylor
       end
 
       def run_command
-        if File.exist?(entrypoint)
+        if File.exist?(File.absolute_path(entrypoint))
           set_argv_for_entrypoint
 
-          require entrypoint
+          require File.absolute_path(entrypoint)
         else
           puts "Could not load \"#{entrypoint}\", are you sure it exists?"
           exit! 1

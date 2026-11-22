@@ -110,7 +110,7 @@ end
   end
 
   And "the name is set to the final folder" do
-    expect(@data[4]).to_equal(
+    expect(@data[7]).to_equal(
       %(Window.open(width: 800, height: 480, title: "folder-name")\n)
     )
   end
@@ -127,7 +127,7 @@ end
   end
 
   And "the name is set" do
-    expect(@data[4]).to_equal(
+    expect(@data[7]).to_equal(
       %(Window.open(width: 800, height: 480, title: "Test Game")\n)
     )
   end
@@ -170,8 +170,8 @@ end
   end
 
   And "we put in all the load paths" do
-    expect(@data[1]).to_equal("$: << './third_party'\n")
-    expect(@data[2]).to_equal("$: << './black_box'\n")
+    expect(@data[4]).to_equal("$: << './third_party'\n")
+    expect(@data[5]).to_equal("$: << './black_box'\n")
   end
 ensure
   Dir.chdir("..")

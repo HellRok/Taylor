@@ -1,14 +1,14 @@
 module Taylor
   module Commands
     class New
-      def self.call(argv, options)
-        new(argv, options)
+      def self.call(argv, config)
+        new(argv, config)
       end
 
       attr_accessor :options
 
-      def initialize(argv, options)
-        setup_options(argv, options)
+      def initialize(argv, config)
+        setup_options(argv, config)
 
         if @options[:help]
           display_help
@@ -48,23 +48,23 @@ module Taylor
 
       private
 
-      def setup_options(argv, options)
+      def setup_options(argv, config)
         parser = OptParser.new do |opts|
           opts.on(:help, :bool, false, short: :h)
           opts.on(:name, :string, nil, short: :n)
-          opts.on(:version, :string, options.version, short: :v)
-          opts.on(:entrypoint, :string, options.entrypoint, short: :e)
-          opts.on(:"export-directory", :string, options.export_directory, short: :d)
-          opts.on(:"export-targets", :string, options.export_targets, short: :t)
-          opts.on(:"load-paths", :string, options.load_paths, short: :l)
-          opts.on(:"copy-paths", :string, options.copy_paths, short: :c)
+          opts.on(:version, :string, config.version, short: :v)
+          opts.on(:entrypoint, :string, config.entrypoint, short: :e)
+          opts.on(:"export-directory", :string, config.export_directory, short: :d)
+          opts.on(:"export-targets", :string, config.export_targets, short: :t)
+          opts.on(:"load-paths", :string, config.load_paths, short: :l)
+          opts.on(:"copy-paths", :string, config.copy_paths, short: :c)
         end
         parser.parse(argv)
 
         @options = parser.opts
         if parser.tail.first.nil? && @options[:name].nil?
-          @options[:folder] = simplify(options.name)
-          @options[:name] = options.name
+          @options[:folder] = simplify(config.name)
+          @options[:name] = config.name
 
         elsif parser.tail.first && @options[:name].nil?
           @options[:folder] = parser.tail.first

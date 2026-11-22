@@ -11,8 +11,8 @@ module Taylor
     # @return [Array<String>]
     attr_writer :export_targets, :load_paths, :copy_paths
 
-    # Creates a new instance of {Taylor::Config}. If the file does it will return
-    # the default values.
+    # Creates a new instance of {Taylor::Config}. If the file does not exist it
+    # will return the default values.
     #
     # @example Basic usage
     #   config = Taylor::Config.new
@@ -24,11 +24,27 @@ module Taylor
     # @return [Taylor::Config]
     def initialize(file: nil)
       @config = {}
-      file ||= File.join(Taylor::WORKING_DIRECTORY, "taylor-config.json")
-      @config = JSON.parse(File.read(file)) if File.exist?(file)
+      @file = file
+      @file ||= File.join(Dir.pwd, "taylor-config.json")
+      @config = JSON.parse(File.read(@file)) if File.exist?(@file)
 
       @web = Web.new(@config.fetch("web", {}))
       @debugging = Debugging.new(@config.fetch("debugging", {}))
+    end
+
+    # Returns the directory of the Taylor game.
+    #
+    # @example Basic usage
+    #   puts Taylor::Config.new.game_dir
+    #   # => "/home/sean/games/my_cool_game"
+    #
+    # @return [String]
+    def game_dir
+      if @config
+        File.dirname(File.absolute_path(@file))
+      else
+        File.absolute_path(entrypoint)
+      end
     end
 
     # Returns the name of the Taylor game.
@@ -67,6 +83,20 @@ module Taylor
           "input",
           "game.rb"
         )
+      )
+    end
+
+    # Returns the absolute path to the entrypoint of the Taylor game.
+    #
+    # @example Basic usage
+    #   puts Taylor::Config.new.absolute_entrypoint
+    #   # => "/home/sean/games/super_cool_game/game.rb"
+    #
+    # @return [String]
+    def absolute_entrypoint
+      File.absolute_path(
+        entrypoint,
+        game_dir
       )
     end
 
