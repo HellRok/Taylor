@@ -34,7 +34,7 @@ class Music
   # @param ctx_type [Integer]
   # @return [String]
   def self.mock_return(sample_rate: 0, sample_size: 0, channels: 0, frame_count: 0, looping: false, ctx_type: 0)
-    [sample_rate, sample_size, channels, frame_count, looping, ctx_type].map(&:to_s).join(" ")
+    [sample_rate, sample_size, channels, frame_count, looping, ctx_type].join(" ")
   end
 
   # Used for alerting the user if the music file was not found at the specified path.

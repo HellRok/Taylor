@@ -184,7 +184,7 @@ class Colour
   # @param alpha [Integer] A value between 0 and 255.
   # @return [String]
   def self.mock_return(red: 0, green: 0, blue: 0, alpha: 255)
-    [red, green, blue, alpha].map(&:to_s).join(" ")
+    [red, green, blue, alpha].join(" ")
   end
 
   # @!group Colours

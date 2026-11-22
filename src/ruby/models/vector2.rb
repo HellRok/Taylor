@@ -257,7 +257,7 @@ class Vector2
   # @param y [Float]
   # @return [String]
   def self.mock_return(x: 0, y: 0)
-    [x, y].map(&:to_s).join(" ")
+    [x, y].join(" ")
   end
 
   # A Vector2 setup at 0, 0.

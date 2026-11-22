@@ -15,6 +15,7 @@
 - Fix up console output on Windows
 - Taylor::Config now takes an optional `file` argument
 - The working directory is based on the file launched
+- Upgrade Ruby to 4.0.10
 
 ## v0.4.3
 

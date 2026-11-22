@@ -30,7 +30,7 @@ class Texture2D
   # @param format [Integer]
   # @return [String]
   def self.mock_return(id: 1, width: 10, height: 15, mipmaps: 2, format: 0)
-    [id, width, height, mipmaps, format].map(&:to_s).join(" ")
+    [id, width, height, mipmaps, format].join(" ")
   end
 
   # Used for alerting the user if the texture was not found at the specified path.

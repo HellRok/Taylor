@@ -45,6 +45,6 @@ class RenderTexture
   # @param height [Integer]
   # @return [String]
   def self.mock_return(width: 10, height: 10)
-    [width, height].map(&:to_s).join(" ")
+    [width, height].join(" ")
   end
 end
