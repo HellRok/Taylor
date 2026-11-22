@@ -79,7 +79,7 @@ class Font
   # @param glyph_padding [Integer]
   # @return [String]
   def self.mock_return(size: 0, glyph_count: 0, glyph_padding: 0)
-    [size, glyph_count, glyph_padding].map(&:to_s).join(" ")
+    [size, glyph_count, glyph_padding].join(" ")
   end
 
   # Used for alerting the user if the font was not found at the specified path.

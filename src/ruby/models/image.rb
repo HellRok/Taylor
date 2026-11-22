@@ -28,7 +28,7 @@ class Image
   # @param format [Integer]
   # @return [String]
   def self.mock_return(width: 10, height: 10, mipmaps: 1, format: 0)
-    [width, height, mipmaps, format].map(&:to_s).join(" ")
+    [width, height, mipmaps, format].join(" ")
   end
 
   # Used for alerting the user if the image was not found at the specified path.
