@@ -1,6 +1,6 @@
 # Taylor
 
-## Unreleased
+## v0.5.0
 
 - Upgraded MRuby to 4.0.0
 - Upgraded Raylib to 6.0
@@ -17,6 +17,7 @@
 - The working directory is based on the file launched
 - Upgrade Ruby to 4.0.10
 - Add Taylor::Config::Finder to resolve path issues
+- Fix OSXCross docker setup
 
 ## v0.4.3
 
