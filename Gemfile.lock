@@ -24,6 +24,7 @@ GEM
       racc
     pastel (0.8.0)
       tty-color (~> 0.5)
+    plist (3.7.2)
     prism (2.1.0)
     prism (2.1.0-x86_64-linux-gnu)
     racc (1.8.1)
@@ -93,6 +94,7 @@ PLATFORMS
 
 DEPENDENCIES
   local_ci
+  plist
   rackup
   rake
   redcarpet

@@ -18,6 +18,7 @@
 - Upgrade Ruby to 4.0.10
 - Add Taylor::Config::Finder to resolve path issues
 - Fix OSXCross docker setup
+- Add an `Info.plist` file into the OSX applications
 
 ## v0.4.3
 
