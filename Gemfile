@@ -5,6 +5,9 @@ gem "rake"
 gem "standardrb"
 gem "local_ci"
 
+# Exporting
+gem "plist"
+
 group :development do
   gem "rackup"
 end

@@ -97,5 +97,7 @@ ENV \
 # glibc headers
 RUN git clone -q --depth=1 https://github.com/wheybags/glibc_version_header.git /opt/glibc && rm -rf /opt/glibc/.git
 
-# mruby utils
-RUN gem install mruby_utils:3.0.1
+# Gems
+RUN gem install \
+  mruby_utils:3.0.1 \
+  plist

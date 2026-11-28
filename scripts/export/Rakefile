@@ -1,6 +1,7 @@
 require "json"
 require "fileutils"
 require_relative "/app/taylor/src/ruby/taylor/config"
+require_relative "lib/osx_app_files"
 
 def taylor(args)
   `taylor /app/taylor/cli-tool/cli.rb #{args}`
@@ -213,7 +214,8 @@ namespace :compress do
       Dir.chdir("/app/game/exports/osx")
       app_path = File.join(".", "#{options.name}-intel.app", "Contents", "MacOS")
       FileUtils.mkdir_p(app_path)
-      File.write(File.join(app_path, "..", "PkgInfo"), "APPL????APPL????")
+      Osx::PkgInfo.generate(app_path)
+      Osx::Plist.generate(app_path, options)
       options.copy_paths.each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), app_path) }
       sh "zip -r \"#{options.name}-osx-intel-#{options.version}.zip\" *.app"
     end
@@ -222,7 +224,8 @@ namespace :compress do
       Dir.chdir("/app/game/exports/osx")
       app_path = File.join(".", "#{options.name}-apple.app", "Contents", "MacOS")
       FileUtils.mkdir_p(app_path)
-      File.write(File.join(app_path, "..", "PkgInfo"), "APPL????APPL????")
+      Osx::PkgInfo.generate(app_path)
+      Osx::Plist.generate(app_path, options)
       options.copy_paths.each { |asset_path| FileUtils.cp_r(File.join("/app/game/", asset_path), app_path) }
       sh "zip -r \"#{options.name}-osx-apple-#{options.version}.zip\" *.app"
     end
